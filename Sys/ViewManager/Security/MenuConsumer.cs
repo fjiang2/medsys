@@ -12,6 +12,7 @@ using Sys.Data;
 using Sys.Security;
 using Sys.Foundation.Dpo;
 using DevExpress.XtraBars;
+using DevExpress.XtraBars.Docking;
 
 namespace Sys.ViewManager.Security
 {
@@ -225,10 +226,6 @@ namespace Sys.ViewManager.Security
         }
 
       
-
-      
-
-
         private void Build(BarItem menuItem, TreeNode<UserMenuItem> parentNode)
         {
             if (parentNode.Nodes.Count == 0)
@@ -313,9 +310,32 @@ namespace Sys.ViewManager.Security
 
             return menu;
         }
-        
-        
-   
-      
+
+
+        public DockPanel AddDockPanel(string menuCaption, Control control)
+        {
+            UserMenuItem menuItem = this[menuCaption];
+            return AddDockPanel(menuItem, control);
+        }
+
+
+        public DockPanel AddDockPanel(UserMenuItem menuItem, Control control)
+        {
+            var formDockManager = mainForm.FormDockManager;
+            DockPanel dockPanel = formDockManager.SearchPanel(menuItem.Key_Name);
+            if (dockPanel == null)
+            {
+                dockPanel = formDockManager.AddPanel(menuItem.Label, control, (DockingStyle)menuItem.Form_Place);
+                dockPanel.ID = new Guid(menuItem.Key_Name);
+                dockPanel.ImageIndex = menuItem.ImageIndex;
+            }
+            else
+            {
+                dockPanel.Show();
+            }
+
+            formDockManager.DockManager.ActivePanel = dockPanel;
+            return dockPanel;
+        }
     }
 }

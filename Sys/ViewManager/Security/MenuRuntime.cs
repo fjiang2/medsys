@@ -19,21 +19,21 @@ namespace Sys.ViewManager.Security
         private const string _SCOPE = "menuItem";
         private const string _SO = "SO";
 
-        private IMainForm mainForm;
-        private System.Windows.Forms.Form owner;
         private Memory DS = new Memory();
+        private IMainForm mainForm;
+        MenuConsumer menuConsumer;
 
         public MenuRuntime(MenuConsumer menuConsumer,  IMainForm mainForm)
         {
+            this.menuConsumer = menuConsumer;
             this.mainForm = mainForm;
-            this.owner = mainForm.Form;
 
             HostType.Register(typeof(System.Windows.Forms.MessageBox));
             HostType.Register(typeof(FormPlace), true);
            
             DS["This"] = VAL.Boxing(this);
             DS["CurrentUser"] = VAL.Boxing(Sys.Security.Account.CurrentUser);
-            DS["owner"] = VAL.Boxing(owner);
+            DS["owner"] = VAL.Boxing(mainForm.Form);
         }
 
         public void OpenForm(string formClass)
@@ -61,7 +61,7 @@ namespace Sys.ViewManager.Security
 
             Cursor cursor = Cursor.Current;
             Cursor.Current = Cursors.WaitCursor;
-            form.PopUp(owner, formPlace);
+            form.PopUp(mainForm.Form, formPlace);
             Cursor.Current = cursor;
         }
 
@@ -78,7 +78,7 @@ namespace Sys.ViewManager.Security
 
         public void OpenControl(Control control)
         {
-            mainForm.ShowMenuItemOnDockPanel(MenuItem, control);
+            this.menuConsumer.AddDockPanel(MenuItem, control);
         }
 
         public void OpenReport(string reportID)

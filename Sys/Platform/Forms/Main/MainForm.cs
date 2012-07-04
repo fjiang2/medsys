@@ -39,6 +39,11 @@ namespace Sys.Platform.Forms
         public Form Form
         { get { return this; } }
 
+        public FormDockManager FormDockManager
+        {
+            get { return this.formDockManager; }
+        }
+
         public Bar MenuStrip
         { get { return barMainMenu; } }
 
@@ -137,26 +142,7 @@ namespace Sys.Platform.Forms
         }
 
 
-        public DockPanel ShowMenuItemOnDockPanel(UserMenuItem menuItem , Control control)
-        {
-            DockPanel dockPanel = formDockManager.SearchPanel(menuItem.Key_Name);
-            if (dockPanel == null)
-            {
-                dockPanel = formDockManager.AddPanel(menuItem.Label, control, (DockingStyle)menuItem.Form_Place);
-                dockPanel.ID = new Guid(menuItem.Key_Name);
-                dockPanel.ImageIndex = menuItem.ImageIndex;
-            }
-            else
-            {
-                dockPanel.Show();
-            }
-            
-            formDockManager.DockManager.ActivePanel = dockPanel;
-            return dockPanel;
-        }
-
-
-
+     
         public void CloseForm(BaseForm form)
         {
             if (form.Owner == this || form.FormPlace == FormPlace.TabbedAera)
@@ -235,25 +221,25 @@ namespace Sys.Platform.Forms
             #region NavBar 
 
             shortcutControl = new ShortcutControl(this);
-            ShowMenuItemOnDockPanel("Shortcuts", shortcutControl);
+            menuConsumer.AddDockPanel("Shortcuts", shortcutControl);
             
             TreeView treeView1 = new TreeView();
             treeView1.Size = new Size(300, 600);
-            DockPanel dpSO = ShowMenuItemOnDockPanel("Sales Order", treeView1);
+            DockPanel dpSO = menuConsumer.AddDockPanel("Sales Order", treeView1);
 
             WorkListControl workList = new WorkListControl(this);
-            DockPanel dpWF = ShowMenuItemOnDockPanel("Work List", workList);
+            DockPanel dpWF = menuConsumer.AddDockPanel("Work List", workList);
 
             formDockManager.HidePanel(dpSO, dpWF);
             
             this.errorList = new Sys.ViewManager.Forms.ErrorListControl();
-            DockPanel messagePanel = ShowMenuItemOnDockPanel("Error List", errorList);
+            DockPanel messagePanel = menuConsumer.AddDockPanel("Error List", errorList);
             //formDockManager.HidePanel(messagePanel);
 
             if (Sys.Constant.USE_XMPP)
             {
                 Sys.Messaging.Forms.Messenger IM = new Sys.Messaging.Forms.Messenger();
-                DockPanel dpMessenger = ShowMenuItemOnDockPanel( "Instant Messenger", IM);
+                DockPanel dpMessenger = menuConsumer.AddDockPanel("Instant Messenger", IM);
 
                 if (SystemInformation.PrimaryMonitorSize.Width < 1440)
                     formDockManager.HidePanel(dpMessenger);
@@ -271,28 +257,23 @@ namespace Sys.Platform.Forms
         }
 
 
-        private DockPanel ShowMenuItemOnDockPanel(string caption, Control control)
-        {
-            UserMenuItem menuItem = this.menuConsumer[caption];
-            return ShowMenuItemOnDockPanel(menuItem, control);
-        }
-
+      
 
         private void BuildHelpMenu()
         {
             BarSubItem menuHelp = menuConsumer.AddBarSubItem("&Help");
             
             BarButtonItem menu;
-            menu = menuConsumer.AddWebLink(menuHelp, "Submit Ticket", (string)Configuration.Instance["URL.ReportIssue"]);
+            menu = menuConsumer.AddWebLink(menuHelp, "Report a Bug", (string)Configuration.Instance["URL.ReportIssue"]);
             menu.Glyph = global::Sys.Platform.Properties.Resources.bug;
 
-            menu = menuConsumer.AddBarButtonItem(menuHelp, "Check Updates");
+            menu = menuConsumer.AddBarButtonItem(menuHelp, "Check for Updates");
             menu.ItemClick += delegate(object sender, ItemClickEventArgs e)
             {
                 if (App.IsNewerVersionAvailable() != null)
                     timerCheckForUpdates_Tick(sender, e);
                 else
-                    MessageBox.Show("You already have the latest version installed.", "Update", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("You already have the latest version installed.", "Updates", MessageBoxButtons.OK, MessageBoxIcon.Information);
             };
 
             menuConsumer.AddWebLink(menuHelp, "Release Notes", (string)Configuration.Instance["URL.ReleaseNotes"]);

@@ -28,6 +28,7 @@ namespace Sys.ViewManager.Forms
         Form Form { get;}
         ShortcutControl ShortcutManager { get; }
         ErrorListControl ErrorList { get; }
+        FormDockManager FormDockManager { get; }
 
         Bar MenuStrip { get; }
         Bar ToolStrip { get; }
@@ -40,11 +41,6 @@ namespace Sys.ViewManager.Forms
         void ChangeCaption(BaseForm form);
 
         IReport Report { get;}
-
-        DockPanel ShowMenuItemOnDockPanel(UserMenuItem menuItem, Control control);
-        void Exit();
-        void LogOff();
-
     }
 
 
