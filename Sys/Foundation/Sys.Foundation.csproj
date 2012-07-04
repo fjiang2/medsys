@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{30FC8D52-477A-415A-9680-B29F0C5A1606}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Sys</RootNamespace>
+    <AssemblyName>Sys.Foundation</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>true</CodeAnalysisFailOnMissingRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Tie">
+      <HintPath>..\..\Lib\Tie.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Dpo\ScriptDpo.cs" />
+    <Compile Include="Package\AssemblyDpoPackage.cs" />
+    <Compile Include="Package\ConfigurationDpoPackage.cs" />
+    <Compile Include="Package\RoleDpoPackage.cs" />
+    <Compile Include="Package\ScriptDpoPackage.cs" />
+    <Compile Include="Package\UserDpoPackage.cs" />
+    <Compile Include="Package\UserRoleDpoPackage.cs" />
+    <Compile Include="Security\Companies.cs" />
+    <Compile Include="Security\Company.cs" />
+    <Compile Include="Dpo\CompanyDpo.cs" />
+    <Compile Include="Dpo\ConfigurationDpo.cs" />
+    <Compile Include="Dpo\logActivityDpo.cs" />
+    <Compile Include="Dpo\RoleDpo.cs" />
+    <Compile Include="Dpo\UserDpo.cs" />
+    <Compile Include="Dpo\UserProfileDpo.cs" />
+    <Compile Include="Dpo\UserRoleDpo.cs" />
+    <Compile Include="Modules\TableDpoDictionary.cs" />
+    <Compile Include="Modules\IModule.cs" />
+    <Compile Include="Modules\IModuleImpl.cs" />
+    <Compile Include="Dpo\AssemblyDpo.cs" />
+    <Compile Include="Modules\Library.cs" />
+    <Compile Include="Sys\ApplicationContext.cs" />
+    <Compile Include="OS\Callback.cs" />
+    <Compile Include="OS\Import\ClassHandshake.cs" />
+    <Compile Include="OS\IO\File.cs" />
+    <Compile Include="OS\Import\MemberParametersAttribute.cs" />
+    <Compile Include="OS\IO\Path.cs" />
+    <Compile Include="OS\Import\PropertyInfoAttribute.cs" />
+    <Compile Include="Security\Profile.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reflection\Compiler.cs" />
+    <Compile Include="Reflection\Reflector.cs" />
+    <Compile Include="Security\Account.cs" />
+    <Compile Include="Security\PredefinedRole.cs" />
+    <Compile Include="Security\PredefinedUser.cs" />
+    <Compile Include="Security\Role.cs" />
+    <Compile Include="Security\SecurityLevel.cs" />
+    <Compile Include="Security\UserAccount.cs" />
+    <Compile Include="Security\UserRole.cs" />
+    <Compile Include="Security\UserRoleAccount.cs" />
+    <Compile Include="SQLCommand.cs" />
+    <Compile Include="OS\App.cs" />
+    <Compile Include="Modules\TieModule.cs" />
+    <Compile Include="Sys\Configuration.cs" />
+    <Compile Include="Sys\Constant.cs" />
+    <Compile Include="Sys\DateTimeExtension.cs" />
+    <Compile Include="Sys\EnumExtension.cs" />
+    <Compile Include="Sys\Helper.cs" />
+    <Compile Include="Sys\StringExtension.cs" />
+    <Compile Include="Sys\SysInformation.cs" />
+    <Compile Include="Sys\SysMessage.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PersistentObjects\Sys.PersistentObjects.csproj">
+      <Project>{FE52736A-BA94-41FC-9FD3-A481A790FC9C}</Project>
+      <Name>Sys.PersistentObjects</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
