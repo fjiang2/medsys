@@ -13,6 +13,7 @@ using Sys.Security;
 using Sys.Foundation.Dpo;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Docking;
+using Sys.ViewManager.Manager;
 
 namespace Sys.ViewManager.Security
 {
@@ -28,22 +29,25 @@ namespace Sys.ViewManager.Security
     {
         UserRoleAccount collector;
 
-        Assembly assembly;
-        MenuRuntime eventHandlerInstance;
+        private MenuRuntime eventHandlerInstance;
 
-        IMainForm mainForm;
-        BarManager barManager;
-        Bar bar1;
+        private IMainForm mainForm;
+        private FormDockManager formDockManager;
+        private BarManager barManager;
+        private Bar menuBar;
 
         ImageList imageList = new ImageList();
         IdentifierTree<UserMenuItem> tree;
         List<UserMenuItem> items;
 
-        int id = 0;
-        public MenuConsumer(IMainForm mainForm, BarManager barManager, bool rebuild)
+        private int id = 0;
+
+        public MenuConsumer(IMainForm mainForm, FormDockManager formDockManager, BarManager barManager, Bar menuBar)
         {
+            this.mainForm = mainForm;
+            this.formDockManager = formDockManager;
             this.barManager = barManager;
-            bar1 = mainForm.MenuStrip;
+            this.menuBar = menuBar;
 
             this.collector = (UserRoleAccount)Account.CurrentUser;
 
@@ -107,12 +111,8 @@ namespace Sys.ViewManager.Security
                 }
             }
 
-            this.mainForm = mainForm;
-            this.assembly =mainForm.GetType().Module.Assembly;
-
-            
+         
             this.tree = new IdentifierTree<UserMenuItem>(items, 0);
-
 			eventHandlerInstance = new MenuRuntime(this,  this.mainForm);
         }
 
@@ -174,7 +174,7 @@ namespace Sys.ViewManager.Security
         {
             BarSubItem item = NewSubItem(caption);
             barManager.Items.Add(item);
-            bar1.LinksPersistInfo.Add(new LinkPersistInfo(item));
+            menuBar.LinksPersistInfo.Add(new LinkPersistInfo(item));
 
             return item;
         }
@@ -196,6 +196,8 @@ namespace Sys.ViewManager.Security
 
             return item;
         }
+
+        #region Build MenuBar from UserMenuDpo
 
         public void Build()
         {
@@ -283,7 +285,7 @@ namespace Sys.ViewManager.Security
             eventInfo.AddEventHandler(item, d);
         }
 
-
+        #endregion
 
 
 
@@ -318,10 +320,14 @@ namespace Sys.ViewManager.Security
             return AddDockPanel(menuItem, control);
         }
 
-
+        /// <summary>
+        /// Add UserControl defined on UserMenus into DockPanel
+        /// </summary>
+        /// <param name="menuItem"></param>
+        /// <param name="control"></param>
+        /// <returns></returns>
         public DockPanel AddDockPanel(UserMenuItem menuItem, Control control)
         {
-            var formDockManager = mainForm.FormDockManager;
             DockPanel dockPanel = formDockManager.SearchPanel(menuItem.Key_Name);
             if (dockPanel == null)
             {

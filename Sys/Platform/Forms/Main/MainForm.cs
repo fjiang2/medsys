@@ -37,30 +37,34 @@ namespace Sys.Platform.Forms
         private Form activeForm = null;
 
         public Form Form
-        { get { return this; } }
-
-        public FormDockManager FormDockManager
-        {
-            get { return this.formDockManager; }
+        { 
+            get { return this; } 
         }
 
-        public Bar MenuStrip
-        { get { return barMainMenu; } }
-
         public Bar ToolStrip
-        { get { return barTools; } }
+        { 
+            get { return barTools; } 
+        }
 
         public Bar StatusStrip
-        { get { return barStatus; } }
+        { 
+            get { return barStatus; } 
+        }
 
         public ShortcutControl ShortcutManager
-        { get { return shortcutControl; } }
+        { 
+            get { return shortcutControl; } 
+        }
 
         public ErrorListControl ErrorList
-        { get { return errorList; } }
+        { 
+            get { return errorList; } 
+        }
 
         public IReport Report
-        { get { return null ; } }
+        { 
+            get { return null ; } 
+        }
 
         
         public void ShowForm(BaseForm form, FormPlace place)
@@ -205,9 +209,9 @@ namespace Sys.Platform.Forms
             //  Otherwise when we are debugging may end up in a infinite loop.
             timerCheckForUpdates.Start();
 #endif         
-            this.menuConsumer = new MenuConsumer(this, this.barManager1, true);
             this.formDockManager = new FormDockManager(this, this.components);
             this.formDockManager.DockManager.MenuManager = barManager1;
+            this.menuConsumer = new MenuConsumer(this, this.formDockManager, this.barManager1, this.barMainMenu);
             this.formDockManager.DockManager.Images = menuConsumer.ImageList;
 
             //build main menu

@@ -28,9 +28,7 @@ namespace Sys.ViewManager.Forms
         Form Form { get;}
         ShortcutControl ShortcutManager { get; }
         ErrorListControl ErrorList { get; }
-        FormDockManager FormDockManager { get; }
 
-        Bar MenuStrip { get; }
         Bar ToolStrip { get; }
         Bar StatusStrip { get; }
 
