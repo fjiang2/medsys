@@ -21,7 +21,8 @@ namespace Sys.ViewManager.Security
     public enum MenuItemType
     {
         MenuItem = 0,
-        Separator = 1
+        Separator = 1,
+        ToolBar = 2
     }
 
 
