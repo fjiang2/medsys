@@ -23,7 +23,7 @@ namespace Sys.ViewManager.Forms
             gridView1.OptionsView.ShowFilterPanelMode = DevExpress.XtraGrid.Views.Base.ShowFilterPanelMode.Never;
 
             this.dt = new DataTable();
-            this.manager = new MassageManager(dt);
+            this.manager = new MassageManager();
             
             dt.Columns.Add(new DataColumn("ErrorTy", typeof(int)));
             dt.Columns.Add(new DataColumn("ID", typeof(int)));
@@ -37,13 +37,10 @@ namespace Sys.ViewManager.Forms
 
             gridControl1.DataSource = dt;
 
-       //     Error(1, "Error Demo", "line 21");
-       //     Warning(2, "Warning Demo", "line 300");
-
             manager.MessageChanged += new MassageManager.MessageHandler(manager_MessageChanged);
         }
 
-        void manager_MessageChanged(object sender, MessageEventArgs e)
+        private void manager_MessageChanged(object sender, MessageEventArgs e)
         {
             int errorCount = 0;
             int warningCount = 0;
@@ -51,7 +48,7 @@ namespace Sys.ViewManager.Forms
 
             foreach (MessageItem item in e.Errors)
             {
-                switch (item.Type)
+                switch (item.Level)
                 {
                     case MessageLevel.error:
                         errorCount++;
@@ -68,7 +65,7 @@ namespace Sys.ViewManager.Forms
 
 
                 DataRow row = dt.NewRow();
-                row[0] = (int)item.Type;
+                row[0] = (int)item.Level;
                 
                 if(item.ID != 0)
                     row[1] = item.ID;
