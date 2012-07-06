@@ -28,12 +28,19 @@ namespace Sys.Data
         public void AddFields(string[] columnNames)
         {
             if (columnNames == null)
+            {
                 this.Fields.Add(tableName);
+                foreach (DataField field in this.Fields)
+                {
+                    columns.Add(new ColumnAdapter(field));
+                }
+            }
             else
             {
                 foreach (string name in columnNames)
                 {
-                    this.Fields.Add(dataTable.Columns[name]);
+                    DataField field = this.Fields.Add(dataTable.Columns[name]);
+                    columns.Add(new ColumnAdapter(field));
                 }
             }
 

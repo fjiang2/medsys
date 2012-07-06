@@ -75,7 +75,7 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Tie">
-      <HintPath>..\..\medsys\Lib\Tie.dll</HintPath>
+      <HintPath>..\..\Lib\Tie.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
