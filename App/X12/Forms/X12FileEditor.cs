@@ -93,6 +93,8 @@ namespace X12.Forms
             }
         }
 
+
+        private JGridView segmentGrid = new JGridView();
         public ContextMenuStrip GetContextMenu(TreeNode treeNode)
         {
             ContextMenuStrip contextMenu = new ContextMenuStrip();
@@ -102,23 +104,22 @@ namespace X12.Forms
                 ToolStripMenuItem menuProperty = new ToolStripMenuItem("Property...");
                 
                 contextMenu.Items.Add(menuProperty);
+
+                Guid guid = new Guid("7AEC4232-93DA-4B09-B44B-A14C3340C43C");
                 
+                segmentGrid.GridView.OptionsView.ShowFilterPanelMode = DevExpress.XtraGrid.Views.Base.ShowFilterPanelMode.Never;
+                segmentGrid.Dock = DockStyle.Fill;
+                segmentGrid.AllowEdit = false;
 
                 menuProperty.Click += delegate(object sender, EventArgs e)
                 {
                     X12SegmentTemplateDpo segment = (treeNode as SegmentTemplateNode).SegmentDpo;
                     DataTable dt = Spec5010A.Instance.GetSegmentInstances().Where(dpo => dpo.Name == segment.Name).ToTable();
+                    segmentGrid.DataSource = dt;
 
-                    //if (!tabControl2.TabPageExists(segment.Name))
-                    //{
-                    //    JGridView view = new JGridView();
-                    //    view.GridView.OptionsView.ShowFilterPanelMode = DevExpress.XtraGrid.Views.Base.ShowFilterPanelMode.Never;
-                    //    view.Dock = DockStyle.Fill;
-                    //    view.DataSource = dt;
-                    //    view.AllowEdit = false;
-
-                    //    tabControl2.AddTabPage(segment.Name, view);
-                    //}
+                    this.AddDockPanel(guid, "Segment: " + segment.Name, DevExpress.XtraBars.Docking.DockingStyle.Bottom, segmentGrid);
+                    
+                    
                 };
 
             }

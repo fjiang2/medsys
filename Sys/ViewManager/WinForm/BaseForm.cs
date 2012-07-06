@@ -15,6 +15,7 @@ using Sys.DataManager;
 using Sys.ViewManager.Manager;
 using Sys.ViewManager.Forms;
 using DevExpress.XtraBars;
+using DevExpress.XtraBars.Docking;
 
 namespace Sys.ViewManager.Forms
 {
@@ -1143,6 +1144,29 @@ namespace Sys.ViewManager.Forms
             return f;
         }
 
+        protected bool DockPanelExists(Guid guid)
+        {
+            return this.MainForm.FormDockManager.SearchPanel(guid.ToString()) != null;
+        }
+
+        public DockPanel AddDockPanel(Guid guid, string caption, DockingStyle dockingStyle, Control control)
+        {
+            FormDockManager manager = this.MainForm.FormDockManager;
+            DockPanel dockPanel = manager.SearchPanel(guid.ToString());
+            if (dockPanel == null)
+            {
+                dockPanel = manager.AddPanel(caption, control, dockingStyle);
+                dockPanel.ID = guid;
+            }
+            else
+            {
+                dockPanel.Text = caption;
+                dockPanel.Show();
+            }
+
+            manager.DockManager.ActivePanel = dockPanel;
+            return dockPanel;
+        }
       
     }
 }

@@ -26,6 +26,8 @@ namespace Sys.ViewManager.Forms
     public interface IMainForm
     {
         Form Form { get;}
+
+        FormDockManager FormDockManager { get; }
         ShortcutControl ShortcutManager { get; }
         ErrorListControl ErrorList { get; }
 

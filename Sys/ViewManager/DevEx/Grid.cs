@@ -282,6 +282,7 @@ namespace Sys.ViewManager.DevEx
             gridView1.ActiveFilterString = "";
 
             gridControl.DataSource = dataTable;
+            //gridView1.PopulateColumns();
             //this.gridControl.RefreshDataSource();
             gridView1.DataController.RefreshData();
 

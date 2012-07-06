@@ -51,6 +51,12 @@ namespace Sys.Platform.Forms
             get { return barStatus; } 
         }
 
+        public FormDockManager FormDockManager
+        {
+            get { return this.formDockManager; }
+        }
+
+
         public ShortcutControl ShortcutManager
         { 
             get { return shortcutControl; } 
