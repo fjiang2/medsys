@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.txtErrors = new System.Windows.Forms.ToolStripLabel();
             this.txtWarnings = new System.Windows.Forms.ToolStripLabel();
@@ -37,7 +36,7 @@
             this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.gridColumnFlag = new DevExpress.XtraGrid.Columns.GridColumn();
             this.repositoryItemImageComboBox1 = new DevExpress.XtraEditors.Repository.RepositoryItemImageComboBox();
-            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
+            this.imageList1 = new System.Windows.Forms.ImageList();
             this.gridColumnID = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColumnDescription = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColumnLocation = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -65,6 +64,7 @@
             this.txtErrors.Name = "txtErrors";
             this.txtErrors.Size = new System.Drawing.Size(62, 22);
             this.txtErrors.Text = "0 Errors";
+            this.txtErrors.Click += new System.EventHandler(this.txtErrors_Click);
             // 
             // txtWarnings
             // 
@@ -72,6 +72,7 @@
             this.txtWarnings.Name = "txtWarnings";
             this.txtWarnings.Size = new System.Drawing.Size(82, 22);
             this.txtWarnings.Text = "0 Warnings";
+            this.txtWarnings.Click += new System.EventHandler(this.txtWarnings_Click);
             // 
             // txtMessages
             // 
@@ -79,6 +80,7 @@
             this.txtMessages.Name = "txtMessages";
             this.txtMessages.Size = new System.Drawing.Size(83, 22);
             this.txtMessages.Text = "0 Messages";
+            this.txtMessages.Click += new System.EventHandler(this.txtMessages_Click);
             // 
             // gridControl1
             // 

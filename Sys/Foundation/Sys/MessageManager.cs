@@ -88,7 +88,7 @@ namespace Sys
     public class MessageItem  
     {
         public int ID;
-        private int level;
+        public MessageLevel Type;
         public string Message;
         public string Location;
 
@@ -96,21 +96,16 @@ namespace Sys
         {
         }
 
-        public MessageLevel Type
-        {
-            get { return (MessageLevel)level; }
-            set { this.level = (int)value; }
-        }
 
         public override int GetHashCode()
         {
-            return Location.GetHashCode() + level.GetHashCode() + Message.GetHashCode();
+            return Location.GetHashCode() + Type.GetHashCode() + Message.GetHashCode();
         }
 
         public override bool Equals(object obj)
         {
             MessageItem item = (MessageItem)obj;
-            return this.Location == item.Location && this.level == item.level && this.Message == item.Message;
+            return this.Location == item.Location && this.Type == item.Type && this.Message == item.Message;
         }
     }
 }

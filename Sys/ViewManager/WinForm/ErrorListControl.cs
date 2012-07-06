@@ -20,6 +20,8 @@ namespace Sys.ViewManager.Forms
         {
             InitializeComponent();
 
+            gridView1.OptionsView.ShowFilterPanelMode = DevExpress.XtraGrid.Views.Base.ShowFilterPanelMode.Never;
+
             this.dt = new DataTable();
             this.manager = new MassageManager(dt);
             
@@ -67,7 +69,10 @@ namespace Sys.ViewManager.Forms
 
                 DataRow row = dt.NewRow();
                 row[0] = (int)item.Type;
-                row[1] = item.ID;
+                
+                if(item.ID != 0)
+                    row[1] = item.ID;
+
                 row[2] = item.Message;
                 row[3] = item.Location;
 
@@ -83,6 +88,21 @@ namespace Sys.ViewManager.Forms
         public MassageManager Manager
         {
             get { return this.manager; }
+        }
+
+        private void txtErrors_Click(object sender, EventArgs e)
+        {
+            this.gridColumnFlag.FilterInfo = new DevExpress.XtraGrid.Columns.ColumnFilterInfo(string.Format("ErrorTy = {0}", (int)MessageLevel.error));
+        }
+
+        private void txtWarnings_Click(object sender, EventArgs e)
+        {
+            this.gridColumnFlag.FilterInfo = new DevExpress.XtraGrid.Columns.ColumnFilterInfo(string.Format("ErrorTy = {0}", (int)MessageLevel.warning));
+        }
+
+        private void txtMessages_Click(object sender, EventArgs e)
+        {
+            this.gridColumnFlag.FilterInfo = new DevExpress.XtraGrid.Columns.ColumnFilterInfo(string.Format("ErrorTy = {0}", (int)MessageLevel.information));
         }
 
     }
