@@ -488,9 +488,9 @@ namespace Sys.ViewManager.Forms
 
 
 
-        protected MassageManager ErrorManager
+        protected MassageManager MassageManager
         {
-            get { return this.MainForm.ErrorList.Manager; }
+            get { return ((ErrorListControl)this.MainForm.FormDockManager[typeof(ErrorListControl)]).Manager; }
         }
 
         #region StatusStrip Function
@@ -736,7 +736,7 @@ namespace Sys.ViewManager.Forms
         {
             get
             {
-                return MainForm.ShortcutManager;
+                return (ShortcutControl)MainForm.FormDockManager[typeof(ShortcutControl)];
             }
         }
         

@@ -346,9 +346,9 @@ namespace X12.Forms
             this.Cursor = Cursors.WaitCursor;
             ClearTabs();
 
-            ErrorManager.Clear();
+            MassageManager.Clear();
 
-            this.x12.Parse(ErrorManager);
+            this.x12.Parse(MassageManager);
 
             //TreeNode Loops
             if (rootLoop == null)
@@ -365,7 +365,7 @@ namespace X12.Forms
             rootLoop.Expand();
 
             this.segmentControl1.SetDataSource(this.x12, SegmentName.DefaultName);
-            this.ErrorManager.Post();
+            this.MassageManager.Post();
 
             this.Cursor = Cursors.Default;
         }

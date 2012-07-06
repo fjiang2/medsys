@@ -32,6 +32,7 @@ namespace Sys.Platform.Forms
         private FormDockManager formDockManager;
         private ErrorListControl errorList;
         
+
         #region IMainForm
 
         private Form activeForm = null;
@@ -54,17 +55,6 @@ namespace Sys.Platform.Forms
         public FormDockManager FormDockManager
         {
             get { return this.formDockManager; }
-        }
-
-
-        public ShortcutControl ShortcutManager
-        { 
-            get { return shortcutControl; } 
-        }
-
-        public ErrorListControl ErrorList
-        { 
-            get { return errorList; } 
         }
 
         public IReport Report

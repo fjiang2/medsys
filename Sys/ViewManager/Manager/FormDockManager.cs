@@ -154,6 +154,8 @@ namespace Sys.ViewManager.Manager
            
 
             dockPanel.ControlContainer.Controls.Add(control);
+            this.controls.Add(control.GetType(), control);
+
             dockPanel.ControlContainer.Name = "controlContainer" + panelCount;
                  
             panelCount++;
@@ -161,7 +163,22 @@ namespace Sys.ViewManager.Manager
             return dockPanel;
         }
 
-      
+
+        private Dictionary<Type, Control> controls = new Dictionary<Type, Control>();
+        public Control this[Type type]
+        {
+            get
+            {
+                if (controls.ContainsKey(type))
+                    return controls[type];
+                else
+                    return null;
+            }
+        }
+
+
+
+        #region Tabbed Document
 
         IDictionary<object, BaseDocument> documentsCore = new Dictionary<object, BaseDocument>();
         public IDictionary<object, BaseDocument> Documents
@@ -289,6 +306,8 @@ namespace Sys.ViewManager.Manager
 
             return form.GetType().FullName;
         }
+
+        #endregion
 
 
         public void RestoreLayout()
