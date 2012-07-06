@@ -1036,6 +1036,10 @@
       <Project>{78D1FDBF-3E84-4D8B-AC56-B8747311D2B2}</Project>
       <Name>App.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\X12\X12.csproj">
+      <Project>{BF2440C5-6467-4ADF-8BEF-52251189AC3D}</Project>
+      <Name>X12</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
