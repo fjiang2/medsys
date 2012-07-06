@@ -7,7 +7,7 @@ using Tie;
 
 namespace Sys.Xmpp
 {
-    class XmppMessage : Message
+    class XmppMessage : agsXMPP.protocol.client.Message
     {
      
         //used for sending message via channel

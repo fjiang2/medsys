@@ -276,7 +276,7 @@ namespace Sys.Workflow.Forms
 
             try
             {
-                this.SystemMessage = WorkflowRuntime.DoActivityForm(this, workflowInstanceID, stateName);
+                this.ShowMessage(WorkflowRuntime.DoActivityForm(this, workflowInstanceID, stateName));
             }
             catch (Exception ex)
             {

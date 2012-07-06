@@ -560,28 +560,25 @@ namespace Sys.ViewManager.Forms
         
         #region Show Message
 
-        protected Sys.SysMessage SystemMessage
+        protected void ShowMessage(Sys.Message message)
         {
-            set
+            if (message == null)
+                return;
+
+            switch (message.Level)
             {
-                if (value == null)
-                    return;
+                case Sys.MessageLevel.information:
+                    this.InformationMessage = message.ToString();
+                    break;
 
-                switch (value.Level)
-                {
-                    case Sys.MessageLevel.information:
-                        this.InformationMessage = value.ToString();
-                        break;
+                case Sys.MessageLevel.error:
+                case Sys.MessageLevel.fatal:
+                    this.ErrorMessage = message.ToString();
+                    break;
 
-                    case Sys.MessageLevel.error:
-                    case Sys.MessageLevel.fatal:
-                        this.ErrorMessage = value.ToString();
-                        break;
-
-                    case Sys.MessageLevel.warning:
-                        this.WarningMessage = value.ToString();
-                        break;
-                }
+                case Sys.MessageLevel.warning:
+                    this.WarningMessage = message.ToString();
+                    break;
             }
         }
 
@@ -693,7 +690,7 @@ namespace Sys.ViewManager.Forms
         public const Int32 _BusinessRuleEditorSysMenuID = 1002;
 
 
-        protected override void WndProc(ref Message m)
+        protected override void WndProc(ref System.Windows.Forms.Message m)
         {
             // Check if a System Command has been executed
             if (m.Msg == WM_SYSCOMMAND)

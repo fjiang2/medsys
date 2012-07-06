@@ -75,14 +75,14 @@ namespace Sys.Workflow.Collaborative
       
 
 
-        public static SysMessage DoActivityForm(ContainerControl owner, int workflowInstanceID, string stateName)
+        public static Message DoActivityForm(ContainerControl owner, int workflowInstanceID, string stateName)
         {
             CollaborativeActivity activity = CollaborativeActivity.NewInsance(workflowInstanceID, stateName, typeof(WorkflowInstanceDpo));
             return DoActivityForm(owner, activity);
         }
 
 
-        public static SysMessage DoActivityForm(ContainerControl owner, CollaborativeActivity activity)
+        public static Message DoActivityForm(ContainerControl owner, CollaborativeActivity activity)
         {
 
             //let not started task be completed since workflow instance has been completed
@@ -104,7 +104,7 @@ namespace Sys.Workflow.Collaborative
                     form.WorkMode = WorkMode.Reading;
                     form.PopUp(owner, FormPlace.Auto);
                     activity.DoAfterAction();
-                    return new SysMessage(MessageLevel.information, "Completed {0} is readonly.", (CollaborativeTask)activity);
+                    return new Message(MessageLevel.information, "Completed {0} is readonly.", (CollaborativeTask)activity);
 
                 case TaskStatus.NotStarted:
                 case TaskStatus.Opened:
@@ -124,11 +124,11 @@ namespace Sys.Workflow.Collaborative
                     activity.DoAfterAction();   //do works such as monitor, Listen XMPP message
                     if (activity.State.IsAgentState)
                         if (!activity.StartAgent())
-                            return new SysMessage(MessageLevel.error, "Agent is not defined in {0}", activity.State);
+                            return new Message(MessageLevel.error, "Agent is not defined in {0}", activity.State);
                     break;
 
                 default:
-                    return new SysMessage(MessageLevel.warning, "{0} is in status:{1}.", activity, activity.Data.TaskStatus);
+                    return new Message(MessageLevel.warning, "{0} is in status:{1}.", activity, activity.Data.TaskStatus);
             }
 
             return null;

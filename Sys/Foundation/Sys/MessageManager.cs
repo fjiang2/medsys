@@ -9,7 +9,7 @@ namespace Sys
 {
     public class MassageManager
     {
-        List<MessageItem> errors = new List<MessageItem>();
+        List<Message> errors = new List<Message>();
 
         public delegate void MessageHandler(object sender, MessageEventArgs e);
     
@@ -33,36 +33,36 @@ namespace Sys
 
         public void Error(int code, string description, string location)
         {
-            MessageItem item = new MessageItem();
+            Message item = new Message();
             item.ID = code;
             item.Level = MessageLevel.error;
-            item.Message = description;
+            item.Description = description;
             item.Location = location;
             Add(item);
         }
 
         public void Warning(int code, string description, string location)
         {
-            MessageItem item = new MessageItem();
+            Message item = new Message();
             item.ID = code;
             item.Level = MessageLevel.warning;
-            item.Message = description;
+            item.Description = description;
             item.Location = location;
             Add(item);
         }
 
-        public void Message(int code, string description, string location)
+        public void Information(int code, string description, string location)
         {
-            MessageItem item = new MessageItem();
+            Message item = new Message();
             item.ID = code;
             item.Level = MessageLevel.information;
-            item.Message = description;
+            item.Description = description;
             item.Location = location;
 
             Add(item);
         }
 
-        private void Add(MessageItem item)
+        private void Add(Message item)
         {
             if (errors.Contains(item))
                 return ;
@@ -73,55 +73,13 @@ namespace Sys
 
     public class MessageEventArgs : EventArgs
     {
-        public readonly List<MessageItem> Errors;
+        public readonly List<Message> Errors;
 
-        public MessageEventArgs(List<MessageItem> errors)
+        public MessageEventArgs(List<Message> errors)
         {
             this.Errors = errors;
         }
     }
 
-    public class MessageItem  
-    {
-        public int ID;
-        public MessageLevel Level;
-        public string Message;
-        public string Location;
-
-        public MessageItem()
-        {
-            this.ID = 0;
-            this.Level = MessageLevel.error;
-        }
-
-        public MessageItem(MessageLevel level, string format, params object[] args)
-            : base()
-        {
-            this.Level = level;
-            this.Message = string.Format(format, args);
-        }
-
-        public MessageItem(string format, params object[] args)
-            : this(MessageLevel.error, format, args)
-        {
-
-        }
-
-
-        public override int GetHashCode()
-        {
-            return Location.GetHashCode() + Level.GetHashCode() + Message.GetHashCode();
-        }
-
-        public override bool Equals(object obj)
-        {
-            MessageItem item = (MessageItem)obj;
-            return this.Location == item.Location && this.Level == item.Level && this.Message == item.Message;
-        }
-
-        public override string ToString()
-        {
-            return string.Format("{0} @ {1}", this.Message, this.Location);
-        }
-    }
+   
 }

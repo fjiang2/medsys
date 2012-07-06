@@ -46,7 +46,7 @@ namespace Sys.ViewManager.Forms
             int warningCount = 0;
             int informationCount = 0;
 
-            foreach (MessageItem item in e.Errors)
+            foreach (Message item in e.Errors)
             {
                 switch (item.Level)
                 {
@@ -70,7 +70,7 @@ namespace Sys.ViewManager.Forms
                 if(item.ID != 0)
                     row[1] = item.ID;
 
-                row[2] = item.Message;
+                row[2] = item.Description;
                 row[3] = item.Location;
 
                 dt.Rows.Add(row);

@@ -130,7 +130,7 @@
     <Compile Include="Sys\Helper.cs" />
     <Compile Include="Sys\StringExtension.cs" />
     <Compile Include="Sys\SysInformation.cs" />
-    <Compile Include="Sys\SysMessage.cs" />
+    <Compile Include="Sys\Message.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PersistentObjects\Sys.PersistentObjects.csproj">
