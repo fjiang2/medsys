@@ -1,6 +1,6 @@
 //
 // Machine Packed Data
-//   by devel at 5/9/2012 6:30:59 AM
+//   by devel at 7/6/2012 1:09:37 PM
 //
 using System;
 using System.Data;
@@ -113,6 +113,15 @@ namespace Sys.Foundation.Package
 			dpo.Label = "WORKFLOW";
 			dpo.Inactive = false;
 			dpo.Location = "Sys\\\\Workflow";
+			list.Add(dpo);
+
+			dpo = new AssemblyDpo();
+			dpo.ID = 16;
+			dpo.AssemblyName = "X12";
+			dpo.FullName = "X12";
+			dpo.Label = "X12";
+			dpo.Inactive = false;
+			dpo.Location = "App\\\\X12";
 			list.Add(dpo);
 
 		}

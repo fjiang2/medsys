@@ -318,7 +318,9 @@ namespace Sys.ViewManager.Security
         public DockPanel AddDockPanel(string menuCaption)
         {
             UserMenuItem menuItem = this[menuCaption];
-            Control control = (Control)Script.Evaluate("", menuItem.Command, new Memory(), new MyFunction1()).HostValue;
+            Memory DS = new Memory();
+            DS["owner"] = VAL.Boxing(mainForm.Form);
+            Control control = (Control)Script.Evaluate("", menuItem.Command, DS, new MyFunction1()).HostValue;
             return AddDockPanel(menuItem, control);
         }
 

@@ -1,6 +1,6 @@
 //
 // Machine Packed Data
-//   by devel at 5/9/2012 6:30:58 AM
+//   by devel at 7/6/2012 1:09:37 PM
 //
 using System;
 using System.Data;
@@ -109,11 +109,11 @@ namespace Sys.Foundation.Package
 			dpo = new UserDpo();
 			dpo.User_ID = 3;
 			dpo.User_Name = "user";
-			dpo.Plain_Password = "password";
-			dpo.Password = new System.Byte[]{91,170,97,228,201,185,63,63,6,130,37,11,108,248,51,27,126,230,143,216};
+			dpo.Plain_Password = "Pass1234";
+			dpo.Password = new System.Byte[]{146,200,177,1,87,224,88,86,175,24,42,100,61,231,220,234,20,71,47,116};
 			dpo.Inactive = false;
 			dpo.Last_Name = "User";
-			dpo.First_Name = "";
+			dpo.First_Name = "Regular";
 			dpo.Nickname = "Regular User";
 			dpo.Group_Name = "CBS";
 			dpo.Department = "Information Technology";
@@ -121,7 +121,7 @@ namespace Sys.Foundation.Package
 			dpo.Supervisor = "admin";
 			dpo.Email = "user@datconn.com";
 			dpo.WorkPhone = "";
-			dpo.Password_Changed_DT = new DateTime(2012,3,6,12,8,48);
+			dpo.Password_Changed_DT = new DateTime(2012,6,29,16,5,13);
 			dpo.Start_Date = new DateTime(2012,1,1,0,0,0);
 			dpo.End_Date = new DateTime(2050,12,31,0,0,0);
 			list.Add(dpo);
