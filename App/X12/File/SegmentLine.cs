@@ -11,6 +11,9 @@ namespace X12.File
     {
         public const char ELEMENT_DELIMITER = '*';
         public const char SEGMENT_DELIMITER = '~';
+        public const int _LINEWIDTH = 6;
+        public const int _LOOPWIDTH = 6;
+
 
         private int lineNumber;     //line number
         
@@ -25,9 +28,9 @@ namespace X12.File
         }
 
         public SegmentLine(string lineWithNumber)
-            :this(int.Parse(lineWithNumber.Substring(0, 6)), lineWithNumber.Substring(13))
+            : this(int.Parse(lineWithNumber.Substring(0, _LINEWIDTH)), lineWithNumber.Substring(_LINEWIDTH + _LOOPWIDTH + 2))
         {
-            this.loopName = lineWithNumber.Substring(6, 6).Trim();
+            this.loopName = lineWithNumber.Substring(_LINEWIDTH + 1, _LOOPWIDTH).Trim();
         }
 
         public SegmentLine(int lineNumber, string line)
@@ -131,7 +134,7 @@ namespace X12.File
 
         public override string ToString()
         {
-            return string.Format("{0:00000} {1,-6} {2}", lineNumber, loopName, Text);
+            return string.Format("{0:000000} {1,-6} {2}", lineNumber, loopName, Text);
         }
 
     }
