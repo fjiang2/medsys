@@ -485,9 +485,12 @@ namespace Sys.ViewManager.Forms
         public virtual bool DataHistory() { return true; }
         public virtual bool DataCancel() { return true; }
 
-    
 
-      
+
+        protected MassageManager ErrorManager
+        {
+            get { return this.MainForm.ErrorList.Manager; }
+        }
 
         #region StatusStrip Function
 

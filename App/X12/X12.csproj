@@ -81,7 +81,6 @@
   <ItemGroup>
     <Compile Include="File\BaseParser.cs" />
     <Compile Include="File\DataElement.cs" />
-    <Compile Include="File\X12ErrorMessage.cs" />
     <Compile Include="File\LoopLine.cs" />
     <Compile Include="File\LoopName.cs" />
     <Compile Include="File\Parser.cs" />

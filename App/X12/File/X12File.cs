@@ -22,10 +22,9 @@ namespace X12.File
           
         }
 
-        public void Parse()
+        public void Parse(MassageManager errorManager)
         {
-            X12ErrorMessage.Reset();
-            this.parser = new Parser(lines);
+            this.parser = new Parser(lines, errorManager);
             parser.Parse();
         }
 

@@ -16,11 +16,14 @@ namespace X12.File
         private IdentifierTree<LoopTemplateDpo> director;
         
         private Memory DS = new Memory();
-       
 
-        public Parser(List<SegmentLine> segmentLines)
+        MassageManager errorManager;
+
+        public Parser(List<SegmentLine> segmentLines, MassageManager errorManager)
             :base(segmentLines)
         {
+            this.errorManager = errorManager;
+
             this.spec = Spec5010A.Instance;
 
         
@@ -65,7 +68,7 @@ namespace X12.File
                 consumer.Nodes.Add(cnode);
             }
             else
-                X12ErrorMessage.Reset();
+                errorManager.Clear();
 
 
             base.HierarchicalTransaction();
@@ -190,7 +193,7 @@ namespace X12.File
                 if (!segment.ValidElementCode(CurrentSegmentLine, out message))
                 {
                     message = string.Format("{0}, {1}", message, this.CurrentLoopTemplate);
-                    X12ErrorMessage.Warning(this.Line + 1, message);
+                    errorManager.Warning(0 , message, "Line:" + (this.Line + 1));
                     return false;
                 }
 

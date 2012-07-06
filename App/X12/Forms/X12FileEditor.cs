@@ -109,16 +109,16 @@ namespace X12.Forms
                     X12SegmentTemplateDpo segment = (treeNode as SegmentTemplateNode).SegmentDpo;
                     DataTable dt = Spec5010A.Instance.GetSegmentInstances().Where(dpo => dpo.Name == segment.Name).ToTable();
 
-                    if (!tabControl2.TabPageExists(segment.Name))
-                    {
-                        JGridView view = new JGridView();
-                        view.GridView.OptionsView.ShowFilterPanelMode = DevExpress.XtraGrid.Views.Base.ShowFilterPanelMode.Never;
-                        view.Dock = DockStyle.Fill;
-                        view.DataSource = dt;
-                        view.AllowEdit = false;
+                    //if (!tabControl2.TabPageExists(segment.Name))
+                    //{
+                    //    JGridView view = new JGridView();
+                    //    view.GridView.OptionsView.ShowFilterPanelMode = DevExpress.XtraGrid.Views.Base.ShowFilterPanelMode.Never;
+                    //    view.Dock = DockStyle.Fill;
+                    //    view.DataSource = dt;
+                    //    view.AllowEdit = false;
 
-                        tabControl2.AddTabPage(segment.Name, view);
-                    }
+                    //    tabControl2.AddTabPage(segment.Name, view);
+                    //}
                 };
 
             }
@@ -345,7 +345,9 @@ namespace X12.Forms
             this.Cursor = Cursors.WaitCursor;
             ClearTabs();
 
-            this.x12.Parse();
+            ErrorManager.Clear();
+
+            this.x12.Parse(ErrorManager);
 
             //TreeNode Loops
             if (rootLoop == null)
@@ -362,7 +364,7 @@ namespace X12.Forms
             rootLoop.Expand();
 
             this.segmentControl1.SetDataSource(this.x12, SegmentName.DefaultName);
-            this.gridControl1.DataSource = X12ErrorMessage.ToTable();
+            this.ErrorManager.Post();
 
             this.Cursor = Cursors.Default;
         }

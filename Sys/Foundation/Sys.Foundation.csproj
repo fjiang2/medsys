@@ -126,6 +126,7 @@
     <Compile Include="Sys\Constant.cs" />
     <Compile Include="Sys\DateTimeExtension.cs" />
     <Compile Include="Sys\EnumExtension.cs" />
+    <Compile Include="Sys\MessageManager.cs" />
     <Compile Include="Sys\Helper.cs" />
     <Compile Include="Sys\StringExtension.cs" />
     <Compile Include="Sys\SysInformation.cs" />
