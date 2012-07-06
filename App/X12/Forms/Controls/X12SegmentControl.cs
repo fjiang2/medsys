@@ -133,8 +133,11 @@ namespace X12.Forms
                         if ((int)row[0] == seg.LineNumber)
                         {
                             seg.ToDataRow(row);
+                            break;
                         }
                     }
+                    
+                    break;
                 }
             }
 
