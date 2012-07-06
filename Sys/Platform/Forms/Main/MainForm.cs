@@ -25,13 +25,9 @@ namespace Sys.Platform.Forms
 
     public partial class MainForm : XtraForm, IMainForm
     {
-        private ShortcutControl shortcutControl;
-
         private MenuConsumer menuConsumer;
         private WindowManager windowManager;
         private FormDockManager formDockManager;
-        private ErrorListControl errorList;
-        
 
         #region IMainForm
 
@@ -220,26 +216,20 @@ namespace Sys.Platform.Forms
 
             #region NavBar 
 
-            shortcutControl = new ShortcutControl(this);
-            menuConsumer.AddDockPanel("Shortcuts", shortcutControl);
             
-            TreeView treeView1 = new TreeView();
-            treeView1.Size = new Size(300, 600);
-            DockPanel dpSO = menuConsumer.AddDockPanel("Sales Order", treeView1);
-
-            WorkListControl workList = new WorkListControl(this);
-            DockPanel dpWF = menuConsumer.AddDockPanel("Work List", workList);
-
+            menuConsumer.AddDockPanel("Shortcuts");
+            
+            DockPanel dpSO = menuConsumer.AddDockPanel("Sales Order");
+            DockPanel dpWF = menuConsumer.AddDockPanel("Work List");
             formDockManager.HidePanel(dpSO, dpWF);
             
-            this.errorList = new Sys.ViewManager.Forms.ErrorListControl();
-            DockPanel messagePanel = menuConsumer.AddDockPanel("Error List", errorList);
-            //formDockManager.HidePanel(messagePanel);
+            DockPanel messagePanel = menuConsumer.AddDockPanel("Error List");
+            DockPanel outputPanel = menuConsumer.AddDockPanel("Output");
+            formDockManager.HidePanel(messagePanel, outputPanel);
 
             if (Sys.Constant.USE_XMPP)
             {
-                Sys.Messaging.Forms.Messenger IM = new Sys.Messaging.Forms.Messenger();
-                DockPanel dpMessenger = menuConsumer.AddDockPanel("Instant Messenger", IM);
+                DockPanel dpMessenger = menuConsumer.AddDockPanel("Instant Messenger");
 
                 if (SystemInformation.PrimaryMonitorSize.Width < 1440)
                     formDockManager.HidePanel(dpMessenger);
@@ -301,6 +291,8 @@ namespace Sys.Platform.Forms
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             formDockManager.SaveLayout();
+            
+            ShortcutControl shortcutControl = (ShortcutControl)formDockManager[typeof(ShortcutControl)];
             shortcutControl.Save();
 
             if (this.DialogResult != DialogResult.Abort && this.DialogResult != DialogResult.Retry) //click [X] to close window

@@ -83,16 +83,19 @@ namespace Sys.ViewManager.Manager
             dockManager1.EndUpdate();
         }
 
-       
-        public DockPanel SearchPanel(string Id)
+
+        public DockPanel this[Guid Id]
         {
-            foreach (DockPanel dockPanel in dockManager1.Panels)
+            get
             {
-                if (dockPanel.ID.ToString().ToLower().Equals(Id.ToLower()))
-                    return dockPanel;
+                foreach (DockPanel dockPanel in dockManager1.Panels)
+                {
+                    if (dockPanel.ID.Equals(Id))
+                        return dockPanel;
+                }
+
+                return null;
             }
-            
-            return null;
         }
 
         public DockPanel AddPanel(string caption, Control control, DockingStyle dockingStyle)
@@ -176,6 +179,7 @@ namespace Sys.ViewManager.Manager
             }
         }
 
+        
 
 
         #region Tabbed Document

@@ -315,11 +315,14 @@ namespace Sys.ViewManager.Security
         }
 
 
-        public DockPanel AddDockPanel(string menuCaption, Control control)
+        public DockPanel AddDockPanel(string menuCaption)
         {
             UserMenuItem menuItem = this[menuCaption];
+            Control control = (Control)Script.Evaluate("", menuItem.Command, new Memory(), new MyFunction1()).HostValue;
             return AddDockPanel(menuItem, control);
         }
+
+
 
         /// <summary>
         /// Add UserControl defined on UserMenus into DockPanel
@@ -329,7 +332,7 @@ namespace Sys.ViewManager.Security
         /// <returns></returns>
         public DockPanel AddDockPanel(UserMenuItem menuItem, Control control)
         {
-            DockPanel dockPanel = formDockManager.SearchPanel(menuItem.Key_Name);
+            DockPanel dockPanel = formDockManager[new Guid(menuItem.Key_Name)];
             if (dockPanel == null)
             {
                 dockPanel = formDockManager.AddPanel(menuItem.Label, control, (DockingStyle)menuItem.Form_Place);
@@ -343,6 +346,30 @@ namespace Sys.ViewManager.Security
 
             formDockManager.DockManager.ActivePanel = dockPanel;
             return dockPanel;
+        }
+    }
+
+    class MyFunction1 : IUserDefinedFunction
+    {
+        public MyFunction1()
+        { }
+
+        public VAL Function(string func, VAL parameters, Memory DS)
+        {
+            switch (func)
+            {
+                //peel OpenControl function
+                //return OpenControl(new System.Windows.Forms.RichTextBox()); ==  return new System.Windows.Forms.RichTextBox();
+                case "OpenControl":  
+                    if (parameters.Size == 1)
+                    {
+                        return parameters[0];
+                    }
+                    break;
+            }
+
+            return null;
+
         }
     }
 }

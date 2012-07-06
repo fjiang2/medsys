@@ -1146,13 +1146,13 @@ namespace Sys.ViewManager.Forms
 
         protected bool DockPanelExists(Guid guid)
         {
-            return this.MainForm.FormDockManager.SearchPanel(guid.ToString()) != null;
+            return this.MainForm.FormDockManager[guid] != null;
         }
 
         public DockPanel AddDockPanel(Guid guid, string caption, DockingStyle dockingStyle, Control control)
         {
             FormDockManager manager = this.MainForm.FormDockManager;
-            DockPanel dockPanel = manager.SearchPanel(guid.ToString());
+            DockPanel dockPanel = manager[guid];
             if (dockPanel == null)
             {
                 dockPanel = manager.AddPanel(caption, control, dockingStyle);
