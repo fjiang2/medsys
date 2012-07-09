@@ -32,6 +32,7 @@
             this.wizardControl1 = new DevExpress.XtraWizard.WizardControl();
             this.pageWelcome = new DevExpress.XtraWizard.WelcomeWizardPage();
             this.pageConnectServer = new DevExpress.XtraWizard.WizardPage();
+            this.btnNewDatabase = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.sqlServerControl1 = new Sys.Platform.Forms.SqlServerControl();
             this.btnConnectServer = new System.Windows.Forms.Button();
@@ -98,6 +99,7 @@
             // 
             // pageConnectServer
             // 
+            this.pageConnectServer.Controls.Add(this.btnNewDatabase);
             this.pageConnectServer.Controls.Add(this.label2);
             this.pageConnectServer.Controls.Add(this.sqlServerControl1);
             this.pageConnectServer.Controls.Add(this.btnConnectServer);
@@ -106,6 +108,17 @@
             this.pageConnectServer.Name = "pageConnectServer";
             this.pageConnectServer.Size = new System.Drawing.Size(598, 277);
             this.pageConnectServer.Text = "Connect to SQL Server";
+            // 
+            // btnNewDatabase
+            // 
+            this.btnNewDatabase.Enabled = false;
+            this.btnNewDatabase.Location = new System.Drawing.Point(368, 250);
+            this.btnNewDatabase.Name = "btnNewDatabase";
+            this.btnNewDatabase.Size = new System.Drawing.Size(117, 23);
+            this.btnNewDatabase.TabIndex = 18;
+            this.btnNewDatabase.Text = "New Database...";
+            this.btnNewDatabase.UseVisualStyleBackColor = true;
+            this.btnNewDatabase.Click += new System.EventHandler(this.btnNewDatabase_Click);
             // 
             // label2
             // 
@@ -125,6 +138,7 @@
             // 
             // btnConnectServer
             // 
+            this.btnConnectServer.Enabled = false;
             this.btnConnectServer.Location = new System.Drawing.Point(491, 250);
             this.btnConnectServer.Name = "btnConnectServer";
             this.btnConnectServer.Size = new System.Drawing.Size(88, 24);
@@ -331,5 +345,6 @@
         private ProgressControl progressUnpackDefaultData;
         private DevExpress.XtraWizard.WizardPage pageCreateDefaultTables;
         private ProgressControl progressCreateDefaultTables;
+        private System.Windows.Forms.Button btnNewDatabase;
     }
 }

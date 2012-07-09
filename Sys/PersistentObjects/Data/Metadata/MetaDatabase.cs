@@ -22,6 +22,11 @@ namespace Sys.Data
             }
         }
 
+        public static void CreateDatabase(this string databaseName)
+        {
+            SqlCmd.ExecuteNonQuery("CREATE DATABASE {0}", databaseName);
+        }
+
         public static bool TableExists(this TableName tname)
         {
             try

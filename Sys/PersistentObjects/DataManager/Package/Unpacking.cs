@@ -42,7 +42,7 @@ namespace Sys.DataManager
             StringBuilder sb = new StringBuilder();
             foreach (Type type in asm.GetExportedTypes())
             {
-                if (type.HasInterface<IPacking>())
+                if (type.HasInterface<IPacking>() && type != typeof(BasePackage<>))
                 {
                     IPacking packing = (IPacking)Activator.CreateInstance(type);
                     if (level == packing.Level)

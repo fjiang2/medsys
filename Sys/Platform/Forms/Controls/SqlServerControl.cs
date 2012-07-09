@@ -13,6 +13,8 @@ namespace Sys.Platform.Forms
 {
     public partial class SqlServerControl : UserControl
     {
+        public event EventHandler Connected;
+
         public SqlServerControl()
         {
             InitializeComponent();
@@ -126,9 +128,14 @@ namespace Sys.Platform.Forms
                 {
                     comboBoxDatabase.Items.Add(database);
                 }
+
+                Sys.Constant.CONNECTION_STRING = GetConnection();
+                if (Connected != null)
+                    Connected(this, new ConnectionEventArgs(true));
             }
             catch (Exception)
             {
+                Connected(this, new ConnectionEventArgs(false));
             }
             finally
             {
@@ -136,7 +143,7 @@ namespace Sys.Platform.Forms
             }
         }
 
-
+      
 
         public bool Connect()
         {
@@ -150,11 +157,20 @@ namespace Sys.Platform.Forms
                 return false;
             }
 
-            Sys.Constant.CONNECTION_STRING = GetConnection();
             Sys.Constant.DB_SYSTEM = databaseName;
             Sys.Constant.DB_DEFAULT = databaseName;
 
             return true;
+        }
+    }
+
+    public class ConnectionEventArgs : EventArgs
+    { 
+        public readonly bool Connected;
+
+        public ConnectionEventArgs(bool connected)
+        {
+            this.Connected = connected;
         }
     }
 }

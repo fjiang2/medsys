@@ -8,7 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using Sys.Data;
 using Sys.DataManager;
-
+using Sys.ViewManager.Forms;
 
 namespace Sys.Platform.Forms
 {
@@ -17,6 +17,12 @@ namespace Sys.Platform.Forms
         public InstallWizard()
         {
             InitializeComponent();
+            sqlServerControl1.Connected += delegate(object sender, EventArgs e)
+                {
+                    ConnectionEventArgs args = (ConnectionEventArgs)e;
+                    btnNewDatabase.Enabled = args.Connected;
+                    btnConnectServer.Enabled = args.Connected;
+                };
         }
 
 
@@ -104,6 +110,24 @@ namespace Sys.Platform.Forms
             }
         }
 
+
+        private void btnNewDatabase_Click(object sender, EventArgs e)
+        {
+            string databaseName = "";
+            if (InputTool.InputBox("Input ", "Database name:", "????????", ref databaseName) == System.Windows.Forms.DialogResult.OK)
+            {
+                try
+                {
+                    databaseName = databaseName.Trim();
+                    databaseName.CreateDatabase();
+                    MessageBox.Show("Database created", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Database not created", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+        }
 
 
 
