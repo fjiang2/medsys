@@ -178,9 +178,7 @@ namespace Sys.Platform.Forms
         {
             string moduleName = (string)this.comboModule.SelectedItem;
 
-            if (moduleName == "Sys.Foundation")
-                this.txtNamespace.Text = "Sys.Dpo";
-            else if (moduleName.StartsWith("Sys."))
+            if (moduleName.StartsWith("Sys."))
                 this.txtNamespace.Text = moduleName + ".Dpo";
             else
             {
