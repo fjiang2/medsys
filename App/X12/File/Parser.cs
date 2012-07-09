@@ -198,8 +198,11 @@ namespace X12.File
                     return false;
                 }
 
-                if(this.worker != null)
-                    this.worker.SetProgress(string.Format("{0}/{1} completed", this.Line + 1, segmentLines.Count));
+                if (this.worker != null)
+                {
+                    if ((this.Line + 1) % 100 == 0)
+                        this.worker.SetProgress(string.Format("{0}/{1} completed", this.Line + 1, segmentLines.Count));
+                }
 
                 SetResult(segment);
                 return true;

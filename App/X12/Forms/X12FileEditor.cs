@@ -149,9 +149,13 @@ namespace X12.Forms
                 return;
             }
 
+            this.Cursor = Cursors.WaitCursor;
+
             this.Text = string.Format("X12 File Editor ({0})", fileName);
             this.x12 = new X12File(fileName);
             Init(this.x12);
+
+            this.Cursor = Cursors.Default;
         }
 
         private void Init(X12File x12)
@@ -345,27 +349,9 @@ namespace X12.Forms
 
             btnParse.Enabled = false;
 
-            this.Cursor = Cursors.WaitCursor;
+           
             ClearTabs();
-
-            MassageManager.Clear();
-
-            Worker worker = this.StartProgressBar(BackgroundWork);
-            worker.RunWorkerCompleted += delegate(object s, RunWorkerCompletedEventArgs e1)
-            {
-                btnParse.Enabled = true;
-            };
-
-            this.Cursor = Cursors.Default;
-        }
-
-        private void BackgroundWork(Worker worker)
-        {
-            this.x12.Parse(worker, MassageManager);
-
-
-            // this.x12.Parse(null, MassageManager);
-
+            
             //TreeNode Loops
             if (rootLoop == null)
             {
@@ -377,12 +363,33 @@ namespace X12.Forms
                 rootLoop.Nodes.Clear();
             }
 
-            x12.Consumer.BuildTree<LoopLine, ConsumerLoopNode>(rootLoop);
-            rootLoop.Expand();
+            MassageManager.Clear();
 
-            this.segmentControl1.SetDataSource(this.x12, SegmentName.DefaultName);
-            this.MassageManager.Post();
+            Worker worker = this.StartProgressBar(delegate(Worker worker1)
+            {
+                this.x12.Parse(worker1, MassageManager);
+                // this.x12.Parse(null, MassageManager);
+
+            });
+
+            worker.RunWorkerCompleted += delegate(object s, RunWorkerCompletedEventArgs e1)
+            {
+                this.Cursor = Cursors.WaitCursor;
+
+                x12.Consumer.BuildTree<LoopLine, ConsumerLoopNode>(rootLoop);
+                rootLoop.Expand();
+
+                this.segmentControl1.SetDataSource(this.x12, SegmentName.DefaultName);
+                this.MassageManager.Post();
+
+                btnParse.Enabled = true;
+                this.Cursor = Cursors.Default;
+            };
+
+          
         }
+
+    
 
         private void btnDeleteSegmentLine_Click(object sender, EventArgs e)
         {
