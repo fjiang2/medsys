@@ -16,6 +16,7 @@ using Sys.ViewManager.Manager;
 using Sys.ViewManager.Forms;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Docking;
+using DevExpress.XtraEditors.Repository;
 
 namespace Sys.ViewManager.Forms
 {
@@ -521,35 +522,50 @@ namespace Sys.ViewManager.Forms
             return MainStatusStrip != null;
         }
 
-
-        protected void StartProgressBar(string message)
+        private BarEditItem ProgressBarItem
         {
-            if (MainStatusStrip == null)
-                return;
+            get
+            {
+                if (MainStatusStrip == null)
+                    return null;
 
-            BarItem host = MainStatusStrip.LinksPersistInfo[0].Item;
-            DevExpress.XtraEditors.Repository.RepositoryItem edit = ((BarEditItem)host).Edit;
-            DevExpress.XtraEditors.Repository.RepositoryItemMarqueeProgressBar progressBar = (DevExpress.XtraEditors.Repository.RepositoryItemMarqueeProgressBar)edit;
-            progressBar.NullText = message;
+                BarItem item = MainStatusStrip.LinksPersistInfo[0].Item;
+
+                return (BarEditItem)item;
+            }
+        }
+
+
+        protected void ShowProgressBar(string message)
+        {
+            RepositoryItemMarqueeProgressBar progressBar = (RepositoryItemMarqueeProgressBar)ProgressBarItem.Edit;
+            ProgressBarItem.EditValue = message;
             progressBar.ShowTitle = true;
             progressBar.Stopped = false; 
         }
 
         protected void StopProgressBar()
         {
-            if (MainStatusStrip == null)
-                return;
-
-            BarItem host = MainStatusStrip.LinksPersistInfo[0].Item;
-            DevExpress.XtraEditors.Repository.RepositoryItem edit = ((BarEditItem)host).Edit;
-            DevExpress.XtraEditors.Repository.RepositoryItemMarqueeProgressBar progressBar = (DevExpress.XtraEditors.Repository.RepositoryItemMarqueeProgressBar)edit;
-            
+            RepositoryItemMarqueeProgressBar progressBar = (RepositoryItemMarqueeProgressBar)ProgressBarItem.Edit;
+            ProgressBarItem.EditValue = "";
             progressBar.ShowTitle = false;
             progressBar.Stopped = true;
         }
 
+        /// <summary>
+        /// background worker
+        /// </summary>
+        private Progress progress;
+        protected Worker StartProgressBar(Action<Worker> action)
+        {
+            this.progress = new Progress(this.ProgressBarItem);
+            progress.Action = action;
+            progress.Start();
 
+            return progress.Worker;
+        }
         
+
         
 
     #endregion

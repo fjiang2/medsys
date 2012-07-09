@@ -144,6 +144,7 @@
             this.barEditItem1.Edit = this.repositoryItemMarqueeProgressBar1;
             this.barEditItem1.Id = 0;
             this.barEditItem1.Name = "barEditItem1";
+            this.barEditItem1.Width = 150;
             // 
             // repositoryItemMarqueeProgressBar1
             // 

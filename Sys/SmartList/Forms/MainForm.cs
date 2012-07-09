@@ -383,7 +383,7 @@ namespace Sys.SmartList.Forms
 
 			if (cmd != null)
 			{
-				this.StartProgressBar("Loading....");
+				this.ShowProgressBar("Loading....");
 				this.InformationMessage = string.Format("Loading data [{0}] from server ...", treeView1.SelectedDpo.NodeText);
 
 				btnInquiry.Enabled = false;
@@ -412,7 +412,7 @@ namespace Sys.SmartList.Forms
 			if (count % 96 == 0)
 			{
 				string message = string.Format("Loading {0}:{1} Records", c, count);
-				this.StartProgressBar(message);
+				this.ShowProgressBar(message);
 			}
 		}
 

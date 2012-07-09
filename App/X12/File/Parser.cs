@@ -17,11 +17,13 @@ namespace X12.File
         
         private Memory DS = new Memory();
 
+        Worker worker;
         MassageManager errorManager;
 
-        public Parser(List<SegmentLine> segmentLines, MassageManager errorManager)
+        public Parser(List<SegmentLine> segmentLines, Worker worker, MassageManager errorManager)
             :base(segmentLines)
         {
+            this.worker = worker;
             this.errorManager = errorManager;
 
             this.spec = Spec5010A.Instance;
@@ -69,7 +71,6 @@ namespace X12.File
             }
             else
                 errorManager.Clear();
-
 
             base.HierarchicalTransaction();
             return false;
@@ -196,6 +197,9 @@ namespace X12.File
                     errorManager.Warning(0 , message, "Line:" + (this.Line + 1));
                     return false;
                 }
+
+                if(this.worker != null)
+                    this.worker.SetProgress(string.Format("{0}/{1} completed", this.Line + 1, segmentLines.Count));
 
                 SetResult(segment);
                 return true;

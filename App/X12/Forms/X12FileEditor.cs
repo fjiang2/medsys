@@ -343,12 +343,28 @@ namespace X12.Forms
             if (this.x12 == null)
                 return;
 
+            btnParse.Enabled = false;
+
             this.Cursor = Cursors.WaitCursor;
             ClearTabs();
 
             MassageManager.Clear();
 
-            this.x12.Parse(MassageManager);
+            Worker worker = this.StartProgressBar(BackgroundWork);
+            worker.RunWorkerCompleted += delegate(object s, RunWorkerCompletedEventArgs e1)
+            {
+                btnParse.Enabled = true;
+            };
+
+            this.Cursor = Cursors.Default;
+        }
+
+        private void BackgroundWork(Worker worker)
+        {
+            this.x12.Parse(worker, MassageManager);
+
+
+            // this.x12.Parse(null, MassageManager);
 
             //TreeNode Loops
             if (rootLoop == null)
@@ -366,8 +382,6 @@ namespace X12.Forms
 
             this.segmentControl1.SetDataSource(this.x12, SegmentName.DefaultName);
             this.MassageManager.Post();
-
-            this.Cursor = Cursors.Default;
         }
 
         private void btnDeleteSegmentLine_Click(object sender, EventArgs e)

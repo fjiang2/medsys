@@ -38,6 +38,13 @@ namespace Sys.ViewManager.Forms
             gridControl1.DataSource = dt;
 
             manager.MessageChanged += new MassageManager.MessageHandler(manager_MessageChanged);
+            manager.MessageCleared += new EventHandler(manager_MessageCleared);
+        }
+
+        void manager_MessageCleared(object sender, EventArgs e)
+        {
+            this.dt.Rows.Clear();
+            this.dt.AcceptChanges();
         }
 
         private void manager_MessageChanged(object sender, MessageEventArgs e)

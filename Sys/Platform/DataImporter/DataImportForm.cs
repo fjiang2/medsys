@@ -162,7 +162,7 @@ namespace Sys.Platform.DataImporter
         public void ImportWorkDoing(object middleResult)
         {
             string message = string.Format("Record: {0}", middleResult);
-            this.StartProgressBar(message); 
+            this.ShowProgressBar(message); 
             progressBar1.Value++;
         }
 

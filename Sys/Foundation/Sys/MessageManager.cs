@@ -12,8 +12,9 @@ namespace Sys
         List<Message> errors = new List<Message>();
 
         public delegate void MessageHandler(object sender, MessageEventArgs e);
-    
+
         public event MessageHandler MessageChanged;
+        public event EventHandler MessageCleared;
 
         public MassageManager()
         {
@@ -29,6 +30,8 @@ namespace Sys
         public void Clear()
         {
             errors.Clear();
+            if (MessageCleared != null)
+                MessageCleared(this, new EventArgs());
         }
 
         public void Error(int code, string description, string location)

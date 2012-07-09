@@ -243,6 +243,7 @@
       <DependentUpon>ErrorListControl.cs</DependentUpon>
     </Compile>
     <Compile Include="WinForm\FormExtension.cs" />
+    <Compile Include="WinForm\Progress.cs" />
     <Compile Include="WinForm\ValidateExtensions.cs" />
     <Compile Include="WinForm\XmppForm.cs">
       <SubType>Form</SubType>
