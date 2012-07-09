@@ -1,6 +1,6 @@
 //
 // Machine Packed Data
-//   by devel at 5/9/2012 6:30:59 AM
+//   by devel at 7/9/2012 3:33:34 PM
 //
 using System;
 using System.Data;
@@ -1654,7 +1654,7 @@ ORDER BY U.User_Name";
 			dpo.Ty = 4;
 			dpo.Company_ID = 0;
 			dpo.Application = "";
-			dpo.Label = "User Activity";
+			dpo.Label = "User Activity I2";
 			dpo.Description = "Security";
 			dpo.Header_Footer = "{{\"Header\",{\"\",\"\",\"\"}},{\"Footer\",{\"\",\"\",\"\"}}}";
 			dpo.Sql_Command = @"USE $DB_SYSTEM
