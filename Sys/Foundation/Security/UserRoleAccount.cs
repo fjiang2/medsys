@@ -13,6 +13,10 @@ namespace Sys.Security
     {
         protected List<int> roles = new List<int>();
 
+        public UserRoleAccount()
+        { 
+        }
+
         public UserRoleAccount(string userName)
             : base(userName)
         {

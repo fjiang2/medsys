@@ -10,6 +10,15 @@ namespace Sys.Security
 {
     public class Account : UserRoleAccount 
     {
+        /// <summary>
+        /// used by Visual Studio in BaseForm designer. don't read database server because database connection string is not initialized
+        /// </summary>
+        private Account()
+        {
+            this.User_ID = 1;
+            this.User_Name = PredefinedUser.admin;
+            this.Inactive = false;
+        }
 
         public Account(string employeeID)
             :base(employeeID)
@@ -100,7 +109,7 @@ namespace Sys.Security
 #if DEBUG
                 if (designMode)
                 {
-                    Account temp = new Account(PredefinedUser.admin);
+                    Account temp = new Account();
                     SetCurrentUser(temp);
                     return temp;
                 }
