@@ -76,6 +76,9 @@ namespace Sys.ViewManager.Manager
             dockManager1.BeginUpdate();
             foreach (DockPanel dockPanel in dockPanels)
             {
+                if (dockPanel == null)
+                    continue;
+
                 dockPanel.Visibility = DevExpress.XtraBars.Docking.DockVisibility.AutoHide;
                 dockPanel.HideSliding();
             }

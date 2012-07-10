@@ -318,6 +318,11 @@ namespace Sys.ViewManager.Security
         public DockPanel AddDockPanel(string menuCaption)
         {
             UserMenuItem menuItem = this[menuCaption];
+            
+            //this user is not allowed to access this menu item
+            if (menuItem == null)
+                return null;
+
             Memory DS = new Memory();
             DS["owner"] = VAL.Boxing(mainForm.Form);
             Control control = (Control)Script.Evaluate("", menuItem.Command, DS, new MyFunction1()).HostValue;
