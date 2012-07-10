@@ -139,7 +139,7 @@ namespace Sys.Platform.Forms
             treeMenu.Nodes.Add(root);
             treeMenu.DataSource = list;
             treeMenu.BuildTreeView(root, 0, dpo => string.Format("[{0}] {1}", dpo.NodeId, dpo.NodeText));
-            treeMenu.ExpandAll();
+            root.Expand();
             treeMenu.AllowDrop = true;
         }
 

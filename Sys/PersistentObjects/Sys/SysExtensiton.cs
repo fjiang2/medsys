@@ -69,7 +69,7 @@ namespace Sys
 
             List<Assembly> list = new List<Assembly>();
             string path = Directory.GetCurrentDirectory();
-            string[] wildcards = new string[] { "sys.*.dll", "app.*.dll", "app.*.exe" };
+            string[] wildcards = new string[] { "*.dll", "*.exe" };
 
             foreach (string wildcard in wildcards)
             {
@@ -79,8 +79,11 @@ namespace Sys
                     try
                     {
                         string f = Path.GetFileNameWithoutExtension(file);
-                        Assembly asm = Assembly.Load(f);
-                        list.Add(asm);
+                        Assembly assembly = Assembly.Load(f);
+                        
+                        string name = assembly.GetName().Name;
+                        if(!name.StartsWith("DevExpress"))
+                            list.Add(assembly);
                     }
                     catch (Exception)
                     {
