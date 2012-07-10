@@ -1,0 +1,6 @@
+syntax: glob
+App/*/bin/
+App/*/obj/
+Sys/*/bin/
+Sys/*/obj/
+*.suo

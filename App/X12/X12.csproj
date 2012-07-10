@@ -1,0 +1,370 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{BF2440C5-6467-4ADF-8BEF-52251189AC3D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>X12</RootNamespace>
+    <AssemblyName>X12</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DevExpress.Data.v11.2, Version=11.2.10.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Printing.v11.2.Core, Version=11.2.10.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.RichEdit.v11.2.Core, Version=11.2.10.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Utils.v11.2, Version=11.2.10.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraBars.v11.2, Version=11.2.10.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraEditors.v11.2, Version=11.2.10.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraGrid.v11.2, Version=11.2.10.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraLayout.v11.2, Version=11.2.10.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraRichEdit.v11.2, Version=11.2.10.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraRichEdit.v11.2.Extensions, Version=11.2.10.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Tie">
+      <HintPath>..\..\Lib\Tie.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="File\BaseParser.cs" />
+    <Compile Include="File\DataElement.cs" />
+    <Compile Include="File\LoopLine.cs" />
+    <Compile Include="File\LoopName.cs" />
+    <Compile Include="File\Parser.cs" />
+    <Compile Include="File\SegmentName.cs" />
+    <Compile Include="Forms\SegmentEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SegmentEditor.Designer.cs">
+      <DependentUpon>SegmentEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Specification\Spec5010A.cs" />
+    <Compile Include="Forms\InputBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\InputBox.Designer.cs">
+      <DependentUpon>InputBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Controls\SegmentEdit.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\Controls\SegmentEdit.Designer.cs">
+      <DependentUpon>SegmentEdit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\TreeNode\ConsumerLoopNode.cs" />
+    <Compile Include="Forms\TreeNode\SegmentTemplateNode.cs" />
+    <Compile Include="Forms\X12ControlNumber.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\X12ControlNumber.Designer.cs">
+      <DependentUpon>X12ControlNumber.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Foundation\Segment.cs" />
+    <Compile Include="Package\X12CodeDefinitionDpoPackage.cs" />
+    <Compile Include="Package\X12ElementInstanceDpoPackage.cs" />
+    <Compile Include="Package\X12ElementTemplateDpoPackage.cs" />
+    <Compile Include="Package\X12LoopTemplateDpoPackage.cs" />
+    <Compile Include="Package\X12SegmentInstanceDpoPackage.cs" />
+    <Compile Include="Package\X12SegmentTemplateDpoPackage.cs" />
+    <Compile Include="Specification\CodeDefinitionDpo.cs" />
+    <Compile Include="Specification\SegmentTemplateDpo.cs" />
+    <Compile Include="Specification\LoopTemplateDpo.cs" />
+    <Compile Include="SpecDocument\temp.cs" />
+    <Compile Include="Specification\SegmentInstanceDpo.cs" />
+    <Compile Include="Type\SegmentType.cs" />
+    <Compile Include="Type\UsageType.cs" />
+    <Compile Include="Type\DataElementType.cs" />
+    <Compile Include="Specification\Rule.cs" />
+    <Compile Include="Specification\ElementInstanceDpo.cs" />
+    <Compile Include="Specification\ElementTemplateDpo.cs" />
+    <Compile Include="X12Exception.cs" />
+    <Compile Include="Type\ConditionDesignator.cs" />
+    <Compile Include="SpecDocument\Convert.cs" />
+    <Compile Include="Dpo\X12CodeDefinitionDpo.cs" />
+    <Compile Include="Dpo\X12ElementTemplateDpo.cs" />
+    <Compile Include="Dpo\X12ElementInstanceDpo.cs" />
+    <Compile Include="Dpo\X12LoopTemplateDpo.cs" />
+    <Compile Include="Dpo\X12SegmentTemplateDpo.cs" />
+    <Compile Include="Dpo\X12SegmentInstanceDpo.cs" />
+    <Compile Include="Forms\Controls\SpecSegment1Control.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\Controls\SpecSegment1Control.Designer.cs">
+      <DependentUpon>SpecSegment1Control.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\TreeNode\DataElementNode.cs" />
+    <Compile Include="Forms\TreeNode\LoopNode.cs" />
+    <Compile Include="Forms\Controls\SpecLoopControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\Controls\SpecLoopControl.Designer.cs">
+      <DependentUpon>SpecLoopControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Controls\SpecSegment2Control.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\Controls\SpecSegment2Control.Designer.cs">
+      <DependentUpon>SpecSegment2Control.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\SpecMaintenance.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SpecMaintenance.Designer.cs">
+      <DependentUpon>SpecMaintenance.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\TreeNode\SegmentInstanceNode.cs" />
+    <Compile Include="Forms\TreeNode\TreeDpoNode.cs" />
+    <Compile Include="Forms\Controls\SpecElement1Control.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\Controls\SpecElement1Control.Designer.cs">
+      <DependentUpon>SpecElement1Control.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Controls\SpecElement2Control.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\Controls\SpecElement2Control.Designer.cs">
+      <DependentUpon>SpecElement2Control.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Editor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Editor.Designer.cs">
+      <DependentUpon>Editor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\GridForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\GridForm.Designer.cs">
+      <DependentUpon>GridForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="File\SegmentLineCollection.cs" />
+    <Compile Include="File\SegmentLine.cs" />
+    <Compile Include="Forms\Controls\X12SegmentControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\Controls\X12SegmentControl.Designer.cs">
+      <DependentUpon>X12SegmentControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="X12Extension.cs" />
+    <Compile Include="File\X12File.cs" />
+    <Compile Include="File\X12Base.cs" />
+    <Compile Include="Forms\X12FileEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\X12FileEditor.Designer.cs">
+      <DependentUpon>X12FileEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Specification\X12Manager.cs" />
+    <EmbeddedResource Include="Forms\Controls\SegmentEdit.resx">
+      <DependentUpon>SegmentEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Editor.resx">
+      <DependentUpon>Editor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Controls\SpecElement1Control.resx">
+      <DependentUpon>SpecElement1Control.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Controls\SpecElement2Control.resx">
+      <DependentUpon>SpecElement2Control.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Controls\SpecSegment1Control.resx">
+      <DependentUpon>SpecSegment1Control.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Controls\SpecLoopControl.resx">
+      <DependentUpon>SpecLoopControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Controls\SpecSegment2Control.resx">
+      <DependentUpon>SpecSegment2Control.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\InputBox.resx">
+      <DependentUpon>InputBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SegmentEditor.resx">
+      <DependentUpon>SegmentEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SpecMaintenance.resx">
+      <DependentUpon>SpecMaintenance.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\GridForm.resx">
+      <DependentUpon>GridForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\X12ControlNumber.resx">
+      <DependentUpon>X12ControlNumber.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\licenses.licx" />
+    <EmbeddedResource Include="Forms\Controls\X12SegmentControl.resx">
+      <DependentUpon>X12SegmentControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\X12FileEditor.resx">
+      <DependentUpon>X12FileEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 Client Profile %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\saveHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\openHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ZoomHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ShowGridlines2HS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OptionsHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BreakpointHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\folder_page.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\folder_page_white.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\folder_table.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\folder_picture.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\picture_empty.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pictures.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DocumentHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\FormRunHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DeleteHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Sys\BusinessRules\Sys.BusinessRules.csproj">
+      <Project>{21D52785-DCA0-46BB-B0FD-428FEFBD7B1D}</Project>
+      <Name>Sys.BusinessRules</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Sys\Foundation\Sys.Foundation.csproj">
+      <Project>{30FC8D52-477A-415A-9680-B29F0C5A1606}</Project>
+      <Name>Sys.Foundation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Sys\PersistentObjects\Sys.PersistentObjects.csproj">
+      <Project>{FE52736A-BA94-41FC-9FD3-A481A790FC9C}</Project>
+      <Name>Sys.PersistentObjects</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Sys\ViewManager\Sys.ViewManager.csproj">
+      <Project>{A5D0E475-F068-4DB0-BD4B-B5647B588E08}</Project>
+      <Name>Sys.ViewManager</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

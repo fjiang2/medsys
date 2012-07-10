@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{78D1FDBF-3E84-4D8B-AC56-B8747311D2B2}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>App.Data</RootNamespace>
+    <AssemblyName>App.Data</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Tie">
+      <HintPath>..\..\Lib\Tie.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Dpo\CategorieDpo.cs" />
+    <Compile Include="Dpo\CustomerCustomerDemoDpo.cs" />
+    <Compile Include="Dpo\CustomerDemographicDpo.cs" />
+    <Compile Include="Dpo\CustomerDpo.cs" />
+    <Compile Include="Dpo\EmployeeDpo.cs" />
+    <Compile Include="Dpo\EmployeeTerritorieDpo.cs" />
+    <Compile Include="Dpo\OrderDpo.cs" />
+    <Compile Include="Dpo\Order_DetailDpo.cs" />
+    <Compile Include="Dpo\ProductDpo.cs" />
+    <Compile Include="Dpo\RegionDpo.cs" />
+    <Compile Include="Dpo\ShipperDpo.cs" />
+    <Compile Include="Dpo\SupplierDpo.cs" />
+    <Compile Include="Dpo\TerritorieDpo.cs" />
+    <Compile Include="Dpo\theAddresDpo.cs" />
+    <Compile Include="Dpo\theDepartmentDpo.cs" />
+    <Compile Include="Dpo\theEmployeeDpo.cs" />
+    <Compile Include="Dpo\theJobTitleDpo.cs" />
+    <Compile Include="Package\CategorieDpoPackage.cs" />
+    <Compile Include="Package\CustomerDpoPackage.cs" />
+    <Compile Include="Package\EmployeeDpoPackage.cs" />
+    <Compile Include="Package\EmployeeTerritorieDpoPackage.cs" />
+    <Compile Include="Package\OrderDpoPackage.cs" />
+    <Compile Include="Package\Order_DetailDpoPackage.cs" />
+    <Compile Include="Package\ProductDpoPackage.cs" />
+    <Compile Include="Package\RegionDpoPackage.cs" />
+    <Compile Include="Package\ShipperDpoPackage.cs" />
+    <Compile Include="Package\SupplierDpoPackage.cs" />
+    <Compile Include="Package\TerritorieDpoPackage.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Sys\Foundation\Sys.Foundation.csproj">
+      <Project>{30FC8D52-477A-415A-9680-B29F0C5A1606}</Project>
+      <Name>Sys.Foundation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Sys\PersistentObjects\Sys.PersistentObjects.csproj">
+      <Project>{FE52736A-BA94-41FC-9FD3-A481A790FC9C}</Project>
+      <Name>Sys.PersistentObjects</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

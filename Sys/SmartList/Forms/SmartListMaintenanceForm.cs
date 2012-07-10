@@ -1,0 +1,298 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
+using Sys.ViewManager.Forms;
+using Sys.Data;
+using Sys.ViewManager;
+using Sys.Security;
+using System.IO;
+using Sys.SmartList.Dpo;
+using Sys.ViewManager.Utils;
+using Sys.ViewManager.DevEx;
+using Sys.ViewManager.Security;
+using Tie;
+
+namespace Sys.SmartList.Forms
+{
+    public partial class SmartListMaintenanceForm : BaseForm
+    {
+        private TreeDpcView treeView = new TreeDpcView();
+
+        BindDpo<CommandNodeDpo> binding = null;
+
+        TextBox tbproperties = new TextBox();
+        TextBox tbAccessLevel = new TextBox();
+        TextBox tbTy = new TextBox();
+
+        TextBox tbCreator = new TextBox();
+
+        public SmartListMaintenanceForm()
+        {
+            InitializeComponent();
+            treeView.Dock = DockStyle.Fill;
+            treeView.ImageList = CommandTree.ImageList;
+
+            this.splitContainer1.Panel1.Controls.Add(treeView);
+            TreeNode root = new TreeNode("COMMAND");
+            treeView.Nodes.Add(root);
+            treeView.DataSource = new CommandNodeDpo().EntireCollection;
+            treeView.BuildTreeView(root, 0, dpo => string.Format("[{0}] {1}", dpo.NodeId, dpo.NodeText));
+
+            treeView.AfterSelect += new TreeViewEventHandler(treeView_AfterSelect);
+            treeView.MouseDoubleClick += new MouseEventHandler(treeView_MouseDoubleClick);
+
+            treeView.AllowDrop = true;
+
+
+
+
+
+            //------------------------------------------------------------------------------
+
+
+
+            this.tbSetting.SelectionChanged += JRichTextBoxPostionDelegate;
+            this.tbScript.SelectionChanged += JRichTextBoxPostionDelegate;
+            this.tbParameter.SelectionChanged += JRichTextBoxPostionDelegate;
+
+
+            this.tbSetting.AcceptsTab = true;
+            this.tbScript.AcceptsTab = true;
+            this.tbParameter.AcceptsTab = true;
+
+            this.FormClosed += delegate(object sender, FormClosedEventArgs e)
+            {
+                this.InformationMessage = "";
+            };
+
+            this.rgViewMode.LoadEnum<DataViewMode>();
+            this.icbImage.Load(CommandTree.ImageList, CommandTree.Items);
+
+            CommandNodeDpo dpo1 = new CommandNodeDpo();
+            binding = new BindDpo<CommandNodeDpo>(dpo1);
+
+            binding.Connect(this.tbID, CommandDpo._ID);
+            binding.Connect(this.tbParentID, CommandDpo._ParentID);
+
+            binding.Connect(this.tbLabel, CommandDpo._Label);
+            binding.Connect(this.tbDescription, CommandDpo._Description);
+            binding.Connect(this.tbCompany, CommandDpo._Company_ID);
+            binding.Connect(this.tbApplication, CommandDpo._Application);
+
+            binding.Connect(this.tbSetting, CommandDpo._Setting_Script);
+            binding.Connect(this.tbScript, CommandDpo._Sql_Command);
+            binding.Connect(this.tbParameter, CommandDpo._User_Layout);
+            binding.Connect(this.tbproperties, CommandDpo._Header_Footer);
+            binding.Connect(this.tbAccessLevel, CommandDpo._Access_Level);
+            binding.Connect(this.tbTy, CommandDpo._Ty);
+
+            binding.Connect(this.cbControlled, CommandDpo._Controlled);
+            binding.Connect(this.cbEnabled, CommandDpo._Enabled);
+            binding.Connect(this.cbVisible, CommandDpo._Visible);
+            binding.Connect(this.cbReleased, CommandDpo._Released);
+
+            binding.Connect(this.tbCreator, CommandDpo._Owner_ID);
+            binding.Connect(this.rgViewMode, CommandDpo._ViewMode);
+            binding.Connect(this.richEditControl1, "HtmlText", CommandDpo._Help);
+            binding.Connect(this.icbImage, CommandDpo._Image_Index);
+
+
+            if (tbproperties.Text != "")
+            {
+                VAL properties = Script.Evaluate(tbproperties.Text);
+                VAL header = properties["Header"];
+                VAL footer = properties["Footer"];
+
+                if (header.Defined)
+                {
+                    tbHeader1.Text = header[0].Str;
+                    tbHeader2.Text = header[1].Str;
+                    tbHeader3.Text = header[2].Str;
+                }
+
+                if (footer.Defined)
+                {
+                    tbFooter1.Text = footer[0].Str;
+                    tbFooter2.Text = footer[1].Str;
+                    tbFooter3.Text = footer[2].Str;
+                }
+
+            }
+
+        }
+
+
+
+        void treeView_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            TreeDpoNode node = treeView.SelectedDpoNode;
+            if (node == null)
+                return;
+
+            var form = new MainForm(node.Dpo.NodeId);
+            form.PopUp(this);
+        }
+
+        void treeView_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+
+            if (e.Action == TreeViewAction.ByMouse)
+            {
+                TreeDpoNode node = (TreeDpoNode)e.Node;
+                if (node != null)
+                {
+                    binding.Apply();
+                    if ((binding.Dpo as CommandDpo).ID !=0 && binding.Dpo.Changed(CommandDpo._ID, CommandDpo._OrderBy))
+                    {
+                        if (MessageBox.Show(this, string.Format("Do you want to save your changes om {0}# {1}?", (binding.Dpo as CommandDpo).ID, (binding.Dpo as CommandDpo).Label),
+                            "Confirmation", 
+                            MessageBoxButtons.YesNo, 
+                            MessageBoxIcon.Question) == DialogResult.Yes)
+                            
+                            binding.SaveDpo();
+                    }
+
+                    binding.Dpo = (CommandNodeDpo)node.Dpo;
+                    binding.Reset();
+                }
+            }
+        }
+
+        private void btnSaveOrderBy_Click(object sender, EventArgs e)
+        {
+            treeView.SaveOrderBy();
+        }
+
+
+
+        private void Backup()
+        {
+            WriteFile(string.Format("Commands.{0}.SQL#{1:yyyy.mm.dd-hhmmss}.sql", this.tbID.Text, DateTime.Now), this.tbScript.Text);
+            WriteFile(string.Format("Commands.{0}.Script#{1:yyyy.mm.dd-hhmmss}.tie", this.tbID.Text, DateTime.Now), this.tbSetting.Text);
+            WriteFile(string.Format("Commands.{0}.Form#{1:yyyy.mm.dd-hhmmss}.tie", this.tbID.Text, DateTime.Now), this.tbParameter.Text);
+        }
+        private void WriteFile(string fileName, string text)
+        {
+            StreamWriter sw = new StreamWriter(fileName);
+            sw.Write(text);
+            sw.Close();
+        }
+
+        private void JRichTextBoxPostionDelegate(object sender, System.EventArgs e)
+        {
+            RichTextBox rtb = (RichTextBox)sender;
+            int line = JRichTextBox.Line(rtb);
+            int col = JRichTextBox.Column(rtb);
+            int pos = rtb.SelectionStart;
+
+            this.InformationMessage = "Line " + line + ", Col " + col +
+                     ", Position " + pos;
+        }
+
+
+
+        private void btnSaveCommand_Click(object sender, EventArgs e)
+        {
+            tbAccessLevel.Text = ((int)SecurityLevel.PublicAccess).ToString();
+            tbTy.Text = ((int)SecurityType.SmartList).ToString();
+
+            VAL properties = new VAL();
+            VAL header = VAL.Array(3);
+            VAL footer = VAL.Array(3);
+
+            header[0] = new VAL(tbHeader1.Text);
+            header[1] = new VAL(tbHeader2.Text);
+            header[2] = new VAL(tbHeader3.Text);
+
+            footer[0] = new VAL(tbFooter1.Text);
+            footer[1] = new VAL(tbFooter2.Text);
+            footer[2] = new VAL(tbFooter3.Text);
+
+            properties["Header"] = header;
+            properties["Footer"] = footer;
+
+            this.tbproperties.Text = properties.ToString();
+
+
+            if (tbCreator.Text == "")
+                tbCreator.Text = Account.CurrentUser.UserID.ToString();
+
+
+            BeginLog();
+            AddLog((DPObject)binding.Dpo);
+            binding.ConfirmAndSave(this.tbLabel.Text);
+            EndLog();
+
+            InformationMessage = string.Format("Smart List Command {0} is saved.", this.tbLabel.Text);
+
+            this.DialogResult = DialogResult.Yes;
+#if DEBUG
+            Backup();
+#endif
+
+            CommandNodeDpo dpo = (CommandNodeDpo)binding.Dpo;
+            treeView.SelectedDpoNode.Text = string.Format("[{0}] {1}", dpo.ID, dpo.Label);
+        }
+
+
+        private void btnHistory_Click(object sender, EventArgs e)
+        {
+            CommandDpo dpo = new CommandDpo();
+            dpo.ID = Int32.Parse(this.tbID.Text);
+            dpo.Load();
+
+            LogHistoryControl history = new LogHistoryControl();
+            history.DPObject = dpo;
+            history.LoadHistory();
+
+            //history.AllowCellMerge = true;
+            history.HideNotLogged = true;
+            history.GridView.OptionsBehavior.Editable = true;
+
+            Sys.ViewManager.Utils.Function.Popup(this, history, "Command History:" + dpo.Label, new Size(800, 360), this.Location + new Size(200, 300));
+
+        }
+
+       
+
+        private void rgViewMode_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Enum mode = this.rgViewMode.GetEnum();
+
+            if (mode != null)
+            {
+                this.btnBuildReport.Visible = (DataViewMode)mode == DataViewMode.Report;
+                this.btnEditReport.Visible = (DataViewMode)mode == DataViewMode.Report;
+            }
+            else
+            {
+                this.btnBuildReport.Visible = false;
+                this.btnEditReport.Visible = false;
+            }
+        }
+
+        private void btnBuildReport_Click(object sender, EventArgs e)
+        {
+            Configuration configuration = (Configuration)binding.Dpo;
+            DpoReportStorage.Register(configuration);
+
+            var form = new DevExpress.XtraReports.UserDesigner.XRDesignForm();
+            string url = configuration.RepxItem.url;
+            form.OpenReport(url);
+            form.ShowDialog(this);
+        }
+
+        private void btnEditReport_Click(object sender, EventArgs e)
+        {
+            Configuration configuration = (Configuration)binding.Dpo;
+            BaseForm form = new ReportMaintenanceForm(configuration);
+            form.PopDialog(this);
+        }
+
+    }
+}

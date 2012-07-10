@@ -1,0 +1,188 @@
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
+using System.Text;
+using System.Reflection;
+
+namespace Sys.Data
+{
+
+    public class ColumnAdapter 
+    {
+
+        public event ValueChangedHandler ValueChanged;
+        
+        private object originValue;
+        protected object value;
+        private string alias;
+
+        private DataField field;
+
+        /// Constructor
+        public ColumnAdapter(DataField field)
+        {
+            this.field = field;
+            this.alias = field.Name;
+
+            this.originValue = System.DBNull.Value;
+            this.value = System.DBNull.Value;
+        }
+
+        public DataField Field
+        {
+            get { return this.field; }
+        }
+
+        public override string ToString()
+        {
+            return string.Format("{0}={1}", field.Name, value);
+        }
+
+        public string Alias
+        {
+            set { this.alias = value; }
+        }
+
+     
+        public void UpdateOriginValue(DataRow dataRow)
+        {
+            this.originValue = dataRow[alias];
+        }
+
+        public object Value
+        {
+            get { return this.value; }
+        }
+
+
+        public void UpdateValue(object val)
+        {
+            this.value = val;
+            this.originValue = this.value;
+        }
+
+        public void UpdateValue(DataRow dataRow)
+        {
+            UpdateValue(dataRow[alias]);
+        }
+
+        public void UpdateDataRow(DataRow dataRow)
+        {
+            dataRow[alias] = value;
+        }
+
+
+        public void UpdateValue(PersistentObject dpo)
+        {
+            Type type = dpo.GetType();
+            FieldInfo fieldInfo = type.GetField(field.Name);
+
+            object val = fieldInfo.GetValue(dpo);
+            Type ty = fieldInfo.FieldType;
+            UpdateValue(val);
+        }
+
+        public void UpdateDpo(PersistentObject dpo)
+        {
+            Type type = dpo.GetType();
+            FieldInfo fieldInfo = type.GetField(field.Name);
+            fieldInfo.SetValue(dpo, this.value);
+        }
+
+      
+        public virtual void AddParameter(SqlCmd sqlCmd)
+        {
+            SqlParameter param = field.SqlParameter;
+            if (value is DateTime)
+            {
+                DateTime SqlMinValue = new DateTime(1900, 1, 1);
+                DateTime SqlMaxValue = new DateTime(9999, 12, 31);
+
+                if ((DateTime)value < SqlMinValue)
+                    value = SqlMinValue;
+
+                else if ((DateTime)value > SqlMaxValue)
+                    value = SqlMaxValue;
+            }
+
+            param.Value = value;
+            param.Direction = ParameterDirection.Input;
+            sqlCmd.SqlCommand.Parameters.Add(param);
+        }
+
+
+        public virtual SqlParameter AddIdentityParameter(SqlCmd sqlCmd)
+        {
+            SqlParameter param = field.SqlParameter;
+            param.Value = value;
+
+            if (value == System.DBNull.Value)
+                param.Value = 0;
+
+            param.Direction = ParameterDirection.Output;
+            sqlCmd.SqlCommand.Parameters.Add(param);
+            return param;
+        }
+
+        public bool IsValueChanged
+        {
+            get
+            {
+                if (originValue is byte[] && value is byte[])
+                {
+                    byte[] b1 = (byte[])originValue;
+                    byte[] b2 = (byte[])value;
+                    if (b1.Length != b2.Length)
+                        return true;
+
+                    for (int i = 0; i < b1.Length; i++)
+                    {
+                        if (b1[i] != b2[i])
+                            return true;
+                    }
+
+                    return false;
+                }
+
+                string x1 = originValue.ToString().Trim();
+                string x2 = value.ToString().Trim();
+
+                return !x1.Equals(x2);
+            }
+        }
+
+     
+
+        protected Type dataType
+        {
+            get { return this.field.DataType; }
+        }
+
+        protected object Convert(object obj)
+        {
+            return DataExtension.Convert(obj, dataType);
+        }
+
+        public void OnVauleChanged()
+        {
+            if (ValueChanged != null)
+                ValueChanged(this, new ValueChangedEventArgs(field.Name, originValue, value));
+
+            originValue = value;
+        }
+
+
+        public virtual void Fill()
+        {
+        }
+
+        public virtual void Collect()
+        {
+        }
+
+    
+
+
+    }
+}
