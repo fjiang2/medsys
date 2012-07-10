@@ -43,6 +43,7 @@
             this.pageUnpackSystemdata = new DevExpress.XtraWizard.WizardPage();
             this.progressUnpackSystemData = new Sys.Platform.Forms.ProgressControl();
             this.pageCreateService = new DevExpress.XtraWizard.WizardPage();
+            this.button1 = new System.Windows.Forms.Button();
             this.txtCreateServiceMessage = new System.Windows.Forms.TextBox();
             this.btnCreateService = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -198,6 +199,7 @@
             // 
             // pageCreateService
             // 
+            this.pageCreateService.Controls.Add(this.button1);
             this.pageCreateService.Controls.Add(this.txtCreateServiceMessage);
             this.pageCreateService.Controls.Add(this.btnCreateService);
             this.pageCreateService.Controls.Add(this.label1);
@@ -208,6 +210,16 @@
             this.pageCreateService.Name = "pageCreateService";
             this.pageCreateService.Size = new System.Drawing.Size(598, 277);
             this.pageCreateService.Text = "Create Service";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(406, 54);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(117, 23);
+            this.button1.TabIndex = 19;
+            this.button1.Text = "New Database...";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.btnNewDatabase_Click);
             // 
             // txtCreateServiceMessage
             // 
@@ -325,26 +337,27 @@
         private DevExpress.XtraWizard.WizardControl wizardControl1;
         private DevExpress.XtraWizard.WelcomeWizardPage pageWelcome;
         private DevExpress.XtraWizard.WizardPage pageConnectServer;
-        private DevExpress.XtraWizard.CompletionWizardPage pageCompletion;
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Button btnConnectServer;
         private DevExpress.XtraWizard.WizardPage pageCreateSystemTables;
         private DevExpress.XtraWizard.WizardPage pageUnpackSystemdata;
+        private DevExpress.XtraWizard.WizardPage pageCreateService;
+        private DevExpress.XtraWizard.WizardPage pageCreateDefaultTables;
+        private DevExpress.XtraWizard.WizardPage pageUnpackDefaultData;
+        private DevExpress.XtraWizard.CompletionWizardPage pageCompletion;
         private ProgressControl progressCreateSystemTables;
         private ProgressControl progressUnpackSystemData;
-        private DevExpress.XtraWizard.WizardPage pageCreateService;
+        private ProgressControl progressUnpackDefaultData;
+        private ProgressControl progressCreateDefaultTables;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Button btnConnectServer;
         private System.Windows.Forms.TextBox txtServiceName;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btnCreateService;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox comboxDefaultDatabase;
         private System.Windows.Forms.TextBox txtCreateServiceMessage;
-        private SqlServerControl sqlServerControl1;
         private System.Windows.Forms.Label label2;
-        private DevExpress.XtraWizard.WizardPage pageUnpackDefaultData;
-        private ProgressControl progressUnpackDefaultData;
-        private DevExpress.XtraWizard.WizardPage pageCreateDefaultTables;
-        private ProgressControl progressCreateDefaultTables;
         private System.Windows.Forms.Button btnNewDatabase;
+        private SqlServerControl sqlServerControl1;
+        private System.Windows.Forms.Button button1;
     }
 }

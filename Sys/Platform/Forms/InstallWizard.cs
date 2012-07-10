@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using Sys.Data;
 using Sys.DataManager;
 using Sys.ViewManager.Forms;
+using DevExpress.XtraWizard;
 
 namespace Sys.Platform.Forms
 {
@@ -17,6 +18,13 @@ namespace Sys.Platform.Forms
         public InstallWizard()
         {
             InitializeComponent();
+
+            foreach (BaseWizardPage page in this.wizardControl1.Pages)
+            {
+                if (page is WizardPage)
+                    page.AllowNext = false;
+            }
+
             sqlServerControl1.Connected += delegate(object sender, EventArgs e)
                 {
                     ConnectionEventArgs args = (ConnectionEventArgs)e;
@@ -35,14 +43,8 @@ namespace Sys.Platform.Forms
 
         private void wizardControl1_NextClick(object sender, DevExpress.XtraWizard.WizardCommandButtonClickEventArgs e)
         {
-            if (e.Page == this.pageWelcome)
+            if (e.Page == pageConnectServer)
             {
-                this.pageConnectServer.AllowNext = false;
-            }
-            else if (e.Page == pageConnectServer)
-            {
-                this.pageCreateSystemTables.AllowNext = false;
-                
                 progressCreateSystemTables.ActionButton.Text = "Create System Table";
                 progressCreateSystemTables.Action = delegate(Worker worker)
                 {
@@ -58,8 +60,6 @@ namespace Sys.Platform.Forms
             }
             else if (e.Page == this.pageCreateSystemTables)
             {
-                this.pageUnpackSystemdata.AllowNext = false;
-
                 progressUnpackSystemData.ActionButton.Text = "Unpack System Data";
                 progressUnpackSystemData.Action = delegate(Worker worker)
                 {
@@ -78,8 +78,6 @@ namespace Sys.Platform.Forms
             }
             else if (e.Page == this.pageCreateService)
             {
-                this.pageCreateDefaultTables.AllowNext = false;
-
                 progressCreateDefaultTables.ActionButton.Text = "Create Service Table";
                 progressCreateDefaultTables.Action = delegate(Worker worker)
                 {
@@ -94,8 +92,6 @@ namespace Sys.Platform.Forms
             }
             else if (e.Page == this.pageCreateDefaultTables)
             {
-                this.pageUnpackDefaultData.AllowNext = false;
-
                 progressUnpackDefaultData.ActionButton.Text = "Unpack Service Data";
                 progressUnpackDefaultData.Action = delegate(Worker worker)
                 {
@@ -114,7 +110,7 @@ namespace Sys.Platform.Forms
         private void btnNewDatabase_Click(object sender, EventArgs e)
         {
             string databaseName = "";
-            if (InputTool.InputBox("Input ", "Database name:", "????????", ref databaseName) == System.Windows.Forms.DialogResult.OK)
+            if (InputTool.InputBox("Input ", "Database name:", "????????????", ref databaseName) == System.Windows.Forms.DialogResult.OK)
             {
                 try
                 {
@@ -202,6 +198,8 @@ namespace Sys.Platform.Forms
             this.Close();
         }
 
+
+        
 
 
     }
