@@ -15,7 +15,7 @@ using Sys.DataManager;
 namespace X12.Dpo
 {
     [Revision(4)]
-    [Table("medsys..X12CodeDefinition")]    //Primary Keys = Code + ElementInstance_ID;  Identity = ID;
+    [Table("X12CodeDefinition", Level=Level.System)]    //Primary Keys = Code + ElementInstance_ID;  Identity = ID;
     public class X12CodeDefinitionDpo : DPObject
     {
 
