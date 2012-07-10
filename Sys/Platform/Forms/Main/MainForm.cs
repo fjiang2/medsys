@@ -217,19 +217,19 @@ namespace Sys.Platform.Forms
             #region NavBar 
 
             
+            //somebody may not have permission to access these Dock Panles below:
             menuConsumer.AddDockPanel("Shortcuts");
-            
             DockPanel dpSO = menuConsumer.AddDockPanel("Sales Order");
             DockPanel dpWF = menuConsumer.AddDockPanel("Work List");
             formDockManager.HidePanel(dpSO, dpWF);
             
             DockPanel messagePanel = menuConsumer.AddDockPanel("Error List");
             DockPanel outputPanel = menuConsumer.AddDockPanel("Output");
-            formDockManager.HidePanel(messagePanel, outputPanel);
+            //formDockManager.HidePanel(messagePanel, outputPanel);
 
             if (Sys.Constant.USE_XMPP)
             {
-                DockPanel dpMessenger = menuConsumer.AddDockPanel("Instant Messenger");
+                DockPanel dpMessenger = menuConsumer.AddDockPanel("Messenger");
 
                 if (SystemInformation.PrimaryMonitorSize.Width < 1440)
                     formDockManager.HidePanel(dpMessenger);
@@ -239,10 +239,9 @@ namespace Sys.Platform.Forms
 
             #endregion
 
-
             ShowForm(new HomeForm(this), FormPlace.TabbedAera);
-            //formDockManager.RestoreLayout();
 
+            //formDockManager.RestoreLayout();
             Splash.RemoveSplash();
         }
 
@@ -281,12 +280,9 @@ namespace Sys.Platform.Forms
 
         private void MainForm_Load(object sender, System.EventArgs e)
         {
+           
         }
 
-        private void MainForm_Closed(object sender, System.EventArgs e)
-        {
-          
-        }
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
@@ -321,7 +317,7 @@ namespace Sys.Platform.Forms
    
                 Image img = global::Sys.Platform.Properties.Resources.WarningHS;
                 string caption = string.Format("<b><u>{0} UPDATE</u></b>", SysInformation.ApplicatioName);
-                string text = string.Format("There is a new version {1} of {0} available for download. Download by clicking <u><b><color=Blue>here</color></b></u> or by restarting {0}. Reporting problems on old versions of {0} will delay software development time.", 
+                string text = string.Format("There is a new version {1} of {0} available. Download by clicking <u><b><color=Blue>here</color></b></u> or by restarting {0}. Reporting problems on old versions of {0} will delay software development time.", 
                     SysInformation.ApplicatioName, 
                     version);
                 
