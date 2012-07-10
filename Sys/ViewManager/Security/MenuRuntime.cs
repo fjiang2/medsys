@@ -65,6 +65,7 @@ namespace Sys.ViewManager.Security
             Cursor.Current = cursor;
         }
 
+
         public void OpenFormBySO(string formClass)
         {
             if (!Sys.Security.Profile.Instance.ContainsKey(_SO))
@@ -80,6 +81,17 @@ namespace Sys.ViewManager.Security
         {
             this.menuConsumer.AddDockPanel(MenuItem, control);
         }
+
+        public void OpenDialog(string formClass, object[] args)
+        {
+            BaseForm form = (BaseForm)Sys.Reflector.NewInstance(formClass, args);
+
+            if (MenuItem.IconImage != null)
+                form.IconImage = MenuItem.IconImage;
+
+            form.PopDialog(mainForm.Form);
+        }
+
 
         public void OpenReport(string reportID)
         {
