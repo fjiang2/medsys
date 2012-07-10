@@ -15,7 +15,7 @@ using Sys.DataManager;
 namespace X12.Dpo
 {
     [Revision(4)]
-    [Table("medsys..X12LoopTemplate")]    //Primary Keys = Name;  Identity = ID;
+    [Table("X12LoopTemplate", Level.System)]    //Primary Keys = Name;  Identity = ID;
     public class X12LoopTemplateDpo : DPObject
     {
 

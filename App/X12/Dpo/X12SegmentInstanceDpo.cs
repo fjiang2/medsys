@@ -15,7 +15,7 @@ using Sys.DataManager;
 namespace X12.Dpo
 {
     [Revision(4)]
-    [Table("medsys..X12SegmentInstance")]    //Primary Keys = LoopName + Name + Sequence;  Identity = ID;
+    [Table("X12SegmentInstance", Level.System)]    //Primary Keys = LoopName + Name + Sequence;  Identity = ID;
     public class X12SegmentInstanceDpo : DPObject
     {
 

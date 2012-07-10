@@ -15,7 +15,7 @@ using Sys.DataManager;
 namespace X12.Dpo
 {
     [Revision(4)]
-    [Table("medsys..X12ElementInstance")]    //Primary Keys = ElementTemplate_ID + SegmentInstance_ID;  Identity = ID;
+    [Table("X12ElementInstance", Level.System)]    //Primary Keys = ElementTemplate_ID + SegmentInstance_ID;  Identity = ID;
     public class X12ElementInstanceDpo : DPObject
     {
 
