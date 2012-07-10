@@ -292,13 +292,13 @@ namespace Sys.Platform.Forms
             if (x == null)
                 return;
 
-            if ((int)x == (int)MenuItemType.Separator)
-            {
-                this.txtLabel.Text = "------";
-                this.txtDescription.Text = "";
-                this.txtCommand.Text = "";
-                this.comboModule.Text = "";
-            }
+            //if ((int)x == (int)MenuItemType.Separator)
+            //{
+            //    this.txtLabel.Text = "------";
+            //    this.txtDescription.Text = "";
+            //    this.txtCommand.Text = "";
+            //    this.comboModule.Text = "";
+            //}
         }
 
 
