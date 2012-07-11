@@ -9,10 +9,10 @@ namespace Sys.DataManager
 {
     public class EnumType
     {
-        IEnumerable<EnumTypeDpo> fields;
+        List<EnumTypeDpo> fields;
         string name;
 
-        public EnumType(IEnumerable<EnumTypeDpo> fields)
+        public EnumType(List<EnumTypeDpo> fields)
         {
             this.fields = fields;
             this.name = fields.FirstOrDefault().Category;
@@ -23,7 +23,7 @@ namespace Sys.DataManager
             get { return this.name; }
         }
 
-        public IEnumerable<EnumTypeDpo> Fields
+        public List<EnumTypeDpo> Fields
         {
             get { return this.fields; }
         }
@@ -36,13 +36,13 @@ using System;
 using Sys.Data;
 
 namespace App.Data
-{
+{{
     {0}
     public enum {1}
-    {
+    {{
 {2}
-    }
-}
+    }}
+}}
 ";
             return string.Format(format, new EnumTypeAttribute(name), name, string.Join(",\r\n", fields.Select(field=>field.ToCode())));
         }

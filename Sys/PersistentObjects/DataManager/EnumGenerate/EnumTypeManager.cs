@@ -27,7 +27,7 @@ namespace Sys.DataManager
                 List<EnumType> types = new List<EnumType>();
                 foreach (var group in groups)
                 {
-                    EnumType type = new EnumType(group.Select(field=>field).OrderBy(field=>field.Value));
+                    EnumType type = new EnumType(group.Select(field=>field).OrderBy(field=>field.Value).ToList());
                     
                     types.Add(type);
                 }
