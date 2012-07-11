@@ -68,6 +68,11 @@ namespace Sys.Data
             }
         }
 
+        public List<T> ToList<T>() where T: class, IDPObject, new()
+        {
+            return new DPList<T>(this).ToList();
+        }
+
         public override string ToString()
         {
             return this.sql;
@@ -116,6 +121,21 @@ namespace Sys.Data
                 return this.reader.Table;
             }
         }
+
+        public List<T> ToList()
+        {
+            //List<T> list = new List<T>();
+            //foreach (DataRow dataRow in Table.Rows)
+            //{
+            //    T t = new T();
+            //    t.Fill(dataRow);
+            //    list.Add(t);
+            //}
+            //return this.list;
+
+            return new DPList<T>(this).ToList();
+        }
+
 
         public override string ToString()
         {

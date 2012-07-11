@@ -119,7 +119,26 @@ namespace Sys.Modules
             return dict;
         }
 
+        public static List<Type> GetEnumTypeList()
+        {
+            List<Type> list = new List<Type>();
+            Assembly[] assemblies = Library.GetRegisteredAssemblies();
+            foreach (Assembly assembly in assemblies)
+            {
+                foreach (Type type in assembly.GetTypes())
+                {
+                    if (type.IsEnum)
+                    {
+                        EnumTypeAttribute[] attributes = type.GetAttributes<EnumTypeAttribute>();
+                        if(attributes.Length > 0)
+                            list.Add(type);
+                    }
+                }
 
+            }
+
+            return list;
+        }
 
         public static Assembly GetRegisteredAssembly(string moduleName)
         {

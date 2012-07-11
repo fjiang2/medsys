@@ -8,7 +8,7 @@ using Sys.Data;
 
 namespace Sys.DataManager
 {
-    class EnumTypeDpo : sysEnumTypeDpo
+    public class EnumTypeDpo : sysEnumTypeDpo
     {
         public EnumTypeDpo()
         { 

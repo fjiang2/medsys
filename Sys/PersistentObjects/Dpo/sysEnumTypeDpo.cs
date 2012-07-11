@@ -15,7 +15,7 @@ using Sys.DataManager;
 namespace Sys.PersistentObjects.Dpo
 {
     [Revision(0)]
-    [Table("sys00001", Level.System, Pack = false)]    //Primary Keys = Category + Feature;  Identity = ID;
+    [Table("sys00204", Level.System, Pack = false)]    //Primary Keys = Category + Feature;  Identity = ID;
     public class sysEnumTypeDpo : DPObject
     {
 

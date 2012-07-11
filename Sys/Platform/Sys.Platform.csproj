@@ -65,6 +65,12 @@
   <ItemGroup>
     <Compile Include="Dpo\AppointmentDpo.cs" />
     <Compile Include="Dpo\ResourceDpo.cs" />
+    <Compile Include="Forms\Database\EnumGenForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Database\EnumGenForm.Designer.cs">
+      <DependentUpon>EnumGenForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Main\AboutBox.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -266,6 +272,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Forms\Database\EnumGenForm.resx">
+      <DependentUpon>EnumGenForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Main\AboutBox.resx">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </EmbeddedResource>
@@ -525,7 +534,9 @@
   <ItemGroup>
     <None Include="Resources\install.ico" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\bullet_toggle_plus.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
