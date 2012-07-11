@@ -64,6 +64,8 @@
     <Compile Include="DataManager\DpoGenerate\DpoField.cs" />
     <Compile Include="DataManager\DpoGenerate\DpoGenerator.cs" />
     <Compile Include="DataManager\DpoGenerate\AccessModifier.cs" />
+    <Compile Include="DataManager\EnumGenerate\EnumType.cs" />
+    <Compile Include="DataManager\EnumGenerate\EnumTypeDpo.cs" />
     <Compile Include="DataManager\Manager.cs" />
     <Compile Include="DataManager\Package\BasePackage.cs" />
     <Compile Include="DataManager\Package\IPacking.cs" />
@@ -89,6 +91,8 @@
     <Compile Include="DataManager\SpGenerate\SpProc.cs" />
     <Compile Include="Data\Attribute\AssociationAttribute.cs" />
     <Compile Include="Data\Attribute\ColumnAttribute.cs" />
+    <Compile Include="Data\Attribute\EnumTypeAttribute.cs" />
+    <Compile Include="Data\Attribute\EnumFieldAttribute.cs" />
     <Compile Include="Data\Attribute\ForeignKeyAttribute.cs" />
     <Compile Include="Data\Attribute\Level.cs" />
     <Compile Include="Data\Attribute\LocatorAttribute.cs" />
@@ -149,6 +153,7 @@
     <Compile Include="Dpo\SqlProcDpo.cs" />
     <Compile Include="DataManager\Package\Packing.cs" />
     <Compile Include="DataManager\Package\Unpacking.cs" />
+    <Compile Include="Dpo\sysEnumTypeDpo.cs" />
     <Compile Include="Generic\IdentifierTree.cs" />
     <Compile Include="Generic\ITreeNode.cs" />
     <Compile Include="Generic\Tree.cs" />

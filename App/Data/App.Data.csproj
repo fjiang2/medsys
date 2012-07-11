@@ -44,6 +44,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddressType.cs" />
     <Compile Include="Dpo\CategorieDpo.cs" />
     <Compile Include="Dpo\CustomerCustomerDemoDpo.cs" />
     <Compile Include="Dpo\CustomerDemographicDpo.cs" />
