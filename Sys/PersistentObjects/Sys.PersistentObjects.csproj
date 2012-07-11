@@ -66,6 +66,7 @@
     <Compile Include="DataManager\DpoGenerate\AccessModifier.cs" />
     <Compile Include="DataManager\EnumGenerate\EnumType.cs" />
     <Compile Include="DataManager\EnumGenerate\EnumTypeDpo.cs" />
+    <Compile Include="DataManager\EnumGenerate\EnumTypeManager.cs" />
     <Compile Include="DataManager\Manager.cs" />
     <Compile Include="DataManager\Package\BasePackage.cs" />
     <Compile Include="DataManager\Package\IPacking.cs" />

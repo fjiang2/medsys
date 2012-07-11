@@ -7,34 +7,30 @@ using Sys.Data;
 
 namespace Sys.DataManager
 {
-    class EnumType
+    public class EnumType
     {
-        DataTable table;
-        string category;
+        IEnumerable<EnumTypeDpo> fields;
+        string name;
 
-        public EnumType(string category)
+        public EnumType(IEnumerable<EnumTypeDpo> fields)
         {
-            this.category = category;
-            table = new TableReader<EnumTypeDpo>(new ColumnValue(EnumTypeDpo._Category, category)).Table;
+            this.fields = fields;
+            this.name = fields.FirstOrDefault().Category;
         }
 
-        public EnumType(Type type)
-            :this(type.Name)
-        { 
+        public string Name
+        {
+            get { return this.name; }
         }
+
+        public IEnumerable<EnumTypeDpo> Fields
+        {
+            get { return this.fields; }
+        }
+
 
         public string ToCode()
         {
-            string attribute = typeof(EnumTypeAttribute).Name.Replace("Attribute", "");
-
-            EnumTypeDpo feature;
-            List<string> features = new List<string>();
-            foreach (DataRow row in table.Rows)
-            {
-                feature = new EnumTypeDpo(row);
-                features.Add(feature.ToCode());
-            }
-
             string format =@"
 using System;
 using Sys.Data;
@@ -48,12 +44,12 @@ namespace App.Data
     }
 }
 ";
-            return string.Format(format, new EnumTypeAttribute(category), category, string.Join(",", features));
+            return string.Format(format, new EnumTypeAttribute(name), name, string.Join(",\r\n", fields.Select(field=>field.ToCode())));
         }
 
         public override string ToString()
         {
-            return category;
+            return name;
         }
     }
 }
