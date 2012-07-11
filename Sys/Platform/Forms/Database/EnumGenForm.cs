@@ -53,6 +53,7 @@ namespace Sys.Platform.Forms
             BuildTree(this.manager.Types);
         }
 
+        private EnumType selectedEnumType;
 
         void treeEnumList_AfterSelect(object sender, TreeViewEventArgs e)
         {
@@ -95,6 +96,7 @@ namespace Sys.Platform.Forms
             DataTable dt = new DataTable();
             dt.Columns.Add(new DataColumn("Field", typeof(string)));
             dt.Columns.Add(new DataColumn("Value", typeof(int)));
+            dt.Columns.Add(new DataColumn("Caption", typeof(string)));
 
             EnumType enumType = (EnumType)node.Tag;
             foreach (var field in enumType.Fields)
@@ -102,6 +104,7 @@ namespace Sys.Platform.Forms
                 DataRow row = dt.NewRow();
                 row["Field"] = field.Feature;
                 row["Value"] = field.Value;
+                row["Caption"] = field.Label;
 
                 dt.Rows.Add(row);
             }
@@ -109,7 +112,30 @@ namespace Sys.Platform.Forms
             dt.AcceptChanges();
             gridFields.DataSource = dt;
 
+            this.selectedEnumType = enumType;
         }
+
+        private EnumType GetEnumTypeFromGrid()
+        {
+            List<EnumTypeDpo> fields = new List<EnumTypeDpo>();
+            DataTable dt = gridFields.DataSource;
+            foreach (DataRow row in dt.Rows)
+            {
+                if (row.RowState == DataRowState.Added)
+                {
+                    EnumTypeDpo dpo = new EnumTypeDpo();
+                    dpo.Category = selectedEnumType.Name;
+                    dpo.Feature = (string)row["Field"];
+                    dpo.Value = (int)row["Value"];
+                    dpo.Label = (string)row["Caption"];
+
+                    this.selectedEnumType.Fields.Add(dpo);
+                }
+            }
+
+            return new EnumType(fields);
+        }
+
 
 
         private void BuildTree(List<EnumType> types)
@@ -179,7 +205,27 @@ namespace Sys.Platform.Forms
 
         private void btnGenEnum_Click(object sender, EventArgs e)
         {
+            string className = this.txtClass.Text;
+            ClassName cname = new ClassName(Namespace, Modifier, className);
+            
+            try
+            {
+                string sourceCode = selectedEnumType.ToCode();
+                System.IO.StreamWriter sw = new System.IO.StreamWriter(string.Format("{0}\\{1}.cs", this.Path, selectedEnumType.Name));
+                sw.Write(sourceCode);
+                sw.Close();
 
+                if (this.treeEnumList.SelectedNode.ImageIndex == 2)
+                {
+                    treeEnumList.SelectedNode.ImageIndex = 1;
+                }
+
+                this.InformationMessage = string.Format("enum {0} is created at {1}", cname,  Path);
+            }
+            catch (Exception ex)
+            {
+                this.ErrorMessage = ex.Message;
+            }
         }
 
         private void btnUpgradeEnums_Click(object sender, EventArgs e)

@@ -62,6 +62,7 @@
     <Compile Include="Dpo\theDepartmentDpo.cs" />
     <Compile Include="Dpo\theEmployeeDpo.cs" />
     <Compile Include="Dpo\theJobTitleDpo.cs" />
+    <Compile Include="MemeberType.cs" />
     <Compile Include="Package\CategorieDpoPackage.cs" />
     <Compile Include="Package\CustomerDpoPackage.cs" />
     <Compile Include="Package\EmployeeDpoPackage.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="Package\ShipperDpoPackage.cs" />
     <Compile Include="Package\SupplierDpoPackage.cs" />
     <Compile Include="Package\TerritorieDpoPackage.cs" />
+    <Compile Include="PhoneType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
