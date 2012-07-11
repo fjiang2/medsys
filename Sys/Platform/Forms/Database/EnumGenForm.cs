@@ -90,8 +90,25 @@ namespace Sys.Platform.Forms
                 this.txtClass.Enabled = true;
                 this.btnBrowse.Enabled = true;
                 this.comboModule.Enabled = true;
-            
             }
+
+            DataTable dt = new DataTable();
+            dt.Columns.Add(new DataColumn("Field", typeof(string)));
+            dt.Columns.Add(new DataColumn("Value", typeof(int)));
+
+            EnumType enumType = (EnumType)node.Tag;
+            foreach (var field in enumType.Fields)
+            {
+                DataRow row = dt.NewRow();
+                row["Field"] = field.Feature;
+                row["Value"] = field.Value;
+
+                dt.Rows.Add(row);
+            }
+
+            dt.AcceptChanges();
+            gridFields.DataSource = dt;
+
         }
 
 
@@ -102,6 +119,7 @@ namespace Sys.Platform.Forms
             foreach (EnumType type in types)
             {
                 TreeNode node = new TreeNode(type.Name);
+                node.Tag = type;
                 if (enumList.Exists(item => item.Name == type.Name))
                     node.ImageIndex = 1;
                 else
@@ -151,7 +169,12 @@ namespace Sys.Platform.Forms
 
         private void btnBrowse_Click(object sender, EventArgs e)
         {
-
+            FolderBrowserDialog fileDialog = new FolderBrowserDialog();
+            fileDialog.SelectedPath = Path;
+            if (fileDialog.ShowDialog() == DialogResult.OK)
+            {
+                this.txtPath.Text = fileDialog.SelectedPath;
+            }
         }
 
         private void btnGenEnum_Click(object sender, EventArgs e)
