@@ -33,7 +33,6 @@
             this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
             this.gridFields = new Sys.ViewManager.Forms.JGridView();
             this.rgModifier = new DevExpress.XtraEditors.RadioGroup();
-            this.btnUpgradeEnums = new System.Windows.Forms.Button();
             this.btnNewEnums = new System.Windows.Forms.Button();
             this.btnBrowse = new System.Windows.Forms.Button();
             this.btnGenEnum = new System.Windows.Forms.Button();
@@ -55,12 +54,15 @@
             this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem10 = new DevExpress.XtraLayout.LayoutControlItem();
             this.emptySpaceItem2 = new DevExpress.XtraLayout.EmptySpaceItem();
-            this.layoutControlItem9 = new DevExpress.XtraLayout.LayoutControlItem();
             this.emptySpaceItem3 = new DevExpress.XtraLayout.EmptySpaceItem();
             this.layoutControlItem8 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem11 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem12 = new DevExpress.XtraLayout.LayoutControlItem();
             this.emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
+            this.emptySpaceItem4 = new DevExpress.XtraLayout.EmptySpaceItem();
+            this.emptySpaceItem5 = new DevExpress.XtraLayout.EmptySpaceItem();
+            this.emptySpaceItem6 = new DevExpress.XtraLayout.EmptySpaceItem();
+            this.emptySpaceItem7 = new DevExpress.XtraLayout.EmptySpaceItem();
             this.splitterItem1 = new DevExpress.XtraLayout.SplitterItem();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.jGridView1 = new Sys.ViewManager.Forms.JGridView();
@@ -79,12 +81,15 @@
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem10)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem9)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem11)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem12)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem5)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem7)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitterItem1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -100,7 +105,6 @@
             // 
             this.layoutControl1.Controls.Add(this.gridFields);
             this.layoutControl1.Controls.Add(this.rgModifier);
-            this.layoutControl1.Controls.Add(this.btnUpgradeEnums);
             this.layoutControl1.Controls.Add(this.btnNewEnums);
             this.layoutControl1.Controls.Add(this.btnBrowse);
             this.layoutControl1.Controls.Add(this.btnGenEnum);
@@ -132,27 +136,17 @@
             this.rgModifier.Location = new System.Drawing.Point(332, 180);
             this.rgModifier.Name = "rgModifier";
             this.rgModifier.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.rgModifier.Size = new System.Drawing.Size(448, 52);
+            this.rgModifier.Size = new System.Drawing.Size(270, 52);
             this.rgModifier.StyleController = this.layoutControl1;
             this.rgModifier.TabIndex = 15;
             // 
-            // btnUpgradeEnums
-            // 
-            this.btnUpgradeEnums.Location = new System.Drawing.Point(664, 363);
-            this.btnUpgradeEnums.Name = "btnUpgradeEnums";
-            this.btnUpgradeEnums.Size = new System.Drawing.Size(116, 30);
-            this.btnUpgradeEnums.TabIndex = 14;
-            this.btnUpgradeEnums.Text = "Upgrade Existing Enums";
-            this.btnUpgradeEnums.UseVisualStyleBackColor = true;
-            this.btnUpgradeEnums.Click += new System.EventHandler(this.btnUpgradeEnums_Click);
-            // 
             // btnNewEnums
             // 
-            this.btnNewEnums.Location = new System.Drawing.Point(664, 397);
+            this.btnNewEnums.Location = new System.Drawing.Point(635, 363);
             this.btnNewEnums.Name = "btnNewEnums";
-            this.btnNewEnums.Size = new System.Drawing.Size(116, 39);
+            this.btnNewEnums.Size = new System.Drawing.Size(130, 36);
             this.btnNewEnums.TabIndex = 13;
-            this.btnNewEnums.Text = "Create new Enum Types";
+            this.btnNewEnums.Text = "Create new Enum Type";
             this.btnNewEnums.UseVisualStyleBackColor = true;
             this.btnNewEnums.Click += new System.EventHandler(this.btnNewEnums_Click);
             // 
@@ -168,51 +162,51 @@
             // 
             // btnGenEnum
             // 
-            this.btnGenEnum.Location = new System.Drawing.Point(664, 325);
+            this.btnGenEnum.Location = new System.Drawing.Point(635, 314);
             this.btnGenEnum.Name = "btnGenEnum";
-            this.btnGenEnum.Size = new System.Drawing.Size(116, 34);
+            this.btnGenEnum.Size = new System.Drawing.Size(130, 45);
             this.btnGenEnum.TabIndex = 10;
-            this.btnGenEnum.Text = "Create/Upgrade Enum";
+            this.btnGenEnum.Text = "Create/Updare C# Enum Code";
             this.btnGenEnum.UseVisualStyleBackColor = true;
             this.btnGenEnum.Click += new System.EventHandler(this.btnGenEnum_Click);
             // 
             // comboModule
             // 
             this.comboModule.FormattingEnabled = true;
-            this.comboModule.Location = new System.Drawing.Point(406, 67);
+            this.comboModule.Location = new System.Drawing.Point(407, 67);
             this.comboModule.Name = "comboModule";
-            this.comboModule.Size = new System.Drawing.Size(374, 21);
+            this.comboModule.Size = new System.Drawing.Size(373, 21);
             this.comboModule.TabIndex = 9;
             this.comboModule.SelectedIndexChanged += new System.EventHandler(this.comboModule_SelectedIndexChanged);
             // 
             // txtClass
             // 
-            this.txtClass.Location = new System.Drawing.Point(406, 116);
+            this.txtClass.Location = new System.Drawing.Point(407, 116);
             this.txtClass.Name = "txtClass";
-            this.txtClass.Size = new System.Drawing.Size(374, 20);
+            this.txtClass.Size = new System.Drawing.Size(180, 20);
             this.txtClass.TabIndex = 8;
             // 
             // txtNamespace
             // 
-            this.txtNamespace.Location = new System.Drawing.Point(406, 92);
+            this.txtNamespace.Location = new System.Drawing.Point(407, 92);
             this.txtNamespace.Name = "txtNamespace";
-            this.txtNamespace.Size = new System.Drawing.Size(374, 20);
+            this.txtNamespace.Size = new System.Drawing.Size(181, 20);
             this.txtNamespace.TabIndex = 7;
             // 
             // txtAssembly
             // 
-            this.txtAssembly.Location = new System.Drawing.Point(406, 43);
+            this.txtAssembly.Location = new System.Drawing.Point(407, 43);
             this.txtAssembly.Name = "txtAssembly";
             this.txtAssembly.ReadOnly = true;
-            this.txtAssembly.Size = new System.Drawing.Size(374, 20);
+            this.txtAssembly.Size = new System.Drawing.Size(373, 20);
             this.txtAssembly.TabIndex = 6;
             // 
             // txtPath
             // 
-            this.txtPath.Location = new System.Drawing.Point(406, 140);
+            this.txtPath.Location = new System.Drawing.Point(407, 140);
             this.txtPath.Name = "txtPath";
             this.txtPath.ReadOnly = true;
-            this.txtPath.Size = new System.Drawing.Size(307, 20);
+            this.txtPath.Size = new System.Drawing.Size(306, 20);
             this.txtPath.TabIndex = 5;
             // 
             // treeEnumList
@@ -245,7 +239,7 @@
             this.layoutControlGroup2.Location = new System.Drawing.Point(0, 0);
             this.layoutControlGroup2.Name = "layoutControlGroup2";
             this.layoutControlGroup2.Size = new System.Drawing.Size(303, 549);
-            this.layoutControlGroup2.Text = "Enum List";
+            this.layoutControlGroup2.Text = "Enum List (in database)";
             // 
             // layoutControlItem1
             // 
@@ -271,16 +265,19 @@
             this.layoutControlItem2,
             this.layoutControlItem10,
             this.emptySpaceItem2,
-            this.layoutControlItem9,
             this.emptySpaceItem3,
             this.layoutControlItem8,
             this.layoutControlItem11,
             this.layoutControlItem12,
-            this.emptySpaceItem1});
+            this.emptySpaceItem1,
+            this.emptySpaceItem4,
+            this.emptySpaceItem5,
+            this.emptySpaceItem6,
+            this.emptySpaceItem7});
             this.layoutControlGroup3.Location = new System.Drawing.Point(308, 0);
             this.layoutControlGroup3.Name = "layoutControlGroup3";
             this.layoutControlGroup3.Size = new System.Drawing.Size(476, 549);
-            this.layoutControlGroup3.Text = "Enum";
+            this.layoutControlGroup3.Text = "Enum Type";
             // 
             // layoutControlItem3
             // 
@@ -298,7 +295,7 @@
             this.layoutControlItem4.CustomizationFormText = "Namespace:";
             this.layoutControlItem4.Location = new System.Drawing.Point(0, 49);
             this.layoutControlItem4.Name = "layoutControlItem4";
-            this.layoutControlItem4.Size = new System.Drawing.Size(452, 24);
+            this.layoutControlItem4.Size = new System.Drawing.Size(260, 24);
             this.layoutControlItem4.Text = "Namespace:";
             this.layoutControlItem4.TextSize = new System.Drawing.Size(71, 13);
             // 
@@ -308,7 +305,7 @@
             this.layoutControlItem5.CustomizationFormText = "Enum Name:";
             this.layoutControlItem5.Location = new System.Drawing.Point(0, 73);
             this.layoutControlItem5.Name = "layoutControlItem5";
-            this.layoutControlItem5.Size = new System.Drawing.Size(452, 24);
+            this.layoutControlItem5.Size = new System.Drawing.Size(259, 24);
             this.layoutControlItem5.Text = "Enum Name:";
             this.layoutControlItem5.TextSize = new System.Drawing.Size(71, 13);
             // 
@@ -326,9 +323,9 @@
             // 
             this.layoutControlItem7.Control = this.btnGenEnum;
             this.layoutControlItem7.CustomizationFormText = "layoutControlItem7";
-            this.layoutControlItem7.Location = new System.Drawing.Point(332, 282);
+            this.layoutControlItem7.Location = new System.Drawing.Point(303, 271);
             this.layoutControlItem7.Name = "layoutControlItem7";
-            this.layoutControlItem7.Size = new System.Drawing.Size(120, 38);
+            this.layoutControlItem7.Size = new System.Drawing.Size(134, 49);
             this.layoutControlItem7.Text = "layoutControlItem7";
             this.layoutControlItem7.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem7.TextToControlDistance = 0;
@@ -348,9 +345,9 @@
             // 
             this.layoutControlItem10.Control = this.btnNewEnums;
             this.layoutControlItem10.CustomizationFormText = "layoutControlItem10";
-            this.layoutControlItem10.Location = new System.Drawing.Point(332, 354);
+            this.layoutControlItem10.Location = new System.Drawing.Point(303, 320);
             this.layoutControlItem10.Name = "layoutControlItem10";
-            this.layoutControlItem10.Size = new System.Drawing.Size(120, 43);
+            this.layoutControlItem10.Size = new System.Drawing.Size(134, 40);
             this.layoutControlItem10.Text = "layoutControlItem10";
             this.layoutControlItem10.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem10.TextToControlDistance = 0;
@@ -360,31 +357,19 @@
             // 
             this.emptySpaceItem2.AllowHotTrack = false;
             this.emptySpaceItem2.CustomizationFormText = "emptySpaceItem2";
-            this.emptySpaceItem2.Location = new System.Drawing.Point(332, 193);
+            this.emptySpaceItem2.Location = new System.Drawing.Point(303, 193);
             this.emptySpaceItem2.Name = "emptySpaceItem2";
-            this.emptySpaceItem2.Size = new System.Drawing.Size(120, 89);
+            this.emptySpaceItem2.Size = new System.Drawing.Size(134, 78);
             this.emptySpaceItem2.Text = "emptySpaceItem2";
             this.emptySpaceItem2.TextSize = new System.Drawing.Size(0, 0);
-            // 
-            // layoutControlItem9
-            // 
-            this.layoutControlItem9.Control = this.btnUpgradeEnums;
-            this.layoutControlItem9.CustomizationFormText = "layoutControlItem9";
-            this.layoutControlItem9.Location = new System.Drawing.Point(332, 320);
-            this.layoutControlItem9.Name = "layoutControlItem9";
-            this.layoutControlItem9.Size = new System.Drawing.Size(120, 34);
-            this.layoutControlItem9.Text = "layoutControlItem9";
-            this.layoutControlItem9.TextSize = new System.Drawing.Size(0, 0);
-            this.layoutControlItem9.TextToControlDistance = 0;
-            this.layoutControlItem9.TextVisible = false;
             // 
             // emptySpaceItem3
             // 
             this.emptySpaceItem3.AllowHotTrack = false;
             this.emptySpaceItem3.CustomizationFormText = "emptySpaceItem3";
-            this.emptySpaceItem3.Location = new System.Drawing.Point(332, 397);
+            this.emptySpaceItem3.Location = new System.Drawing.Point(303, 360);
             this.emptySpaceItem3.Name = "emptySpaceItem3";
-            this.emptySpaceItem3.Size = new System.Drawing.Size(120, 109);
+            this.emptySpaceItem3.Size = new System.Drawing.Size(134, 146);
             this.emptySpaceItem3.Text = "emptySpaceItem3";
             this.emptySpaceItem3.TextSize = new System.Drawing.Size(0, 0);
             // 
@@ -406,7 +391,7 @@
             this.layoutControlItem11.CustomizationFormText = "Enum Modifier:";
             this.layoutControlItem11.Location = new System.Drawing.Point(0, 121);
             this.layoutControlItem11.Name = "layoutControlItem11";
-            this.layoutControlItem11.Size = new System.Drawing.Size(452, 72);
+            this.layoutControlItem11.Size = new System.Drawing.Size(274, 72);
             this.layoutControlItem11.Text = "Enum Modifier:";
             this.layoutControlItem11.TextLocation = DevExpress.Utils.Locations.Top;
             this.layoutControlItem11.TextSize = new System.Drawing.Size(71, 13);
@@ -428,9 +413,49 @@
             this.emptySpaceItem1.CustomizationFormText = "emptySpaceItem1";
             this.emptySpaceItem1.Location = new System.Drawing.Point(275, 193);
             this.emptySpaceItem1.Name = "emptySpaceItem1";
-            this.emptySpaceItem1.Size = new System.Drawing.Size(57, 313);
+            this.emptySpaceItem1.Size = new System.Drawing.Size(28, 313);
             this.emptySpaceItem1.Text = "emptySpaceItem1";
             this.emptySpaceItem1.TextSize = new System.Drawing.Size(0, 0);
+            // 
+            // emptySpaceItem4
+            // 
+            this.emptySpaceItem4.AllowHotTrack = false;
+            this.emptySpaceItem4.CustomizationFormText = "emptySpaceItem4";
+            this.emptySpaceItem4.Location = new System.Drawing.Point(259, 73);
+            this.emptySpaceItem4.Name = "emptySpaceItem4";
+            this.emptySpaceItem4.Size = new System.Drawing.Size(193, 24);
+            this.emptySpaceItem4.Text = "emptySpaceItem4";
+            this.emptySpaceItem4.TextSize = new System.Drawing.Size(0, 0);
+            // 
+            // emptySpaceItem5
+            // 
+            this.emptySpaceItem5.AllowHotTrack = false;
+            this.emptySpaceItem5.CustomizationFormText = "emptySpaceItem5";
+            this.emptySpaceItem5.Location = new System.Drawing.Point(260, 49);
+            this.emptySpaceItem5.Name = "emptySpaceItem5";
+            this.emptySpaceItem5.Size = new System.Drawing.Size(192, 24);
+            this.emptySpaceItem5.Text = "emptySpaceItem5";
+            this.emptySpaceItem5.TextSize = new System.Drawing.Size(0, 0);
+            // 
+            // emptySpaceItem6
+            // 
+            this.emptySpaceItem6.AllowHotTrack = false;
+            this.emptySpaceItem6.CustomizationFormText = "emptySpaceItem6";
+            this.emptySpaceItem6.Location = new System.Drawing.Point(274, 121);
+            this.emptySpaceItem6.Name = "emptySpaceItem6";
+            this.emptySpaceItem6.Size = new System.Drawing.Size(178, 72);
+            this.emptySpaceItem6.Text = "emptySpaceItem6";
+            this.emptySpaceItem6.TextSize = new System.Drawing.Size(0, 0);
+            // 
+            // emptySpaceItem7
+            // 
+            this.emptySpaceItem7.AllowHotTrack = false;
+            this.emptySpaceItem7.CustomizationFormText = "emptySpaceItem7";
+            this.emptySpaceItem7.Location = new System.Drawing.Point(437, 193);
+            this.emptySpaceItem7.Name = "emptySpaceItem7";
+            this.emptySpaceItem7.Size = new System.Drawing.Size(15, 313);
+            this.emptySpaceItem7.Text = "emptySpaceItem7";
+            this.emptySpaceItem7.TextSize = new System.Drawing.Size(0, 0);
             // 
             // splitterItem1
             // 
@@ -478,12 +503,15 @@
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem10)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem9)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem11)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem12)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem7)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitterItem1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -517,9 +545,7 @@
         private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem1;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem8;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem10;
-        private System.Windows.Forms.Button btnUpgradeEnums;
         private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem2;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem9;
         private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem3;
         private DevExpress.XtraEditors.RadioGroup rgModifier;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem11;
@@ -527,5 +553,9 @@
         private ViewManager.Forms.JGridView gridFields;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem12;
         private ViewManager.Forms.JGridView jGridView1;
+        private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem4;
+        private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem5;
+        private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem6;
+        private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem7;
     }
 }

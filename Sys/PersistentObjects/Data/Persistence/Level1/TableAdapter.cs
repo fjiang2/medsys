@@ -48,6 +48,7 @@ namespace Sys.Data
 
         }
 
+
         protected RowAdapter GetPersistentRow()
         {
             return new RowAdapter(this.fields, this.columns, this.TableName, this.Locator);
@@ -203,32 +204,30 @@ namespace Sys.Data
         public ValueChangedHandler ValueChangedHandler = null;
 
 
-        public static TableAdapter WriteDataTable(DataTable dataTable, TableName tname, string[] columnNames, Locator locator, RowChangedHandler rowChangedHandler)
+        public static TableAdapter WriteDataTable(DataTable dataTable, 
+            TableName tname, Locator locator, 
+            string[] columnNames,
+            RowChangedHandler rowChangedHandler, ValueChangedHandler columnHandler)
         {
             if (dataTable == null)
                 return null;
 
-            TableAdapter dt = new TableAdapter(dataTable, tname, locator);
+            if (locator == null)
+                locator = new Locator(tname);
+
+            TableAdapter adapter = new TableAdapter(dataTable, tname, locator);
 
             if(rowChangedHandler != null)
-                dt.DataRowChangedHandler += rowChangedHandler;
+                adapter.DataRowChangedHandler += rowChangedHandler;
 
+            if (columnHandler != null)
+                adapter.ValueChangedHandler = columnHandler;
 
-            if (columnNames == null)
-                dt.Fields.Add(tname);
-            else
-            {
-                foreach (string name in columnNames)
-                {
-                    dt.Fields.Add(dataTable.Columns[name]);
-                }
-            }
+            adapter.AddFields(columnNames);
+            adapter.Save();
 
-            dt.Fields.UpdatePrimaryIdentity(tname);
-            dt.Save();
-
-            return dt;
+            return adapter;
         }
-
+      
     }
 }
