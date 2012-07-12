@@ -18,12 +18,14 @@ namespace Sys.Data
         void Clear();
 
         TableName TableName { get; }
+        Locator Locator { get; }
     }
 
 
     public interface IDPObject : IPersistentObject
     {
         void UpdateDataRow(DataRow dataRow);
+        void UpdateObject(DataRow dataRow);
 
         void Fill(DataRow dataRow);
         void Collect(DataRow dataRow);

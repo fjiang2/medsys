@@ -8,6 +8,8 @@ namespace Sys.Data
 {
     public static class DataExtension
     {
+        #region SqlCmd
+
         public static object ExecuteScalar(this string script)
         {
             SqlCmd cmd = new SqlCmd(script);
@@ -99,9 +101,11 @@ namespace Sys.Data
             return cmd.FillDataRow();
         }
 
+        #endregion
 
 
-        //-----------------------------------------------------------------------------------------
+        #region IsNull
+
         public static T IsNull<T>(this DataRow dataRow, string columnName, T defaultValue)
         {
             if (dataRow == null)
@@ -110,7 +114,6 @@ namespace Sys.Data
             return dataRow[columnName] != System.DBNull.Value ? (T)dataRow[columnName] : defaultValue;
         }
 
-        //-----------------------------------------------------------------------------------------
         public static T IsNull<T>(this object value, T defaultValue)
         {
             if (value == null)
@@ -119,15 +122,11 @@ namespace Sys.Data
             return value != System.DBNull.Value ? (T)value : defaultValue;
         }
 
+        #endregion
 
 
-        public static DataTable ToTable<T>(this IEnumerable<T> records) where T : class,  IDPObject, new()
-        {
-            DPList<T> list = new DPList<T>(records);
-            return list.Table;
-        }
+   
 
-        //-----------------------------------------------------------------------------------------
 
 
         #region  DataTable.Rows[][x] -> Array[x]
@@ -278,109 +277,6 @@ namespace Sys.Data
             SqlCmd.ExecuteNonQuery(sql);
         }
 
-
-        public static SqlDbType ToSqlDbType(this Type type)
-        {
-            if (type == typeof(Boolean))
-                return SqlDbType.Bit;
-
-            else if (type == typeof(Int16))
-                return SqlDbType.SmallInt;
-
-            else if (type == typeof(Int32)) 
-                return SqlDbType.Int;
-
-            else if (type == typeof(Int64)) 
-                return SqlDbType.BigInt;
-
-            else if (type == typeof(Double)) 
-                return SqlDbType.Float;
-
-            else if (type == typeof(Decimal)) 
-                return SqlDbType.Decimal;
-
-            else if (type == typeof(String)) 
-                return SqlDbType.NVarChar;
-
-            else if (type == typeof(DateTime)) 
-                return SqlDbType.DateTime;
-
-            else if (type == typeof(Byte[]))
-                return SqlDbType.Binary;
-
-            else if (type == typeof(Guid))
-                return SqlDbType.UniqueIdentifier;
-
-            throw new SysException("Type {0} cannot be converted into SqlDbType", type.FullName);
-        }
-
-
-        public static Type ToType(this SqlDbType type)
-        {
-            switch (type)
-            {
-                case SqlDbType.Bit: 
-                    return typeof(System.Boolean);
-
-                case SqlDbType.TinyInt: 
-                    return typeof(byte);
-                
-                case SqlDbType.SmallInt: 
-                    return typeof(Int16);
-                
-                case SqlDbType.Int: 
-                    return typeof(Int32);
-                
-                case SqlDbType.BigInt: 
-                    return typeof(Int64);
-
-                case SqlDbType.Float: 
-                case SqlDbType.Real: 
-                    return typeof(Double);
-                
-                case SqlDbType.Decimal: 
-                case SqlDbType.SmallMoney: 
-                case SqlDbType.Money: 
-                    return typeof(Decimal);
-
-                case SqlDbType.Char: 
-                case SqlDbType.NChar:
-                case SqlDbType.VarChar: 
-                case SqlDbType.NVarChar: 
-                case SqlDbType.Text: 
-                case SqlDbType.NText: 
-                    return typeof(String);
-
-                case SqlDbType.SmallDateTime: 
-                case SqlDbType.DateTime: 
-                    return typeof(DateTime);
-
-                case SqlDbType.Timestamp: 
-                case SqlDbType.VarBinary: 
-                case SqlDbType.Binary: 
-                case SqlDbType.Image: 
-                    return typeof(Byte[]);
-                
-                case SqlDbType.UniqueIdentifier: 
-                    return typeof(Guid);
-
-                case SqlDbType.Variant:
-                case SqlDbType.Xml:
-                case SqlDbType.Udt:
-                case SqlDbType.Date:
-                case SqlDbType.Time:
-                case SqlDbType.DateTime2:
-                case SqlDbType.DateTimeOffset:
-                    break;
-
-            }
-
-            throw new SysException("SqlDbType {0} cannot be converted into Type", type);
-        }
-        
-
-
-        //---------------------------------------
         internal static object Convert(object obj, Type type)
         {
             if (obj == null)
@@ -408,7 +304,7 @@ namespace Sys.Data
                     if (s[i] == '.')
                         break;
                 }
-                
+
                 int result = int.Parse(g);
 
                 if (type == typeof(bool))
@@ -447,6 +343,139 @@ namespace Sys.Data
                 throw new ApplicationException("Data Type in Convert Function is not defined.");
 
         }
+
+
+
+
+
+        #region ToSqlDbType / ToType
+
+        public static SqlDbType ToSqlDbType(this Type type)
+        {
+            if (type == typeof(Boolean))
+                return SqlDbType.Bit;
+
+            else if (type == typeof(Int16))
+                return SqlDbType.SmallInt;
+
+            else if (type == typeof(Int32))
+                return SqlDbType.Int;
+
+            else if (type == typeof(Int64))
+                return SqlDbType.BigInt;
+
+            else if (type == typeof(Double))
+                return SqlDbType.Float;
+
+            else if (type == typeof(Decimal))
+                return SqlDbType.Decimal;
+
+            else if (type == typeof(String))
+                return SqlDbType.NVarChar;
+
+            else if (type == typeof(DateTime))
+                return SqlDbType.DateTime;
+
+            else if (type == typeof(Byte[]))
+                return SqlDbType.Binary;
+
+            else if (type == typeof(Guid))
+                return SqlDbType.UniqueIdentifier;
+
+            throw new SysException("Type {0} cannot be converted into SqlDbType", type.FullName);
+        }
+
+
+        public static Type ToType(this SqlDbType type)
+        {
+            switch (type)
+            {
+                case SqlDbType.Bit:
+                    return typeof(System.Boolean);
+
+                case SqlDbType.TinyInt:
+                    return typeof(byte);
+
+                case SqlDbType.SmallInt:
+                    return typeof(Int16);
+
+                case SqlDbType.Int:
+                    return typeof(Int32);
+
+                case SqlDbType.BigInt:
+                    return typeof(Int64);
+
+                case SqlDbType.Float:
+                case SqlDbType.Real:
+                    return typeof(Double);
+
+                case SqlDbType.Decimal:
+                case SqlDbType.SmallMoney:
+                case SqlDbType.Money:
+                    return typeof(Decimal);
+
+                case SqlDbType.Char:
+                case SqlDbType.NChar:
+                case SqlDbType.VarChar:
+                case SqlDbType.NVarChar:
+                case SqlDbType.Text:
+                case SqlDbType.NText:
+                    return typeof(String);
+
+                case SqlDbType.SmallDateTime:
+                case SqlDbType.DateTime:
+                    return typeof(DateTime);
+
+                case SqlDbType.Timestamp:
+                case SqlDbType.VarBinary:
+                case SqlDbType.Binary:
+                case SqlDbType.Image:
+                    return typeof(Byte[]);
+
+                case SqlDbType.UniqueIdentifier:
+                    return typeof(Guid);
+
+                case SqlDbType.Variant:
+                case SqlDbType.Xml:
+                case SqlDbType.Udt:
+                case SqlDbType.Date:
+                case SqlDbType.Time:
+                case SqlDbType.DateTime2:
+                case SqlDbType.DateTimeOffset:
+                    break;
+
+            }
+
+            throw new SysException("SqlDbType {0} cannot be converted into Type", type);
+        }
+        
+        #endregion
+
+        #region ToINumerable<T>
+
+        public static DataTable ToTable<T>(this IEnumerable<T> records) where T : class,  IDPObject, new()
+        {
+            DPList<T> list = new DPList<T>(records);
+            return list.Table;
+        }
+
+        public static DPList<T> ToDPList<T>(this IEnumerable<T> collection) where T : class, IDPObject, new()
+        {
+            return new DPList<T>(collection);
+        }
+
+        public static DPList<T> ToDPList<T>(this TableReader<T> reader) where T : class, IDPObject, new()
+        {
+            return new DPList<T>(reader);
+        }
+
+        public static DPCollection<T> ToDPCollection<T>(this DPList<T> list) where T : class, IDPObject, new()
+        {
+            return new DPCollection<T>(list.Table);
+        }
+
+
+        #endregion
 
     }
 }

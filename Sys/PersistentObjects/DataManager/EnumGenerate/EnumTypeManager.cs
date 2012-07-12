@@ -8,32 +8,42 @@ namespace Sys.DataManager
 {
     public class EnumTypeManager
     {
-        IEnumerable<EnumTypeDpo> list;
+        List<EnumType> types;
 
         public EnumTypeManager()
         {
-            this.list = new TableReader<EnumTypeDpo>().ToList().OrderBy(field => field.Category);
+            IEnumerable<EnumTypeDpo> list = new TableReader<EnumTypeDpo>().ToList().OrderBy(field => field.Category);
+              
+            types = new List<EnumType>();
 
+            var groups = list.GroupBy(field => field.Category);
+            foreach (var group in groups)
+            {
+                EnumType type = new EnumType(group.Select(field => field).OrderBy(field => field.Value).ToList());
+                    
+                types.Add(type);
+            }
         }
 
+        /// <summary>
+        /// replace existing EnumType or add new EnumType
+        /// </summary>
+        /// <param name="type"></param>
+        public void Add(EnumType type)
+        { 
+            if(types.Exists(ty => ty.Name == type.Name))
+            {
+                types.RemoveAll(ty => ty.Name == type.Name);
+            }
+
+            types.Add(type);
+        }
 
         public List<EnumType> Types
         {
             get
             {
-                var groups = list.GroupBy(field => field.Category);
-                List<string> typenames = groups.Select(group => group.Key).OrderBy(key => key).ToList();
-
-                List<EnumType> types = new List<EnumType>();
-                foreach (var group in groups)
-                {
-                    EnumType type = new EnumType(group.Select(field=>field).OrderBy(field=>field.Value).ToList());
-                    
-                    types.Add(type);
-                }
-
                 return types;
-
             }
         }
     }

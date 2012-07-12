@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Sys.Data;
 using Sys.ViewManager.Forms;
 using Sys.DataManager;
 using Sys.ViewManager.DevEx;
@@ -117,23 +118,44 @@ namespace Sys.Platform.Forms
 
         private EnumType GetEnumTypeFromGrid()
         {
-            List<EnumTypeDpo> fields = new List<EnumTypeDpo>();
             DataTable dt = gridFields.DataSource;
+
+            EnumTypeDpo dpo;
+            List<EnumTypeDpo> fields = new List<EnumTypeDpo>();
             foreach (DataRow row in dt.Rows)
             {
-                if (row.RowState == DataRowState.Added)
+                if (row.RowState != DataRowState.Deleted)
                 {
-                    EnumTypeDpo dpo = new EnumTypeDpo();
+                    dpo = new EnumTypeDpo();
                     dpo.Category = selectedEnumType.Name;
                     dpo.Feature = (string)row["Field"];
                     dpo.Value = (int)row["Value"];
-                    dpo.Label = (string)row["Caption"];
+                    dpo.Label = row.IsNull<string>("Caption",null);
 
-                    this.selectedEnumType.Fields.Add(dpo);
+                    fields.Add(dpo);
+                    dpo.Save();
+                    row.AcceptChanges();
+                }
+                else
+                {
+                    row.RejectChanges();
+                    dpo = new EnumTypeDpo(selectedEnumType.Name, (string)row["Field"]);
+                    dpo.Delete();
+                    row.AcceptChanges();
                 }
             }
 
-            return new EnumType(fields);
+            EnumType enumType = new EnumType(fields);
+
+            this.selectedEnumType = enumType;
+
+            //Update TreeNode
+            treeEnumList.SelectedNode.Tag = enumType;
+
+            //update EnumType
+            this.manager.Types.Add(enumType);
+
+            return enumType;
         }
 
 
@@ -193,6 +215,13 @@ namespace Sys.Platform.Forms
         }
 
 
+        private void comboModule_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            SetNamespaceAndPath();
+            Assembly asm = Library.GetRegisteredAssembly((string)comboModule.SelectedItem);
+            this.txtAssembly.Text = asm.FullName;
+        }
+
         private void btnBrowse_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog fileDialog = new FolderBrowserDialog();
@@ -210,6 +239,14 @@ namespace Sys.Platform.Forms
             
             try
             {
+                GetEnumTypeFromGrid();
+
+                if (selectedEnumType.Fields.Count == 0)
+                {
+                    this.ErrorMessage = "Enum fields not defined.";
+                    return;
+                }
+
                 string sourceCode = selectedEnumType.ToCode();
                 System.IO.StreamWriter sw = new System.IO.StreamWriter(string.Format("{0}\\{1}.cs", this.Path, selectedEnumType.Name));
                 sw.Write(sourceCode);
@@ -228,21 +265,17 @@ namespace Sys.Platform.Forms
             }
         }
 
-        private void btnUpgradeEnums_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void btnNewEnums_Click(object sender, EventArgs e)
         {
-
+            string name = "";
+            if (InputTool.InputBox("Input enum type name", "Enum Name:", ref name) == System.Windows.Forms.DialogResult.OK)
+            { 
+                TreeNode node = new TreeNode(name);
+                node.Tag = new EnumType(name);
+                this.treeEnumList.Nodes.Add(node);
+            }
         }
 
-        private void comboModule_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            SetNamespaceAndPath();
-            Assembly asm = Library.GetRegisteredAssembly((string)comboModule.SelectedItem);
-            this.txtAssembly.Text = asm.FullName;
-        }
+     
     }
 }

@@ -112,10 +112,12 @@
     <Compile Include="Data\Persistence\Level0\SqlTrans.cs" />
     <Compile Include="Data\Conversion.cs" />
     <Compile Include="Data\DefaultRowValue.cs" />
+    <Compile Include="Data\Persistence\Level1\TableWriter.cs" />
     <Compile Include="Data\Persistence\Level1\DataFieldCollection.cs" />
     <Compile Include="Data\Persistence\Level1\DataField.cs" />
     <Compile Include="Data\Persistence\Level1\BaseRowAdapter.cs" />
     <Compile Include="Data\Persistence\Level1\ValueChangedEventArgs.cs" />
+    <Compile Include="Data\Persistence\Level2\ObjectState.cs" />
     <Compile Include="Data\Persistence\Locator.cs" />
     <Compile Include="Data\Metadata\IdentityKeys.cs" />
     <Compile Include="Data\Metadata\MetaColumn.cs" />

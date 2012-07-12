@@ -6,13 +6,6 @@ using System.Data;
 namespace Sys.Data
 {
 
-    public enum ObjectState
-    {
-        Added,
-        Modified,
-        Deleted
-    }
-
     public delegate void RowChangedHandler(object sender, RowChangedEventArgs e);
 
     public class RowChangedEventArgs : EventArgs

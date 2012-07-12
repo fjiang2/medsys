@@ -19,6 +19,11 @@ namespace Sys.DataManager
         { 
         }
 
+        public EnumTypeDpo(string category, string feature)
+            :base(category, feature)
+        {
+        }
+
         public string Caption
         {
             get
