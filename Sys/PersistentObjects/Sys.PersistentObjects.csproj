@@ -169,7 +169,9 @@
     <Compile Include="Sys\ExceptionLevel.cs" />
     <Compile Include="Sys\IAccount.cs" />
     <Compile Include="Generic\Identifier.cs" />
-    <Compile Include="Sys\MessageLevel.cs" />
+    <Compile Include="Sys\Message\MessageLevel.cs" />
+    <Compile Include="Sys\Message\Message.cs" />
+    <Compile Include="Sys\Message\MessageManager.cs" />
     <Compile Include="Sys\SysException.cs" />
     <Compile Include="Sys\SysExtensiton.cs" />
     <Compile Include="Sys\Worker.cs">

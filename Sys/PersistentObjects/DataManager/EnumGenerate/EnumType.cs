@@ -5,6 +5,7 @@ using System.Text;
 using System.Data;
 using Sys.Data;
 using System.Reflection;
+using Sys;
 
 namespace Sys.DataManager
 {
@@ -57,32 +58,32 @@ namespace Sys.DataManager
             }
         }
 
-        public bool Validate(List<string> messages)
+        public bool Validate(MassageManager manager)
         {
             DPList<EnumField> list = new DPList<EnumField>(this.fields);
 
             bool good = true;
             foreach (EnumField field in list)
             {
-                if (!field.Validate(messages))
+                if (!field.Validate(manager))
                     good = false;
             }
 
             if (list.Count == 0)
             {
-                messages.Add("Enum fields not defined.");
+                manager.Error("Enum fields not defined.");
                 good = false;
             }
 
             if (list.ToArray<string>(EnumField._Feature).Distinct().Count() != list.Count)
             {
-                messages.Add("Duplicated field names found.");
+                manager.Error("Duplicated field names found.");
                 good = false;
             }
 
             if (list.ToArray<int>(EnumField._Value).Distinct().Count() != list.Count)
             {
-                messages.Add("Duplicated values found.");
+                manager.Error("Duplicated values found.");
                 good = false;
             }
 

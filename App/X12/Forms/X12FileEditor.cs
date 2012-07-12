@@ -380,7 +380,7 @@ namespace X12.Forms
                 rootLoop.Expand();
 
                 this.segmentControl1.SetDataSource(this.x12, SegmentName.DefaultName);
-                this.MassageManager.Post();
+                this.MassageManager.Commit();
 
                 btnParse.Enabled = true;
                 this.Cursor = Cursors.Default;

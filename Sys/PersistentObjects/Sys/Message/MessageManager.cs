@@ -9,7 +9,7 @@ namespace Sys
 {
     public class MassageManager
     {
-        List<Message> errors = new List<Message>();
+        List<Message> messages = new List<Message>();
 
         public delegate void MessageHandler(object sender, MessageEventArgs e);
 
@@ -20,18 +20,23 @@ namespace Sys
         {
         }
 
-        public void Post()
+        public void Commit()
         {
             if (MessageChanged != null)
-                MessageChanged(this, new MessageEventArgs(this.errors));
+                MessageChanged(this, new MessageEventArgs(this.messages));
         }
 
 
         public void Clear()
         {
-            errors.Clear();
+            messages.Clear();
             if (MessageCleared != null)
                 MessageCleared(this, new EventArgs());
+        }
+
+        public void Error(string description)
+        {
+            Error(0, description, "");
         }
 
         public void Error(string description, string location)
@@ -82,16 +87,21 @@ namespace Sys
 
         private void Add(Message item)
         {
-            if (errors.Contains(item))
+            if (messages.Contains(item))
                 return ;
 
-            this.errors.Add(item);
+            this.messages.Add(item);
         }
 
-        public void Add(IEnumerable<string> messages)
+        public void Add(IEnumerable<Message> messages)
         {
-            foreach(string message in messages)
-               this.errors.Add(new Message(message));
+            foreach (Message message in messages)
+               this.messages.Add(message);
+        }
+
+        public override string ToString()
+        {
+            return string.Format("{0} error(s) found",this.messages.Where(message => message.Level == MessageLevel.error).Count());
         }
     }
 
