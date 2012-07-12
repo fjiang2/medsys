@@ -1,7 +1,7 @@
 using System;
 using Sys.Data;
 
-namespace App.Data
+namespace PTA
 {
     [DataEnum]
     public enum MemeberEnum
