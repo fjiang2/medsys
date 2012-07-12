@@ -120,13 +120,13 @@ namespace Sys.Platform.Forms
         {
             DataTable dt = gridFields.DataSource;
 
-            EnumTypeDpo dpo;
-            List<EnumTypeDpo> fields = new List<EnumTypeDpo>();
+            EnumField dpo;
+            List<EnumField> fields = new List<EnumField>();
             foreach (DataRow row in dt.Rows)
             {
                 if (row.RowState != DataRowState.Deleted)
                 {
-                    dpo = new EnumTypeDpo();
+                    dpo = new EnumField();
                     dpo.Category = selectedEnumType.Name;
                     dpo.Feature = (string)row["Field"];
                     dpo.Value = (int)row["Value"];
@@ -139,7 +139,7 @@ namespace Sys.Platform.Forms
                 else
                 {
                     row.RejectChanges();
-                    dpo = new EnumTypeDpo(selectedEnumType.Name, (string)row["Field"]);
+                    dpo = new EnumField(selectedEnumType.Name, (string)row["Field"]);
                     dpo.Delete();
                     row.AcceptChanges();
                 }
@@ -234,9 +234,11 @@ namespace Sys.Platform.Forms
 
         private void btnGenEnum_Click(object sender, EventArgs e)
         {
+            this.Cursor = Cursors.WaitCursor;
+
             string className = this.txtClass.Text;
             ClassName cname = new ClassName(Namespace, Modifier, className);
-            
+
             try
             {
                 GetEnumTypeFromGrid();
@@ -257,11 +259,15 @@ namespace Sys.Platform.Forms
                     treeEnumList.SelectedNode.ImageIndex = 1;
                 }
 
-                this.InformationMessage = string.Format("enum {0} is created at {1}", cname,  Path);
+                this.InformationMessage = string.Format("enum {0} is created at {1}", cname, Path);
             }
             catch (Exception ex)
             {
                 this.ErrorMessage = ex.Message;
+            }
+            finally
+            {
+                this.Cursor = Cursors.Default;
             }
         }
 
@@ -274,6 +280,26 @@ namespace Sys.Platform.Forms
                 node.Tag = new EnumType(name);
                 this.treeEnumList.Nodes.Add(node);
             }
+        }
+
+        private void btnGenDict_Click(object sender, EventArgs e)
+        {
+            this.Cursor = Cursors.WaitCursor;
+
+            this.MassageManager.Clear();
+
+            foreach (Type type in this.enumList)
+            {
+                EnumType enumType = new EnumType(type);
+                enumType.Save();
+
+                this.MassageManager.Information(0, string.Format("enum {0} is saved into database", type.FullName), typeof(EnumField).TableName().ToString());
+            }
+            
+            this.MassageManager.Post();
+            this.InformationMessage = "Completed to generate Enum Dictionary";
+
+            this.Cursor = Cursors.Default;
         }
 
      

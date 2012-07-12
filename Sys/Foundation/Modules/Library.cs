@@ -119,6 +119,10 @@ namespace Sys.Modules
             return dict;
         }
 
+        /// <summary>
+        /// Get Enum Types from C# source code
+        /// </summary>
+        /// <returns></returns>
         public static List<Type> GetEnumTypeList()
         {
             List<Type> list = new List<Type>();
@@ -139,6 +143,21 @@ namespace Sys.Modules
 
             return list;
         }
+
+        /// <summary>
+        /// Save Enum into Dictionary in database from C# Enum Types
+        /// </summary>
+        public static void GenerateEnumDictionary()
+        {
+            IEnumerable<Type> enumList = GetEnumTypeList();
+
+            foreach (Type type in enumList)
+            {
+                EnumType enumType = new EnumType(type);
+                enumType.Save();
+            }
+        }
+
 
         public static Assembly GetRegisteredAssembly(string moduleName)
         {

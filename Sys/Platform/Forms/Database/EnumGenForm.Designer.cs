@@ -66,6 +66,8 @@
             this.splitterItem1 = new DevExpress.XtraLayout.SplitterItem();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.jGridView1 = new Sys.ViewManager.Forms.JGridView();
+            this.btnGenDict = new System.Windows.Forms.ToolStripButton();
+            this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
             this.layoutControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.rgModifier.Properties)).BeginInit();
@@ -95,6 +97,8 @@
             // 
             // toolStrip1
             // 
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnGenDict});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(804, 25);
@@ -105,7 +109,6 @@
             // 
             this.layoutControl1.Controls.Add(this.gridFields);
             this.layoutControl1.Controls.Add(this.rgModifier);
-            this.layoutControl1.Controls.Add(this.btnNewEnums);
             this.layoutControl1.Controls.Add(this.btnBrowse);
             this.layoutControl1.Controls.Add(this.btnGenEnum);
             this.layoutControl1.Controls.Add(this.comboModule);
@@ -114,6 +117,7 @@
             this.layoutControl1.Controls.Add(this.txtAssembly);
             this.layoutControl1.Controls.Add(this.txtPath);
             this.layoutControl1.Controls.Add(this.treeEnumList);
+            this.layoutControl1.Controls.Add(this.btnNewEnums);
             this.layoutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.layoutControl1.Location = new System.Drawing.Point(0, 25);
             this.layoutControl1.Name = "layoutControl1";
@@ -144,7 +148,7 @@
             // 
             this.btnNewEnums.Location = new System.Drawing.Point(635, 363);
             this.btnNewEnums.Name = "btnNewEnums";
-            this.btnNewEnums.Size = new System.Drawing.Size(130, 36);
+            this.btnNewEnums.Size = new System.Drawing.Size(130, 54);
             this.btnNewEnums.TabIndex = 13;
             this.btnNewEnums.Text = "Create new Enum Type";
             this.btnNewEnums.UseVisualStyleBackColor = true;
@@ -347,7 +351,7 @@
             this.layoutControlItem10.CustomizationFormText = "layoutControlItem10";
             this.layoutControlItem10.Location = new System.Drawing.Point(303, 320);
             this.layoutControlItem10.Name = "layoutControlItem10";
-            this.layoutControlItem10.Size = new System.Drawing.Size(134, 40);
+            this.layoutControlItem10.Size = new System.Drawing.Size(134, 58);
             this.layoutControlItem10.Text = "layoutControlItem10";
             this.layoutControlItem10.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem10.TextToControlDistance = 0;
@@ -367,9 +371,9 @@
             // 
             this.emptySpaceItem3.AllowHotTrack = false;
             this.emptySpaceItem3.CustomizationFormText = "emptySpaceItem3";
-            this.emptySpaceItem3.Location = new System.Drawing.Point(303, 360);
+            this.emptySpaceItem3.Location = new System.Drawing.Point(303, 378);
             this.emptySpaceItem3.Name = "emptySpaceItem3";
-            this.emptySpaceItem3.Size = new System.Drawing.Size(134, 146);
+            this.emptySpaceItem3.Size = new System.Drawing.Size(134, 128);
             this.emptySpaceItem3.Text = "emptySpaceItem3";
             this.emptySpaceItem3.TextSize = new System.Drawing.Size(0, 0);
             // 
@@ -479,6 +483,15 @@
             this.jGridView1.Size = new System.Drawing.Size(261, 293);
             this.jGridView1.TabIndex = 16;
             // 
+            // btnGenDict
+            // 
+            this.btnGenDict.Image = global::Sys.Platform.Properties.Resources.book_open;
+            this.btnGenDict.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnGenDict.Name = "btnGenDict";
+            this.btnGenDict.Size = new System.Drawing.Size(165, 22);
+            this.btnGenDict.Text = "Generate Enum Dictionary";
+            this.btnGenDict.Click += new System.EventHandler(this.btnGenDict_Click);
+            // 
             // EnumGenForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -488,6 +501,8 @@
             this.Controls.Add(this.toolStrip1);
             this.Name = "EnumGenForm";
             this.Text = "Generate Enum Types";
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).EndInit();
             this.layoutControl1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.rgModifier.Properties)).EndInit();
@@ -557,5 +572,6 @@
         private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem5;
         private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem6;
         private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem7;
+        private System.Windows.Forms.ToolStripButton btnGenDict;
     }
 }
