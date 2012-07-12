@@ -38,6 +38,16 @@ namespace Sys.DataManager
             return sb.ToString();
         }
 
+        public bool Validate(List<string> messages)
+        {
+            bool good = Identifier(this.Feature).Equals(this.Feature);
+           
+            if (!good)
+               messages.Add(string.Format("Invalid identifier: {0}", this.Feature));
+
+            return good;
+        }
+
         public string Caption
         {
             get
@@ -51,12 +61,13 @@ namespace Sys.DataManager
 
         public string ToCode()
         {
-            return string.Format("\t\t{0}\t{1} = {2}", new EnumFieldAttribute(this.Caption), Identifier(this.Feature), this.Value);
+            return string.Format("\t\t{0}\r\n\t\t{1} = {2}", new FieldAttribute(this.Caption), this.Feature, this.Value);
         }
 
+        
         public override string ToString()
         {
-            return string.Format("{0}.{1}={2}", this.Category, Identifier(this.Feature), this.Value);
+            return string.Format("{0}.{1}={2}", this.Category, this.Feature, this.Value);
         }
     }
 }

@@ -34,6 +34,11 @@ namespace Sys
                 MessageCleared(this, new EventArgs());
         }
 
+        public void Error(string description, string location)
+        {
+            Error(0, description, location);
+        }
+
         public void Error(int code, string description, string location)
         {
             Message item = new Message();
@@ -44,6 +49,11 @@ namespace Sys
             Add(item);
         }
 
+        public void Warning(string description, string location)
+        {
+            Warning(0, description, location);
+        }
+
         public void Warning(int code, string description, string location)
         {
             Message item = new Message();
@@ -52,6 +62,11 @@ namespace Sys
             item.Description = description;
             item.Location = location;
             Add(item);
+        }
+
+        public void Information(string description, string location)
+        {
+            Information(0, description, location);
         }
 
         public void Information(int code, string description, string location)
@@ -71,6 +86,12 @@ namespace Sys
                 return ;
 
             this.errors.Add(item);
+        }
+
+        public void Add(IEnumerable<string> messages)
+        {
+            foreach(string message in messages)
+               this.errors.Add(new Message(message));
         }
     }
 

@@ -242,14 +242,17 @@ namespace Sys.Platform.Forms
             try
             {
                 GetEnumTypeFromGrid();
-
-                if (selectedEnumType.Fields.Count == 0)
+                List<string> messages = new List<string>();
+                if(!selectedEnumType.Validate(messages))
                 {
-                    this.ErrorMessage = "Enum fields not defined.";
+                    this.MassageManager.Clear();
+                    this.MassageManager.Add(messages);
+                    this.ErrorMessage = "Invalid enum definition";
+                    this.MassageManager.Post();
                     return;
                 }
 
-                string sourceCode = selectedEnumType.ToCode();
+                string sourceCode = selectedEnumType.ToCode(this.Namespace);
                 System.IO.StreamWriter sw = new System.IO.StreamWriter(string.Format("{0}\\{1}.cs", this.Path, selectedEnumType.Name));
                 sw.Write(sourceCode);
                 sw.Close();
@@ -293,7 +296,7 @@ namespace Sys.Platform.Forms
                 EnumType enumType = new EnumType(type);
                 enumType.Save();
 
-                this.MassageManager.Information(0, string.Format("enum {0} is saved into database", type.FullName), typeof(EnumField).TableName().ToString());
+                this.MassageManager.Information(string.Format("enum {0} is saved into database", type.FullName), typeof(EnumField).TableName().ToString());
             }
             
             this.MassageManager.Post();

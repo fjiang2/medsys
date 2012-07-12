@@ -47,7 +47,7 @@ namespace Sys.DataManager
                 field.Feature = fieldInfo.Name;
                 field.Value = (int)fieldInfo.GetValue(null);
 
-                EnumFieldAttribute[] attributes = (EnumFieldAttribute[])fieldInfo.GetCustomAttributes(typeof(EnumFieldAttribute), false);
+                FieldAttribute[] attributes = (FieldAttribute[])fieldInfo.GetCustomAttributes(typeof(FieldAttribute), false);
                 if (attributes.Length > 0)
                 {
                     field.Label = attributes[0].Caption;
@@ -56,6 +56,39 @@ namespace Sys.DataManager
                 this.fields.Add(field);
             }
         }
+
+        public bool Validate(List<string> messages)
+        {
+            DPList<EnumField> list = new DPList<EnumField>(this.fields);
+
+            bool good = true;
+            foreach (EnumField field in list)
+            {
+                if (!field.Validate(messages))
+                    good = false;
+            }
+
+            if (list.Count == 0)
+            {
+                messages.Add("Enum fields not defined.");
+                good = false;
+            }
+
+            if (list.ToArray<string>(EnumField._Feature).Distinct().Count() != list.Count)
+            {
+                messages.Add("Duplicated field names found.");
+                good = false;
+            }
+
+            if (list.ToArray<int>(EnumField._Value).Distinct().Count() != list.Count)
+            {
+                messages.Add("Duplicated values found.");
+                good = false;
+            }
+
+            return good;
+        }
+
 
         public void Save()
         {
@@ -75,22 +108,22 @@ namespace Sys.DataManager
         }
 
 
-        public string ToCode()
+        public string ToCode(string nameSpace)
         {
-            string format =@"
-using System;
+            string format = 
+@"using System;
 using Sys.Data;
 
-namespace App.Data
+namespace {0}
 {{
-    {0}
-    public enum {1}
+    {1}
+    public enum {2}
     {{
-{2}
+{3}
     }}
 }}
 ";
-            return string.Format(format, new EnumTypeAttribute(name), name, string.Join(",\r\n", fields.Select(field=>field.ToCode())));
+            return string.Format(format, nameSpace, new DataEnumAttribute(), name, string.Join(",\r\n\r\n", fields.Select(field=>field.ToCode())));
         }
 
         public override string ToString()

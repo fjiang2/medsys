@@ -118,13 +118,31 @@ namespace Sys.Data
         {
             FieldInfo fieldInfo = typeof(T).GetField(fieldName, BindingFlags.Instance | BindingFlags.Public| BindingFlags.NonPublic);
 
-            F[] values = new F[this.Count];
-            int i = 0;
-            foreach (T t in this)
+            if (fieldInfo != null)
             {
-                values[i++] = (F)fieldInfo.GetValue(t);
+                F[] values = new F[this.Count];
+                int i = 0;
+                foreach (T t in this)
+                {
+                    values[i++] = (F)fieldInfo.GetValue(t);
+                }
+                return values;
             }
-            return values;
+
+            PropertyInfo propertyInfo = typeof(T).GetProperty(fieldName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+            if (propertyInfo != null)
+            {
+                F[] values = new F[this.Count];
+                int i = 0;
+                foreach (T t in this)
+                {
+                    values[i++] = (F)propertyInfo.GetValue(t, null);
+                }
+
+                return values;
+            }
+
+            return null;
         }
 
         public void Save()
