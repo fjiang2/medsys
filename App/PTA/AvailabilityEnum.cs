@@ -1,8 +1,9 @@
 using System;
 using Sys.Data;
 
-namespace App.Data
+namespace PTA
 {
+    [Flags]
     [DataEnum]
     public enum AvailabilityEnum
     {
@@ -13,6 +14,6 @@ namespace App.Data
 		Night = 2,
 
 		[Field("Weekend")]
-		Weekend = 3
+		Weekend = 4
     }
 }

@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 4/19/2012 5:59:16 PM
+//   by devel at 7/12/2012 2:16:58 PM
 //
 
 using System;
@@ -12,11 +12,11 @@ using Sys.Data;
 using Sys.DataManager;
 
 
-namespace App.Data.Dpo
+namespace Sys.DataManager.Dpo
 {
-    [Revision(9)]
-    [Table("theDepartment", Level.System)]    //Primary Keys = Name;  Identity = Dept_ID;
-    public class theDepartmentDpo : DPObject
+    [Revision(10)]
+    [Table("app00202", Level.System)]    //Primary Keys = Name;  Identity = Dept_ID;
+    public class appDepartmentDpo : DPObject
     {
 
 #pragma warning disable
@@ -29,17 +29,17 @@ namespace App.Data.Dpo
 
 #pragma warning restore
 
-        public theDepartmentDpo()
+        public appDepartmentDpo()
         {
         }
 
-        public theDepartmentDpo(DataRow dataRow)
+        public appDepartmentDpo(DataRow dataRow)
             :base(dataRow)
         {
         }
 
 
-        public theDepartmentDpo(string name)
+        public appDepartmentDpo(string name)
         {
            this.Name = name; 
 
@@ -85,7 +85,7 @@ namespace App.Data.Dpo
         { 
             get
             {
-              return new theDepartmentDpo().TableName.FullName;
+              return new appDepartmentDpo().TableName.FullName;
             }
         }
 

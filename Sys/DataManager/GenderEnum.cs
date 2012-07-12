@@ -1,7 +1,7 @@
 using System;
 using Sys.Data;
 
-namespace App.Data
+namespace Sys.DataManager
 {
     [DataEnum]
     public enum GenderEnum

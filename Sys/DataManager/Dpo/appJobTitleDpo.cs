@@ -12,11 +12,11 @@ using Sys.Data;
 using Sys.DataManager;
 
 
-namespace App.Data.Dpo
+namespace Sys.DataMananger.Dpo
 {
     [Revision(9)]
-    [Table("theJobTitle", Level.System)]    //Primary Keys = Job_ID;  Identity = Job_ID;
-    public class theJobTitleDpo : DPObject
+    [Table("app00203", Level.System)]    //Primary Keys = Job_ID;  Identity = Job_ID;
+    public class appJobTitleDpo : DPObject
     {
 
 #pragma warning disable
@@ -27,17 +27,17 @@ namespace App.Data.Dpo
 
 #pragma warning restore
 
-        public theJobTitleDpo()
+        public appJobTitleDpo()
         {
         }
 
-        public theJobTitleDpo(DataRow dataRow)
+        public appJobTitleDpo(DataRow dataRow)
             :base(dataRow)
         {
         }
 
 
-        public theJobTitleDpo(int job_id)
+        public appJobTitleDpo(int job_id)
         {
            this.Job_ID = job_id; 
 
@@ -83,7 +83,7 @@ namespace App.Data.Dpo
         { 
             get
             {
-              return new theJobTitleDpo().TableName.FullName;
+              return new appJobTitleDpo().TableName.FullName;
             }
         }
 

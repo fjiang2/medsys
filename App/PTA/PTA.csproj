@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{78D1FDBF-3E84-4D8B-AC56-B8747311D2B2}</ProjectGuid>
+    <ProjectGuid>{AC4B0A33-0804-409D-B5D4-AADA29206710}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>App.Data</RootNamespace>
-    <AssemblyName>App.Data</AssemblyName>
+    <RootNamespace>PTA</RootNamespace>
+    <AssemblyName>PTA</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,46 +31,38 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DevExpress.Data.v11.2, Version=11.2.10.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Printing.v11.2.Core, Version=11.2.10.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Utils.v11.2, Version=11.2.10.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraEditors.v11.2, Version=11.2.10.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraLayout.v11.2, Version=11.2.10.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Tie">
-      <HintPath>..\..\Lib\Tie.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Dpo\CategorieDpo.cs" />
-    <Compile Include="Dpo\CustomerCustomerDemoDpo.cs" />
-    <Compile Include="Dpo\CustomerDemographicDpo.cs" />
-    <Compile Include="Dpo\CustomerDpo.cs" />
-    <Compile Include="Dpo\EmployeeDpo.cs" />
-    <Compile Include="Dpo\EmployeeTerritorieDpo.cs" />
-    <Compile Include="Dpo\OrderDpo.cs" />
-    <Compile Include="Dpo\Order_DetailDpo.cs" />
-    <Compile Include="Dpo\ProductDpo.cs" />
-    <Compile Include="Dpo\RegionDpo.cs" />
-    <Compile Include="Dpo\ShipperDpo.cs" />
-    <Compile Include="Dpo\SupplierDpo.cs" />
-    <Compile Include="Dpo\TerritorieDpo.cs" />
-    <Compile Include="Package\CategorieDpoPackage.cs" />
-    <Compile Include="Package\CustomerDpoPackage.cs" />
-    <Compile Include="Package\EmployeeDpoPackage.cs" />
-    <Compile Include="Package\EmployeeTerritorieDpoPackage.cs" />
-    <Compile Include="Package\OrderDpoPackage.cs" />
-    <Compile Include="Package\Order_DetailDpoPackage.cs" />
-    <Compile Include="Package\ProductDpoPackage.cs" />
-    <Compile Include="Package\RegionDpoPackage.cs" />
-    <Compile Include="Package\ShipperDpoPackage.cs" />
-    <Compile Include="Package\SupplierDpoPackage.cs" />
-    <Compile Include="Package\TerritorieDpoPackage.cs" />
+    <Compile Include="AvailabilityEnum.cs" />
+    <Compile Include="Forms\RegisterForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\RegisterForm.Designer.cs">
+      <DependentUpon>RegisterForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MemeberEnum.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
+    <ProjectReference Include="..\..\Sys\BusinessRules\Sys.BusinessRules.csproj">
+      <Project>{21D52785-DCA0-46BB-B0FD-428FEFBD7B1D}</Project>
+      <Name>Sys.BusinessRules</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Sys\Foundation\Sys.Foundation.csproj">
       <Project>{30FC8D52-477A-415A-9680-B29F0C5A1606}</Project>
       <Name>Sys.Foundation</Name>
@@ -79,6 +71,16 @@
       <Project>{FE52736A-BA94-41FC-9FD3-A481A790FC9C}</Project>
       <Name>Sys.PersistentObjects</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Sys\ViewManager\Sys.ViewManager.csproj">
+      <Project>{A5D0E475-F068-4DB0-BD4B-B5647B588E08}</Project>
+      <Name>Sys.ViewManager</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Forms\RegisterForm.resx">
+      <DependentUpon>RegisterForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\licenses.licx" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

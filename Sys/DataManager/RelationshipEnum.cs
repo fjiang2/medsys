@@ -1,7 +1,7 @@
 using System;
 using Sys.Data;
 
-namespace App.Data
+namespace Sys.DataManager
 {
     [DataEnum]
     public enum RelationshipEnum
@@ -30,7 +30,10 @@ namespace App.Data
 		[Field("Grand Father")]
 		Grandfather = 8,
 
+		[Field("Spouse")]
+		Spouse = 10,
+
 		[Field("Other")]
-		Other = 9
+		Other = 99
     }
 }

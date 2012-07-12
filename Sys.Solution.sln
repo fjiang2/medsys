@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sys.PersistentObjects", "Sy
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "X12", "App\X12\X12.csproj", "{BF2440C5-6467-4ADF-8BEF-52251189AC3D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PTA", "App\PTA\PTA.csproj", "{AC4B0A33-0804-409D-B5D4-AADA29206710}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -171,6 +173,16 @@ Global
 		{BF2440C5-6467-4ADF-8BEF-52251189AC3D}.Release|Mixed Platforms.Build.0 = Release|x86
 		{BF2440C5-6467-4ADF-8BEF-52251189AC3D}.Release|x86.ActiveCfg = Release|x86
 		{BF2440C5-6467-4ADF-8BEF-52251189AC3D}.Release|x86.Build.0 = Release|x86
+		{AC4B0A33-0804-409D-B5D4-AADA29206710}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC4B0A33-0804-409D-B5D4-AADA29206710}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC4B0A33-0804-409D-B5D4-AADA29206710}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{AC4B0A33-0804-409D-B5D4-AADA29206710}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{AC4B0A33-0804-409D-B5D4-AADA29206710}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{AC4B0A33-0804-409D-B5D4-AADA29206710}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC4B0A33-0804-409D-B5D4-AADA29206710}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC4B0A33-0804-409D-B5D4-AADA29206710}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{AC4B0A33-0804-409D-B5D4-AADA29206710}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{AC4B0A33-0804-409D-B5D4-AADA29206710}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
