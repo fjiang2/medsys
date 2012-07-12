@@ -88,6 +88,7 @@ namespace Sys.DataManager
                 typeof(dictDatabaseDpo), 
                 typeof(dictDataTableDpo), 
                 typeof(dictDataColumnDpo), 
+                typeof(dictEnumTypeDpo), 
                 typeof(logDataSetDpo), 
                 typeof(logDataTableDpo), 
                 typeof(logDataColumnDpo),

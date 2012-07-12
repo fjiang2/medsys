@@ -71,6 +71,10 @@ namespace Sys.Platform.Forms
                     progressUnpackSystemData.ActionButton.Enabled = false;
                     this.pageUnpackSystemdata.AllowNext = true;
                 };
+
+                //Generate Enum Type Dictionary
+                Sys.Modules.Library.GenerateEnumDictionary();
+
             }
             else if (e.Page == this.pageUnpackSystemdata)
             {
