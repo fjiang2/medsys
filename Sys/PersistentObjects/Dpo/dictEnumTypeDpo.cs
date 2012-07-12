@@ -16,7 +16,7 @@ namespace Sys.PersistentObjects.Dpo
 {
     [Revision(0)]
     [Table("sys00204", Level.System, Pack = false)]    //Primary Keys = Category + Feature;  Identity = ID;
-    public class sysEnumTypeDpo : DPObject
+    public class dictEnumTypeDpo : DPObject
     {
 
 #pragma warning disable
@@ -29,17 +29,17 @@ namespace Sys.PersistentObjects.Dpo
 
 #pragma warning restore
 
-        public sysEnumTypeDpo()
+        public dictEnumTypeDpo()
         {
         }
 
-        public sysEnumTypeDpo(DataRow dataRow)
+        public dictEnumTypeDpo(DataRow dataRow)
             :base(dataRow)
         {
         }
 
 
-        public sysEnumTypeDpo(string category, string feature)
+        public dictEnumTypeDpo(string category, string feature)
         {
            this.Category = category; this.Feature = feature; 
 
@@ -85,7 +85,7 @@ namespace Sys.PersistentObjects.Dpo
         { 
             get
             {
-              return new sysEnumTypeDpo().TableName.FullName;
+              return new dictEnumTypeDpo().TableName.FullName;
             }
         }
 

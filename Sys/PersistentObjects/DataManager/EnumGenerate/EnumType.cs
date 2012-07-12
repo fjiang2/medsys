@@ -4,19 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Data;
 using Sys.Data;
+using System.Reflection;
 
 namespace Sys.DataManager
 {
     public class EnumType
     {
-        List<EnumTypeDpo> fields;
+        List<EnumField> fields;
         string name;
 
         /// <summary>
         /// Used for reading from database
         /// </summary>
         /// <param name="fields"></param>
-        public EnumType(List<EnumTypeDpo> fields)
+        public EnumType(List<EnumField> fields)
         {
             this.fields = fields;
             this.name = fields.FirstOrDefault().Category;
@@ -28,16 +29,47 @@ namespace Sys.DataManager
         /// <param name="name"></param>
         public EnumType(string name)
         {
-            this.fields = new List<EnumTypeDpo>();
             this.name = name;
+            this.fields = new List<EnumField>();
         }
+
+        public EnumType(Type type)
+        {
+            this.name = type.Name;
+            this.fields = new List<EnumField>();
+            foreach (FieldInfo fieldInfo in type.GetFields())
+            {
+                if (fieldInfo.Name == "value__")
+                    continue;
+
+                EnumField field = new EnumField();
+                field.Category = this.name;
+                field.Feature = fieldInfo.Name;
+                field.Value = (int)fieldInfo.GetValue(null);
+
+                EnumFieldAttribute[] attributes = (EnumFieldAttribute[])fieldInfo.GetCustomAttributes(typeof(EnumFieldAttribute), false);
+                if (attributes.Length > 0)
+                {
+                    field.Label = attributes[0].Caption;
+                }
+                
+                this.fields.Add(field);
+            }
+        }
+
+        public void Save()
+        {
+            foreach (EnumField field in this.fields)
+                field.Save();
+        }
+
 
         public string Name
         {
             get { return this.name; }
         }
 
-        public List<EnumTypeDpo> Fields
+        public List<EnumField> Fields
         {
             get { return this.fields; }
         }

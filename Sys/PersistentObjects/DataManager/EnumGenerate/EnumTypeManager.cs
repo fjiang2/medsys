@@ -12,7 +12,7 @@ namespace Sys.DataManager
 
         public EnumTypeManager()
         {
-            IEnumerable<EnumTypeDpo> list = new TableReader<EnumTypeDpo>().ToList().OrderBy(field => field.Category);
+            IEnumerable<EnumField> list = new TableReader<EnumField>().ToList().OrderBy(field => field.Category);
               
             types = new List<EnumType>();
 
