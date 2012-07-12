@@ -6,19 +6,19 @@ using Tie;
 namespace Sys.Data
 {
     [System.AttributeUsage(System.AttributeTargets.Field)]
-    public class EnumFieldAttribute : Attribute
+    public class FieldAttribute : Attribute
     {
         public string Caption;
 
 
-        public EnumFieldAttribute(string caption)
+        public FieldAttribute(string caption)
         {
             this.Caption = caption;
         }
 
         public override string ToString()
         {
-            string attribute = typeof(EnumFieldAttribute).Name.Replace("Attribute", "");
+            string attribute = typeof(FieldAttribute).Name.Replace("Attribute", "");
             return string.Format("[{0}(\"{1}\")]", attribute, Caption);
         }
     }

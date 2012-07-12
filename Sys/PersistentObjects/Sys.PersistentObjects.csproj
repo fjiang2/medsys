@@ -92,8 +92,8 @@
     <Compile Include="DataManager\SpGenerate\SpProc.cs" />
     <Compile Include="Data\Attribute\AssociationAttribute.cs" />
     <Compile Include="Data\Attribute\ColumnAttribute.cs" />
-    <Compile Include="Data\Attribute\EnumTypeAttribute.cs" />
-    <Compile Include="Data\Attribute\EnumFieldAttribute.cs" />
+    <Compile Include="Data\Attribute\DataEnumAttribute.cs" />
+    <Compile Include="Data\Attribute\FieldAttribute.cs" />
     <Compile Include="Data\Attribute\ForeignKeyAttribute.cs" />
     <Compile Include="Data\Attribute\Level.cs" />
     <Compile Include="Data\Attribute\LocatorAttribute.cs" />

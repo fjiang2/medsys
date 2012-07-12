@@ -133,7 +133,7 @@ namespace Sys.Modules
                 {
                     if (type.IsEnum)
                     {
-                        EnumTypeAttribute[] attributes = type.GetAttributes<EnumTypeAttribute>();
+                        DataEnumAttribute[] attributes = type.GetAttributes<DataEnumAttribute>();
                         if(attributes.Length > 0)
                             list.Add(type);
                     }

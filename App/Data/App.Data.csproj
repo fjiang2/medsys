@@ -44,8 +44,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AddressType.cs" />
-    <Compile Include="AvailabilityType.cs" />
+    <Compile Include="AddressEnum.cs" />
+    <Compile Include="AvailabilityEnum.cs" />
     <Compile Include="Dpo\CategorieDpo.cs" />
     <Compile Include="Dpo\CustomerCustomerDemoDpo.cs" />
     <Compile Include="Dpo\CustomerDemographicDpo.cs" />
@@ -63,7 +63,8 @@
     <Compile Include="Dpo\theDepartmentDpo.cs" />
     <Compile Include="Dpo\theEmployeeDpo.cs" />
     <Compile Include="Dpo\theJobTitleDpo.cs" />
-    <Compile Include="MemeberType.cs" />
+    <Compile Include="GenderEnum.cs" />
+    <Compile Include="MemeberEnum.cs" />
     <Compile Include="Package\CategorieDpoPackage.cs" />
     <Compile Include="Package\CustomerDpoPackage.cs" />
     <Compile Include="Package\EmployeeDpoPackage.cs" />
@@ -75,9 +76,9 @@
     <Compile Include="Package\ShipperDpoPackage.cs" />
     <Compile Include="Package\SupplierDpoPackage.cs" />
     <Compile Include="Package\TerritorieDpoPackage.cs" />
-    <Compile Include="PhoneType.cs" />
+    <Compile Include="PhoneEnum.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RelationshipType.cs" />
+    <Compile Include="RelationshipEnum.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Sys\Foundation\Sys.Foundation.csproj">
