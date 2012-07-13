@@ -305,8 +305,7 @@ namespace Sys.ViewManager.Forms
         /// <param name="collect">function of collect value</param>
         /// <param name="columnName">Column name</param>
         /// <returns></returns>
-        public BindRow Connect<TControl, TColumn>(Control control, Action<TControl, TColumn> fill, Func<TControl, TColumn> collect, string columnName) 
-            where TControl : System.Windows.Forms.Control
+        public BindRow Connect<TControl, TColumn>(TControl control, Action<TControl, TColumn> fill, Func<TControl, TColumn> collect, string columnName) 
         {
             DataField field = AddField(columnName);
             JWinControl x = new JGenericControl<TControl, TColumn>(control, fill, collect, field);
