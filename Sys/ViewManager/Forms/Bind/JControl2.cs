@@ -7,14 +7,14 @@ using Sys.Data;
 
 namespace Sys.ViewManager.Forms
 {
-    public class JControl<TValue, TControl> : JWinControl
+    public class JControl<TColumnValue, TControlValue> : JWinControl
     {
         PropertyInfo propertyInfo;
 
-        private Func<TValue, TControl> fill = null;
-        private Func<TControl, TValue> collect = null;
+        private Func<TColumnValue, TControlValue> fill = null;
+        private Func<TControlValue, TColumnValue> collect = null;
 
-        public JControl(Control control, string property, Func<TValue, TControl> fill, Func<TControl, TValue> collect, DataField field)
+        public JControl(Control control, string property, Func<TColumnValue, TControlValue> fill, Func<TControlValue, TColumnValue> collect, DataField field)
             : base(control, field)
         {
             Type type = control.GetType();
@@ -35,12 +35,15 @@ namespace Sys.ViewManager.Forms
         {
             base.Fill();
 
-            if(value == System.DBNull.Value || value == null)
-                value = null;
+            if(this.value == System.DBNull.Value || value == null)
+                this.value = null;
 
-            if (propertyInfo.CanWrite && fill != null)
+            if (propertyInfo.CanWrite)
             {
-                propertyInfo.SetValue(Control, fill((TValue)value), null);
+                if(fill != null)
+                    propertyInfo.SetValue(Control, fill((TColumnValue)this.value), null);
+                else
+                    propertyInfo.SetValue(Control, this.value, null);
             }
 
             return;
@@ -48,11 +51,16 @@ namespace Sys.ViewManager.Forms
 
         public override void Collect()
         {
-            if (propertyInfo.CanRead && collect != null)
-                value = collect((TControl)propertyInfo.GetValue(Control, null));
+            if (propertyInfo.CanRead)
+            {
+                if (collect != null)
+                    this.value = collect((TControlValue)propertyInfo.GetValue(Control, null));
+                else
+                    this.value = propertyInfo.GetValue(Control, null);
+            }
 
-            if (value == null)
-                value = System.DBNull.Value;
+            if (this.value == null)
+                this.value = System.DBNull.Value;
 
             base.Collect();
             return;

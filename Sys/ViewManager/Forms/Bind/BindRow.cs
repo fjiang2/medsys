@@ -276,20 +276,22 @@ namespace Sys.ViewManager.Forms
 
 
         /// <summary>
-        /// fill Windows Control by function fill(value), collect value from Windows Control by function collect(control)
+        /// fill Property of Windows Control by function fill(columnValue), collect column value from Windows Control by function collect(propertyValue)
         /// </summary>
-        /// <typeparam name="TValue"></typeparam>
-        /// <typeparam name="TControl"></typeparam>
+        /// <typeparam name="TColumnValue">type of Table's column</typeparam>
+        /// <typeparam name="TControlValue">type of Control's Property bound</typeparam>
         /// <param name="control"></param>
         /// <param name="property">Windows Control's Property name</param>
-        /// <param name="fill"></param>
-        /// <param name="collect"></param>
+        /// <param name="fill">convert column value from database into value Windows Control needed</param>
+        /// <param name="collect">convert value from Windows Control into value saved in the database</param>
         /// <param name="columnName"></param>
         /// <returns></returns>
-        public BindRow Connect<TValue, TControl>(Control control, string property, Func<TValue, TControl> fill, Func<TControl, TValue> collect, string columnName)
+        public BindRow Connect<TColumnValue, TControlValue>(Control control, string property, 
+            Func<TColumnValue, TControlValue> fill, Func<TControlValue, TColumnValue> collect, 
+            string columnName)
         {
             DataField field = AddField(columnName);
-            JWinControl x = new JControl<TValue, TControl>(control, property, fill, collect, field);
+            JWinControl x = new JControl<TColumnValue, TControlValue>(control, property, fill, collect, field);
             return Connect(x, columnName);
         }
 
