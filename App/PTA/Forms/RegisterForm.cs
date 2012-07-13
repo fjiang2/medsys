@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using Sys.ViewManager.Forms;
 using Sys.DataManager.Dpo;
+using Sys.DataManager;
 using PTA.Dpo;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
@@ -16,8 +17,8 @@ namespace PTA.Forms
 {
     public partial class RegisterForm : BaseForm
     {
-        BindDpo<appPersonDpo> bdStudentDemography;
-        BindDpo<appPersonDpo> bdAdultDemography;
+        BindDpo<PersonDpo> bdStudentDemography;
+        BindDpo<PersonDpo> bdAdultDemography;
 
         BindDpo<appAddressDpo> bdAddress;
         BindDpo<appPhoneDpo> bdPhone;
@@ -34,11 +35,11 @@ namespace PTA.Forms
         {
             InitializeComponent();
 
-            bdStudentDemography = new BindDpo<appPersonDpo>();
+            bdStudentDemography = new BindDpo<PersonDpo>();
             bdStudentDemography.Connect(this.txtStudent_FirstName, appPersonDpo._First_Name);
             bdStudentDemography.Connect(this.txtStudent_LastName, appPersonDpo._Last_Name);
 
-            bdAdultDemography = new BindDpo<appPersonDpo>();
+            bdAdultDemography = new BindDpo<PersonDpo>();
 
             bdAddress = new BindDpo<appAddressDpo>();
             bdPhone = new BindDpo<appPhoneDpo>();

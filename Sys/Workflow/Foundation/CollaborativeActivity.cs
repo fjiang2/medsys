@@ -8,7 +8,7 @@ using Sys.ViewManager;
 using System.Data;
 using Sys.Data;
 using Sys.Workflow.Collaborative;
-using Sys.DataManager;
+using Sys.Data.Manager;
 
 namespace Sys.Workflow
 {

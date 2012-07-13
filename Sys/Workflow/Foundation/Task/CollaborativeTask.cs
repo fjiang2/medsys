@@ -5,7 +5,7 @@ using System.Data;
 using Tie;
 using Sys.Xmpp;
 using Sys.Data;
-using Sys.DataManager;
+using Sys.Data.Manager;
 
 
 namespace Sys.Workflow

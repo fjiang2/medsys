@@ -9,7 +9,7 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Reflection;
 using Sys.Data;
-using Sys.DataManager;
+using Sys.Data.Manager;
 using Sys.Security;
 
 namespace X12

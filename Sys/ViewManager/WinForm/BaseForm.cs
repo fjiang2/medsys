@@ -11,7 +11,7 @@ using System.Drawing;
 using Tie;
 using Sys.Xmpp;
 using Sys.BusinessRules;
-using Sys.DataManager;
+using Sys.Data.Manager;
 using Sys.ViewManager.Manager;
 using Sys.ViewManager.Forms;
 using DevExpress.XtraBars;

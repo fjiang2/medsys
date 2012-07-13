@@ -4,7 +4,7 @@ using System.Text;
 using System.Data;
 using Tie;
 using Sys.Data;
-using Sys.DataManager;
+using Sys.Data.Manager;
 using Sys.Workflow.Dpo;
 namespace Sys.Workflow.Collaborative
 {

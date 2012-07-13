@@ -6,7 +6,7 @@ using Sys.Security;
 using Sys.Foundation.Dpo;
 using System.Drawing;
 using System.Data.SqlClient;
-using Sys.DataManager;
+using Sys.Data.Manager;
 using Tie;
 using Sys.OS;
 

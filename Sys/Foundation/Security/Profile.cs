@@ -5,7 +5,7 @@ using System.Data;
 using System.Text;
 using Tie;
 using Sys.Data;
-using Sys.DataManager;
+using Sys.Data.Manager;
 using Sys.Foundation.Dpo;
 
 namespace Sys.Security

@@ -5,7 +5,7 @@ using System.Data;
 using System.Drawing;
 using Sys.Data;
 using Sys.BusinessRules.Dpo;
-using Sys.DataManager;
+using Sys.Data.Manager;
 
 namespace Sys.BusinessRules
 {

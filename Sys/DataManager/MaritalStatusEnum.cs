@@ -1,7 +1,7 @@
 using System;
 using Sys.Data;
 
-namespace Sys.DataManager
+namespace Sys.Data.Manager
 {
     [DataEnum]
     public enum MaritalStatusEnum

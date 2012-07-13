@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Sys.Workflow;
 using Sys.Data;
-using Sys.DataManager;
+using Sys.Data.Manager;
 
 namespace Sys.SmartList
 {

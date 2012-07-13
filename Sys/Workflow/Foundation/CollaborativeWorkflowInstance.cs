@@ -5,7 +5,7 @@ using System.Text;
 using Tie;
 using System.Data;
 using Sys.Data;
-using Sys.DataManager;
+using Sys.Data.Manager;
 
 
 namespace Sys.Workflow

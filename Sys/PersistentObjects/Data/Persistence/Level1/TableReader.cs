@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Data;
 using Sys.Data;
-using Sys.DataManager;
+using Sys.Data.Manager;
 
 namespace Sys.Data
 {

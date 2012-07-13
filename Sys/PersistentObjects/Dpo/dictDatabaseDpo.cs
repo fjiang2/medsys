@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 4/19/2012 5:59:04 PM
+//   by devel at 7/13/2012 3:20:08 PM
 //
 
 using System;
@@ -9,12 +9,12 @@ using System.Text;
 using System.Data;
 using System.Drawing;
 using Sys.Data;
-using Sys.DataManager;
+using Sys.Data.Manager;
 
 
 namespace Sys.PersistentObjects.Dpo
 {
-    [Revision(11)]
+    [Revision(12)]
     [Table("sys00201", Level.System, Pack = false)]    //Primary Keys = name;  Identity = database_id;
     internal class dictDatabaseDpo : DPObject
     {

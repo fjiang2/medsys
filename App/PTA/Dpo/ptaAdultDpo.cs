@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 7/13/2012 2:55:32 PM
+//   by devel at 7/13/2012 3:21:11 PM
 //
 
 using System;
@@ -9,12 +9,12 @@ using System.Text;
 using System.Data;
 using System.Drawing;
 using Sys.Data;
-using Sys.DataManager;
+using Sys.Data.Manager;
 
 
 namespace PTA.Dpo
 {
-    [Revision(1)]
+    [Revision(2)]
     [Table("ptaAdults", Level.System, Pack = false)]    //Primary Keys = Person_ID;  Identity = ;
     public class ptaAdultDpo : DPObject
     {

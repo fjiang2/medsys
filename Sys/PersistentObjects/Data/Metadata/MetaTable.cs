@@ -7,7 +7,7 @@ using Sys.Data;
 using System.Reflection;
 using System.Linq;
 using Tie;
-using Sys.DataManager;
+using Sys.Data.Manager;
 using Sys.PersistentObjects.Dpo;
 
 namespace Sys.Data

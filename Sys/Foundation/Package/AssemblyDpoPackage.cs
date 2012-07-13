@@ -1,6 +1,6 @@
 //
 // Machine Packed Data
-//   by devel at 7/10/2012 4:14:08 PM
+//   by devel at 7/13/2012 3:21:36 PM
 //
 using System;
 using System.Data;
@@ -8,7 +8,7 @@ using System.Text;
 using System.Collections.Generic;
 using Sys;
 using Sys.Data;
-using Sys.DataManager;
+using Sys.Data.Manager;
 using Sys.Foundation.Dpo;
 
 namespace Sys.Foundation.Package
@@ -28,6 +28,15 @@ namespace Sys.Foundation.Package
 			dpo.FullName = "App.Data";
 			dpo.Inactive = false;
 			dpo.Location = "App\\Data";
+			list.Add(dpo);
+
+			dpo = new AssemblyDpo();
+			dpo.ID = 18;
+			dpo.AssemblyName = "PTA";
+			dpo.FullName = "PTA";
+			dpo.Label = "PTA";
+			dpo.Inactive = false;
+			dpo.Location = "App\\PTA";
 			list.Add(dpo);
 
 			dpo = new AssemblyDpo();

@@ -5,7 +5,7 @@ using System.Text;
 using System.Data;
 using Sys.Data;
 using Sys.PersistentObjects.Dpo;
-using Sys.DataManager;
+using Sys.Data.Manager;
 using System.Reflection;
 using Sys.Foundation.Dpo;
 
