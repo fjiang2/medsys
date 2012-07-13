@@ -6,10 +6,11 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Sys.ViewManager.Forms;
 
 namespace PTA.Forms
 {
-    public partial class RegisterForm : Form
+    public partial class RegisterForm : BaseForm
     {
         public RegisterForm()
         {
