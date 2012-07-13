@@ -242,11 +242,11 @@ namespace Sys.Platform.Forms
             try
             {
                 GetEnumTypeFromGrid();
-                this.MassageManager.Clear();
-                if (!selectedEnumType.Validate(this.MassageManager))
+                this.MessageManager.Clear();
+                if (!selectedEnumType.Validate(this.MessageManager))
                 {
-                    this.ErrorMessage = "Invalid enum definition, " + this.MassageManager.ToString();
-                    this.MassageManager.Commit();
+                    this.ErrorMessage = "Invalid enum definition, " + this.MessageManager.ToString();
+                    this.MessageManager.Commit();
                     return;
                 }
 
@@ -287,17 +287,17 @@ namespace Sys.Platform.Forms
         {
             this.Cursor = Cursors.WaitCursor;
 
-            this.MassageManager.Clear();
+            this.MessageManager.Clear();
 
             foreach (Type type in this.enumList)
             {
                 EnumType enumType = new EnumType(type);
                 enumType.Save();
 
-                this.MassageManager.Information(string.Format("enum {0} is saved into database", type.FullName), typeof(EnumField).TableName().ToString());
+                this.MessageManager.Information(string.Format("enum {0} is saved into database", type.FullName), typeof(EnumField).TableName().ToString());
             }
             
-            this.MassageManager.Commit();
+            this.MessageManager.Commit();
             this.InformationMessage = "Completed to generate Enum Dictionary";
 
             this.Cursor = Cursors.Default;

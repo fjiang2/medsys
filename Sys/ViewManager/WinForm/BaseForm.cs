@@ -489,7 +489,7 @@ namespace Sys.ViewManager.Forms
 
 
 
-        protected MassageManager MassageManager
+        protected MessageManager MessageManager
         {
             get { return ((ErrorListControl)this.MainForm.FormDockManager[typeof(ErrorListControl)]).Manager; }
         }
@@ -584,16 +584,16 @@ namespace Sys.ViewManager.Forms
 
             switch (message.Level)
             {
-                case Sys.MessageLevel.information:
+                case Sys.MessageLevel.Information:
                     this.InformationMessage = message.ToString();
                     break;
 
-                case Sys.MessageLevel.error:
-                case Sys.MessageLevel.fatal:
+                case Sys.MessageLevel.Error:
+                case Sys.MessageLevel.Fatal:
                     this.ErrorMessage = message.ToString();
                     break;
 
-                case Sys.MessageLevel.warning:
+                case Sys.MessageLevel.Warning:
                     this.WarningMessage = message.ToString();
                     break;
             }

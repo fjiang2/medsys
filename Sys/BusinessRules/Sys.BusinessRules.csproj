@@ -56,7 +56,6 @@
     <Compile Include="Rule\RuleEngine.cs" />
     <Compile Include="Rule\RuleEvent.cs" />
     <Compile Include="Rule\RuleFunction.cs" />
-    <Compile Include="Rule\SeverityLevel.cs" />
     <Compile Include="Rule\ValidateProvider.cs" />
     <Compile Include="Rule\Validator.cs" />
     <Compile Include="Rule\ValidatorFunction.cs" />

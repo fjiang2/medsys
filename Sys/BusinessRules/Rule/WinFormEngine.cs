@@ -62,7 +62,7 @@ namespace Sys.BusinessRules
         #region Apply/Clear Control
         internal static void ApplyControl(RuleEvent ruleEvent, ToolTip toolTip, Control control)
         {
-            if (ruleEvent.SeverityLevel != SeverityLevel.None)
+            if (ruleEvent.MessageLevel != MessageLevel.None)
             {
                 control.BackColor = ruleEvent.ErrorColor;
                 toolTip.SetToolTip(control, ruleEvent.ToString());
@@ -86,7 +86,7 @@ namespace Sys.BusinessRules
 
         internal static void ApplyControl(RuleEvent ruleEvent, ErrorProvider errorProvider, Control control)
         {
-            if (ruleEvent.SeverityLevel == SeverityLevel.Confirmation && !ruleEvent.Confirmed)
+            if (ruleEvent.MessageLevel == MessageLevel.Confirmation && !ruleEvent.Confirmed)
             {
                 ruleEvent.Confirmed = DialogResult.Yes == MessageBox.Show(ruleEvent.ToString(), "Ignore the error and continue ?", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
             }

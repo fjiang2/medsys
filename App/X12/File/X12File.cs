@@ -22,7 +22,7 @@ namespace X12.File
           
         }
 
-        public void Parse(Worker worker, MassageManager errorManager)
+        public void Parse(Worker worker, MessageManager errorManager)
         {
             this.parser = new Parser(lines, worker, errorManager);
             parser.Parse();

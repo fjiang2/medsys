@@ -15,7 +15,7 @@ namespace Sys
         public Message()
         {
             this.ID = 0;
-            this.Level = MessageLevel.error;
+            this.Level = MessageLevel.Error;
         }
 
         public Message(MessageLevel level, string format, params object[] args)
@@ -26,7 +26,7 @@ namespace Sys
         }
 
         public Message(string format, params object[] args)
-            : this(MessageLevel.error, format, args)
+            : this(MessageLevel.Error, format, args)
         {
 
         }

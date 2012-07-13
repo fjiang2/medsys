@@ -58,6 +58,7 @@
     <Compile Include="Dpo\appJobTitleDpo.cs" />
     <Compile Include="IApproval.cs" />
     <Compile Include="MaritalStatusEnum.cs" />
+    <Compile Include="Model\AddressDpo.cs" />
     <Compile Include="Model\Doc01Dpo.cs" />
     <Compile Include="Model\Doc02Dpo.cs" />
     <Compile Include="DataFile\Document\Document.cs" />
@@ -69,6 +70,7 @@
     <Compile Include="DataFile\Image\RowImageList.cs" />
     <Compile Include="GenderEnum.cs" />
     <Compile Include="Model\PersonDpo.cs" />
+    <Compile Include="Model\PhoneDpo.cs" />
     <Compile Include="PhoneEnum.cs" />
     <Compile Include="Model\PictureDpo.cs" />
     <Compile Include="Dpo\sysDOC01Dpo.cs" />

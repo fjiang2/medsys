@@ -6,6 +6,7 @@ using System.Reflection;
 using Tie;
 using System.Text.RegularExpressions;
 using System.Data;
+using Sys;
 
 namespace Sys.BusinessRules
 {
@@ -35,7 +36,7 @@ namespace Sys.BusinessRules
         
         public void DisplayMessageOn(Control control, string message)
         {
-            RuleEvent ruleEvent = new RuleEvent(control.Name, SeverityLevel.Error, message);
+            RuleEvent ruleEvent = new RuleEvent(control.Name, MessageLevel.Error, message);
             ruleEvent.OriginalColor = control.BackColor;
             DisplayMessage(ruleEvent, control);
             messages.Add(control, ruleEvent);
@@ -154,12 +155,12 @@ namespace Sys.BusinessRules
         /// <param name="errorCode"></param>
         /// <param name="severityLevel"></param>
         /// <returns></returns>
-        public bool Exist(int errorCode, SeverityLevel severityLevel)
+        public bool Exist(int errorCode, MessageLevel severityLevel)
         {
             foreach (Validator validator in validators)
             {
                 RuleEvent ruleEvent = validator.Search(errorCode);
-                if (ruleEvent != null && ruleEvent.SeverityLevel == severityLevel)
+                if (ruleEvent != null && ruleEvent.MessageLevel == severityLevel)
                 {
                     return true;
                 }
@@ -221,12 +222,32 @@ namespace Sys.BusinessRules
 #if DEBUG
                 row["Place"] = ruleEvent.keyName;
 #endif                
-                row["Severity"] = ruleEvent.SeverityLevel.ToString();
+                row["Severity"] = ruleEvent.MessageLevel.ToString();
                 row["Message"] = ruleEvent.Message;
                 dt.Rows.Add(row);
             }
 
             return dt;
+        }
+
+        public IEnumerable<Message> ToEnumerable()
+        {
+            List<Message> list = new List<Message>();
+            foreach (RuleEvent ruleEvent in BrokenRules)
+            { 
+                Message message = new Message();
+                
+                if(ruleEvent.ErrorCode != -1 )
+                    message.ID = ruleEvent.ErrorCode;
+                
+                message.Level = ruleEvent.MessageLevel;
+                message.Description = ruleEvent.Message;
+                message.Location =  ruleEvent.keyName;
+                
+                list.Add(message);
+            }
+
+            return list;
         }
     }
 }

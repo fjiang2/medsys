@@ -13,7 +13,7 @@ namespace Sys.ViewManager.Forms
 {
     public partial class ErrorListControl : UserControl
     {
-        MassageManager manager;
+        MessageManager manager;
         DataTable dt;
 
         public ErrorListControl()
@@ -23,7 +23,7 @@ namespace Sys.ViewManager.Forms
             gridView1.OptionsView.ShowFilterPanelMode = DevExpress.XtraGrid.Views.Base.ShowFilterPanelMode.Never;
 
             this.dt = new DataTable();
-            this.manager = new MassageManager();
+            this.manager = new MessageManager();
             
             dt.Columns.Add(new DataColumn("ErrorTy", typeof(int)));
             dt.Columns.Add(new DataColumn("ID", typeof(int)));
@@ -37,7 +37,7 @@ namespace Sys.ViewManager.Forms
 
             gridControl1.DataSource = dt;
 
-            manager.MessageChanged += new MassageManager.MessageHandler(manager_MessageChanged);
+            manager.MessageChanged += new MessageManager.MessageHandler(manager_MessageChanged);
             manager.MessageCleared += new EventHandler(manager_MessageCleared);
         }
 
@@ -57,15 +57,15 @@ namespace Sys.ViewManager.Forms
             {
                 switch (item.Level)
                 {
-                    case MessageLevel.error:
+                    case MessageLevel.Error:
                         errorCount++;
                         break;
 
-                    case MessageLevel.warning:
+                    case MessageLevel.Warning:
                         warningCount++;
                         break;
 
-                    case MessageLevel.information:
+                    case MessageLevel.Information:
                         informationCount++;
                         break;
                 }
@@ -89,24 +89,24 @@ namespace Sys.ViewManager.Forms
 
         }
 
-        public MassageManager Manager
+        public MessageManager Manager
         {
             get { return this.manager; }
         }
 
         private void txtErrors_Click(object sender, EventArgs e)
         {
-            this.gridColumnFlag.FilterInfo = new DevExpress.XtraGrid.Columns.ColumnFilterInfo(string.Format("ErrorTy = {0}", (int)MessageLevel.error));
+            this.gridColumnFlag.FilterInfo = new DevExpress.XtraGrid.Columns.ColumnFilterInfo(string.Format("ErrorTy = {0}", (int)MessageLevel.Error));
         }
 
         private void txtWarnings_Click(object sender, EventArgs e)
         {
-            this.gridColumnFlag.FilterInfo = new DevExpress.XtraGrid.Columns.ColumnFilterInfo(string.Format("ErrorTy = {0}", (int)MessageLevel.warning));
+            this.gridColumnFlag.FilterInfo = new DevExpress.XtraGrid.Columns.ColumnFilterInfo(string.Format("ErrorTy = {0}", (int)MessageLevel.Warning));
         }
 
         private void txtMessages_Click(object sender, EventArgs e)
         {
-            this.gridColumnFlag.FilterInfo = new DevExpress.XtraGrid.Columns.ColumnFilterInfo(string.Format("ErrorTy = {0}", (int)MessageLevel.information));
+            this.gridColumnFlag.FilterInfo = new DevExpress.XtraGrid.Columns.ColumnFilterInfo(string.Format("ErrorTy = {0}", (int)MessageLevel.Information));
         }
 
     }

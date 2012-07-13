@@ -29,7 +29,7 @@ namespace Sys
         }
 
         public SysException(string format, params object[] args)
-            : this(MessageLevel.error, format, args)
+            : this(MessageLevel.Error, format, args)
         {
 
         }
@@ -37,7 +37,7 @@ namespace Sys
         public SysException(ExceptionLevel clss, string message)
             :base(message)
         {
-            this.level = MessageLevel.error; 
+            this.level = MessageLevel.Error; 
             this.clss = clss;
         }
 

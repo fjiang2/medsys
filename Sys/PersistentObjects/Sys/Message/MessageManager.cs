@@ -7,7 +7,7 @@ using System.Data;
 
 namespace Sys
 {
-    public class MassageManager
+    public class MessageManager
     {
         List<Message> messages = new List<Message>();
 
@@ -16,7 +16,7 @@ namespace Sys
         public event MessageHandler MessageChanged;
         public event EventHandler MessageCleared;
 
-        public MassageManager()
+        public MessageManager()
         {
         }
 
@@ -48,7 +48,7 @@ namespace Sys
         {
             Message item = new Message();
             item.ID = code;
-            item.Level = MessageLevel.error;
+            item.Level = MessageLevel.Error;
             item.Description = description;
             item.Location = location;
             Add(item);
@@ -63,7 +63,7 @@ namespace Sys
         {
             Message item = new Message();
             item.ID = code;
-            item.Level = MessageLevel.warning;
+            item.Level = MessageLevel.Warning;
             item.Description = description;
             item.Location = location;
             Add(item);
@@ -78,7 +78,7 @@ namespace Sys
         {
             Message item = new Message();
             item.ID = code;
-            item.Level = MessageLevel.information;
+            item.Level = MessageLevel.Information;
             item.Description = description;
             item.Location = location;
 
@@ -101,7 +101,7 @@ namespace Sys
 
         public override string ToString()
         {
-            return string.Format("{0} error(s) found",this.messages.Where(message => message.Level == MessageLevel.error).Count());
+            return string.Format("{0} error(s) found",this.messages.Where(message => message.Level == MessageLevel.Error).Count());
         }
     }
 
