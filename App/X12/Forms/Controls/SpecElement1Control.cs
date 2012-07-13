@@ -36,16 +36,16 @@ namespace X12.Forms
 
             this.rgCondition.LoadEnum<ConditionDesignator>();
             bind.Connect<string, ConditionDesignator>(this.rgCondition, 
-                    "SelectedIndex", 
-                    value => ElementTemplateDpo.FromCondition(value),
-                    control => ElementTemplateDpo.ToCondition(control),
+                    "SelectedIndex",
+                    columnValue => ElementTemplateDpo.FromCondition(columnValue),
+                    controlValue => ElementTemplateDpo.ToCondition(controlValue),
                     X12ElementTemplateDpo._Condition);
 
             this.rgElementType.LoadEnum<DataELemenType>();
             bind.Connect<string, DataELemenType>(this.rgElementType,
                     "SelectedIndex",
-                    value => ElementTemplateDpo.FromDataType(value),
-                    control => ElementTemplateDpo.ToDataType(control),
+                    columnValue => ElementTemplateDpo.FromDataType(columnValue),
+                    controlValue => ElementTemplateDpo.ToDataType(controlValue),
                 X12ElementTemplateDpo._DataType);
 
         }
