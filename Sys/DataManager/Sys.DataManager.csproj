@@ -68,6 +68,7 @@
     <Compile Include="DataFile\Image\ImageMan.cs" />
     <Compile Include="DataFile\Image\RowImageList.cs" />
     <Compile Include="GenderEnum.cs" />
+    <Compile Include="Model\PersonDpo.cs" />
     <Compile Include="PhoneEnum.cs" />
     <Compile Include="Model\PictureDpo.cs" />
     <Compile Include="Dpo\sysDOC01Dpo.cs" />

@@ -7,23 +7,21 @@ using Sys.Data;
 
 namespace Sys.ViewManager.Forms
 {
-    public class JGenericControl<TControl, TColumn> : JWinControl where TControl : System.Windows.Forms.Control
+    public class JGenericControl<TControl, TColumn> : JWinControl
     {
+        private TControl control;
+
         private Action<TControl, TColumn> fill = null;
         private Func<TControl, TColumn> collect = null;
 
-        public JGenericControl(Control control, Action<TControl, TColumn> fill, Func<TControl, TColumn> collect, DataField field)
-            : base(control, field)
+        public JGenericControl(TControl control, Action<TControl, TColumn> fill, Func<TControl, TColumn> collect, DataField field)
+            : base(null, field)
         {
-            Type type = control.GetType();
+            this.control = control;
 
             this.fill = fill;
             this.collect = collect;
         }
-
-
-
-       
 
         public override void Fill()
         {
@@ -31,7 +29,7 @@ namespace Sys.ViewManager.Forms
                 this.value = null;
 
             if (fill != null)
-                 fill((TControl)this.Control, (TColumn)this.value);
+                 fill(this.control, (TColumn)this.value);
 
             return;
         }
@@ -39,7 +37,7 @@ namespace Sys.ViewManager.Forms
         public override void Collect()
         {
             if (collect != null)
-                this.value = collect((TControl)Control);
+                this.value = collect(this.control);
 
             if (this.value == null)
                 this.value = System.DBNull.Value;
