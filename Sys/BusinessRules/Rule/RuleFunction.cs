@@ -15,7 +15,7 @@ namespace Sys.BusinessRules
         {
             VAL L0 = parameters[0];
             
-            SeverityLevel severityLevel = SeverityLevel.None;
+            MessageLevel severityLevel = MessageLevel.None;
             string message = "";
 
             if (func == "error" || func == "warning" || func == "information" || func == "fatal")
@@ -24,13 +24,13 @@ namespace Sys.BusinessRules
                 Rule rule = (Rule)facts["$ActiveRule"].value;
 
                 if (func == "error")
-                    severityLevel = SeverityLevel.Error;
+                    severityLevel = MessageLevel.Error;
                 else if (func == "warning")
-                    severityLevel = SeverityLevel.Warning;
+                    severityLevel = MessageLevel.Warning;
                 else if (func == "information")
-                    severityLevel = SeverityLevel.Information;
+                    severityLevel = MessageLevel.Information;
                 else if (func == "fatal")
-                    severityLevel = SeverityLevel.Fatal;
+                    severityLevel = MessageLevel.Fatal;
 
 
                 if (parameters.Size > 1)

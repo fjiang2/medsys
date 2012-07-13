@@ -18,9 +18,9 @@ namespace X12.File
         private Memory DS = new Memory();
 
         Worker worker;
-        MassageManager errorManager;
+        MessageManager errorManager;
 
-        public Parser(List<SegmentLine> segmentLines, Worker worker, MassageManager errorManager)
+        public Parser(List<SegmentLine> segmentLines, Worker worker, MessageManager errorManager)
             :base(segmentLines)
         {
             this.worker = worker;

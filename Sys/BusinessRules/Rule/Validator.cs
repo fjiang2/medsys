@@ -192,7 +192,7 @@ namespace Sys.BusinessRules
 
         public void error(Control control, string message)
         {
-            RuleEvent ruleEvent = new RuleEvent(control.Name, SeverityLevel.Error, message);
+            RuleEvent ruleEvent = new RuleEvent(control.Name, MessageLevel.Error, message);
             Add(control, ruleEvent);
         }
         
@@ -204,37 +204,37 @@ namespace Sys.BusinessRules
 
         public void error(Control control, int errorCode, string message)
         {
-            RuleEvent ruleEvent = new RuleEvent(errorCode, control.Name, SeverityLevel.Error, message);
+            RuleEvent ruleEvent = new RuleEvent(errorCode, control.Name, MessageLevel.Error, message);
             Add(control, ruleEvent);
         }
 
         public void warning(Control control, string message)
         {
-            RuleEvent ruleEvent = new RuleEvent(control.Name, SeverityLevel.Warning, message);
+            RuleEvent ruleEvent = new RuleEvent(control.Name, MessageLevel.Warning, message);
             Add(control, ruleEvent);
         }
 
         public void fatal(Control control, string message)
         {
-            RuleEvent ruleEvent = new RuleEvent(control.Name, SeverityLevel.Fatal, message);
+            RuleEvent ruleEvent = new RuleEvent(control.Name, MessageLevel.Fatal, message);
             Add(control, ruleEvent);
         }
         
         public void information(Control control, string message)
         {
-            RuleEvent ruleEvent = new RuleEvent(control.Name, SeverityLevel.Information, message);
+            RuleEvent ruleEvent = new RuleEvent(control.Name, MessageLevel.Information, message);
             Add(control, ruleEvent);
         }
         
         public void confirm(Control control, int errorCode, string message)
         {
-            RuleEvent ruleEvent = new RuleEvent(errorCode, control.Name, SeverityLevel.Confirmation, message);
+            RuleEvent ruleEvent = new RuleEvent(errorCode, control.Name, MessageLevel.Confirmation, message);
             Add(control, ruleEvent);
         }
         
         public void confirm(Control control, string message)
         {
-            RuleEvent ruleEvent = new RuleEvent(control.Name, SeverityLevel.Confirmation, message);
+            RuleEvent ruleEvent = new RuleEvent(control.Name, MessageLevel.Confirmation, message);
             Add(control, ruleEvent);
         }
 
@@ -317,7 +317,7 @@ namespace Sys.BusinessRules
 
             foreach (RuleEvent ruleEvent in ruleEvents.Values)
             {
-                if (ruleEvent.SeverityLevel != SeverityLevel.None)
+                if (ruleEvent.MessageLevel != MessageLevel.None)
                     rules.Add(ruleEvent);
             }
 

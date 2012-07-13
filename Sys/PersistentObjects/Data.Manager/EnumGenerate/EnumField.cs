@@ -38,7 +38,7 @@ namespace Sys.Data.Manager
             return sb.ToString();
         }
 
-        public bool Validate(MassageManager manager)
+        public bool Validate(MessageManager manager)
         {
             bool good = Identifier(this.Feature).Equals(this.Feature);
            

@@ -30,7 +30,7 @@ namespace Sys.BusinessRules
                 control = (Control)facts["$THIS"].HostValue;
 
 
-            SeverityLevel severityLevel = SeverityLevel.None;
+            MessageLevel severityLevel = MessageLevel.None;
 
             if (func == "error" || func == "warning" || func == "information" || func == "fatal")
             {
@@ -38,13 +38,13 @@ namespace Sys.BusinessRules
                 Validator validator = (Validator)facts["$ActiveValidator"].value;
 
                 if (func == "error")
-                    severityLevel = SeverityLevel.Error;
+                    severityLevel = MessageLevel.Error;
                 else if (func == "warning")
-                    severityLevel = SeverityLevel.Warning;
+                    severityLevel = MessageLevel.Warning;
                 else if (func == "information")
-                    severityLevel = SeverityLevel.Information;
+                    severityLevel = MessageLevel.Information;
                 else if (func == "fatal")
-                    severityLevel = SeverityLevel.Fatal;
+                    severityLevel = MessageLevel.Fatal;
 
 
                 if (size == 2)

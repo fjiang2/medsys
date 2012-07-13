@@ -49,14 +49,14 @@ namespace Sys.BusinessRules
                         if (scope != "")
                            keyName = scope + "." + keyName;
                         
-                        if (ruleEvent.SeverityLevel != SeverityLevel.None)
+                        if (ruleEvent.MessageLevel != MessageLevel.None)
                         {
                             if (brokenRules.ContainsKey(keyName))
                                 brokenRules.Remove(keyName);
 
                             brokenRules.Add(keyName, ruleEvent);
 
-                            if (ruleEvent.SeverityLevel == SeverityLevel.Error || ruleEvent.SeverityLevel == SeverityLevel.Fatal)
+                            if (ruleEvent.MessageLevel == MessageLevel.Error || ruleEvent.MessageLevel == MessageLevel.Fatal)
                                 passed = false;
                         }
                     }
@@ -84,25 +84,25 @@ namespace Sys.BusinessRules
 
 
 
-        protected string ConvertRule(string antecedent, string consequent, SeverityLevel severityLevel, string trace, string message)
+        protected string ConvertRule(string antecedent, string consequent, MessageLevel severityLevel, string trace, string message)
         {
             string func = "error";
 
             switch (severityLevel)
             {
-                case SeverityLevel.Information:
+                case MessageLevel.Information:
                     func = "information"; 
                     break;
                 
-                case SeverityLevel.Warning:
+                case MessageLevel.Warning:
                     func = "warning"; 
                     break;
                 
-                case SeverityLevel.Error:
+                case MessageLevel.Error:
                     func = "error"; 
                     break;
                 
-                case SeverityLevel.Fatal:
+                case MessageLevel.Fatal:
                     func = "fatal"; 
                     break;
             }

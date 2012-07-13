@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 7/13/2012 3:21:13 PM
+//   by devel at 7/13/2012 3:53:12 PM
 //
 
 using System;
@@ -14,16 +14,16 @@ using Sys.Data.Manager;
 
 namespace PTA.Dpo
 {
-    [Revision(2)]
-    [Table("ptaStudents", Level.System, Pack = false)]    //Primary Keys = Student_ID;  Identity = Student_ID;
+    [Revision(4)]
+    [Table("ptaStudents", Level.System, Pack = false)]    //Primary Keys = Student_ID;  Identity = ;
     public class ptaStudentDpo : DPObject
     {
 
 #pragma warning disable
 
-        [Column(_Student_ID, SqlDbType.Int, Identity = true, Primary = true)]                     public int Student_ID;        //int(4) not null
-        [Column(_Person_ID, SqlDbType.Int)]                                                       public int Person_ID;         //int(4) not null
-        [Column(_Address_ID, SqlDbType.Int)]                                                      public int Address_ID;        //int(4) not null
+        [Column(_Student_ID, SqlDbType.Int, Primary = true)]                                      public int Student_ID;        //int(4) not null
+        [Column(_Adult_ID, SqlDbType.Int)]                                                        public int Adult_ID;          //int(4) not null
+        [Column(_Address_ID, SqlDbType.Int, Nullable = true)]                                     public int? Address_ID;       //int(4) null
         [Column(_Phone_ID, SqlDbType.Int, Nullable = true)]                                       public int? Phone_ID;         //int(4) null
         [Column(_Grade, SqlDbType.VarChar, Length = 20)]                                          public string Grade;          //varchar(20) not null
 
@@ -76,10 +76,10 @@ namespace PTA.Dpo
         {
             get
             {
-                return new IdentityKeys(new string[]{ _Student_ID });
+                return new IdentityKeys();
             }
         }
-
+        
 
         public static string TABLE_NAME
         { 
@@ -94,7 +94,7 @@ namespace PTA.Dpo
         #region CONSTANT
 
         public const string _Student_ID = "Student_ID";
-        public const string _Person_ID = "Person_ID";
+        public const string _Adult_ID = "Adult_ID";
         public const string _Address_ID = "Address_ID";
         public const string _Phone_ID = "Phone_ID";
         public const string _Grade = "Grade";

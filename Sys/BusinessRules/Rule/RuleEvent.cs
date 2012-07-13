@@ -11,11 +11,11 @@ namespace Sys.BusinessRules
         private int errorCode;
         public readonly string keyName;
 
-        private SeverityLevel severityLevel;
+        private MessageLevel severityLevel;
         private string message;
         public Color OriginalColor = Color.Black;
 
-        public RuleEvent(int errorCode, string keyName, SeverityLevel severityLevel, string message)
+        public RuleEvent(int errorCode, string keyName, MessageLevel severityLevel, string message)
         {
             this.severityLevel = severityLevel;
             this.keyName = keyName;
@@ -23,7 +23,7 @@ namespace Sys.BusinessRules
             this.errorCode = errorCode;
         }
 
-        public RuleEvent(string keyName, SeverityLevel severityLevel, string message)
+        public RuleEvent(string keyName, MessageLevel severityLevel, string message)
             :this(-1, keyName, severityLevel , message)
         {
         }
@@ -31,16 +31,16 @@ namespace Sys.BusinessRules
         public void Update(RuleEvent ruleEvent)
         {
             errorCode = ruleEvent.errorCode;
-            severityLevel = ruleEvent.SeverityLevel;
+            severityLevel = ruleEvent.MessageLevel;
             message = ruleEvent.Message;
         }
 
         public void Clear()
         {
-            severityLevel = SeverityLevel.None;
+            severityLevel = MessageLevel.None;
         }
 
-        public SeverityLevel SeverityLevel
+        public MessageLevel MessageLevel
         {
             get
             {
@@ -73,26 +73,26 @@ namespace Sys.BusinessRules
             string level = "";
             switch (severityLevel)
             {
-                case SeverityLevel.None:
+                case MessageLevel.None:
                     return "";
                 
-                case SeverityLevel.Information:
+                case MessageLevel.Information:
                     level = "Info";
                     break;
 
-                case SeverityLevel.Error:
+                case MessageLevel.Error:
                     level = "Error";
                     break;
                 
-                case SeverityLevel.Warning:
+                case MessageLevel.Warning:
                     level = "Warning";
                     break;
 
-                case SeverityLevel.Fatal:
+                case MessageLevel.Fatal:
                     level = "Fatal";
                     break;
 
-                case SeverityLevel.Confirmation:
+                case MessageLevel.Confirmation:
                     level = "Confirm";
                     break;
             }
@@ -109,22 +109,22 @@ namespace Sys.BusinessRules
             {
                 switch (severityLevel)
                 {
-                    case SeverityLevel.None:
+                    case MessageLevel.None:
                         break;
 
-                    case SeverityLevel.Information:
+                    case MessageLevel.Information:
                         return Color.LightBlue;
 
-                    case SeverityLevel.Error:
+                    case MessageLevel.Error:
                         return Color.Red;
 
-                    case SeverityLevel.Warning:
+                    case MessageLevel.Warning:
                         return Color.Blue;
 
-                    case SeverityLevel.Fatal:
+                    case MessageLevel.Fatal:
                         return Color.LightYellow;
                    
-                    case SeverityLevel.Confirmation:
+                    case MessageLevel.Confirmation:
                         return Color.Brown;
                 }
 
@@ -137,10 +137,10 @@ namespace Sys.BusinessRules
         {
             get
             {
-                if (severityLevel == SeverityLevel.Confirmation)
+                if (severityLevel == MessageLevel.Confirmation)
                     return Confirmed;
 
-                return severityLevel == SeverityLevel.None || severityLevel == SeverityLevel.Warning || severityLevel == SeverityLevel.Information;
+                return severityLevel == MessageLevel.None || severityLevel == MessageLevel.Warning || severityLevel == MessageLevel.Information;
             }
         }
        

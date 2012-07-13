@@ -58,7 +58,7 @@ namespace Sys.Data.Manager
             }
         }
 
-        public bool Validate(MassageManager manager)
+        public bool Validate(MessageManager manager)
         {
             DPList<EnumField> list = new DPList<EnumField>(this.fields);
 

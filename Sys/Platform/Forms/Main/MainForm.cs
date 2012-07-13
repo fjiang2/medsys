@@ -225,7 +225,9 @@ namespace Sys.Platform.Forms
             
             DockPanel messagePanel = menuConsumer.AddDockPanel("Error List");
             DockPanel outputPanel = menuConsumer.AddDockPanel("Output");
+
             //formDockManager.HidePanel(messagePanel, outputPanel);
+            formDockManager.DockManager.ActivePanel = messagePanel;
 
             if (Sys.Constant.USE_XMPP)
             {

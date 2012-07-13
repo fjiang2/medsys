@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 7/13/2012 3:21:11 PM
+//   by devel at 7/13/2012 3:45:03 PM
 //
 
 using System;
@@ -14,14 +14,14 @@ using Sys.Data.Manager;
 
 namespace PTA.Dpo
 {
-    [Revision(2)]
-    [Table("ptaAdults", Level.System, Pack = false)]    //Primary Keys = Person_ID;  Identity = ;
+    [Revision(3)]
+    [Table("ptaAdults", Level.System, Pack = false)]    //Primary Keys = Adult_ID;  Identity = ;
     public class ptaAdultDpo : DPObject
     {
 
 #pragma warning disable
 
-        [Column(_Person_ID, SqlDbType.Int, Primary = true)]                                       public int Person_ID;         //int(4) not null
+        [Column(_Adult_ID, SqlDbType.Int, Primary = true)]                                        public int Adult_ID;          //int(4) not null
         [Column(_Student_Id, SqlDbType.Int, Nullable = true)]                                     public int? Student_Id;       //int(4) null
         [Column(_Address_ID, SqlDbType.Int)]                                                      public int Address_ID;        //int(4) not null
         [Column(_Phone_ID, SqlDbType.Int, Nullable = true)]                                       public int? Phone_ID;         //int(4) null
@@ -67,14 +67,14 @@ namespace PTA.Dpo
         }
 
 
-        public ptaAdultDpo(int person_id)
+        public ptaAdultDpo(int adult_id)
         {
-           this.Person_ID = person_id; 
+           this.Adult_ID = adult_id; 
 
            this.Load();
            if(!this.Exists)
            {
-              this.Person_ID = person_id;     
+              this.Adult_ID = adult_id;     
            }
         }
         
@@ -84,7 +84,7 @@ namespace PTA.Dpo
         {
             get
             {
-                return this.Person_ID;
+                return this.Adult_ID;
             }
         }
 
@@ -94,7 +94,7 @@ namespace PTA.Dpo
         {
             get
             {
-                return new PrimaryKeys(new string[]{ _Person_ID });
+                return new PrimaryKeys(new string[]{ _Adult_ID });
             }
         }
 
@@ -121,7 +121,7 @@ namespace PTA.Dpo
 
         #region CONSTANT
 
-        public const string _Person_ID = "Person_ID";
+        public const string _Adult_ID = "Adult_ID";
         public const string _Student_Id = "Student_Id";
         public const string _Address_ID = "Address_ID";
         public const string _Phone_ID = "Phone_ID";

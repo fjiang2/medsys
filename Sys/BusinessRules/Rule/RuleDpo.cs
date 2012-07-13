@@ -58,9 +58,9 @@ namespace Sys.BusinessRules
             }
         }
 
-        public SeverityLevel SeverityLevel
+        public MessageLevel MessageLevel
         {
-            get { return (SeverityLevel)this.Severity_Level; }
+            get { return (MessageLevel)this.Severity_Level; }
             set { this.Severity_Level = (int)value; }
         }
 
