@@ -10,7 +10,7 @@ using Sys.ViewManager.Forms;
 using X12.Dpo;
 using Sys.ViewManager.DevEx;
 using X12.Specification;
-
+using DevExpress.XtraEditors;
 
 namespace X12.Forms
 {
@@ -35,18 +35,30 @@ namespace X12.Forms
             bind.Connect(this.txtMaxLength, X12ElementTemplateDpo._MaxLength);
 
             this.rgCondition.LoadEnum<ConditionDesignator>();
-            bind.Connect<string, ConditionDesignator>(this.rgCondition, 
-                    "SelectedIndex",
-                    columnValue => ElementTemplateDpo.FromCondition(columnValue),
-                    controlValue => ElementTemplateDpo.ToCondition(controlValue),
+            //bind.Connect<string, ConditionDesignator>(this.rgCondition, 
+            //        "SelectedIndex",
+            //        columnValue => ElementTemplateDpo.FromCondition(columnValue),
+            //        controlValue => ElementTemplateDpo.ToCondition(controlValue),
+            //        X12ElementTemplateDpo._Condition);
+
+            bind.Connect<RadioGroup, string>(this.rgCondition,
+                    (control, value) => control.SelectedIndex = (int)ElementTemplateDpo.FromCondition(value),
+                    (control) => ElementTemplateDpo.ToCondition((ConditionDesignator)control.SelectedIndex),
                     X12ElementTemplateDpo._Condition);
 
+
+
             this.rgElementType.LoadEnum<DataELemenType>();
-            bind.Connect<string, DataELemenType>(this.rgElementType,
-                    "SelectedIndex",
-                    columnValue => ElementTemplateDpo.FromDataType(columnValue),
-                    controlValue => ElementTemplateDpo.ToDataType(controlValue),
-                X12ElementTemplateDpo._DataType);
+            //bind.Connect<string, DataELemenType>(this.rgElementType,
+            //        "SelectedIndex",
+            //        columnValue => ElementTemplateDpo.FromDataType(columnValue),
+            //        controlValue => ElementTemplateDpo.ToDataType(controlValue),
+            //    X12ElementTemplateDpo._DataType);
+
+            bind.Connect<RadioGroup, string>(this.rgElementType,
+                    (control, value) => control.SelectedIndex = (int)ElementTemplateDpo.FromDataType(value),
+                    (control) => ElementTemplateDpo.ToDataType((DataELemenType)control.SelectedIndex),
+                    X12ElementTemplateDpo._DataType);
 
         }
 

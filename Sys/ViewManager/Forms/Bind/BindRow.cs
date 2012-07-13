@@ -295,6 +295,25 @@ namespace Sys.ViewManager.Forms
             return Connect(x, columnName);
         }
 
+        /// <summary>
+        /// Generic Control binding, user defined methods void Fill(control, value); and type Collect(control);
+        /// </summary>
+        /// <typeparam name="TControl">Windows Control Type</typeparam>
+        /// <typeparam name="TColumn">Column Value Type</typeparam>
+        /// <param name="control">control bound</param>
+        /// <param name="fill">action of fill value into control</param>
+        /// <param name="collect">function of collect value</param>
+        /// <param name="columnName">Column name</param>
+        /// <returns></returns>
+        public BindRow Connect<TControl, TColumn>(Control control, Action<TControl, TColumn> fill, Func<TControl, TColumn> collect, string columnName) 
+            where TControl : System.Windows.Forms.Control
+        {
+            DataField field = AddField(columnName);
+            JWinControl x = new JGenericControl<TControl, TColumn>(control, fill, collect, field);
+            return Connect(x, columnName);
+        }
+
+
         public BindRow Connect(VAL val, string columnName)
         {
             DataField field = AddField(columnName);

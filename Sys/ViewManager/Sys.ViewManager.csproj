@@ -129,6 +129,7 @@
     <Compile Include="Dpo\ShortcutDpo.cs" />
     <Compile Include="Dpo\UserMenuDpo.cs" />
     <Compile Include="Dpo\FormRuleDpo.cs" />
+    <Compile Include="Forms\Bind\JGenericControl.cs" />
     <Compile Include="Forms\Bind\JControl2.cs" />
     <Compile Include="Forms\TieScript.cs" />
     <Compile Include="Manager\AppLink.cs" />
