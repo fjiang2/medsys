@@ -10,7 +10,7 @@ using Sys.ViewManager.Forms;
 using Sys.Data;
 using System.Reflection;
 using Sys.Modules;
-using Sys.DataManager;
+using Sys.Data.Manager;
 using Sys.IO;
 
 namespace Sys.Platform.Forms

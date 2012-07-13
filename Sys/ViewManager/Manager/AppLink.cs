@@ -5,7 +5,7 @@ using System.Text;
 using System.Data;
 using Sys.ViewManager.Dpo;
 using Sys.Data;
-using Sys.DataManager;
+using Sys.Data.Manager;
 using DevExpress.XtraNavBar;
 using System.Drawing;
 using Sys.Security;

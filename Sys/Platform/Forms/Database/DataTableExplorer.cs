@@ -8,7 +8,7 @@ using System.Windows.Forms;
 using Sys.ViewManager.Forms;
 using Sys.ViewManager;
 using Sys.Data;
-using Sys.DataManager;
+using Sys.Data.Manager;
 using System.Reflection;
 
 namespace Sys.Platform.Forms

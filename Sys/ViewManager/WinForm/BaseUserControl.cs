@@ -10,7 +10,7 @@ using Sys.Xmpp;
 using Sys.BusinessRules;
 using Sys.ViewManager.Manager;
 using Sys.Security;
-using Sys.DataManager;
+using Sys.Data.Manager;
 
 namespace Sys.ViewManager.Forms
 {

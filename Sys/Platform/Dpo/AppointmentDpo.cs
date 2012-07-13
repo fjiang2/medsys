@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 5/4/2012 4:32:11 PM
+//   by devel at 7/13/2012 3:21:21 PM
 //
 
 using System;
@@ -9,12 +9,12 @@ using System.Text;
 using System.Data;
 using System.Drawing;
 using Sys.Data;
-using Sys.DataManager;
+using Sys.Data.Manager;
 
 
 namespace Sys.Platform.Dpo
 {
-    [Revision(4)]
+    [Revision(5)]
     [Table("Appointments", Level.System, Pack = false)]    //Primary Keys = UniqueID;  Identity = UniqueID;
     public class AppointmentDpo : DPObject
     {

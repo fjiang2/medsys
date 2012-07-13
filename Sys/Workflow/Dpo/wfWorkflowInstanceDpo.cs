@@ -9,7 +9,7 @@ using System.Text;
 using System.Data;
 using System.Drawing;
 using Sys.Data;
-using Sys.DataManager;
+using Sys.Data.Manager;
 using Tie;
 
 namespace Sys.Workflow.Dpo

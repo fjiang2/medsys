@@ -8,7 +8,7 @@ using System.Text;
 using System.Collections.Generic;
 using Sys;
 using Sys.Data;
-using Sys.DataManager;
+using Sys.Data.Manager;
 using X12.Dpo;
 
 namespace X12.Package

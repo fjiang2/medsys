@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Sys.Data;
 using System.Data;
-using Sys.DataManager;
+using Sys.Data.Manager;
 using System.ComponentModel;
 
 namespace Sys.Data

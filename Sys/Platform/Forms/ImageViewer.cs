@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Drawing.Printing;
-using Sys.DataManager;
+using Sys.Data.Manager;
 using Sys.Data;
 using Sys.ViewManager;
 using Sys.ViewManager.Forms;

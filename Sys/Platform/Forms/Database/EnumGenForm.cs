@@ -8,7 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using Sys.Data;
 using Sys.ViewManager.Forms;
-using Sys.DataManager;
+using Sys.Data.Manager;
 using Sys.ViewManager.DevEx;
 using Sys.Modules;
 using System.Reflection;
@@ -73,9 +73,9 @@ namespace Sys.Platform.Forms
                 this.txtClass.Text = ty.Name;
 
                 if (ty.IsPublic)
-                    this.Modifier = DataManager.AccessModifier.Public;
+                    this.Modifier = Data.Manager.AccessModifier.Public;
                 else
-                    this.Modifier = DataManager.AccessModifier.Internal;
+                    this.Modifier = Data.Manager.AccessModifier.Internal;
 
                 this.txtNamespace.Enabled = false;
                 this.txtClass.Enabled = false;
@@ -86,7 +86,7 @@ namespace Sys.Platform.Forms
             {
                 this.txtClass.Text = name;
 
-                this.Modifier = DataManager.AccessModifier.Public;
+                this.Modifier = Data.Manager.AccessModifier.Public;
 
                 this.txtNamespace.Enabled = true;
                 this.txtClass.Enabled = true;

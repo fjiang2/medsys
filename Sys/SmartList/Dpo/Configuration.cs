@@ -5,7 +5,7 @@ using System.Data;
 using Tie;
 using Sys.ViewManager.Forms;
 using Sys.Data;
-using Sys.DataManager;
+using Sys.Data.Manager;
 using Sys.Security;
 using System.IO;
 using Sys.SmartList.Dpo;

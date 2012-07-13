@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Reflection;
-using Sys.DataManager;
+using Sys.Data.Manager;
 using Sys.ViewManager.Forms;
 using Sys.ViewManager.DevEx;
 using Sys.Data;
@@ -107,9 +107,9 @@ namespace Sys.Platform.Forms
                 this.txtClass.Text = ty.Name;
 
                 if(ty.IsPublic)
-                    this.Modifier = DataManager.AccessModifier.Public;
+                    this.Modifier = Data.Manager.AccessModifier.Public;
                 else 
-                    this.Modifier = DataManager.AccessModifier.Internal;
+                    this.Modifier = Data.Manager.AccessModifier.Internal;
 
 
                 DPObject dpo = (DPObject)Activator.CreateInstance(ty);
@@ -129,7 +129,7 @@ namespace Sys.Platform.Forms
                 this.txtClass.Text = name.ClassName;
                 //this.txtPath.Text = "";
 
-                this.Modifier = DataManager.AccessModifier.Public;
+                this.Modifier = Data.Manager.AccessModifier.Public;
                 this.Level = Data.Level.Fixed;
 
                 this.txtNamespace.Enabled = true;
@@ -448,7 +448,7 @@ namespace Sys.Platform.Forms
 
             try
             {
-                Sys.DataManager.SpDatabase sp = new SpDatabase(DatabaseName, Path);
+                Sys.Data.Manager.SpDatabase sp = new SpDatabase(DatabaseName, Path);
                 int count = sp.Generate(Namespace, "sa", "password");
                 this.InformationMessage = string.Format("{0} stored procedures are updated at database [{1}].", count, DatabaseName);
             }

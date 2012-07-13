@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Sys.Data;
-using Sys.DataManager;
+using Sys.Data.Manager;
 
 namespace Sys.Platform.Forms
 {

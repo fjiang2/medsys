@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Sys.DataManager;
+using Sys.Data.Manager;
 using Sys.PersistentObjects.Dpo;
 using Sys.Data;
 

@@ -6,7 +6,7 @@ using System.Text;
 using System.Security.Cryptography;
 using System.Drawing;
 using Sys.Data;
-using Sys.DataManager;
+using Sys.Data.Manager;
 using Sys.Foundation.Dpo;
 
 namespace Sys.Security
