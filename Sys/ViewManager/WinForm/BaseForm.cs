@@ -960,7 +960,13 @@ namespace Sys.ViewManager.Forms
         /// <returns></returns>
         protected virtual bool RuleValidated()
         {
-            return RuleValidated(false);
+            bool result =  RuleValidated(false);
+
+            this.MessageManager.Clear();
+            this.MessageManager.Add(this.validateProvider.ToMessageList());
+            this.MessageManager.Commit();
+            
+            return result;
         }
 
         /// <summary>

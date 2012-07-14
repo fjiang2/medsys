@@ -90,12 +90,12 @@ namespace PTA.Forms
 
         public override void RuleDefinition(ValidateProvider provider)
         {
-            this.txtStudent_FirstName.Required(provider);
-            this.txtStudent_LastName.Required(provider);
+            this.txtStudent_FirstName.Required(provider, "First name of student required");
+            this.txtStudent_LastName.Required(provider, "Last name of student required");
 
-            this.txtAdult_FirstName.Required(provider);
-            this.txtAdult_LastName.Required(provider);
-            this.txtHomePhone.Required(provider);
+            this.txtAdult_FirstName.Required(provider, "First name of adult required");
+            this.txtAdult_LastName.Required(provider, "Last name of adult required");
+            this.txtHomePhone.Required(provider, "Home phone is required");
 
             this.clAvailability.Validate(provider, delegate(Validator validator, object sender, EventArgs e)
             {
@@ -132,12 +132,7 @@ namespace PTA.Forms
         private void btnSave_Click(object sender, EventArgs e)
         {
             if (!this.RuleValidated())
-            {
-                this.MessageManager.Clear();
-                this.MessageManager.Add(this.validateProvider.ToEnumerable());
-                this.MessageManager.Commit();
                 return;
-            }
 
             bdStudentDemography.SaveDpo();
             this.studentId = bdStudentDemography.Dpo.Person_ID;
