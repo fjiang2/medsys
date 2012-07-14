@@ -12,7 +12,7 @@ using Sys.Data;
 using Sys.Data.Manager;
 
 
-namespace Sys.DataManager.Dpo
+namespace App.Data.Dpo
 {
     [Revision(0)]
     [Table("app00102", Level.System, Pack = false)]    //Primary Keys = Address_ID;  Identity = Address_ID;

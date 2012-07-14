@@ -12,7 +12,7 @@ using Sys.Data;
 using Sys.Data.Manager;
 
 
-namespace Sys.DataManager.Dpo
+namespace App.Data.Dpo
 {
     [Revision(1)]
     [Table("app00104", Level.System, Pack = false)]    //Primary Keys = Phone_Enum + Phone_ID;  Identity = ;

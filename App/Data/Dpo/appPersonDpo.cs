@@ -12,7 +12,7 @@ using Sys.Data;
 using Sys.Data.Manager;
 
 
-namespace Sys.DataManager.Dpo
+namespace App.Data.Dpo
 {
     [Revision(1)]
     [Table("app00101", Level.System, Pack = false)]    //Primary Keys = Person_ID;  Identity = Person_ID;
