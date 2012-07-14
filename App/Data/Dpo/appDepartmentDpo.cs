@@ -12,7 +12,7 @@ using Sys.Data;
 using Sys.Data.Manager;
 
 
-namespace Sys.DataManager.Dpo
+namespace App.Data.Dpo
 {
     [Revision(10)]
     [Table("app00202", Level.System)]    //Primary Keys = Name;  Identity = Dept_ID;

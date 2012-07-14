@@ -93,6 +93,10 @@
       <Project>{A5D0E475-F068-4DB0-BD4B-B5647B588E08}</Project>
       <Name>Sys.ViewManager</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Data\App.Data.csproj">
+      <Project>{78D1FDBF-3E84-4D8B-AC56-B8747311D2B2}</Project>
+      <Name>App.Data</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Forms\RegisterForm.resx">

@@ -44,21 +44,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AddressEnum.cs" />
     <Compile Include="DataFile\Directory\DateDirectory.cs" />
     <Compile Include="DataFile\Directory\FilePath.cs" />
     <Compile Include="DataFile\Directory\IDirectory.cs" />
     <Compile Include="DataFile\Directory\LetterDirectory.cs" />
-    <Compile Include="Dpo\appAddressDpo.cs" />
-    <Compile Include="Dpo\appPersonDpo.cs" />
-    <Compile Include="Dpo\appPersonRelationshipDpo.cs" />
-    <Compile Include="Dpo\appDepartmentDpo.cs" />
-    <Compile Include="Dpo\appEmployeeDpo.cs" />
-    <Compile Include="Dpo\appPhoneDpo.cs" />
-    <Compile Include="Dpo\appJobTitleDpo.cs" />
     <Compile Include="IApproval.cs" />
-    <Compile Include="MaritalStatusEnum.cs" />
-    <Compile Include="Model\AddressDpo.cs" />
     <Compile Include="Model\Doc01Dpo.cs" />
     <Compile Include="Model\Doc02Dpo.cs" />
     <Compile Include="DataFile\Document\Document.cs" />
@@ -68,15 +58,10 @@
     <Compile Include="DataFile\Document\VersionDocument.cs" />
     <Compile Include="DataFile\Image\ImageMan.cs" />
     <Compile Include="DataFile\Image\RowImageList.cs" />
-    <Compile Include="GenderEnum.cs" />
-    <Compile Include="Model\PersonDpo.cs" />
-    <Compile Include="Model\PhoneDpo.cs" />
-    <Compile Include="PhoneEnum.cs" />
     <Compile Include="Model\PictureDpo.cs" />
     <Compile Include="Dpo\sysDOC01Dpo.cs" />
     <Compile Include="Dpo\sysDOC02Dpo.cs" />
     <Compile Include="Dpo\sysPictureDpo.cs" />
-    <Compile Include="RelationshipEnum.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

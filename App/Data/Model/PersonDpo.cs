@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Data;
 
-namespace Sys.DataManager
+namespace App.Data
 {
     public class PersonDpo : Dpo.appPersonDpo
     {

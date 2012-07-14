@@ -1,7 +1,7 @@
 using System;
 using Sys.Data;
 
-namespace Sys.DataManager
+namespace App.Data
 {
     [DataEnum]
     public enum PhoneEnum
