@@ -25,9 +25,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sys.BusinessRules", "Sys\Bu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sys.PersistentObjects", "Sys\PersistentObjects\Sys.PersistentObjects.csproj", "{FE52736A-BA94-41FC-9FD3-A481A790FC9C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "X12", "App\X12\X12.csproj", "{BF2440C5-6467-4ADF-8BEF-52251189AC3D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App.X12", "App\X12\App.X12.csproj", "{BF2440C5-6467-4ADF-8BEF-52251189AC3D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PTA", "App\PTA\PTA.csproj", "{AC4B0A33-0804-409D-B5D4-AADA29206710}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App.PTA", "App\PTA\App.PTA.csproj", "{AC4B0A33-0804-409D-B5D4-AADA29206710}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

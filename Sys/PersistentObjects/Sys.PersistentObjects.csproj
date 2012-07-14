@@ -8,7 +8,7 @@
     <ProjectGuid>{FE52736A-BA94-41FC-9FD3-A481A790FC9C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Sys.PersistentObjects</RootNamespace>
+    <RootNamespace>Sys</RootNamespace>
     <AssemblyName>Sys.PersistentObjects</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

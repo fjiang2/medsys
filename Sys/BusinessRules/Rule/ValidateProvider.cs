@@ -230,7 +230,7 @@ namespace Sys.BusinessRules
             return dt;
         }
 
-        public IEnumerable<Message> ToEnumerable()
+        public IEnumerable<Message> ToMessageList()
         {
             List<Message> list = new List<Message>();
             foreach (RuleEvent ruleEvent in BrokenRules)
@@ -242,8 +242,9 @@ namespace Sys.BusinessRules
                 
                 message.Level = ruleEvent.MessageLevel;
                 message.Description = ruleEvent.Message;
+#if DEBUG
                 message.Location =  ruleEvent.keyName;
-                
+#endif                
                 list.Add(message);
             }
 
