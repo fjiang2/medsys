@@ -37,6 +37,9 @@
             this.btnPackModule = new System.Windows.Forms.Button();
             this.btnPackAll = new System.Windows.Forms.Button();
             this.btnBrowseModule = new System.Windows.Forms.Button();
+            this.txtDpoClass = new System.Windows.Forms.RichTextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // comboModule
@@ -60,7 +63,7 @@
             // btnCreateTable
             // 
             this.btnCreateTable.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnCreateTable.Location = new System.Drawing.Point(24, 69);
+            this.btnCreateTable.Location = new System.Drawing.Point(60, 372);
             this.btnCreateTable.Name = "btnCreateTable";
             this.btnCreateTable.Size = new System.Drawing.Size(118, 40);
             this.btnCreateTable.TabIndex = 9;
@@ -84,13 +87,13 @@
             this.txtAssembly.Location = new System.Drawing.Point(60, 39);
             this.txtAssembly.Name = "txtAssembly";
             this.txtAssembly.ReadOnly = true;
-            this.txtAssembly.Size = new System.Drawing.Size(381, 20);
+            this.txtAssembly.Size = new System.Drawing.Size(600, 20);
             this.txtAssembly.TabIndex = 11;
             // 
             // btnCreateAllTable
             // 
             this.btnCreateAllTable.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnCreateAllTable.Location = new System.Drawing.Point(24, 115);
+            this.btnCreateAllTable.Location = new System.Drawing.Point(62, 418);
             this.btnCreateAllTable.Name = "btnCreateAllTable";
             this.btnCreateAllTable.Size = new System.Drawing.Size(116, 36);
             this.btnCreateAllTable.TabIndex = 12;
@@ -101,7 +104,7 @@
             // btnPackModule
             // 
             this.btnPackModule.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnPackModule.Location = new System.Drawing.Point(226, 69);
+            this.btnPackModule.Location = new System.Drawing.Point(566, 372);
             this.btnPackModule.Name = "btnPackModule";
             this.btnPackModule.Size = new System.Drawing.Size(94, 40);
             this.btnPackModule.TabIndex = 13;
@@ -112,7 +115,7 @@
             // btnPackAll
             // 
             this.btnPackAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnPackAll.Location = new System.Drawing.Point(226, 111);
+            this.btnPackAll.Location = new System.Drawing.Point(566, 418);
             this.btnPackAll.Name = "btnPackAll";
             this.btnPackAll.Size = new System.Drawing.Size(94, 36);
             this.btnPackAll.TabIndex = 13;
@@ -130,11 +133,42 @@
             this.btnBrowseModule.UseVisualStyleBackColor = true;
             this.btnBrowseModule.Click += new System.EventHandler(this.btnBrowseModule_Click);
             // 
+            // txtDpoClass
+            // 
+            this.txtDpoClass.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtDpoClass.Location = new System.Drawing.Point(60, 82);
+            this.txtDpoClass.Name = "txtDpoClass";
+            this.txtDpoClass.ReadOnly = true;
+            this.txtDpoClass.Size = new System.Drawing.Size(600, 271);
+            this.txtDpoClass.TabIndex = 16;
+            this.txtDpoClass.Text = "";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(21, 85);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(27, 13);
+            this.label1.TabIndex = 7;
+            this.label1.Text = "Dpo";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(13, 98);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(35, 13);
+            this.label2.TabIndex = 7;
+            this.label2.Text = "Class:";
+            // 
             // CreateTableForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(453, 184);
+            this.ClientSize = new System.Drawing.Size(672, 487);
+            this.Controls.Add(this.txtDpoClass);
             this.Controls.Add(this.btnBrowseModule);
             this.Controls.Add(this.btnPackAll);
             this.Controls.Add(this.btnPackModule);
@@ -142,6 +176,8 @@
             this.Controls.Add(this.txtAssembly);
             this.Controls.Add(this.btnCreateTable);
             this.Controls.Add(this.comboModule);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.lblAssembly);
             this.Controls.Add(this.label4);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -165,5 +201,8 @@
         private System.Windows.Forms.Button btnPackModule;
         private System.Windows.Forms.Button btnPackAll;
         private System.Windows.Forms.Button btnBrowseModule;
+        private System.Windows.Forms.RichTextBox txtDpoClass;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
     }
 }
