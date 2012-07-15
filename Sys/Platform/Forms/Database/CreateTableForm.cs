@@ -108,6 +108,7 @@ namespace Sys.Platform.Forms
             this.asm = assembly;
             this.txtAssembly.Text = asm.FullName;
 
+            StringBuilder builder = new StringBuilder();
             foreach (Type type in asm.GetTypes())
             {
                 if (type.BaseType == typeof(DPObject))
@@ -115,11 +116,12 @@ namespace Sys.Platform.Forms
                     DPObject dpo = (DPObject)Activator.CreateInstance(type);
                     if (dpo.HasAttribute<TableAttribute>())
                     {
-                        this.OutputManager.Information(string.Format("class {0} \t-->\t table {1}", type.FullName, dpo.TableName));
+                        builder.AppendLine(string.Format("class {0} \t-->\t table {1}", type.FullName, dpo.TableName));
                     }
                 }
             }
 
+            this.txtDpoClass.Text = builder.ToString();
 
         }
 
