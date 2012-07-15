@@ -54,6 +54,7 @@
             this.progressUnpackDefaultData = new Sys.Platform.Forms.ProgressControl();
             this.pageCreateDefaultTables = new DevExpress.XtraWizard.WizardPage();
             this.progressCreateDefaultTables = new Sys.Platform.Forms.ProgressControl();
+            this.chkSingleUserSystem = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.wizardControl1)).BeginInit();
             this.wizardControl1.SuspendLayout();
             this.pageConnectServer.SuspendLayout();
@@ -199,6 +200,7 @@
             // 
             // pageCreateService
             // 
+            this.pageCreateService.Controls.Add(this.chkSingleUserSystem);
             this.pageCreateService.Controls.Add(this.button1);
             this.pageCreateService.Controls.Add(this.txtCreateServiceMessage);
             this.pageCreateService.Controls.Add(this.btnCreateService);
@@ -213,9 +215,9 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(406, 54);
+            this.button1.Location = new System.Drawing.Point(406, 50);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(117, 23);
+            this.button1.Size = new System.Drawing.Size(117, 34);
             this.button1.TabIndex = 19;
             this.button1.Text = "New Database...";
             this.button1.UseVisualStyleBackColor = true;
@@ -232,9 +234,9 @@
             // 
             // btnCreateService
             // 
-            this.btnCreateService.Location = new System.Drawing.Point(449, 194);
+            this.btnCreateService.Location = new System.Drawing.Point(406, 205);
             this.btnCreateService.Name = "btnCreateService";
-            this.btnCreateService.Size = new System.Drawing.Size(111, 43);
+            this.btnCreateService.Size = new System.Drawing.Size(117, 32);
             this.btnCreateService.TabIndex = 16;
             this.btnCreateService.Text = "Create Service";
             this.btnCreateService.UseVisualStyleBackColor = true;
@@ -307,6 +309,17 @@
             this.progressCreateDefaultTables.Size = new System.Drawing.Size(598, 277);
             this.progressCreateDefaultTables.TabIndex = 1;
             // 
+            // chkSingleUserSystem
+            // 
+            this.chkSingleUserSystem.AutoSize = true;
+            this.chkSingleUserSystem.Location = new System.Drawing.Point(133, 257);
+            this.chkSingleUserSystem.Name = "chkSingleUserSystem";
+            this.chkSingleUserSystem.Size = new System.Drawing.Size(282, 17);
+            this.chkSingleUserSystem.TabIndex = 20;
+            this.chkSingleUserSystem.Text = "Is this a single user application (logon is not required) ?";
+            this.chkSingleUserSystem.UseVisualStyleBackColor = true;
+            this.chkSingleUserSystem.CheckedChanged += new System.EventHandler(this.chkSingleUserSystem_CheckedChanged);
+            // 
             // InstallWizard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -359,5 +372,6 @@
         private System.Windows.Forms.Button btnNewDatabase;
         private SqlServerControl sqlServerControl1;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.CheckBox chkSingleUserSystem;
     }
 }
