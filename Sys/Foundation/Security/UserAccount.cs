@@ -28,12 +28,15 @@ namespace Sys.Security
 
             if (Exists)
             {
-                //prevent people change devel and admin ID
+                //prevent people change devel, admin and ignore ID
                 if (userName == PredefinedUser.devel)
                     this.User_ID = PredefinedUser.develID;
 
                 else if (userName == PredefinedUser.admin)
                     this.User_ID = PredefinedUser.adminID;
+                
+                else if (userName == PredefinedUser.ignore)
+                    this.User_ID = PredefinedUser.ignoreID;
             }
             else
             {
@@ -63,6 +66,12 @@ namespace Sys.Security
 
         public virtual bool Login(string password)
         {
+            if (this.UserName == PredefinedUser.ignore)
+            {
+                EnterLoginedState();
+                return true;
+            }
+
             if (!this.Exists)
                 return false;
 
