@@ -56,8 +56,6 @@ namespace App.Executable
                 executable))
                 return;
 
-            SysInformation.IsSingleUserSystem = false;
-
             //DataManager.Helper.Start();
             if (!LoginForm.Run(App.Executable.Properties.Resources.logoicon))
                return;

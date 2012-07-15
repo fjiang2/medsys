@@ -184,8 +184,8 @@ namespace Sys.Platform.Forms
             string version = App.ApplicationVersion();
             if (version != "0.0.0.0")
                 this.Text = string.Format("{0} - v{1}", SysInformation.ApplicatioName, version);
-           
-            if (!SysInformation.IsSingleUserSystem)
+
+            if (!Constant.SINGLE_USER_SYSTEM)
             {
                 this.Text += string.Format(" : {0}({1}) @{2} of {3}", 
                     Account.CurrentUser.Name, 
@@ -291,7 +291,8 @@ namespace Sys.Platform.Forms
             formDockManager.SaveLayout();
             
             ShortcutControl shortcutControl = (ShortcutControl)formDockManager[typeof(ShortcutControl)];
-            shortcutControl.Save();
+            if(shortcutControl != null)
+                shortcutControl.Save();
 
             if (this.DialogResult != DialogResult.Abort && this.DialogResult != DialogResult.Retry) //click [X] to close window
                 this.DialogResult = DialogResult.Abort;

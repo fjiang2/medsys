@@ -23,7 +23,9 @@ namespace Sys
         public static int DB_SYSTEM_ID = 1;
         public static int DB_APPLICATION_ID = 2;
 
-        public static int POLICY_DATAPOOL_MAXCOUNT      = 10;
+        public static bool SINGLE_USER_SYSTEM = false;
+
+        public static int POLICY_DATAPOOL_MAXCOUNT = 10;
         public static string COMPUTER_NAME = "";
 
         public static int Revision = 1;

@@ -19,15 +19,7 @@ namespace Sys
         private static string executable;
         private static Bitmap logo;
         private static Icon icon;
-        private static bool isSingleUserSystem = false;
-        
-        
-        public static bool IsSingleUserSystem 
-        {
-            get { return isSingleUserSystem; }
-            set { isSingleUserSystem = value; }
-        }
-
+       
         public static Version DatabaseVersion
         {
             get
@@ -174,7 +166,7 @@ namespace Sys
 
         public static void Start(IAccount account)
         {
-            if (SysInformation.IsSingleUserSystem)
+            if (Constant.SINGLE_USER_SYSTEM)
                 return;
 
             logActivityDpo activity = new logActivityDpo();
@@ -189,7 +181,7 @@ namespace Sys
 
         private static void Stop(IAccount account)
         {
-            if (SysInformation.IsSingleUserSystem)
+            if (Constant.SINGLE_USER_SYSTEM)
                 return;
 
             logActivityDpo activity = new logActivityDpo();
