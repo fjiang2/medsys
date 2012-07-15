@@ -153,7 +153,7 @@ namespace Sys.Platform.Forms
 
         public static bool Run(Icon loginIcon)
         {
-            if (!SysInformation.IsSingleUserSystem)
+            if (!Constant.SINGLE_USER_SYSTEM)
                 return RunLogonRequired(loginIcon);
             else
             {
