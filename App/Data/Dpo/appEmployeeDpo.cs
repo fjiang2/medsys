@@ -15,7 +15,7 @@ using Sys.Data.Manager;
 namespace App.Data.Dpo
 {
     [Revision(10)]
-    [Table("app00201", Level.System)]    //Primary Keys = Badge;  Identity = Emp_ID;
+    [Table("app00201", Level.Application)]    //Primary Keys = Badge;  Identity = Emp_ID;
     public class appEmployeeDpo : DPObject
     {
 

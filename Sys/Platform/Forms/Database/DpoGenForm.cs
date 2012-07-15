@@ -27,7 +27,7 @@ namespace Sys.Platform.Forms
 
 
         public DpoGenForm()
-            : this(Sys.Constant.DB_DEFAULT)
+            : this(Sys.Constant.DB_APPLICATION)
         { 
         
         }
@@ -51,7 +51,7 @@ namespace Sys.Platform.Forms
             this.rgModifier.SetEnum(AccessModifier.Public);
 
             this.rgDpoLevel.LoadEnum<Level>();
-            this.rgDpoLevel.SetEnum(Level.Default);
+            this.rgDpoLevel.SetEnum(Level.Application);
 
             string[] assemblies = Library.RegisteredAssemblyNames;
             foreach (string x in assemblies)
@@ -484,7 +484,7 @@ namespace Sys.Platform.Forms
             try
             {
                 int count;
-                if (DatabaseName == Sys.Constant.DB_DEFAULT)
+                if (DatabaseName == Sys.Constant.DB_APPLICATION)
                 {
                     count = Manager.CreateClass(Path, MustGenerate, DatabaseName, Namespace, true, Modifier, chkFolder.Checked);
                     if (count != 0)

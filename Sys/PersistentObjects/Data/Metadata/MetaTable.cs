@@ -227,11 +227,12 @@ namespace Sys.Data
             string attr = "";
             switch (level)
             {
-                case Level.Default:
+
+                case Level.Application:
                     if (pack)
-                        attr = string.Format(@"[Table(""{0}"", Level.Default)]", tname.Name);
+                        attr = string.Format(@"[Table(""{0}"", Level.Application)]", tname.Name);
                     else
-                        attr = string.Format(@"[Table(""{0}"", Level.Default, Pack = false)]", tname.Name);
+                        attr = string.Format(@"[Table(""{0}"", Level.Application, Pack = false)]", tname.Name);
                     break;
                 
                 case Level.System:
@@ -242,7 +243,7 @@ namespace Sys.Data
                     break;
                  
                 case Level.Fixed:
-                    attr = string.Format(@"[Table(""{0}..{1}"")]", tname.DatabaseName, tname.Name);
+                    attr = string.Format(@"[Table(""{0}..[{1}]"")]", tname.DatabaseName, tname.Name);
                     break;
             }
                 

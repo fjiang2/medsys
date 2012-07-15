@@ -11,7 +11,7 @@ namespace Sys
 {
     public class Constant : Const
     {
-        public static string DB_XMPP = DB_DEFAULT;
+        public static string DB_XMPP = DB_APPLICATION;
 
         public static bool USE_XMPP                     { get { return (bool)Configuration.Instance["Xmpp.Active"]; } }
         public static int POLICY_PASSWORD_EXPRIED_DAYS  { get { return (int)Configuration.Instance["Policy.Password.Expired.Days"]; }  }

@@ -15,7 +15,7 @@ using Sys.Data.Manager;
 namespace App.Data.Dpo
 {
     [Revision(8)]
-    [Table("Territories", Level.Default)]    //Primary Keys = TerritoryID;  Identity = ;
+    [Table("Northwind..Territories", Level.Fixed)]    //Primary Keys = TerritoryID;  Identity = ;
     public class TerritorieDpo : DPObject
     {
 

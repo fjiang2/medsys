@@ -34,8 +34,8 @@ namespace Sys.Data
                     case Level.System:
                         return new TableName(Const.DB_SYSTEM, this.tableName);
 
-                    case Level.Default:
-                        return new TableName(Const.DB_DEFAULT, this.tableName);
+                    case Level.Application:
+                        return new TableName(Const.DB_APPLICATION, this.tableName);
                          
 
                     default:

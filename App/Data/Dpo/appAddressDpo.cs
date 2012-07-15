@@ -15,7 +15,7 @@ using Sys.Data.Manager;
 namespace App.Data.Dpo
 {
     [Revision(0)]
-    [Table("app00102", Level.System, Pack = false)]    //Primary Keys = Address_ID;  Identity = Address_ID;
+    [Table("app00102", Level.Application, Pack = false)]    //Primary Keys = Address_ID;  Identity = Address_ID;
     public class appAddressDpo : DPObject
     {
 
