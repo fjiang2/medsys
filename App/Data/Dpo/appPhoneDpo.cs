@@ -15,7 +15,7 @@ using Sys.Data.Manager;
 namespace App.Data.Dpo
 {
     [Revision(1)]
-    [Table("app00104", Level.System, Pack = false)]    //Primary Keys = Phone_Enum + Phone_ID;  Identity = ;
+    [Table("app00104", Level.Application, Pack = false)]    //Primary Keys = Phone_Enum + Phone_ID;  Identity = ;
     public class appPhoneDpo : DPObject
     {
 

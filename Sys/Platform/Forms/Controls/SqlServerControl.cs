@@ -158,7 +158,7 @@ namespace Sys.Platform.Forms
             }
 
             Sys.Constant.DB_SYSTEM = databaseName;
-            Sys.Constant.DB_DEFAULT = databaseName;
+            Sys.Constant.DB_APPLICATION = databaseName;
 
             return true;
         }

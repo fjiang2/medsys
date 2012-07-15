@@ -15,7 +15,7 @@ using Sys.Data.Manager;
 namespace App.Data.Dpo
 {
     [Revision(8)]
-    [Table("Region", Level.Default)]    //Primary Keys = RegionID;  Identity = ;
+    [Table("Northwind..Region", Level.Fixed)]    //Primary Keys = RegionID;  Identity = ;
     public class RegionDpo : DPObject
     {
 

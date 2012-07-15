@@ -16,7 +16,8 @@ namespace Sys.Data
         {
             this.script = string.Format(script, args)
                         .Replace("$DB_SYSTEM", Const.DB_SYSTEM)
-                        .Replace("$DB_DEFAULT", Const.DB_DEFAULT);
+                        .Replace("$DB_APPLICATION", Const.DB_APPLICATION)
+                        .Replace("$DB_DEFAULT", Const.DB_APPLICATION);
 
 
             SqlConnection sqlConnection = new SqlConnection(Const.CONNECTION_STRING);

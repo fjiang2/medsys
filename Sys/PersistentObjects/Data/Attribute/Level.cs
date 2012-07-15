@@ -12,12 +12,12 @@ namespace Sys.Data
         /// </summary>
         Fixed,
 
-        Default,
-
         /// <summary>
         /// System tables
         /// </summary>
-        System
+        System,
+
+        Application
 
     }
 }

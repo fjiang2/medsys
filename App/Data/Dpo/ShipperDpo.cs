@@ -15,7 +15,7 @@ using Sys.Data.Manager;
 namespace App.Data.Dpo
 {
     [Revision(8)]
-    [Table("Shippers", Level.Default)]    //Primary Keys = ShipperID;  Identity = ShipperID;
+    [Table("Northwind..Shippers", Level.Fixed)]    //Primary Keys = ShipperID;  Identity = ShipperID;
     public class ShipperDpo : DPObject
     {
 

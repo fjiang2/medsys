@@ -78,7 +78,7 @@ namespace Sys.Platform.Forms
             Company company = (Company)this.comboServerName.SelectedItem;
             SysInformation.SetCompany(company);
             if (!string.IsNullOrEmpty(company.Default_DB))
-                Constant.DB_DEFAULT = company.Default_DB;
+                Constant.DB_APPLICATION = company.Default_DB;
 
 
             DialogResult = DialogResult.OK;
@@ -144,7 +144,7 @@ namespace Sys.Platform.Forms
             Company company = new Company(1);
             SysInformation.SetCompany(company);
             if (!string.IsNullOrEmpty(company.Default_DB))
-                Sys.Constant.DB_DEFAULT = company.Default_DB;
+                Sys.Constant.DB_APPLICATION = company.Default_DB;
 
             MainForm main = new MainForm();
             Application.Run(main);

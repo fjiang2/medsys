@@ -15,7 +15,7 @@ using Sys.Data.Manager;
 namespace App.Data.Dpo
 {
     [Revision(7)]
-    [Table("Employees", Level.Default)]    //Primary Keys = EmployeeID;  Identity = EmployeeID;
+    [Table("Northwind..Employees", Level.Fixed)]    //Primary Keys = EmployeeID;  Identity = EmployeeID;
     public class EmployeeDpo : DPObject
     {
 

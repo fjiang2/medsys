@@ -15,7 +15,7 @@ using Sys.Data.Manager;
 namespace App.Data.Dpo
 {
     [Revision(10)]
-    [Table("app00202", Level.System)]    //Primary Keys = Name;  Identity = Dept_ID;
+    [Table("app00202", Level.Application)]    //Primary Keys = Name;  Identity = Dept_ID;
     public class appDepartmentDpo : DPObject
     {
 

@@ -15,7 +15,7 @@ using Sys.Data.Manager;
 namespace App.Data.Dpo
 {
     [Revision(8)]
-    [Table("Orders", Level.Default)]    //Primary Keys = OrderID;  Identity = OrderID;
+    [Table("Northwind..Orders", Level.Fixed)]    //Primary Keys = OrderID;  Identity = OrderID;
     public class OrderDpo : DPObject
     {
 

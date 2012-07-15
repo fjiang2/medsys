@@ -85,7 +85,7 @@ namespace Sys.Platform.Forms
                 progressCreateDefaultTables.ActionButton.Text = "Create Service Table";
                 progressCreateDefaultTables.Action = delegate(Worker worker)
                 {
-                    Unpacking.CreateTable(Level.Default, worker);
+                    Unpacking.CreateTable(Level.Application, worker);
                 };
 
                 progressCreateDefaultTables.Worker.RunWorkerCompleted += delegate(object s, RunWorkerCompletedEventArgs e1)
@@ -99,7 +99,7 @@ namespace Sys.Platform.Forms
                 progressUnpackDefaultData.ActionButton.Text = "Unpack Service Data";
                 progressUnpackDefaultData.Action = delegate(Worker worker)
                 {
-                    Unpacking.Unpack(Level.Default, worker, true);
+                    Unpacking.Unpack(Level.Application, worker, true);
                 };
 
                 progressUnpackDefaultData.Worker.RunWorkerCompleted += delegate(object s, RunWorkerCompletedEventArgs e1)
@@ -161,7 +161,7 @@ namespace Sys.Platform.Forms
 
             Sys.Security.Company company = new Sys.Security.Company();
             company.CreateService(txtServiceName.Text, databaseName);
-            Const.DB_DEFAULT = databaseName;
+            Const.DB_APPLICATION = databaseName;
 
             txtCreateServiceMessage.Text += string.Format("Serivce [{0}] has been created at {1}.\r\n", txtServiceName.Text, databaseName);
 
