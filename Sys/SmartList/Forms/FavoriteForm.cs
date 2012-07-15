@@ -88,7 +88,6 @@ namespace Sys.SmartList.Forms
             }
 
             command.Ty = (int)securityType;
-            command.Company_ID = SysInformation.CompanyID;
             command.Label = this.tbTitle.Text;
             command.User_Layout = this.value;
             command.ViewMode = par.ViewMode;

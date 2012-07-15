@@ -45,12 +45,12 @@ namespace Sys.SmartList.Forms
         string selectCommand = @"
                             SELECT	*
                             FROM	@Commands 
-                            WHERE	(Company_ID={0} OR Company_ID IS NULL OR Company_ID = 0) AND Visible=1 AND Ty ={1} AND Released = 1 
-                                    AND (Controlled=0 OR Owner_ID = {2}
+                            WHERE	Visible=1 AND Ty ={0} AND Released = 1 
+                                    AND (Controlled=0 OR Owner_ID = {1}
 		                              OR ID IN (SELECT ID 
 					                            FROM @IPermissions 
-			  	                               WHERE Ty ={1} AND Visible=1 AND Role_ID IN (
-						                            SELECT Role_ID FROM @UserRoles WHERE User_ID = {2}
+			  	                               WHERE Ty ={0} AND Visible=1 AND Role_ID IN (
+						                            SELECT Role_ID FROM @UserRoles WHERE User_ID = {1}
 						                            )
                                      ))
                             ORDER BY isNull(OrderBy, 0), label
@@ -59,16 +59,16 @@ namespace Sys.SmartList.Forms
         string selectComamndDeveloper = @"
                             SELECT	*
                             FROM	@Commands 
-                            WHERE	(Company_ID={0} OR Company_ID IS NULL OR Company_ID = 0)  AND Ty={1}
+                            WHERE	Ty={0}
                             ORDER BY isNull(OrderBy, 0), label
                             ";
 
         string selectComamndAdmin = @"
                             SELECT	*
                             FROM	@Commands 
-                            WHERE	(Company_ID={0} OR Company_ID IS NULL OR Company_ID = 0) AND Visible=1 AND Ty={1} 
+                            WHERE	Visible=1 AND Ty={0} 
                                     AND ID NOT IN (20)
-                                    AND (Access_Level<>2 OR Owner_ID = {2})
+                                    AND (Access_Level<>2 OR Owner_ID = {1})
                                     AND Released = 1
                             ORDER BY isNull(OrderBy, 0), label
                             ";
@@ -210,7 +210,7 @@ namespace Sys.SmartList.Forms
 
             treeView1.ImageList = CommandTree.ImageList;
 
-            this.dtSmartList = SqlCmd.FillDataTable(selectCommand, SysInformation.CompanyID, (int)SecurityType.SmartList, collector.UserID);
+            this.dtSmartList = SqlCmd.FillDataTable(selectCommand, (int)SecurityType.SmartList, collector.UserID);
             List<ITreeNodeDpo> list = new List<ITreeNodeDpo>();
             foreach (DataRow dataRow in dtSmartList.Rows)
             {

@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 4/19/2012 5:59:11 PM
+//   by devel at 7/15/2012 8:37:11 AM
 //
 
 using System;
@@ -14,7 +14,7 @@ using Sys.Data.Manager;
 
 namespace Sys.SmartList.Dpo
 {
-    [Revision(13)]
+    [Revision(14)]
     [Table("sys01101", Level.System)]    //Primary Keys = ID;  Identity = ID;
     public class CommandDpo : DPObject
     {
@@ -26,8 +26,6 @@ namespace Sys.SmartList.Dpo
         [Column(_OrderBy, SqlDbType.Int)]                                                         public int OrderBy;           //int(4) not null
         [Column(_Image_Index, SqlDbType.Int)]                                                     public int Image_Index;       //int(4) not null
         [Column(_Ty, SqlDbType.Int)]                                                              public int Ty;                //int(4) not null
-        [Column(_Company_ID, SqlDbType.Int)]                                                      public int Company_ID;        //int(4) not null
-        [Column(_Application, SqlDbType.NVarChar, Length = 50)]                                   public string Application;    //nvarchar(50) not null
         [Column(_Label, SqlDbType.NVarChar, Length = 50)]                                         public string Label;          //nvarchar(50) not null
         [Column(_Description, SqlDbType.Text, Nullable = true)]                                   public string Description;    //text(16) null
         [Column(_Header_Footer, SqlDbType.NVarChar, Length = 512)]                                public string Header_Footer;  //nvarchar(512) not null
@@ -114,8 +112,6 @@ namespace Sys.SmartList.Dpo
         public const string _OrderBy = "OrderBy";
         public const string _Image_Index = "Image_Index";
         public const string _Ty = "Ty";
-        public const string _Company_ID = "Company_ID";
-        public const string _Application = "Application";
         public const string _Label = "Label";
         public const string _Description = "Description";
         public const string _Header_Footer = "Header_Footer";

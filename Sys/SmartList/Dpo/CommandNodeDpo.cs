@@ -33,7 +33,6 @@ namespace Sys.SmartList
             this.Released = true;
             this.Controlled = true;
 
-            this.Company_ID = SysInformation.CompanyID;
             this.Owner_ID = Account.CurrentUser.UserID;
 
             this.Setting_Script = "";
@@ -41,7 +40,6 @@ namespace Sys.SmartList
             this.User_Layout = "";
             this.Header_Footer = "";
 
-            this.Application = "";
             this.Help = "";
         }
     
