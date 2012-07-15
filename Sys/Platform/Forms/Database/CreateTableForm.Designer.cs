@@ -37,9 +37,9 @@
             this.btnPackModule = new System.Windows.Forms.Button();
             this.btnPackAll = new System.Windows.Forms.Button();
             this.btnBrowseModule = new System.Windows.Forms.Button();
-            this.txtDpoClass = new System.Windows.Forms.RichTextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.jGridView1 = new Sys.ViewManager.Forms.JGridView();
             this.SuspendLayout();
             // 
             // comboModule
@@ -89,6 +89,7 @@
             this.txtAssembly.ReadOnly = true;
             this.txtAssembly.Size = new System.Drawing.Size(600, 20);
             this.txtAssembly.TabIndex = 11;
+            this.txtAssembly.TextChanged += new System.EventHandler(this.txtAssembly_TextChanged);
             // 
             // btnCreateAllTable
             // 
@@ -133,18 +134,6 @@
             this.btnBrowseModule.UseVisualStyleBackColor = true;
             this.btnBrowseModule.Click += new System.EventHandler(this.btnBrowseModule_Click);
             // 
-            // txtDpoClass
-            // 
-            this.txtDpoClass.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtDpoClass.Location = new System.Drawing.Point(60, 82);
-            this.txtDpoClass.Name = "txtDpoClass";
-            this.txtDpoClass.ReadOnly = true;
-            this.txtDpoClass.Size = new System.Drawing.Size(600, 271);
-            this.txtDpoClass.TabIndex = 16;
-            this.txtDpoClass.Text = "";
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -163,12 +152,23 @@
             this.label2.TabIndex = 7;
             this.label2.Text = "Class:";
             // 
+            // jGridView1
+            // 
+            this.jGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.jGridView1.DataSource = null;
+            this.jGridView1.Location = new System.Drawing.Point(62, 85);
+            this.jGridView1.Name = "jGridView1";
+            this.jGridView1.Size = new System.Drawing.Size(598, 274);
+            this.jGridView1.TabIndex = 16;
+            // 
             // CreateTableForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(672, 487);
-            this.Controls.Add(this.txtDpoClass);
+            this.Controls.Add(this.jGridView1);
             this.Controls.Add(this.btnBrowseModule);
             this.Controls.Add(this.btnPackAll);
             this.Controls.Add(this.btnPackModule);
@@ -201,8 +201,8 @@
         private System.Windows.Forms.Button btnPackModule;
         private System.Windows.Forms.Button btnPackAll;
         private System.Windows.Forms.Button btnBrowseModule;
-        private System.Windows.Forms.RichTextBox txtDpoClass;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
+        private ViewManager.Forms.JGridView jGridView1;
     }
 }
