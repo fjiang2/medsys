@@ -52,7 +52,7 @@ namespace Sys.ViewManager.Forms
             }
 
             this.Text += builder.ToString();
-
+            this.ScrollToCaret();
         }
         public MessageManager Manager
         {

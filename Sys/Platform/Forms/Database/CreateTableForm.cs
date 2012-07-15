@@ -111,7 +111,12 @@ namespace Sys.Platform.Forms
             this.asm = assembly;
             this.txtAssembly.Text = asm.FullName;
 
-            StringBuilder builder = new StringBuilder();
+            DataTable dt = new DataTable();
+            dt.Columns.Add(new DataColumn("Namcespace", typeof(string)));
+            dt.Columns.Add(new DataColumn("Class", typeof(string)));
+            dt.Columns.Add(new DataColumn("Database", typeof(string)));
+            dt.Columns.Add(new DataColumn("Table", typeof(string)));
+            dt.Columns.Add(new DataColumn("Package", typeof(bool)));
             foreach (Type type in asm.GetTypes())
             {
                 if (type.BaseType == typeof(DPObject))
@@ -119,12 +124,21 @@ namespace Sys.Platform.Forms
                     DPObject dpo = (DPObject)Activator.CreateInstance(type);
                     if (dpo.HasAttribute<TableAttribute>())
                     {
-                        builder.AppendLine(string.Format("class {0} \t-->\t table {1}", type.FullName, dpo.TableName));
+                        TableAttribute[] A = type.GetAttributes<TableAttribute>();
+                        DataRow row = dt.NewRow();
+                        int i = 0;
+                        row[i++] = type.Namespace;
+                        row[i++] = type.Name;
+                        row[i++] = dpo.TableName.DatabaseName;
+                        row[i++] = dpo.TableName.Name;
+                        row[i++] = A[0].Pack;
+                        dt.Rows.Add(row);
                     }
                 }
             }
 
-            this.txtDpoClass.Text = builder.ToString();
+            this.jGridView1.ReadOnly = true;
+            this.jGridView1.DataSource = dt;
 
         }
 
@@ -196,6 +210,11 @@ namespace Sys.Platform.Forms
                 Assembly asm = Assembly.LoadFile(fileDialog.FileName);
                 LoadAssembly(asm, true);
             }
+        }
+
+        private void txtAssembly_TextChanged(object sender, EventArgs e)
+        {
+
         }
 
    

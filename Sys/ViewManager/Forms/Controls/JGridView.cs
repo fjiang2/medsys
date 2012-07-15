@@ -81,6 +81,16 @@ namespace Sys.ViewManager.Forms
             }
         }
 
+        public bool ReadOnly
+        {
+            set
+            {
+                gridView1.OptionsBehavior.Editable = !value;
+                if (value == true)
+                    AllowAddNew = false;
+            }
+        }
+
 
         public DevExpress.XtraGrid.GridControl GridControl
         {
