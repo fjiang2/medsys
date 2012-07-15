@@ -90,6 +90,9 @@ namespace Sys.Platform.Forms
                 return;
 
             this.OutputManager.Add(Pack(asm, this.externalAssembly));
+            if (this.OutputManager.Count == 0)
+                this.OutputManager.Information("No table needs to be packed.");
+
             this.OutputManager.Commit();
         }
 

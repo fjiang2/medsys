@@ -79,7 +79,8 @@ namespace Sys.ViewManager.Security
 
         public void OpenControl(Control control)
         {
-            this.menuConsumer.AddDockPanel(MenuItem, control);
+            DockPanel dockPanel = this.menuConsumer.AddDockPanel(MenuItem, control);
+            control.Tag = dockPanel;        
         }
 
         public void OpenDialog(string formClass, object[] args)

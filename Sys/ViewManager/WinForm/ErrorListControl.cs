@@ -8,10 +8,11 @@ using System.Text;
 using System.Windows.Forms;
 using Sys.Data;
 using Sys;
+using DevExpress.XtraBars.Docking;
 
 namespace Sys.ViewManager.Forms
 {
-    public partial class ErrorListControl : UserControl
+    public partial class ErrorListControl : UserControl, IDockPanel
     {
         MessageManager manager;
         DataTable dt;
@@ -20,10 +21,11 @@ namespace Sys.ViewManager.Forms
         {
             InitializeComponent();
 
+
             gridView1.OptionsView.ShowFilterPanelMode = DevExpress.XtraGrid.Views.Base.ShowFilterPanelMode.Never;
 
             this.dt = new DataTable();
-            this.manager = new MessageManager();
+            this.manager = new MessageManager(this);
             
             dt.Columns.Add(new DataColumn("ErrorTy", typeof(int)));
             dt.Columns.Add(new DataColumn("ID", typeof(int)));
@@ -39,6 +41,15 @@ namespace Sys.ViewManager.Forms
 
             manager.MessageChanged += new MessageManager.MessageHandler(manager_MessageChanged);
             manager.MessageCleared += new EventHandler(manager_MessageCleared);
+        }
+
+        public void ActivateDockPanel()
+        {
+            if (this.Tag is DockPanel)
+            {
+                DockPanel dockPanel = (DockPanel)this.Tag;
+                dockPanel.DockManager.ActivePanel = dockPanel;
+            }
         }
 
         void manager_MessageCleared(object sender, EventArgs e)
