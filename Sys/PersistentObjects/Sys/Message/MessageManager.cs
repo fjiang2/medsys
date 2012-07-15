@@ -7,6 +7,11 @@ using System.Data;
 
 namespace Sys
 {
+    public interface IDockPanel
+    { 
+        void ActivateDockPanel();
+    }
+
     public class MessageManager
     {
         List<Message> messages = new List<Message>();
@@ -16,14 +21,19 @@ namespace Sys
         public event MessageHandler MessageChanged;
         public event EventHandler MessageCleared;
 
-        public MessageManager()
+        IDockPanel host;
+
+        public MessageManager(IDockPanel host)
         {
+            this.host = host;
         }
 
         public void Commit()
         {
             if (MessageChanged != null)
                 MessageChanged(this, new MessageEventArgs(this.messages));
+
+            host.ActivateDockPanel();
         }
 
 
@@ -102,6 +112,11 @@ namespace Sys
         {
             foreach (Message message in messages)
                this.messages.Add(message);
+        }
+
+        public int Count
+        {
+            get { return this.messages.Count; }
         }
 
         public override string ToString()

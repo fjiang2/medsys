@@ -117,7 +117,12 @@ namespace Sys.ViewManager.Forms
         {
             get
             {
-                return GetMainForm(this.owner);
+                IMainForm mainForm = GetMainForm(this.owner);
+                if (mainForm != null)
+                    return GetMainForm(this.owner);
+                else
+                    throw new Exception("MainForm is not instantiated before using");
+                    
             }
 
         }
