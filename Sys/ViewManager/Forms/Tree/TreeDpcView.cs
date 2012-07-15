@@ -49,6 +49,8 @@ namespace Sys.ViewManager.Forms
             }
             set
             {
+                if (value == null)
+                    return;
 
                 if (value.Count > 0)
                     this.nodeType = value[0].GetType();

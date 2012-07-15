@@ -51,7 +51,6 @@ namespace Sys.Platform.Forms
                 comboModule.Items.Add(x);
             }
 
-            comboApplication.Items.Add("SYS");
         }
 
         void MenuMaintenance_FormClosed(object sender, FormClosedEventArgs e)
@@ -88,8 +87,6 @@ namespace Sys.Platform.Forms
                 .Connect(picIcon, UserMenuDpo._Icon)
                 .Connect(txtFormClass, UserMenuDpo._Form_Class)
                 .Connect(rgFormPlace, UserMenuDpo._Form_Place)
-                .Connect(comboCompany, UserMenuDpo._Company_ID, new TableReader<CompanyDpo>().Table, CompanyDpo._Name, CompanyDpo._Comany_ID)
-                .Connect(comboApplication, UserMenuDpo._Application)
                 .Connect(txtKeyName, UserMenuDpo._Key_Name)
 
                 .Reset();

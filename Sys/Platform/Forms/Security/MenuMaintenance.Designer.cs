@@ -30,8 +30,6 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.txtLabel = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.txtDescription = new System.Windows.Forms.TextBox();
@@ -50,8 +48,6 @@
             this.label6 = new System.Windows.Forms.Label();
             this.txtID = new System.Windows.Forms.TextBox();
             this.btnSearch = new System.Windows.Forms.Button();
-            this.comboCompany = new System.Windows.Forms.ComboBox();
-            this.comboApplication = new System.Windows.Forms.ComboBox();
             this.comboModule = new System.Windows.Forms.ComboBox();
             this.txtParentID = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
@@ -90,28 +86,10 @@
             this.txtLabel.Size = new System.Drawing.Size(397, 20);
             this.txtLabel.TabIndex = 3;
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(19, 550);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(51, 13);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "Company";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(14, 580);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(59, 13);
-            this.label3.TabIndex = 0;
-            this.label3.Text = "Application";
-            // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(31, 607);
+            this.label4.Location = new System.Drawing.Point(13, 132);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(42, 13);
             this.label4.TabIndex = 0;
@@ -154,7 +132,7 @@
             // chkControlled
             // 
             this.chkControlled.AutoSize = true;
-            this.chkControlled.Location = new System.Drawing.Point(230, 541);
+            this.chkControlled.Location = new System.Drawing.Point(15, 532);
             this.chkControlled.Name = "chkControlled";
             this.chkControlled.Size = new System.Drawing.Size(73, 17);
             this.chkControlled.TabIndex = 21;
@@ -164,7 +142,7 @@
             // chkEnabled
             // 
             this.chkEnabled.AutoSize = true;
-            this.chkEnabled.Location = new System.Drawing.Point(230, 564);
+            this.chkEnabled.Location = new System.Drawing.Point(179, 532);
             this.chkEnabled.Name = "chkEnabled";
             this.chkEnabled.Size = new System.Drawing.Size(65, 17);
             this.chkEnabled.TabIndex = 22;
@@ -174,7 +152,7 @@
             // chkVisible
             // 
             this.chkVisible.AutoSize = true;
-            this.chkVisible.Location = new System.Drawing.Point(230, 587);
+            this.chkVisible.Location = new System.Drawing.Point(247, 532);
             this.chkVisible.Name = "chkVisible";
             this.chkVisible.Size = new System.Drawing.Size(56, 17);
             this.chkVisible.TabIndex = 23;
@@ -184,7 +162,7 @@
             // chkReleased
             // 
             this.chkReleased.AutoSize = true;
-            this.chkReleased.Location = new System.Drawing.Point(230, 610);
+            this.chkReleased.Location = new System.Drawing.Point(102, 532);
             this.chkReleased.Name = "chkReleased";
             this.chkReleased.Size = new System.Drawing.Size(71, 17);
             this.chkReleased.TabIndex = 24;
@@ -242,6 +220,7 @@
             // 
             // treeMenu
             // 
+            this.treeMenu.DataSource = null;
             this.treeMenu.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeMenu.Location = new System.Drawing.Point(0, 0);
             this.treeMenu.Name = "treeMenu";
@@ -284,30 +263,12 @@
             this.btnSearch.UseVisualStyleBackColor = true;
             this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
-            // comboCompany
-            // 
-            this.comboCompany.FormattingEnabled = true;
-            this.comboCompany.ItemHeight = 13;
-            this.comboCompany.Location = new System.Drawing.Point(79, 550);
-            this.comboCompany.Name = "comboCompany";
-            this.comboCompany.Size = new System.Drawing.Size(121, 21);
-            this.comboCompany.TabIndex = 6;
-            // 
-            // comboApplication
-            // 
-            this.comboApplication.FormattingEnabled = true;
-            this.comboApplication.ItemHeight = 13;
-            this.comboApplication.Location = new System.Drawing.Point(79, 577);
-            this.comboApplication.Name = "comboApplication";
-            this.comboApplication.Size = new System.Drawing.Size(121, 21);
-            this.comboApplication.TabIndex = 6;
-            // 
             // comboModule
             // 
             this.comboModule.FormattingEnabled = true;
-            this.comboModule.Location = new System.Drawing.Point(79, 604);
+            this.comboModule.Location = new System.Drawing.Point(61, 129);
             this.comboModule.Name = "comboModule";
-            this.comboModule.Size = new System.Drawing.Size(121, 21);
+            this.comboModule.Size = new System.Drawing.Size(242, 21);
             this.comboModule.TabIndex = 6;
             // 
             // txtParentID
@@ -417,8 +378,6 @@
             this.Controls.Add(this.rgMenuType);
             this.Controls.Add(this.rgFormPlace);
             this.Controls.Add(this.comboModule);
-            this.Controls.Add(this.comboApplication);
-            this.Controls.Add(this.comboCompany);
             this.Controls.Add(this.btnSearch);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.toolStrip1);
@@ -427,8 +386,6 @@
             this.Controls.Add(this.chkEnabled);
             this.Controls.Add(this.chkControlled);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.txtCommand);
             this.Controls.Add(this.txtDescription);
             this.Controls.Add(this.label10);
@@ -463,8 +420,6 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtLabel;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox txtDescription;
@@ -482,8 +437,6 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox txtID;
         private System.Windows.Forms.Button btnSearch;
-        private System.Windows.Forms.ComboBox comboCompany;
-        private System.Windows.Forms.ComboBox comboApplication;
         private System.Windows.Forms.ComboBox comboModule;
         private System.Windows.Forms.TextBox txtParentID;
         private System.Windows.Forms.Label label8;

@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 4/19/2012 5:59:09 PM
+//   by devel at 7/15/2012 8:05:37 AM
 //
 
 using System;
@@ -14,7 +14,7 @@ using Sys.Data.Manager;
 
 namespace Sys.ViewManager.Dpo
 {
-    [Revision(10)]
+    [Revision(11)]
     [Table("sys00801", Level.System)]    //Primary Keys = ID;  Identity = ID;
     public class UserMenuDpo : DPObject
     {
@@ -25,8 +25,6 @@ namespace Sys.ViewManager.Dpo
         [Column(_ParentID, SqlDbType.Int, Nullable = true)]                                       public int? ParentID;         //int(4) null
         [Column(_OrderBy, SqlDbType.Int, Nullable = true)]                                        public int? OrderBy;          //int(4) null
         [Column(_Ty, SqlDbType.Int)]                                                              public int Ty;                //int(4) not null
-        [Column(_Company_ID, SqlDbType.Int, Nullable = true)]                                     public int? Company_ID;       //int(4) null
-        [Column(_Application, SqlDbType.NVarChar, Nullable = true, Length = 50)]                  public string Application;    //nvarchar(50) null
         [Column(_Module, SqlDbType.VarChar, Nullable = true, Length = 128)]                       public string Module;         //varchar(128) null
         [Column(_Label, SqlDbType.NVarChar, Nullable = true, Length = 128)]                       public string Label;          //nvarchar(128) null
         [Column(_Description, SqlDbType.NVarChar, Nullable = true, Length = 512)]                 public string Description;    //nvarchar(512) null
@@ -48,7 +46,7 @@ namespace Sys.ViewManager.Dpo
                 if (Icon != null)
                 {
                     System.IO.MemoryStream stream = new System.IO.MemoryStream(Icon);
-                    return Image.FromStream(stream);
+                    return System.Drawing.Image.FromStream(stream);
                 }
                 
                 return null;
@@ -135,8 +133,6 @@ namespace Sys.ViewManager.Dpo
         public const string _ParentID = "ParentID";
         public const string _OrderBy = "OrderBy";
         public const string _Ty = "Ty";
-        public const string _Company_ID = "Company_ID";
-        public const string _Application = "Application";
         public const string _Module = "Module";
         public const string _Label = "Label";
         public const string _Description = "Description";
