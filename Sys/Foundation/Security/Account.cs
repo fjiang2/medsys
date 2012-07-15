@@ -26,17 +26,12 @@ namespace Sys.Security
         }
 
 
-        public Account(string employeeID, string password)
-            : base(employeeID)
+        public Account(string userName, string password)
+            : base(userName)
         {
             if (!Login(password))
                 return;
 
-        }
-
-        public string EmployeeID
-        { 
-            get { return UserName; } 
         }
 
         
