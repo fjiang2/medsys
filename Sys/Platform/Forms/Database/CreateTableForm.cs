@@ -32,37 +32,44 @@ namespace Sys.Platform.Forms
                 comboModule.Items.Add(x);
             }
 
+            
+        }
+
+        private void CreateTableForm_Load(object sender, EventArgs e)
+        {
             comboModule.SelectedIndex = 0;
         }
 
-       
 
 
         private void btnCreateTable_Click(object sender, EventArgs e)
         {
-            this.txtOuput.Text = "";
+            this.OutputManager.Clear();
             
             if (asm == null)
                 return;
 
-            this.txtOuput.Text = Unpacking.CreateTable(asm);
+            this.OutputManager.Add(Unpacking.CreateTable(asm));
+            this.OutputManager.Commit();
         }
 
 
         private void btnCreateAllTable_Click(object sender, EventArgs e)
         {
-            this.txtOuput.Text = CreateTable();
+            this.OutputManager.Clear();
+            this.OutputManager.Add(CreateTable());
+            this.OutputManager.Commit();
         }
 
-        public static string CreateTable()
+        public static IEnumerable<Message> CreateTable()
         {
-            StringBuilder sb = new StringBuilder();
+            List<Message> messages = new List<Message>();
             foreach (Assembly asm in Library.GetRegisteredAssemblies())
             {
-                sb.AppendLine(Unpacking.CreateTable(asm));
+                messages.AddRange(Unpacking.CreateTable(asm));
             }
-            
-            return sb.ToString();
+
+            return messages;
         }
 
 
@@ -78,17 +85,19 @@ namespace Sys.Platform.Forms
 
         private void btnPackModule_Click(object sender, EventArgs e)
         {
-            this.txtOuput.Text = "";
-
+            this.OutputManager.Clear();
             if (asm == null)
                 return;
 
-            this.txtOuput.Text = Pack(asm, this.externalAssembly);
+            this.OutputManager.Add(Pack(asm, this.externalAssembly));
+            this.OutputManager.Commit();
         }
 
         private void btnPackAll_Click(object sender, EventArgs e)
         {
-            this.txtOuput.Text = Pack();
+           this.OutputManager.Clear();
+           this.OutputManager.Add(Pack());
+           this.OutputManager.Commit();
         }
 
 
@@ -99,7 +108,6 @@ namespace Sys.Platform.Forms
             this.asm = assembly;
             this.txtAssembly.Text = asm.FullName;
 
-            string output = "";
             foreach (Type type in asm.GetTypes())
             {
                 if (type.BaseType == typeof(DPObject))
@@ -107,35 +115,34 @@ namespace Sys.Platform.Forms
                     DPObject dpo = (DPObject)Activator.CreateInstance(type);
                     if (dpo.HasAttribute<TableAttribute>())
                     {
-                        output += string.Format("class {0} \t-->\t table {1}\r\n", type.FullName, dpo.TableName);
+                        this.OutputManager.Information(string.Format("class {0} \t-->\t table {1}", type.FullName, dpo.TableName));
                     }
                 }
             }
 
-            this.txtDpoClass.Text = output;
 
         }
 
-        private static string Pack()
+        private IEnumerable<Message> Pack()
         {
-            StringBuilder sb = new StringBuilder();
+            List<Message> messages = new List<Message>();
             foreach (Assembly asm in Library.GetRegisteredAssemblies())
             {
                 //don't pack data for PersistentObjects, all data can be re-created
                 //if (asm == typeof(DPObject).Assembly)
                 //    continue;
 
-                sb.AppendLine(asm.FullName);
-                sb.Append(Pack(asm, false));
-                sb.AppendLine();
+                messages.Add(new Message(asm.FullName));
+                messages.AddRange(Pack(asm, false));
             }
-            return sb.ToString();
+            return messages;
+            
         }
 
-        private static string Pack(Assembly assembly, bool external)
+        private static IEnumerable<Message> Pack(Assembly assembly, bool external)
         {
 
-            StringBuilder sb = new StringBuilder();
+            List<Message> messages = new List<Message>();
             foreach (Type type in assembly.GetTypes())
             {
                 if (type.BaseType != typeof(DPObject))
@@ -151,7 +158,7 @@ namespace Sys.Platform.Forms
 
                 if (!packing)
                 {
-                      sb.AppendLine(string.Format("Table {0} is empty.", packing.TableName));
+                      messages.Add(new Message("Table {0} is empty.", packing.TableName));
                 }
                 else
                 {
@@ -164,19 +171,16 @@ namespace Sys.Platform.Forms
                     string fileName = string.Format("{0}\\{1}.cs", path, packing.ClassName);
                     File.WriteFile(fileName, packing.ToString());
 
-                    sb.AppendLine(string.Format("Table {0} packed into {1}.", packing.TableName, fileName));
+                     messages.Add(new Message("Table {0} packed into {1}.", packing.TableName, fileName));
                 }
             }
 
 
-            return sb.ToString();
+            return messages;
 
         }
 
-        private void btnUnpackModule_Click(object sender, EventArgs e)
-        {
-            //Unpacking.Unpack(
-        }
+       
 
       
         private void btnBrowseModule_Click(object sender, EventArgs e)
@@ -189,5 +193,6 @@ namespace Sys.Platform.Forms
             }
         }
 
+   
     }
 }

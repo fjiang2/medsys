@@ -65,9 +65,9 @@ namespace Sys.Data.Manager
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
-        public string UpgradePackage(string path)
+        public IEnumerable<Message> UpgradePackage(string path)
         {
-            StringBuilder sb = new StringBuilder();
+            List<Message> messages = new List<Message>();
             foreach (Type type in assembly.GetTypes())
             {
                 if (type.BaseType != typeof(DPObject))
@@ -83,7 +83,7 @@ namespace Sys.Data.Manager
 
                 if (!packing)
                 {
-                    sb.AppendLine(string.Format("Table {0} is empty.", packing.TableName));
+                    messages.Add(new Message(string.Format("Table {0} is empty.", packing.TableName)));
                 }
                 else
                 {
@@ -92,12 +92,12 @@ namespace Sys.Data.Manager
                     sw.Write(packing.ToString());
                     sw.Close();
 
-                    sb.AppendLine(string.Format("Table {0} packed into {1}.", packing.TableName, fileName));
+                     messages.Add(new Message(string.Format("Table {0} packed into {1}.", packing.TableName, fileName)));
                 }
             }
 
 
-            return sb.ToString();
+            return messages;
         }
 
 
@@ -105,10 +105,9 @@ namespace Sys.Data.Manager
         /// Create Tables in SQL Server from DPO classes
         /// </summary>
         /// <returns></returns>
-        public string CreateTables()
+        public IEnumerable<Message> CreateTables()
         {
-            string message = Unpacking.CreateTable(assembly);
-            return message;
+            return Unpacking.CreateTable(assembly);
         }
 
         /// <summary>

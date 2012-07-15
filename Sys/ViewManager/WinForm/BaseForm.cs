@@ -494,6 +494,11 @@ namespace Sys.ViewManager.Forms
             get { return ((ErrorListControl)this.MainForm.FormDockManager[typeof(ErrorListControl)]).Manager; }
         }
 
+        protected MessageManager OutputManager
+        {
+            get { return ((OutputControl)this.MainForm.FormDockManager[typeof(OutputControl)]).Manager; }
+        }
+
         #region StatusStrip Function
 
         private Bar MainStatusStrip

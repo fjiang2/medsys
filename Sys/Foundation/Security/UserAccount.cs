@@ -35,8 +35,8 @@ namespace Sys.Security
                 else if (userName == PredefinedUser.admin)
                     this.User_ID = PredefinedUser.adminID;
                 
-                else if (userName == PredefinedUser.ignore)
-                    this.User_ID = PredefinedUser.ignoreID;
+                else if (userName == PredefinedUser.singleuser)
+                    this.User_ID = PredefinedUser.singleuserID;
             }
             else
             {
@@ -66,7 +66,7 @@ namespace Sys.Security
 
         public virtual bool Login(string password)
         {
-            if (this.UserName == PredefinedUser.ignore)
+            if (this.UserName == PredefinedUser.singleuser)
             {
                 EnterLoginedState();
                 return true;

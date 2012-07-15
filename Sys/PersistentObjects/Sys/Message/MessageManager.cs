@@ -69,6 +69,11 @@ namespace Sys
             Add(item);
         }
 
+        public void Information(string description)
+        {
+            Information(0, description, "");
+        }
+
         public void Information(string description, string location)
         {
             Information(0, description, location);

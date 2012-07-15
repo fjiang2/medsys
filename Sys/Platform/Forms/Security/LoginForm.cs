@@ -137,7 +137,7 @@ namespace Sys.Platform.Forms
         /// <param name="sysIcon"></param>
         private static void RunNotLogon()
         {
-            Account account = new Account(PredefinedUser.ignore, "password");
+            Account account = new Account(PredefinedUser.singleuser, "password");
             Account.SetCurrentUser(account);
             SysInformation.LoadProfile();
 

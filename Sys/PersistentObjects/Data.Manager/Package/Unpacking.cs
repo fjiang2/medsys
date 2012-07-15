@@ -155,9 +155,9 @@ namespace Sys.Data.Manager
         }
 
        
-        public static string CreateTable(Assembly assembly)
+        public static IEnumerable<Message> CreateTable(Assembly assembly)
         {
-            StringBuilder sb = new StringBuilder();
+            List<Message> messages = new List<Message>();
             foreach (Type type in assembly.GetTypes())
             {
                 if (type.BaseType != typeof(DPObject))
@@ -166,17 +166,17 @@ namespace Sys.Data.Manager
                 if (!type.HasAttribute<TableAttribute>())
                     continue;
 
-                sb.Append(CreateTable(type));
+                messages.AddRange(CreateTable(type));
             }
 
-            return sb.ToString();
+            return messages;
 
         }
 
 
-        private static string CreateTable(Type dpoType)
+        private static IEnumerable<Message> CreateTable(Type dpoType)
         {
-            StringBuilder sb = new StringBuilder();
+            List<Message> messages = new List<Message>();
 
             DPObject dpo = (DPObject)Activator.CreateInstance(dpoType);
 
@@ -184,15 +184,15 @@ namespace Sys.Data.Manager
 
             if (dpo.CreateTable())
             {
-                sb.AppendLine(string.Format("Table {0} created.", dpo.TableName));
+                messages.Add(new Message(string.Format("Table {0} created.", dpo.TableName)));
 
                 if (tableId == -1)  //register new table to dictionary
                     tableId = dpo.RegisterEntireTable();
             }
             else
-                sb.AppendLine(string.Format("Table {0} exists, cannot be created.", dpo.TableName));
+                messages.Add(new Message(string.Format("Table {0} exists, cannot be created.", dpo.TableName)));
 
-            return sb.ToString();
+            return messages;
 
         }
         
