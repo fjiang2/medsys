@@ -202,6 +202,11 @@ namespace Sys.Platform.Forms
             this.Close();
         }
 
+        private void chkSingleUserSystem_CheckedChanged(object sender, EventArgs e)
+        {
+            Const.SINGLE_USER_SYSTEM = this.chkSingleUserSystem.Checked;
+        }
+
 
         
 
