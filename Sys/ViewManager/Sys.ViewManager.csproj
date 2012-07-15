@@ -133,6 +133,12 @@
     <Compile Include="Forms\Bind\JControl2.cs" />
     <Compile Include="Forms\TieScript.cs" />
     <Compile Include="Manager\AppLink.cs" />
+    <Compile Include="WinForm\OutputControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="WinForm\OutputControl.Designer.cs">
+      <DependentUpon>OutputControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Manager\TaskData.cs" />
     <Compile Include="Manager\TaskItem.cs">
       <SubType>Component</SubType>
