@@ -65,7 +65,7 @@ namespace Sys.ViewManager.Security
                 menus = new DPList<UserMenuItem>(new TableReader<UserMenuItem>().Table).ToList();
 #endif
 
-                menus = menus.Where(dpo => (dpo.Company_ID & SysInformation.CompanyID) == SysInformation.CompanyID && dpo.Visible).OrderBy(dpo => dpo.OrderBy);
+                menus = menus.Where(dpo => dpo.Visible).OrderBy(dpo => dpo.OrderBy);
 
                 if (collector.IsDeveloper)
                 {
@@ -80,7 +80,7 @@ namespace Sys.ViewManager.Security
                 string SQL = @"
             SELECT	* 
             FROM	@UserMenus 
-            WHERE	(Company_ID ={0} OR Company_ID IS NULL) AND Visible=1 AND Released = 1 AND (Controlled=0 
+            WHERE	Visible=1 AND Released = 1 AND (Controlled=0 
 		            OR ID IN (SELECT ID 
 					            FROM @ItemPermissions 
 			  	               WHERE Ty ={1} AND Visible=1 AND Role_ID IN (SELECT Role_ID FROM @UserRoles WHERE User_ID = {2})
