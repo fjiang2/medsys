@@ -35,6 +35,7 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabBasic = new System.Windows.Forms.TabPage();
+            this.btnEditReport = new System.Windows.Forms.Button();
             this.btnBuildReport = new System.Windows.Forms.Button();
             this.icbImage = new DevExpress.XtraEditors.ImageComboBoxEdit();
             this.rgViewMode = new DevExpress.XtraEditors.RadioGroup();
@@ -51,11 +52,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.tbDescription = new System.Windows.Forms.TextBox();
             this.tbID = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
-            this.tbCompany = new System.Windows.Forms.TextBox();
-            this.tbApplication = new System.Windows.Forms.TextBox();
             this.tbParentID = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tbFooter1 = new System.Windows.Forms.TextBox();
@@ -74,7 +71,6 @@
             this.tbParameter = new System.Windows.Forms.RichTextBox();
             this.tabHep = new System.Windows.Forms.TabPage();
             this.richEditControl1 = new DevExpress.XtraRichEdit.RichEditControl();
-            this.btnEditReport = new System.Windows.Forms.Button();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -173,11 +169,7 @@
             this.tabBasic.Controls.Add(this.label2);
             this.tabBasic.Controls.Add(this.tbDescription);
             this.tabBasic.Controls.Add(this.tbID);
-            this.tabBasic.Controls.Add(this.label8);
-            this.tabBasic.Controls.Add(this.label6);
             this.tabBasic.Controls.Add(this.label10);
-            this.tabBasic.Controls.Add(this.tbCompany);
-            this.tabBasic.Controls.Add(this.tbApplication);
             this.tabBasic.Controls.Add(this.tbParentID);
             this.tabBasic.Controls.Add(this.groupBox1);
             this.tabBasic.Location = new System.Drawing.Point(4, 22);
@@ -187,6 +179,16 @@
             this.tabBasic.TabIndex = 0;
             this.tabBasic.Text = "Basic";
             this.tabBasic.UseVisualStyleBackColor = true;
+            // 
+            // btnEditReport
+            // 
+            this.btnEditReport.Location = new System.Drawing.Point(35, 612);
+            this.btnEditReport.Name = "btnEditReport";
+            this.btnEditReport.Size = new System.Drawing.Size(119, 23);
+            this.btnEditReport.TabIndex = 41;
+            this.btnEditReport.Text = "Edit Report...";
+            this.btnEditReport.UseVisualStyleBackColor = true;
+            this.btnEditReport.Click += new System.EventHandler(this.btnEditReport_Click);
             // 
             // btnBuildReport
             // 
@@ -343,24 +345,6 @@
             this.tbID.Size = new System.Drawing.Size(105, 20);
             this.tbID.TabIndex = 1;
             // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(252, 20);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(59, 13);
-            this.label8.TabIndex = 0;
-            this.label8.Text = "Application";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(253, 53);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(51, 13);
-            this.label6.TabIndex = 0;
-            this.label6.Text = "Company";
-            // 
             // label10
             // 
             this.label10.AutoSize = true;
@@ -369,24 +353,6 @@
             this.label10.Size = new System.Drawing.Size(52, 13);
             this.label10.TabIndex = 0;
             this.label10.Text = "Parent ID";
-            // 
-            // tbCompany
-            // 
-            this.tbCompany.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbCompany.Location = new System.Drawing.Point(315, 49);
-            this.tbCompany.Name = "tbCompany";
-            this.tbCompany.Size = new System.Drawing.Size(417, 20);
-            this.tbCompany.TabIndex = 5;
-            // 
-            // tbApplication
-            // 
-            this.tbApplication.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbApplication.Location = new System.Drawing.Point(315, 21);
-            this.tbApplication.Name = "tbApplication";
-            this.tbApplication.Size = new System.Drawing.Size(417, 20);
-            this.tbApplication.TabIndex = 6;
             // 
             // tbParentID
             // 
@@ -490,7 +456,7 @@
             this.tabSQL.Location = new System.Drawing.Point(4, 22);
             this.tabSQL.Name = "tabSQL";
             this.tabSQL.Padding = new System.Windows.Forms.Padding(3);
-            this.tabSQL.Size = new System.Drawing.Size(606, 629);
+            this.tabSQL.Size = new System.Drawing.Size(766, 654);
             this.tabSQL.TabIndex = 1;
             this.tabSQL.Text = "SQL";
             this.tabSQL.UseVisualStyleBackColor = true;
@@ -512,7 +478,7 @@
             this.tabScript.Location = new System.Drawing.Point(4, 22);
             this.tabScript.Name = "tabScript";
             this.tabScript.Padding = new System.Windows.Forms.Padding(3);
-            this.tabScript.Size = new System.Drawing.Size(606, 629);
+            this.tabScript.Size = new System.Drawing.Size(766, 654);
             this.tabScript.TabIndex = 2;
             this.tabScript.Text = "Script";
             this.tabScript.UseVisualStyleBackColor = true;
@@ -534,7 +500,7 @@
             this.tabForm.Location = new System.Drawing.Point(4, 22);
             this.tabForm.Name = "tabForm";
             this.tabForm.Padding = new System.Windows.Forms.Padding(3);
-            this.tabForm.Size = new System.Drawing.Size(606, 629);
+            this.tabForm.Size = new System.Drawing.Size(766, 654);
             this.tabForm.TabIndex = 3;
             this.tabForm.Text = "Form";
             this.tabForm.UseVisualStyleBackColor = true;
@@ -556,7 +522,7 @@
             this.tabHep.Location = new System.Drawing.Point(4, 22);
             this.tabHep.Name = "tabHep";
             this.tabHep.Padding = new System.Windows.Forms.Padding(3);
-            this.tabHep.Size = new System.Drawing.Size(606, 629);
+            this.tabHep.Size = new System.Drawing.Size(766, 654);
             this.tabHep.TabIndex = 4;
             this.tabHep.Text = "Help";
             this.tabHep.UseVisualStyleBackColor = true;
@@ -569,16 +535,6 @@
             this.richEditControl1.Size = new System.Drawing.Size(600, 623);
             this.richEditControl1.TabIndex = 0;
             this.richEditControl1.Text = "richEditControl1";
-            // 
-            // btnEditReport
-            // 
-            this.btnEditReport.Location = new System.Drawing.Point(35, 612);
-            this.btnEditReport.Name = "btnEditReport";
-            this.btnEditReport.Size = new System.Drawing.Size(119, 23);
-            this.btnEditReport.TabIndex = 41;
-            this.btnEditReport.Text = "Edit Report...";
-            this.btnEditReport.UseVisualStyleBackColor = true;
-            this.btnEditReport.Click += new System.EventHandler(this.btnEditReport_Click);
             // 
             // SmartListMaintenanceForm
             // 
@@ -632,11 +588,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox tbDescription;
         private System.Windows.Forms.TextBox tbID;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.TextBox tbCompany;
-        private System.Windows.Forms.TextBox tbApplication;
         private System.Windows.Forms.TextBox tbParentID;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TextBox tbFooter1;

@@ -83,7 +83,7 @@ namespace Sys.ViewManager.Security
             WHERE	Visible=1 AND Released = 1 AND (Controlled=0 
 		            OR ID IN (SELECT ID 
 					            FROM @ItemPermissions 
-			  	               WHERE Ty ={1} AND Visible=1 AND Role_ID IN (SELECT Role_ID FROM @UserRoles WHERE User_ID = {2})
+			  	               WHERE Ty ={0} AND Visible=1 AND Role_ID IN (SELECT Role_ID FROM @UserRoles WHERE User_ID = {1})
                      ))
             ORDER BY OrderBy
             ";
@@ -95,7 +95,6 @@ namespace Sys.ViewManager.Security
                     .Replace("@UserRoles", UserRoleDpo.TABLE_NAME);
 
                 dataTable = SqlCmd.FillDataTable(SQL,
-                    SysInformation.CompanyID,
                     (int)SecurityType.MenuItem,
                     collector.UserID);
 

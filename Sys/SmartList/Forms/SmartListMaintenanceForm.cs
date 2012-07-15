@@ -81,8 +81,6 @@ namespace Sys.SmartList.Forms
 
             binding.Connect(this.tbLabel, CommandDpo._Label);
             binding.Connect(this.tbDescription, CommandDpo._Description);
-            binding.Connect(this.tbCompany, CommandDpo._Company_ID);
-            binding.Connect(this.tbApplication, CommandDpo._Application);
 
             binding.Connect(this.tbSetting, CommandDpo._Setting_Script);
             binding.Connect(this.tbScript, CommandDpo._Sql_Command);

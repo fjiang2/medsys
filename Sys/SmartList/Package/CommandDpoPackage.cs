@@ -1,6 +1,6 @@
 //
 // Machine Packed Data
-//   by devel at 7/9/2012 3:33:34 PM
+//   by devel at 7/15/2012 8:37:35 AM
 //
 using System;
 using System.Data;
@@ -28,8 +28,6 @@ namespace Sys.SmartList.Package
 			dpo.OrderBy = 0;
 			dpo.Image_Index = 1;
 			dpo.Ty = 4;
-			dpo.Company_ID = 0;
-			dpo.Application = "";
 			dpo.Label = "Menus(sys00801)";
 			dpo.Description = "";
 			dpo.Header_Footer = "{{\"Header\",{\"\",\"\",\"\"}},{\"Footer\",{\"\",\"\",\"\"}}}";
@@ -74,8 +72,6 @@ namespace Sys.SmartList.Package
 			dpo.OrderBy = 10;
 			dpo.Image_Index = 1;
 			dpo.Ty = 4;
-			dpo.Company_ID = 0;
-			dpo.Application = "";
 			dpo.Label = "Commands(sys01101)";
 			dpo.Description = "Source of SmartList";
 			dpo.Header_Footer = "{{\"Header\",{\"\",\"\",\"\"}},{\"Footer\",{\"\",\"\",\"\"}}}";
@@ -111,8 +107,6 @@ namespace Sys.SmartList.Package
 			dpo.OrderBy = 10;
 			dpo.Image_Index = 1;
 			dpo.Ty = 4;
-			dpo.Company_ID = 0;
-			dpo.Application = "";
 			dpo.Label = "Security Permission:  Window Form";
 			dpo.Description = "Security";
 			dpo.Header_Footer = "{{\"Header\",{\"\",\"\",\"\"}},{\"Footer\",{\"\",\"\",\"\"}}}";
@@ -196,8 +190,6 @@ Controls:
 			dpo.OrderBy = 20;
 			dpo.Image_Index = 1;
 			dpo.Ty = 4;
-			dpo.Company_ID = 0;
-			dpo.Application = "";
 			dpo.Label = "Security Permission:  SmartList";
 			dpo.Description = "Security";
 			dpo.Header_Footer = "{{\"Header\",{\"\",\"\",\"\"}},{\"Footer\",{\"\",\"\",\"\"}}}";
@@ -284,8 +276,6 @@ Controls:
 			dpo.OrderBy = 30;
 			dpo.Image_Index = 1;
 			dpo.Ty = 4;
-			dpo.Company_ID = 0;
-			dpo.Application = "";
 			dpo.Label = "Security Permission:  Menu";
 			dpo.Description = "Security";
 			dpo.Header_Footer = "{{\"Header\",{\"\",\"\",\"\"}},{\"Footer\",{\"\",\"\",\"\"}}}";
@@ -375,8 +365,6 @@ Controls:
 			dpo.OrderBy = 0;
 			dpo.Image_Index = 1;
 			dpo.Ty = 4;
-			dpo.Company_ID = 0;
-			dpo.Application = "";
 			dpo.Label = "Chart Control Demo";
 			dpo.Description = "DEMO";
 			dpo.Header_Footer = "{{\"Header\",{\"\",\"\",\"\"}},{\"Footer\",{\"\",\"\",\"\"}}}";
@@ -481,8 +469,6 @@ FROM Northwind..products";
 			dpo.OrderBy = 10;
 			dpo.Image_Index = 1;
 			dpo.Ty = 4;
-			dpo.Company_ID = 0;
-			dpo.Application = "";
 			dpo.Label = "Chart Control Pane Demo";
 			dpo.Description = "DEMO";
 			dpo.Header_Footer = "{{\"Header\",{\"\",\"\",\"\"}},{\"Footer\",{\"\",\"\",\"\"}}}";
@@ -591,8 +577,6 @@ FROM Northwind..products";
 			dpo.OrderBy = 20;
 			dpo.Image_Index = 1;
 			dpo.Ty = 4;
-			dpo.Company_ID = 0;
-			dpo.Application = "";
 			dpo.Label = "Generic Chart+Grid Demo";
 			dpo.Description = "DEMO";
 			dpo.Header_Footer = "{{\"Header\",{\"\",\"\",\"\"}},{\"Footer\",{\"\",\"\",\"\"}}}";
@@ -648,7 +632,7 @@ FROM Northwind..products";
       page1.Controls.Add(chartControl);
 
 //page2
-      var gridControl = new Sys.ViewManager.WinControls.JGridView(); //new DevExpress.XtraGrid.GridControl();
+      var gridControl = new Sys.ViewManager.Forms.JGridView(); //new DevExpress.XtraGrid.GridControl();
       gridControl.Dock = System.Windows.Forms.DockStyle.Fill;
       gridControl.DataSource = this.viewer.DataSet.Tables[2];
 
@@ -697,7 +681,7 @@ series1.PointOptions.ValueNumericOptions.Precision = 0;
 
 
       //Grid
-	this.gridView = new Sys.ViewManager.WinControls.JGridView(); 
+	this.gridView = new Sys.ViewManager.Forms.JGridView(); 
       this.gridView.Dock = System.Windows.Forms.DockStyle.Fill;
 	this.gridView.DataSource = this.viewer.DataSet.Tables[2];
 	this.gridView.GridControl.MouseClick += this.GridMouseClick;
@@ -758,8 +742,6 @@ series1.PointOptions.ValueNumericOptions.Precision = 0;
 			dpo.OrderBy = 30;
 			dpo.Image_Index = 1;
 			dpo.Ty = 4;
-			dpo.Company_ID = 0;
-			dpo.Application = "";
 			dpo.Label = "PivotGrid+Chart Demo";
 			dpo.Description = "DEMO";
 			dpo.Header_Footer = "{{\"Header\",{\"\",\"\",\"\"}},{\"Footer\",{\"\",\"\",\"\"}}}";
@@ -859,8 +841,6 @@ class(viewer, container)
 			dpo.OrderBy = 40;
 			dpo.Image_Index = 1;
 			dpo.Ty = 4;
-			dpo.Company_ID = 0;
-			dpo.Application = "";
 			dpo.Label = "Workflow Demo";
 			dpo.Description = "DEMO";
 			dpo.Header_Footer = "{{\"Header\",{\"\",\"\",\"\"}},{\"Footer\",{\"\",\"\",\"\"}}}";
@@ -1021,8 +1001,6 @@ WHERE Workflow_Name =@WorkflowName
 			dpo.OrderBy = 50;
 			dpo.Image_Index = 1;
 			dpo.Ty = 4;
-			dpo.Company_ID = 0;
-			dpo.Application = "";
 			dpo.Label = "Global Scripts";
 			dpo.Description = "Global variable, data type, common functions for sharing.";
 			dpo.Header_Footer = "{{\"Header\",{\"\",\"\",\"\"}},{\"Footer\",{\"\",\"\",\"\"}}}";
@@ -1124,8 +1102,6 @@ this.ContextMenu=function()
 			dpo.OrderBy = 50;
 			dpo.Image_Index = 1;
 			dpo.Ty = 4;
-			dpo.Company_ID = 0;
-			dpo.Application = "";
 			dpo.Label = "Grid Color Legend Demo";
 			dpo.Description = "";
 			dpo.Header_Footer = "{{\"Header\",{\"\",\"\",\"\"}},{\"Footer\",{\"\",\"\",\"\"}}}";
@@ -1443,8 +1419,6 @@ this.ContextMenu=function()
 			dpo.OrderBy = 40;
 			dpo.Image_Index = 1;
 			dpo.Ty = 4;
-			dpo.Company_ID = 0;
-			dpo.Application = "";
 			dpo.Label = "Stored Procedures";
 			dpo.Description = "";
 			dpo.Header_Footer = "{{\"Header\",{\"\",\"Command List\",\"\"}},{\"Footer\",{\"\",\"\",\"\"}}}";
@@ -1484,8 +1458,6 @@ ORDER BY name";
 			dpo.OrderBy = 40;
 			dpo.Image_Index = 0;
 			dpo.Ty = 4;
-			dpo.Company_ID = 0;
-			dpo.Application = "";
 			dpo.Label = "Developer Used Only";
 			dpo.Description = "Developer";
 			dpo.Header_Footer = "";
@@ -1521,8 +1493,6 @@ ORDER BY name";
 			dpo.OrderBy = 20;
 			dpo.Image_Index = 0;
 			dpo.Ty = 4;
-			dpo.Company_ID = 0;
-			dpo.Application = "";
 			dpo.Label = "Security";
 			dpo.Description = "Security";
 			dpo.Header_Footer = "";
@@ -1558,8 +1528,6 @@ ORDER BY name";
 			dpo.OrderBy = 10;
 			dpo.Image_Index = 1;
 			dpo.Ty = 4;
-			dpo.Company_ID = 0;
-			dpo.Application = "";
 			dpo.Label = "Users & Roles";
 			dpo.Description = "Security";
 			dpo.Header_Footer = "{{\"Header\",{\"\",\"\",\"\"}},{\"Footer\",{\"\",\"\",\"\"}}}";
@@ -1606,8 +1574,6 @@ ORDER BY U.User_Name";
 			dpo.OrderBy = 20;
 			dpo.Image_Index = 1;
 			dpo.Ty = 4;
-			dpo.Company_ID = 0;
-			dpo.Application = "";
 			dpo.Label = "Users & Roles Unassigned";
 			dpo.Description = "Security";
 			dpo.Header_Footer = "{{\"Header\",{\"\",\"\",\"\"}},{\"Footer\",{\"\",\"\",\"\"}}}";
@@ -1652,9 +1618,7 @@ ORDER BY U.User_Name";
 			dpo.OrderBy = 0;
 			dpo.Image_Index = 1;
 			dpo.Ty = 4;
-			dpo.Company_ID = 0;
-			dpo.Application = "";
-			dpo.Label = "User Activity I2";
+			dpo.Label = "User Activity";
 			dpo.Description = "Security";
 			dpo.Header_Footer = "{{\"Header\",{\"\",\"\",\"\"}},{\"Footer\",{\"\",\"\",\"\"}}}";
 			dpo.Sql_Command = @"USE $DB_SYSTEM
@@ -1726,8 +1690,6 @@ class(gridViewer, container)
 			dpo.OrderBy = 20;
 			dpo.Image_Index = 1;
 			dpo.Ty = 4;
-			dpo.Company_ID = 0;
-			dpo.Application = "";
 			dpo.Label = "Dictionary Tables(sys00202)";
 			dpo.Description = "Dictionary Tables";
 			dpo.Header_Footer = "{{\"Header\",{\"\",\"\",\"\"}},{\"Footer\",{\"\",\"\",\"\"}}}";
@@ -1763,8 +1725,6 @@ class(gridViewer, container)
 			dpo.OrderBy = 30;
 			dpo.Image_Index = 1;
 			dpo.Ty = 4;
-			dpo.Company_ID = 0;
-			dpo.Application = "";
 			dpo.Label = "Configuration (sys00501)";
 			dpo.Description = "Configuration";
 			dpo.Header_Footer = "{{\"Header\",{\"\",\"\",\"\"}},{\"Footer\",{\"\",\"\",\"\"}}}";
@@ -1800,8 +1760,6 @@ class(gridViewer, container)
 			dpo.OrderBy = 0;
 			dpo.Image_Index = 0;
 			dpo.Ty = 4;
-			dpo.Company_ID = 0;
-			dpo.Application = "";
 			dpo.Label = "System Tables";
 			dpo.Description = "";
 			dpo.Header_Footer = "";
@@ -1837,8 +1795,6 @@ class(gridViewer, container)
 			dpo.OrderBy = 40;
 			dpo.Image_Index = 1;
 			dpo.Ty = 4;
-			dpo.Company_ID = 0;
-			dpo.Application = "";
 			dpo.Label = "Assemblies(sys00701)";
 			dpo.Description = "Module List";
 			dpo.Header_Footer = "{{\"Header\",{\"\",\"\",\"\"}},{\"Footer\",{\"\",\"\",\"\"}}}";
@@ -1874,8 +1830,6 @@ class(gridViewer, container)
 			dpo.OrderBy = 30;
 			dpo.Image_Index = 0;
 			dpo.Ty = 4;
-			dpo.Company_ID = 0;
-			dpo.Application = "";
 			dpo.Label = "Demo";
 			dpo.Description = "Demo";
 			dpo.Header_Footer = "";
@@ -1911,8 +1865,6 @@ class(gridViewer, container)
 			dpo.OrderBy = 30;
 			dpo.Image_Index = 0;
 			dpo.Ty = 4;
-			dpo.Company_ID = 1;
-			dpo.Application = "";
 			dpo.Label = "Undefined";
 			dpo.Description = "";
 			dpo.Header_Footer = "";
@@ -1948,8 +1900,6 @@ class(gridViewer, container)
 			dpo.OrderBy = 0;
 			dpo.Image_Index = 0;
 			dpo.Ty = 4;
-			dpo.Company_ID = 1;
-			dpo.Application = "";
 			dpo.Label = "Undefined3";
 			dpo.Description = "";
 			dpo.Header_Footer = "{{\"Header\",{\"\",\"\",\"\"}},{\"Footer\",{\"\",\"\",\"\"}}}";
@@ -1985,8 +1935,6 @@ class(gridViewer, container)
 			dpo.OrderBy = 60;
 			dpo.Image_Index = 2;
 			dpo.Ty = 4;
-			dpo.Company_ID = 1;
-			dpo.Application = "";
 			dpo.Label = "Report Demo";
 			dpo.Description = "";
 			dpo.Header_Footer = "{{\"Header\",{\"\",\"\",\"\"}},{\"Footer\",{\"\",\"\",\"\"}}}";
