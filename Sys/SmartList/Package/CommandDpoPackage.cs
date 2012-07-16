@@ -1,6 +1,6 @@
 //
 // Machine Packed Data
-//   by devel at 7/15/2012 8:37:35 AM
+//   by devel at 7/16/2012 1:58:04 PM
 //
 using System;
 using System.Data;
@@ -365,7 +365,7 @@ Controls:
 			dpo.OrderBy = 0;
 			dpo.Image_Index = 1;
 			dpo.Ty = 4;
-			dpo.Label = "Chart Control Demo";
+			dpo.Label = "Chart Control Demo(Northwind)";
 			dpo.Description = "DEMO";
 			dpo.Header_Footer = "{{\"Header\",{\"\",\"\",\"\"}},{\"Footer\",{\"\",\"\",\"\"}}}";
 			dpo.Sql_Command = @"SELECT  TOP 10
@@ -469,7 +469,7 @@ FROM Northwind..products";
 			dpo.OrderBy = 10;
 			dpo.Image_Index = 1;
 			dpo.Ty = 4;
-			dpo.Label = "Chart Control Pane Demo";
+			dpo.Label = "Chart Control Pane Demo((Northwind)";
 			dpo.Description = "DEMO";
 			dpo.Header_Footer = "{{\"Header\",{\"\",\"\",\"\"}},{\"Footer\",{\"\",\"\",\"\"}}}";
 			dpo.Sql_Command = @"SELECT TOP 10
@@ -577,7 +577,7 @@ FROM Northwind..products";
 			dpo.OrderBy = 20;
 			dpo.Image_Index = 1;
 			dpo.Ty = 4;
-			dpo.Label = "Generic Chart+Grid Demo";
+			dpo.Label = "Generic Chart+Grid Demo(Northwind)";
 			dpo.Description = "DEMO";
 			dpo.Header_Footer = "{{\"Header\",{\"\",\"\",\"\"}},{\"Footer\",{\"\",\"\",\"\"}}}";
 			dpo.Sql_Command = @"SELECT TOP 10
@@ -742,7 +742,7 @@ series1.PointOptions.ValueNumericOptions.Precision = 0;
 			dpo.OrderBy = 30;
 			dpo.Image_Index = 1;
 			dpo.Ty = 4;
-			dpo.Label = "PivotGrid+Chart Demo";
+			dpo.Label = "PivotGrid+Chart Demo(Northwind)";
 			dpo.Description = "DEMO";
 			dpo.Header_Footer = "{{\"Header\",{\"\",\"\",\"\"}},{\"Footer\",{\"\",\"\",\"\"}}}";
 			dpo.Sql_Command = @"SELECT 
@@ -1102,141 +1102,41 @@ this.ContextMenu=function()
 			dpo.OrderBy = 50;
 			dpo.Image_Index = 1;
 			dpo.Ty = 4;
-			dpo.Label = "Grid Color Legend Demo";
+			dpo.Label = "Grid Color Legend Demo(Northwind)";
 			dpo.Description = "";
 			dpo.Header_Footer = "{{\"Header\",{\"\",\"\",\"\"}},{\"Footer\",{\"\",\"\",\"\"}}}";
-			dpo.Sql_Command = @"set nocount on
-
-IF OBJECT_ID('tempdb..#partsNeeded') IS NOT NULL drop table #partsNeeded
-IF OBJECT_ID('tempdb..#partsNeededAndLate') IS NOT NULL drop table #partsNeededAndLate
-IF OBJECT_ID('tempdb..#engineeringWorkQueue') IS NOT NULL drop table #engineeringWorkQueue
-
-
---Engineering Work Queue
-SELECT count(tracking.taskcard) as ttl, tracking.taskcard into #engineeringWorkQueue
-FROM Engineering.dbo.EngParent 
-INNER JOIN Tracking ON Engineering.dbo.EngParent.SO = Tracking.SO AND Engineering.dbo.EngParent.Taskcard = Tracking.Taskcard 
-
-where Engineering.dbo.EngParent.so = @mySO and FinalClose = 0
-group by tracking.taskcard
-
--- partsNeeded
-Select  
-count(taskcard) as ttl, p.taskcard into #partsNeeded
-
-from PaqViewPCParts p
-
-left join 
-      (SELECT b.ITEMNMBR, b.QTYONHND, b.LOCNCODE
-      FROM eas..IV00101 a 
-       JOIN eas..IV00102 b ON a.ITEMNMBR = b.ITEMNMBR 
-       WHERE b.LOCNCODE <> '') stock on stock.itemnmbr = p.part
-
-where  p.so = @mySO and p.cured = 0 and p.qty > stock.qtyonhnd
-group by taskcard
-
--- partsNeededAndLate
-Select  
-count(taskcard) as ttl, p.taskcard into #partsNeededAndLate
-
-from PaqViewPCParts p
-
-left join 
-      (SELECT b.ITEMNMBR, b.QTYONHND, b.LOCNCODE
-      FROM eas..IV00101 a 
-       JOIN eas..IV00102 b ON a.ITEMNMBR = b.ITEMNMBR 
-       WHERE b.LOCNCODE <> '') stock on stock.itemnmbr = p.part
-
-where  p.so = @mySO and p.cured = 0 and p.qty > stock.qtyonhnd and DateDiff(d, [need Date], getDate()) < 0
-group by taskcard
-
---get SO Start Date
-declare @startdate datetime
-select @startdate = [start_date] from sales_order where wo = @mySO
-
---main query
-select
-	CASE WHEN t.AComplete IS NULL THEN 'FALSE' ELSE 'TRUE' END AS Complete
-	, ms.Milestone      	
-	, t.Taskcard	
-	, t.Tracking
-	, rtrim(t.Nomen) as 'Nomen'
-	, isNull(rtrim(TrackingDescr), '') as 'Phase Description'	
-	, isNull(rtrim(upper(notes.NoteText)), '') as 'Note'
-	, t.crew	
-	, isnull(t.actual, 0) as 'Actual'
-	, t.Budget
-	, tk.budget as 'Banked LUs'
-	, t.Doctype
-	, t.Phase
-	, t.Sequence
-	, t.cardstatus as 'Card Status'
-	, t.NRCriteria
-	, t.aczone
-	, convert(varchar(10), case when t.ms_ukey is not null then dateAdd(d, ms.offset + isNull(t.ms_offset, 0), @startdate) else @startdate end, 101) as 'Start Date'
-	, t.Duration
-	,convert(varchar(10), dateAdd(hh, t.duration, case when t.ms_ukey is not null then dateAdd(d, ms.offset + isNull(t.ms_offset, 0), @startdate) else @startdate end), 101) as 'Est. Completion Date'
-	,(select count([key]) from timekeeping where so = t.so and taskcard = t.tracking and tcstart is not null and tcstop is null) as 'Employees on Job'
-	, case when dateDiff(d, dateAdd(hh, t.duration, case when t.ms_ukey is not null then dateAdd(d, ms.offset + isNull(t.ms_offset, 0), @startdate) else @startdate end), getDate()) > 0 then 'Yes' else 'No' end as 'Is Late'
-	, case when t.actual > t.budget then 'Yes' else 'No' end as 'Over Budget'
-	, case when p.ttl is null then 0 else p.ttl end as 'Parts on Order'
-	, case when pLate.ttl is null then 0 else pLate.ttl end as 'Parts on Order and Late'
-	, case when eWQueue.ttl is null then 0 else eWQueue.ttl end as 'Engineering Work Queue'
-	, case when qc.ttlMinsWaiting is not null then t.taskcard else 'No' end as 'Waiting on QC'
-	, case when qc.ttlMinsWaiting is not null then qc.ttlMinsWaiting else 0 end as 'Total Mins Waiting on QC'
-	--,cast(case when t.nomen like '%corrosion%' then 1 else 0 end as bit) as 'Corrosion'
-	, case when cast(isNull((select count(*)
-					from tracking
-					join
-						(select s1_name, so from trackingrelations where s2_name = t.tracking and so = @mySO) d on d.s1_name = tracking.tracking
-					where
-					tracking.so = @mySO
-					and tracking.acomplete is null), 0) as bit) = 0 then 'No' else 'Yes' end as 'Waiting on Dependency'
-	, t.uKey
-from tracking t
-
-left join trackingmilestones ms on ms.ukey = t.ms_ukey
-left join #partsNeeded p on p.taskcard = t.taskcard
-left join #partsNeededAndLate pLate on pLate.taskcard = t.taskcard
-left join #engineeringWorkQueue eWQueue on eWQueue.taskcard = t.taskcard
-left join (SELECT NoteText, key1, key2 FROM Notes where NoteType = 1) notes on notes.key1 = t.so and notes.key2 = t.taskcard
-left join --budget stuff
-(select sum(tk.budget) as 'budget', taskcard
-	from timekeeping tk
-	where tk.so = @mySO and tk.LUPdStatus IN ('PAID', 'InQueue')
-	group by taskcard) tk on tk.taskcard = t.taskcard
-
-left join --qc stuff
-(select max(dateDiff(n, datetimeofcall, coalesce(inspectoroncall ,getDate()))) as ttlMinsWaiting, taskcard from aeronet..callsheetdetail where so = @mySO and inspectorOffCall is null group by taskcard) qc on qc.taskcard = t.taskcard
-
-WHERE t.SO = @mySO AND t.MS_uKey IS NULL
-order by [start date], t.taskcard, t.tracking	
-
-drop table #partsNeeded
-drop table #partsNeededAndLate
-drop table #engineeringWorkQueue";
+			dpo.Sql_Command = @"SELECT P.*, S.CompanyName, C.CategoryName
+FROM Northwind..Products P
+INNER JOIN Northwind..Suppliers S  ON S.SupplierID = P.SupplierID
+INNER JOIN Northwind..Categories C ON C.CategoryID = P.CategoryID";
 			dpo.User_Layout = @"{
-{""Title"",""Input SO#""},
-{""Parameters"",{""mySO""}},
-{""Controls"",
+ Title : ""Input Product#"",
+ Parameters :{""Product""},
+ Controls :
    {
-   {{""Class"",""System.Windows.Forms.Label""},{""Text"",""Sales Order""}, {""Position"",{1,1}} },
-   {{""Class"",""System.Windows.Forms.TextBox""},{""Return"",""Text""},{""Name"",""mySO""},{""Format"",2} , {""Position"",{1,2}} }
+   {Class: ""System.Windows.Forms.Label"",   Text : ""Product"", Position: {1,1} },
+   {Class: ""System.Windows.Forms.TextBox"", Return: ""Text"", Name: ""Product"", Format:2 , Position:{1,2} }
   }
-}}";
+}";
 			dpo.Setting_Script = @"class(gridViewer, container) 
 {
    this.gridViewer = gridViewer;
    this.gridControl = gridViewer.ViewControl;
    this.gridView = this.gridControl.MainView;
+   this.container = container;
 
    this.Initialize =function()
    {
 	var filterType = typeof(""DevExpress.XtraGrid.Columns.ColumnFilterType"");
 
-	this.gridView.Columns[""Card Status""].FilterInfo = new DevExpress.XtraGrid.Columns.ColumnFilterInfo(filterType.Custom, null, ""[Card Status] != 'records' and [Card Status] != 'closed'"");
+	this.gridView.Columns[""CategoryName""].FilterInfo = 
+		new DevExpress.XtraGrid.Columns.ColumnFilterInfo(
+			filterType.Custom, 
+			null, 
+			""[CategoryName] != 'Condiments' and [CategoryName] != 'Seafood'""
+			);
 
-	this.gridView.Columns[""uKey""].Visible=false;
+	this.gridView.Columns[""SupplierID""].Visible=false;
 
 	var green = System.Drawing.Color.FromArgb(191, 254, 177);
 	var red =  System.Drawing.Color.FromArgb(255, 175, 175);
@@ -1244,25 +1144,18 @@ drop table #engineeringWorkQueue";
 
 	var sit = typeof(""DevExpress.Data.SummaryItemType"");
 
-	/*
-	Green = Card Ready to Work
-	Red = Card not Ready to Work
-	Yellow = General Caution
-	*/
+	
 
 	this.gridView.BestFitColumns();
 
-	this.gridView.Columns[""Nomen""].Width = 300;
-	this.gridView.Columns[""Phase Description""].Width = 300;
-	this.gridView.Columns[""Note""].Width = 300;
+	this.gridView.Columns[""CompanyName""].Width = 300;
+
+	this.gridView.Columns[""UnitsInStock""].SummaryItem.DisplayFormat = ""SUM={0:#.##}"";
+      this.gridView.Columns[""UnitsInStock""].SummaryItem.SummaryType = sit.Sum;
 
 
-	this.gridView.Columns[""Actual""].SummaryItem.DisplayFormat = ""SUM={0:#.##}"";
-      this.gridView.Columns[""Actual""].SummaryItem.SummaryType = sit.Sum;
-
-
-	this.gridView.Columns[""Budget""].SummaryItem.DisplayFormat = ""SUM={0:#.##}"";
-      this.gridView.Columns[""Budget""].SummaryItem.SummaryType = sit.Sum;
+	this.gridView.Columns[""UnitsOnOrder""].SummaryItem.DisplayFormat = ""SUM={0:#.##}"";
+      this.gridView.Columns[""UnitsOnOrder""].SummaryItem.SummaryType = sit.Sum;
 
 	//this.gridViewer.OptionsView.ShowFooter = true;
 
@@ -1270,19 +1163,9 @@ drop table #engineeringWorkQueue";
 	this.gridViewer.SetDataRowBackColor(""1 = 1"", green);
       this.expr = 
       {
-	 {""1. Parts on Order"", 		""[Parts on Order] > 0"", red},
-	 {""2. Card Status != Open"", 	""[Card Status] != 'OPEN'"", red},
-	 {""3. Waiting on QC"", 		""[Waiting on QC] != 'No'"", red},
- 	 {""4. Actuals > Budget"", 	""Actual > Budget"", red },
-	 {""5. Card Status == New"", 	""[Card Status] = 'NEW'"", yellow},
-	 {""6. Banked LUs >= Budget"",	""[Banked LUs] >= Budget"", yellow},
-	 {""7. Zero Hrs clocked & OverDue"",""[Is Late] == 'Yes' and Actual = 0"", red},
-	 {""8. Parts on Order and Late"",""[Parts on Order and Late] > 0"", red},
-	 {""9. Phases in Engineering work Queue (by tasckard)"",""[Engineering Work Queue] > 0"", red},
-
-	//10. Scheduled but shift over & no hours clocked **This is not possible with current scheduling software as it is not specific to any day and they may schedule cards ahead of time?
-
-	{""11. Waiting on Dependency"",""[Waiting on Dependency] != 'No'"", red}
+	 {""1. In Stock"", 		""[UnitsInStock] > 0"", green},
+	 {""2. Out of Stock"", 		""[UnitsInStock] = 0"", red},
+	 {""3. Ordered"", 	""[UnitsOnOrder] > 0"", yellow},
      };
 	
 	foreach(var exp in this.expr)
@@ -1291,44 +1174,25 @@ drop table #engineeringWorkQueue";
 
    };
 
-
-
-
 this.ContextMenu=function()
    {
       var contextMenuStrip = new System.Windows.Forms.ContextMenuStrip();
 	var selected = this.gridViewer.SelectedDataRow != null;
       
 
-	var menuItem = new System.Windows.Forms.ToolStripMenuItem(""Adjust Milestone"");
+	var menuItem = new System.Windows.Forms.ToolStripMenuItem(""Order Product..."");
       contextMenuStrip.Items.Add(menuItem);
-	menuItem.Image = ViewManager.Utils.GetResourceObject(""PAQ_Client"",""PAQ"", ""pencil"");		//(DllName,ImageName)
+	menuItem.Image = Sys.ViewManager.Utils.Function.GetResourceObject(""Sys.ViewManager"", ""star"");		//(DllName,ImageName)
       menuItem.Click += function(sender, e)
           { 
 		var view = sender;		
-		var tracking= this.gridViewer.SelectedDataRow[""Tracking""];
+		var companyName= this.gridViewer.SelectedDataRow[""CompanyName""];
+		var productName= this.gridViewer.SelectedDataRow[""ProductName""];
 
-		var frm = new Scheduling.Aircraft.AdjustMilestone();
-		frm.SalesOrder = mySO;
-		frm.Tracking = tracking;           
-		frm.PopUp(container);		
-
-           };
-
-	menuItem = new System.Windows.Forms.ToolStripMenuItem(""Project Info"");
-      contextMenuStrip.Items.Add(menuItem);
-      menuItem.Click += function(sender, e)
-          { 
-		var view = sender;		
-		var taskcard = this.gridViewer.SelectedDataRow[""Taskcard""];
-
-		var frmProjInfo = new Aeroframe.Manager.ProjectInfoDrillDown();
-			frmProjInfo.SalesOrder = mySO;
-            	frmProjInfo.Taskcard = taskcard;
-            	frmProjInfo.OMSCall = false;
-
-		frmProjInfo.PopUp(container);		
-
+		var frm = new Sys.Platform.Forms.SendMailForm();
+		frm.Subject= ""Order Product:"" + productName;
+		frm.Body = ""Dear "" + companyName + "","";
+		frm.PopUp(this.container);	
            };
 	
 	contextMenuStrip.Items.Add(new System.Windows.Forms.ToolStripSeparator());
@@ -1347,7 +1211,7 @@ this.ContextMenu=function()
 	{
 	  menuItem = new System.Windows.Forms.ToolStripMenuItem(exp[0]);
 	  contextMenuStrip.Items.Add(menuItem);
-	  menuItem.Image = ViewManager.Utils.ColorBox(exp[2],16,16);
+	  menuItem.Image = Sys.ViewManager.Utils.Function.ColorBox(exp[2],16,16);
 	  menuItem.Enabled = selected;
 	  menuItem.Tag = exp[1];
         menuItem.Click += function(sender, e)
@@ -1362,7 +1226,7 @@ this.ContextMenu=function()
 	contextMenuStrip.Items.Add(new System.Windows.Forms.ToolStripSeparator());
 	
 	menuItem = new System.Windows.Forms.ToolStripMenuItem(""About"");
-	menuItem.Image = ViewManager.Utils.GetResourceObject(""SmartList"", ""information"");		//(DllName,ImageName)
+	menuItem.Image = Sys.ViewManager.Utils.Function.GetResourceObject(""Sys.SmartList"", ""information"");
       contextMenuStrip.Items.Add(menuItem);
       menuItem.Click += function(sender, e)
           { 
@@ -1373,12 +1237,14 @@ this.ContextMenu=function()
 
 
 	var currentRow = this.gridViewer.SelectedDataRowView;
+      var DevExtension = typeof(Sys.ViewManager.DevEx.DevExtension);
+
       for(i=0; i< size(expr); i++)
 	{
 	  var exp = expr[i];
-	  if( ViewManager.Utils.EvaluateRowExpression(this.gridView, currentRow, exp[1]) == true)
+	  if(DevExtension.EvaluateRowExpression(this.gridView, currentRow, exp[1]) == true)
 	  {
-		contextMenuStrip.Items[4+i].Font = new System.Drawing.Font(""MS Gothic"", (float)11.25, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, (byte)0);
+		contextMenuStrip.Items[3+i].Font = new System.Drawing.Font(""MS Gothic"", (float)11.25, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, (byte)0);
 	  }
 	}
 
