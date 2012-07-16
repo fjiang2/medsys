@@ -7,14 +7,20 @@ namespace Sys
 {
     public class Message
     {
-        public int ID;
+        public int Code;
         public MessageLevel Level;
-        public string Description;
+        private string description;
         public string Location;
 
-        public Message()
+        /// <summary>
+        /// Message's owner
+        /// </summary>
+        public object sender;
+
+        public Message(string description)
         {
-            this.ID = 0;
+            this.Code = 0;
+            this.description = description;
             this.Level = MessageLevel.Error;
         }
 
@@ -22,30 +28,28 @@ namespace Sys
             : base()
         {
             this.Level = level;
-            this.Description = string.Format(format, args);
+            this.description = string.Format(format, args);
         }
 
-        public Message(string format, params object[] args)
-            : this(MessageLevel.Error, format, args)
+        public string Description
         {
-
+            get { return this.description; }
         }
-
 
         public override int GetHashCode()
         {
-            return Location.GetHashCode() + Level.GetHashCode() + Description.GetHashCode();
+            return Location.GetHashCode() + Level.GetHashCode() + description.GetHashCode();
         }
 
         public override bool Equals(object obj)
         {
-            Message item = (Message)obj;
-            return this.Location == item.Location && this.Level == item.Level && this.Description == item.Description;
+            Message message = (Message)obj;
+            return this.Code == message.Code && this.Location == message.Location && this.Level == message.Level && this.description == message.description;
         }
 
         public override string ToString()
         {
-            return string.Format("{0} @ {1}", this.Description, this.Location);
+            return string.Format("{0} @ {1}", this.description, this.Location);
         }
     }
 }

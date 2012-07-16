@@ -235,13 +235,12 @@ namespace Sys.BusinessRules
             List<Message> list = new List<Message>();
             foreach (RuleEvent ruleEvent in BrokenRules)
             { 
-                Message message = new Message();
+                Message message = new Message(ruleEvent.Message);
                 
                 if(ruleEvent.ErrorCode != -1 )
-                    message.ID = ruleEvent.ErrorCode;
+                    message.Code = ruleEvent.ErrorCode;
                 
                 message.Level = ruleEvent.MessageLevel;
-                message.Description = ruleEvent.Message;
 #if DEBUG
                 message.Location =  ruleEvent.keyName;
 #endif                

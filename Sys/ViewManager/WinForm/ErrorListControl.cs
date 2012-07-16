@@ -12,7 +12,7 @@ using DevExpress.XtraBars.Docking;
 
 namespace Sys.ViewManager.Forms
 {
-    public partial class ErrorListControl : UserControl, IDockPanel
+    public partial class ErrorListControl : UserControl, IDockable
     {
         MessageManager manager;
         DataTable dt;
@@ -64,7 +64,7 @@ namespace Sys.ViewManager.Forms
             int warningCount = 0;
             int informationCount = 0;
 
-            foreach (Message item in e.Errors)
+            foreach (Message item in e.Messages)
             {
                 switch (item.Level)
                 {
@@ -85,8 +85,8 @@ namespace Sys.ViewManager.Forms
                 DataRow row = dt.NewRow();
                 row[0] = (int)item.Level;
                 
-                if(item.ID != 0)
-                    row[1] = item.ID;
+                if(item.Code != 0)
+                    row[1] = item.Code;
 
                 row[2] = item.Description;
                 row[3] = item.Location;

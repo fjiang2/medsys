@@ -7,7 +7,7 @@ using System.Data;
 
 namespace Sys
 {
-    public interface IDockPanel
+    public interface IDockable
     { 
         void ActivateDockPanel();
     }
@@ -21,11 +21,11 @@ namespace Sys
         public event MessageHandler MessageChanged;
         public event EventHandler MessageCleared;
 
-        IDockPanel host;
+        IDockable dock;
 
-        public MessageManager(IDockPanel host)
+        public MessageManager(IDockable dock)
         {
-            this.host = host;
+            this.dock = dock;
         }
 
         public void Commit()
@@ -33,7 +33,7 @@ namespace Sys
             if (MessageChanged != null)
                 MessageChanged(this, new MessageEventArgs(this.messages));
 
-            host.ActivateDockPanel();
+            dock.ActivateDockPanel();
         }
 
 
@@ -44,74 +44,77 @@ namespace Sys
                 MessageCleared(this, new EventArgs());
         }
 
-        public void Error(string description)
+        public Message Error(string description)
         {
-            Error(0, description, "");
+            return Error(0, description, "");
         }
 
-        public void Error(string description, string location)
+        public Message Error(string description, string location)
         {
-            Error(0, description, location);
+            return Error(0, description, location);
         }
 
-        public void Error(int code, string description, string location)
+        public Message Error(int code, string description, string location)
         {
-            Message item = new Message();
-            item.ID = code;
-            item.Level = MessageLevel.Error;
-            item.Description = description;
-            item.Location = location;
-            Add(item);
+            Message message = new Message(description);
+            message.Code = code;
+            message.Level = MessageLevel.Error;
+            message.Location = location;
+            return Add(message);
         }
 
-        public void Warning(string description, string location)
+        public Message Warning(string description, string location)
         {
-            Warning(0, description, location);
+            return Warning(0, description, location);
         }
 
-        public void Warning(int code, string description, string location)
+        public Message Warning(int code, string description, string location)
         {
-            Message item = new Message();
-            item.ID = code;
-            item.Level = MessageLevel.Warning;
-            item.Description = description;
-            item.Location = location;
-            Add(item);
+            Message message = new Message(description);
+            message.Code = code;
+            message.Level = MessageLevel.Warning;
+            message.Location = location;
+            return Add(message);
         }
 
-        public void Information(string description)
+        public Message Information(string description)
         {
-            Information(0, description, "");
+            return Information(0, description, "");
         }
 
-        public void Information(string description, string location)
+        public Message Information(string description, string location)
         {
-            Information(0, description, location);
+            return Information(0, description, location);
         }
 
-        public void Information(int code, string description, string location)
+        public Message Information(int code, string description, string location)
         {
-            Message item = new Message();
-            item.ID = code;
-            item.Level = MessageLevel.Information;
-            item.Description = description;
-            item.Location = location;
+            Message message = new Message(description);
+            message.Code = code;
+            message.Level = MessageLevel.Information;
+            message.Location = location;
 
-            Add(item);
+            return Add(message);
         }
 
-        private void Add(Message item)
+        private Message Add(Message item)
         {
             if (messages.Contains(item))
-                return ;
+                return item;
 
             this.messages.Add(item);
+
+            return item;
+        }
+
+        public bool Remove(Message message)
+        {
+            return this.messages.Remove(message);
         }
 
         public void Add(IEnumerable<Message> messages)
         {
-            foreach (Message message in messages)
-               this.messages.Add(message);
+            this.messages.AddRange(messages);
         }
 
         public int Count
@@ -127,11 +130,11 @@ namespace Sys
 
     public class MessageEventArgs : EventArgs
     {
-        public readonly List<Message> Errors;
+        public readonly IEnumerable<Message> Messages;
 
-        public MessageEventArgs(List<Message> errors)
+        public MessageEventArgs(IEnumerable<Message> messages)
         {
-            this.Errors = errors;
+            this.Messages = messages;
         }
     }
 
