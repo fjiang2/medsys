@@ -104,7 +104,7 @@ namespace Sys.Workflow.Collaborative
                     form.WorkMode = WorkMode.Reading;
                     form.PopUp(owner, FormPlace.Auto);
                     activity.DoAfterAction();
-                    return new Message(MessageLevel.Information, "Completed {0} is readonly.", (CollaborativeTask)activity);
+                    return new Message(MessageLevel.Information, string.Format("Completed {0} is readonly.", (CollaborativeTask)activity));
 
                 case TaskStatus.NotStarted:
                 case TaskStatus.Opened:
@@ -124,11 +124,11 @@ namespace Sys.Workflow.Collaborative
                     activity.DoAfterAction();   //do works such as monitor, Listen XMPP message
                     if (activity.State.IsAgentState)
                         if (!activity.StartAgent())
-                            return new Message(MessageLevel.Error, "Agent is not defined in {0}", activity.State);
+                            return new Message(MessageLevel.Error, string.Format("Agent is not defined in {0}", activity.State));
                     break;
 
                 default:
-                    return new Message(MessageLevel.Warning, "{0} is in status:{1}.", activity, activity.Data.TaskStatus);
+                    return new Message(MessageLevel.Warning, string.Format("{0} is in status:{1}.", activity, activity.Data.TaskStatus));
             }
 
             return null;

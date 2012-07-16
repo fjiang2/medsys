@@ -177,7 +177,7 @@ namespace Sys.Platform.Forms
 
                 if (!packing)
                 {
-                      messages.Add(new Message(MessageLevel.Warning, "Table {0} is empty.", packing.TableName));
+                      messages.Add(new Message(MessageLevel.Warning, string.Format("Table {0} is empty.", packing.TableName)));
                 }
                 else
                 {
@@ -190,7 +190,7 @@ namespace Sys.Platform.Forms
                     string fileName = string.Format("{0}\\{1}.cs", path, packing.ClassName);
                     File.WriteFile(fileName, packing.ToString());
 
-                    messages.Add(new Message(MessageLevel.Information, "Table {0} packed into {1}.", packing.TableName, fileName));
+                    messages.Add(new Message(MessageLevel.Information, string.Format("Table {0} packed into {1}.", packing.TableName, fileName)));
                 }
             }
 

@@ -21,14 +21,14 @@ namespace Sys
         {
             this.Code = 0;
             this.description = description;
-            this.Level = MessageLevel.Error;
+            this.Level = MessageLevel.None;
         }
 
-        public Message(MessageLevel level, string format, params object[] args)
+        public Message(MessageLevel level, string description)
             : base()
         {
             this.Level = level;
-            this.description = string.Format(format, args);
+            this.description = description;
         }
 
         public string Description
@@ -49,7 +49,20 @@ namespace Sys
 
         public override string ToString()
         {
-            return string.Format("{0} @ {1}", this.description, this.Location);
+            StringBuilder builder = new StringBuilder();
+            if (Code != 0)
+                builder.AppendFormat("{0}({1})", this.Level, this.Code);
+            else
+                builder.Append(this.Level);
+
+            builder.Append(" : ");
+
+            if(string.IsNullOrEmpty(this.Location))
+                builder.Append(this.description);
+            else
+                builder.AppendFormat("{0} @ {1}", this.description, this.Location);
+
+            return builder.ToString();
         }
     }
 }

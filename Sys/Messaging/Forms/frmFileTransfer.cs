@@ -781,8 +781,8 @@ namespace Sys.Messaging.Forms
             iq.Type = IqType.error;
 
             iq.Error = new agsXMPP.protocol.client.Error(ErrorCondition.Forbidden);
-            iq.Error.Code = ErrorCode.Forbidden;
-            iq.Error.Type = ErrorType.cancel;
+            iq.Error.Code = agsXMPP.protocol.client.ErrorCode.Forbidden;
+            iq.Error.Type = agsXMPP.protocol.client.ErrorType.cancel;
             
 
             m_XmppCon.Send(iq);

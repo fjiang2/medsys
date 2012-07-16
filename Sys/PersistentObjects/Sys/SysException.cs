@@ -5,8 +5,6 @@ using System.Text;
 
 namespace Sys
 {
-
-   
     public class SysException : Exception
     {
         public static Action<string, string> DefaultExceptionHandler =
@@ -16,16 +14,13 @@ namespace Sys
                 Console.WriteLine(message);
             };
 
-        MessageLevel level;
-        ExceptionLevel clss;
-
-
+        private Message msg;
 
         public SysException(MessageLevel level, string format, params object[] args)
             :base(string.Format(format, args))
         {
-            this.level = level;
-            this.clss = ExceptionLevel.None;
+            this.msg = new Message(level, string.Format(format, args));
+            this.msg.Code = (int)MessageCode.None;
         }
 
         public SysException(string format, params object[] args)
@@ -34,30 +29,30 @@ namespace Sys
 
         }
 
-        public SysException(ExceptionLevel clss, string message)
+        public SysException(MessageCode code, string message)
             :base(message)
         {
-            this.level = MessageLevel.Error; 
-            this.clss = clss;
+            this.msg = new Message(MessageLevel.Error, message);
+            this.msg.Code = (int)code;
         }
 
-        public MessageLevel Level
+        public Message SysMessage
         {
             get
             {
-                return this.level;
+                return this.msg;
             }
         }
 
 
-        public ExceptionLevel ExceptionClass
+        public MessageCode MessageCode
         {
-            get { return this.clss; }
+            get { return (MessageCode)this.msg.Code; }
         }
 
         public override string  ToString()
         {
- 	        return this.Message;
+ 	        return this.msg.ToString();
         }
     }
 }
