@@ -107,6 +107,12 @@ namespace Sys
             return item;
         }
 
+        public Message Add(SysException ex)
+        {
+            this.messages.Add(ex.SysMessage);
+            return ex.SysMessage;
+        }
+
         public bool Remove(Message message)
         {
             return this.messages.Remove(message);
@@ -128,15 +134,7 @@ namespace Sys
         }
     }
 
-    public class MessageEventArgs : EventArgs
-    {
-        public readonly IEnumerable<Message> Messages;
-
-        public MessageEventArgs(IEnumerable<Message> messages)
-        {
-            this.Messages = messages;
-        }
-    }
+   
 
    
 }
