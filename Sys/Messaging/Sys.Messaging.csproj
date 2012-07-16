@@ -87,12 +87,6 @@
     <Compile Include="Forms\frmProfile.Designer.cs">
       <DependentUpon>frmProfile.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmUserManagement.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmUserManagement.Designer.cs">
-      <DependentUpon>frmUserManagement.cs</DependentUpon>
-    </Compile>
     <Compile Include="Dpo\LogChat.cs" />
     <Compile Include="Forms\frmAddRoster.cs">
       <SubType>Form</SubType>
@@ -182,9 +176,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmSubscribe.resx">
       <DependentUpon>frmSubscribe.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmUserManagement.resx">
-      <DependentUpon>frmUserManagement.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmVcard.resx">
       <DependentUpon>frmVcard.cs</DependentUpon>

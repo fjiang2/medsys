@@ -11,7 +11,7 @@ namespace Sys.ViewManager.Forms
 {
     public class TreeDpoView : TreeView
     {
-        private List<ITreeDpoNode> dpc;
+        private List<ITreeDpoNode> list;
         private DisplayTreeDpoNode d;
         private TreeDpoNode mySelectedNode;
         
@@ -45,7 +45,7 @@ namespace Sys.ViewManager.Forms
         {
             get
             {
-                return this.dpc;
+                return this.list;
             }
             set
             {
@@ -57,7 +57,7 @@ namespace Sys.ViewManager.Forms
                 else
                     this.nodeType = typeof(TreeNode);
 
-                this.dpc = value;
+                this.list = value;
             }
         }
 
@@ -219,7 +219,7 @@ namespace Sys.ViewManager.Forms
                 dpo.NodeOrderBy = 0;
 
             dpo.NodeSave();
-            dpc.Add(dpo);
+            list.Add(dpo);
 
             selectedNode.Nodes.Add(new TreeDpoNode(dpo, d));
 
@@ -273,7 +273,7 @@ namespace Sys.ViewManager.Forms
         private void RemoveNode(TreeDpoNode dpoNode)
         {
             dpoNode.Remove();
-            dpc.Remove(SelectedDpo);
+            list.Remove(SelectedDpo);
             dpoNode.Dpo.Delete();
         }
 
@@ -389,7 +389,7 @@ namespace Sys.ViewManager.Forms
 
         private void BuildTreeView(TreeNodeCollection nodes, int parentID, DisplayTreeDpoNode d)
         {
-            foreach(ITreeDpoNode dpo in dpc)
+            foreach(ITreeDpoNode dpo in list)
             {
                 if (dpo.NodeParentId != parentID)
                     continue;
