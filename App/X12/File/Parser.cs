@@ -13,7 +13,7 @@ namespace X12.File
     class Parser : BaseParser
     {
         protected Spec5010A spec;
-        private IdentifierTree<LoopTemplateDpo> director;
+        private NTree<LoopTemplateDpo> director;
         
         private Memory DS = new Memory();
 

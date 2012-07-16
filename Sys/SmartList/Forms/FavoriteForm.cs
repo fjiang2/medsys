@@ -22,7 +22,7 @@ namespace Sys.SmartList.Forms
 
         CommandDpo par;
 
-        public FavoriteForm(SecurityType securityType, TreeDpcView tree,  string value)
+        public FavoriteForm(SecurityType securityType, TreeDpoView tree,  string value)
         {
             InitializeComponent();
 

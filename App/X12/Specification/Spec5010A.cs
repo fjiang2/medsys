@@ -80,10 +80,10 @@ namespace X12.Specification
 
 
         
-        public IdentifierTree<LoopTemplateDpo> GetLoopTemplateTree()
+        public NTree<LoopTemplateDpo> GetLoopTemplateTree()
         {
             int parentId = 0;
-            return new IdentifierTree<LoopTemplateDpo>(GetLoopTemplates(), parentId);
+            return new NTree<LoopTemplateDpo>(GetLoopTemplates(), parentId);
         }
 
         public SegmentInstanceDpo[] GetSegmentInstances(LoopTemplateDpo loop)

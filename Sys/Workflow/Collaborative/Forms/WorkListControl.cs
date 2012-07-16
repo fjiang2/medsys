@@ -21,7 +21,7 @@ namespace Sys.Workflow.Collaborative.Forms
         string selectComamndDeveloper = "SELECT * FROM {0}";
 
 
-        JDataTableTreeView treeView;
+        TreeRowView treeView;
         DataTable dataTable;
         public WorkListControl(ContainerControl owner)
         {
@@ -42,14 +42,14 @@ namespace Sys.Workflow.Collaborative.Forms
             else
                 this.dataTable = SqlCmd.FillDataTable(selectCommand, wfWorkflowDpo.TABLE_NAME);
 
-            treeView = new JDataTableTreeView(treeView1, dataTable);
+            treeView = new TreeRowView(treeView1, dataTable);
             treeView.ImageField = "Workflow";
 
             treeView1.Nodes.Clear();
             treeView.BuildTreeView();
             
 
-            treeView.SelectNode += new JDataTableTreeView.AfterSelectHandler(treeView_TreeViewEventHandler);
+            treeView.SelectNode += new TreeRowView.AfterSelectHandler(treeView_TreeViewEventHandler);
             treeView1.MouseDoubleClick +=new MouseEventHandler(treeView1_MouseDoubleClick);
 
 

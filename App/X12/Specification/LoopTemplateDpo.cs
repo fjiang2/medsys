@@ -10,7 +10,7 @@ using Sys;
 
 namespace X12.Specification
 {
-    public class LoopTemplateDpo : X12LoopTemplateDpo, ITreeNodeDpo, ITreeIdentifierNode<LoopTemplateDpo> 
+    public class LoopTemplateDpo : X12LoopTemplateDpo, ITreeDpoNode, INTreeNode<LoopTemplateDpo> 
     {
 
         public LoopTemplateDpo()
@@ -102,7 +102,7 @@ namespace X12.Specification
             return true;
         }
 
-        public List<ITreeNodeDpo> GetNodes(int parentID)
+        public List<ITreeDpoNode> GetNodes(int parentID)
         {
             //@"SELECT ID, ParentID, Label FROM {0} WHERE Ty=0 AND Controlled=1 ORDER BY orderBy";
             SqlBuilder sql = new SqlBuilder()
@@ -113,10 +113,10 @@ namespace X12.Specification
                 .ORDER_BY(_Sequence);
             DataTable dt = sql.FillDataTable(); //new TableReader<LoopDpo>(new ColumnValue(_ParentID, parentID)).Table;
 
-            List<ITreeNodeDpo> list = new List<ITreeNodeDpo>();
+            List<ITreeDpoNode> list = new List<ITreeDpoNode>();
             foreach (DataRow dataRow in dt.Rows)
             {
-                ITreeNodeDpo dpo = new LoopTemplateDpo(dataRow);
+                ITreeDpoNode dpo = new LoopTemplateDpo(dataRow);
                 list.Add(dpo);
             }
 

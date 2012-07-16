@@ -8,7 +8,7 @@ using Sys.Data;
 namespace Sys.ViewManager.Forms
 {
     
-    public class JDataTableTreeView 
+    public class TreeRowView 
     {
         TreeView treeView;
         //TreeNode rootNode;
@@ -25,7 +25,7 @@ namespace Sys.ViewManager.Forms
 
 
         DataTable dataTable;
-        public JDataTableTreeView(TreeView treeView, DataTable dataTable)
+        public TreeRowView(TreeView treeView, DataTable dataTable)
         {
             this.treeView = treeView;
             this.dataTable = dataTable;
@@ -41,14 +41,6 @@ namespace Sys.ViewManager.Forms
             };
 
         }
-
-        //public JDataTableTreeView(TreeNode treeNode, DataTable dataTable)
-        //{
-        //    this.treeView = treeNode.TreeView;
-        //    this.dataTable = dataTable;
-        //    this.rootNode = treeNode;
-
-        //}
 
         public DataTable DataTable
         {

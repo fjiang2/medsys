@@ -36,7 +36,7 @@ namespace X12.Forms
             treeView1.Nodes.Add(rootSpecLoop);
 
             int parentId = 0;
-            var tree = new IdentifierTree<LoopTemplateDpo>(Spec5010A.Instance.GetLoopTemplates(), parentId);
+            var tree = new NTree<LoopTemplateDpo>(Spec5010A.Instance.GetLoopTemplates(), parentId);
             tree.BuildTree<LoopTemplateDpo, LoopNode>(rootSpecLoop);
             rootSpecLoop.Expand();
 

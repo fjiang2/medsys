@@ -9,9 +9,9 @@ using System.Drawing;
 
 namespace Sys.ViewManager.Forms
 {
-    public class TreeDpcView : TreeView
+    public class TreeDpoView : TreeView
     {
-        private List<ITreeNodeDpo> dpc;
+        private List<ITreeDpoNode> dpc;
         private DisplayTreeDpoNode d;
         private TreeDpoNode mySelectedNode;
         
@@ -19,7 +19,7 @@ namespace Sys.ViewManager.Forms
         private int rootID;
         private Type nodeType;
 
-        public TreeDpcView()
+        public TreeDpoView()
         {
             this.ContextMenuStrip = new ContextMenuStrip();
             treeMenuContextMenu(this.ContextMenuStrip);
@@ -41,7 +41,7 @@ namespace Sys.ViewManager.Forms
 
         }
 
-        public List<ITreeNodeDpo> DataSource
+        public List<ITreeDpoNode> DataSource
         {
             get
             {
@@ -61,7 +61,7 @@ namespace Sys.ViewManager.Forms
             }
         }
 
-        public ITreeNodeDpo SelectedDpo
+        public ITreeDpoNode SelectedDpo
         {
             get
             {
@@ -199,15 +199,15 @@ namespace Sys.ViewManager.Forms
 
         #region Add/Move/Delete Node
 
-        private ITreeNodeDpo AddNode(TreeDpoNode selectedNode, string nodeText)
+        private ITreeDpoNode AddNode(TreeDpoNode selectedNode, string nodeText)
         {
             return AddNode(selectedNode, selectedNode.Dpo.NodeId, nodeText);
         }
 
 
-        private ITreeNodeDpo AddNode(TreeNode selectedNode, int parentID, string nodeText)
+        private ITreeDpoNode AddNode(TreeNode selectedNode, int parentID, string nodeText)
         {
-            ITreeNodeDpo dpo = (ITreeNodeDpo)Activator.CreateInstance(this.nodeType);
+            ITreeDpoNode dpo = (ITreeDpoNode)Activator.CreateInstance(this.nodeType);
             dpo.NodeText = nodeText;
             dpo.NodeParentId = parentID;
             if (selectedNode.Nodes.Count > 0)
@@ -389,7 +389,7 @@ namespace Sys.ViewManager.Forms
 
         private void BuildTreeView(TreeNodeCollection nodes, int parentID, DisplayTreeDpoNode d)
         {
-            foreach(ITreeNodeDpo dpo in dpc)
+            foreach(ITreeDpoNode dpo in dpc)
             {
                 if (dpo.NodeParentId != parentID)
                     continue;
@@ -406,7 +406,7 @@ namespace Sys.ViewManager.Forms
         }
 
 
-        private string DisplayDelegate(ITreeNodeDpo dpo)
+        private string DisplayDelegate(ITreeDpoNode dpo)
         {
             return dpo.NodeText;
         }

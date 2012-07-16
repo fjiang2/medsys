@@ -124,10 +124,10 @@ namespace Sys.Platform.Forms
                 .Replace("@UserMenus", Sys.ViewManager.Dpo.UserMenuDpo.TABLE_NAME);
 
 
-            List<ITreeNodeDpo> list = new List<ITreeNodeDpo>();
+            List<ITreeDpoNode> list = new List<ITreeDpoNode>();
             foreach (DataRow dataRow in SQL.FillDataTable().Rows)
             {
-                ITreeNodeDpo dpo = new UserMenuItem(dataRow);
+                ITreeDpoNode dpo = new UserMenuItem(dataRow);
                 list.Add(dpo);
             }
 
