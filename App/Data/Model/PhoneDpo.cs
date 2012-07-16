@@ -8,20 +8,21 @@ namespace App.Data
 {
     public class PhoneDpo : Dpo.appPhoneDpo
     {
-       public PhoneDpo()
+        public PhoneDpo()
         {
-            this.PhoneEnum = PhoneEnum.Home;
         }
 
-       public PhoneDpo(DataRow dataRow)
+        public PhoneDpo(DataRow dataRow)
             :base(dataRow)
         {
         }
 
-       public PhoneEnum PhoneEnum
-       {
-           get { return (PhoneEnum)this.Phone_Enum; }
-           set { this.Phone_Enum = (int)value; }
-       }
+        public PhoneDpo(int phone_id)
+           :base(phone_id)
+        {
+         
+        }
+
+    
     }
 }

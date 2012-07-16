@@ -19,5 +19,10 @@ namespace App.Data
             :base(dataRow)
         {
         }
+
+        public AddressDpo(int address_id)
+            : base(address_id)
+        {
+        }
     }
 }
