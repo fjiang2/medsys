@@ -298,9 +298,9 @@ namespace Sys.Data
 
 
 
-        protected ColumnAdapter Connect(ColumnAdapter column)
+        protected ColumnAdapter Bind(ColumnAdapter column)
         {
-            columns.Connect(column);
+            columns.Bind(column);
 
             column.UpdateValue(this.dataRow);
             return column;

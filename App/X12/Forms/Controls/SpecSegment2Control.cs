@@ -21,18 +21,18 @@ namespace X12.Forms
 
             bind = new BindDpo<X12SegmentInstanceDpo>();
 
-            bind.Connect(this.txtSegmentName, X12SegmentInstanceDpo._Name);
-            bind.Connect(this.txtLoop, X12SegmentInstanceDpo._LoopName);
-            bind.Connect(this.txtDescription, X12SegmentInstanceDpo._Description);
-            bind.Connect(this.txtRepeatValue, X12SegmentInstanceDpo._RepeatValue);
-            bind.Connect(this.chkRequired, X12SegmentInstanceDpo._Required);
-            bind.Connect(this.txtSequence, X12SegmentInstanceDpo._Sequence);
+            bind.Bind(this.txtSegmentName, X12SegmentInstanceDpo._Name);
+            bind.Bind(this.txtLoop, X12SegmentInstanceDpo._LoopName);
+            bind.Bind(this.txtDescription, X12SegmentInstanceDpo._Description);
+            bind.Bind(this.txtRepeatValue, X12SegmentInstanceDpo._RepeatValue);
+            bind.Bind(this.chkRequired, X12SegmentInstanceDpo._Required);
+            bind.Bind(this.txtSequence, X12SegmentInstanceDpo._Sequence);
             
-            bind.Connect(this.txtTR3Notes, X12SegmentInstanceDpo._TR3_Notes);
-            bind.Connect(this.txtTR3Example, X12SegmentInstanceDpo._TR3_Example);
+            bind.Bind(this.txtTR3Notes, X12SegmentInstanceDpo._TR3_Notes);
+            bind.Bind(this.txtTR3Example, X12SegmentInstanceDpo._TR3_Example);
 
-            bind.Connect(this.txtRule, X12SegmentInstanceDpo._Situational_Rule);
-            bind.Connect(this.txtScript, X12SegmentInstanceDpo._Script);
+            bind.Bind(this.txtRule, X12SegmentInstanceDpo._Situational_Rule);
+            bind.Bind(this.txtScript, X12SegmentInstanceDpo._Script);
 
         }
 

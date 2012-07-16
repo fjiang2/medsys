@@ -40,10 +40,10 @@ namespace Sys.Workflow.Collaborative.Forms
 
             bind = new BindDpo<WorkflowDpo>(dpo);
 
-            bind.Connect(txtWorkflowName, WorkflowDpo._Name);
-            bind.Connect(txtLabel, WorkflowDpo._Label);
-            bind.Connect(txtDescription, WorkflowDpo._Description);
-            bind.Connect(txtMetadata, WorkflowDpo._Metadata);
+            bind.Bind(txtWorkflowName, WorkflowDpo._Name);
+            bind.Bind(txtLabel, WorkflowDpo._Label);
+            bind.Bind(txtDescription, WorkflowDpo._Description);
+            bind.Bind(txtMetadata, WorkflowDpo._Metadata);
 
             DataTable dataTable = new DataTable();
             dataTable.Columns.Add("Name", typeof(string));

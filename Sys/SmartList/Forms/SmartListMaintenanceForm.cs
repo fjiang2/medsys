@@ -76,28 +76,28 @@ namespace Sys.SmartList.Forms
             CommandNodeDpo dpo1 = new CommandNodeDpo();
             binding = new BindDpo<CommandNodeDpo>(dpo1);
 
-            binding.Connect(this.tbID, CommandDpo._ID);
-            binding.Connect(this.tbParentID, CommandDpo._ParentID);
+            binding.Bind(this.tbID, CommandDpo._ID);
+            binding.Bind(this.tbParentID, CommandDpo._ParentID);
 
-            binding.Connect(this.tbLabel, CommandDpo._Label);
-            binding.Connect(this.tbDescription, CommandDpo._Description);
+            binding.Bind(this.tbLabel, CommandDpo._Label);
+            binding.Bind(this.tbDescription, CommandDpo._Description);
 
-            binding.Connect(this.tbSetting, CommandDpo._Setting_Script);
-            binding.Connect(this.tbScript, CommandDpo._Sql_Command);
-            binding.Connect(this.tbParameter, CommandDpo._User_Layout);
-            binding.Connect(this.tbproperties, CommandDpo._Header_Footer);
-            binding.Connect(this.tbAccessLevel, CommandDpo._Access_Level);
-            binding.Connect(this.tbTy, CommandDpo._Ty);
+            binding.Bind(this.tbSetting, CommandDpo._Setting_Script);
+            binding.Bind(this.tbScript, CommandDpo._Sql_Command);
+            binding.Bind(this.tbParameter, CommandDpo._User_Layout);
+            binding.Bind(this.tbproperties, CommandDpo._Header_Footer);
+            binding.Bind(this.tbAccessLevel, CommandDpo._Access_Level);
+            binding.Bind(this.tbTy, CommandDpo._Ty);
 
-            binding.Connect(this.cbControlled, CommandDpo._Controlled);
-            binding.Connect(this.cbEnabled, CommandDpo._Enabled);
-            binding.Connect(this.cbVisible, CommandDpo._Visible);
-            binding.Connect(this.cbReleased, CommandDpo._Released);
+            binding.Bind(this.cbControlled, CommandDpo._Controlled);
+            binding.Bind(this.cbEnabled, CommandDpo._Enabled);
+            binding.Bind(this.cbVisible, CommandDpo._Visible);
+            binding.Bind(this.cbReleased, CommandDpo._Released);
 
-            binding.Connect(this.tbCreator, CommandDpo._Owner_ID);
-            binding.Connect(this.rgViewMode, CommandDpo._ViewMode);
-            binding.Connect(this.richEditControl1, "HtmlText", CommandDpo._Help);
-            binding.Connect(this.icbImage, CommandDpo._Image_Index);
+            binding.Bind(this.tbCreator, CommandDpo._Owner_ID);
+            binding.Bind(this.rgViewMode, CommandDpo._ViewMode);
+            binding.Bind(this.richEditControl1, "HtmlText", CommandDpo._Help);
+            binding.Bind(this.icbImage, CommandDpo._Image_Index);
 
 
             if (tbproperties.Text != "")

@@ -233,13 +233,13 @@ namespace Sys.ViewManager.Forms
         }
 
 
-        protected override BindRow Connect(JWinControl control, string columnName)
+        protected override BindRow Bind(JWinControl control, string columnName)
         {
             //Check it is valid column name?
             if (this.columnNameFields.Where(fieldInfo => fieldInfo.GetValue(null).Equals(columnName)).Count() != 1)
                 throw new SysException("Invalid column name [{0}] in {1}", columnName, typeof(T).FullName);
          
-            return base.Connect(control, columnName);
+            return base.Bind(control, columnName);
         }
 
         protected override DataField AddField(string columnName)

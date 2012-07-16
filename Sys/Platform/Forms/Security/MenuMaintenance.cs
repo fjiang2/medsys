@@ -68,26 +68,26 @@ namespace Sys.Platform.Forms
             bind = new BindDpo<UserMenuDpo>(dpo);
             bind.BeforeSaving += bind_BeforeSaving;
 
-            bind.Connect(txtID, UserMenuDpo._ID)
-                .Connect(txtParentID, UserMenuDpo._ParentID)
-                .Connect(txtOrderBy, UserMenuDpo._OrderBy)
-                .Connect(rgMenuType, UserMenuDpo._Ty)
+            bind.Bind(txtID, UserMenuDpo._ID)
+                .Bind(txtParentID, UserMenuDpo._ParentID)
+                .Bind(txtOrderBy, UserMenuDpo._OrderBy)
+                .Bind(rgMenuType, UserMenuDpo._Ty)
 
-                .Connect(txtLabel, UserMenuDpo._Label)
-                .Connect(txtDescription, UserMenuDpo._Description)
+                .Bind(txtLabel, UserMenuDpo._Label)
+                .Bind(txtDescription, UserMenuDpo._Description)
 
-                .Connect(txtCommand, UserMenuDpo._Command)
+                .Bind(txtCommand, UserMenuDpo._Command)
 
-                .Connect(chkControlled, UserMenuDpo._Controlled)
-                .Connect(chkReleased, UserMenuDpo._Released)
-                .Connect(chkVisible, UserMenuDpo._Visible)
-                .Connect(chkEnabled, UserMenuDpo._Enabled)
+                .Bind(chkControlled, UserMenuDpo._Controlled)
+                .Bind(chkReleased, UserMenuDpo._Released)
+                .Bind(chkVisible, UserMenuDpo._Visible)
+                .Bind(chkEnabled, UserMenuDpo._Enabled)
 
-                .Connect(comboModule, UserMenuDpo._Module)
-                .Connect(picIcon, UserMenuDpo._Icon)
-                .Connect(txtFormClass, UserMenuDpo._Form_Class)
-                .Connect(rgFormPlace, UserMenuDpo._Form_Place)
-                .Connect(txtKeyName, UserMenuDpo._Key_Name)
+                .Bind(comboModule, UserMenuDpo._Module)
+                .Bind(picIcon, UserMenuDpo._Icon)
+                .Bind(txtFormClass, UserMenuDpo._Form_Class)
+                .Bind(rgFormPlace, UserMenuDpo._Form_Place)
+                .Bind(txtKeyName, UserMenuDpo._Key_Name)
 
                 .Reset();
 

@@ -21,12 +21,12 @@ namespace X12.Forms
 
             bind = new BindDpo<X12SegmentTemplateDpo>();
 
-            bind.Connect(this.txtSegmentName, X12SegmentTemplateDpo._Name);
-            bind.Connect(this.txtDescription, X12SegmentTemplateDpo._Description);
+            bind.Bind(this.txtSegmentName, X12SegmentTemplateDpo._Name);
+            bind.Bind(this.txtDescription, X12SegmentTemplateDpo._Description);
             
-            bind.Connect(this.txtPurpose, X12SegmentTemplateDpo._Purpose);
-            bind.Connect(this.txtNotes, X12SegmentTemplateDpo._Notes);
-            bind.Connect(this.txtSyntax, X12SegmentTemplateDpo._Syntax);
+            bind.Bind(this.txtPurpose, X12SegmentTemplateDpo._Purpose);
+            bind.Bind(this.txtNotes, X12SegmentTemplateDpo._Notes);
+            bind.Bind(this.txtSyntax, X12SegmentTemplateDpo._Syntax);
             
 
         }

@@ -25,13 +25,13 @@ namespace X12.Forms
         
             bind = new BindDpo<X12LoopTemplateDpo>();
 
-            bind.Connect(this.txtLoop, X12LoopTemplateDpo._Name);
-            bind.Connect(this.txtSequence, X12LoopTemplateDpo._Sequence);
-            bind.Connect(this.txtDescription, X12LoopTemplateDpo._Description);
-            bind.Connect(this.chkRequired, X12LoopTemplateDpo._Required);
+            bind.Bind(this.txtLoop, X12LoopTemplateDpo._Name);
+            bind.Bind(this.txtSequence, X12LoopTemplateDpo._Sequence);
+            bind.Bind(this.txtDescription, X12LoopTemplateDpo._Description);
+            bind.Bind(this.chkRequired, X12LoopTemplateDpo._Required);
 
-            bind.Connect(this.txtRepeatMin, X12LoopTemplateDpo._MinRepeat);
-            bind.Connect(this.txtRepeatMax, X12LoopTemplateDpo._MaxRepeat);
+            bind.Bind(this.txtRepeatMin, X12LoopTemplateDpo._MinRepeat);
+            bind.Bind(this.txtRepeatMax, X12LoopTemplateDpo._MaxRepeat);
 
             
         }

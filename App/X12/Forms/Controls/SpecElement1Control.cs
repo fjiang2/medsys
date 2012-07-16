@@ -25,23 +25,23 @@ namespace X12.Forms
         
             bind = new BindDpo<X12ElementTemplateDpo>();
 
-            bind.Connect(this.txtSegmentName, X12ElementTemplateDpo._SegmentName);
-            bind.Connect(this.txtDescription, X12ElementTemplateDpo._Description);
+            bind.Bind(this.txtSegmentName, X12ElementTemplateDpo._SegmentName);
+            bind.Bind(this.txtDescription, X12ElementTemplateDpo._Description);
 
-            bind.Connect(this.txtRefDes, X12ElementTemplateDpo._RefDes);
-            bind.Connect(this.txtDeNum, X12ElementTemplateDpo._DeNum);
-            bind.Connect(this.txtRepeatValue, X12ElementTemplateDpo._RepeatValue);
-            bind.Connect(this.txtMinLength, X12ElementTemplateDpo._MinLength);
-            bind.Connect(this.txtMaxLength, X12ElementTemplateDpo._MaxLength);
+            bind.Bind(this.txtRefDes, X12ElementTemplateDpo._RefDes);
+            bind.Bind(this.txtDeNum, X12ElementTemplateDpo._DeNum);
+            bind.Bind(this.txtRepeatValue, X12ElementTemplateDpo._RepeatValue);
+            bind.Bind(this.txtMinLength, X12ElementTemplateDpo._MinLength);
+            bind.Bind(this.txtMaxLength, X12ElementTemplateDpo._MaxLength);
 
             this.rgCondition.LoadEnum<ConditionDesignator>();
-            //bind.Connect<string, ConditionDesignator>(this.rgCondition, 
+            //bind.Bind<string, ConditionDesignator>(this.rgCondition, 
             //        "SelectedIndex",
             //        columnValue => ElementTemplateDpo.FromCondition(columnValue),
             //        controlValue => ElementTemplateDpo.ToCondition(controlValue),
             //        X12ElementTemplateDpo._Condition);
 
-            bind.Connect<RadioGroup, string>(this.rgCondition,
+            bind.Bind<RadioGroup, string>(this.rgCondition,
                     (control, value) => control.SelectedIndex = (int)ElementTemplateDpo.FromCondition(value),
                     (control) => ElementTemplateDpo.ToCondition((ConditionDesignator)control.SelectedIndex),
                     X12ElementTemplateDpo._Condition);
@@ -49,13 +49,13 @@ namespace X12.Forms
 
 
             this.rgElementType.LoadEnum<DataELemenType>();
-            //bind.Connect<string, DataELemenType>(this.rgElementType,
+            //bind.Bind<string, DataELemenType>(this.rgElementType,
             //        "SelectedIndex",
             //        columnValue => ElementTemplateDpo.FromDataType(columnValue),
             //        controlValue => ElementTemplateDpo.ToDataType(controlValue),
             //    X12ElementTemplateDpo._DataType);
 
-            bind.Connect<RadioGroup, string>(this.rgElementType,
+            bind.Bind<RadioGroup, string>(this.rgElementType,
                     (control, value) => control.SelectedIndex = (int)ElementTemplateDpo.FromDataType(value),
                     (control) => ElementTemplateDpo.ToDataType((DataELemenType)control.SelectedIndex),
                     X12ElementTemplateDpo._DataType);

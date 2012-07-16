@@ -40,28 +40,28 @@ namespace Sys.Messaging.Forms
                 dpo = new UserDpo(Sys.Security.Account.CurrentUser.User_Name);
 
             binding = new BindDpo<UserDpo>(dpo);
-            binding.Connect(this.txtUserName, UserDpo._User_Name);
+            binding.Bind(this.txtUserName, UserDpo._User_Name);
 
-            binding.Connect(this.txtFirstName, UserDpo._First_Name);
-            binding.Connect(this.txtLastName, UserDpo._Last_Name);
-            binding.Connect(this.txtMiddleName, UserDpo._Middle_Name);
-            binding.Connect(this.txtNickname, UserDpo._Nickname);
-            binding.Connect(this.txtEmailAddress, UserDpo._Email);
+            binding.Bind(this.txtFirstName, UserDpo._First_Name);
+            binding.Bind(this.txtLastName, UserDpo._Last_Name);
+            binding.Bind(this.txtMiddleName, UserDpo._Middle_Name);
+            binding.Bind(this.txtNickname, UserDpo._Nickname);
+            binding.Bind(this.txtEmailAddress, UserDpo._Email);
 
-
-            //----------------------------------------------------
-            binding.Connect(this.txtCompany, UserDpo._Group_Name);
-            binding.Connect(this.txtDepartment, UserDpo._Department);
-            binding.Connect(this.txtJobTitle, UserDpo._Job_Title);
-            binding.Connect(this.txtSupervisor, UserDpo._Supervisor);
-
-            binding.Connect(this.txtWorkPhone, UserDpo._WorkPhone);
-            binding.Connect(this.txtWorkFax, UserDpo._WorkFax);
-            binding.Connect(this.txtWorkPager, UserDpo._WorkPager);
-            binding.Connect(this.txtWorkMobile, UserDpo._WorkMobile);
 
             //----------------------------------------------------
-            binding.Connect(this.pictureBox1,UserDpo._Avatar);
+            binding.Bind(this.txtCompany, UserDpo._Group_Name);
+            binding.Bind(this.txtDepartment, UserDpo._Department);
+            binding.Bind(this.txtJobTitle, UserDpo._Job_Title);
+            binding.Bind(this.txtSupervisor, UserDpo._Supervisor);
+
+            binding.Bind(this.txtWorkPhone, UserDpo._WorkPhone);
+            binding.Bind(this.txtWorkFax, UserDpo._WorkFax);
+            binding.Bind(this.txtWorkPager, UserDpo._WorkPager);
+            binding.Bind(this.txtWorkMobile, UserDpo._WorkMobile);
+
+            //----------------------------------------------------
+            binding.Bind(this.pictureBox1,UserDpo._Avatar);
             binding.Reset();
 
         }
