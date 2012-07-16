@@ -25,10 +25,10 @@ namespace Sys.ViewManager.Forms
             treeMenuContextMenu(this.ContextMenuStrip);
 
             this.AfterSelect += new TreeViewEventHandler(TreeView_AfterSelect);
-            this.ItemDrag += new ItemDragEventHandler(TreeDpcView_ItemDrag);
-            this.DragEnter += new DragEventHandler(TreeDpcView_DragEnter);
-            this.DragDrop += new DragEventHandler(TreeDpcView_DragDrop);
-            this.DragOver += new DragEventHandler(TreeDpcView_DragOver);
+            this.ItemDrag += new ItemDragEventHandler(TreeDpoView_ItemDrag);
+            this.DragEnter += new DragEventHandler(TreeDpoView_DragEnter);
+            this.DragDrop += new DragEventHandler(TreeDpoView_DragDrop);
+            this.DragOver += new DragEventHandler(TreeDpoView_DragOver);
 
             this.MouseDown += delegate(object sender, System.Windows.Forms.MouseEventArgs e)
                 {
@@ -101,7 +101,7 @@ namespace Sys.ViewManager.Forms
 
         #region Drag and Drop
 
-        void TreeDpcView_DragDrop(object sender, DragEventArgs e)
+        void TreeDpoView_DragDrop(object sender, DragEventArgs e)
         {
             TreeDpoNode node1;
 
@@ -120,17 +120,17 @@ namespace Sys.ViewManager.Forms
 
         }
 
-        void TreeDpcView_DragOver(object sender, DragEventArgs e)
+        void TreeDpoView_DragOver(object sender, DragEventArgs e)
         {
             e.Effect = DragDropEffects.Move;
         }
 
-        void TreeDpcView_DragEnter(object sender, DragEventArgs e)
+        void TreeDpoView_DragEnter(object sender, DragEventArgs e)
         {
             e.Effect = DragDropEffects.Move;
         }
 
-        void TreeDpcView_ItemDrag(object sender, ItemDragEventArgs e)
+        void TreeDpoView_ItemDrag(object sender, ItemDragEventArgs e)
         {
             DoDragDrop(e.Item, DragDropEffects.Move);
         }
@@ -323,7 +323,7 @@ namespace Sys.ViewManager.Forms
                     return;
 
                 if (MessageBox.Show(
-                    string.Format("Menu item [{0}] {1} is about to be deleted, continue?", SelectedDpo.NodeId, SelectedDpo.NodeText),
+                    string.Format("Item [{0}] {1} is about to be deleted, continue?", SelectedDpo.NodeId, SelectedDpo.NodeText),
                     "Confirmation",
                     MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == System.Windows.Forms.DialogResult.Yes)
                 {
