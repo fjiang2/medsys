@@ -68,6 +68,7 @@
     <Compile Include="GenderEnum.cs" />
     <Compile Include="MaritalStatusEnum.cs" />
     <Compile Include="Model\AddressDpo.cs" />
+    <Compile Include="Model\PersonRelationshipDpo.cs" />
     <Compile Include="Model\PersonDpo.cs" />
     <Compile Include="Model\PhoneDpo.cs" />
     <Compile Include="Package\CategorieDpoPackage.cs" />

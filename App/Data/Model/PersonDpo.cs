@@ -17,7 +17,12 @@ namespace App.Data
             : base(dataRow)
         { 
         }
-
+        
+        public PersonDpo(int person_id)
+            : base(person_id)
+        { 
+        
+        }
 
     }
 }

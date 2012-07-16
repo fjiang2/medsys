@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 7/12/2012 1:16:00 PM
+//   by devel at 7/16/2012 4:07:27 PM
 //
 
 using System;
@@ -14,7 +14,7 @@ using Sys.Data.Manager;
 
 namespace App.Data.Dpo
 {
-    [Revision(0)]
+    [Revision(1)]
     [Table("app00103", Level.Application, Pack = false)]    //Primary Keys = Person_ID1 + Person_ID2;  Identity = ;
     public class appPersonRelationshipDpo : DPObject
     {
@@ -23,7 +23,7 @@ namespace App.Data.Dpo
 
         [Column(_Person_ID1, SqlDbType.Int, Primary = true)]                                      public int Person_ID1;        //int(4) not null
         [Column(_Person_ID2, SqlDbType.Int, Primary = true)]                                      public int Person_ID2;        //int(4) not null
-        [Column(_RelationshipEnum, SqlDbType.Int)]                                                public int RelationshipEnum;  //int(4) not null
+        [Column(_Relationship_Enum, SqlDbType.Int)]                                               public int Relationship_Enum; //int(4) not null
 
 #pragma warning restore
 
@@ -94,7 +94,7 @@ namespace App.Data.Dpo
 
         public const string _Person_ID1 = "Person_ID1";
         public const string _Person_ID2 = "Person_ID2";
-        public const string _RelationshipEnum = "RelationshipEnum";
+        public const string _Relationship_Enum = "Relationship_Enum";
 
        
         #endregion 

@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 7/13/2012 3:45:03 PM
+//   by devel at 7/16/2012 4:01:31 PM
 //
 
 using System;
@@ -14,8 +14,8 @@ using Sys.Data.Manager;
 
 namespace PTA.Dpo
 {
-    [Revision(3)]
-    [Table("ptaAdults", Level.System, Pack = false)]    //Primary Keys = Adult_ID;  Identity = ;
+    [Revision(4)]
+    [Table("ptaAdults", Level.Application, Pack = false)]    //Primary Keys = Adult_ID;  Identity = ;
     public class ptaAdultDpo : DPObject
     {
 
@@ -24,7 +24,8 @@ namespace PTA.Dpo
         [Column(_Adult_ID, SqlDbType.Int, Primary = true)]                                        public int Adult_ID;          //int(4) not null
         [Column(_Student_Id, SqlDbType.Int, Nullable = true)]                                     public int? Student_Id;       //int(4) null
         [Column(_Address_ID, SqlDbType.Int)]                                                      public int Address_ID;        //int(4) not null
-        [Column(_Phone_ID, SqlDbType.Int, Nullable = true)]                                       public int? Phone_ID;         //int(4) null
+        [Column(_Home_Phone_ID, SqlDbType.Int)]                                                   public int Home_Phone_ID;     //int(4) not null
+        [Column(_Work_Phone_ID, SqlDbType.Int, Nullable = true)]                                  public int? Work_Phone_ID;    //int(4) null
         [Column(_Email, SqlDbType.VarChar, Nullable = true, Length = 60)]                         public string Email;          //varchar(60) null
         [Column(_Profession, SqlDbType.NVarChar, Nullable = true, Length = 150)]                  public string Profession;     //nvarchar(150) null
         [Column(_Day, SqlDbType.Bit)]                                                             public bool Day;              //bit(1) not null
@@ -124,7 +125,8 @@ namespace PTA.Dpo
         public const string _Adult_ID = "Adult_ID";
         public const string _Student_Id = "Student_Id";
         public const string _Address_ID = "Address_ID";
-        public const string _Phone_ID = "Phone_ID";
+        public const string _Home_Phone_ID = "Home_Phone_ID";
+        public const string _Work_Phone_ID = "Work_Phone_ID";
         public const string _Email = "Email";
         public const string _Profession = "Profession";
         public const string _Day = "Day";

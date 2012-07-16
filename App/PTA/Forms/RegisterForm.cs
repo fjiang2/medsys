@@ -70,7 +70,7 @@ namespace PTA.Forms
             bdAdult.Bind<RegisterForm, int>(this, (form, value) => form.adultId = value, form => form.adultId, ptaAdultDpo._Adult_ID);
             bdAdult.Bind<RegisterForm, int>(this, (form, value) => form.studentId = value, form => form.studentId, ptaAdultDpo._Student_Id);
             bdAdult.Bind<RegisterForm, int>(this, (form, value) => form.addressId = value, form => form.addressId, ptaAdultDpo._Address_ID);
-            bdAdult.Bind<RegisterForm, int>(this, (form, value) => form.phoneId = value, form => form.phoneId, ptaAdultDpo._Phone_ID);
+            bdAdult.Bind<RegisterForm, int>(this, (form, value) => form.phoneId = value, form => form.phoneId, ptaAdultDpo._Home_Phone_ID);
 
             foreach (CheckedListBoxItem item in this.clAvailability.Items)
             {
