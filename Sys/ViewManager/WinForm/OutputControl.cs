@@ -13,7 +13,7 @@ using DevExpress.XtraBars.Docking;
 
 namespace Sys.ViewManager.Forms
 {
-    public partial class OutputControl : RichTextBox, IDockPanel
+    public partial class OutputControl : RichTextBox, IDockable
     {
         MessageManager manager;
 
@@ -46,7 +46,7 @@ namespace Sys.ViewManager.Forms
         {
             StringBuilder builder = new StringBuilder();
 
-            foreach (Message item in e.Errors)
+            foreach (Message item in e.Messages)
             {
                 builder.AppendLine(item.Description);
             }
