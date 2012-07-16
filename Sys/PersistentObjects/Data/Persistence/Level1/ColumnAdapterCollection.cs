@@ -34,7 +34,7 @@ namespace Sys.Data
 
        
 
-        public ColumnAdapter Connect(ColumnAdapter column)
+        public ColumnAdapter Bind(ColumnAdapter column)
         {
             foreach (ColumnAdapter adapter in this)
                 if (adapter.Field.Name.Equals(column.Field.Name))

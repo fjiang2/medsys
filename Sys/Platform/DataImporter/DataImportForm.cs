@@ -33,12 +33,12 @@ namespace Sys.Platform.DataImporter
 
             var dpo = new DataImportDpo();
             binding = new BindDpo<DataImportDpo>(dpo);
-            binding.Connect(this.tbId, DataImportDpo._ID);
-            binding.Connect(this.tbTemplate, DataImportDpo._Label);
-            binding.Connect(this.tbDescription, DataImportDpo._Description);
-            binding.Connect(this.tbDataSource, DataImportDpo._DataSource);
-            binding.Connect(this.tbClassName, DataImportDpo._ClassName);
-            binding.Connect(this.tbMapping, DataImportDpo._Mapping);
+            binding.Bind(this.tbId, DataImportDpo._ID);
+            binding.Bind(this.tbTemplate, DataImportDpo._Label);
+            binding.Bind(this.tbDescription, DataImportDpo._Description);
+            binding.Bind(this.tbDataSource, DataImportDpo._DataSource);
+            binding.Bind(this.tbClassName, DataImportDpo._ClassName);
+            binding.Bind(this.tbMapping, DataImportDpo._Mapping);
             
         }
 

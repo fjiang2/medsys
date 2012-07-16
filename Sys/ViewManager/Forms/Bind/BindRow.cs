@@ -105,9 +105,9 @@ namespace Sys.ViewManager.Forms
         }
 
 
-        protected virtual BindRow Connect(JWinControl control, string columnName)
+        protected virtual BindRow Bind(JWinControl control, string columnName)
         {
-            base.Connect(control);
+            base.Bind(control);
             return this;
         }
 
@@ -118,160 +118,160 @@ namespace Sys.ViewManager.Forms
     
         //------------------------------------------------------------------------------------------------
 
-        public BindRow Connect(RichTextBox textBox, string columnName)
+        public BindRow Bind(RichTextBox textBox, string columnName)
         {
             DataField field = AddField(columnName);
             JWinControl control = new JRichTextBox(textBox, field);
-            return Connect(control, columnName);
+            return Bind(control, columnName);
         }
 
-        public BindRow Connect(TextBoxBase textBox, string columnName)
+        public BindRow Bind(TextBoxBase textBox, string columnName)
         {
             DataField field = AddField(columnName);
             JWinControl control = new JTextBox(textBox, field);
-            return Connect(control, columnName);
+            return Bind(control, columnName);
         }
 
-        public BindRow Connect(CheckBox checkBox, string columnName)
+        public BindRow Bind(CheckBox checkBox, string columnName)
         {
             DataField field = AddField(columnName);
             JWinControl control = new JCheckBox(checkBox, field);
-            return Connect(control, columnName);
+            return Bind(control, columnName);
         }
 
-        public BindRow Connect(CheckEdit checkBox, string columnName)
+        public BindRow Bind(CheckEdit checkBox, string columnName)
         {
             DataField field = AddField(columnName);
             JWinControl control = new JCheckEdit(checkBox, field);
-            return Connect(control, columnName);
+            return Bind(control, columnName);
         }
 
-        public BindRow Connect(RadioButton radioButton, string columnName)
+        public BindRow Bind(RadioButton radioButton, string columnName)
         {
             DataField field = AddField(columnName);
             JWinControl control = new JRadioButton(radioButton, field);
-            return Connect(control, columnName);
+            return Bind(control, columnName);
         }
 
-        public BindRow Connect(System.Windows.Forms.ComboBox comboBox, string columnName)
+        public BindRow Bind(System.Windows.Forms.ComboBox comboBox, string columnName)
         {
             DataField field = AddField(columnName);
             JComboBox control = new JComboBox(comboBox, field);
-            return Connect(control, columnName);
+            return Bind(control, columnName);
         }
 
-        public BindRow Connect(System.Windows.Forms.ComboBox comboBox, string columnName, DataTable dataTable)
+        public BindRow Bind(System.Windows.Forms.ComboBox comboBox, string columnName, DataTable dataTable)
         {
             DataField field = AddField(columnName);
             JComboBox control = new JComboBox(comboBox, field, dataTable);
-            return Connect(control, columnName);
+            return Bind(control, columnName);
         }
 
-        public BindRow Connect(System.Windows.Forms.ComboBox comboBox, string columnName, DataTable dataTable, string displayMember, string valueMember)
+        public BindRow Bind(System.Windows.Forms.ComboBox comboBox, string columnName, DataTable dataTable, string displayMember, string valueMember)
         {
             DataField field = AddField(columnName);
             JComboBox control = new JComboBox(comboBox, field, dataTable, displayMember, valueMember);
-            return Connect(control, columnName);
+            return Bind(control, columnName);
         }
 
-        public BindRow Connect(DevExpress.XtraEditors.DateEdit dateEdit, string columnName)
+        public BindRow Bind(DevExpress.XtraEditors.DateEdit dateEdit, string columnName)
         {
             DataField field = AddField(columnName);
             JWinControl control = new JDateEdit(dateEdit, field);
-            return Connect(control, columnName);
+            return Bind(control, columnName);
 
         }
 
-        public BindRow Connect(DevExpress.XtraEditors.SpinEdit spinEdit, string columnName)
+        public BindRow Bind(DevExpress.XtraEditors.SpinEdit spinEdit, string columnName)
         {
             DataField field = AddField(columnName);
             JWinControl control = new JSpinEdit(spinEdit, field);
-            return Connect(control, columnName);
+            return Bind(control, columnName);
 
         }
 
-        public BindRow Connect(DevExpress.XtraEditors.TimeEdit timeEdit, string columnName)
+        public BindRow Bind(DevExpress.XtraEditors.TimeEdit timeEdit, string columnName)
         {
             DataField field = AddField(columnName);
             JWinControl control = new JTimeEdit(timeEdit, field);
-            return Connect(control, columnName);
+            return Bind(control, columnName);
 
         }
 
-        public BindRow Connect(DevExpress.XtraEditors.LookUpEdit lookUpEdit, string columnName)
+        public BindRow Bind(DevExpress.XtraEditors.LookUpEdit lookUpEdit, string columnName)
         {
             DataField field = AddField(columnName);
             JWinControl control = new JLookUpEdit(lookUpEdit, field);
-            return Connect(control, columnName);
+            return Bind(control, columnName);
         }
 
-        public BindRow Connect(DevExpress.XtraEditors.ImageComboBoxEdit combo, string columnName)
+        public BindRow Bind(DevExpress.XtraEditors.ImageComboBoxEdit combo, string columnName)
         {
             DataField field = AddField(columnName);
             JWinControl control = new JImageComboBoxEdit(combo, field);
-            return Connect(control, columnName);
+            return Bind(control, columnName);
         }
 
-        public BindRow Connect(DevExpress.XtraEditors.LookUpEdit lookUpEdit, string columnName, TableReader tableReader)
+        public BindRow Bind(DevExpress.XtraEditors.LookUpEdit lookUpEdit, string columnName, TableReader tableReader)
         {
             DataField field = AddField(columnName);
             JWinControl control = new JLookUpEdit(lookUpEdit, field, tableReader);
-            return Connect(control, columnName);
+            return Bind(control, columnName);
         }
 
-        public BindRow Connect(DateTimePicker dateTimePicker, string columnName)
+        public BindRow Bind(DateTimePicker dateTimePicker, string columnName)
         {
             DataField field = AddField(columnName);
             JWinControl control = new JDateTimePicker(dateTimePicker, field);
-            return Connect(control, columnName);
+            return Bind(control, columnName);
         }
 
-        public BindRow Connect(DevExpress.XtraEditors.RadioGroup radioGroup, string columnName)
+        public BindRow Bind(DevExpress.XtraEditors.RadioGroup radioGroup, string columnName)
         {
             DataField field = AddField(columnName);
             JWinControl control = new JRadioGroup(radioGroup, field);
-            return Connect(control, columnName);
+            return Bind(control, columnName);
         }
 
-        public BindRow Connect<T>(DevExpress.XtraEditors.RadioGroup radioGroup, string columnName) where T: struct
+        public BindRow Bind<T>(DevExpress.XtraEditors.RadioGroup radioGroup, string columnName) where T: struct
         {
             radioGroup.LoadEnum<T>();
-            return Connect(radioGroup, columnName);
+            return Bind(radioGroup, columnName);
         }
 
-        public BindRow Connect(PictureBox pictureBox, string columnName)
+        public BindRow Bind(PictureBox pictureBox, string columnName)
         {
             DataField field = AddField(columnName);
             JWinControl control = new JPictureBox(pictureBox, field);
-            return Connect(control, columnName);
+            return Bind(control, columnName);
         }
 
-        public BindRow Connect(DomainUpDown domainUpDown, string columnName)
+        public BindRow Bind(DomainUpDown domainUpDown, string columnName)
         {
             DataField field = AddField(columnName);
             JWinControl control = new JDomainUpDown(domainUpDown, field);
-            return Connect(control, columnName);
+            return Bind(control, columnName);
         }
 
-        public BindRow Connect(MemoExEdit edit, string columnName)
+        public BindRow Bind(MemoExEdit edit, string columnName)
         {
             DataField field = AddField(columnName);
             JWinControl control = new JMemoExEdit(edit, field);
-            return Connect(control, columnName);
+            return Bind(control, columnName);
         }
 
-        public BindRow Connect(Label label, string columnName)
+        public BindRow Bind(Label label, string columnName)
         {
             DataField field = AddField(columnName);
             JWinControl control = new JLabel(label, field);
-            return Connect(control, columnName);
+            return Bind(control, columnName);
         }
 
-        public BindRow Connect(Control control, string property, string columnName)
+        public BindRow Bind(Control control, string property, string columnName)
         {
             DataField field = AddField(columnName);
             JWinControl x = new JControl(control, property, field);
-            return Connect(x, columnName);
+            return Bind(x, columnName);
         }
 
 
@@ -286,13 +286,13 @@ namespace Sys.ViewManager.Forms
         /// <param name="collect">convert value from Windows Control into value saved in the database</param>
         /// <param name="columnName"></param>
         /// <returns></returns>
-        public BindRow Connect<TColumnValue, TControlValue>(Control control, string property, 
+        public BindRow Bind<TColumnValue, TControlValue>(Control control, string property, 
             Func<TColumnValue, TControlValue> fill, Func<TControlValue, TColumnValue> collect, 
             string columnName)
         {
             DataField field = AddField(columnName);
             JWinControl x = new JControl<TColumnValue, TControlValue>(control, property, fill, collect, field);
-            return Connect(x, columnName);
+            return Bind(x, columnName);
         }
 
         /// <summary>
@@ -305,26 +305,26 @@ namespace Sys.ViewManager.Forms
         /// <param name="collect">function of collect value</param>
         /// <param name="columnName">Column name</param>
         /// <returns></returns>
-        public BindRow Connect<TControl, TColumn>(TControl control, Action<TControl, TColumn> fill, Func<TControl, TColumn> collect, string columnName) 
+        public BindRow Bind<TControl, TColumn>(TControl control, Action<TControl, TColumn> fill, Func<TControl, TColumn> collect, string columnName) 
         {
             DataField field = AddField(columnName);
             JWinControl x = new JGenericControl<TControl, TColumn>(control, fill, collect, field);
-            return Connect(x, columnName);
+            return Bind(x, columnName);
         }
 
 
-        public BindRow Connect(VAL val, string columnName)
+        public BindRow Bind(VAL val, string columnName)
         {
             DataField field = AddField(columnName);
             JWinControl control = new JVal(val, field);
-            return Connect(control, columnName);
+            return Bind(control, columnName);
         }
 
-        public BindRow Connect(object obj, string columnName)
+        public BindRow Bind(object obj, string columnName)
         {
             DataField field = AddField(columnName);
             JWinControl control = new JHostObject(obj, field);
-            return Connect(control, columnName);
+            return Bind(control, columnName);
         }
 
      

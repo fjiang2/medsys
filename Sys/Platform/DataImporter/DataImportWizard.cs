@@ -26,11 +26,11 @@ namespace Sys.Platform.DataImporter
             InitializeComponent();
             var dpo = new Sys.ViewManager.Dpo.DataImportDpo();
             binding = new BindRow(dpo, new Locator("[Label]=@Label"));
-            binding.Connect(this.tbTemplate, DataImportDpo._Label);
-            binding.Connect(this.tbDescription, DataImportDpo._Description);
-            binding.Connect(this.tbDataSource, DataImportDpo._DataSource);
-            binding.Connect(this.tbClassName, DataImportDpo._ClassName);
-            binding.Connect(this.tbMapping, DataImportDpo._Mapping);
+            binding.Bind(this.tbTemplate, DataImportDpo._Label);
+            binding.Bind(this.tbDescription, DataImportDpo._Description);
+            binding.Bind(this.tbDataSource, DataImportDpo._DataSource);
+            binding.Bind(this.tbClassName, DataImportDpo._ClassName);
+            binding.Bind(this.tbMapping, DataImportDpo._Mapping);
         }
 
   

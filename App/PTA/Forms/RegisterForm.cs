@@ -37,54 +37,54 @@ namespace PTA.Forms
             InitializeComponent();
 
             bdStudentDemography = new BindDpo<PersonDpo>();
-            bdStudentDemography.Connect(this.txtStudent_FirstName, PersonDpo._First_Name);
-            bdStudentDemography.Connect(this.txtStudent_LastName, PersonDpo._Last_Name);
+            bdStudentDemography.Bind(this.txtStudent_FirstName, PersonDpo._First_Name);
+            bdStudentDemography.Bind(this.txtStudent_LastName, PersonDpo._Last_Name);
 
             bdAdultDemography = new BindDpo<PersonDpo>();
-            bdAdultDemography.Connect(this.txtAdult_FirstName, PersonDpo._First_Name);
-            bdAdultDemography.Connect(this.txtAdult_LastName, PersonDpo._Last_Name);
+            bdAdultDemography.Bind(this.txtAdult_FirstName, PersonDpo._First_Name);
+            bdAdultDemography.Bind(this.txtAdult_LastName, PersonDpo._Last_Name);
 
 
             bdAddress = new BindDpo<AddressDpo>();
-            bdAddress.Connect(this.txtStreetNumber, AddressDpo._Street_Number);
-            bdAddress.Connect(this.txtStreetName, AddressDpo._Street_Name);
-            bdAddress.Connect(this.txtApartment, AddressDpo._Apartment);
-            bdAddress.Connect(this.txtCity, AddressDpo._City);
-            bdAddress.Connect(this.txtState, AddressDpo._State);
-            bdAddress.Connect(this.txtZipCode, AddressDpo._Postal_Code);
+            bdAddress.Bind(this.txtStreetNumber, AddressDpo._Street_Number);
+            bdAddress.Bind(this.txtStreetName, AddressDpo._Street_Name);
+            bdAddress.Bind(this.txtApartment, AddressDpo._Apartment);
+            bdAddress.Bind(this.txtCity, AddressDpo._City);
+            bdAddress.Bind(this.txtState, AddressDpo._State);
+            bdAddress.Bind(this.txtZipCode, AddressDpo._Postal_Code);
 
             bdPhone = new BindDpo<PhoneDpo>();
-            bdPhone.Connect(this.txtCellPhone, PhoneDpo._Mobile);
-            bdPhone.Connect(this.txtHomePhone, PhoneDpo._Phone);
+            bdPhone.Bind(this.txtCellPhone, PhoneDpo._Mobile);
+            bdPhone.Bind(this.txtHomePhone, PhoneDpo._Phone);
 
             bdStudent = new BindDpo<ptaStudentDpo>();
-            bdStudent.Connect<RegisterForm, int>(this, (form, value) => form.studentId = value, form => form.studentId, ptaStudentDpo._Student_ID);
-            bdStudent.Connect<RegisterForm, int>(this, (form, value) => form.adultId = value, form => form.adultId, ptaStudentDpo._Adult_ID);
-            bdStudent.Connect<RegisterForm, int>(this, (form, value) => form.addressId = value, form => form.addressId, ptaStudentDpo._Address_ID);
-            bdStudent.Connect(this.txtGrade, ptaStudentDpo._Grade);
+            bdStudent.Bind<RegisterForm, int>(this, (form, value) => form.studentId = value, form => form.studentId, ptaStudentDpo._Student_ID);
+            bdStudent.Bind<RegisterForm, int>(this, (form, value) => form.adultId = value, form => form.adultId, ptaStudentDpo._Adult_ID);
+            bdStudent.Bind<RegisterForm, int>(this, (form, value) => form.addressId = value, form => form.addressId, ptaStudentDpo._Address_ID);
+            bdStudent.Bind(this.txtGrade, ptaStudentDpo._Grade);
 
             // Adult
             bdAdult = new BindDpo<ptaAdultDpo>();
-            bdAdult.Connect(this.txtEmail, ptaAdultDpo._Email);
-            bdAdult.Connect(this.txtProfession, ptaAdultDpo._Profession);
-            bdAdult.Connect<RegisterForm, int>(this, (form, value) => form.adultId = value, form => form.adultId, ptaAdultDpo._Adult_ID);
-            bdAdult.Connect<RegisterForm, int>(this, (form, value) => form.studentId = value, form => form.studentId, ptaAdultDpo._Student_Id);
-            bdAdult.Connect<RegisterForm, int>(this, (form, value) => form.addressId = value, form => form.addressId, ptaAdultDpo._Address_ID);
-            bdAdult.Connect<RegisterForm, int>(this, (form, value) => form.phoneId = value, form => form.phoneId, ptaAdultDpo._Phone_ID);
+            bdAdult.Bind(this.txtEmail, ptaAdultDpo._Email);
+            bdAdult.Bind(this.txtProfession, ptaAdultDpo._Profession);
+            bdAdult.Bind<RegisterForm, int>(this, (form, value) => form.adultId = value, form => form.adultId, ptaAdultDpo._Adult_ID);
+            bdAdult.Bind<RegisterForm, int>(this, (form, value) => form.studentId = value, form => form.studentId, ptaAdultDpo._Student_Id);
+            bdAdult.Bind<RegisterForm, int>(this, (form, value) => form.addressId = value, form => form.addressId, ptaAdultDpo._Address_ID);
+            bdAdult.Bind<RegisterForm, int>(this, (form, value) => form.phoneId = value, form => form.phoneId, ptaAdultDpo._Phone_ID);
 
             foreach (CheckedListBoxItem item in this.clAvailability.Items)
             {
-                bdAdult.Connect<CheckedListBoxItem, bool>(item, FillCheckedListBoxItem, CollectCheckedListBoxItem, (string)item.Value);
+                bdAdult.Bind<CheckedListBoxItem, bool>(item, FillCheckedListBoxItem, CollectCheckedListBoxItem, (string)item.Value);
                 item.CheckState = CheckState.Unchecked;
             }
 
             foreach (CheckedListBoxItem item in this.clInterest.Items)
             {
-                bdAdult.Connect<CheckedListBoxItem, bool>(item, FillCheckedListBoxItem, CollectCheckedListBoxItem, (string)item.Value);
+                bdAdult.Bind<CheckedListBoxItem, bool>(item, FillCheckedListBoxItem, CollectCheckedListBoxItem, (string)item.Value);
                 item.CheckState = CheckState.Unchecked;
             }
 
-            bdAdult.Connect(this.txtOther, ptaAdultDpo._Other);
+            bdAdult.Bind(this.txtOther, ptaAdultDpo._Other);
         }
 
 

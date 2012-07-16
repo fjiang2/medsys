@@ -39,12 +39,12 @@ namespace Sys.Platform.Forms
             bind = new BindDpo<AppLinkDpo>(dpo);
             //bind.BeforeSaving += bind_BeforeSaving;
 
-            bind.Connect(txtID, AppLinkDpo._ID)
-                .Connect(txtOrderBy, AppLinkDpo._OrderBy)
-                .Connect(txtLabel, AppLinkDpo._Label)
-                .Connect(txtDescription, AppLinkDpo._Description)
-                .Connect(txtCommand, AppLinkDpo._Command)
-                .Connect(picIcon, AppLinkDpo._Icon)
+            bind.Bind(txtID, AppLinkDpo._ID)
+                .Bind(txtOrderBy, AppLinkDpo._OrderBy)
+                .Bind(txtLabel, AppLinkDpo._Label)
+                .Bind(txtDescription, AppLinkDpo._Description)
+                .Bind(txtCommand, AppLinkDpo._Command)
+                .Bind(picIcon, AppLinkDpo._Icon)
                 .Reset();
         }
 

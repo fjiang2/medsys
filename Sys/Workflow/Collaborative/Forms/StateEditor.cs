@@ -29,24 +29,24 @@ namespace Sys.Workflow.Collaborative.Forms
             StateDpo dpo =(StateDpo)state.Data;
 
             bind = new BindDpo<StateDpo>(dpo);
-            bind.Connect(txtID, StateDpo._ID);
-            bind.Connect(txtWorkflowName, StateDpo._Workflow_Name);
+            bind.Bind(txtID, StateDpo._ID);
+            bind.Bind(txtWorkflowName, StateDpo._Workflow_Name);
 
-            bind.Connect(txtStateName, StateDpo._Name);
-            bind.Connect(txtIndex, StateDpo._Index);
-            bind.Connect(txtLabel, StateDpo._Label);
-            bind.Connect(txtDescription, StateDpo._Description);
-            bind.Connect(txtDependency, StateDpo._Description);
-            bind.Connect(cblNodeType, "Value", StateDpo._Ty);
-            bind.Connect(txtOffset, StateDpo._Offset);
-            bind.Connect(txtDuration, StateDpo._Duration);
-            bind.Connect(txtMetadata, StateDpo._Metadata);
-            bind.Connect(txtDependency, StateDpo._Dependency);
-            bind.Connect(txtPreaction, StateDpo._Preaction);
-            bind.Connect(txtAction, StateDpo._Action);
-            bind.Connect(txtAfterAction, StateDpo._AfterAction);
-            bind.Connect(txtPostaction, StateDpo._Postaction);
-            bind.Connect(txtAgent, StateDpo._Agent);
+            bind.Bind(txtStateName, StateDpo._Name);
+            bind.Bind(txtIndex, StateDpo._Index);
+            bind.Bind(txtLabel, StateDpo._Label);
+            bind.Bind(txtDescription, StateDpo._Description);
+            bind.Bind(txtDependency, StateDpo._Description);
+            bind.Bind(cblNodeType, "Value", StateDpo._Ty);
+            bind.Bind(txtOffset, StateDpo._Offset);
+            bind.Bind(txtDuration, StateDpo._Duration);
+            bind.Bind(txtMetadata, StateDpo._Metadata);
+            bind.Bind(txtDependency, StateDpo._Dependency);
+            bind.Bind(txtPreaction, StateDpo._Preaction);
+            bind.Bind(txtAction, StateDpo._Action);
+            bind.Bind(txtAfterAction, StateDpo._AfterAction);
+            bind.Bind(txtPostaction, StateDpo._Postaction);
+            bind.Bind(txtAgent, StateDpo._Agent);
 
             bind.Reset();
         }

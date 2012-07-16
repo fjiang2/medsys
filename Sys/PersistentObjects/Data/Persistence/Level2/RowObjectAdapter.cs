@@ -23,11 +23,11 @@ namespace Sys.Data
         {
             this.obj = obj;
             this.transaction = obj.Transaction;
-            Connect(columnNames);
+            Bind(columnNames);
             
         }
 
-        private RowObjectAdapter Connect(Selector columnNames)
+        private RowObjectAdapter Bind(Selector columnNames)
         {
 
             foreach (FieldInfo fieldInfo in Reflex.GetPublicFields(obj))
@@ -38,7 +38,7 @@ namespace Sys.Data
                 {
                     DataField field = this.fields.Add(attribute.ColumnNameSaved, attribute.SqlDbType);
                     ColumnAdapter column = new ColumnAdapter(field);
-                    this.Connect(column);
+                    this.Bind(column);
 
                     column.Field.Identity = attribute.Identity;
                     column.Field.Primary = attribute.Primary;

@@ -23,11 +23,11 @@ namespace X12.Forms
             InitializeComponent();
             bind = new BindDpo<ElementInstanceDpo>();
 
-            bind.Connect(this.txtDescription, X12ElementInstanceDpo._Description);
-            bind.Connect(this.txtSituationalRule, X12ElementInstanceDpo._Situational_Rule);
+            bind.Bind(this.txtDescription, X12ElementInstanceDpo._Description);
+            bind.Bind(this.txtSituationalRule, X12ElementInstanceDpo._Situational_Rule);
             
             this.rgUsage.LoadEnum<UsageType>();
-            bind.Connect(this.rgUsage, X12ElementInstanceDpo._Usage);
+            bind.Bind(this.rgUsage, X12ElementInstanceDpo._Usage);
 
          
         }

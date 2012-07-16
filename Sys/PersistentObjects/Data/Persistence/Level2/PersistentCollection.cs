@@ -610,7 +610,7 @@ namespace Sys.Data
 
     //            DataTable dataTable = collection.DataTable;
 
-    //            JDataRow d = collection.Connect(columnNames);
+    //            JDataRow d = collection.Bind(columnNames);
 
     //            int i = 0;
     //            foreach (DataRow dataRow in dataTable.Rows)

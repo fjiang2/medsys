@@ -26,11 +26,11 @@ namespace Sys.Workflow.Collaborative.Forms
             this.workflow = workflow;
             
             bind = new BindDpo<WorkflowInstanceDpo>(new WorkflowInstanceDpo());
-            bind.Connect(this.tbWorkflowInstanceID, WorkflowInstanceDpo._ID);
-            bind.Connect(this.tbLabel, WorkflowInstanceDpo._Label);
-            bind.Connect(this.tbDescription, WorkflowInstanceDpo._Description);
-            bind.Connect(this.dtpWorkDate, WorkflowInstanceDpo._Work_Date);
-            bind.Connect(this.dtpCompleteDate, WorkflowInstanceDpo._Complete_Date);
+            bind.Bind(this.tbWorkflowInstanceID, WorkflowInstanceDpo._ID);
+            bind.Bind(this.tbLabel, WorkflowInstanceDpo._Label);
+            bind.Bind(this.tbDescription, WorkflowInstanceDpo._Description);
+            bind.Bind(this.dtpWorkDate, WorkflowInstanceDpo._Work_Date);
+            bind.Bind(this.dtpCompleteDate, WorkflowInstanceDpo._Complete_Date);
 
             if (workflow != null)
             {
