@@ -6,7 +6,7 @@ using System.Drawing;
 
 namespace Sys
 {
-    public interface ITreeIdentifierNode<T> where T : class
+    public interface INTreeNode<T> where T : class
     {
         int NodeId { get; }
         int NodeParentId { get; set; }

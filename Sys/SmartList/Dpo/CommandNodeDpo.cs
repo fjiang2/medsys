@@ -19,7 +19,7 @@ namespace Sys.SmartList
     }
 
 
-    class CommandNodeDpo : Configuration, ITreeNodeDpo, ITreeIdentifierNode<CommandNodeDpo>
+    class CommandNodeDpo : Configuration, ITreeDpoNode, INTreeNode<CommandNodeDpo>
     {
         public CommandNodeDpo()
         {
@@ -110,16 +110,16 @@ namespace Sys.SmartList
             return true;
         }
 
-        public List<ITreeNodeDpo> GetNodes(int parentID)
+        public List<ITreeDpoNode> GetNodes(int parentID)
         {
             //SELECT * FROM {0} WHERE ParentID = @parentID ORDER BY OrderBy
             SqlBuilder sql = new SqlBuilder().SELECT.COLUMNS().FROM(this).WHERE( new SqlExpr(_ParentID) == parentID).ORDER_BY(_OrderBy);
             DataTable dt = sql.FillDataTable();
 
-            List<ITreeNodeDpo> list = new List<ITreeNodeDpo>();
+            List<ITreeDpoNode> list = new List<ITreeDpoNode>();
             foreach (DataRow dataRow in dt.Rows)
             {
-                ITreeNodeDpo dpo = new CommandNodeDpo(dataRow);
+                ITreeDpoNode dpo = new CommandNodeDpo(dataRow);
                 list.Add(dpo);
             }
 
@@ -135,7 +135,7 @@ namespace Sys.SmartList
 
 
 
-        public List<ITreeNodeDpo> EntireCollection
+        public List<ITreeDpoNode> EntireCollection
         {
             get
             {
@@ -147,10 +147,10 @@ namespace Sys.SmartList
                 SqlBuilder sql = new SqlBuilder().SELECT.COLUMNS().FROM(this).ORDER_BY(_OrderBy);
                 DataTable dt = sql.FillDataTable();
 
-                List<ITreeNodeDpo> list = new List<ITreeNodeDpo>();
+                List<ITreeDpoNode> list = new List<ITreeDpoNode>();
                 foreach (DataRow dataRow in dt.Rows)
                 {
-                    ITreeNodeDpo dpo = new CommandNodeDpo(dataRow);
+                    ITreeDpoNode dpo = new CommandNodeDpo(dataRow);
                     list.Add(dpo);
                 }
 

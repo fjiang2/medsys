@@ -43,7 +43,7 @@
             this.toolStripButtonSave = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonCreateMenuItem = new System.Windows.Forms.ToolStripButton();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.treeMenu = new Sys.ViewManager.Forms.TreeDpcView();
+            this.treeMenu = new Sys.ViewManager.Forms.TreeDpoView();
             this.treeForm = new System.Windows.Forms.TreeView();
             this.label6 = new System.Windows.Forms.Label();
             this.txtID = new System.Windows.Forms.TextBox();
@@ -432,7 +432,7 @@
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton toolStripButtonSave;
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private Sys.ViewManager.Forms.TreeDpcView treeMenu;
+        private Sys.ViewManager.Forms.TreeDpoView treeMenu;
         private System.Windows.Forms.TreeView treeForm;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox txtID;

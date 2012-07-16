@@ -8,14 +8,14 @@ using Sys.Data;
 
 namespace Sys.ViewManager.Forms
 {
-    public delegate string DisplayTreeDpoNode(ITreeNodeDpo dpo);
+    public delegate string DisplayTreeDpoNode(ITreeDpoNode dpo);
 
 
     public class TreeDpoNode : TreeNode
     {
-        private ITreeNodeDpo dpo;
+        private ITreeDpoNode dpo;
 
-        public TreeDpoNode(ITreeNodeDpo dpo, DisplayTreeDpoNode d)
+        public TreeDpoNode(ITreeDpoNode dpo, DisplayTreeDpoNode d)
         {
             this.dpo = dpo;
             this.Text =d(dpo);
@@ -29,11 +29,11 @@ namespace Sys.ViewManager.Forms
             this.Nodes.Add(dataRowTreeNode);
         }
 
-        public ITreeNodeDpo Dpo
+        public ITreeDpoNode Dpo
         {
             get 
             {
-                return (ITreeNodeDpo)this.dpo; 
+                return (ITreeDpoNode)this.dpo; 
             }
         }
 

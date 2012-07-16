@@ -10,7 +10,7 @@ using Sys.ViewManager.Forms;
 namespace Sys.ViewManager.Security
 {
 
-    public class UserMenuItem : Dpo.UserMenuDpo, ITreeNodeDpo , ITreeIdentifierNode<UserMenuItem>
+    public class UserMenuItem : Dpo.UserMenuDpo, ITreeDpoNode , INTreeNode<UserMenuItem>
     {
         int imageIndex = -1;
 
@@ -134,7 +134,7 @@ namespace Sys.ViewManager.Security
             return true;
         }
 
-        public List<ITreeNodeDpo> GetNodes(int parentID)
+        public List<ITreeDpoNode> GetNodes(int parentID)
         {
             //@"SELECT ID, ParentID, Label FROM {0} WHERE Ty=0 AND Controlled=1 ORDER BY orderBy";
             SqlBuilder sql = new SqlBuilder()
@@ -146,10 +146,10 @@ namespace Sys.ViewManager.Security
                 .ORDER_BY(_OrderBy);
             DataTable dt = sql.FillDataTable();
 
-            List<ITreeNodeDpo> list = new List<ITreeNodeDpo>();
+            List<ITreeDpoNode> list = new List<ITreeDpoNode>();
             foreach (DataRow dataRow in dt.Rows)
             {
-                ITreeNodeDpo dpo = new UserMenuItem(dataRow);
+                ITreeDpoNode dpo = new UserMenuItem(dataRow);
                 list.Add(dpo);
             }
 

@@ -230,13 +230,13 @@
     <Compile Include="Forms\Controls\LogHistoryControl.Designer.cs">
       <DependentUpon>LogHistoryControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Tree\TreeDpoNode.cs" />
-    <Compile Include="Forms\Tree\ITreeNodeDpo.cs" />
-    <Compile Include="Forms\Tree\TreeDpcView.cs">
+    <Compile Include="Forms\TreeDpoView\TreeDpoNode.cs" />
+    <Compile Include="Forms\TreeDpoView\ITreeDpoNode.cs" />
+    <Compile Include="Forms\TreeDpoView\TreeDpoView.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Forms\Tree\TreeRowNode.cs" />
-    <Compile Include="Forms\Tree\TreeRowNodeEventArgs.cs" />
+    <Compile Include="Forms\TreeRowView\TreeRowNode.cs" />
+    <Compile Include="Forms\TreeRowView\TreeRowNodeEventArgs.cs" />
     <Compile Include="Manager\FormDockManager.cs" />
     <Compile Include="WinForm\BaseUserControl.cs">
       <SubType>UserControl</SubType>
@@ -329,7 +329,7 @@
     <Compile Include="Forms\Bind\JRadioGroup.cs" />
     <Compile Include="Forms\Bind\JTextBox.cs" />
     <Compile Include="Forms\Bind\JTimeEdit.cs" />
-    <Compile Include="Forms\Tree\JDataTableTreeView.cs">
+    <Compile Include="Forms\TreeRowView\TreeRowView.cs">
     </Compile>
     <Compile Include="Forms\Bind\JWinControl.cs" />
     <Compile Include="WinForm\BaseForm.cs">

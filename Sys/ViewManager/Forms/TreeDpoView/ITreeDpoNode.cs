@@ -7,7 +7,7 @@ using Sys;
 
 namespace Sys.ViewManager.Forms
 {
-    public interface ITreeNodeDpo 
+    public interface ITreeDpoNode 
     {
         int NodeId { get; }
         int NodeParentId { get; set; }
@@ -25,6 +25,6 @@ namespace Sys.ViewManager.Forms
         /// </summary>
         /// <param name="parentID"></param>
         /// <returns></returns>
-        List<ITreeNodeDpo> GetNodes(int parentID);
+        List<ITreeDpoNode> GetNodes(int parentID);
     }
 }

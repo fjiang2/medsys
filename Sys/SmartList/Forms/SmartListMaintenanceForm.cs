@@ -21,7 +21,7 @@ namespace Sys.SmartList.Forms
 {
     public partial class SmartListMaintenanceForm : BaseForm
     {
-        private TreeDpcView treeView = new TreeDpcView();
+        private TreeDpoView treeView = new TreeDpoView();
 
         BindDpo<CommandNodeDpo> binding = null;
 

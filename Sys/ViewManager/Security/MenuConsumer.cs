@@ -38,7 +38,7 @@ namespace Sys.ViewManager.Security
         private Bar menuBar;
 
         ImageList imageList = new ImageList();
-        IdentifierTree<UserMenuItem> tree;
+        NTree<UserMenuItem> tree;
         List<UserMenuItem> items;
 
         private int id = 0;
@@ -112,7 +112,7 @@ namespace Sys.ViewManager.Security
             }
 
          
-            this.tree = new IdentifierTree<UserMenuItem>(items, 0);
+            this.tree = new NTree<UserMenuItem>(items, 0);
 			eventHandlerInstance = new MenuRuntime(this,  this.mainForm);
         }
 

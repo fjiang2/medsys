@@ -55,6 +55,9 @@ namespace Sys
             }
         }
 
+        /// <summary>
+        /// Node position in sibling nodes, index of first node = 0
+        /// </summary>
         public int Index
         {
             get { return this.index; }

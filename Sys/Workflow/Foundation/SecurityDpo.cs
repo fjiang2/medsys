@@ -8,7 +8,7 @@ using Sys.ViewManager.Forms;
 
 namespace Sys.Workflow
 {
-    public class SecurityDpo : Dpo.wfSecurity, ITreeNodeDpo, ITreeIdentifierNode<SecurityDpo>
+    public class SecurityDpo : Dpo.wfSecurity, ITreeDpoNode, INTreeNode<SecurityDpo>
     {
 
         public SecurityDpo()
@@ -78,7 +78,7 @@ namespace Sys.Workflow
             return true;
         }
 
-        public List<ITreeNodeDpo> GetNodes(int parentID)
+        public List<ITreeDpoNode> GetNodes(int parentID)
         {
             return null;
         }
@@ -86,7 +86,7 @@ namespace Sys.Workflow
         #endregion
 
 
-        public List<ITreeNodeDpo> EntireCollection
+        public List<ITreeDpoNode> EntireCollection
         {
             get
             {
@@ -106,10 +106,10 @@ namespace Sys.Workflow
                     Sys.Workflow.Dpo.wfStateDpo.TABLE_NAME
                     );
 
-                List<ITreeNodeDpo> list = new List<ITreeNodeDpo>();
+                List<ITreeDpoNode> list = new List<ITreeDpoNode>();
                 foreach (DataRow dataRow in dt.Rows)
                 {
-                    ITreeNodeDpo dpo = new SecurityDpo(dataRow);
+                    ITreeDpoNode dpo = new SecurityDpo(dataRow);
                     list.Add(dpo);
                 }
 

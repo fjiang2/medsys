@@ -5,13 +5,17 @@ using System.Text;
 
 namespace Sys
 {
-    public class IdentifierTree<T> : Tree<T> where T : class
+    /// <summary>
+    /// Numeric Tree, each node has ID(unique integer number), its parent ID, and body(Item)
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public class NTree<T> : Tree<T> where T : class
     {
 
-        private IEnumerable<ITreeIdentifierNode<T>> collection;
+        private IEnumerable<INTreeNode<T>> collection;
         private int parentID;
 
-        public IdentifierTree(IEnumerable<ITreeIdentifierNode<T>> collection, int parentID)
+        public NTree(IEnumerable<INTreeNode<T>> collection, int parentID)
         {
             this.collection = collection;
             this.parentID = parentID;
@@ -21,7 +25,7 @@ namespace Sys
 
         private void BuildTree(TreeNodeCollection<T> nodes, int parentID)
         {
-            foreach (ITreeIdentifierNode<T> node in collection)
+            foreach (INTreeNode<T> node in collection)
             {
                 if (node.NodeParentId != parentID)
                     continue;
@@ -36,7 +40,7 @@ namespace Sys
 
         public override string ToString()
         {
-            return string.Format("IdentifierTree<{0}>(Count={1})", typeof(T).Name, this.Nodes.Count);
+            return string.Format("NTree<{0}>(Count={1})", typeof(T).Name, this.Nodes.Count);
         }
     }
 }
