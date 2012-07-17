@@ -175,7 +175,7 @@ namespace Sys.Platform.DataImporter
 
             if (result is Exception)
             {
-                this.ErrorMessage = (result as Exception).ToString();
+                this.ShowError((result as Exception).ToString());
                 return;
             }
 

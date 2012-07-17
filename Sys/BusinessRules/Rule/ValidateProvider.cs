@@ -235,7 +235,7 @@ namespace Sys.BusinessRules
             List<Message> list = new List<Message>();
             foreach (RuleEvent ruleEvent in BrokenRules)
             { 
-                Message message = new Message(ruleEvent.Message);
+                Message message = new Message(MessageLevel.None, ruleEvent.Message);
                 
                 if(ruleEvent.ErrorCode != -1 )
                     message.Code = ruleEvent.ErrorCode;

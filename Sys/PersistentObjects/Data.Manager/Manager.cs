@@ -83,7 +83,7 @@ namespace Sys.Data.Manager
 
                 if (!packing)
                 {
-                    messages.Add(new Message(string.Format("Table {0} is empty.", packing.TableName)));
+                    messages.Add(Message.Information(string.Format("Table {0} is empty.", packing.TableName)));
                 }
                 else
                 {
@@ -92,7 +92,7 @@ namespace Sys.Data.Manager
                     sw.Write(packing.ToString());
                     sw.Close();
 
-                     messages.Add(new Message(string.Format("Table {0} packed into {1}.", packing.TableName, fileName)));
+                     messages.Add(Message.Information(string.Format("Table {0} packed into {1}.", packing.TableName, fileName)));
                 }
             }
 

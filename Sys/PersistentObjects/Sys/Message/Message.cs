@@ -17,12 +17,6 @@ namespace Sys
         /// </summary>
         public object sender;
 
-        public Message(string description)
-        {
-            this.Code = 0;
-            this.description = description;
-            this.Level = MessageLevel.None;
-        }
 
         public Message(MessageLevel level, string description)
             : base()
@@ -63,6 +57,57 @@ namespace Sys
                 builder.AppendFormat("{0} @ {1}", this.description, this.Location);
 
             return builder.ToString();
+        }
+
+
+
+        public static Message Error(string description)
+        {
+            return Error(0, description, "");
+        }
+
+        public static Message Error(string description, string location)
+        {
+            return Error(0, description, location);
+        }
+
+        public static Message Error(int code, string description, string location)
+        {
+            Message message = new Message(MessageLevel.Error, description);
+            message.Code = code;
+            message.Location = location;
+            return message;
+        }
+
+        public static Message Warning(string description, string location)
+        {
+            return Warning(0, description, location);
+        }
+
+        public static Message Warning(int code, string description, string location)
+        {
+            Message message = new Message(MessageLevel.Warning, description);
+            message.Code = code;
+            message.Location = location;
+            return message;
+        }
+
+        public static Message Information(string description)
+        {
+            return Information(0, description, "");
+        }
+
+        public static Message Information(string description, string location)
+        {
+            return Information(0, description, location);
+        }
+
+        public static Message Information(int code, string description, string location)
+        {
+            Message message = new Message(MessageLevel.Information, description);
+            message.Code = code;
+            message.Location = location;
+            return message;
         }
     }
 }

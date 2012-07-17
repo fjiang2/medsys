@@ -184,13 +184,13 @@ namespace Sys.Data.Manager
 
             if (dpo.CreateTable())
             {
-                messages.Add(new Message(string.Format("Table {0} created.", dpo.TableName)));
+                messages.Add(Message.Information(string.Format("Table {0} created.", dpo.TableName)));
 
                 if (tableId == -1)  //register new table to dictionary
                     tableId = dpo.RegisterEntireTable();
             }
             else
-                messages.Add(new Message(string.Format("Table {0} exists, cannot be created.", dpo.TableName)));
+                messages.Add(Message.Information(string.Format("Table {0} exists, cannot be created.", dpo.TableName)));
 
             return messages;
 
