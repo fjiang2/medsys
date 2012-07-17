@@ -161,7 +161,7 @@ namespace Sys.Messaging.Forms
 			XmppCon.OnClose			    += new ObjectHandler(XmppCon_OnClose);
 			XmppCon.OnError			    += new ErrorHandler(XmppCon_OnError);
 			XmppCon.OnPresence		    += new PresenceHandler(XmppCon_OnPresence);
-			XmppCon.OnMessage		    += new MessageHandler(XmppCon_OnMessage);
+            XmppCon.OnMessage           += new agsXMPP.protocol.client.MessageHandler(XmppCon_OnMessage);
 			XmppCon.OnIq			    += new IqHandler(XmppCon_OnIq);
 			XmppCon.OnAuthError		    += new XmppElementHandler(XmppCon_OnAuthError);
             XmppCon.OnSocketError += new ErrorHandler(XmppCon_OnSocketError);

@@ -62,7 +62,6 @@ namespace PTA.Forms
 
             bdStudent = new BindDpo<ptaStudentDpo>(student);
             bdStudent.Bind<RegisterForm, int>(this, (form, value) => form.studentId = value, form => form.studentId, ptaStudentDpo._Student_ID);
-            bdStudent.Bind<RegisterForm, int>(this, (form, value) => form.adultId = value, form => form.adultId, ptaStudentDpo._Adult_ID);
             bdStudent.Bind<RegisterForm, int>(this, (form, value) => form.addressId = value, form => form.addressId, ptaStudentDpo._Address_ID);
             bdStudent.Bind(this.txtGrade, ptaStudentDpo._Grade);
 
@@ -71,7 +70,6 @@ namespace PTA.Forms
             bdAdult.Bind(this.txtEmail, ptaAdultDpo._Email);
             bdAdult.Bind(this.txtProfession, ptaAdultDpo._Profession);
             bdAdult.Bind<RegisterForm, int>(this, (form, value) => form.adultId = value, form => form.adultId, ptaAdultDpo._Adult_ID);
-            bdAdult.Bind<RegisterForm, int>(this, (form, value) => form.studentId = value, form => form.studentId, ptaAdultDpo._Student_Id);
             bdAdult.Bind<RegisterForm, int>(this, (form, value) => form.addressId = value, form => form.addressId, ptaAdultDpo._Address_ID);
             bdAdult.Bind<RegisterForm, int>(this, (form, value) => form.phoneId = value, form => form.phoneId, ptaAdultDpo._Home_Phone_ID);
 

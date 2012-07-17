@@ -23,8 +23,8 @@ namespace Sys.ViewManager.Forms
             this.ReadOnly = true;
 
             this.manager = new MessageManager(this);
-            manager.MessageChanged += new MessageManager.MessageHandler(manager_MessageChanged);
-            manager.MessageCleared += new EventHandler(manager_MessageCleared);
+            manager.Comitted += new EventHandler(manager_Committed);
+            manager.Cleared += new EventHandler(manager_Cleared);
         }
 
         public void ActivateDockPanel()
@@ -37,16 +37,16 @@ namespace Sys.ViewManager.Forms
         }
 
 
-        void manager_MessageCleared(object sender, EventArgs e)
+        void manager_Cleared(object sender, EventArgs e)
         {
             this.Text = "";
         }
 
-        private void manager_MessageChanged(object sender, MessageEventArgs e)
+        private void manager_Committed(object sender, EventArgs e)
         {
             StringBuilder builder = new StringBuilder();
-
-            foreach (Message item in e.Messages)
+            var messages = ((MessageManager)sender).Messages;
+            foreach (Message item in messages)
             {
                 builder.AppendLine(item.Description);
             }

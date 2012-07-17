@@ -5,13 +5,16 @@ using System.Text;
 
 namespace Sys
 {
+    public delegate void MessageHandler(object sender, MessageEventArgs e);
+
     public class MessageEventArgs : EventArgs
     {
-        public readonly IEnumerable<Message> Messages;
+        public readonly Message Message;
 
-        public MessageEventArgs(IEnumerable<Message> messages)
+        public MessageEventArgs(Message message)
         {
-            this.Messages = messages;
+            this.Message = message;
         }
     }
+
 }
