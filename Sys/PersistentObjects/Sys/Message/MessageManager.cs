@@ -12,14 +12,15 @@ namespace Sys
         void ActivateDockPanel();
     }
 
+
     public class MessageManager
     {
+   
         List<Message> messages = new List<Message>();
 
-        public delegate void MessageHandler(object sender, MessageEventArgs e);
-
-        public event MessageHandler MessageChanged;
-        public event EventHandler MessageCleared;
+        public event EventHandler Comitted;
+        public event EventHandler Cleared;
+        public event MessageHandler MessageClicked;
 
         IDockable dock;
 
@@ -30,8 +31,8 @@ namespace Sys
 
         public void Commit()
         {
-            if (MessageChanged != null)
-                MessageChanged(this, new MessageEventArgs(this.messages));
+            if (Comitted != null)
+                Comitted(this, new EventArgs());
 
             dock.ActivateDockPanel();
         }
@@ -40,8 +41,14 @@ namespace Sys
         public void Clear()
         {
             messages.Clear();
-            if (MessageCleared != null)
-                MessageCleared(this, new EventArgs());
+            if (Cleared != null)
+                Cleared(this, new EventArgs());
+        }
+
+        public void OnMessageClicked(Message message)
+        {
+            if (MessageClicked != null)
+                MessageClicked(this, new MessageEventArgs(message));
         }
 
         public Message Error(string description)
@@ -123,15 +130,18 @@ namespace Sys
             this.messages.AddRange(messages);
         }
 
-        public int Count
+       
+        public IEnumerable<Message> Messages
         {
-            get { return this.messages.Count; }
+            get { return this.messages; }
         }
 
         public override string ToString()
         {
             return string.Format("{0} error(s) found",this.messages.Where(message => message.Level == MessageLevel.Error).Count());
         }
+
+
     }
 
    

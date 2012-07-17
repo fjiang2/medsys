@@ -23,7 +23,7 @@ namespace Sys.ViewManager.Forms
 {
 
 
-    public delegate void DataRowSelectedEventHandler(object sender, DataRowSelectedEventArgs e);
+    public delegate void RowSelectedEventHandler(object sender, DataRowSelectedEventArgs e);
 
     public partial class JGridView : UserControl
     {
@@ -34,8 +34,8 @@ namespace Sys.ViewManager.Forms
 
         public bool ContextMenuEnabled = true;
 
-        public event DataRowSelectedEventHandler RowMouseClick;
-        public event DataRowSelectedEventHandler RowMouseDoubleClick;
+        public event RowSelectedEventHandler RowMouseClick;
+        public event RowSelectedEventHandler RowMouseDoubleClick;
         
         public JGridView()
         {

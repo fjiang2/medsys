@@ -16,7 +16,7 @@ namespace Sys.ViewManager.Forms
 {
     public partial class JAssociator2 : UserControl
     {
-        public event DataRowSelectedEventHandler SelectorChanged;
+        public event RowSelectedEventHandler SelectorChanged;
         public const string Flag = "[X]";
 
         public string WorkflowColumnName;
@@ -40,8 +40,8 @@ namespace Sys.ViewManager.Forms
             this.checkEdit = new RepositoryItemCheckEdit();
 
 
-            gridView1.RowMouseClick += new DataRowSelectedEventHandler(gridView1_MouseClick);
-            gridView2.RowMouseClick += new DataRowSelectedEventHandler(gridView2_MouseClick);
+            gridView1.RowMouseClick += new RowSelectedEventHandler(gridView1_MouseClick);
+            gridView2.RowMouseClick += new RowSelectedEventHandler(gridView2_MouseClick);
             checkEdit.CheckedChanged += new EventHandler(checkEdit_CheckedChanged);  
 
         }

@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 7/16/2012 4:01:31 PM
+//   by devel at 7/17/2012 8:43:36 AM
 //
 
 using System;
@@ -14,7 +14,7 @@ using Sys.Data.Manager;
 
 namespace PTA.Dpo
 {
-    [Revision(4)]
+    [Revision(5)]
     [Table("ptaAdults", Level.Application, Pack = false)]    //Primary Keys = Adult_ID;  Identity = ;
     public class ptaAdultDpo : DPObject
     {
@@ -122,7 +122,6 @@ namespace PTA.Dpo
         #region CONSTANT
 
         public const string _Adult_ID = "Adult_ID";
-        public const string _Student_Id = "Student_Id";
         public const string _Address_ID = "Address_ID";
         public const string _Home_Phone_ID = "Home_Phone_ID";
         public const string _Work_Phone_ID = "Work_Phone_ID";

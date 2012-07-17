@@ -272,8 +272,14 @@ namespace Sys.Platform.Forms
             string className = this.txtClass.Text;
             ClassTableName tname = new ClassTableName(DatabaseName, TableName);
             ClassName cname = new ClassName(Namespace, Modifier, className);
-            tname.SetLevel(this.Level, this.Pack); 
+            tname.SetLevel(this.Level, this.Pack);
 
+            if (className == "" || TableName == "" || Namespace == "")
+            {
+                this.ErrorMessage = "class or namespace name is not defined";
+                
+                return;
+            }
             try
             {
                 if (tname.GenTableDpo(Path, this.chkMustGenerate.Checked, cname, true))

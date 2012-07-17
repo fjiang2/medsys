@@ -9,11 +9,15 @@ using System.Windows.Forms;
 using Sys.Data;
 using Sys;
 using DevExpress.XtraBars.Docking;
+using DevExpress.XtraGrid.Views.Grid.ViewInfo;
+using DevExpress.XtraGrid.Columns;
+
 
 namespace Sys.ViewManager.Forms
 {
     public partial class ErrorListControl : UserControl, IDockable
     {
+        const string MESSAGE_COLUMN = "Object";
         MessageManager manager;
         DataTable dt;
 
@@ -26,12 +30,14 @@ namespace Sys.ViewManager.Forms
 
             this.dt = new DataTable();
             this.manager = new MessageManager(this);
+
             
             dt.Columns.Add(new DataColumn("ErrorTy", typeof(int)));
             dt.Columns.Add(new DataColumn("ID", typeof(int)));
             dt.Columns.Add(new DataColumn("Description", typeof(string)));
             dt.Columns.Add(new DataColumn("Location", typeof(string)));
 
+            dt.Columns.Add(new DataColumn(MESSAGE_COLUMN, typeof(object)));
 
             imageList1.Images.Add(txtMessages.Image);
             imageList1.Images.Add(txtWarnings.Image);
@@ -39,8 +45,22 @@ namespace Sys.ViewManager.Forms
 
             gridControl1.DataSource = dt;
 
-            manager.MessageChanged += new MessageManager.MessageHandler(manager_MessageChanged);
-            manager.MessageCleared += new EventHandler(manager_MessageCleared);
+            manager.Comitted += new EventHandler(manager_Committed);
+            manager.Cleared += new EventHandler(manager_Cleared);
+
+            this.gridControl1.MouseDoubleClick += new MouseEventHandler(gridControl1_MouseDoubleClick);
+        }
+
+        void gridControl1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            DataRow dataRow = DevEx.Grid.GetGridClickEx(this.gridView1, sender);
+            if (dataRow == null)
+                return;
+
+            Message selectedMessage = manager.Messages.FirstOrDefault(message => message == dataRow[MESSAGE_COLUMN]);
+
+            if (selectedMessage != null)
+                this.manager.OnMessageClicked(selectedMessage);
         }
 
         public void ActivateDockPanel()
@@ -52,19 +72,20 @@ namespace Sys.ViewManager.Forms
             }
         }
 
-        void manager_MessageCleared(object sender, EventArgs e)
+        void manager_Cleared(object sender, EventArgs e)
         {
             this.dt.Rows.Clear();
             this.dt.AcceptChanges();
         }
 
-        private void manager_MessageChanged(object sender, MessageEventArgs e)
+        private void manager_Committed(object sender, EventArgs e)
         {
             int errorCount = 0;
             int warningCount = 0;
             int informationCount = 0;
+            var messages = ((MessageManager)sender).Messages;
 
-            foreach (Message item in e.Messages)
+            foreach (Message item in messages)
             {
                 switch (item.Level)
                 {
@@ -91,6 +112,7 @@ namespace Sys.ViewManager.Forms
                 row[2] = item.Description;
                 row[3] = item.Location;
 
+                row[MESSAGE_COLUMN] = item;
                 dt.Rows.Add(row);
             }
 
