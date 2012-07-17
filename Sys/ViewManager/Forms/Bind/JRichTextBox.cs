@@ -37,6 +37,7 @@ namespace Sys.ViewManager.Forms
         [System.Runtime.InteropServices.DllImport("user32")]
         public static extern int GetCaretPos(ref Point lpPoint);
 
+    
         private static int GetCorrection(RichTextBox e, int index)
         {
             Point pt1 = Point.Empty;
@@ -80,6 +81,39 @@ namespace Sys.ViewManager.Forms
 
             return col;
         }
-        }
+
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        public static extern int SendMessage(IntPtr hWnd, uint Msg, int wParam, int lParam);
+
+        private const uint EM_SETSEL = 0xB1;
+        private const uint EM_GETLINECOUNT = 0xBA;
+        private const uint EM_LINEINDEX = 0xBB;
+
+        /// <summary>
+        /// Zero based line number
+        /// </summary>
+        /// <param name="rtb"></param>
+        /// <param name="line"></param>
+        public static void GotoLine(RichTextBox rtb, int line)
+        {
+            int chrsToStart;
+            int chrsToEnd;
+            int lineCount;
+
+            //Get the line count in the RichTextBox
+            lineCount = SendMessage(rtb.Handle, EM_GETLINECOUNT, (int)0, (int)0);
+
+            //Make sure line# isn't greater than total lines
+            if (line > lineCount - 1)
+                return;
+
+            chrsToStart = SendMessage(rtb.Handle, EM_LINEINDEX, line, (int)0);
+            chrsToEnd = SendMessage(rtb.Handle, EM_LINEINDEX,  line + 1 , (int)0);
+            rtb.Focus();
+
+            SendMessage(rtb.Handle, EM_SETSEL, chrsToStart, chrsToEnd);
+        }        
+
+    }
     
 }
