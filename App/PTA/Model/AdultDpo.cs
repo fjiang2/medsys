@@ -9,49 +9,59 @@ using PTA.Dpo;
 
 namespace PTA
 {
-    class AdultDpo : ptaAdultDpo
+    public class AdultDpo : ptaAdultDpo
     {
-        PersonDpo person;
-        AddressDpo address;
-        PhoneDpo phone;
+        PersonDpo person = new PersonDpo();
+        AddressDpo address = new AddressDpo();
+        PhoneDpo phone = new PhoneDpo();
+
+        List<StudentDpo> students = new List<StudentDpo>();
 
         public AdultDpo()
         {
-            this.person = new PersonDpo();
-            this.address = new AddressDpo();
-            this.phone = new PhoneDpo();
-
         }
 
         public AdultDpo(DataRow dataRow)
             :base(dataRow)
         {
-            this.person = new PersonDpo(dataRow);
-            this.address = new AddressDpo(dataRow);
-            this.phone = new PhoneDpo(dataRow);
         }
 
         public AdultDpo(int adult_id)
             :base(adult_id)
         {
-            this.person = new PersonDpo(adult_id);
-            this.address = new AddressDpo(this.Address_ID);
-            
-             this.phone = new PhoneDpo(this.Home_Phone_ID);
         }
 
-
-        public StudentDpo Student
+        public override DataRow Load()
         {
-            get
-            { 
+            DataRow row = base.Load();
+
+            if (this.Exists)
+            {
+                this.person = new PersonDpo(this.Adult_ID);
+                this.address = new AddressDpo(this.Address_ID);
+                this.phone = new PhoneDpo(this.Home_Phone_ID);
+
+
                 TableReader<PersonRelationshipDpo> reader = new TableReader<PersonRelationshipDpo>(
-                    new ColumnValue(PersonRelationshipDpo._Person_ID1, this.Adult_ID), 
-                    new ColumnValue(PersonRelationshipDpo._Relationship_Enum, RelationshipEnum.Daughter)
-                    );
-                //PersonRelationshipDpo relation = new PersonRelationshipDpo(this.Adult_ID, Re
-                return null;
+                     new ColumnValue(PersonRelationshipDpo._Person_ID2, this.Adult_ID)
+                     );
+
+                var relations = reader.ToDPList<PersonRelationshipDpo>();
+
+                foreach (var relation in relations)
+                {
+                    var student = new StudentDpo(relation.Person_ID1);
+                    students.Add(student);
+
+                }
             }
+
+            return row;
+        }
+
+        public IEnumerable<StudentDpo> Students
+        {
+            get   { return students;  }
         }
 
         public PersonDpo Person
@@ -71,17 +81,37 @@ namespace PTA
 
         public override DataRow Save()
         {
-            DataRow row = base.Save();
-            
-            this.person.Person_ID = this.Adult_ID;
-            this.phone.Phone_ID = this.Home_Phone_ID;
-            this.address.Address_ID = this.Address_ID;
+            if (this.Exists)
+            {
+                this.person.Person_ID = this.Adult_ID;
+                this.person.Save();
 
-            this.person.Save();
-            this.address.Save();
-            this.phone.Save();
+                this.phone.Phone_ID = this.Home_Phone_ID;
+                this.phone.Save();
 
-            return row;
+                this.address.Address_ID = this.Address_ID;
+                this.address.Save();
+            }
+            else
+            {
+                this.person.Save();
+                this.Adult_ID = person.Person_ID;
+
+                if (this.phone != null)
+                {
+                    this.phone.Save();
+                    this.Home_Phone_ID = this.phone.Phone_ID;
+                }
+
+                if (this.address != null)
+                {
+                    this.address.Save();
+                    this.Address_ID = this.address.Address_ID;
+                }
+            }
+
+
+            return base.Save();
         }
 
 
