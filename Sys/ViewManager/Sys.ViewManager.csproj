@@ -170,7 +170,7 @@
     <Compile Include="Forms\HtmlEditor.Designer.cs">
       <DependentUpon>HtmlEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Utils\RichText.cs" />
+    <Compile Include="WinForm\RichText.cs" />
     <Compile Include="Security\Setting\HookTree.cs" />
     <Compile Include="Utils\Function.cs" />
     <Compile Include="Forms\LookUp.cs">

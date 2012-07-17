@@ -26,11 +26,7 @@ namespace Sys.Platform.Forms
         private void richTextBox1_SelectionChanged(object sender, EventArgs e)
         {
             RichTextBox rtb = (RichTextBox)sender;
-            int line = JRichTextBox.Line(rtb);
-            int col = JRichTextBox.Column(rtb);
-            int pos = rtb.SelectionStart;
-
-            this.statusStrip1.Items[0].Text = "Ln " + line + ", Col " + col;
+            this.statusStrip1.Items[0].Text = new RichText(rtb).ToString();
 
         }
 

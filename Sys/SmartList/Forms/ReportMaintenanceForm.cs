@@ -32,12 +32,7 @@ namespace Sys.SmartList.Forms
         private void JRichTextBoxPostionDelegate(object sender, System.EventArgs e)
         {
             RichTextBox rtb = (RichTextBox)sender;
-            int line = JRichTextBox.Line(rtb);
-            int col = JRichTextBox.Column(rtb);
-            int pos = rtb.SelectionStart;
-
-            this.InformationMessage = "Line " + line + ", Col " + col +
-                     ", Position " + pos;
+            this.InformationMessage = new RichText(rtb).ToString(); 
         }
 
         private void btnBuildReport_Click(object sender, EventArgs e)

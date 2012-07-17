@@ -67,11 +67,7 @@ namespace Sys.Workflow.Collaborative.Forms
         private void richTextBox1_SelectionChanged(object sender, EventArgs e)
         {
             RichTextBox rtb = (RichTextBox)sender;
-            int line = JRichTextBox.Line(rtb);
-            int col = JRichTextBox.Column(rtb);
-            int pos = rtb.SelectionStart;
-
-            this.InformationMessage  = "Ln " + line + ", Col " + col;
+            this.InformationMessage = new RichText(rtb).ToString();
 
         }
 
