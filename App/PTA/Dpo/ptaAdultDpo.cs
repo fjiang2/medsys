@@ -22,7 +22,6 @@ namespace PTA.Dpo
 #pragma warning disable
 
         [Column(_Adult_ID, SqlDbType.Int, Primary = true)]                                        public int Adult_ID;          //int(4) not null
-        [Column(_Student_Id, SqlDbType.Int, Nullable = true)]                                     public int? Student_Id;       //int(4) null
         [Column(_Address_ID, SqlDbType.Int)]                                                      public int Address_ID;        //int(4) not null
         [Column(_Home_Phone_ID, SqlDbType.Int)]                                                   public int Home_Phone_ID;     //int(4) not null
         [Column(_Work_Phone_ID, SqlDbType.Int, Nullable = true)]                                  public int? Work_Phone_ID;    //int(4) null
