@@ -42,7 +42,9 @@ namespace X12.Forms
 
             treeView1.AfterSelect += new TreeViewEventHandler(treeView1_AfterSelect);
             treeView1.MouseClick += new MouseEventHandler(treeView1_MouseClick);
+         
         }
+
 
 
 
@@ -407,6 +409,28 @@ namespace X12.Forms
                 this.x12.RemoveLine(line);
                 this.Init(this.x12);
             }
+        }
+
+
+
+    
+        private void X12FileEditor_Load(object sender, EventArgs e)
+        {
+            base.MessageManager.MessageClicked += new MessageHandler(MessageManager_MessageClicked);
+        }
+
+        private void X12FileEditor_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            base.MessageManager.MessageClicked -= MessageManager_MessageClicked;
+        }
+
+        void MessageManager_MessageClicked(object sender, MessageEventArgs e)
+        {
+            tabControl1.SelectedTab = tabPageX12;
+            
+            int line = int.Parse(e.Message.Location.Substring(5));
+            this.segmentControl1.GotoLine(line); 
+
         }
 
 

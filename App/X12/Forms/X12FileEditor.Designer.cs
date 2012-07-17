@@ -234,6 +234,8 @@
             this.Controls.Add(this.toolStrip1);
             this.Name = "X12FileEditor";
             this.Text = "X12 File Editor";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.X12FileEditor_FormClosed);
+            this.Load += new System.EventHandler(this.X12FileEditor_Load);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);

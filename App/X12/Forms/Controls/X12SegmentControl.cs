@@ -162,6 +162,27 @@ namespace X12.Forms
             }
         }
 
+        public void GotoLine(int line)
+        {
+            Sys.ViewManager.Forms.JRichTextBox.GotoLine(richTextBox1, line - 1);
+            return;
+
+            //string text = this.richTextBox1.Text;
+
+            //int start = 0;
+            //while (line > 1)
+            //{
+            //    start = text.IndexOf("\n", start) + 1;
+            //    line --;
+            //}
+
+            //int end = text.IndexOf("\n", start);
+            //this.richTextBox1.SelectionStart = start;
+            //this.richTextBox1.SelectionLength = end - start;
+            //this.richTextBox1.SelectionColor = Color.Red;
+            //this.richTextBox1.SelectionLength = 0;
+
+        }
 
     }
 }
