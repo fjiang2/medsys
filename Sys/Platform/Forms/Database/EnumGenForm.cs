@@ -264,7 +264,7 @@ namespace Sys.Platform.Forms
             }
             catch (Exception ex)
             {
-                this.ErrorMessage = ex.Message;
+                this.ShowError(ex.Message);
             }
             finally
             {

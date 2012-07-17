@@ -158,9 +158,9 @@ namespace Sys.SmartList.Forms
             {
                 TieEditor.Show(e1);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                this.ErrorMessage = e.Message;
+                this.ShowError(ex.Message);
             }
 
             BuildTree();
@@ -298,7 +298,7 @@ namespace Sys.SmartList.Forms
 				}
 				catch (CompilingException ex)
 				{
-					this.ErrorMessage = ex.Message;
+					this.ShowError(ex.Message);
 
 					return;
 				}
@@ -371,7 +371,7 @@ namespace Sys.SmartList.Forms
 				}
 				catch (Exception ex)
 				{
-					this.ErrorMessage = ex.Message;
+					this.ShowError(ex.Message);
 					cmd = null;
 				}
 
@@ -669,7 +669,7 @@ namespace Sys.SmartList.Forms
 			}
 			catch (Exception ex)
 			{
-				this.ErrorMessage = ex.Message;
+                this.ShowError(ex.Message);
 			}
 
 

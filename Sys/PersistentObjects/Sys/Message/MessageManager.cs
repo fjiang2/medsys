@@ -53,56 +53,34 @@ namespace Sys
 
         public Message Error(string description)
         {
-            return Error(0, description, "");
+            return Error(description, "");
         }
 
         public Message Error(string description, string location)
         {
-            return Error(0, description, location);
+            return Add(Message.Error(0, description, location));
         }
 
-        public Message Error(int code, string description, string location)
-        {
-            Message message = new Message(description);
-            message.Code = code;
-            message.Level = MessageLevel.Error;
-            message.Location = location;
-            return Add(message);
-        }
+
 
         public Message Warning(string description, string location)
         {
-            return Warning(0, description, location);
+            return Add(Message.Warning(0, description, location));
         }
 
-        public Message Warning(int code, string description, string location)
-        {
-            Message message = new Message(description);
-            message.Code = code;
-            message.Level = MessageLevel.Warning;
-            message.Location = location;
-            return Add(message);
-        }
+      
 
         public Message Information(string description)
         {
-            return Information(0, description, "");
+            return Information(description, "");
         }
 
         public Message Information(string description, string location)
         {
-            return Information(0, description, location);
+            return Add(Message.Information(description, location));
         }
 
-        public Message Information(int code, string description, string location)
-        {
-            Message message = new Message(description);
-            message.Code = code;
-            message.Level = MessageLevel.Information;
-            message.Location = location;
-
-            return Add(message);
-        }
+   
 
         private Message Add(Message item)
         {

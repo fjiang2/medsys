@@ -151,7 +151,7 @@ namespace Sys.Platform.Forms
                 //if (asm == typeof(DPObject).Assembly)
                 //    continue;
 
-                messages.Add(new Message(asm.FullName));
+                messages.Add(Message.Information(asm.FullName));
                 messages.AddRange(Pack(asm, false));
             }
             return messages;

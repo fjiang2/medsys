@@ -519,13 +519,13 @@ namespace Sys.ViewManager.Forms
         }
 
 
-        protected bool SetStatusBarText(Color foreColor, string format, params object[] args)
+        protected bool SetStatusBarText(Color foreColor, string description)
         {
             if (MainStatusStrip != null)
             {
                 BarItem host = MainStatusStrip.LinksPersistInfo[1].Item;
                 BarStaticItem label = (BarStaticItem)host;
-                label.Caption = string.Format(format, args);
+                label.Caption = description;
                 label.ItemAppearance.Normal.ForeColor = foreColor;
             }
 
@@ -587,7 +587,7 @@ namespace Sys.ViewManager.Forms
         
         #region Show Message
 
-        protected void ShowMessage(Sys.Message message)
+        protected void ShowMessage(Message message)
         {
             if (message == null)
                 return;
@@ -615,10 +615,10 @@ namespace Sys.ViewManager.Forms
             {
                 if (MainStatusStrip != null)
                 {
-                    SetStatusBarText(System.Drawing.Color.Red, "{0}", value);
+                    SetStatusBarText(System.Drawing.Color.Red, value);
                 }
 
-                MessageBox.Show(this, value, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ShowError(value);
             }
         }
 
@@ -629,12 +629,10 @@ namespace Sys.ViewManager.Forms
             {
                 if (MainStatusStrip != null)
                 {
-                    SetStatusBarText(System.Drawing.Color.Brown, "{0}", value);
+                    SetStatusBarText(System.Drawing.Color.Brown, value);
                 }
 
-                //MainForm.ErrorList.Warning(0, value, "");
-
-                MessageBox.Show(this, value, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                ShowWarning(value);
             }
         }
 
@@ -644,13 +642,19 @@ namespace Sys.ViewManager.Forms
             {
                 if (MainStatusStrip != null)
                 {
-                    SetStatusBarText( System.Drawing.Color.Blue, "{0}", value);
+                    SetStatusBarText( System.Drawing.Color.Blue,  value);
                 }
                 else
-                    MessageBox.Show(this, value, "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    ShowInformation(value);
             }
         }
 
+        protected void ShowError(string message)
+        {
+            MessageBox.Show(this, message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+        }
+         
         protected void ShowInformation(string message)
         {
             MessageBox.Show(this, message, "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
