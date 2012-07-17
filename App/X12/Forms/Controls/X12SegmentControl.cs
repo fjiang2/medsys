@@ -8,6 +8,7 @@ using System.Data.Linq;
 using System.Text;
 using System.Windows.Forms;
 using X12.File;
+using Sys.ViewManager.Forms;
 
 namespace X12.Forms
 {
@@ -164,24 +165,7 @@ namespace X12.Forms
 
         public void GotoLine(int line)
         {
-            Sys.ViewManager.Forms.JRichTextBox.GotoLine(richTextBox1, line - 1);
-            return;
-
-            //string text = this.richTextBox1.Text;
-
-            //int start = 0;
-            //while (line > 1)
-            //{
-            //    start = text.IndexOf("\n", start) + 1;
-            //    line --;
-            //}
-
-            //int end = text.IndexOf("\n", start);
-            //this.richTextBox1.SelectionStart = start;
-            //this.richTextBox1.SelectionLength = end - start;
-            //this.richTextBox1.SelectionColor = Color.Red;
-            //this.richTextBox1.SelectionLength = 0;
-
+            new RichText(this.richTextBox1).GotoLine("\n", line, Color.Red);
         }
 
     }
