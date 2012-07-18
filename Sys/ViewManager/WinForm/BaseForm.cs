@@ -575,10 +575,16 @@ namespace Sys.ViewManager.Forms
 
         
         #region Show Message
-
+        private MessageManager messageManager = null;
         protected MessageManager MessageManager
         {
-            get { return ((ErrorListControl)this.MainForm.FormDockManager[typeof(ErrorListControl)]).Manager; }
+            get 
+            { 
+                if(this.messageManager == null)
+                    this.messageManager = ((ErrorListControl)this.MainForm.FormDockManager[typeof(ErrorListControl)]).Manager;
+
+                return this.messageManager;
+            }
         }
 
         private MessageManager OutputManager
@@ -1008,9 +1014,7 @@ namespace Sys.ViewManager.Forms
         {
             bool result =  RuleValidated(false);
 
-            this.MessageManager.Clear();
-            this.MessageManager.Add(this.validateProvider.ToMessageList());
-            this.MessageManager.Commit();
+            this.ShowMessage(this.validateProvider.ToMessageList(), MessagePlace.ErrorListWindow);
             
             return result;
         }

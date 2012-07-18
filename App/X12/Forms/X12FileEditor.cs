@@ -428,8 +428,7 @@ namespace X12.Forms
         {
             tabControl1.SelectedTab = tabPageX12;
             
-            int line = int.Parse(e.Message.Location.Substring(5));
-            this.segmentControl1.GotoLine(line); 
+            this.segmentControl1.GotoLine(e.Message.Location.line); 
 
         }
 
