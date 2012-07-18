@@ -22,9 +22,9 @@ namespace X12.File
           
         }
 
-        public void Parse(Worker worker, MessageManager errorManager)
+        public void Parse(Worker worker)
         {
-            this.parser = new Parser(lines, worker, errorManager);
+            this.parser = new Parser(lines, worker);
             parser.Parse();
         }
 

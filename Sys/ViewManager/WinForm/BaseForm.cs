@@ -576,21 +576,23 @@ namespace Sys.ViewManager.Forms
 
         
         #region Show Message
-        private MessageManager messageManager = null;
+
+        //private ErrorListControl errorListControl
+        //{
+        //    get  { return (ErrorListControl)this.MainForm.FormDockManager[typeof(ErrorListControl)]; }
+        //}
+
+        //private OutputControl outputControl
+        //{
+        //    get { return (OutputControl)this.MainForm.FormDockManager[typeof(OutputControl)]; }
+        //}
+
         protected MessageManager MessageManager
         {
-            get 
-            { 
-                if(this.messageManager == null)
-                    this.messageManager = ((ErrorListControl)this.MainForm.FormDockManager[typeof(ErrorListControl)]).Manager;
-
-                return this.messageManager;
+            get
+            {
+                return MessageManager.Instance;
             }
-        }
-
-        private MessageManager OutputManager
-        {
-            get { return ((OutputControl)this.MainForm.FormDockManager[typeof(OutputControl)]).Manager; }
         }
 
 
@@ -629,6 +631,8 @@ namespace Sys.ViewManager.Forms
             ShowMessage(message.To(MessageWindow.MessageBox));
         }
 
+      
+
         protected void ShowMessage(IEnumerable<Message> messages, MessageWindow place)
         {
             foreach (var message in messages)
@@ -643,22 +647,13 @@ namespace Sys.ViewManager.Forms
         /// <param name="messages"></param>
         protected void ShowMessage(IEnumerable<Message> messages)
         {
-            var m1 = messages.Where(message => (message.Window & MessageWindow.ErrorListWindow) == MessageWindow.ErrorListWindow);
-            var m2 = messages.Where(message => (message.Window & MessageWindow.OutputWindow) == MessageWindow.OutputWindow);
+            if (messages.Count() == 0)
+                return;
 
-            if (m2.Count() > 0)
-            {
-                this.OutputManager.Clear();
-                this.OutputManager.Add(m2);
-                this.OutputManager.Commit();
-            }
+            this.MessageManager.Clear();
+            this.MessageManager.Add(messages);
+            this.MessageManager.Commit();
 
-            if (m1.Count() > 0)
-            {
-                this.MessageManager.Clear();
-                this.MessageManager.Add(m1);
-                this.MessageManager.Commit();   //activate ErrorListWindow
-            }
         }
 
 
@@ -730,17 +725,13 @@ namespace Sys.ViewManager.Forms
                 }
             }
 
-           
 
-            if ((place & MessageWindow.ErrorListWindow) == MessageWindow.ErrorListWindow)
+            
+            if ((place & MessageWindow.ErrorListWindow) == MessageWindow.ErrorListWindow || (place & MessageWindow.OutputWindow) == MessageWindow.OutputWindow)
             {
                 this.MessageManager.Add(message);
             }
-
-            if ((place & MessageWindow.OutputWindow) == MessageWindow.OutputWindow)
-            {
-                this.OutputManager.Add(message);
-            }
+            
         }
 
      

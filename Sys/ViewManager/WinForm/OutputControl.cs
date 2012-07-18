@@ -14,7 +14,7 @@ using DevExpress.XtraBars.Docking;
 
 namespace Sys.ViewManager.Forms
 {
-    public partial class OutputControl : RichTextBox, IDockable
+    public partial class OutputControl : RichTextBox
     {
         MessageManager manager;
 
@@ -23,7 +23,7 @@ namespace Sys.ViewManager.Forms
             InitializeComponent();
             this.ReadOnly = true;
 
-            this.manager = new MessageManager(this);
+            this.manager = MessageManager.Instance;
             manager.Committed += new EventHandler(manager_Committed);
             manager.Cleared += new EventHandler(manager_Cleared);
         }
@@ -40,13 +40,20 @@ namespace Sys.ViewManager.Forms
 
         void manager_Cleared(object sender, EventArgs e)
         {
+            var messages = this.manager.GetMessages(MessageWindow.OutputWindow);
+            if (messages.Count() == 0)
+                return;
+
             this.Text = "";
         }
 
         private void manager_Committed(object sender, EventArgs e)
         {
+            var messages = this.manager.GetMessages(MessageWindow.OutputWindow);
+            if (messages.Count() == 0)
+                return;
+
             StringBuilder builder = new StringBuilder();
-            var messages = ((MessageManager)sender).Messages.Where(message => (message.Window & MessageWindow.OutputWindow) == MessageWindow.OutputWindow);
             foreach (Message item in messages)
             {
                 builder.AppendLine(item.Description);
@@ -54,10 +61,9 @@ namespace Sys.ViewManager.Forms
 
             this.Text += builder.ToString();
             this.ScrollToCaret();
+
+            ActivateDockPanel();
         }
-        public MessageManager Manager
-        {
-            get { return this.manager; }
-        }
+       
     }
 }
