@@ -494,15 +494,7 @@ namespace Sys.ViewManager.Forms
 
 
 
-        protected MessageManager MessageManager
-        {
-            get { return ((ErrorListControl)this.MainForm.FormDockManager[typeof(ErrorListControl)]).Manager; }
-        }
-
-        protected MessageManager OutputManager
-        {
-            get { return ((OutputControl)this.MainForm.FormDockManager[typeof(OutputControl)]).Manager; }
-        }
+     
 
         #region StatusStrip Function
 
@@ -519,11 +511,11 @@ namespace Sys.ViewManager.Forms
         }
 
 
-        protected bool SetStatusBarText(Color foreColor, string description)
+        protected bool SetStatusBarText(Color foreColor, string description, int index)
         {
             if (MainStatusStrip != null)
             {
-                BarItem host = MainStatusStrip.LinksPersistInfo[1].Item;
+                BarItem host = MainStatusStrip.LinksPersistInfo[index].Item;
                 BarStaticItem label = (BarStaticItem)host;
                 label.Caption = description;
                 label.ItemAppearance.Normal.ForeColor = foreColor;
@@ -581,44 +573,25 @@ namespace Sys.ViewManager.Forms
     #endregion
 
 
-       
-        
-        
         
         #region Show Message
 
-        protected void ShowMessage(Message message)
+        protected MessageManager MessageManager
         {
-            if (message == null)
-                return;
-
-            switch (message.Level)
-            {
-                case Sys.MessageLevel.Information:
-                    this.InformationMessage = message.ToString();
-                    break;
-
-                case Sys.MessageLevel.Error:
-                case Sys.MessageLevel.Fatal:
-                    this.ErrorMessage = message.ToString();
-                    break;
-
-                case Sys.MessageLevel.Warning:
-                    this.WarningMessage = message.ToString();
-                    break;
-            }
+            get { return ((ErrorListControl)this.MainForm.FormDockManager[typeof(ErrorListControl)]).Manager; }
         }
+
+        protected MessageManager OutputManager
+        {
+            get { return ((OutputControl)this.MainForm.FormDockManager[typeof(OutputControl)]).Manager; }
+        }
+
 
         protected string ErrorMessage
         {
             set
             {
-                if (MainStatusStrip != null)
-                {
-                    SetStatusBarText(System.Drawing.Color.Red, value);
-                }
-
-                ShowError(value);
+                ShowMessage(Message.Error(value), MessagePlace.MessageBox|MessagePlace.StatusBar);
             }
         }
 
@@ -627,12 +600,7 @@ namespace Sys.ViewManager.Forms
         {
             set
             {
-                if (MainStatusStrip != null)
-                {
-                    SetStatusBarText(System.Drawing.Color.Brown, value);
-                }
-
-                ShowWarning(value);
+                ShowMessage(Message.Warning(value), MessagePlace.MessageBox | MessagePlace.StatusBar);
             }
         }
 
@@ -640,44 +608,90 @@ namespace Sys.ViewManager.Forms
         {
             set
             {
-                if (MainStatusStrip != null)
-                {
-                    SetStatusBarText( System.Drawing.Color.Blue,  value);
-                }
-                else
-                    ShowInformation(value);
+                ShowMessage(Message.Information(value), MessagePlace.StatusBar);
             }
         }
 
-        protected void ShowError(string message)
+        protected void ShowMessage(Exception ex)
         {
-            MessageBox.Show(this, message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-        }
-         
-        protected void ShowInformation(string message)
-        {
-            MessageBox.Show(this, message, "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            ShowMessage(Message.Error(ex.Message));
         }
 
-        protected void ShowWarning(string message)
+        protected void ShowMessage(Message message)
         {
-            MessageBox.Show(this, message, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            ShowMessage(message, MessagePlace.MessageBox);
         }
 
-        protected string OtherMessage
-        {
-            set
+        protected void ShowMessage(Message message, MessagePlace place)
+        { 
+            if (message == null)
+                return;
+
+            string text = message.ToString();
+            if ((place & MessagePlace.MessageBox) == MessagePlace.MessageBox)
+            {
+                switch (message.Level)
+                {
+                    case MessageLevel.Error:
+                        MessageBox.Show(this, text, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        break;
+
+                    case MessageLevel.Warning:
+                        MessageBox.Show(this, text, "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        break;
+
+                    case MessageLevel.Information:
+                        MessageBox.Show(this, text, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        break;
+                }
+            }
+
+            if ((place & MessagePlace.StatusBar) == MessagePlace.StatusBar)
             {
                 if (MainStatusStrip != null)
                 {
-                    BarItem host = MainStatusStrip.LinksPersistInfo[2].Item;
-                    BarStaticItem label = (BarStaticItem)host;
-                    label.Caption = value;
+                    switch (message.Level)
+                    {
+                        case Sys.MessageLevel.Information:
+                            SetStatusBarText(System.Drawing.Color.Blue, text, 1);
+                            break;
+
+                        case Sys.MessageLevel.Error:
+                        case Sys.MessageLevel.Fatal:
+                            SetStatusBarText(System.Drawing.Color.Red, text, 1);
+                            break;
+
+                        case Sys.MessageLevel.Warning:
+                            SetStatusBarText(System.Drawing.Color.Brown, text, 1);
+                            break;
+                    }
+                }
+            }
+
+            if ((place & MessagePlace.StatusBar2) == MessagePlace.StatusBar2)
+            {
+                if (MainStatusStrip != null)
+                {
+                    switch (message.Level)
+                    {
+                        case Sys.MessageLevel.Information:
+                            SetStatusBarText(System.Drawing.Color.Blue, text, 2);
+                            break;
+
+                        case Sys.MessageLevel.Error:
+                        case Sys.MessageLevel.Fatal:
+                            SetStatusBarText(System.Drawing.Color.Red, text, 2);
+                            break;
+
+                        case Sys.MessageLevel.Warning:
+                            SetStatusBarText(System.Drawing.Color.Brown, text, 2);
+                            break;
+                    }
                 }
             }
         }
 
+     
 
         protected void ShowMessageOn(Control control, string message)
         {

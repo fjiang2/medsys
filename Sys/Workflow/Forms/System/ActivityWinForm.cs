@@ -280,7 +280,7 @@ namespace Sys.Workflow.Forms
             }
             catch (Exception ex)
             {
-                this.ShowError(ex.Message);
+                this.ShowMessage(ex);
             }
         }
 

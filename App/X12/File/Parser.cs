@@ -194,7 +194,7 @@ namespace X12.File
                 if (!segment.ValidElementCode(CurrentSegmentLine, out message))
                 {
                     message = string.Format("{0}, {1}", message, this.CurrentLoopTemplate);
-                    errorManager.Warning(message, "Line:" + (this.Line + 1));
+                    errorManager.Add(Message.Warning(message, "Line:" + (this.Line + 1)));
                     return false;
                 }
 
@@ -207,15 +207,6 @@ namespace X12.File
                 SetResult(segment);
                 return true;
             }
-
-            //if (segment.Required)
-            //{
-            //    message = string.Format("Required Segment = {0} on Loop={1}",
-            //                        segment.Name,
-            //                        this.CurrentLoopTemplate);
-
-            //    ErrorMessage.Error(this.Line + 1, message);
-            //}
 
             return false;
         }

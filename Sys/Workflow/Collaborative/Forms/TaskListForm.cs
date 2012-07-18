@@ -378,12 +378,14 @@ namespace Sys.Workflow.Collaborative.Forms
 
             if (taskRow != null)
             {
-                this.OtherMessage = string.Format("Task {0} \"{1}\" synchronized by {2} in {3} at {4}.",
+                string msg = string.Format("Task {0} \"{1}\" synchronized by {2} in {3} at {4}.",
                     taskRow[TaskDpo._ID],
                     taskRow[TaskDpo._Summary],
                     e.Val[XmppClient.XMPP_SENDER][Sys.Xmpp.UserProtocol.USER_NAME].Str,
                     e.Val[XmppClient.XMPP_COMPUTER_NAME].Str,
                     DateTime.Now);
+
+                this.ShowMessage(Message.Information(msg), MessagePlace.StatusBar2);
             }
 
             Cursor.Current = Cursors.Default;

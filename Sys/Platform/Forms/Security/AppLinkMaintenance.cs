@@ -71,7 +71,7 @@ namespace Sys.Platform.Forms
 
             txtID.Text = "-1";
             if (bind.ConfirmAndSave())
-                this.ShowInformation("Application Link is created.");
+                this.ShowMessage(Message.Information("Application Link is created."));
         }
 
         private void btnLoadImage_Click(object sender, EventArgs e)

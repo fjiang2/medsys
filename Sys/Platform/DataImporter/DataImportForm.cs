@@ -172,18 +172,23 @@ namespace Sys.Platform.DataImporter
 
             if (result == null)
                 return;
-
+            
+            Message message;
             if (result is Exception)
             {
-                this.ShowError((result as Exception).ToString());
+                message = Message.Error(result.ToString());
                 return;
             }
-
-            bool b = (bool)result;
-            if(b)
-                this.InformationMessage = "Import completed.";
             else
-                this.WarningMessage = "Import interrupted.";
+            {
+                bool b = (bool)result;
+                if (b)
+                    message = Message.Information("Import completed.");
+                else
+                    message = Message.Warning("Import interrupted.");
+            }
+
+            this.ShowMessage(message);
         }
 
       
