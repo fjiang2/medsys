@@ -15,13 +15,13 @@ using System.Reflection;
 
 namespace Sys.Platform.Forms
 {
-    public partial class EnumGenForm : BaseForm
+    public partial class GenEnumForm : BaseForm
     {
         string rootPath = "C:\\temp";
         EnumTypeManager manager;
         List<Type> enumList;
 
-        public EnumGenForm()
+        public GenEnumForm()
         {
             InitializeComponent();
 

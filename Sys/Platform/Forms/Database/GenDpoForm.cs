@@ -19,20 +19,20 @@ using Sys.OS;
 namespace Sys.Platform.Forms
 {
 
-    public partial class DpoGenForm : BaseForm
+    public partial class GenDpoForm : BaseForm
     {
         TableDpoDictionary dpoDict;
         string rootPath = "C:\\temp";
         private BackgroundWorker worker;
 
 
-        public DpoGenForm()
+        public GenDpoForm()
             : this(Sys.Constant.DB_APPLICATION)
         { 
         
         }
         
-        public DpoGenForm(string databaseName)
+        public GenDpoForm(string databaseName)
         {
             
             InitializeComponent();

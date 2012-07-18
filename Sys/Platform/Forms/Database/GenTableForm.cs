@@ -15,11 +15,11 @@ using Sys.IO;
 
 namespace Sys.Platform.Forms
 {
-    public partial class CreateTableForm : BaseForm
+    public partial class GenTableForm : BaseForm
     {
         Assembly asm;
 
-        public CreateTableForm()
+        public GenTableForm()
         {
             InitializeComponent();
 

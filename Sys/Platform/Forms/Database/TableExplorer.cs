@@ -13,12 +13,12 @@ using System.Reflection;
 
 namespace Sys.Platform.Forms
 {
-    public partial class DataTableExplorer : WinForm
+    public partial class TableExplorer : WinForm
     {
         string tableName;
         TreeNode root;
 
-        public DataTableExplorer()
+        public TableExplorer()
         {
             InitializeComponent();
             ButtonDelete.Visible = false;
@@ -111,7 +111,7 @@ namespace Sys.Platform.Forms
                 if (tableName.IndexOf(".") == -1)
                 {
                     string databaseName = node.Text;
-                    Form f = new DpoGenForm(databaseName);
+                    Form f = new GenDpoForm(databaseName);
                     f.ShowDialog(this);
                     return;
                 }
@@ -124,7 +124,7 @@ namespace Sys.Platform.Forms
 
 
 
-        public DataTableExplorer(string text, string tableName)
+        public TableExplorer(string text, string tableName)
             :base(tableName)
         {
 

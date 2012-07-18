@@ -1,6 +1,6 @@
 ﻿namespace Sys.Platform.Forms
 {
-    partial class DpoGenForm
+    partial class GenDpoForm
     {
         /// <summary>
         /// Required designer variable.
