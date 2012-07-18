@@ -635,28 +635,18 @@ namespace Sys.ViewManager.Forms
 
         protected void ShowMessage(MessageBuilder messages, MessagePlace place)
         {
-            foreach (var message in messages)
-                message.To(place);
-
-            ShowMessage(messages);
-        }
-
-        /// <summary>
-        /// ErrorListWindow has high priority to activate
-        /// </summary>
-        /// <param name="messages"></param>
-        protected void ShowMessage(MessageBuilder messages)
-        {
             if (messages.Count() == 0)
                 return;
 
-            this.MessageManager.Clear();
+            foreach (var message in messages)
+                message.To(place);
+
+            this.MessageManager.ClearWindow(place);
             this.MessageManager.Add(messages);
             this.MessageManager.Commit();
-
         }
 
-
+       
 
         protected void ShowMessage(Message message)
         { 

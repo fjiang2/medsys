@@ -133,11 +133,12 @@
     <Compile Include="Forms\Bind\JControl2.cs" />
     <Compile Include="Forms\TieScript.cs" />
     <Compile Include="Manager\AppLink.cs" />
-    <Compile Include="WinForm\MessageManager.cs" />
-    <Compile Include="WinForm\OutputControl.cs">
+    <Compile Include="WinForm\Message\MessageEventArgs.cs" />
+    <Compile Include="WinForm\Message\MessageManager.cs" />
+    <Compile Include="WinForm\Message\OutputControl.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="WinForm\OutputControl.Designer.cs">
+    <Compile Include="WinForm\Message\OutputControl.Designer.cs">
       <DependentUpon>OutputControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Manager\TaskData.cs" />
@@ -244,10 +245,10 @@
     </Compile>
     <Compile Include="Forms\InputTool.cs" />
     <Compile Include="Manager\WindowManager.cs" />
-    <Compile Include="WinForm\ErrorListControl.cs">
+    <Compile Include="WinForm\Message\ErrorListControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="WinForm\ErrorListControl.Designer.cs">
+    <Compile Include="WinForm\Message\ErrorListControl.Designer.cs">
       <DependentUpon>ErrorListControl.cs</DependentUpon>
     </Compile>
     <Compile Include="WinForm\FormExtension.cs" />
@@ -402,7 +403,7 @@
     <EmbeddedResource Include="Forms\Controls\JGridView.resx">
       <DependentUpon>JGridView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WinForm\ErrorListControl.resx">
+    <EmbeddedResource Include="WinForm\Message\ErrorListControl.resx">
       <DependentUpon>ErrorListControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WinForm\WinForm.resx">

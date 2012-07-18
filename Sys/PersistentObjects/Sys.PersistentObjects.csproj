@@ -171,7 +171,6 @@
     <Compile Include="Sys\Message\MessageCode.cs" />
     <Compile Include="Sys\IAccount.cs" />
     <Compile Include="Sys\DataStructure\Identifier.cs" />
-    <Compile Include="Sys\Message\MessageEventArgs.cs" />
     <Compile Include="Sys\Message\MessageLevel.cs" />
     <Compile Include="Sys\Message\Message.cs" />
     <Compile Include="Sys\Message\MessagePlace.cs" />

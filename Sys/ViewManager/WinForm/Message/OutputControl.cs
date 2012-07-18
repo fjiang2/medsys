@@ -25,7 +25,7 @@ namespace Sys.ViewManager.Forms
 
             this.manager = MessageManager.Instance;
             manager.Committed += new EventHandler(manager_Committed);
-            manager.Cleared += new EventHandler(manager_Cleared);
+            manager.Cleared += new MessageHandler(manager_Cleared);
         }
 
         public void ActivateDockPanel()
@@ -38,13 +38,10 @@ namespace Sys.ViewManager.Forms
         }
 
 
-        void manager_Cleared(object sender, EventArgs e)
+        void manager_Cleared(object sender, MessageEventArgs e)
         {
-            var messages = this.manager.GetMessages(MessagePlace.OutputWindow);
-            if (messages.Count() == 0)
-                return;
-
-            this.Text = "";
+            if ((e.Message.Place & MessagePlace.OutputWindow) == MessagePlace.OutputWindow)
+                this.Text = "";
         }
 
         private void manager_Committed(object sender, EventArgs e)
