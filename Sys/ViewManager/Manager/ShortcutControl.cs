@@ -231,7 +231,8 @@ namespace Sys.ViewManager.Manager
                 {
                     Cursor = Cursors.WaitCursor;
                     BaseForm form = task.NewFormInstance(); 
-                    form.PopUp(owner);
+                    if(form != null)
+                        form.PopUp(owner);
                     Cursor = Cursors.Default;
                 };
 

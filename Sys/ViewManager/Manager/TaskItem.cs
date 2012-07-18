@@ -20,6 +20,9 @@ namespace Sys.ViewManager.Manager
             if (!dpo.Exists)
             {
                 BaseForm form = task.NewFormInstance();
+                if (form == null)
+                    return;
+
                 this.Caption = task.caption == null ? form.Text : task.caption;
                 this.LargeImage = this.SmallImage = form.IconImage;
 
