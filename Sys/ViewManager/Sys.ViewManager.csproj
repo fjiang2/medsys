@@ -135,6 +135,7 @@
     <Compile Include="Manager\AppLink.cs" />
     <Compile Include="WinForm\Message\MessageEventArgs.cs" />
     <Compile Include="WinForm\Message\MessageManager.cs" />
+    <Compile Include="WinForm\Message\MessagePlace.cs" />
     <Compile Include="WinForm\Message\OutputControl.cs">
       <SubType>Component</SubType>
     </Compile>

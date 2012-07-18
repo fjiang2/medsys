@@ -45,8 +45,8 @@ namespace Sys.ViewManager.Forms
 
             gridControl1.DataSource = dt;
 
-            manager.Committed += new MessageHandler(manager_Committed);
-            manager.Cleared += new MessageHandler(manager_Cleared);
+            manager.Committed += new MessagePlaceHandler(manager_Committed);
+            manager.Cleared += new MessagePlaceHandler(manager_Cleared);
 
             this.gridControl1.MouseDoubleClick += new MouseEventHandler(gridControl1_MouseDoubleClick);
         }
@@ -72,18 +72,18 @@ namespace Sys.ViewManager.Forms
             }
         }
 
-        void manager_Cleared(object sender, MessageEventArgs e)
+        void manager_Cleared(object sender, MessagePlaceEventArgs e)
         {
-            if ((e.Message.Place & MessagePlace.ErrorListWindow )== MessagePlace.ErrorListWindow)
+            if ((e.Place & MessagePlace.ErrorListWindow )== MessagePlace.ErrorListWindow)
             {
                 this.dt.Rows.Clear();
                 this.dt.AcceptChanges();
             }
         }
 
-        private void manager_Committed(object sender, MessageEventArgs e)
+        private void manager_Committed(object sender, MessagePlaceEventArgs e)
         {
-            if (!((e.Message.Place & MessagePlace.ErrorListWindow) == MessagePlace.ErrorListWindow))
+            if (!((e.Place & MessagePlace.ErrorListWindow) == MessagePlace.ErrorListWindow))
                 return;
 
 

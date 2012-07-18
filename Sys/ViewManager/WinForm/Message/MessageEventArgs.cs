@@ -6,6 +6,7 @@ using System.Text;
 namespace Sys.ViewManager.Forms
 {
     public delegate void MessageHandler(object sender, MessageEventArgs e);
+    public delegate void MessagePlaceHandler(object sender, MessagePlaceEventArgs e);
 
     public class MessageEventArgs : EventArgs
     {
@@ -17,4 +18,13 @@ namespace Sys.ViewManager.Forms
         }
     }
 
+    public class MessagePlaceEventArgs : EventArgs
+    {
+        public readonly MessagePlace Place;
+
+        public MessagePlaceEventArgs(MessagePlace place)
+        {
+            this.Place = place;
+        }
+    }
 }

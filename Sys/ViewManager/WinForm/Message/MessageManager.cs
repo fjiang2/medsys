@@ -22,8 +22,8 @@ namespace Sys.ViewManager.Forms
 
         List<Message> messages = new List<Message>();
 
-        public event MessageHandler Committed;
-        public event MessageHandler Cleared;
+        public event MessagePlaceHandler Committed;
+        public event MessagePlaceHandler Cleared;
         public event MessageHandler MessageClicked;
 
         private MessageManager()
@@ -34,8 +34,7 @@ namespace Sys.ViewManager.Forms
         {
             if (Committed != null)
             {
-                Message message = new Message(MessageLevel.None, null).To(place);
-                Committed(this, new MessageEventArgs(message));
+                Committed(this, new MessagePlaceEventArgs(place));
             }
 
         }
@@ -46,8 +45,7 @@ namespace Sys.ViewManager.Forms
             messages.Clear();
             if (Cleared != null)
             {
-                Message message = new Message(MessageLevel.None, null).To(place);
-                Cleared(this, new MessageEventArgs(message));
+                Cleared(this, new MessagePlaceEventArgs(place));
             }
         }
 
