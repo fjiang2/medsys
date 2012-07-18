@@ -83,7 +83,7 @@ namespace Sys.ViewManager.Forms
             int errorCount = 0;
             int warningCount = 0;
             int informationCount = 0;
-            var messages = ((MessageManager)sender).Messages;
+            var messages = ((MessageManager)sender).Messages.Where(message => (message.Window & MessageWindow.ErrorListWindow) == MessageWindow.ErrorListWindow);
 
             foreach (Message item in messages)
             {

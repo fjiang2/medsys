@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Text;
+using System.Linq;
 using System.Windows.Forms;
 using System.Drawing;
 using DevExpress.XtraNavBar;
@@ -45,7 +46,7 @@ namespace Sys.ViewManager.Forms
         private void manager_Committed(object sender, EventArgs e)
         {
             StringBuilder builder = new StringBuilder();
-            var messages = ((MessageManager)sender).Messages;
+            var messages = ((MessageManager)sender).Messages.Where(message => (message.Window & MessageWindow.OutputWindow) == MessageWindow.OutputWindow);
             foreach (Message item in messages)
             {
                 builder.AppendLine(item.Description);
