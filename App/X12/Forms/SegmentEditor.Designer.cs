@@ -47,6 +47,7 @@
             this.ClientSize = new System.Drawing.Size(521, 366);
             this.Controls.Add(this.segmentEdit1);
             this.Name = "SegmentEditor";
+            this.ShowInTaskbar = false;
             this.Text = "SegmentEditor";
             this.ResumeLayout(false);
 
