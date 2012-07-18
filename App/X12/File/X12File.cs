@@ -24,9 +24,9 @@ namespace X12.File
             parser.Parse();
         }
 
-        public MessageBuilder MessageBuilder
+        public MessageBuilder Messages
         {
-            get { return this.parser.MessageBuilder; }
+            get { return this.parser.Messages; }
         }
 
         public string[] Segments

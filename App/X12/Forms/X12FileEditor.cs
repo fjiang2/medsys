@@ -364,8 +364,7 @@ namespace X12.Forms
             {
                 rootLoop.Nodes.Clear();
             }
-            this.MessageManager.ClearWindow(MessagePlace.ErrorListWindow);
-
+            
             Worker worker = this.StartProgressBar(delegate(Worker worker1)
             {
                 this.x12.Parse(worker1);
@@ -379,9 +378,8 @@ namespace X12.Forms
                 rootLoop.Expand();
 
                 this.segmentControl1.SetDataSource(this.x12, SegmentName.DefaultName);
-                this.MessageManager.Add(this.x12.MessageBuilder);
-                this.MessageManager.Commit(MessagePlace.ErrorListWindow);
-
+                
+                this.ShowMessage(this.x12.Messages, MessagePlace.ErrorListWindow);
                 btnParse.Enabled = true;
                 this.Cursor = Cursors.Default;
             };
