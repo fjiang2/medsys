@@ -47,13 +47,13 @@ namespace Sys.Platform.Forms
             if (asm == null)
                 return;
 
-            this.ShowMessage(Unpacking.CreateTable(asm), MessagePlace.OutputWindow);
+            this.ShowMessage(Unpacking.CreateTable(asm), MessageWindow.OutputWindow);
         }
 
 
         private void btnCreateAllTable_Click(object sender, EventArgs e)
         {
-            this.ShowMessage(CreateTable(), MessagePlace.OutputWindow);
+            this.ShowMessage(CreateTable(), MessageWindow.OutputWindow);
         }
 
         public static IEnumerable<Message> CreateTable()
@@ -86,14 +86,14 @@ namespace Sys.Platform.Forms
 
             IEnumerable<Message> messages = Pack(asm, this.externalAssembly);
             if (messages.Count() == 0)
-                this.ShowMessage(Message.Warning("No table needs to be packed."));
+                this.ShowMessageBox(Message.Warning("No table needs to be packed."));
             else
-                this.ShowMessage(messages, MessagePlace.OutputWindow);
+                this.ShowMessage(messages, MessageWindow.OutputWindow);
         }
 
         private void btnPackAll_Click(object sender, EventArgs e)
         {
-           this.ShowMessage(Pack(), MessagePlace.OutputWindow);
+           this.ShowMessage(Pack(), MessageWindow.OutputWindow);
         }
 
 

@@ -297,7 +297,7 @@ namespace Sys.Platform.Forms
             }
             catch (Exception ex)
             {
-                this.ShowMessage(ex);
+                this.ShowMessageBox(ex);
             }
         }
 
@@ -380,7 +380,7 @@ namespace Sys.Platform.Forms
                 }
                 catch (Exception ex)
                 {
-                    this.ShowMessage(ex);
+                    this.ShowMessageBox(ex);
                 }
             }
 
@@ -460,7 +460,7 @@ namespace Sys.Platform.Forms
             }
             catch (Exception ex)
             {
-                this.ShowMessage(ex);
+                this.ShowMessageBox(ex);
             }
 
             this.Cursor = Cursors.Default;
@@ -500,7 +500,7 @@ namespace Sys.Platform.Forms
             }
             catch (Exception ex)
             {
-                this.ShowMessage(ex);
+                this.ShowMessageBox(ex);
             }
 
             return;

@@ -6,8 +6,9 @@ using System.Text;
 namespace Sys
 {
     [Flags]
-    public enum MessagePlace
+    public enum MessageWindow
     {
+        None                = 0,
         MessageBox          = 1,
         ErrorListWindow     = 2,
         OutputWindow        = 4,

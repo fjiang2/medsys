@@ -7,16 +7,17 @@ namespace Sys
 {
     public class Message
     {
-        public int Code;
         public readonly MessageLevel Level;
         public readonly string Description;
-        public MessageLocation Location;
+
+        private int code;
+        private MessageLocation location;
+        private MessageWindow window;
 
         /// <summary>
         /// Message's owner
         /// </summary>
-        public object sender;
-        private MessagePlace place;
+        private object sender;
 
 
 
@@ -24,106 +25,122 @@ namespace Sys
         {
             this.Level = level;
             this.Description = description;
-            this.place = MessagePlace.StatusBar;
+            this.window = MessageWindow.None;
         }
 
+
+        public Message HasCode(int code)
+        {
+            this.code = code;
+            return this;
+        }
+        
+        public Message From(object sender)
+        {
+            this.sender = sender;
+            return this;
+        }
+        
         public Message At(MessageLocation location)
         {
-            this.Location = location;
+            this.location = location;
             return this;
         }
 
-        public Message To(MessagePlace place)
+        public Message To(MessageWindow place)
         {
-            this.place = place;
+            this.window |= place;
             return this;
+        }
+
+        public int Code
+        {
+            get { return this.code; }
+        }
+
+        public MessageWindow Window
+        {
+            get { return this.window; }
+        }
+
+        public MessageLocation Location
+        {
+            get { return this.location;}
+        }
+
+        public object Sender
+        {
+            get { return this.sender; }
         }
 
         #region GetHashCode/Equals/ToString
 
         public override int GetHashCode()
         {
-            return Location.GetHashCode() + Level.GetHashCode() + Description.GetHashCode();
+            return location.GetHashCode() + Level.GetHashCode() + Description.GetHashCode();
         }
 
         public override bool Equals(object obj)
         {
             Message message = (Message)obj;
-            return this.Code == message.Code && this.Location == message.Location && this.Level == message.Level && this.Description == message.Description;
+            return this.code == message.code && this.location == message.location && this.Level == message.Level && this.Description == message.Description;
         }
 
         public override string ToString()
         {
             StringBuilder builder = new StringBuilder();
             if (Code != 0)
-                builder.AppendFormat("{0}({1})", this.Level, this.Code);
+                builder.AppendFormat("{0}({1})", this.Level, this.code);
             else
                 builder.Append(this.Level);
 
             builder.Append(" : ");
 
-            if(this.Location == null)
+            if(this.location == null)
                 builder.Append(this.Description);
             else
-                builder.AppendFormat("{0} @ {1}", this.Description, this.Location);
+                builder.AppendFormat("{0} @ {1}", this.Description, this.location);
 
             return builder.ToString();
         }
         
         #endregion
 
-
         public static Message Error(string description)
         {
-            return Error(description, null);
+            return Error(0, description);
         }
 
-        public static Message Error(string description, MessageLocation location)
-        {
-            return Error(0, description, location);
-        }
-
-        public static Message Error(int code, string description, MessageLocation location)
+        public static Message Error(int code, string description)
         {
             Message message = new Message(MessageLevel.Error, description);
-            message.Code = code;
-            message.Location = location;
+            message.code = code;
             return message;
         }
 
+
         public static Message Warning(string description)
         {
-            return Warning(description, null);
+            return Warning(0, description);
         }
 
-        public static Message Warning(string description, MessageLocation location)
-        {
-            return Warning(0, description, location);
-        }
-
-        public static Message Warning(int code, string description, MessageLocation location)
+        public static Message Warning(int code, string description)
         {
             Message message = new Message(MessageLevel.Warning, description);
-            message.Code = code;
-            message.Location = location;
+            message.code = code;
             return message;
         }
 
         public static Message Information(string description)
         {
-            return Information(description, null);
+            return Information(0, description);
         }
 
-        public static Message Information(string description, MessageLocation location)
-        {
-            return Information(0, description, location);
-        }
 
-        public static Message Information(int code, string description, MessageLocation location)
+        public static Message Information(int code, string description)
         {
             Message message = new Message(MessageLevel.Information, description);
-            message.Code = code;
-            message.Location = location;
+            message.code = code;
             return message;
         }
     }

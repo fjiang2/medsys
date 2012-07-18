@@ -188,7 +188,7 @@ namespace Sys.Platform.DataImporter
                     message = Message.Warning("Import interrupted.");
             }
 
-            this.ShowMessage(message);
+            this.ShowMessageBox(message);
         }
 
       

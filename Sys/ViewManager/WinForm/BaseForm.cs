@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
 using System.Data;
+using System.Linq;
 using Sys.Security;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
@@ -597,7 +598,7 @@ namespace Sys.ViewManager.Forms
         {
             set
             {
-                ShowMessage(Message.Error(value), MessagePlace.MessageBox|MessagePlace.StatusBar);
+                ShowMessage(Message.Error(value).To(MessageWindow.MessageBox|MessageWindow.StatusBar));
             }
         }
 
@@ -606,7 +607,7 @@ namespace Sys.ViewManager.Forms
         {
             set
             {
-                ShowMessage(Message.Warning(value), MessagePlace.MessageBox | MessagePlace.StatusBar);
+                ShowMessage(Message.Warning(value).To(MessageWindow.MessageBox | MessageWindow.StatusBar));
             }
         }
 
@@ -614,70 +615,93 @@ namespace Sys.ViewManager.Forms
         {
             set
             {
-                ShowMessage(Message.Information(value), MessagePlace.StatusBar);
+                ShowMessage(Message.Information(value).To(MessageWindow.StatusBar));
             }
         }
 
-        protected void ShowMessage(Exception ex)
+        protected void ShowMessageBox(Exception ex)
         {
-            ShowMessage(Message.Error(ex.Message));
+            ShowMessageBox(Message.Error(ex.Message));
         }
 
-        protected void ShowMessage(Message message)
+        protected void ShowMessageBox(Message message)
         {
-            ShowMessage(message, MessagePlace.MessageBox);
+            ShowMessage(message.To(MessageWindow.MessageBox));
         }
 
-        protected void ShowMessage(IEnumerable<Message> messages, MessagePlace place)
+        protected void ShowMessage(IEnumerable<Message> messages, MessageWindow place)
         {
+            foreach (var message in messages)
+                message.To(place);
 
-            if ((place & MessagePlace.ErrorListWindow) == MessagePlace.ErrorListWindow)
-            {
-                this.MessageManager.Clear();
-                this.MessageManager.Add(messages);
-                this.MessageManager.Commit();
-            }
-            else if ((place & MessagePlace.OutputWindow) == MessagePlace.OutputWindow)
+            ShowMessage(messages);
+        }
+
+        /// <summary>
+        /// ErrorListWindow has high priority to activate
+        /// </summary>
+        /// <param name="messages"></param>
+        protected void ShowMessage(IEnumerable<Message> messages)
+        {
+            var m1 = messages.Where(message => (message.Window & MessageWindow.ErrorListWindow) == MessageWindow.ErrorListWindow);
+            var m2 = messages.Where(message => (message.Window & MessageWindow.OutputWindow) == MessageWindow.OutputWindow);
+
+            if (m2.Count() > 0)
             {
                 this.OutputManager.Clear();
-                this.OutputManager.Add(messages);
+                this.OutputManager.Add(m2);
                 this.OutputManager.Commit();
             }
 
+            if (m1.Count() > 0)
+            {
+                this.MessageManager.Clear();
+                this.MessageManager.Add(m1);
+                this.MessageManager.Commit();   //activate ErrorListWindow
+            }
         }
 
-        protected void ShowMessage(Message message, MessagePlace place)
+
+
+        protected void ShowMessage(Message message)
         { 
             if (message == null)
                 return;
 
+            MessageWindow place = message.Window;
+
             string text = message.ToString();
-            if ((place & MessagePlace.MessageBox) == MessagePlace.MessageBox)
+            if ((place & MessageWindow.MessageBox) == MessageWindow.MessageBox)
             {
                 switch (message.Level)
                 {
                     case MessageLevel.Error:
                     case MessageLevel.Fatal:
-                        MessageBox.Show(this, text, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(this, text, message.Level.ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
                         break;
 
                     case MessageLevel.Warning:
-                        MessageBox.Show(this, text, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show(this, text, message.Level.ToString(), MessageBoxButtons.OK, MessageBoxIcon.Information);
                         break;
 
                     case MessageLevel.Information:
-                        MessageBox.Show(this, text, "Information", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show(this, text, message.Level.ToString(), MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         break;
+                    
+                    default:
+                        MessageBox.Show(this, text, message.Level.ToString(), MessageBoxButtons.OK);
+                        break;
+                    
                 }
             }
 
             if (MainStatusStrip != null)
             {
-                if (((place & MessagePlace.StatusBar) == MessagePlace.StatusBar) || ((place & MessagePlace.StatusBar2) == MessagePlace.StatusBar2))
+                if (((place & MessageWindow.StatusBar) == MessageWindow.StatusBar) || ((place & MessageWindow.StatusBar2) == MessageWindow.StatusBar2))
                 {
 
                     int index;
-                    if (((place & MessagePlace.StatusBar) == MessagePlace.StatusBar))
+                    if (((place & MessageWindow.StatusBar) == MessageWindow.StatusBar))
                         index = 1;
                     else
                         index = 2;
@@ -698,18 +722,22 @@ namespace Sys.ViewManager.Forms
                             SetStatusBarText(System.Drawing.Color.Blue, text, index);
                             break;
 
+                        default:
+                            SetStatusBarText(System.Drawing.Color.Black, text, index);
+                            break;
+
                     }
                 }
             }
 
            
 
-            if ((place & MessagePlace.ErrorListWindow) == MessagePlace.ErrorListWindow)
+            if ((place & MessageWindow.ErrorListWindow) == MessageWindow.ErrorListWindow)
             {
                 this.MessageManager.Add(message);
             }
 
-            if ((place & MessagePlace.OutputWindow) == MessagePlace.OutputWindow)
+            if ((place & MessageWindow.OutputWindow) == MessageWindow.OutputWindow)
             {
                 this.OutputManager.Add(message);
             }
@@ -1014,7 +1042,7 @@ namespace Sys.ViewManager.Forms
         {
             bool result =  RuleValidated(false);
 
-            this.ShowMessage(this.validateProvider.ToMessageList(), MessagePlace.ErrorListWindow);
+            this.ShowMessage(this.validateProvider.ToMessageList(), MessageWindow.ErrorListWindow);
             
             return result;
         }

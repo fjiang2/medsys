@@ -428,7 +428,7 @@ namespace X12.Forms
         {
             tabControl1.SelectedTab = tabPageX12;
             
-            this.segmentControl1.GotoLine(e.Message.Location.line); 
+            this.segmentControl1.GotoLine(e.Message.Location.Line); 
 
         }
 

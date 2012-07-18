@@ -171,7 +171,7 @@ namespace Sys.Platform.Forms
             SaveMenuItem();
 
             if (saved)
-                this.ShowMessage(Message.Information("Menu Item is created."));
+                this.ShowMessageBox(Message.Information("Menu Item is created."));
         }
 
 
