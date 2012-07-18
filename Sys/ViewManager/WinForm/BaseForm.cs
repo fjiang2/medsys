@@ -600,7 +600,7 @@ namespace Sys.ViewManager.Forms
         {
             set
             {
-                ShowMessage(Message.Error(value).To(MessageWindow.MessageBox|MessageWindow.StatusBar));
+                ShowMessage(Message.Error(value).To(MessagePlace.MessageBox|MessagePlace.StatusBar));
             }
         }
 
@@ -609,7 +609,7 @@ namespace Sys.ViewManager.Forms
         {
             set
             {
-                ShowMessage(Message.Warning(value).To(MessageWindow.MessageBox | MessageWindow.StatusBar));
+                ShowMessage(Message.Warning(value).To(MessagePlace.MessageBox | MessagePlace.StatusBar));
             }
         }
 
@@ -617,7 +617,7 @@ namespace Sys.ViewManager.Forms
         {
             set
             {
-                ShowMessage(Message.Information(value).To(MessageWindow.StatusBar));
+                ShowMessage(Message.Information(value).To(MessagePlace.StatusBar));
             }
         }
 
@@ -628,12 +628,12 @@ namespace Sys.ViewManager.Forms
 
         protected void ShowMessageBox(Message message)
         {
-            ShowMessage(message.To(MessageWindow.MessageBox));
+            ShowMessage(message.To(MessagePlace.MessageBox));
         }
 
-      
 
-        protected void ShowMessage(IEnumerable<Message> messages, MessageWindow place)
+
+        protected void ShowMessage(MessageBuilder messages, MessagePlace place)
         {
             foreach (var message in messages)
                 message.To(place);
@@ -645,7 +645,7 @@ namespace Sys.ViewManager.Forms
         /// ErrorListWindow has high priority to activate
         /// </summary>
         /// <param name="messages"></param>
-        protected void ShowMessage(IEnumerable<Message> messages)
+        protected void ShowMessage(MessageBuilder messages)
         {
             if (messages.Count() == 0)
                 return;
@@ -663,10 +663,10 @@ namespace Sys.ViewManager.Forms
             if (message == null)
                 return;
 
-            MessageWindow place = message.Window;
+            MessagePlace place = message.Place;
 
             string text = message.ToString();
-            if ((place & MessageWindow.MessageBox) == MessageWindow.MessageBox)
+            if ((place & MessagePlace.MessageBox) == MessagePlace.MessageBox)
             {
                 switch (message.Level)
                 {
@@ -692,11 +692,11 @@ namespace Sys.ViewManager.Forms
 
             if (MainStatusStrip != null)
             {
-                if (((place & MessageWindow.StatusBar) == MessageWindow.StatusBar) || ((place & MessageWindow.StatusBar2) == MessageWindow.StatusBar2))
+                if (((place & MessagePlace.StatusBar) == MessagePlace.StatusBar) || ((place & MessagePlace.StatusBar2) == MessagePlace.StatusBar2))
                 {
 
                     int index;
-                    if (((place & MessageWindow.StatusBar) == MessageWindow.StatusBar))
+                    if (((place & MessagePlace.StatusBar) == MessagePlace.StatusBar))
                         index = 1;
                     else
                         index = 2;
@@ -727,7 +727,7 @@ namespace Sys.ViewManager.Forms
 
 
             
-            if ((place & MessageWindow.ErrorListWindow) == MessageWindow.ErrorListWindow || (place & MessageWindow.OutputWindow) == MessageWindow.OutputWindow)
+            if ((place & MessagePlace.ErrorListWindow) == MessagePlace.ErrorListWindow || (place & MessagePlace.OutputWindow) == MessagePlace.OutputWindow)
             {
                 this.MessageManager.Add(message);
             }
@@ -1033,7 +1033,7 @@ namespace Sys.ViewManager.Forms
         {
             bool result =  RuleValidated(false);
 
-            this.ShowMessage(this.validateProvider.ToMessageList(), MessageWindow.ErrorListWindow);
+            this.ShowMessage(this.validateProvider.ToMessageList(), MessagePlace.ErrorListWindow);
             
             return result;
         }

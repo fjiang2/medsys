@@ -16,10 +16,6 @@ namespace X12.File
         public X12File(string fileName)
             : base(fileName)
         {
-           
-
-           
-          
         }
 
         public void Parse(Worker worker)
@@ -28,6 +24,10 @@ namespace X12.File
             parser.Parse();
         }
 
+        public MessageBuilder MessageBuilder
+        {
+            get { return this.parser.MessageBuilder; }
+        }
 
         public string[] Segments
         {

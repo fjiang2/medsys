@@ -40,7 +40,7 @@ namespace Sys.ViewManager.Forms
 
         void manager_Cleared(object sender, EventArgs e)
         {
-            var messages = this.manager.GetMessages(MessageWindow.OutputWindow);
+            var messages = this.manager.GetMessages(MessagePlace.OutputWindow);
             if (messages.Count() == 0)
                 return;
 
@@ -49,7 +49,7 @@ namespace Sys.ViewManager.Forms
 
         private void manager_Committed(object sender, EventArgs e)
         {
-            var messages = this.manager.GetMessages(MessageWindow.OutputWindow);
+            var messages = this.manager.GetMessages(MessagePlace.OutputWindow);
             if (messages.Count() == 0)
                 return;
 

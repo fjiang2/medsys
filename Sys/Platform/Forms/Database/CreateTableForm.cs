@@ -47,18 +47,18 @@ namespace Sys.Platform.Forms
             if (asm == null)
                 return;
 
-            this.ShowMessage(Unpacking.CreateTable(asm), MessageWindow.OutputWindow);
+            this.ShowMessage(Unpacking.CreateTable(asm), MessagePlace.OutputWindow);
         }
 
 
         private void btnCreateAllTable_Click(object sender, EventArgs e)
         {
-            this.ShowMessage(CreateTable(), MessageWindow.OutputWindow);
+            this.ShowMessage(CreateTable(), MessagePlace.OutputWindow);
         }
 
-        public static IEnumerable<Message> CreateTable()
+        public static MessageBuilder CreateTable()
         {
-            List<Message> messages = new List<Message>();
+            MessageBuilder messages = new MessageBuilder();
             foreach (Assembly asm in Library.GetRegisteredAssemblies())
             {
                 messages.AddRange(Unpacking.CreateTable(asm));
@@ -84,16 +84,16 @@ namespace Sys.Platform.Forms
             if (asm == null)
                 return;
 
-            IEnumerable<Message> messages = Pack(asm, this.externalAssembly);
+            MessageBuilder messages = Pack(asm, this.externalAssembly);
             if (messages.Count() == 0)
                 this.ShowMessageBox(Message.Warning("No table needs to be packed."));
             else
-                this.ShowMessage(messages, MessageWindow.OutputWindow);
+                this.ShowMessage(messages, MessagePlace.OutputWindow);
         }
 
         private void btnPackAll_Click(object sender, EventArgs e)
         {
-           this.ShowMessage(Pack(), MessageWindow.OutputWindow);
+           this.ShowMessage(Pack(), MessagePlace.OutputWindow);
         }
 
 
@@ -135,9 +135,9 @@ namespace Sys.Platform.Forms
 
         }
 
-        private IEnumerable<Message> Pack()
+        private MessageBuilder Pack()
         {
-            List<Message> messages = new List<Message>();
+            MessageBuilder messages = new MessageBuilder();
             foreach (Assembly asm in Library.GetRegisteredAssemblies())
             {
                 //don't pack data for PersistentObjects, all data can be re-created
@@ -151,10 +151,10 @@ namespace Sys.Platform.Forms
             
         }
 
-        private static IEnumerable<Message> Pack(Assembly assembly, bool external)
+        private static MessageBuilder Pack(Assembly assembly, bool external)
         {
 
-            List<Message> messages = new List<Message>();
+            MessageBuilder messages = new MessageBuilder();
             foreach (Type type in assembly.GetTypes())
             {
                 if (type.BaseType != typeof(DPObject))

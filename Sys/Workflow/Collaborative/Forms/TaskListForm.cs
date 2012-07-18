@@ -385,7 +385,7 @@ namespace Sys.Workflow.Collaborative.Forms
                     e.Val[XmppClient.XMPP_COMPUTER_NAME].Str,
                     DateTime.Now);
 
-                this.ShowMessage(Message.Information(msg).To(MessageWindow.StatusBar2));
+                this.ShowMessage(Message.Information(msg).To(MessagePlace.StatusBar2));
             }
 
             Cursor.Current = Cursors.Default;

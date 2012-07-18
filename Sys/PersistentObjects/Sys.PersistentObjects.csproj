@@ -166,6 +166,7 @@
     <Compile Include="Sys\Active.cs" />
     <Compile Include="Sys\Const.cs" />
     <Compile Include="Sys\DataPool.cs" />
+    <Compile Include="Sys\Message\MessageBuilder.cs" />
     <Compile Include="Sys\Message\MessageLocation.cs" />
     <Compile Include="Sys\Message\MessageCode.cs" />
     <Compile Include="Sys\IAccount.cs" />
@@ -173,8 +174,7 @@
     <Compile Include="Sys\Message\MessageEventArgs.cs" />
     <Compile Include="Sys\Message\MessageLevel.cs" />
     <Compile Include="Sys\Message\Message.cs" />
-    <Compile Include="Sys\Message\MessageManager.cs" />
-    <Compile Include="Sys\Message\MessageWindow.cs" />
+    <Compile Include="Sys\Message\MessagePlace.cs" />
     <Compile Include="Sys\SysException.cs" />
     <Compile Include="Sys\SysExtensiton.cs" />
     <Compile Include="Sys\Worker.cs">

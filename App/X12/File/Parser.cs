@@ -16,8 +16,8 @@ namespace X12.File
         private NTree<LoopTemplateDpo> director;
         
         private Memory DS = new Memory();
-
-        Worker worker;
+        private Worker worker;
+        public readonly MessageBuilder MessageBuilder = new MessageBuilder();
 
         public Parser(List<SegmentLine> segmentLines, Worker worker)
             :base(segmentLines)
@@ -31,6 +31,7 @@ namespace X12.File
 
             GlobalVariables();
         }
+
 
         /// <summary>
         /// Global variables
@@ -68,7 +69,7 @@ namespace X12.File
                 consumer.Nodes.Add(cnode);
             }
             else
-                MessageManager.Instance.Clear(MessageWindow.ErrorListWindow);
+                MessageBuilder.Clear();
 
             base.HierarchicalTransaction();
             return false;
@@ -192,7 +193,7 @@ namespace X12.File
                 if (!segment.ValidElementCode(CurrentSegmentLine, out message))
                 {
                     message = string.Format("{0}, {1}", message, this.CurrentLoopTemplate);
-                    MessageManager.Instance.Add(Message.Warning(message).At(new MessageLocation(this.Line + 1)));
+                    MessageBuilder.Add(Message.Warning(message).At(new MessageLocation(this.Line + 1)));
                     return false;
                 }
 

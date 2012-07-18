@@ -38,12 +38,12 @@ namespace Sys.Data.Manager
             return sb.ToString();
         }
 
-        public bool Validate(MessageManager manager)
+        public bool Validate(MessageBuilder builder)
         {
             bool good = Identifier(this.Feature).Equals(this.Feature);
            
             if (!good)
-                manager.Add(Message.Error(string.Format("Invalid identifier: {0}", this.Feature)));
+                builder.Add(Message.Error(string.Format("Invalid identifier: {0}", this.Feature)));
 
             return good;
         }

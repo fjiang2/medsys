@@ -58,32 +58,32 @@ namespace Sys.Data.Manager
             }
         }
 
-        public bool Validate(MessageManager manager)
+        public bool Validate(MessageBuilder builder)
         {
             DPList<EnumField> list = new DPList<EnumField>(this.fields);
 
             bool good = true;
             foreach (EnumField field in list)
             {
-                if (!field.Validate(manager))
+                if (!field.Validate(builder))
                     good = false;
             }
 
             if (list.Count == 0)
             {
-                manager.Add(Message.Error("Enum fields not defined."));
+                builder.Add(Message.Error("Enum fields not defined."));
                 good = false;
             }
 
             if (list.ToArray<string>(EnumField._Feature).Distinct().Count() != list.Count)
             {
-                manager.Add(Message.Error("Duplicated field names found."));
+                builder.Add(Message.Error("Duplicated field names found."));
                 good = false;
             }
 
             if (list.ToArray<int>(EnumField._Value).Distinct().Count() != list.Count)
             {
-                manager.Add(Message.Error("Duplicated values found."));
+                builder.Add(Message.Error("Duplicated values found."));
                 good = false;
             }
 

@@ -154,10 +154,10 @@ namespace Sys.Data.Manager
 
         }
 
-       
-        public static IEnumerable<Message> CreateTable(Assembly assembly)
+
+        public static MessageBuilder CreateTable(Assembly assembly)
         {
-            List<Message> messages = new List<Message>();
+            MessageBuilder messages = new MessageBuilder();
             foreach (Type type in assembly.GetTypes())
             {
                 if (type.BaseType != typeof(DPObject))
@@ -174,9 +174,9 @@ namespace Sys.Data.Manager
         }
 
 
-        private static IEnumerable<Message> CreateTable(Type dpoType)
+        private static MessageBuilder CreateTable(Type dpoType)
         {
-            List<Message> messages = new List<Message>();
+            MessageBuilder messages = new MessageBuilder();
 
             DPObject dpo = (DPObject)Activator.CreateInstance(dpoType);
 
