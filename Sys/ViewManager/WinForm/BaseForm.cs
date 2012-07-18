@@ -600,7 +600,7 @@ namespace Sys.ViewManager.Forms
         {
             set
             {
-                ShowMessage(Message.Error(value).To(MessagePlace.MessageBox|MessagePlace.StatusBar));
+                ShowMessage(Message.Error(value), MessagePlace.MessageBox|MessagePlace.StatusBar);
             }
         }
 
@@ -609,7 +609,7 @@ namespace Sys.ViewManager.Forms
         {
             set
             {
-                ShowMessage(Message.Warning(value).To(MessagePlace.MessageBox | MessagePlace.StatusBar));
+                ShowMessage(Message.Warning(value),  MessagePlace.MessageBox | MessagePlace.StatusBar);
             }
         }
 
@@ -617,7 +617,7 @@ namespace Sys.ViewManager.Forms
         {
             set
             {
-                ShowMessage(Message.Information(value).To(MessagePlace.StatusBar));
+                ShowMessage(Message.Information(value) , MessagePlace.StatusBar);
             }
         }
 
@@ -628,7 +628,7 @@ namespace Sys.ViewManager.Forms
 
         protected void ShowMessageBox(Message message)
         {
-            ShowMessage(message.To(MessagePlace.MessageBox));
+            ShowMessage(message, MessagePlace.MessageBox);
         }
 
 
@@ -638,8 +638,6 @@ namespace Sys.ViewManager.Forms
             if (messages.Count() == 0)
                 return;
 
-            foreach (var message in messages)
-                message.To(place);
 
             this.MessageManager.ClearWindow(place);
             this.MessageManager.Add(messages);
@@ -648,36 +646,33 @@ namespace Sys.ViewManager.Forms
 
        
 
-        protected void ShowMessage(Message message)
+        protected void ShowMessage(Message message, MessagePlace place)
         { 
             if (message == null)
                 return;
 
-            MessagePlace place = message.Place;
 
             string text = message.ToString();
             if ((place & MessagePlace.MessageBox) == MessagePlace.MessageBox)
             {
+                MessageBoxIcon icon = MessageBoxIcon.None;
                 switch (message.Level)
                 {
                     case MessageLevel.Error:
                     case MessageLevel.Fatal:
-                        MessageBox.Show(this, text, message.Level.ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        icon = MessageBoxIcon.Error;
                         break;
 
                     case MessageLevel.Warning:
-                        MessageBox.Show(this, text, message.Level.ToString(), MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        icon = MessageBoxIcon.Warning;
                         break;
 
                     case MessageLevel.Information:
-                        MessageBox.Show(this, text, message.Level.ToString(), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        icon = MessageBoxIcon.Information;
                         break;
-                    
-                    default:
-                        MessageBox.Show(this, text, message.Level.ToString(), MessageBoxButtons.OK);
-                        break;
-                    
                 }
+
+                MessageBox.Show(this, text, message.Level.ToString(), MessageBoxButtons.OK, icon);
             }
 
             if (MainStatusStrip != null)
@@ -691,32 +686,33 @@ namespace Sys.ViewManager.Forms
                     else
                         index = 2;
 
+                    Color color = Color.Black;
                     switch (message.Level)
                     {
 
                         case MessageLevel.Error:
                         case MessageLevel.Fatal:
-                            SetStatusBarText(System.Drawing.Color.Red, text, index);
+                            color = Color.Red;
                             break;
 
                         case MessageLevel.Warning:
-                            SetStatusBarText(System.Drawing.Color.Brown, text, index);
+                            color = Color.Brown;
                             break;
 
                         case MessageLevel.Information:
-                            SetStatusBarText(System.Drawing.Color.Blue, text, index);
+                            color = Color.Blue;
                             break;
 
                         default:
-                            SetStatusBarText(System.Drawing.Color.Black, text, index);
                             break;
 
                     }
+
+                    SetStatusBarText(color, text, index);
+
                 }
             }
 
-
-            
             if ((place & MessagePlace.ErrorListWindow) == MessagePlace.ErrorListWindow || (place & MessagePlace.OutputWindow) == MessagePlace.OutputWindow)
             {
                 this.MessageManager.Add(message);

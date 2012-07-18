@@ -24,8 +24,8 @@ namespace Sys.ViewManager.Forms
             this.ReadOnly = true;
 
             this.manager = MessageManager.Instance;
-            manager.Committed += new MessageHandler(manager_Committed);
-            manager.Cleared += new MessageHandler(manager_Cleared);
+            manager.Committed += new MessagePlaceHandler(manager_Committed);
+            manager.Cleared += new MessagePlaceHandler(manager_Cleared);
         }
 
         public void ActivateDockPanel()
@@ -38,15 +38,15 @@ namespace Sys.ViewManager.Forms
         }
 
 
-        void manager_Cleared(object sender, MessageEventArgs e)
+        void manager_Cleared(object sender, MessagePlaceEventArgs e)
         {
-            if ((e.Message.Place & MessagePlace.OutputWindow) == MessagePlace.OutputWindow)
+            if ((e.Place & MessagePlace.OutputWindow) == MessagePlace.OutputWindow)
                 this.Text = "";
         }
 
-        private void manager_Committed(object sender, MessageEventArgs e)
+        private void manager_Committed(object sender, MessagePlaceEventArgs e)
         {
-            if (!((e.Message.Place & MessagePlace.OutputWindow) == MessagePlace.OutputWindow))
+            if (!((e.Place & MessagePlace.OutputWindow) == MessagePlace.OutputWindow))
                 return;
 
             StringBuilder builder = new StringBuilder();

@@ -173,7 +173,6 @@
     <Compile Include="Sys\DataStructure\Identifier.cs" />
     <Compile Include="Sys\Message\MessageLevel.cs" />
     <Compile Include="Sys\Message\Message.cs" />
-    <Compile Include="Sys\Message\MessagePlace.cs" />
     <Compile Include="Sys\SysException.cs" />
     <Compile Include="Sys\SysExtensiton.cs" />
     <Compile Include="Sys\Worker.cs">
