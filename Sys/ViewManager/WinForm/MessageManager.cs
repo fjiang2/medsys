@@ -45,14 +45,7 @@ namespace Sys.ViewManager.Forms
                 Cleared(this, new EventArgs());
         }
 
-        public void Clear(MessagePlace place)
-        {
-            if (Cleared != null)
-                Cleared(this, new EventArgs());
-
-            messages.RemoveAll(message => message.Place == place);
-
-        }
+    
 
         public void OnMessageClicked(Message message)
         {
@@ -95,9 +88,14 @@ namespace Sys.ViewManager.Forms
             get { return this.messages; }
         }
 
-        public IEnumerable<Message> GetMessages(MessagePlace place)
+        internal IEnumerable<Message> GetMessages(MessagePlace place)
         {
             return this.messages.Where(message => (message.Place & place) == place);
+        }
+
+        internal void RemoveMessages(MessagePlace place)
+        {
+            messages.RemoveAll(message => (message.Place & place) == place);
         }
 
         public override string ToString()

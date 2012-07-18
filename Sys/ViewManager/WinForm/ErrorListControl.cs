@@ -92,9 +92,9 @@ namespace Sys.ViewManager.Forms
             int warningCount = 0;
             int informationCount = 0;
 
-            foreach (Message item in messages)
+            foreach (Message message in messages)
             {
-                switch (item.Level)
+                switch (message.Level)
                 {
                     case MessageLevel.Error:
                         errorCount++;
@@ -111,15 +111,15 @@ namespace Sys.ViewManager.Forms
 
 
                 DataRow row = dt.NewRow();
-                row[0] = (int)item.Level;
+                row[0] = (int)message.Level;
                 
-                if(item.Code != 0)
-                    row[1] = item.Code;
+                if(message.Code != 0)
+                    row[1] = message.Code;
 
-                row[2] = item.Description;
-                row[3] = item.Location;
+                row[2] = message.Description;
+                row[3] = message.Location;
 
-                row[MESSAGE_COLUMN] = item;
+                row[MESSAGE_COLUMN] = message;
                 dt.Rows.Add(row);
             }
 
@@ -127,6 +127,7 @@ namespace Sys.ViewManager.Forms
             txtWarnings.Text = string.Format("{0} Warnings", warningCount);
             txtMessages.Text = string.Format("{0} Messages", informationCount);
 
+            manager.RemoveMessages(MessagePlace.ErrorListWindow);
             ActivateDockPanel();
         }
 
