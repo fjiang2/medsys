@@ -133,7 +133,6 @@
     <Compile Include="Forms\Bind\JControl2.cs" />
     <Compile Include="Forms\TieScript.cs" />
     <Compile Include="Manager\AppLink.cs" />
-    <Compile Include="WinForm\MessagePlace.cs" />
     <Compile Include="WinForm\OutputControl.cs">
       <SubType>Component</SubType>
     </Compile>

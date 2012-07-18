@@ -194,7 +194,7 @@ namespace X12.File
                 if (!segment.ValidElementCode(CurrentSegmentLine, out message))
                 {
                     message = string.Format("{0}, {1}", message, this.CurrentLoopTemplate);
-                    errorManager.Add(Message.Warning(message, "Line:" + (this.Line + 1)));
+                    errorManager.Add(Message.Warning(message, new MessageLocation(this.Line + 1)));
                     return false;
                 }
 

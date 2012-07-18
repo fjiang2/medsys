@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Sys.ViewManager.Forms
+namespace Sys
 {
     [Flags]
     public enum MessagePlace

@@ -234,15 +234,14 @@ namespace Sys.BusinessRules
         {
             List<Message> list = new List<Message>();
             foreach (RuleEvent ruleEvent in BrokenRules)
-            { 
-                Message message = new Message(MessageLevel.None, ruleEvent.Message);
+            {
+                Message message = new Message(ruleEvent.MessageLevel, ruleEvent.Message);
                 
                 if(ruleEvent.ErrorCode != -1 )
                     message.Code = ruleEvent.ErrorCode;
                 
-                message.Level = ruleEvent.MessageLevel;
 #if DEBUG
-                message.Location =  ruleEvent.keyName;
+                message.Location =  new MessageLocation(ruleEvent.keyName);
 #endif                
                 list.Add(message);
             }
