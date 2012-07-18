@@ -17,7 +17,7 @@ namespace X12.File
         
         private Memory DS = new Memory();
         private Worker worker;
-        public readonly MessageBuilder MessageBuilder = new MessageBuilder();
+        public readonly MessageBuilder Messages = new MessageBuilder();
 
         public Parser(List<SegmentLine> segmentLines, Worker worker)
             :base(segmentLines)
@@ -69,7 +69,7 @@ namespace X12.File
                 consumer.Nodes.Add(cnode);
             }
             else
-                MessageBuilder.Clear();
+                Messages.Clear();
 
             base.HierarchicalTransaction();
             return false;
@@ -193,7 +193,7 @@ namespace X12.File
                 if (!segment.ValidElementCode(CurrentSegmentLine, out message))
                 {
                     message = string.Format("{0}, {1}", message, this.CurrentLoopTemplate);
-                    MessageBuilder.Add(Message.Warning(message).At(new MessageLocation(this.Line + 1)));
+                    Messages.Add(Message.Warning(message).At(new MessageLocation(this.Line + 1)));
                     return false;
                 }
 
