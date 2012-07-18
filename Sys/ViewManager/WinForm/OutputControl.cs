@@ -23,7 +23,7 @@ namespace Sys.ViewManager.Forms
             this.ReadOnly = true;
 
             this.manager = new MessageManager(this);
-            manager.Comitted += new EventHandler(manager_Committed);
+            manager.Committed += new EventHandler(manager_Committed);
             manager.Cleared += new EventHandler(manager_Cleared);
         }
 

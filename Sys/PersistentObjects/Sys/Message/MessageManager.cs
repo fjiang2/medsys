@@ -18,7 +18,7 @@ namespace Sys
    
         List<Message> messages = new List<Message>();
 
-        public event EventHandler Comitted;
+        public event EventHandler Committed;
         public event EventHandler Cleared;
         public event MessageHandler MessageClicked;
 
@@ -31,8 +31,8 @@ namespace Sys
 
         public void Commit()
         {
-            if (Comitted != null)
-                Comitted(this, new EventArgs());
+            if (Committed != null)
+                Committed(this, new EventArgs());
 
             dock.ActivateDockPanel();
         }

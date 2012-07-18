@@ -581,7 +581,7 @@ namespace Sys.ViewManager.Forms
             get { return ((ErrorListControl)this.MainForm.FormDockManager[typeof(ErrorListControl)]).Manager; }
         }
 
-        protected MessageManager OutputManager
+        private MessageManager OutputManager
         {
             get { return ((OutputControl)this.MainForm.FormDockManager[typeof(OutputControl)]).Manager; }
         }
@@ -622,6 +622,24 @@ namespace Sys.ViewManager.Forms
             ShowMessage(message, MessagePlace.MessageBox);
         }
 
+        protected void ShowMessage(IEnumerable<Message> messages, MessagePlace place)
+        {
+
+            if ((place & MessagePlace.ErrorListWindow) == MessagePlace.ErrorListWindow)
+            {
+                this.MessageManager.Clear();
+                this.MessageManager.Add(messages);
+                this.MessageManager.Commit();
+            }
+            else if ((place & MessagePlace.OutputWindow) == MessagePlace.OutputWindow)
+            {
+                this.OutputManager.Clear();
+                this.OutputManager.Add(messages);
+                this.OutputManager.Commit();
+            }
+
+        }
+
         protected void ShowMessage(Message message, MessagePlace place)
         { 
             if (message == null)
@@ -633,61 +651,61 @@ namespace Sys.ViewManager.Forms
                 switch (message.Level)
                 {
                     case MessageLevel.Error:
+                    case MessageLevel.Fatal:
                         MessageBox.Show(this, text, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         break;
 
                     case MessageLevel.Warning:
-                        MessageBox.Show(this, text, "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show(this, text, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         break;
 
                     case MessageLevel.Information:
-                        MessageBox.Show(this, text, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show(this, text, "Information", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         break;
                 }
             }
 
-            if ((place & MessagePlace.StatusBar) == MessagePlace.StatusBar)
+            if (MainStatusStrip != null)
             {
-                if (MainStatusStrip != null)
+                if (((place & MessagePlace.StatusBar) == MessagePlace.StatusBar) || ((place & MessagePlace.StatusBar2) == MessagePlace.StatusBar2))
                 {
+
+                    int index;
+                    if (((place & MessagePlace.StatusBar) == MessagePlace.StatusBar))
+                        index = 1;
+                    else
+                        index = 2;
+
                     switch (message.Level)
                     {
-                        case Sys.MessageLevel.Information:
-                            SetStatusBarText(System.Drawing.Color.Blue, text, 1);
+
+                        case MessageLevel.Error:
+                        case MessageLevel.Fatal:
+                            SetStatusBarText(System.Drawing.Color.Red, text, index);
                             break;
 
-                        case Sys.MessageLevel.Error:
-                        case Sys.MessageLevel.Fatal:
-                            SetStatusBarText(System.Drawing.Color.Red, text, 1);
+                        case MessageLevel.Warning:
+                            SetStatusBarText(System.Drawing.Color.Brown, text, index);
                             break;
 
-                        case Sys.MessageLevel.Warning:
-                            SetStatusBarText(System.Drawing.Color.Brown, text, 1);
+                        case MessageLevel.Information:
+                            SetStatusBarText(System.Drawing.Color.Blue, text, index);
                             break;
+
                     }
                 }
             }
 
-            if ((place & MessagePlace.StatusBar2) == MessagePlace.StatusBar2)
+           
+
+            if ((place & MessagePlace.ErrorListWindow) == MessagePlace.ErrorListWindow)
             {
-                if (MainStatusStrip != null)
-                {
-                    switch (message.Level)
-                    {
-                        case Sys.MessageLevel.Information:
-                            SetStatusBarText(System.Drawing.Color.Blue, text, 2);
-                            break;
+                this.MessageManager.Add(message);
+            }
 
-                        case Sys.MessageLevel.Error:
-                        case Sys.MessageLevel.Fatal:
-                            SetStatusBarText(System.Drawing.Color.Red, text, 2);
-                            break;
-
-                        case Sys.MessageLevel.Warning:
-                            SetStatusBarText(System.Drawing.Color.Brown, text, 2);
-                            break;
-                    }
-                }
+            if ((place & MessagePlace.OutputWindow) == MessagePlace.OutputWindow)
+            {
+                this.OutputManager.Add(message);
             }
         }
 
