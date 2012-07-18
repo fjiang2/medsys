@@ -44,21 +44,16 @@ namespace Sys.Platform.Forms
 
         private void btnCreateTable_Click(object sender, EventArgs e)
         {
-            this.OutputManager.Clear();
-            
             if (asm == null)
                 return;
 
-            this.OutputManager.Add(Unpacking.CreateTable(asm));
-            this.OutputManager.Commit();
+            this.ShowMessage(Unpacking.CreateTable(asm), MessagePlace.OutputWindow);
         }
 
 
         private void btnCreateAllTable_Click(object sender, EventArgs e)
         {
-            this.OutputManager.Clear();
-            this.OutputManager.Add(CreateTable());
-            this.OutputManager.Commit();
+            this.ShowMessage(CreateTable(), MessagePlace.OutputWindow);
         }
 
         public static IEnumerable<Message> CreateTable()
@@ -85,22 +80,20 @@ namespace Sys.Platform.Forms
 
         private void btnPackModule_Click(object sender, EventArgs e)
         {
-            this.OutputManager.Clear();
+            
             if (asm == null)
                 return;
 
-            this.OutputManager.Add(Pack(asm, this.externalAssembly));
-            if (this.OutputManager.Messages.Count() == 0)
-                this.OutputManager.Add(Message.Information("No table needs to be packed."));
-
-            this.OutputManager.Commit();
+            IEnumerable<Message> messages = Pack(asm, this.externalAssembly);
+            if (messages.Count() == 0)
+                this.ShowMessage(Message.Warning("No table needs to be packed."));
+            else
+                this.ShowMessage(messages, MessagePlace.OutputWindow);
         }
 
         private void btnPackAll_Click(object sender, EventArgs e)
         {
-           this.OutputManager.Clear();
-           this.OutputManager.Add(Pack());
-           this.OutputManager.Commit();
+           this.ShowMessage(Pack(), MessagePlace.OutputWindow);
         }
 
 

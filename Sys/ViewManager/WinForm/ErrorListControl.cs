@@ -45,7 +45,7 @@ namespace Sys.ViewManager.Forms
 
             gridControl1.DataSource = dt;
 
-            manager.Comitted += new EventHandler(manager_Committed);
+            manager.Committed += new EventHandler(manager_Committed);
             manager.Cleared += new EventHandler(manager_Cleared);
 
             this.gridControl1.MouseDoubleClick += new MouseEventHandler(gridControl1_MouseDoubleClick);
