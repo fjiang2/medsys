@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Sys
+namespace Sys.ViewManager.Forms
 {
     public delegate void MessageHandler(object sender, MessageEventArgs e);
 
