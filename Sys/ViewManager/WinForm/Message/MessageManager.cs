@@ -22,7 +22,7 @@ namespace Sys.ViewManager.Forms
 
         List<Message> messages = new List<Message>();
 
-        public event EventHandler Committed;
+        public event MessageHandler Committed;
         public event MessageHandler Cleared;
         public event MessageHandler MessageClicked;
 
@@ -30,10 +30,13 @@ namespace Sys.ViewManager.Forms
         {
         }
 
-        public void Commit()
+        public void Commit(MessagePlace place)
         {
             if (Committed != null)
-                Committed(this, new EventArgs());
+            {
+                Message message = new Message(MessageLevel.None, null).To(place);
+                Committed(this, new MessageEventArgs(message));
+            }
 
         }
 
@@ -41,9 +44,11 @@ namespace Sys.ViewManager.Forms
         public void ClearWindow(MessagePlace place)
         {
             messages.Clear();
-            Message message = new Message(MessageLevel.None, null).To(place);
             if (Cleared != null)
+            {
+                Message message = new Message(MessageLevel.None, null).To(place);
                 Cleared(this, new MessageEventArgs(message));
+            }
         }
 
     
@@ -89,15 +94,8 @@ namespace Sys.ViewManager.Forms
             get { return this.messages; }
         }
 
-        internal IEnumerable<Message> GetMessages(MessagePlace place)
-        {
-            return this.messages.Where(message => (message.Place & place) == place);
-        }
-
-        internal void RemoveMessages(MessagePlace place)
-        {
-            messages.RemoveAll(message => (message.Place & place) == place);
-        }
+   
+     
 
         public override string ToString()
         {

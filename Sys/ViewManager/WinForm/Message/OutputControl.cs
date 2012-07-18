@@ -24,7 +24,7 @@ namespace Sys.ViewManager.Forms
             this.ReadOnly = true;
 
             this.manager = MessageManager.Instance;
-            manager.Committed += new EventHandler(manager_Committed);
+            manager.Committed += new MessageHandler(manager_Committed);
             manager.Cleared += new MessageHandler(manager_Cleared);
         }
 
@@ -44,14 +44,13 @@ namespace Sys.ViewManager.Forms
                 this.Text = "";
         }
 
-        private void manager_Committed(object sender, EventArgs e)
+        private void manager_Committed(object sender, MessageEventArgs e)
         {
-            var messages = this.manager.GetMessages(MessagePlace.OutputWindow);
-            if (messages.Count() == 0)
+            if (!((e.Message.Place & MessagePlace.OutputWindow) == MessagePlace.OutputWindow))
                 return;
 
             StringBuilder builder = new StringBuilder();
-            foreach (Message item in messages)
+            foreach (Message item in manager.Messages)
             {
                 builder.AppendLine(item.Description);
             }
@@ -59,7 +58,6 @@ namespace Sys.ViewManager.Forms
             this.Text += builder.ToString();
             this.ScrollToCaret();
 
-            manager.RemoveMessages(MessagePlace.OutputWindow);
             ActivateDockPanel();
         }
        

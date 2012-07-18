@@ -643,7 +643,7 @@ namespace Sys.ViewManager.Forms
 
             this.MessageManager.ClearWindow(place);
             this.MessageManager.Add(messages);
-            this.MessageManager.Commit();
+            this.MessageManager.Commit(place);
         }
 
        
