@@ -18,13 +18,11 @@ namespace X12.File
         private Memory DS = new Memory();
 
         Worker worker;
-        MessageManager errorManager;
 
-        public Parser(List<SegmentLine> segmentLines, Worker worker, MessageManager errorManager)
+        public Parser(List<SegmentLine> segmentLines, Worker worker)
             :base(segmentLines)
         {
             this.worker = worker;
-            this.errorManager = errorManager;
 
             this.spec = Spec5010A.Instance;
 
@@ -70,7 +68,7 @@ namespace X12.File
                 consumer.Nodes.Add(cnode);
             }
             else
-                errorManager.Clear();
+                MessageManager.Instance.Clear(MessageWindow.ErrorListWindow);
 
             base.HierarchicalTransaction();
             return false;
@@ -194,7 +192,7 @@ namespace X12.File
                 if (!segment.ValidElementCode(CurrentSegmentLine, out message))
                 {
                     message = string.Format("{0}, {1}", message, this.CurrentLoopTemplate);
-                    errorManager.Add(Message.Warning(message).At(new MessageLocation(this.Line + 1)));
+                    MessageManager.Instance.Add(Message.Warning(message).At(new MessageLocation(this.Line + 1)));
                     return false;
                 }
 

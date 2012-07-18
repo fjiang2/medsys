@@ -15,7 +15,7 @@ using DevExpress.XtraGrid.Columns;
 
 namespace Sys.ViewManager.Forms
 {
-    public partial class ErrorListControl : UserControl, IDockable
+    public partial class ErrorListControl : UserControl
     {
         const string MESSAGE_COLUMN = "Object";
         MessageManager manager;
@@ -29,7 +29,7 @@ namespace Sys.ViewManager.Forms
             gridView1.OptionsView.ShowFilterPanelMode = DevExpress.XtraGrid.Views.Base.ShowFilterPanelMode.Never;
 
             this.dt = new DataTable();
-            this.manager = new MessageManager(this);
+            this.manager = MessageManager.Instance;
 
             
             dt.Columns.Add(new DataColumn("ErrorTy", typeof(int)));
@@ -74,16 +74,23 @@ namespace Sys.ViewManager.Forms
 
         void manager_Cleared(object sender, EventArgs e)
         {
+            var messages = this.manager.GetMessages(MessageWindow.ErrorListWindow);
+            if (messages.Count() == 0)
+                return;
+
             this.dt.Rows.Clear();
             this.dt.AcceptChanges();
         }
 
         private void manager_Committed(object sender, EventArgs e)
         {
+            var messages = this.manager.GetMessages(MessageWindow.ErrorListWindow);
+            if (messages.Count() == 0)
+                return;
+
             int errorCount = 0;
             int warningCount = 0;
             int informationCount = 0;
-            var messages = ((MessageManager)sender).Messages.Where(message => (message.Window & MessageWindow.ErrorListWindow) == MessageWindow.ErrorListWindow);
 
             foreach (Message item in messages)
             {
@@ -120,11 +127,7 @@ namespace Sys.ViewManager.Forms
             txtWarnings.Text = string.Format("{0} Warnings", warningCount);
             txtMessages.Text = string.Format("{0} Messages", informationCount);
 
-        }
-
-        public MessageManager Manager
-        {
-            get { return this.manager; }
+            ActivateDockPanel();
         }
 
         private void txtErrors_Click(object sender, EventArgs e)

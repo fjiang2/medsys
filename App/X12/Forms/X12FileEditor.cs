@@ -365,13 +365,11 @@ namespace X12.Forms
                 rootLoop.Nodes.Clear();
             }
 
-            MessageManager.Clear();
+            MessageManager.Clear(MessageWindow.ErrorListWindow);
 
             Worker worker = this.StartProgressBar(delegate(Worker worker1)
             {
-                this.x12.Parse(worker1, MessageManager);
-                // this.x12.Parse(null, MassageManager);
-
+                this.x12.Parse(worker1);
             });
 
             worker.RunWorkerCompleted += delegate(object s, RunWorkerCompletedEventArgs e1)

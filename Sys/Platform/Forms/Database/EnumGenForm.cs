@@ -242,7 +242,7 @@ namespace Sys.Platform.Forms
             try
             {
                 GetEnumTypeFromGrid();
-                this.MessageManager.Clear();
+                this.MessageManager.Clear(MessageWindow.OutputWindow);
                 if (!selectedEnumType.Validate(this.MessageManager))
                 {
                     this.ErrorMessage = "Invalid enum definition, " + this.MessageManager.ToString();
@@ -287,7 +287,7 @@ namespace Sys.Platform.Forms
         {
             this.Cursor = Cursors.WaitCursor;
 
-            this.MessageManager.Clear();
+            this.MessageManager.Clear(MessageWindow.OutputWindow);
 
             foreach (Type type in this.enumList)
             {
@@ -300,7 +300,7 @@ namespace Sys.Platform.Forms
                 
                 this.MessageManager.Add(message);
             }
-            
+
             this.MessageManager.Commit();
             this.InformationMessage = "Completed to generate Enum Dictionary";
 

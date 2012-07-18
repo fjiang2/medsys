@@ -7,26 +7,27 @@ using System.Data;
 
 namespace Sys
 {
-    public interface IDockable
-    { 
-        void ActivateDockPanel();
-    }
-
-
     public class MessageManager
     {
-   
+        private static MessageManager instance = null;
+        public static MessageManager Instance
+        {
+            get
+            {
+                if (instance == null)
+                    instance = new MessageManager();
+                return instance;
+            }
+        }
+
         List<Message> messages = new List<Message>();
 
         public event EventHandler Committed;
         public event EventHandler Cleared;
         public event MessageHandler MessageClicked;
 
-        IDockable dock;
-
-        public MessageManager(IDockable dock)
+        private MessageManager()
         {
-            this.dock = dock;
         }
 
         public void Commit()
@@ -34,7 +35,6 @@ namespace Sys
             if (Committed != null)
                 Committed(this, new EventArgs());
 
-            dock.ActivateDockPanel();
         }
 
 
@@ -43,6 +43,15 @@ namespace Sys
             messages.Clear();
             if (Cleared != null)
                 Cleared(this, new EventArgs());
+        }
+
+        public void Clear(MessageWindow window)
+        {
+            if (Cleared != null)
+                Cleared(this, new EventArgs());
+
+            messages.RemoveAll(message => message.Window == window);
+
         }
 
         public void OnMessageClicked(Message message)
@@ -54,10 +63,13 @@ namespace Sys
        
         public Message Add(Message message)
         {
-            if (messages.Contains(message))
-                return message;
+            lock (this.messages)
+            {
+                if (messages.Contains(message))
+                    return message;
 
-            this.messages.Add(message);
+                this.messages.Add(message);
+            }
             return message;
         }
 
@@ -81,6 +93,11 @@ namespace Sys
         public IEnumerable<Message> Messages
         {
             get { return this.messages; }
+        }
+
+        public IEnumerable<Message> GetMessages(MessageWindow window)
+        {
+            return this.messages.Where(message => (message.Window & window) == window);
         }
 
         public override string ToString()
