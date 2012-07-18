@@ -243,11 +243,12 @@ namespace Sys.Platform.Forms
             {
                 GetEnumTypeFromGrid();
                 MessageBuilder messages = new MessageBuilder();
+                this.MessageManager.ClearWindow(MessagePlace.OutputWindow);
                 if (!selectedEnumType.Validate(messages))
                 {
-                    this.ErrorMessage = "Invalid enum definition, " + this.MessageManager.ToString();
                     this.MessageManager.Add(messages);
-                    this.MessageManager.Commit();
+                    this.ErrorMessage = "Invalid enum definition, " + this.MessageManager.ToString();
+                    this.MessageManager.Commit(MessagePlace.OutputWindow);
                     return;
                 }
 
@@ -287,7 +288,8 @@ namespace Sys.Platform.Forms
         private void btnGenDict_Click(object sender, EventArgs e)
         {
             this.Cursor = Cursors.WaitCursor;
-
+            
+            this.MessageManager.ClearWindow(MessagePlace.OutputWindow);
             foreach (Type type in this.enumList)
             {
                 EnumType enumType = new EnumType(type);
@@ -300,7 +302,7 @@ namespace Sys.Platform.Forms
                 this.MessageManager.Add(message);
             }
 
-            this.MessageManager.Commit();
+            this.MessageManager.Commit(MessagePlace.OutputWindow);
             this.InformationMessage = "Completed to generate Enum Dictionary";
 
             this.Cursor = Cursors.Default;

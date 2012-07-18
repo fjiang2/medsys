@@ -45,7 +45,7 @@ namespace Sys.ViewManager.Forms
 
             gridControl1.DataSource = dt;
 
-            manager.Committed += new EventHandler(manager_Committed);
+            manager.Committed += new MessageHandler(manager_Committed);
             manager.Cleared += new MessageHandler(manager_Cleared);
 
             this.gridControl1.MouseDoubleClick += new MouseEventHandler(gridControl1_MouseDoubleClick);
@@ -81,17 +81,17 @@ namespace Sys.ViewManager.Forms
             }
         }
 
-        private void manager_Committed(object sender, EventArgs e)
+        private void manager_Committed(object sender, MessageEventArgs e)
         {
-            var messages = this.manager.GetMessages(MessagePlace.ErrorListWindow);
-            if (messages.Count() == 0)
+            if (!((e.Message.Place & MessagePlace.ErrorListWindow) == MessagePlace.ErrorListWindow))
                 return;
+
 
             int errorCount = 0;
             int warningCount = 0;
             int informationCount = 0;
 
-            foreach (Message message in messages)
+            foreach (Message message in this.manager.Messages)
             {
                 switch (message.Level)
                 {
@@ -126,7 +126,6 @@ namespace Sys.ViewManager.Forms
             txtWarnings.Text = string.Format("{0} Warnings", warningCount);
             txtMessages.Text = string.Format("{0} Messages", informationCount);
 
-            manager.RemoveMessages(MessagePlace.ErrorListWindow);
             ActivateDockPanel();
         }
 
