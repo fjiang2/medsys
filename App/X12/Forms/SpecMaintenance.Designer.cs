@@ -291,7 +291,7 @@
             this.Controls.Add(this.layoutControl1);
             this.Controls.Add(this.toolStrip1);
             this.Name = "SpecMaintenance";
-            this.Text = "Segment Maintenance";
+            this.Text = "X12 Segment Maintenance";
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).EndInit();

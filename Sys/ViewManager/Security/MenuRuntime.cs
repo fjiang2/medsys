@@ -54,8 +54,11 @@ namespace Sys.ViewManager.Security
 
         public void OpenForm(FormPlace formPlace, string formClass, object[] args)
         {
-            BaseForm form = (BaseForm)Sys.Reflector.NewInstance(formClass, args);
-            
+            BaseForm form = NewInstance(formClass, args);
+            if (form == null)
+                return;
+
+
             if(MenuItem.IconImage != null)
                 form.IconImage = MenuItem.IconImage;
 
@@ -85,7 +88,9 @@ namespace Sys.ViewManager.Security
 
         public void OpenDialog(string formClass, object[] args)
         {
-            BaseForm form = (BaseForm)Sys.Reflector.NewInstance(formClass, args);
+            BaseForm form = NewInstance(formClass, args);
+            if (form == null)
+                return;
 
             if (MenuItem.IconImage != null)
                 form.IconImage = MenuItem.IconImage;
@@ -93,6 +98,19 @@ namespace Sys.ViewManager.Security
             form.PopDialog(mainForm.Form);
         }
 
+        private BaseForm NewInstance(string formClass, object[] args)
+        {
+            try
+            {
+                return (BaseForm)Sys.Reflector.NewInstance(formClass, args);
+            }
+            catch (Exception ex)
+            {
+                string message = string.Format("invalid form [{0}], {1}", formClass, ex.Message);
+                MessageBox.Show((Form)this.mainForm, message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
+            }
+        }
 
         public void OpenReport(string reportID)
         {

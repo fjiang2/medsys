@@ -5,6 +5,7 @@ using Tie;
 using DevExpress.XtraNavBar;
 using Sys.ViewManager.Forms;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace Sys.ViewManager.Manager
 {
@@ -77,9 +78,19 @@ namespace Sys.ViewManager.Manager
 
         public BaseForm NewFormInstance()
         {
-            return (BaseForm)Reflector.NewInstance(formClass, args);
+            try
+            {
+                return (BaseForm)Reflector.NewInstance(formClass, args);
+            }
+            catch (Exception ex)
+            {
+                string message = string.Format("invalid form [{0}], {1}", formClass, ex.Message);
+                MessageBox.Show(message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
+            }
         }
 
+ 
         public override string ToString()
         {
             if (caption != null)

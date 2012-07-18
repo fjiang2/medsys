@@ -300,11 +300,7 @@ namespace X12.Forms
             form.Show(this);
         }
 
-        private void toolStripButtonSpec_Click(object sender, EventArgs e)
-        {
-            var form = new SpecMaintenance();
-            form.Show();
-        }
+     
 
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {

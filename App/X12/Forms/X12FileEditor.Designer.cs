@@ -37,7 +37,6 @@
             this.toolStripButtonSearch = new System.Windows.Forms.ToolStripButton();
             this.comboSegments = new System.Windows.Forms.ToolStripComboBox();
             this.btnShowGrid = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonSpec = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.btnControlNumber = new System.Windows.Forms.ToolStripButton();
             this.btnDeleteSegmentLine = new System.Windows.Forms.ToolStripButton();
@@ -69,7 +68,6 @@
             this.toolStripButtonSearch,
             this.comboSegments,
             this.btnShowGrid,
-            this.toolStripButtonSpec,
             this.toolStripSeparator2,
             this.btnControlNumber,
             this.btnDeleteSegmentLine});
@@ -135,16 +133,6 @@
             this.btnShowGrid.Size = new System.Drawing.Size(23, 22);
             this.btnShowGrid.Text = "Grid Analyze";
             this.btnShowGrid.Click += new System.EventHandler(this.btnShowGrid_Click);
-            // 
-            // toolStripButtonSpec
-            // 
-            this.toolStripButtonSpec.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolStripButtonSpec.Image = global::X12.Properties.Resources.DocumentHS;
-            this.toolStripButtonSpec.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonSpec.Name = "toolStripButtonSpec";
-            this.toolStripButtonSpec.Size = new System.Drawing.Size(130, 22);
-            this.toolStripButtonSpec.Text = "5010A Specification";
-            this.toolStripButtonSpec.Click += new System.EventHandler(this.toolStripButtonSpec_Click);
             // 
             // toolStripSeparator2
             // 
@@ -262,7 +250,6 @@
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPageX12;
         private System.Windows.Forms.ToolStripComboBox comboSegments;
-        private System.Windows.Forms.ToolStripButton toolStripButtonSpec;
         private X12SegmentControl segmentControl1;
         private System.Windows.Forms.ToolStripButton btnControlNumber;
         private System.Windows.Forms.ToolStripButton btnParse;

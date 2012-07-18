@@ -635,10 +635,6 @@ namespace Sys.ViewManager.Forms
 
         protected void ShowMessage(MessageBuilder messages, MessagePlace place)
         {
-            if (messages.Count() == 0)
-                return;
-
-
             this.MessageManager.ClearWindow(place);
             this.MessageManager.Add(messages);
             this.MessageManager.Commit(place);
