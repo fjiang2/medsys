@@ -71,19 +71,19 @@ namespace Sys.Data.Manager
 
             if (list.Count == 0)
             {
-                manager.Error("Enum fields not defined.");
+                manager.Add(Message.Error("Enum fields not defined."));
                 good = false;
             }
 
             if (list.ToArray<string>(EnumField._Feature).Distinct().Count() != list.Count)
             {
-                manager.Error("Duplicated field names found.");
+                manager.Add(Message.Error("Duplicated field names found."));
                 good = false;
             }
 
             if (list.ToArray<int>(EnumField._Value).Distinct().Count() != list.Count)
             {
-                manager.Error("Duplicated values found.");
+                manager.Add(Message.Error("Duplicated values found."));
                 good = false;
             }
 

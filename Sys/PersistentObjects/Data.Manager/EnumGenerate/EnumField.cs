@@ -43,7 +43,7 @@ namespace Sys.Data.Manager
             bool good = Identifier(this.Feature).Equals(this.Feature);
            
             if (!good)
-                manager.Error(string.Format("Invalid identifier: {0}", this.Feature));
+                manager.Add(Message.Error(string.Format("Invalid identifier: {0}", this.Feature)));
 
             return good;
         }

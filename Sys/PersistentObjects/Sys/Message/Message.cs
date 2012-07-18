@@ -63,7 +63,7 @@ namespace Sys
 
         public static Message Error(string description)
         {
-            return Error(0, description, "");
+            return Error(description, "");
         }
 
         public static Message Error(string description, string location)
@@ -77,6 +77,11 @@ namespace Sys
             message.Code = code;
             message.Location = location;
             return message;
+        }
+
+        public static Message Warning(string description)
+        {
+            return Warning(description, "");
         }
 
         public static Message Warning(string description, string location)
@@ -94,7 +99,7 @@ namespace Sys
 
         public static Message Information(string description)
         {
-            return Information(0, description, "");
+            return Information(description, "");
         }
 
         public static Message Information(string description, string location)

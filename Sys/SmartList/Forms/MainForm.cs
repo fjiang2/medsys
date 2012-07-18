@@ -160,7 +160,7 @@ namespace Sys.SmartList.Forms
             }
             catch (Exception ex)
             {
-                this.ShowError(ex.Message);
+                this.ShowMessage(ex);
             }
 
             BuildTree();
@@ -298,7 +298,7 @@ namespace Sys.SmartList.Forms
 				}
 				catch (CompilingException ex)
 				{
-					this.ShowError(ex.Message);
+                    this.ShowMessage(ex);
 
 					return;
 				}
@@ -371,7 +371,7 @@ namespace Sys.SmartList.Forms
 				}
 				catch (Exception ex)
 				{
-					this.ShowError(ex.Message);
+                    this.ShowMessage(ex);
 					cmd = null;
 				}
 
@@ -669,7 +669,7 @@ namespace Sys.SmartList.Forms
 			}
 			catch (Exception ex)
 			{
-                this.ShowError(ex.Message);
+                this.ShowMessage(ex);
 			}
 
 

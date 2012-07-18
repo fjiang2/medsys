@@ -51,45 +51,14 @@ namespace Sys
                 MessageClicked(this, new MessageEventArgs(message));
         }
 
-        public Message Error(string description)
+       
+        public Message Add(Message message)
         {
-            return Error(description, "");
-        }
+            if (messages.Contains(message))
+                return message;
 
-        public Message Error(string description, string location)
-        {
-            return Add(Message.Error(0, description, location));
-        }
-
-
-
-        public Message Warning(string description, string location)
-        {
-            return Add(Message.Warning(0, description, location));
-        }
-
-      
-
-        public Message Information(string description)
-        {
-            return Information(description, "");
-        }
-
-        public Message Information(string description, string location)
-        {
-            return Add(Message.Information(description, location));
-        }
-
-   
-
-        private Message Add(Message item)
-        {
-            if (messages.Contains(item))
-                return item;
-
-            this.messages.Add(item);
-
-            return item;
+            this.messages.Add(message);
+            return message;
         }
 
         public Message Add(SysException ex)
