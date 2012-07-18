@@ -1,6 +1,6 @@
 ﻿namespace Sys.Platform.Forms
 {
-    partial class EnumGenForm
+    partial class GenEnumForm
     {
         /// <summary>
         /// Required designer variable.

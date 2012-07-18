@@ -1,6 +1,6 @@
 ﻿namespace Sys.Platform.Forms
 {
-    partial class CreateTableForm
+    partial class GenTableForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.comboModule = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.btnCreateTable = new System.Windows.Forms.Button();
@@ -65,7 +66,7 @@
             this.btnCreateTable.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnCreateTable.Location = new System.Drawing.Point(60, 372);
             this.btnCreateTable.Name = "btnCreateTable";
-            this.btnCreateTable.Size = new System.Drawing.Size(118, 40);
+            this.btnCreateTable.Size = new System.Drawing.Size(175, 40);
             this.btnCreateTable.TabIndex = 9;
             this.btnCreateTable.Text = "Create Tables of selected module";
             this.btnCreateTable.UseVisualStyleBackColor = true;
@@ -96,7 +97,7 @@
             this.btnCreateAllTable.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnCreateAllTable.Location = new System.Drawing.Point(62, 418);
             this.btnCreateAllTable.Name = "btnCreateAllTable";
-            this.btnCreateAllTable.Size = new System.Drawing.Size(116, 36);
+            this.btnCreateAllTable.Size = new System.Drawing.Size(173, 45);
             this.btnCreateAllTable.TabIndex = 12;
             this.btnCreateAllTable.Text = "Create Tables of all modules";
             this.btnCreateAllTable.UseVisualStyleBackColor = true;
@@ -105,9 +106,9 @@
             // btnPackModule
             // 
             this.btnPackModule.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnPackModule.Location = new System.Drawing.Point(566, 372);
+            this.btnPackModule.Location = new System.Drawing.Point(519, 372);
             this.btnPackModule.Name = "btnPackModule";
-            this.btnPackModule.Size = new System.Drawing.Size(94, 40);
+            this.btnPackModule.Size = new System.Drawing.Size(141, 40);
             this.btnPackModule.TabIndex = 13;
             this.btnPackModule.Text = "Pack selected module";
             this.btnPackModule.UseVisualStyleBackColor = true;
@@ -116,9 +117,9 @@
             // btnPackAll
             // 
             this.btnPackAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnPackAll.Location = new System.Drawing.Point(566, 418);
+            this.btnPackAll.Location = new System.Drawing.Point(519, 418);
             this.btnPackAll.Name = "btnPackAll";
-            this.btnPackAll.Size = new System.Drawing.Size(94, 36);
+            this.btnPackAll.Size = new System.Drawing.Size(141, 45);
             this.btnPackAll.TabIndex = 13;
             this.btnPackAll.Text = "Pack all modules";
             this.btnPackAll.UseVisualStyleBackColor = true;
@@ -163,7 +164,7 @@
             this.jGridView1.Size = new System.Drawing.Size(598, 274);
             this.jGridView1.TabIndex = 16;
             // 
-            // CreateTableForm
+            // GenTableForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -181,9 +182,9 @@
             this.Controls.Add(this.lblAssembly);
             this.Controls.Add(this.label4);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Name = "CreateTableForm";
+            this.Name = "GenTableForm";
             this.ShowIcon = false;
-            this.Text = "Create Table from DPO";
+            this.Text = "Generate Table from DPO";
             this.Load += new System.EventHandler(this.CreateTableForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

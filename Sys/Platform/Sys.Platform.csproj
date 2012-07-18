@@ -65,11 +65,11 @@
   <ItemGroup>
     <Compile Include="Dpo\AppointmentDpo.cs" />
     <Compile Include="Dpo\ResourceDpo.cs" />
-    <Compile Include="Forms\Database\EnumGenForm.cs">
+    <Compile Include="Forms\Database\GenEnumForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Database\EnumGenForm.Designer.cs">
-      <DependentUpon>EnumGenForm.cs</DependentUpon>
+    <Compile Include="Forms\Database\GenEnumForm.Designer.cs">
+      <DependentUpon>GenEnumForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Main\AboutBox.cs">
       <SubType>Form</SubType>
@@ -80,17 +80,17 @@
     <Compile Include="Forms\Database\Connect2ServerForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Database\CreateTableForm.cs">
+    <Compile Include="Forms\Database\GenTableForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Database\CreateTableForm.Designer.cs">
-      <DependentUpon>CreateTableForm.cs</DependentUpon>
+    <Compile Include="Forms\Database\GenTableForm.Designer.cs">
+      <DependentUpon>GenTableForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Database\DataTableExplorer.cs">
+    <Compile Include="Forms\Database\TableExplorer.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Database\DataTableExplorer.Designer.cs">
-      <DependentUpon>DataTableExplorer.cs</DependentUpon>
+    <Compile Include="Forms\Database\TableExplorer.Designer.cs">
+      <DependentUpon>TableExplorer.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Database\DataTableSaveForm.cs">
       <SubType>Form</SubType>
@@ -98,11 +98,11 @@
     <Compile Include="Forms\Database\DataTableSaveForm.Designer.cs">
       <DependentUpon>DataTableSaveForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Database\DpoGenForm.cs">
+    <Compile Include="Forms\Database\GenDpoForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Database\DpoGenForm.Designer.cs">
-      <DependentUpon>DpoGenForm.cs</DependentUpon>
+    <Compile Include="Forms\Database\GenDpoForm.Designer.cs">
+      <DependentUpon>GenDpoForm.cs</DependentUpon>
     </Compile>
     <Compile Include="DataImporter\DataImportForm.cs">
       <SubType>Form</SubType>
@@ -272,8 +272,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Forms\Database\EnumGenForm.resx">
-      <DependentUpon>EnumGenForm.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Database\GenEnumForm.resx">
+      <DependentUpon>GenEnumForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Main\AboutBox.resx">
       <DependentUpon>AboutBox.cs</DependentUpon>
@@ -281,17 +281,17 @@
     <EmbeddedResource Include="Forms\Database\Connect2ServerForm.resx">
       <DependentUpon>Connect2ServerForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Database\CreateTableForm.resx">
-      <DependentUpon>CreateTableForm.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Database\GenTableForm.resx">
+      <DependentUpon>GenTableForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Database\DataTableExplorer.resx">
-      <DependentUpon>DataTableExplorer.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Database\TableExplorer.resx">
+      <DependentUpon>TableExplorer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Database\DataTableSaveForm.resx">
       <DependentUpon>DataTableSaveForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Database\DpoGenForm.resx">
-      <DependentUpon>DpoGenForm.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Database\GenDpoForm.resx">
+      <DependentUpon>GenDpoForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DataImporter\DataImportForm.resx">
       <DependentUpon>DataImportForm.cs</DependentUpon>

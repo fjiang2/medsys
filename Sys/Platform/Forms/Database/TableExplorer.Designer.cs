@@ -1,6 +1,6 @@
 ﻿namespace Sys.Platform.Forms
 {
-    partial class DataTableExplorer
+    partial class TableExplorer
     {
         /// <summary>
         /// Required designer variable.
