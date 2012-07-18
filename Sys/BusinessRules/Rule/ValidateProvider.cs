@@ -238,10 +238,10 @@ namespace Sys.BusinessRules
                 Message message = new Message(ruleEvent.MessageLevel, ruleEvent.Message);
                 
                 if(ruleEvent.ErrorCode != -1 )
-                    message.Code = ruleEvent.ErrorCode;
+                    message.HasCode(ruleEvent.ErrorCode);
                 
 #if DEBUG
-                message.Location =  new MessageLocation(ruleEvent.keyName);
+                message.At(new MessageLocation(ruleEvent.keyName));
 #endif                
                 list.Add(message);
             }

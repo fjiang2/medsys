@@ -276,11 +276,11 @@ namespace Sys.Workflow.Forms
 
             try
             {
-                this.ShowMessage(WorkflowRuntime.DoActivityForm(this, workflowInstanceID, stateName));
+                this.ShowMessageBox(WorkflowRuntime.DoActivityForm(this, workflowInstanceID, stateName));
             }
             catch (Exception ex)
             {
-                this.ShowMessage(ex);
+                this.ShowMessageBox(ex);
             }
         }
 

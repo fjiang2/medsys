@@ -19,8 +19,8 @@ namespace Sys
         public SysException(MessageLevel level, string format, params object[] args)
             :base(string.Format(format, args))
         {
-            this.msg = new Message(level, string.Format(format, args));
-            this.msg.Code = (int)MessageCode.None;
+            this.msg = new Message(level, string.Format(format, args))
+                .HasCode((int)MessageCode.None);
         }
 
         public SysException(string format, params object[] args)
@@ -32,8 +32,8 @@ namespace Sys
         public SysException(MessageCode code, string message)
             :base(message)
         {
-            this.msg = new Message(MessageLevel.Error, message);
-            this.msg.Code = (int)code;
+            this.msg = new Message(MessageLevel.Error, message)
+                .HasCode((int)code);
         }
 
         public Message SysMessage

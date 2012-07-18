@@ -264,7 +264,7 @@ namespace Sys.Platform.Forms
             }
             catch (Exception ex)
             {
-                this.ShowMessage(ex);
+                this.ShowMessageBox(ex);
             }
             finally
             {
@@ -294,7 +294,10 @@ namespace Sys.Platform.Forms
                 EnumType enumType = new EnumType(type);
                 enumType.Save();
 
-                Message message = Message.Information(string.Format("enum {0} is saved into database", type.FullName), new MessageLocation(typeof(EnumField).TableName().ToString()));
+                Message message = Message
+                    .Information(string.Format("enum {0} is saved into database", type.FullName))
+                    .At(new MessageLocation(typeof(EnumField).TableName().ToString()));
+                
                 this.MessageManager.Add(message);
             }
             
