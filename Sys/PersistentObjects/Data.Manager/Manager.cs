@@ -65,9 +65,9 @@ namespace Sys.Data.Manager
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
-        public IEnumerable<Message> UpgradePackage(string path)
+        public MessageBuilder UpgradePackage(string path)
         {
-            List<Message> messages = new List<Message>();
+            MessageBuilder messages = new MessageBuilder();
             foreach (Type type in assembly.GetTypes())
             {
                 if (type.BaseType != typeof(DPObject))
@@ -105,7 +105,7 @@ namespace Sys.Data.Manager
         /// Create Tables in SQL Server from DPO classes
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<Message> CreateTables()
+        public MessageBuilder CreateTables()
         {
             return Unpacking.CreateTable(assembly);
         }

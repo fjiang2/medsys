@@ -243,7 +243,6 @@ namespace Sys.Platform.Forms
             {
                 GetEnumTypeFromGrid();
                 MessageBuilder messages = new MessageBuilder();
-                this.MessageManager.Clear(MessagePlace.OutputWindow);
                 if (!selectedEnumType.Validate(messages))
                 {
                     this.ErrorMessage = "Invalid enum definition, " + this.MessageManager.ToString();
@@ -288,8 +287,6 @@ namespace Sys.Platform.Forms
         private void btnGenDict_Click(object sender, EventArgs e)
         {
             this.Cursor = Cursors.WaitCursor;
-
-            this.MessageManager.Clear(MessagePlace.OutputWindow);
 
             foreach (Type type in this.enumList)
             {

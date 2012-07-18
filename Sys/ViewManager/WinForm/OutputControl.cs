@@ -62,6 +62,7 @@ namespace Sys.ViewManager.Forms
             this.Text += builder.ToString();
             this.ScrollToCaret();
 
+            manager.RemoveMessages(MessagePlace.OutputWindow);
             ActivateDockPanel();
         }
        
