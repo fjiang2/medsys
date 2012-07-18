@@ -12,7 +12,7 @@ namespace Sys
 
         private int code;
         private MessageLocation location;
-        private MessageWindow window;
+        private MessagePlace place;
 
         /// <summary>
         /// Message's owner
@@ -25,7 +25,7 @@ namespace Sys
         {
             this.Level = level;
             this.Description = description;
-            this.window = MessageWindow.None;
+            this.place = MessagePlace.None;
         }
 
 
@@ -47,9 +47,9 @@ namespace Sys
             return this;
         }
 
-        public Message To(MessageWindow place)
+        public Message To(MessagePlace place)
         {
-            this.window |= place;
+            this.place |= place;
             return this;
         }
 
@@ -58,9 +58,9 @@ namespace Sys
             get { return this.code; }
         }
 
-        public MessageWindow Window
+        public MessagePlace Place
         {
-            get { return this.window; }
+            get { return this.place; }
         }
 
         public MessageLocation Location

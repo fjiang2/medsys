@@ -5,7 +5,7 @@ using System.Text;
 using Sys.Data;
 using System.Data;
 
-namespace Sys
+namespace Sys.ViewManager.Forms
 {
     public class MessageManager
     {
@@ -45,12 +45,12 @@ namespace Sys
                 Cleared(this, new EventArgs());
         }
 
-        public void Clear(MessageWindow window)
+        public void Clear(MessagePlace place)
         {
             if (Cleared != null)
                 Cleared(this, new EventArgs());
 
-            messages.RemoveAll(message => message.Window == window);
+            messages.RemoveAll(message => message.Place == place);
 
         }
 
@@ -84,9 +84,9 @@ namespace Sys
             return this.messages.Remove(message);
         }
 
-        public void Add(IEnumerable<Message> messages)
+        public void Add(MessageBuilder builder)
         {
-            this.messages.AddRange(messages);
+            this.messages.AddRange(builder);
         }
 
        
@@ -95,9 +95,9 @@ namespace Sys
             get { return this.messages; }
         }
 
-        public IEnumerable<Message> GetMessages(MessageWindow window)
+        public IEnumerable<Message> GetMessages(MessagePlace place)
         {
-            return this.messages.Where(message => (message.Window & window) == window);
+            return this.messages.Where(message => (message.Place & place) == place);
         }
 
         public override string ToString()

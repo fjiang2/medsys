@@ -230,9 +230,9 @@ namespace Sys.BusinessRules
             return dt;
         }
 
-        public IEnumerable<Message> ToMessageList()
+        public MessageBuilder ToMessageList()
         {
-            List<Message> list = new List<Message>();
+            MessageBuilder messages = new MessageBuilder();
             foreach (RuleEvent ruleEvent in BrokenRules)
             {
                 Message message = new Message(ruleEvent.MessageLevel, ruleEvent.Message);
@@ -243,10 +243,10 @@ namespace Sys.BusinessRules
 #if DEBUG
                 message.At(new MessageLocation(ruleEvent.keyName));
 #endif                
-                list.Add(message);
+                messages.Add(message);
             }
 
-            return list;
+            return messages;
         }
     }
 }

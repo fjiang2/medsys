@@ -242,10 +242,12 @@ namespace Sys.Platform.Forms
             try
             {
                 GetEnumTypeFromGrid();
-                this.MessageManager.Clear(MessageWindow.OutputWindow);
-                if (!selectedEnumType.Validate(this.MessageManager))
+                MessageBuilder messages = new MessageBuilder();
+                this.MessageManager.Clear(MessagePlace.OutputWindow);
+                if (!selectedEnumType.Validate(messages))
                 {
                     this.ErrorMessage = "Invalid enum definition, " + this.MessageManager.ToString();
+                    this.MessageManager.Add(messages);
                     this.MessageManager.Commit();
                     return;
                 }
@@ -287,7 +289,7 @@ namespace Sys.Platform.Forms
         {
             this.Cursor = Cursors.WaitCursor;
 
-            this.MessageManager.Clear(MessageWindow.OutputWindow);
+            this.MessageManager.Clear(MessagePlace.OutputWindow);
 
             foreach (Type type in this.enumList)
             {

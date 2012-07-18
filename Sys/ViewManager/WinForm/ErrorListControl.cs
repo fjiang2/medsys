@@ -74,7 +74,7 @@ namespace Sys.ViewManager.Forms
 
         void manager_Cleared(object sender, EventArgs e)
         {
-            var messages = this.manager.GetMessages(MessageWindow.ErrorListWindow);
+            var messages = this.manager.GetMessages(MessagePlace.ErrorListWindow);
             if (messages.Count() == 0)
                 return;
 
@@ -84,7 +84,7 @@ namespace Sys.ViewManager.Forms
 
         private void manager_Committed(object sender, EventArgs e)
         {
-            var messages = this.manager.GetMessages(MessageWindow.ErrorListWindow);
+            var messages = this.manager.GetMessages(MessagePlace.ErrorListWindow);
             if (messages.Count() == 0)
                 return;
 
