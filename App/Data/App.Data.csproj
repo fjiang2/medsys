@@ -44,7 +44,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AddressEnum.cs" />
+    <Compile Include="MgCode\DataEnum\AddressEnum.cs" />
+    <Compile Include="MgCode\DataEnum\GenderEnum.cs" />
+    <Compile Include="MgCode\DataEnum\MaritalStatusEnum.cs" />
+    <Compile Include="MgCode\DataEnum\PhoneEnum.cs" />
+    <Compile Include="MgCode\DataEnum\RelationshipEnum.cs" />
     <Compile Include="MgCode\DpoClass\appAddressDpo.cs" />
     <Compile Include="MgCode\DpoClass\appDepartmentDpo.cs" />
     <Compile Include="MgCode\DpoClass\appEmployeeDpo.cs" />
@@ -65,8 +69,6 @@
     <Compile Include="MgCode\DpoClass\ShipperDpo.cs" />
     <Compile Include="MgCode\DpoClass\SupplierDpo.cs" />
     <Compile Include="MgCode\DpoClass\TerritorieDpo.cs" />
-    <Compile Include="GenderEnum.cs" />
-    <Compile Include="MaritalStatusEnum.cs" />
     <Compile Include="Model\AddressDpo.cs" />
     <Compile Include="Model\PersonRelationshipDpo.cs" />
     <Compile Include="Model\PersonDpo.cs" />
@@ -82,9 +84,7 @@
     <Compile Include="MgCode\DpoPackage\ShipperDpoPackage.cs" />
     <Compile Include="MgCode\DpoPackage\SupplierDpoPackage.cs" />
     <Compile Include="MgCode\DpoPackage\TerritorieDpoPackage.cs" />
-    <Compile Include="PhoneEnum.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RelationshipEnum.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Sys\Foundation\Sys.Foundation.csproj">

@@ -1,9 +1,8 @@
 using System;
 using Sys.Data;
 
-namespace PTA
+namespace PTA.DataEnum
 {
-    [Flags]
     [DataEnum]
     public enum AvailabilityEnum
     {
