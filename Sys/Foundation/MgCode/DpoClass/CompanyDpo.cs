@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 4/19/2012 5:59:07 PM
+//   by devel at 7/19/2012 12:12:42 AM
 //
 
 using System;
@@ -14,7 +14,7 @@ using Sys.Data.Manager;
 
 namespace Sys.Foundation.DpoClass
 {
-    [Revision(11)]
+    [Revision(12)]
     [Table("sys00504", Level.System, Pack = false)]    //Primary Keys = Comany_ID;  Identity = Comany_ID;
     public class CompanyDpo : DPObject
     {

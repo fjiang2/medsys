@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 4/27/2012 3:20:04 PM
+//   by devel at 7/19/2012 12:12:38 AM
 //
 
 using System;
@@ -14,7 +14,7 @@ using Sys.Data.Manager;
 
 namespace Sys.Platform.DpoClass
 {
-    [Revision(1)]
+    [Revision(2)]
     [Table("Resources", Level.System, Pack = false)]    //Primary Keys = UniqueID;  Identity = UniqueID;
     public class ResourceDpo : DPObject
     {

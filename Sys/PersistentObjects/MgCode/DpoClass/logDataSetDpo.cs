@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 4/19/2012 5:59:04 PM
+//   by devel at 7/19/2012 12:12:40 AM
 //
 
 using System;
@@ -14,7 +14,7 @@ using Sys.Data.Manager;
 
 namespace Sys.PersistentObjects.DpoClass
 {
-    [Revision(10)]
+    [Revision(11)]
     [Table("sys00301", Level.System, Pack = false)]    //Primary Keys = date + form_name;  Identity = log_dataset_id;
     public class logDataSetDpo : DPObject
     {

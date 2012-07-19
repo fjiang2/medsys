@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 7/11/2012 9:59:49 AM
+//   by devel at 7/19/2012 12:12:39 AM
 //
 
 using System;
@@ -14,7 +14,7 @@ using Sys.Data.Manager;
 
 namespace Sys.PersistentObjects.DpoClass
 {
-    [Revision(0)]
+    [Revision(1)]
     [Table("sys00204", Level.System, Pack = false)]    //Primary Keys = Category + Feature;  Identity = ID;
     public class dictEnumTypeDpo : DPObject
     {

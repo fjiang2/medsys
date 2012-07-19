@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 7/12/2012 1:15:41 PM
+//   by devel at 7/19/2012 12:12:36 AM
 //
 
 using System;
@@ -14,7 +14,7 @@ using Sys.Data.Manager;
 
 namespace App.Data.DpoClass
 {
-    [Revision(0)]
+    [Revision(1)]
     [Table("app00102", Level.Application, Pack = false)]    //Primary Keys = Address_ID;  Identity = Address_ID;
     public class appAddressDpo : DPObject
     {
@@ -22,14 +22,15 @@ namespace App.Data.DpoClass
 #pragma warning disable
 
         [Column(_Address_ID, SqlDbType.Int, Identity = true, Primary = true)]                     public int Address_ID;        //int(4) not null
-        [Column(_Category, SqlDbType.Int)]                                                        public int Category;          //int(4) not null
+        [Column(_Address_Enum, SqlDbType.Int)]                                                    public int Address_Enum;      //int(4) not null
         [Column(_Street_Number, SqlDbType.Int, Nullable = true)]                                  public int? Street_Number;    //int(4) null
         [Column(_Street_Name, SqlDbType.NVarChar, Nullable = true, Length = 150)]                 public string Street_Name;    //nvarchar(150) null
         [Column(_Apartment, SqlDbType.NVarChar, Nullable = true, Length = 50)]                    public string Apartment;      //nvarchar(50) null
         [Column(_City, SqlDbType.NVarChar, Nullable = true, Length = 50)]                         public string City;           //nvarchar(50) null
         [Column(_State, SqlDbType.NVarChar, Nullable = true, Length = 50)]                        public string State;          //nvarchar(50) null
-        [Column(_Country_Code, SqlDbType.NVarChar, Nullable = true, Length = 50)]                 public string Country_Code;   //nvarchar(50) null
         [Column(_Postal_Code, SqlDbType.VarChar, Nullable = true, Length = 12)]                   public string Postal_Code;    //varchar(12) null
+        [Column(_Country_Code, SqlDbType.NVarChar, Nullable = true, Length = 50)]                 public string Country_Code;   //nvarchar(50) null
+        [Column(_Country_Sub_Code, SqlDbType.NVarChar, Nullable = true, Length = 20)]             public string Country_Sub_Code;//nvarchar(20) null
 
 #pragma warning restore
 
@@ -98,14 +99,15 @@ namespace App.Data.DpoClass
         #region CONSTANT
 
         public const string _Address_ID = "Address_ID";
-        public const string _Category = "Category";
+        public const string _Address_Enum = "Address_Enum";
         public const string _Street_Number = "Street_Number";
         public const string _Street_Name = "Street_Name";
         public const string _Apartment = "Apartment";
         public const string _City = "City";
         public const string _State = "State";
-        public const string _Country_Code = "Country_Code";
         public const string _Postal_Code = "Postal_Code";
+        public const string _Country_Code = "Country_Code";
+        public const string _Country_Sub_Code = "Country_Sub_Code";
 
        
         #endregion 

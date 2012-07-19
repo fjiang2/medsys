@@ -1,6 +1,6 @@
 //
 // Machine Packed Data
-//   by devel at 7/13/2012 3:21:36 PM
+//   by devel at 7/19/2012 12:14:09 AM
 //
 using System;
 using System.Data;
@@ -89,9 +89,28 @@ namespace Sys.Foundation.DpoPackage
 
 			dpo = new UserDpo();
 			dpo.User_ID = 2;
-			dpo.User_Name = "tester";
+			dpo.User_Name = "singleuser";
 			dpo.Plain_Password = "password";
 			dpo.Password = new System.Byte[]{91,170,97,228,201,185,63,63,6,130,37,11,108,248,51,27,126,230,143,216};
+			dpo.Inactive = false;
+			dpo.Last_Name = "Single";
+			dpo.First_Name = "User";
+			dpo.Middle_Name = "System";
+			dpo.Nickname = "Single";
+			dpo.Group_Name = "CBS";
+			dpo.Department = "Information Technology";
+			dpo.Job_Title = "Me";
+			dpo.Supervisor = "admin";
+			dpo.Email = "tester@datconn.com";
+			dpo.WorkPhone = "";
+			dpo.Start_Date = new DateTime(2012,1,1,0,0,0);
+			dpo.End_Date = new DateTime(2050,12,31,0,0,0);
+			list.Add(dpo);
+
+			dpo = new UserDpo();
+			dpo.User_ID = 6;
+			dpo.User_Name = "tester";
+			dpo.Plain_Password = "password";
 			dpo.Inactive = false;
 			dpo.Last_Name = "Tester";
 			dpo.First_Name = "System";

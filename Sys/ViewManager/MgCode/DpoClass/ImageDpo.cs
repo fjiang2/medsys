@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 4/19/2012 5:59:10 PM
+//   by devel at 7/19/2012 12:12:45 AM
 //
 
 using System;
@@ -14,7 +14,7 @@ using Sys.Data.Manager;
 
 namespace Sys.ViewManager.DpoClass
 {
-    [Revision(12)]
+    [Revision(13)]
     [Table("sys00806", Level.System)]    //Primary Keys = Image_Index + Ty;  Identity = ID;
     public class ImageDpo : DPObject
     {
@@ -36,7 +36,7 @@ namespace Sys.ViewManager.DpoClass
                 if (Picture != null)
                 {
                     System.IO.MemoryStream stream = new System.IO.MemoryStream(Picture);
-                    return Image.FromStream(stream);
+                    return System.Drawing.Image.FromStream(stream);
                 }
                 
                 return null;

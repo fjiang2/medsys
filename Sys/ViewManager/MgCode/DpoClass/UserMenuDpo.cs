@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 7/15/2012 8:05:37 AM
+//   by devel at 7/19/2012 12:12:43 AM
 //
 
 using System;
@@ -14,7 +14,7 @@ using Sys.Data.Manager;
 
 namespace Sys.ViewManager.DpoClass
 {
-    [Revision(11)]
+    [Revision(12)]
     [Table("sys00801", Level.System)]    //Primary Keys = ID;  Identity = ID;
     public class UserMenuDpo : DPObject
     {

@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 4/19/2012 5:59:03 PM
+//   by devel at 7/19/2012 12:12:38 AM
 //
 
 using System;
@@ -14,7 +14,7 @@ using Sys.Data.Manager;
 
 namespace Sys.Foundation.DpoClass
 {
-    [Revision(14)]
+    [Revision(15)]
     [Table("sys00101", Level.System)]    //Primary Keys = User_Name;  Identity = User_ID;
     public class UserDpo : DPObject
     {
@@ -54,7 +54,7 @@ namespace Sys.Foundation.DpoClass
                 if (Signature != null)
                 {
                     System.IO.MemoryStream stream = new System.IO.MemoryStream(Signature);
-                    return Image.FromStream(stream);
+                    return System.Drawing.Image.FromStream(stream);
                 }
                 
                 return null;
@@ -78,7 +78,7 @@ namespace Sys.Foundation.DpoClass
                 if (Avatar != null)
                 {
                     System.IO.MemoryStream stream = new System.IO.MemoryStream(Avatar);
-                    return Image.FromStream(stream);
+                    return System.Drawing.Image.FromStream(stream);
                 }
                 
                 return null;
