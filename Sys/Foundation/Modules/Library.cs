@@ -15,7 +15,7 @@ namespace Sys.Modules
     public class Library
     {
         private static Library instance = null;
-        public static Library Instance
+        private static Library Instance
         {
             get
             {
@@ -26,7 +26,9 @@ namespace Sys.Modules
             }
         }
 
-
+        /// <summary>
+        /// Dictionary<moduleName, Assembly>
+        /// </summary>
         private Dictionary<string, Assembly> assemblies;
 
         private Library()
@@ -127,21 +129,5 @@ namespace Sys.Modules
             return list;
         }
 
-        /// <summary>
-        /// Save Enum into Dictionary in database from C# Enum Types
-        /// </summary>
-        public static void GenerateEnumDict()
-        {
-            IEnumerable<Type> enumList = GetEnumTypeList();
-
-            foreach (Type type in enumList)
-            {
-                EnumType enumType = new EnumType(type);
-                enumType.Save();
-            }
-        }
-
-
-     
     }
 }
