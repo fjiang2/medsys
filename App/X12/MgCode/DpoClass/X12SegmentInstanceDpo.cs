@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 6/22/2012 2:14:34 PM
+//   by devel at 7/19/2012 12:12:51 AM
 //
 
 using System;
@@ -14,7 +14,7 @@ using Sys.Data.Manager;
 
 namespace X12.DpoClass
 {
-    [Revision(4)]
+    [Revision(5)]
     [Table("X12SegmentInstance", Level.System)]    //Primary Keys = LoopName + Name + Sequence;  Identity = ID;
     public class X12SegmentInstanceDpo : DPObject
     {

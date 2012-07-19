@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 4/19/2012 5:59:13 PM
+//   by devel at 7/19/2012 12:12:47 AM
 //
 
 using System;
@@ -14,7 +14,7 @@ using Tie;
 
 namespace Sys.Workflow.DpoClass
 {
-    [Revision(11)]
+    [Revision(12)]
     [Table("sys01303", Level.System)]    //Primary Keys = S1_Name + S2_Name + Workflow_Name;  Identity = ID;
     public class wfTransitionDpo : DPObject
     {

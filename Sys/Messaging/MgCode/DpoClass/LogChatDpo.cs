@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 4/19/2012 5:59:12 PM
+//   by devel at 7/19/2012 12:12:46 AM
 //
 
 using System;
@@ -14,7 +14,7 @@ using Sys.Data.Manager;
 
 namespace Sys.Messaging.DpoClass
 {
-    [Revision(10)]
+    [Revision(11)]
     [Table("sys01201", Level.System, Pack = false)]    //Primary Keys = ID;  Identity = ID;
     public class LogChatDpo : DPObject
     {

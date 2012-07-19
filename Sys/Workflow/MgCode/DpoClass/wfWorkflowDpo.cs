@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 4/19/2012 5:59:12 PM
+//   by devel at 7/19/2012 12:12:46 AM
 //
 
 using System;
@@ -14,7 +14,7 @@ using Sys.Data.Manager;
 
 namespace Sys.Workflow.DpoClass
 {
-    [Revision(11)]
+    [Revision(12)]
     [Table("sys01301", Level.System)]    //Primary Keys = Name;  Identity = ID;
     public class wfWorkflowDpo : DPObject
     {

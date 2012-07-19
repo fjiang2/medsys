@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 7/17/2012 8:43:36 AM
+//   by devel at 7/19/2012 12:12:38 AM
 //
 
 using System;
@@ -14,7 +14,7 @@ using Sys.Data.Manager;
 
 namespace PTA.DpoClass
 {
-    [Revision(6)]
+    [Revision(7)]
     [Table("ptaStudents", Level.Application, Pack = false)]    //Primary Keys = Student_ID;  Identity = ;
     public class ptaStudentDpo : DPObject
     {

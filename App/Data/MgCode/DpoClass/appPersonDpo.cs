@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 7/19/2012 12:06:44 AM
+//   by devel at 7/19/2012 12:12:36 AM
 //
 
 using System;
@@ -14,7 +14,7 @@ using Sys.Data.Manager;
 
 namespace App.Data.DpoClass
 {
-    [Revision(3)]
+    [Revision(4)]
     [Table("app00101", Level.Application, Pack = false)]    //Primary Keys = Person_ID;  Identity = Person_ID;
     public class appPersonDpo : DPObject
     {

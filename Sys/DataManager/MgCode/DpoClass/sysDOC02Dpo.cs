@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 4/19/2012 5:59:15 PM
+//   by devel at 7/19/2012 12:12:49 AM
 //
 
 using System;
@@ -14,7 +14,7 @@ using Sys.Data.Manager;
 
 namespace Sys.DataManager.DpoClass
 {
-    [Revision(9)]
+    [Revision(10)]
     [Table("sys01402", Level.System)]    //Primary Keys = Doc_Id + Version;  Identity = ID;
     public class sysDOC02Dpo : DPObject
     {

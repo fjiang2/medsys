@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 7/16/2012 4:00:01 PM
+//   by devel at 7/19/2012 12:12:36 AM
 //
 
 using System;
@@ -14,7 +14,7 @@ using Sys.Data.Manager;
 
 namespace App.Data.DpoClass
 {
-    [Revision(3)]
+    [Revision(4)]
     [Table("app00104", Level.Application, Pack = false)]    //Primary Keys = Phone_ID;  Identity = ;
     public class appPhoneDpo : DPObject
     {

@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 4/19/2012 5:59:10 PM
+//   by devel at 7/19/2012 12:12:44 AM
 //
 
 using System;
@@ -14,7 +14,7 @@ using Sys.Data.Manager;
 
 namespace Sys.PersistentObjects.DpoClass
 {
-    [Revision(11)]
+    [Revision(12)]
     [Table("sys00805", Level.System)]    //Primary Keys = ID;  Identity = ID;
     public class SqlParamDpo : DPObject
     {
@@ -36,7 +36,7 @@ namespace Sys.PersistentObjects.DpoClass
                 if (Icon != null)
                 {
                     System.IO.MemoryStream stream = new System.IO.MemoryStream(Icon);
-                    return Image.FromStream(stream);
+                    return System.Drawing.Image.FromStream(stream);
                 }
                 
                 return null;

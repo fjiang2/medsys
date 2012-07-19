@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 4/23/2012 12:41:52 PM
+//   by devel at 7/19/2012 12:12:46 AM
 //
 
 using System;
@@ -14,7 +14,7 @@ using Sys.Data.Manager;
 
 namespace Sys.SmartList.DpoClass
 {
-    [Revision(6)]
+    [Revision(7)]
     [Table("sys01103", Level.System)]    //Primary Keys = Command_ID + url;  Identity = ID;
     public class RepxDpo : DPObject
     {

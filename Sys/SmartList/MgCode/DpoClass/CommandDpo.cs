@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 7/15/2012 8:37:11 AM
+//   by devel at 7/19/2012 12:12:45 AM
 //
 
 using System;
@@ -14,7 +14,7 @@ using Sys.Data.Manager;
 
 namespace Sys.SmartList.DpoClass
 {
-    [Revision(14)]
+    [Revision(15)]
     [Table("sys01101", Level.System)]    //Primary Keys = ID;  Identity = ID;
     public class CommandDpo : DPObject
     {

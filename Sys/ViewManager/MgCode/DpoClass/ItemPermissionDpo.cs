@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 4/19/2012 5:59:07 PM
+//   by devel at 7/19/2012 12:12:41 AM
 //
 
 using System;
@@ -14,7 +14,7 @@ using Sys.Data.Manager;
 
 namespace Sys.ViewManager.DpoClass
 {
-    [Revision(10)]
+    [Revision(11)]
     [Table("sys00502", Level.System)]    //Primary Keys = ID + Role_ID + Ty;  Identity = ;
     public class ItemPermissionDpo : DPObject
     {

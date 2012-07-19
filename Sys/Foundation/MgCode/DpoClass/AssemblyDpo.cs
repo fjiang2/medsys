@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 4/19/2012 5:59:08 PM
+//   by devel at 7/19/2012 12:12:42 AM
 //
 
 using System;
@@ -14,7 +14,7 @@ using Sys.Data.Manager;
 
 namespace Sys.Foundation.DpoClass
 {
-    [Revision(10)]
+    [Revision(11)]
     [Table("sys00701", Level.System)]    //Primary Keys = AssemblyName;  Identity = ID;
     public class AssemblyDpo : DPObject
     {
