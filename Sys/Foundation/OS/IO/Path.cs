@@ -88,7 +88,7 @@ namespace Sys.IO
 
         public static string ModuleDpoPath(string moduleName)
         {
-            string path = ModulePath(moduleName) + "\\Dpo";
+            string path = ModulePath(moduleName) + "\\Dpo\\Class";
             
             if (!Directory.Exists(path))
             {
@@ -105,7 +105,7 @@ namespace Sys.IO
 
         public static string ModulePackagePath(string moduleName)
         {
-            string path = ModulePath(moduleName) + "\\Package";
+            string path = ModulePath(moduleName) + "\\Dpo\\Package";
             
             if (!Directory.Exists(path))
             {

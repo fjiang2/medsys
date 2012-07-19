@@ -6,10 +6,10 @@ using System.Data;
 using Tie;
 using Sys.Data;
 using Sys.Data.Manager;
-using Sys.Workflow.Dpo;
+using Sys.Workflow.DpoClass;
 using System.Windows.Forms;
 using System.Drawing;
-using Sys.PersistentObjects.Dpo;
+using Sys.PersistentObjects.DpoClass;
 
 namespace Sys.Workflow.Collaborative
 {

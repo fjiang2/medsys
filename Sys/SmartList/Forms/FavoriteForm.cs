@@ -9,7 +9,7 @@ using Sys.ViewManager;
 using Sys.Security;
 using Sys.ViewManager.Forms;
 using Sys.Data;
-using Sys.SmartList.Dpo;
+using Sys.SmartList.DpoClass;
 using Sys.ViewManager.Security;
 
 namespace Sys.SmartList.Forms

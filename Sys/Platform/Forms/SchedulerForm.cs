@@ -10,7 +10,7 @@ using DevExpress.XtraScheduler;
 using Sys.ViewManager.Forms;
 using Sys.Platform.Scheduler;
 using Sys.Data;
-using Sys.Platform.Dpo;
+using Sys.Platform.DpoClass;
 
 namespace Sys.Platform.Forms
 {

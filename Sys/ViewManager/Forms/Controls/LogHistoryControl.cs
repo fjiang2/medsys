@@ -8,7 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using Sys.Data;
 using Sys.Data.Manager;
-using Sys.ViewManager.Dpo;
+using Sys.ViewManager.DpoClass;
 
 namespace Sys.ViewManager.Forms
 {

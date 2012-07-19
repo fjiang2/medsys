@@ -8,7 +8,7 @@ using System.Reflection;
 using System.Linq;
 using Tie;
 using Sys.Data.Manager;
-using Sys.PersistentObjects.Dpo;
+using Sys.PersistentObjects.DpoClass;
 
 namespace Sys.Data
 {

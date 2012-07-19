@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Sys.Security;
-using Sys.Foundation.Dpo;
+using Sys.Foundation.DpoClass;
 using System.Drawing;
 using System.Data.SqlClient;
 using Sys.Data.Manager;

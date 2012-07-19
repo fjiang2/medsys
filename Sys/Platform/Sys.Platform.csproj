@@ -63,8 +63,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Dpo\AppointmentDpo.cs" />
-    <Compile Include="Dpo\ResourceDpo.cs" />
+    <Compile Include="Dpo\Class\AppointmentDpo.cs" />
+    <Compile Include="Dpo\Class\ResourceDpo.cs" />
     <Compile Include="Forms\Database\GenEnumForm.cs">
       <SubType>Form</SubType>
     </Compile>

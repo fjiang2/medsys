@@ -8,7 +8,7 @@ using System.Reflection;
 using Sys.Security;
 using Tie;
 using Sys.Data;
-using Sys.Foundation.Dpo;
+using Sys.Foundation.DpoClass;
 using Sys.ViewManager.Forms;
 
 namespace Sys.ViewManager.Security

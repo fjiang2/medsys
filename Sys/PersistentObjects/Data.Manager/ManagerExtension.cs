@@ -5,7 +5,7 @@ using System.Text;
 using Sys.Data;
 using System.Threading;
 using System.ComponentModel;
-using Sys.PersistentObjects.Dpo;
+using Sys.PersistentObjects.DpoClass;
 using System.IO;
 using System.Reflection;
 

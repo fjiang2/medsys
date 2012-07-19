@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Collections;
 using System.ComponentModel;
-using Sys.Platform.Dpo;
+using Sys.Platform.DpoClass;
 using Sys.Data.Manager;
 
 namespace Sys.Platform.Scheduler

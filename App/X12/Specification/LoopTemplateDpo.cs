@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Data;
 using Sys.Data;
-using X12.Dpo;
+using X12.DpoClass;
 using Sys.ViewManager.Forms;
 using Sys;
 

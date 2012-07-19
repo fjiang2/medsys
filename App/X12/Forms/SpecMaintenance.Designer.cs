@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             X12.Specification.ElementInstanceDpo dataElement21 = new X12.Specification.ElementInstanceDpo();
-            X12.Dpo.X12ElementTemplateDpo x12Element1Dpo1 = new X12.Dpo.X12ElementTemplateDpo();
-            X12.Dpo.X12SegmentInstanceDpo x12Segment2Dpo1 = new X12.Dpo.X12SegmentInstanceDpo();
-            X12.Dpo.X12LoopTemplateDpo x12LoopDpo1 = new X12.Dpo.X12LoopTemplateDpo();
+            X12.DpoClass.X12ElementTemplateDpo x12Element1Dpo1 = new X12.DpoClass.X12ElementTemplateDpo();
+            X12.DpoClass.X12SegmentInstanceDpo x12Segment2Dpo1 = new X12.DpoClass.X12SegmentInstanceDpo();
+            X12.DpoClass.X12LoopTemplateDpo x12LoopDpo1 = new X12.DpoClass.X12LoopTemplateDpo();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripButtonSave = new System.Windows.Forms.ToolStripButton();
             this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Tie;
 using Sys.Data;
-using Sys.Workflow.Dpo;
+using Sys.Workflow.DpoClass;
 using System.Data;
 
 namespace Sys.Workflow.Collaborative 

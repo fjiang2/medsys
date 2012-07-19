@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using X12.Dpo;
+using X12.DpoClass;
 using Sys.Data;
 using System.Data;
 

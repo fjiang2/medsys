@@ -7,7 +7,7 @@ using System.Data;
 using System.Reflection;
 using Sys.Data;
 using Sys.Data.Manager;
-using Sys.Workflow.Dpo;
+using Sys.Workflow.DpoClass;
 
 namespace Sys.Workflow.Collaborative
 {

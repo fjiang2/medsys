@@ -10,7 +10,7 @@ using Sys.ViewManager.Forms;
 using Sys.Security;
 using Sys.BusinessRules;
 using Sys.ViewManager.Utils;
-using Sys.PersistentObjects.Dpo;
+using Sys.PersistentObjects.DpoClass;
 
 namespace Sys.Platform.Forms
 {

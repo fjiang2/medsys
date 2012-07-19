@@ -79,26 +79,26 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Dpo\ScriptDpo.cs" />
-    <Compile Include="Package\AssemblyDpoPackage.cs" />
-    <Compile Include="Package\ConfigurationDpoPackage.cs" />
-    <Compile Include="Package\RoleDpoPackage.cs" />
-    <Compile Include="Package\ScriptDpoPackage.cs" />
-    <Compile Include="Package\UserDpoPackage.cs" />
-    <Compile Include="Package\UserRoleDpoPackage.cs" />
+    <Compile Include="Dpo\Class\ScriptDpo.cs" />
+    <Compile Include="Dpo\Package\AssemblyDpoPackage.cs" />
+    <Compile Include="Dpo\Package\ConfigurationDpoPackage.cs" />
+    <Compile Include="Dpo\Package\RoleDpoPackage.cs" />
+    <Compile Include="Dpo\Package\ScriptDpoPackage.cs" />
+    <Compile Include="Dpo\Package\UserDpoPackage.cs" />
+    <Compile Include="Dpo\Package\UserRoleDpoPackage.cs" />
     <Compile Include="Security\Companies.cs" />
     <Compile Include="Security\Company.cs" />
-    <Compile Include="Dpo\CompanyDpo.cs" />
-    <Compile Include="Dpo\ConfigurationDpo.cs" />
-    <Compile Include="Dpo\logActivityDpo.cs" />
-    <Compile Include="Dpo\RoleDpo.cs" />
-    <Compile Include="Dpo\UserDpo.cs" />
-    <Compile Include="Dpo\UserProfileDpo.cs" />
-    <Compile Include="Dpo\UserRoleDpo.cs" />
+    <Compile Include="Dpo\Class\CompanyDpo.cs" />
+    <Compile Include="Dpo\Class\ConfigurationDpo.cs" />
+    <Compile Include="Dpo\Class\logActivityDpo.cs" />
+    <Compile Include="Dpo\Class\RoleDpo.cs" />
+    <Compile Include="Dpo\Class\UserDpo.cs" />
+    <Compile Include="Dpo\Class\UserProfileDpo.cs" />
+    <Compile Include="Dpo\Class\UserRoleDpo.cs" />
     <Compile Include="Modules\TableDpoDictionary.cs" />
     <Compile Include="Modules\IModule.cs" />
     <Compile Include="Modules\IModuleImpl.cs" />
-    <Compile Include="Dpo\AssemblyDpo.cs" />
+    <Compile Include="Dpo\Class\AssemblyDpo.cs" />
     <Compile Include="Modules\Library.cs" />
     <Compile Include="Sys\ApplicationContext.cs" />
     <Compile Include="OS\Callback.cs" />

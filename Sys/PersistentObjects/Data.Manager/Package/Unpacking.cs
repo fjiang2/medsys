@@ -6,7 +6,7 @@ using System.Reflection;
 using System.IO;
 using Sys;
 using Sys.Data;
-using Sys.PersistentObjects.Dpo;
+using Sys.PersistentObjects.DpoClass;
 
 namespace Sys.Data.Manager
 {

@@ -78,8 +78,8 @@ namespace Sys.Data
         public static void DpoExample()
         {
             var transaction = new SqlTrans();
-            var dpo1 = new Sys.PersistentObjects.Dpo.dictDatabaseDpo();
-            var dpo2 = new Sys.PersistentObjects.Dpo.dictDataTableDpo();
+            var dpo1 = new Sys.PersistentObjects.DpoClass.dictDatabaseDpo();
+            var dpo2 = new Sys.PersistentObjects.DpoClass.dictDataTableDpo();
 
             transaction.Add(dpo1);
             transaction.Add(dpo2);

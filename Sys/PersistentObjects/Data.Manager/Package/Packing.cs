@@ -32,7 +32,7 @@ namespace Sys.Data.Manager
             Type baseType = typeof(BasePackage<>);
             baseType = baseType.MakeGenericType(dpoType);
 
-            this.clss = new ClassBuilder(dpoType.Assembly.GetName().Name + ".Package", ModifierType.Public, ClassName, new Type[] { baseType });
+            this.clss = new ClassBuilder(dpoType.Assembly.GetName().Name + ".DpoPackage", ModifierType.Public, ClassName, new Type[] { baseType });
             
             this.clss.AddUsing("System")
             .AddUsing("System.Data")

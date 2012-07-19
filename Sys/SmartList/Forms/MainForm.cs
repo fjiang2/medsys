@@ -22,9 +22,9 @@ using DevExpress.XtraEditors.Repository;
 using DevExpress.XtraEditors.Controls;
 using Sys.Security;
 using Sys.Data;
-using Sys.SmartList.Dpo;
+using Sys.SmartList.DpoClass;
 using Sys.ViewManager.Security;
-using Sys.Foundation.Dpo;
+using Sys.Foundation.DpoClass;
 using Sys.OS;
 
 namespace Sys.SmartList.Forms
@@ -138,7 +138,7 @@ namespace Sys.SmartList.Forms
 
             selectCommand = selectCommand
                 .Replace("@Commands", CommandDpo.TABLE_NAME)
-                .Replace("@IPermissions", Sys.ViewManager.Dpo.ItemPermissionDpo.TABLE_NAME)
+                .Replace("@IPermissions", Sys.ViewManager.DpoClass.ItemPermissionDpo.TABLE_NAME)
                 .Replace("@UserRoles", UserRoleDpo.TABLE_NAME);
             
             selectComamndDeveloper = selectComamndDeveloper

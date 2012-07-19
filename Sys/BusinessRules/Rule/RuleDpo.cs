@@ -4,7 +4,7 @@ using System.Text;
 using System.Data;
 using System.Drawing;
 using Sys.Data;
-using Sys.BusinessRules.Dpo;
+using Sys.BusinessRules.DpoClass;
 using Sys.Data.Manager;
 
 namespace Sys.BusinessRules

@@ -8,9 +8,9 @@ using System.Windows.Forms;
 using Sys.ViewManager.Forms ;
 using Sys.ViewManager;
 using Sys.Data;
-using Sys.Workflow.Dpo;
+using Sys.Workflow.DpoClass;
 using Sys.ViewManager.Security;
-using Sys.Foundation.Dpo;
+using Sys.Foundation.DpoClass;
 
 
 namespace Sys.Workflow.Collaborative.Forms
@@ -190,8 +190,8 @@ namespace Sys.Workflow.Collaborative.Forms
                                 WHERE   ty = {4} )
                         ORDER BY Label
                         ";
-                        SQL = SQL.Replace("@States", Dpo.wfStateDpo.TABLE_NAME)
-                            .Replace("@IPermissions", Sys.ViewManager.Dpo.ItemPermissionDpo.TABLE_NAME)
+                        SQL = SQL.Replace("@States", DpoClass.wfStateDpo.TABLE_NAME)
+                            .Replace("@IPermissions", Sys.ViewManager.DpoClass.ItemPermissionDpo.TABLE_NAME)
                             .Replace("@UserRoles", UserRoleDpo.TABLE_NAME);
                         
                         DataTable stateTable = SqlCmd.FillDataTable(SQL,

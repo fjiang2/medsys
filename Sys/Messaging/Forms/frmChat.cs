@@ -8,7 +8,7 @@ using agsXMPP;
 using agsXMPP.protocol;
 using agsXMPP.protocol.client;
 using agsXMPP.Collections;
-using Sys.Messaging.Dpo;
+using Sys.Messaging.DpoClass;
 using Sys.ViewManager.Forms;
 
 namespace Sys.Messaging.Forms

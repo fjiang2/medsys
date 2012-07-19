@@ -7,7 +7,7 @@ using System.IO;
 using System.Drawing.Imaging;
 using System.Data;
 using Sys.Data;
-using Sys.DataManager.Dpo;
+using Sys.DataManager.DpoClass;
 
 namespace Sys.DataManager
 {

@@ -6,7 +6,7 @@ using System.Reflection;
 using Tie;
 using System.Data;
 using Sys.Data;
-using Sys.ViewManager.Dpo;
+using Sys.ViewManager.DpoClass;
 
 
 

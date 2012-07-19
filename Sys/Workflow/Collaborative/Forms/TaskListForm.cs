@@ -13,10 +13,10 @@ using Tie;
 using Sys.ViewManager.Forms;
 using Sys.Workflow.Forms;
 using Sys.Data;
-using Sys.Workflow.Dpo;
+using Sys.Workflow.DpoClass;
 using Sys.ViewManager.DevEx;
-using Sys.Foundation.Dpo;
-using Sys.PersistentObjects.Dpo;
+using Sys.Foundation.DpoClass;
+using Sys.PersistentObjects.DpoClass;
 
 namespace Sys.Workflow.Collaborative.Forms
 {

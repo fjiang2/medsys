@@ -8,7 +8,7 @@ using Sys.ViewManager.Forms;
 
 namespace Sys.Workflow
 {
-    public class SecurityDpo : Dpo.wfSecurity, ITreeDpoNode, INTreeNode<SecurityDpo>
+    public class SecurityDpo : DpoClass.wfSecurity, ITreeDpoNode, INTreeNode<SecurityDpo>
     {
 
         public SecurityDpo()
@@ -102,8 +102,8 @@ namespace Sys.Workflow
                 ";
 
                 DataTable dt = SqlCmd.FillDataTable(SQL,
-                    Sys.Workflow.Dpo.wfWorkflowDpo.TABLE_NAME,
-                    Sys.Workflow.Dpo.wfStateDpo.TABLE_NAME
+                    Sys.Workflow.DpoClass.wfWorkflowDpo.TABLE_NAME,
+                    Sys.Workflow.DpoClass.wfStateDpo.TABLE_NAME
                     );
 
                 List<ITreeDpoNode> list = new List<ITreeDpoNode>();

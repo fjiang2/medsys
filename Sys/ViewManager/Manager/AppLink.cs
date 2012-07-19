@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data;
-using Sys.ViewManager.Dpo;
+using Sys.ViewManager.DpoClass;
 using Sys.Data;
 using Sys.Data.Manager;
 using DevExpress.XtraNavBar;

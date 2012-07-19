@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Sys.Data;
-using Sys.Foundation.Dpo;
+using Sys.Foundation.DpoClass;
 using Sys.ViewManager.Forms;
 
 namespace Sys.Platform.Forms

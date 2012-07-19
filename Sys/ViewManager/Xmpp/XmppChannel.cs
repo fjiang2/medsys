@@ -8,9 +8,9 @@ using Tie;
 using Sys.ViewManager;
 using Sys.Security;
 using Sys.Data;
-using Sys.PersistentObjects.Dpo;
+using Sys.PersistentObjects.DpoClass;
 using Sys.ViewManager.Security;
-using Sys.Foundation.Dpo;
+using Sys.Foundation.DpoClass;
 
 
 namespace Sys.Xmpp
@@ -54,7 +54,7 @@ namespace Sys.Xmpp
             ";
 
             DataTable dataTable = SqlCmd.FillDataTable(SQL,
-                Sys.ViewManager.Dpo.ItemPermissionDpo.TABLE_NAME, UserRoleDpo.TABLE_NAME, UserDpo.TABLE_NAME,
+                Sys.ViewManager.DpoClass.ItemPermissionDpo.TABLE_NAME, UserRoleDpo.TABLE_NAME, UserDpo.TABLE_NAME,
                 (int)SecurityType.Workflow, channelID);
             subscribers = new UserCollectionProtocol(dataTable);
         }
