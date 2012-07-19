@@ -79,26 +79,26 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Dpo\Class\ScriptDpo.cs" />
-    <Compile Include="Dpo\Package\AssemblyDpoPackage.cs" />
-    <Compile Include="Dpo\Package\ConfigurationDpoPackage.cs" />
-    <Compile Include="Dpo\Package\RoleDpoPackage.cs" />
-    <Compile Include="Dpo\Package\ScriptDpoPackage.cs" />
-    <Compile Include="Dpo\Package\UserDpoPackage.cs" />
-    <Compile Include="Dpo\Package\UserRoleDpoPackage.cs" />
+    <Compile Include="MgCode\DpoClass\ScriptDpo.cs" />
+    <Compile Include="MgCode\DpoPackage\AssemblyDpoPackage.cs" />
+    <Compile Include="MgCode\DpoPackage\ConfigurationDpoPackage.cs" />
+    <Compile Include="MgCode\DpoPackage\RoleDpoPackage.cs" />
+    <Compile Include="MgCode\DpoPackage\ScriptDpoPackage.cs" />
+    <Compile Include="MgCode\DpoPackage\UserDpoPackage.cs" />
+    <Compile Include="MgCode\DpoPackage\UserRoleDpoPackage.cs" />
     <Compile Include="Security\Companies.cs" />
     <Compile Include="Security\Company.cs" />
-    <Compile Include="Dpo\Class\CompanyDpo.cs" />
-    <Compile Include="Dpo\Class\ConfigurationDpo.cs" />
-    <Compile Include="Dpo\Class\logActivityDpo.cs" />
-    <Compile Include="Dpo\Class\RoleDpo.cs" />
-    <Compile Include="Dpo\Class\UserDpo.cs" />
-    <Compile Include="Dpo\Class\UserProfileDpo.cs" />
-    <Compile Include="Dpo\Class\UserRoleDpo.cs" />
+    <Compile Include="MgCode\DpoClass\CompanyDpo.cs" />
+    <Compile Include="MgCode\DpoClass\ConfigurationDpo.cs" />
+    <Compile Include="MgCode\DpoClass\logActivityDpo.cs" />
+    <Compile Include="MgCode\DpoClass\RoleDpo.cs" />
+    <Compile Include="MgCode\DpoClass\UserDpo.cs" />
+    <Compile Include="MgCode\DpoClass\UserProfileDpo.cs" />
+    <Compile Include="MgCode\DpoClass\UserRoleDpo.cs" />
     <Compile Include="Modules\TableDpoDictionary.cs" />
     <Compile Include="Modules\IModule.cs" />
     <Compile Include="Modules\IModuleImpl.cs" />
-    <Compile Include="Dpo\Class\AssemblyDpo.cs" />
+    <Compile Include="MgCode\DpoClass\AssemblyDpo.cs" />
     <Compile Include="Modules\Library.cs" />
     <Compile Include="Sys\ApplicationContext.cs" />
     <Compile Include="OS\Callback.cs" />

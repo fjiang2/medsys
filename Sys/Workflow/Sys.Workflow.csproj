@@ -142,15 +142,15 @@
     <Compile Include="Control\WorkflowGridControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Dpo\Class\wfSecurityDpo.cs" />
-    <Compile Include="Dpo\Class\wfNodeDpo.cs" />
-    <Compile Include="Dpo\Class\wfNoteDpo.cs" />
-    <Compile Include="Dpo\Class\wfStateDpo.cs" />
-    <Compile Include="Dpo\Class\wfTaskDpo.cs" />
-    <Compile Include="Dpo\Class\wfTrackDpo.cs" />
-    <Compile Include="Dpo\Class\wfTransitionDpo.cs" />
-    <Compile Include="Dpo\Class\wfWorkflowDpo.cs" />
-    <Compile Include="Dpo\Class\wfWorkflowInstanceDpo.cs" />
+    <Compile Include="MgCode\DpoClass\wfSecurityDpo.cs" />
+    <Compile Include="MgCode\DpoClass\wfNodeDpo.cs" />
+    <Compile Include="MgCode\DpoClass\wfNoteDpo.cs" />
+    <Compile Include="MgCode\DpoClass\wfStateDpo.cs" />
+    <Compile Include="MgCode\DpoClass\wfTaskDpo.cs" />
+    <Compile Include="MgCode\DpoClass\wfTrackDpo.cs" />
+    <Compile Include="MgCode\DpoClass\wfTransitionDpo.cs" />
+    <Compile Include="MgCode\DpoClass\wfWorkflowDpo.cs" />
+    <Compile Include="MgCode\DpoClass\wfWorkflowInstanceDpo.cs" />
     <Compile Include="Forms\ActivityForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -244,9 +244,9 @@
     <Compile Include="Model\StatePointCollection.cs" />
     <Compile Include="Model\TransitionLink.cs" />
     <Compile Include="Model\TransitionLinkCollection.cs" />
-    <Compile Include="Dpo\Package\wfStateDpoPackage.cs" />
-    <Compile Include="Dpo\Package\wfTransitionDpoPackage.cs" />
-    <Compile Include="Dpo\Package\wfWorkflowDpoPackage.cs" />
+    <Compile Include="MgCode\DpoPackage\wfStateDpoPackage.cs" />
+    <Compile Include="MgCode\DpoPackage\wfTransitionDpoPackage.cs" />
+    <Compile Include="MgCode\DpoPackage\wfWorkflowDpoPackage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>

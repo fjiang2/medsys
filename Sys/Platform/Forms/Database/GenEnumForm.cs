@@ -180,8 +180,8 @@ namespace Sys.Platform.Forms
         private void SetNamespaceAndPath()
         {
             string moduleName = (string)this.comboModule.SelectedItem;
-            this.txtNamespace.Text = moduleName + "";
-            this.txtPath.Text = Sys.IO.Path.ModulePath(moduleName);
+            this.txtNamespace.Text = string.Format("{0}.{1}", moduleName, Setting.ENUM_SUB_NAMESPACE);
+            this.txtPath.Text = Sys.IO.Path.ModuleEnumPath(moduleName);
         }
 
         private AccessModifier Modifier
@@ -252,9 +252,8 @@ namespace Sys.Platform.Forms
 
                 string sourceCode = selectedEnumType.ToCode(this.Namespace);
 
-                //this.txtPath.Text = Sys.IO.Path.ModuleEnumPath(moduleName);
-
-                System.IO.StreamWriter sw = new System.IO.StreamWriter(string.Format("{0}\\{1}.cs", this.Path, selectedEnumType.Name));
+    
+                System.IO.StreamWriter sw = new System.IO.StreamWriter(string.Format("{0}\\{1}.cs", this.Path, selectedEnumType.ClassName));
                 sw.Write(sourceCode);
                 sw.Close();
 

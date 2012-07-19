@@ -92,19 +92,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Dpo\Class\CommandNodeDpo.cs" />
+    <Compile Include="MgCode\DpoClass\CommandNodeDpo.cs" />
     <Compile Include="CommandTree.cs" />
     <Compile Include="DataViewMode.cs" />
     <Compile Include="DpoReportStorage.cs" />
-    <Compile Include="Dpo\Class\CommandDpo.cs" />
+    <Compile Include="MgCode\DpoClass\CommandDpo.cs" />
     <Compile Include="Controls\PivotChartControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Controls\PivotChartControl.designer.cs">
       <DependentUpon>PivotChartControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Dpo\Class\RepxDpo.cs" />
-    <Compile Include="Dpo\Class\RepxItemList.cs" />
+    <Compile Include="MgCode\DpoClass\RepxDpo.cs" />
+    <Compile Include="MgCode\DpoClass\RepxItemList.cs" />
     <Compile Include="Forms\ReportMaintenanceForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -117,14 +117,14 @@
     <Compile Include="Forms\SmartListMaintenanceForm.Designer.cs">
       <DependentUpon>SmartListMaintenanceForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Dpo\Package\CommandDpoPackage.cs" />
-    <Compile Include="Dpo\Package\RepxDpoPackage.cs" />
+    <Compile Include="MgCode\DpoPackage\CommandDpoPackage.cs" />
+    <Compile Include="MgCode\DpoPackage\RepxDpoPackage.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <DependentUpon>Resources.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Dpo\Class\RepxItem.cs" />
+    <Compile Include="MgCode\DpoClass\RepxItem.cs" />
     <Compile Include="Viewer\BandedGridViewer.cs" />
     <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
@@ -133,7 +133,7 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="CustomizedCode.cs" />
-    <Compile Include="Dpo\Class\Configuration.cs" />
+    <Compile Include="MgCode\DpoClass\Configuration.cs" />
     <Compile Include="DataViewer.cs" />
     <Compile Include="DataViewerFactory.cs" />
     <Compile Include="Forms\FavoriteForm.cs">
