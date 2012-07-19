@@ -1,7 +1,7 @@
 using System;
 using Sys.Data;
 
-namespace App.Data
+namespace App.Data.DataEnum
 {
     [DataEnum]
     public enum RelationshipEnum

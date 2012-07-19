@@ -1,10 +1,10 @@
 using System;
 using Sys.Data;
 
-namespace App.Data
+namespace App.Data.DataEnum
 {
     [DataEnum]
-    public enum AddressEnum
+    public enum PhoneEnum
     {
 		[Field("Home")]
 		Home = 1,

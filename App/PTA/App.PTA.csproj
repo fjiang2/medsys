@@ -51,7 +51,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AvailabilityEnum.cs" />
+    <Compile Include="MgCode\DataEnum\AvailabilityEnum.cs" />
+    <Compile Include="MgCode\DataEnum\MemeberEnum.cs" />
     <Compile Include="MgCode\DpoClass\ptaAdultDpo.cs" />
     <Compile Include="MgCode\DpoClass\ptaStudentDpo.cs" />
     <Compile Include="Forms\RegisterForm.cs">
@@ -61,7 +62,6 @@
       <DependentUpon>RegisterForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Interest.cs" />
-    <Compile Include="MemeberEnum.cs" />
     <Compile Include="Model\AdultDpo.cs" />
     <Compile Include="Model\StudentDpo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
