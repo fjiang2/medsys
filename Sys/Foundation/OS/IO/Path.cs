@@ -80,6 +80,18 @@ namespace Sys.IO
                 return string.Format("{0}\\{1}",path.Application, moduleName);
         }
 
+        private static string ModulePath(string moduleName, string subpath)
+        {
+            string path = ModulePath(moduleName) + subpath;
+
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+            return path;
+        }
+
+
 
 
         public static string ModuleDpoPath(Assembly assembly)
@@ -89,13 +101,7 @@ namespace Sys.IO
 
         public static string ModuleDpoPath(string moduleName)
         {
-            string path = ModulePath(moduleName) + Setting.DPO_CLASS_PATH;
-            
-            if (!Directory.Exists(path))
-            {
-                Directory.CreateDirectory(path);
-            }
-            return path;
+            return ModulePath(moduleName,Setting.DPO_CLASS_PATH);
         }
 
 
@@ -106,14 +112,7 @@ namespace Sys.IO
 
         public static string ModulePackagePath(string moduleName)
         {
-            string path = ModulePath(moduleName) + Setting.DPO_PACKAGE_PATH;
-            
-            if (!Directory.Exists(path))
-            {
-                Directory.CreateDirectory(path);
-            }
-
-            return path;
+            return ModulePath(moduleName, Setting.DPO_PACKAGE_PATH);
         }
 
 
@@ -124,14 +123,7 @@ namespace Sys.IO
 
         public static string ModuleEnumPath(string moduleName)
         {
-            string path = ModulePath(moduleName) + Setting.ENUM_PATH;
-
-            if (!Directory.Exists(path))
-            {
-                Directory.CreateDirectory(path);
-            }
-
-            return path;
+            return ModulePath(moduleName, Setting.ENUM_PATH);
         }
 
     }

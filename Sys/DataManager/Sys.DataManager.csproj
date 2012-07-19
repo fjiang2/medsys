@@ -59,9 +59,9 @@
     <Compile Include="DataFile\Image\ImageMan.cs" />
     <Compile Include="DataFile\Image\RowImageList.cs" />
     <Compile Include="Model\PictureDpo.cs" />
-    <Compile Include="Dpo\Class\sysDOC01Dpo.cs" />
-    <Compile Include="Dpo\Class\sysDOC02Dpo.cs" />
-    <Compile Include="Dpo\Class\sysPictureDpo.cs" />
+    <Compile Include="MgCode\DpoClass\sysDOC01Dpo.cs" />
+    <Compile Include="MgCode\DpoClass\sysDOC02Dpo.cs" />
+    <Compile Include="MgCode\DpoClass\sysPictureDpo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

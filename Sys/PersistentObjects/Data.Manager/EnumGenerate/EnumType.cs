@@ -108,6 +108,16 @@ namespace Sys.Data.Manager
             get { return this.fields; }
         }
 
+        public string ClassName
+        {
+            get
+            {
+                if (!name.ToLower().EndsWith("enum"))
+                    return name + Setting.ENUM_SUFFIX_STRUCT_NAME;
+                else
+                    return name;
+            }
+        }
 
         public string ToCode(string nameSpace)
         {
@@ -124,12 +134,8 @@ namespace {0}
     }}
 }}
 ";
-            string enumName = name;
 
-            if (!enumName.ToLower().EndsWith("enum"))
-                enumName += Setting.ENUM_SUFFIX_STRUCT_NAME;
-
-            return string.Format(format, nameSpace, new DataEnumAttribute(), enumName, string.Join(",\r\n\r\n", fields.Select(field => field.ToCode())));
+            return string.Format(format, nameSpace, new DataEnumAttribute(), ClassName, string.Join(",\r\n\r\n", fields.Select(field => field.ToCode())));
         }
 
         public override string ToString()

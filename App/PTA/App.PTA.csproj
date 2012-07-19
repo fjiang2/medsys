@@ -52,8 +52,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AvailabilityEnum.cs" />
-    <Compile Include="Dpo\Class\ptaAdultDpo.cs" />
-    <Compile Include="Dpo\Class\ptaStudentDpo.cs" />
+    <Compile Include="MgCode\DpoClass\ptaAdultDpo.cs" />
+    <Compile Include="MgCode\DpoClass\ptaStudentDpo.cs" />
     <Compile Include="Forms\RegisterForm.cs">
       <SubType>Form</SubType>
     </Compile>
