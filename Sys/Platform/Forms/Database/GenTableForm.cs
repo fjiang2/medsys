@@ -26,8 +26,7 @@ namespace Sys.Platform.Forms
             if (!account.IsAdmin)
                 return;
 
-            string[] assemblies = Library.RegisteredAssemblyNames;
-            foreach (string x in assemblies)
+            foreach (string x in Library.AssemblyNames)
             {
                 comboModule.Items.Add(x);
             }
@@ -59,7 +58,7 @@ namespace Sys.Platform.Forms
         public static MessageBuilder CreateTable()
         {
             MessageBuilder messages = new MessageBuilder();
-            foreach (Assembly asm in Library.GetRegisteredAssemblies())
+            foreach (Assembly asm in Library.Assemblies)
             {
                 messages.AddRange(Unpacking.CreateTable(asm));
             }
@@ -138,7 +137,7 @@ namespace Sys.Platform.Forms
         private MessageBuilder Pack()
         {
             MessageBuilder messages = new MessageBuilder();
-            foreach (Assembly asm in Library.GetRegisteredAssemblies())
+            foreach (Assembly asm in Library.Assemblies)
             {
                 //don't pack data for PersistentObjects, all data can be re-created
                 //if (asm == typeof(DPObject).Assembly)
@@ -178,7 +177,7 @@ namespace Sys.Platform.Forms
                     if(external)
                         path = new Path(assembly).SimplePath + "\\"+ Setting.DPO_PACKAGE_PATH;
                     else
-                        path = new AssemblyLocation(assembly).Path(Setting.DPO_PACKAGE_PATH);
+                        path = new RegisteredAssembly(assembly).Path(Setting.DPO_PACKAGE_PATH);
 
                     string fileName = string.Format("{0}.cs", packing.ClassName);
                     File.WriteFile(path, fileName, packing.ToString());

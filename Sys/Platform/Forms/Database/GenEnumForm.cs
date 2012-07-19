@@ -40,8 +40,7 @@ namespace Sys.Platform.Forms
             this.rgModifier.LoadEnum<AccessModifier>();
             this.rgModifier.SetEnum(AccessModifier.Public);
 
-            string[] assemblies = Library.RegisteredAssemblyNames;
-            foreach (string x in assemblies)
+            foreach (string x in Library.AssemblyNames)
             {
                 comboModule.Items.Add(x);
             }
@@ -181,7 +180,7 @@ namespace Sys.Platform.Forms
         {
             string moduleName = (string)this.comboModule.SelectedItem;
             this.txtNamespace.Text = string.Format("{0}.{1}", moduleName, Setting.ENUM_SUB_NAMESPACE);
-            this.txtPath.Text = new AssemblyLocation(moduleName).Path(Setting.ENUM_PATH);
+            this.txtPath.Text = new RegisteredAssembly(moduleName).Path(Setting.ENUM_PATH);
         }
 
         private AccessModifier Modifier
@@ -218,7 +217,7 @@ namespace Sys.Platform.Forms
         private void comboModule_SelectedIndexChanged(object sender, EventArgs e)
         {
             SetNamespaceAndPath();
-            Assembly asm = Library.GetRegisteredAssembly((string)comboModule.SelectedItem);
+            Assembly asm = Library.GetAssembly((string)comboModule.SelectedItem);
             this.txtAssembly.Text = asm.FullName;
         }
 

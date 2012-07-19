@@ -19,8 +19,7 @@ namespace Sys.Platform.Securtity
         public void BuildWinFormTree(TreeNode parent)
         {
              
-            string[] assemblies = Sys.Modules.Library.RegisteredAssemblyNames;
-            foreach (string x in assemblies)
+            foreach (string x in Sys.Modules.Library.AssemblyNames)
             {
                 Assembly assembly = null;
                 foreach (Assembly asm in AppDomain.CurrentDomain.GetAssemblies())

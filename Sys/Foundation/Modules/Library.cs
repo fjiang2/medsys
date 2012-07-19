@@ -14,10 +14,6 @@ namespace Sys.Modules
 {
     public class Library
     {
-        DPCollection<AssemblyDpo> dpcAssemblies;
-        Dictionary<string, Assembly> assemblies;
-
-
         private static Library instance = null;
         public static Library Instance
         {
@@ -31,13 +27,14 @@ namespace Sys.Modules
         }
 
 
+        private Dictionary<string, Assembly> assemblies;
+
         private Library()
         {
-            DataTable dt = new TableReader<AssemblyDpo>(new ColumnValue(AssemblyDpo._Inactive, 0)).Table;
-            dpcAssemblies = new DPCollection<AssemblyDpo>(dt);
-            assemblies = new Dictionary<string, Assembly>();
-
-            foreach (AssemblyDpo assembly in dpcAssemblies)
+            var list = new TableReader<AssemblyDpo>(new ColumnValue(AssemblyDpo._Inactive, 0)).ToList();
+            
+            this.assemblies = new Dictionary<string, Assembly>();
+            foreach (AssemblyDpo assembly in list)
             {
                 string name = assembly.AssemblyName;
 
@@ -54,31 +51,32 @@ namespace Sys.Modules
         }
 
 
-
-
-        public void CreateTable()
+        public static Assembly GetAssembly(string moduleName)
         {
-            foreach (Assembly asm in  this.assemblies.Values)
-                CreateTable(asm);
+            if (Library.Instance.assemblies.ContainsKey(moduleName))
+                return Library.Instance.assemblies[moduleName];
+            else
+                return null;
         }
 
 
-        /// <summary>
-        /// Create Tables in the SQL Server
-        /// </summary>
-        /// <param name="assembly"></param>
-        public static void CreateTable(Assembly assembly)
+        public static IEnumerable<string> AssemblyNames
         {
-            foreach (Type type in assembly.GetExportedTypes())
+            get
             {
-                if (type.BaseType == typeof(DPObject))
-                {
-                    DPObject dpo = (DPObject)Activator.CreateInstance(type);
-                    dpo.CreateTable();
-                }
+                return Library.Instance.assemblies.Keys.ToArray();
             }
-        
         }
+
+        public static IEnumerable<Assembly> Assemblies
+        {
+            get
+            {
+                return Library.Instance.assemblies.Values.ToArray();
+            }
+        }
+    
+
 
 
         /// <summary>
@@ -87,8 +85,7 @@ namespace Sys.Modules
         public static TableDpoDictionary GetTableDpoDict()
         {
             TableDpoDictionary dict = new TableDpoDictionary();
-            Assembly[] assemblies = Library.GetRegisteredAssemblies();
-            foreach (Assembly assembly in assemblies)
+            foreach (Assembly assembly in Library.Assemblies)
             {
                 foreach (Type type in assembly.GetTypes())
                 {
@@ -104,20 +101,7 @@ namespace Sys.Modules
             return dict;
         }
 
-        public static TableDpoDictionary GetTableDpoDict(Assembly assembly)
-        {
-            TableDpoDictionary dict = new TableDpoDictionary();
-            foreach (Type type in assembly.GetTypes())
-            {
-                if (type.BaseType == typeof(DPObject))
-                {
-                    DPObject dpo = (DPObject)Activator.CreateInstance(type);
-                    dict.Add(dpo.TableName, type);
-                }
-            }
-
-            return dict;
-        }
+      
 
         /// <summary>
         /// Get Enum Types from C# source code
@@ -126,8 +110,7 @@ namespace Sys.Modules
         public static List<Type> GetEnumTypeList()
         {
             List<Type> list = new List<Type>();
-            Assembly[] assemblies = Library.GetRegisteredAssemblies();
-            foreach (Assembly assembly in assemblies)
+            foreach (Assembly assembly in Library.Assemblies)
             {
                 foreach (Type type in assembly.GetTypes())
                 {
@@ -147,7 +130,7 @@ namespace Sys.Modules
         /// <summary>
         /// Save Enum into Dictionary in database from C# Enum Types
         /// </summary>
-        public static void GenerateEnumDictionary()
+        public static void GenerateEnumDict()
         {
             IEnumerable<Type> enumList = GetEnumTypeList();
 
@@ -159,27 +142,6 @@ namespace Sys.Modules
         }
 
 
-        public static Assembly GetRegisteredAssembly(string moduleName)
-        {
-            if (Library.Instance.assemblies.ContainsKey(moduleName))
-                return Library.Instance.assemblies[moduleName];
-            else
-                return null;
-        }
      
-
-        public static string[] RegisteredAssemblyNames
-        {
-            get
-            {
-                return Library.Instance.assemblies.Keys.ToArray();
-            }
-        }
-
-        public static Assembly[] GetRegisteredAssemblies()
-        {
-            return Library.Instance.assemblies.Values.ToArray();
-        }
-    
     }
 }
