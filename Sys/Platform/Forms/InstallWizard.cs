@@ -73,7 +73,11 @@ namespace Sys.Platform.Forms
                 };
 
                 //Generate Enum Type Dictionary
-                Sys.Modules.Library.GenerateEnumDict();
+                foreach (Type type in Sys.Modules.Library.GetEnumTypeList())
+                {
+                    EnumType enumType = new EnumType(type);
+                    enumType.Save();
+                }
 
             }
             else if (e.Page == this.pageUnpackSystemdata)
