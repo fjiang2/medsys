@@ -27,7 +27,7 @@ namespace X12.File
         protected void Initialize(string x12)
         {
 
-           // x12 = x12.Replace("\r\n", "").Trim();
+            x12 = x12.Replace("\r\n", "").Replace("\n", "").Trim();
 
             string[] L = x12.Split(new char[] { SegmentLine.SEGMENT_DELIMITER }, StringSplitOptions.RemoveEmptyEntries);
 

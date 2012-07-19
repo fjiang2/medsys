@@ -37,6 +37,15 @@ namespace Sys.IO
             sw.Close();
         }
 
+        public static void WriteFile(string path, string simpleFileName, string text)
+        {
+            if (!Directory.Exists(path))
+                Directory.CreateDirectory(path);
+
+            StreamWriter sw = new StreamWriter(path + "\\" + simpleFileName);
+            sw.Write(text);
+            sw.Close();
+        }
 
 
         public static void ExecuteFile(string fileName)

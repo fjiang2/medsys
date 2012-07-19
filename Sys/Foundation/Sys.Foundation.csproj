@@ -86,6 +86,7 @@
     <Compile Include="MgCode\DpoPackage\ScriptDpoPackage.cs" />
     <Compile Include="MgCode\DpoPackage\UserDpoPackage.cs" />
     <Compile Include="MgCode\DpoPackage\UserRoleDpoPackage.cs" />
+    <Compile Include="Modules\AssemblyLocation.cs" />
     <Compile Include="Security\Companies.cs" />
     <Compile Include="Security\Company.cs" />
     <Compile Include="MgCode\DpoClass\CompanyDpo.cs" />

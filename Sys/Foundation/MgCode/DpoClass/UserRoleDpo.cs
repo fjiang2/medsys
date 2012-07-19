@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 7/19/2012 12:12:39 AM
+//   by devel at 7/19/2012 2:51:10 PM
 //
 
 using System;
@@ -14,7 +14,7 @@ using Sys.Data.Manager;
 
 namespace Sys.Foundation.DpoClass
 {
-    [Revision(12)]
+    [Revision(13)]
     [Table("sys00103", Level.System)]    //Primary Keys = Role_ID + User_ID;  Identity = UR_ID;
     public class UserRoleDpo : DPObject
     {

@@ -176,14 +176,14 @@ namespace Sys.Platform.Forms
                 {
                     string path;
                     if(external)
-                        path = new Path(assembly).SimplePath + "\\Package";
+                        path = new Path(assembly).SimplePath + "\\"+ Setting.DPO_PACKAGE_PATH;
                     else
-                        path = Sys.IO.Path.ModulePackagePath(assembly);
+                        path = new AssemblyLocation(assembly).Path(Setting.DPO_PACKAGE_PATH);
 
-                    string fileName = string.Format("{0}\\{1}.cs", path, packing.ClassName);
-                    File.WriteFile(fileName, packing.ToString());
+                    string fileName = string.Format("{0}.cs", packing.ClassName);
+                    File.WriteFile(path, fileName, packing.ToString());
 
-                    messages.Add(new Message(MessageLevel.Information, string.Format("Table {0} packed into {1}.", packing.TableName, fileName)));
+                    messages.Add(new Message(MessageLevel.Information, string.Format("Table {0} packed into {1}\\{2}.", packing.TableName, path, fileName)));
                 }
             }
 
