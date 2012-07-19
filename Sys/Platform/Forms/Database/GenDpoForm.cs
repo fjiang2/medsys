@@ -184,7 +184,7 @@ namespace Sys.Platform.Forms
                 this.txtNamespace.Text = string.Format("{0}.{1}", moduleName, Setting.DPO_CLASS_SUB_NAMESPACE);
 
 
-            this.txtPath.Text = Sys.IO.Path.ModuleDpoPath(moduleName);
+            this.txtPath.Text = new AssemblyLocation(moduleName).Path(Setting.DPO_CLASS_PATH);
             if (chkFolder.Checked && Level == Level.Fixed)
                 this.txtPath.Text += string.Format("\\{0}", DatabaseName);
         }
@@ -313,7 +313,7 @@ namespace Sys.Platform.Forms
                     continue;
 
                 Type ty = dpoDict[tname];
-                string path = Sys.IO.Path.ModuleDpoPath(ty.Assembly);
+                string path = new AssemblyLocation(ty.Assembly).Path(Setting.DPO_CLASS_PATH);  
 
                 DPObject dpo = (DPObject)Activator.CreateInstance(ty);
                 ClassName cname = new ClassName(dpo);

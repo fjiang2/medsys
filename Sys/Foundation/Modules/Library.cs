@@ -33,7 +33,7 @@ namespace Sys.Modules
 
         private Library()
         {
-            DataTable dt = SqlCmd.FillDataTable("SELECT * FROM {0} WHERE Inactive = 0", AssemblyDpo.TABLE_NAME);
+            DataTable dt = new TableReader<AssemblyDpo>(new ColumnValue(AssemblyDpo._Inactive, 0)).Table;
             dpcAssemblies = new DPCollection<AssemblyDpo>(dt);
             assemblies = new Dictionary<string, Assembly>();
 

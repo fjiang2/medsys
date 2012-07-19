@@ -1,6 +1,6 @@
 //
 // Machine Packed Data
-//   by devel at 7/19/2012 12:14:09 AM
+//   by devel at 7/19/2012 2:59:10 PM
 //
 using System;
 using System.Data;
@@ -45,7 +45,7 @@ namespace Sys.Foundation.DpoPackage
 			dpo.FullName = "Sys.BusinessRules";
 			dpo.Label = "Rule";
 			dpo.Inactive = false;
-			dpo.Location = "Sys\\\\BusinessRules";
+			dpo.Location = "Sys\\BusinessRules";
 			list.Add(dpo);
 
 			dpo = new AssemblyDpo();
@@ -53,7 +53,7 @@ namespace Sys.Foundation.DpoPackage
 			dpo.AssemblyName = "Sys.DataManager";
 			dpo.FullName = "Sys.DataManager";
 			dpo.Inactive = false;
-			dpo.Location = "Sys\\\\DataManager";
+			dpo.Location = "Sys\\DataManager";
 			list.Add(dpo);
 
 			dpo = new AssemblyDpo();
@@ -61,7 +61,7 @@ namespace Sys.Foundation.DpoPackage
 			dpo.AssemblyName = "Sys.Foundation";
 			dpo.FullName = "Sys.Foundation";
 			dpo.Inactive = false;
-			dpo.Location = "Sys\\\\Foundation";
+			dpo.Location = "Sys\\Foundation";
 			list.Add(dpo);
 
 			dpo = new AssemblyDpo();
@@ -69,7 +69,7 @@ namespace Sys.Foundation.DpoPackage
 			dpo.AssemblyName = "Sys.Messaging";
 			dpo.FullName = "Sys.Messaging";
 			dpo.Inactive = false;
-			dpo.Location = "Sys\\\\Messaging";
+			dpo.Location = "Sys\\Messaging";
 			list.Add(dpo);
 
 			dpo = new AssemblyDpo();
@@ -78,7 +78,7 @@ namespace Sys.Foundation.DpoPackage
 			dpo.FullName = "Sys.PersistentObjects";
 			dpo.Label = "DPO";
 			dpo.Inactive = false;
-			dpo.Location = "Sys\\\\PersistentObjects";
+			dpo.Location = "Sys\\PersistentObjects";
 			list.Add(dpo);
 
 			dpo = new AssemblyDpo();
@@ -86,7 +86,7 @@ namespace Sys.Foundation.DpoPackage
 			dpo.AssemblyName = "Sys.Platform";
 			dpo.FullName = "Sys.Platform";
 			dpo.Inactive = false;
-			dpo.Location = "Sys\\\\Platform";
+			dpo.Location = "Sys\\Platform";
 			list.Add(dpo);
 
 			dpo = new AssemblyDpo();
@@ -95,7 +95,7 @@ namespace Sys.Foundation.DpoPackage
 			dpo.FullName = "Sys.Report";
 			dpo.Label = "REPORT";
 			dpo.Inactive = true;
-			dpo.Location = "Sys\\\\Report";
+			dpo.Location = "Sys\\Report";
 			list.Add(dpo);
 
 			dpo = new AssemblyDpo();
@@ -104,7 +104,7 @@ namespace Sys.Foundation.DpoPackage
 			dpo.FullName = "Sys.SmartList";
 			dpo.Label = "SMARTLIST";
 			dpo.Inactive = false;
-			dpo.Location = "Sys\\\\SmartList";
+			dpo.Location = "Sys\\SmartList";
 			list.Add(dpo);
 
 			dpo = new AssemblyDpo();
@@ -112,7 +112,7 @@ namespace Sys.Foundation.DpoPackage
 			dpo.AssemblyName = "Sys.ViewManager";
 			dpo.FullName = "Sys.ViewManager";
 			dpo.Inactive = false;
-			dpo.Location = "Sys\\\\ViewManager";
+			dpo.Location = "Sys\\ViewManager";
 			list.Add(dpo);
 
 			dpo = new AssemblyDpo();
@@ -121,7 +121,7 @@ namespace Sys.Foundation.DpoPackage
 			dpo.FullName = "Sys.Workflow";
 			dpo.Label = "WORKFLOW";
 			dpo.Inactive = false;
-			dpo.Location = "Sys\\\\Workflow";
+			dpo.Location = "Sys\\Workflow";
 			list.Add(dpo);
 
 			dpo = new AssemblyDpo();
@@ -130,7 +130,7 @@ namespace Sys.Foundation.DpoPackage
 			dpo.FullName = "X12";
 			dpo.Label = "X12";
 			dpo.Inactive = false;
-			dpo.Location = "App\\\\X12";
+			dpo.Location = "App\\X12";
 			list.Add(dpo);
 
 		}

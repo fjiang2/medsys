@@ -49,6 +49,7 @@
             this.txtDatabaseId = new System.Windows.Forms.TextBox();
             this.chkCheckAll = new System.Windows.Forms.CheckBox();
             this.chkShowNewTables = new System.Windows.Forms.CheckBox();
+            this.chkPack = new System.Windows.Forms.CheckBox();
             this.label9 = new System.Windows.Forms.Label();
             this.txtTableId = new System.Windows.Forms.TextBox();
             this.txtCounter = new System.Windows.Forms.TextBox();
@@ -69,7 +70,6 @@
             this.toolStripButtonGenSP = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
-            this.chkPack = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.rgModifier.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rgDpoLevel.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -93,7 +93,7 @@
             this.txtPath.Location = new System.Drawing.Point(91, 184);
             this.txtPath.Name = "txtPath";
             this.txtPath.ReadOnly = true;
-            this.txtPath.Size = new System.Drawing.Size(266, 20);
+            this.txtPath.Size = new System.Drawing.Size(351, 20);
             this.txtPath.TabIndex = 1;
             // 
             // label2
@@ -109,7 +109,7 @@
             // 
             this.txtNamespace.Location = new System.Drawing.Point(91, 132);
             this.txtNamespace.Name = "txtNamespace";
-            this.txtNamespace.Size = new System.Drawing.Size(266, 20);
+            this.txtNamespace.Size = new System.Drawing.Size(351, 20);
             this.txtNamespace.TabIndex = 1;
             // 
             // label3
@@ -180,7 +180,7 @@
             // 
             // btnBrowse
             // 
-            this.btnBrowse.Location = new System.Drawing.Point(359, 181);
+            this.btnBrowse.Location = new System.Drawing.Point(448, 184);
             this.btnBrowse.Name = "btnBrowse";
             this.btnBrowse.Size = new System.Drawing.Size(75, 23);
             this.btnBrowse.TabIndex = 6;
@@ -305,6 +305,16 @@
             this.chkShowNewTables.UseVisualStyleBackColor = true;
             this.chkShowNewTables.CheckedChanged += new System.EventHandler(this.chkShowNewTables_CheckedChanged);
             // 
+            // chkPack
+            // 
+            this.chkPack.AutoSize = true;
+            this.chkPack.Location = new System.Drawing.Point(359, 220);
+            this.chkPack.Name = "chkPack";
+            this.chkPack.Size = new System.Drawing.Size(51, 17);
+            this.chkPack.TabIndex = 24;
+            this.chkPack.Text = "Pack";
+            this.chkPack.UseVisualStyleBackColor = true;
+            // 
             // label9
             // 
             this.label9.AutoSize = true;
@@ -377,7 +387,7 @@
             // 
             this.txtClass.Location = new System.Drawing.Point(91, 158);
             this.txtClass.Name = "txtClass";
-            this.txtClass.Size = new System.Drawing.Size(265, 20);
+            this.txtClass.Size = new System.Drawing.Size(351, 20);
             this.txtClass.TabIndex = 16;
             // 
             // txtAssembly
@@ -393,7 +403,7 @@
             this.comboModule.FormattingEnabled = true;
             this.comboModule.Location = new System.Drawing.Point(91, 105);
             this.comboModule.Name = "comboModule";
-            this.comboModule.Size = new System.Drawing.Size(265, 21);
+            this.comboModule.Size = new System.Drawing.Size(351, 21);
             this.comboModule.TabIndex = 14;
             this.comboModule.SelectedIndexChanged += new System.EventHandler(this.comboModule_SelectedIndexChanged);
             // 
@@ -484,24 +494,14 @@
             this.imageList1.ImageSize = new System.Drawing.Size(16, 16);
             this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
             // 
-            // chkPack
-            // 
-            this.chkPack.AutoSize = true;
-            this.chkPack.Location = new System.Drawing.Point(359, 220);
-            this.chkPack.Name = "chkPack";
-            this.chkPack.Size = new System.Drawing.Size(51, 17);
-            this.chkPack.TabIndex = 24;
-            this.chkPack.Text = "Pack";
-            this.chkPack.UseVisualStyleBackColor = true;
-            // 
-            // DpoGenForm
+            // GenDpoForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(832, 636);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.splitContainer1);
-            this.Name = "DpoGenForm";
+            this.Name = "GenDpoForm";
             this.Text = "Generate Dpo Class";
             ((System.ComponentModel.ISupportInitialize)(this.rgModifier.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.rgDpoLevel.Properties)).EndInit();

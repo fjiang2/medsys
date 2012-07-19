@@ -181,7 +181,7 @@ namespace Sys.Platform.Forms
         {
             string moduleName = (string)this.comboModule.SelectedItem;
             this.txtNamespace.Text = string.Format("{0}.{1}", moduleName, Setting.ENUM_SUB_NAMESPACE);
-            this.txtPath.Text = Sys.IO.Path.ModuleEnumPath(moduleName);
+            this.txtPath.Text = new AssemblyLocation(moduleName).Path(Setting.ENUM_PATH);
         }
 
         private AccessModifier Modifier
@@ -253,16 +253,15 @@ namespace Sys.Platform.Forms
                 string sourceCode = selectedEnumType.ToCode(this.Namespace);
 
     
-                System.IO.StreamWriter sw = new System.IO.StreamWriter(string.Format("{0}\\{1}.cs", this.Path, selectedEnumType.ClassName));
-                sw.Write(sourceCode);
-                sw.Close();
+                string fileName = string.Format("{0}.cs", selectedEnumType.ClassName);
+                Sys.IO.File.WriteFile(this.Path, fileName, sourceCode);
 
                 if (this.treeEnumList.SelectedNode.ImageIndex == 2)
                 {
                     treeEnumList.SelectedNode.ImageIndex = 1;
                 }
 
-                this.InformationMessage = string.Format("enum {0} is created at {1}", cname, Path);
+                this.InformationMessage = string.Format("enum {0} is created at {1}\\{2}", cname, Path, fileName);
             }
             catch (Exception ex)
             {

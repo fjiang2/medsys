@@ -11,6 +11,7 @@ using System.Reflection;
 using Sys.Data;
 using Sys.Data.Manager;
 using Sys.Security;
+using Sys.Modules;
 
 namespace X12
 {
@@ -30,7 +31,7 @@ namespace X12
 
             Assembly assembly = Assembly.GetExecutingAssembly();
             Manager mgr = new Manager(assembly);
-            string path = Sys.IO.Path.ModuleDpoPath(assembly);
+            string path = new AssemblyLocation(assembly).Path(Setting.DPO_CLASS_PATH);
 
 #if CREATE_DPOBJECT
             Manager.CreateClass(new string[] {
