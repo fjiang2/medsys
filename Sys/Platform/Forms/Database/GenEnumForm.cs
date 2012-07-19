@@ -251,6 +251,9 @@ namespace Sys.Platform.Forms
                 }
 
                 string sourceCode = selectedEnumType.ToCode(this.Namespace);
+
+                //this.txtPath.Text = Sys.IO.Path.ModuleEnumPath(moduleName);
+
                 System.IO.StreamWriter sw = new System.IO.StreamWriter(string.Format("{0}\\{1}.cs", this.Path, selectedEnumType.Name));
                 sw.Write(sourceCode);
                 sw.Close();
