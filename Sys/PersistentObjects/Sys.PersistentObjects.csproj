@@ -88,6 +88,7 @@
     <Compile Include="Data.Manager\Package\IPacking.cs" />
     <Compile Include="Data.Manager\Package\Packing.cs" />
     <Compile Include="Data.Manager\Package\Unpacking.cs" />
+    <Compile Include="Data.Manager\Setting.cs" />
     <Compile Include="Data.Manager\SpGenerate\SpDatabase.cs" />
     <Compile Include="Data.Manager\SpGenerate\SpParam.cs" />
     <Compile Include="Data.Manager\SpGenerate\SpParamDpo.cs" />

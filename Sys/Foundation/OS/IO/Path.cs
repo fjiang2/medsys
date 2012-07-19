@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Reflection;
 using System.IO;
+using Sys.Data.Manager;
 
 namespace Sys.IO
 {
@@ -88,7 +89,7 @@ namespace Sys.IO
 
         public static string ModuleDpoPath(string moduleName)
         {
-            string path = ModulePath(moduleName) + "\\Dpo\\Class";
+            string path = ModulePath(moduleName) + Setting.DPO_CLASS_PATH;
             
             if (!Directory.Exists(path))
             {
@@ -105,7 +106,7 @@ namespace Sys.IO
 
         public static string ModulePackagePath(string moduleName)
         {
-            string path = ModulePath(moduleName) + "\\Dpo\\Package";
+            string path = ModulePath(moduleName) + Setting.DPO_PACKAGE_PATH;
             
             if (!Directory.Exists(path))
             {

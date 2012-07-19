@@ -15,7 +15,6 @@ namespace Sys.Data.Manager
     public class Packing
     {
         private FieldInfo[] publicFields;
-        
         private Type dpoType;
         PersistentObject instance;
 
@@ -32,7 +31,7 @@ namespace Sys.Data.Manager
             Type baseType = typeof(BasePackage<>);
             baseType = baseType.MakeGenericType(dpoType);
 
-            this.clss = new ClassBuilder(dpoType.Assembly.GetName().Name + ".DpoPackage", ModifierType.Public, ClassName, new Type[] { baseType });
+            this.clss = new ClassBuilder(dpoType.Assembly.GetName().Name + "." + Setting.DPO_PACKAGE_SUB_NAMESPACE, ModifierType.Public, ClassName, new Type[] { baseType });
             
             this.clss.AddUsing("System")
             .AddUsing("System.Data")
@@ -61,7 +60,7 @@ namespace Sys.Data.Manager
         {
             get
             {
-                return dpoType.Name + "Package";
+                return dpoType.Name + Setting.DPO_PACKAGE_SUFFIX_CLASS_NAME;
             }
         }
 
