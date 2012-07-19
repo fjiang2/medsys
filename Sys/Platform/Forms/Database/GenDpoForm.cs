@@ -320,7 +320,7 @@ namespace Sys.Platform.Forms
                 tname.SetLevel(dpo.Level, dpo.IsPack);
 
                 if (tname.GenTableDpo(path, this.chkMustGenerate.Checked, cname, true))
-                    output += string.Format("class {0} is upgradeed from table {1} at {2}\r\n", cname, tname, path);
+                    output += string.Format("class {0} is upgraded from table {1} at {2}\r\n", cname, tname, path);
                 else
                     output += string.Format("class {0} is skipped from table {1}\r\n", cname, tname);
             }

@@ -2,6 +2,8 @@
 using System.Reflection;
 using System.Windows.Forms;
 using Sys.OS;
+using System.Linq;
+using System.Text;
 
 namespace Sys.Platform.Forms
 {
@@ -16,16 +18,30 @@ namespace Sys.Platform.Forms
             
             this.labelVersion.Text = String.Format("Version {0}", App.ApplicationVersion());
             this.labelCopyright.Text = string.Format("Copyright © {0} 2012 - {1}", SysInformation.SoftwareCompanyName, DateTime.Today.Year);
-            this.textBoxDescription.Text = AssemblyDescription 
-                + "\r\n\r\nMicrosoft .NET Framework Version:" + version(typeof(object))
-                + "\r\nDevExpress Version:" + version(typeof(DevExpress.XtraEditors.ButtonEdit))
-                + "\r\nTie Version:" + version(typeof(Tie.VAL))
-                + "\r\nSys Framework Version:" + version(this)
-                + "\r\nAGS XMPP Version:" + version(typeof(agsXMPP.XmppClientConnection));
 
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine()
+                .AppendLine("Microsoft .NET Framework Version:" + version(typeof(object)))
+                .AppendLine("DevExpress Version:" + version(typeof(DevExpress.XtraEditors.ButtonEdit)))
+                .AppendLine("Tie Version:" + version(typeof(Tie.VAL)))
+                .AppendLine("Sys Framework Version:" + version(this))
+                .AppendLine("AGS XMPP Version:" + version(typeof(agsXMPP.XmppClientConnection)))
+                .AppendLine();
             
+
+            foreach(Assembly assembly in Sys.Modules.Library.GetRegisteredAssemblies())
+            {
+                string name = assembly.GetName().Name;
+                if(!name.StartsWith("Sys") && !name.StartsWith("App"))
+                {
+                    builder.AppendLine(string.Format("{0} Version:{1}", name, assembly.GetName().Version));
+                }
+            }
+
+            this.textBoxDescription.Text = builder.ToString();
+
             this.labelProductName.Text = string.Format("Product Name: {0}", SysInformation.ApplicatioName);
-            this.labelCompanyName.Text = string.Format("Company Name: {0}", SysInformation.CompanyName);
+            this.labelCompanyName.Text = string.Format("Service: {0}", SysInformation.CompanyName);
             
             this.okButton.Click += new EventHandler(okButton_Click);
         }
