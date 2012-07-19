@@ -59,7 +59,7 @@ namespace Sys.Data.Manager
                 className = className.Substring(0, className.Length - 1);
 
             //Add "Dpo"
-            className += "Dpo";
+            className += Setting.DPO_CLASS_SUFFIX_CLASS_NAME;
 
             return className;
 

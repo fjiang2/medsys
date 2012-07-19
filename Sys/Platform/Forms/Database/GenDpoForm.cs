@@ -178,20 +178,15 @@ namespace Sys.Platform.Forms
         {
             string moduleName = (string)this.comboModule.SelectedItem;
 
-            if (moduleName.StartsWith("Sys."))
-                this.txtNamespace.Text = moduleName + ".DpoClass";
+            if (chkFolder.Checked && Level == Level.Fixed)
+                this.txtNamespace.Text = string.Format("{0}.{1}.{2}", moduleName, Setting.DPO_CLASS_SUB_NAMESPACE, DatabaseName);
             else
-            {
-                if (chkFolder.Checked && Level == Level.Fixed)
-                    this.txtNamespace.Text = string.Format( "{0}.DpoClass.{1}",  moduleName, DatabaseName);
-                else
-                    this.txtNamespace.Text = moduleName + ".DpoClass";
-            }
+                this.txtNamespace.Text = string.Format("{0}.{1}", moduleName, Setting.DPO_CLASS_SUB_NAMESPACE);
 
 
-                this.txtPath.Text = Sys.IO.Path.ModuleDpoPath(moduleName);
-                if (chkFolder.Checked && Level == Level.Fixed)
-                    this.txtPath.Text += string.Format("\\{0}", DatabaseName);
+            this.txtPath.Text = Sys.IO.Path.ModuleDpoPath(moduleName);
+            if (chkFolder.Checked && Level == Level.Fixed)
+                this.txtPath.Text += string.Format("\\{0}", DatabaseName);
         }
 
         private AccessModifier Modifier
