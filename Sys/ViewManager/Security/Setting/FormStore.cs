@@ -35,8 +35,7 @@ namespace Sys.ViewManager.Security
             checkedClasses = (object[])Configuration.Instance["Security.Classes"];
 
 
-            string[] checkedAssemblies = Sys.Modules.Library.RegisteredAssemblyNames;
-            foreach (string x in checkedAssemblies)
+            foreach (string x in Sys.Modules.Library.AssemblyNames)
             {
                 Assembly assembly = null;
                 try

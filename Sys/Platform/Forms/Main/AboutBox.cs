@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using Sys.OS;
 using System.Linq;
 using System.Text;
+using Sys.Modules;
 
 namespace Sys.Platform.Forms
 {
@@ -29,7 +30,7 @@ namespace Sys.Platform.Forms
                 .AppendLine();
             
 
-            foreach(Assembly assembly in Sys.Modules.Library.GetRegisteredAssemblies())
+            foreach(Assembly assembly in Library.Assemblies)
             {
                 string name = assembly.GetName().Name;
                 if(!name.StartsWith("Sys") && !name.StartsWith("App"))

@@ -45,8 +45,7 @@ namespace Sys.Platform.Forms
             RefreshMenuTree();
             treeMenu.AfterSelect += new TreeViewEventHandler(treeMenu_AfterSelect);
 
-            string[] assemblies = Sys.Modules.Library.RegisteredAssemblyNames;
-            foreach (string x in assemblies)
+            foreach (string x in Sys.Modules.Library.AssemblyNames)
             {
                 comboModule.Items.Add(x);
             }

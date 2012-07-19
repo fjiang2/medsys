@@ -6,14 +6,15 @@ using System.Reflection;
 using System.IO;
 using Sys.Foundation.DpoClass;
 using Sys.Data.Manager;
+using Sys.Data;
 
 namespace Sys.Modules
 {
-    public class AssemblyLocation: AssemblyDpo
+    public class RegisteredAssembly: AssemblyDpo
     {
         Assembly assembly;
 
-        public AssemblyLocation(Assembly assembly)
+        public RegisteredAssembly(Assembly assembly)
             :base(assembly.GetName().Name)
         {
             if (!Exists)
@@ -22,7 +23,7 @@ namespace Sys.Modules
             this.assembly = assembly;
         }
 
-        public AssemblyLocation(string assemblyName)
+        public RegisteredAssembly(string assemblyName)
             :base(assemblyName)
         {
             if (!Exists)
@@ -51,6 +52,6 @@ namespace Sys.Modules
                 return Path() + "\\" + subpath;
         }
 
-    
+
     }
 }
