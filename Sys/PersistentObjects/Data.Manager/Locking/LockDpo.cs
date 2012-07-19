@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Sys.Data;
-using Sys.PersistentObjects.Dpo;
+using Sys.PersistentObjects.DpoClass;
 
 namespace Sys.Data.Manager
 {

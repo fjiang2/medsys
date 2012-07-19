@@ -10,7 +10,7 @@ using Sys.ViewManager.Forms;
 namespace Sys.ViewManager.Security
 {
 
-    public class UserMenuItem : Dpo.UserMenuDpo, ITreeDpoNode , INTreeNode<UserMenuItem>
+    public class UserMenuItem : DpoClass.UserMenuDpo, ITreeDpoNode , INTreeNode<UserMenuItem>
     {
         int imageIndex = -1;
 

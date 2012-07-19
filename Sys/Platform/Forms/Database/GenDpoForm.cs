@@ -179,13 +179,13 @@ namespace Sys.Platform.Forms
             string moduleName = (string)this.comboModule.SelectedItem;
 
             if (moduleName.StartsWith("Sys."))
-                this.txtNamespace.Text = moduleName + ".Dpo";
+                this.txtNamespace.Text = moduleName + ".DpoClass";
             else
             {
                 if (chkFolder.Checked && Level == Level.Fixed)
-                    this.txtNamespace.Text = string.Format( "{0}.Dpo.{1}",  moduleName, DatabaseName);
+                    this.txtNamespace.Text = string.Format( "{0}.DpoClass.{1}",  moduleName, DatabaseName);
                 else
-                    this.txtNamespace.Text = moduleName + ".Dpo";
+                    this.txtNamespace.Text = moduleName + ".DpoClass";
             }
 
 

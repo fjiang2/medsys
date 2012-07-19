@@ -64,7 +64,7 @@ namespace Sys.ViewManager.Manager
             //AddApp("Microsoft Word", "WINWORD.EXE", global::Sys.ViewManager.Properties.Resources.word);
 
             AppLink appLink = new AppLink(Account.CurrentUser);
-            foreach (Dpo.AppLinkDpo dpo in appLink.Links)
+            foreach (DpoClass.AppLinkDpo dpo in appLink.Links)
             {
                 Image map;
                 if (dpo.IconImage != null)

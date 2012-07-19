@@ -10,7 +10,7 @@ using System.Reflection;
 using Sys.ViewManager.Forms;
 using Sys.Data;
 using Sys.Security;
-using Sys.Foundation.Dpo;
+using Sys.Foundation.DpoClass;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Docking;
 using Sys.ViewManager.Manager;
@@ -90,8 +90,8 @@ namespace Sys.ViewManager.Security
 
                 DataTable dataTable;
                 SQL = SQL
-                    .Replace("@UserMenus", Dpo.UserMenuDpo.TABLE_NAME)
-                    .Replace("@ItemPermissions", Dpo.ItemPermissionDpo.TABLE_NAME)
+                    .Replace("@UserMenus", DpoClass.UserMenuDpo.TABLE_NAME)
+                    .Replace("@ItemPermissions", DpoClass.ItemPermissionDpo.TABLE_NAME)
                     .Replace("@UserRoles", UserRoleDpo.TABLE_NAME);
 
                 dataTable = SqlCmd.FillDataTable(SQL,

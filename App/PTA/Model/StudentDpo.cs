@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Data;
 using App.Data;
-using PTA.Dpo;
+using PTA.DpoClass;
 using Sys.Data;
 
 namespace PTA

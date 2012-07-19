@@ -11,7 +11,7 @@ using Sys.ViewManager;
 using Sys.Data;
 using Sys.ViewManager.Security;
 using Sys.Security;
-using Sys.PersistentObjects.Dpo;
+using Sys.PersistentObjects.DpoClass;
 
 namespace Sys.ViewManager.Security
 {

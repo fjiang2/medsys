@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Data;
 using Sys;
-using X12.Dpo;
+using X12.DpoClass;
 using X12.Specification;
 
 namespace X12.File

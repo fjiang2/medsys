@@ -6,7 +6,7 @@ using System.Text;
 using Tie;
 using Sys.Data;
 using Sys.Data.Manager;
-using Sys.Foundation.Dpo;
+using Sys.Foundation.DpoClass;
 
 namespace Sys.Security
 {

@@ -7,7 +7,7 @@ using System.Security.Cryptography;
 using System.Drawing;
 using Sys.Data;
 using Sys.Data.Manager;
-using Sys.Foundation.Dpo;
+using Sys.Foundation.DpoClass;
 
 namespace Sys.Security
 {

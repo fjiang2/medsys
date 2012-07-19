@@ -9,13 +9,13 @@ using System.Windows.Forms;
 using System.Reflection;
 using Sys.Security;
 using Sys.Data;
-using Sys.PersistentObjects.Dpo;
+using Sys.PersistentObjects.DpoClass;
 using Sys.ViewManager.Forms;
 using Sys.ViewManager;
 using Sys.ViewManager.Security;
 using DevExpress.XtraEditors.Controls;
-using Sys.Foundation.Dpo;
-using Sys.ViewManager.Dpo;
+using Sys.Foundation.DpoClass;
+using Sys.ViewManager.DpoClass;
 using Sys.ViewManager.DevEx;
 using Sys.ViewManager.Modules;
 using Sys.Platform.Securtity;
@@ -121,7 +121,7 @@ namespace Sys.Platform.Forms
         private void RefreshMenuTree()
         {
             string SQL = @"SELECT * FROM @UserMenus ORDER BY orderBy"
-                .Replace("@UserMenus", Sys.ViewManager.Dpo.UserMenuDpo.TABLE_NAME);
+                .Replace("@UserMenus", Sys.ViewManager.DpoClass.UserMenuDpo.TABLE_NAME);
 
 
             List<ITreeDpoNode> list = new List<ITreeDpoNode>();
@@ -261,7 +261,7 @@ namespace Sys.Platform.Forms
         private void btnSearch_Click(object sender, EventArgs e)
         {
             string SQL = "SELECT ID, Label, Command FROM @UserMenus"
-                .Replace("@UserMenus", Sys.ViewManager.Dpo.UserMenuDpo.TABLE_NAME);
+                .Replace("@UserMenus", Sys.ViewManager.DpoClass.UserMenuDpo.TABLE_NAME);
 
             LookUp lookup = new LookUp("Select Menu Item", SQL.FillDataTable());
             DataRow dataRow = lookup.PopUp(this);

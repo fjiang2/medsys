@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using X12.Package;
-using X12.Dpo;
+using X12.DpoPackage;
+using X12.DpoClass;
 using X12.Specification;
 using Sys;
 using Tie;

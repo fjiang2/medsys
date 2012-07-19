@@ -80,14 +80,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Dpo\LogChatDpo.cs" />
+    <Compile Include="Dpo\Class\LogChatDpo.cs" />
     <Compile Include="Forms\frmProfile.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\frmProfile.Designer.cs">
       <DependentUpon>frmProfile.cs</DependentUpon>
     </Compile>
-    <Compile Include="Dpo\LogChat.cs" />
+    <Compile Include="Dpo\Class\LogChat.cs" />
     <Compile Include="Forms\frmAddRoster.cs">
       <SubType>Form</SubType>
     </Compile>

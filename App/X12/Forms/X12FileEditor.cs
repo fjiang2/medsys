@@ -9,7 +9,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.Runtime.InteropServices;
 using X12.File;
-using X12.Dpo;
+using X12.DpoClass;
 using X12.Specification;
 using Sys;
 using Sys.Data;

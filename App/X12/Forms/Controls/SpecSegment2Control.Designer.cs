@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            X12.Dpo.X12SegmentTemplateDpo x12SegmentTemplateDpo1 = new X12.Dpo.X12SegmentTemplateDpo();
+            X12.DpoClass.X12SegmentTemplateDpo x12SegmentTemplateDpo1 = new X12.DpoClass.X12SegmentTemplateDpo();
             this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
             this.txtScript = new System.Windows.Forms.RichTextBox();
             this.x12Segment1Control1 = new X12.Forms.SpecSegment1Control();

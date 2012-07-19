@@ -4,7 +4,7 @@ using System.Text;
 using System.Data;
 using Sys.Data;
 using Tie;
-using Sys.PersistentObjects.Dpo;
+using Sys.PersistentObjects.DpoClass;
 
 namespace Sys.Data.Manager
 {

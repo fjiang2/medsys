@@ -7,7 +7,7 @@ using Sys;
 
 namespace X12.Specification
 {
-    public class CodeDefinitionDpo : Dpo.X12CodeDefinitionDpo
+    public class CodeDefinitionDpo : DpoClass.X12CodeDefinitionDpo
     {
 
         public CodeDefinitionDpo()

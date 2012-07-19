@@ -113,12 +113,12 @@
       <DependentUpon>X12ControlNumber.cs</DependentUpon>
     </Compile>
     <Compile Include="Foundation\Segment.cs" />
-    <Compile Include="Package\X12CodeDefinitionDpoPackage.cs" />
-    <Compile Include="Package\X12ElementInstanceDpoPackage.cs" />
-    <Compile Include="Package\X12ElementTemplateDpoPackage.cs" />
-    <Compile Include="Package\X12LoopTemplateDpoPackage.cs" />
-    <Compile Include="Package\X12SegmentInstanceDpoPackage.cs" />
-    <Compile Include="Package\X12SegmentTemplateDpoPackage.cs" />
+    <Compile Include="Dpo\Package\X12CodeDefinitionDpoPackage.cs" />
+    <Compile Include="Dpo\Package\X12ElementInstanceDpoPackage.cs" />
+    <Compile Include="Dpo\Package\X12ElementTemplateDpoPackage.cs" />
+    <Compile Include="Dpo\Package\X12LoopTemplateDpoPackage.cs" />
+    <Compile Include="Dpo\Package\X12SegmentInstanceDpoPackage.cs" />
+    <Compile Include="Dpo\Package\X12SegmentTemplateDpoPackage.cs" />
     <Compile Include="Specification\CodeDefinitionDpo.cs" />
     <Compile Include="Specification\SegmentTemplateDpo.cs" />
     <Compile Include="Specification\LoopTemplateDpo.cs" />
@@ -133,12 +133,12 @@
     <Compile Include="X12Exception.cs" />
     <Compile Include="Type\ConditionDesignator.cs" />
     <Compile Include="SpecDocument\Convert.cs" />
-    <Compile Include="Dpo\X12CodeDefinitionDpo.cs" />
-    <Compile Include="Dpo\X12ElementTemplateDpo.cs" />
-    <Compile Include="Dpo\X12ElementInstanceDpo.cs" />
-    <Compile Include="Dpo\X12LoopTemplateDpo.cs" />
-    <Compile Include="Dpo\X12SegmentTemplateDpo.cs" />
-    <Compile Include="Dpo\X12SegmentInstanceDpo.cs" />
+    <Compile Include="Dpo\Class\X12CodeDefinitionDpo.cs" />
+    <Compile Include="Dpo\Class\X12ElementTemplateDpo.cs" />
+    <Compile Include="Dpo\Class\X12ElementInstanceDpo.cs" />
+    <Compile Include="Dpo\Class\X12LoopTemplateDpo.cs" />
+    <Compile Include="Dpo\Class\X12SegmentTemplateDpo.cs" />
+    <Compile Include="Dpo\Class\X12SegmentInstanceDpo.cs" />
     <Compile Include="Forms\Controls\SpecSegment1Control.cs">
       <SubType>UserControl</SubType>
     </Compile>

@@ -5,7 +5,7 @@ using System.Text;
 using System.Collections;
 using System.ComponentModel;
 using Sys.Data;
-using Sys.Platform.Dpo;
+using Sys.Platform.DpoClass;
 using System.Data;
 
 namespace Sys.Platform.Scheduler

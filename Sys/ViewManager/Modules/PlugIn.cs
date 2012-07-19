@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Text;
 using System.Reflection;
 using Sys.Data;
-using Sys.PersistentObjects.Dpo;
+using Sys.PersistentObjects.DpoClass;
 using Sys.Modules;
 using Sys.ViewManager.Forms;
-using Sys.Foundation.Dpo;
+using Sys.Foundation.DpoClass;
 
 namespace Sys.ViewManager.Modules
 {
@@ -116,9 +116,9 @@ namespace Sys.ViewManager.Modules
                 DELETE FROM @UserMenus WHERE Module = '{0}'
                 DELETE FROM @Permissions WHERE Key_Name IN ({1})
                 DELETE FROM @Assemblies WHERE AssemblyName = '{0}'"
-                .Replace("@IPermissions", Sys.ViewManager.Dpo.ItemPermissionDpo.TABLE_NAME)
-                .Replace("@Permissions", Sys.ViewManager.Dpo.FormPermissionDpo.TABLE_NAME)
-                .Replace("@UserMenus", Sys.ViewManager.Dpo.UserMenuDpo.TABLE_NAME)
+                .Replace("@IPermissions", Sys.ViewManager.DpoClass.ItemPermissionDpo.TABLE_NAME)
+                .Replace("@Permissions", Sys.ViewManager.DpoClass.FormPermissionDpo.TABLE_NAME)
+                .Replace("@UserMenus", Sys.ViewManager.DpoClass.UserMenuDpo.TABLE_NAME)
                 .Replace("@Assemblies", AssemblyDpo.TABLE_NAME);
              
             SqlCmd.ExecuteNonQuery(SQL, assemblyName, L);

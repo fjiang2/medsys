@@ -9,7 +9,7 @@ using Sys.ViewManager.Forms;
 using Sys.ViewManager;
 using Tie;
 using Sys.Data;
-using Sys.ViewManager.Dpo;
+using Sys.ViewManager.DpoClass;
 
 namespace Sys.Platform.DataImporter
 {
@@ -24,7 +24,7 @@ namespace Sys.Platform.DataImporter
         public DataImportWizard()
         {
             InitializeComponent();
-            var dpo = new Sys.ViewManager.Dpo.DataImportDpo();
+            var dpo = new Sys.ViewManager.DpoClass.DataImportDpo();
             binding = new BindRow(dpo, new Locator("[Label]=@Label"));
             binding.Bind(this.tbTemplate, DataImportDpo._Label);
             binding.Bind(this.tbDescription, DataImportDpo._Description);
@@ -39,7 +39,7 @@ namespace Sys.Platform.DataImporter
             LookUp lookUp = new LookUp(
                 "Select import template", 
                 "SELECT ID, Label, Description FROM @DataImports"
-                    .Replace("@DataImports", Sys.ViewManager.Dpo.DataImportDpo.TABLE_NAME)
+                    .Replace("@DataImports", Sys.ViewManager.DpoClass.DataImportDpo.TABLE_NAME)
                     .FillDataTable()
                     );
 

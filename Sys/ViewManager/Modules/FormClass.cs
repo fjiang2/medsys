@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Sys.ViewManager.Dpo;
+using Sys.ViewManager.DpoClass;
 using Sys.ViewManager.Forms;
 
 namespace Sys.ViewManager.Modules

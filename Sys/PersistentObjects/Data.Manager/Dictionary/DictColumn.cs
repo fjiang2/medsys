@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Data;
 using Sys.Data;
-using Sys.PersistentObjects.Dpo;
+using Sys.PersistentObjects.DpoClass;
 
 namespace Sys.Data.Manager
 {

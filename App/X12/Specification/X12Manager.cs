@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Sys.Data;
-using X12.Dpo;
+using X12.DpoClass;
 using System.Data;
 
 namespace X12.Specification

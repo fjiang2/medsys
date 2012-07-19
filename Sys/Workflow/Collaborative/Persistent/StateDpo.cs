@@ -5,7 +5,7 @@ using Tie;
 using System.Reflection;
 using Sys.Data;
 using Sys.Data.Manager;
-using Sys.Workflow.Dpo;
+using Sys.Workflow.DpoClass;
 using System.Data;
 
 namespace Sys.Workflow.Collaborative

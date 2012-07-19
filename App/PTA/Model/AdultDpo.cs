@@ -5,7 +5,7 @@ using System.Text;
 using System.Data;
 using Sys.Data;
 using App.Data;
-using PTA.Dpo;
+using PTA.DpoClass;
 
 namespace PTA
 {

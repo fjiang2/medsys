@@ -8,7 +8,7 @@ using System.Windows.Forms;
 using System.Reflection;
 using Sys.Data;
 using Sys.Security;
-using Sys.Foundation.Dpo;
+using Sys.Foundation.DpoClass;
 using Sys.ViewManager.Forms;
 
 

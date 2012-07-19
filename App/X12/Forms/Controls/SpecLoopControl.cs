@@ -8,7 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using Sys.Data;
 using Sys.ViewManager.Forms;
-using X12.Dpo;
+using X12.DpoClass;
 
 namespace X12.Forms
 {

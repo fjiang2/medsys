@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Sys.Data.Manager;
-using Sys.PersistentObjects.Dpo;
+using Sys.PersistentObjects.DpoClass;
 using Sys.Data;
 
 namespace Sys.Security

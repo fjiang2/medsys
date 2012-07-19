@@ -11,7 +11,7 @@ using Sys.Data;
 using Sys.ViewManager;
 using Sys.Security;
 using System.IO;
-using Sys.SmartList.Dpo;
+using Sys.SmartList.DpoClass;
 using Sys.ViewManager.Utils;
 using Sys.ViewManager.DevEx;
 using Sys.ViewManager.Security;

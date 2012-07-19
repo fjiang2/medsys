@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Data;
 using Sys.Data;
-using Sys.Foundation.Dpo;
+using Sys.Foundation.DpoClass;
 using Tie;
 using System.Reflection;
 

@@ -114,7 +114,7 @@ O 1 ID 0/0
         public void ConvertElement(string specification, string segment)
         {
 
-            Dpo.X12ElementTemplateDpo dpo = new Dpo.X12ElementTemplateDpo();
+            DpoClass.X12ElementTemplateDpo dpo = new DpoClass.X12ElementTemplateDpo();
 
             dpo.SegmentName = segment;
 

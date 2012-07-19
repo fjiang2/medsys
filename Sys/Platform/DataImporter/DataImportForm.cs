@@ -9,7 +9,7 @@ using Sys.ViewManager.Forms;
 using Sys.ViewManager;
 using Tie;
 using Sys.Data;
-using Sys.ViewManager.Dpo;
+using Sys.ViewManager.DpoClass;
 
 namespace Sys.Platform.DataImporter
 {

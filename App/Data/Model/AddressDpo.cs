@@ -6,7 +6,7 @@ using System.Data;
 
 namespace App.Data
 {
-    public class AddressDpo : Dpo.appAddressDpo
+    public class AddressDpo : DpoClass.appAddressDpo
     {
           
         public AddressDpo()

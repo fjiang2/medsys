@@ -11,7 +11,7 @@ using Sys.Data;
 using Sys.ViewManager;
 using Sys.ViewManager.Security;
 using Sys.Security;
-using Sys.Foundation.Dpo;
+using Sys.Foundation.DpoClass;
 using Sys.ViewManager.DevEx;
 
 namespace Sys.Platform.Forms
@@ -62,12 +62,12 @@ namespace Sys.Platform.Forms
             
             
             string SQL = @"SELECT ID, ParentID, Label FROM {0} WHERE Ty=0 AND Controlled=1 ORDER BY orderBy";
-            DataTable definition = SqlCmd.FillDataTable(SQL, Sys.ViewManager.Dpo.UserMenuDpo.TABLE_NAME);
+            DataTable definition = SqlCmd.FillDataTable(SQL, Sys.ViewManager.DpoClass.UserMenuDpo.TABLE_NAME);
             HookTree hook = new HookTree(treeView1, "MENU", definition, SecurityType.MenuItem);
             hooks.Add(hook);
 
             SQL = @"SELECT ID, ParentID, Label FROM {0} WHERE ParentID IS NOT NULL AND Access_Level <> {1}";
-            definition = SqlCmd.FillDataTable(SQL, Sys.SmartList.Dpo.CommandDpo.TABLE_NAME, (int)SecurityLevel.PrivateAccess);
+            definition = SqlCmd.FillDataTable(SQL, Sys.SmartList.DpoClass.CommandDpo.TABLE_NAME, (int)SecurityLevel.PrivateAccess);
             hook = new HookTree(treeView1, "SMART LIST", definition, SecurityType.SmartList);
             hooks.Add(hook);
 
@@ -83,8 +83,8 @@ namespace Sys.Platform.Forms
                 ORDER BY ParentID, ID
             ";
             definition = SqlCmd.FillDataTable(SQL,
-                Sys.Workflow.Dpo.wfWorkflowDpo.TABLE_NAME,
-                Sys.Workflow.Dpo.wfStateDpo.TABLE_NAME
+                Sys.Workflow.DpoClass.wfWorkflowDpo.TABLE_NAME,
+                Sys.Workflow.DpoClass.wfStateDpo.TABLE_NAME
                 );
             hook = new HookTree(treeView1, "WORKFLOW", definition, SecurityType.Workflow);
             hooks.Add(hook);
@@ -398,8 +398,8 @@ namespace Sys.Platform.Forms
         private void toolStripButtonClean_Click(object sender, EventArgs e)
         {
 
-            SqlCmd.ExecuteScalar("DELETE FROM {0} WHERE Role_ID NOT IN (SELECT Role_ID FROM {1})", Sys.ViewManager.Dpo.FormPermissionDpo.TABLE_NAME, RoleDpo.TABLE_NAME);
-            SqlCmd.ExecuteScalar("DELETE FROM {0} WHERE Role_ID NOT IN (SELECT Role_ID FROM {1})", Sys.ViewManager.Dpo.ItemPermissionDpo.TABLE_NAME, RoleDpo.TABLE_NAME);
+            SqlCmd.ExecuteScalar("DELETE FROM {0} WHERE Role_ID NOT IN (SELECT Role_ID FROM {1})", Sys.ViewManager.DpoClass.FormPermissionDpo.TABLE_NAME, RoleDpo.TABLE_NAME);
+            SqlCmd.ExecuteScalar("DELETE FROM {0} WHERE Role_ID NOT IN (SELECT Role_ID FROM {1})", Sys.ViewManager.DpoClass.ItemPermissionDpo.TABLE_NAME, RoleDpo.TABLE_NAME);
             this.InformationMessage ="Role definition is cleaned.";
         }
 

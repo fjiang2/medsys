@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using DevExpress.XtraLayout;
-using X12.Dpo;
+using X12.DpoClass;
 using Sys.ViewManager.Forms;
 using X12.Specification;
 

@@ -8,7 +8,7 @@ using System.Windows.Forms;
 using Sys.ViewManager;
 using Sys.ViewManager.Forms;
 using Sys.Xmpp;
-using Sys.Foundation.Dpo;
+using Sys.Foundation.DpoClass;
 
 namespace Sys.Messaging.Forms
 {
