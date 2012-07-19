@@ -15,7 +15,10 @@ namespace Sys.Data.Manager
         public const string DPO_PACKAGE_SUFFIX_CLASS_NAME = "Package";
         public const string DPO_PACKAGE_PATH = "\\Dpo\\Package";
 
-        public const string ENUM_PATH = "\\Dpo\\ENUM";
+
+        public const string ENUM_SUB_NAMESPACE = "DataEnum";
+        public const string ENUM_SUFFIX_STRUCT_NAME = "Enum";
+        public const string ENUM_PATH = "\\Dpo\\Enum";
 
     }
 }

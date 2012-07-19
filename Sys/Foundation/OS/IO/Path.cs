@@ -117,5 +117,22 @@ namespace Sys.IO
         }
 
 
+        public static string ModuleEnumPath(Assembly assembly)
+        {
+            return ModuleEnumPath(assembly.GetName().Name);
+        }
+
+        public static string ModuleEnumPath(string moduleName)
+        {
+            string path = ModulePath(moduleName) + Setting.ENUM_PATH;
+
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+
+            return path;
+        }
+
     }
 }

@@ -124,7 +124,12 @@ namespace {0}
     }}
 }}
 ";
-            return string.Format(format, nameSpace, new DataEnumAttribute(), name, string.Join(",\r\n\r\n", fields.Select(field=>field.ToCode())));
+            string enumName = name;
+
+            if (!enumName.ToLower().EndsWith("enum"))
+                enumName += Setting.ENUM_SUFFIX_STRUCT_NAME;
+
+            return string.Format(format, nameSpace, new DataEnumAttribute(), enumName, string.Join(",\r\n\r\n", fields.Select(field => field.ToCode())));
         }
 
         public override string ToString()
