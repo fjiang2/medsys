@@ -29,6 +29,24 @@ namespace Sys.IO
         {
             WriteFile(string.Format("{0}#{1:yyyy.mm.dd-hhmmss}.{2}", prefix, DateTime.Now, ext), text);
         }
+
+        public static string ReadFile(string fileName)
+        {
+            StreamReader sr;
+            try
+            {
+                sr = new StreamReader(fileName);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+
+            string text = sr.ReadToEnd();
+            sr.Close();
+
+            return text;
+        }
         
         public static void WriteFile(string fileName, string text)
         {
