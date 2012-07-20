@@ -14,6 +14,7 @@ namespace Sys.Platform.Forms
     public partial class SqlServerControl : UserControl
     {
         public event EventHandler Connected;
+        public event EventHandler DatabaseSelected;
 
         public SqlServerControl()
         {
@@ -101,9 +102,33 @@ namespace Sys.Platform.Forms
         private void radioButtonWindowsAuthentication_CheckedChanged(object sender, EventArgs e)
         {
             Synchronize();
+            RefreshComboBoxDatabase();
         }
 
         private void comboBoxDatabase_DropDown(object sender, EventArgs e)
+        {
+            RefreshComboBoxDatabase();
+        }
+
+        private void comboBoxDatabase_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (this.comboBoxDatabase.SelectedIndex != -1)
+            {
+                if (DatabaseSelected != null)
+                    DatabaseSelected(this, new EventArgs());
+            }
+        }
+
+        public void RefreshDatabaseList(string databaseName)
+        {
+            RefreshComboBoxDatabase();
+            this.comboBoxDatabase.SelectedItem = databaseName;
+            
+            if (DatabaseSelected != null)
+                DatabaseSelected(this, new EventArgs());
+        }
+
+        private void RefreshComboBoxDatabase()
         {
             if (!radioButtonWindowsAuthentication.Checked && (textBoxUserName.Text == "" || textBoxPassword.Text == ""))
                 return;
@@ -142,7 +167,6 @@ namespace Sys.Platform.Forms
                 Cursor.Current = Cursors.Default;
             }
         }
-
       
 
         public bool Connect()
@@ -162,6 +186,8 @@ namespace Sys.Platform.Forms
 
             return true;
         }
+
+     
     }
 
     public class ConnectionEventArgs : EventArgs

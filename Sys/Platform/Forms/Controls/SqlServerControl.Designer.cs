@@ -150,6 +150,7 @@
             this.comboBoxDatabase.Size = new System.Drawing.Size(189, 21);
             this.comboBoxDatabase.TabIndex = 13;
             this.comboBoxDatabase.DropDown += new System.EventHandler(this.comboBoxDatabase_DropDown);
+            this.comboBoxDatabase.SelectedIndexChanged += new System.EventHandler(this.comboBoxDatabase_SelectedIndexChanged);
             // 
             // SqlServerControl
             // 

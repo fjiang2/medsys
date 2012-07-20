@@ -26,13 +26,18 @@ namespace Sys.Platform.Forms
             }
 
             sqlServerControl1.Connected += delegate(object sender, EventArgs e)
-                {
-                    ConnectionEventArgs args = (ConnectionEventArgs)e;
-                    btnNewDatabase.Enabled = args.Connected;
-                    btnConnectServer.Enabled = args.Connected;
-                };
+            {
+                ConnectionEventArgs args = (ConnectionEventArgs)e;
+                btnNewDatabase.Enabled = args.Connected;
+            };
+
+            sqlServerControl1.DatabaseSelected += delegate(object sender, EventArgs e)
+            {
+                btnConnectServer.Enabled = true;
+            };
         }
 
+        
 
 
         private void wizardControl1_PrevClick(object sender, DevExpress.XtraWizard.WizardCommandButtonClickEventArgs e)
@@ -118,7 +123,7 @@ namespace Sys.Platform.Forms
 
         private void btnNewDatabase_Click(object sender, EventArgs e)
         {
-            string databaseName = "";
+            string databaseName = "medsys";
             if (InputTool.InputBox("Input ", "Database name:", "????????????", ref databaseName) == System.Windows.Forms.DialogResult.OK)
             {
                 try
@@ -126,6 +131,10 @@ namespace Sys.Platform.Forms
                     databaseName = databaseName.Trim();
                     databaseName.CreateDatabase();
                     MessageBox.Show("Database created", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    sqlServerControl1.RefreshDatabaseList(databaseName);
+
+                    //automatically connect to new database
+                    btnConnectServer_Click(this.btnConnectServer, new EventArgs());
                 }
                 catch (Exception ex)
                 {
@@ -141,6 +150,10 @@ namespace Sys.Platform.Forms
             if (!sqlServerControl1.Connect())
                 return;
 
+            RefreshcomboxDefaultDatabase();
+            this.comboxDefaultDatabase.SelectedItem = sqlServerControl1.DatabaseName;
+
+            lbStatus.Text = string.Format("{0} is connected.", sqlServerControl1.DatabaseName);
             this.pageConnectServer.AllowNext = true;
         }
 
@@ -176,6 +189,11 @@ namespace Sys.Platform.Forms
 
         private void comboxDefaultDatabase_DropDown(object sender, EventArgs e)
         {
+            RefreshcomboxDefaultDatabase();
+        }
+
+        private void RefreshcomboxDefaultDatabase()
+        {
             try
             {
                 Cursor.Current = Cursors.WaitCursor;
@@ -196,8 +214,6 @@ namespace Sys.Platform.Forms
                 Cursor.Current = Cursors.Default;
             }
         }
-
-
        
 
         #endregion

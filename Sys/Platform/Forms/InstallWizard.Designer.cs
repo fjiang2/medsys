@@ -32,6 +32,7 @@
             this.wizardControl1 = new DevExpress.XtraWizard.WizardControl();
             this.pageWelcome = new DevExpress.XtraWizard.WelcomeWizardPage();
             this.pageConnectServer = new DevExpress.XtraWizard.WizardPage();
+            this.lbStatus = new System.Windows.Forms.Label();
             this.btnNewDatabase = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.sqlServerControl1 = new Sys.Platform.Forms.SqlServerControl();
@@ -43,6 +44,7 @@
             this.pageUnpackSystemdata = new DevExpress.XtraWizard.WizardPage();
             this.progressUnpackSystemData = new Sys.Platform.Forms.ProgressControl();
             this.pageCreateService = new DevExpress.XtraWizard.WizardPage();
+            this.chkSingleUserSystem = new System.Windows.Forms.CheckBox();
             this.button1 = new System.Windows.Forms.Button();
             this.txtCreateServiceMessage = new System.Windows.Forms.TextBox();
             this.btnCreateService = new System.Windows.Forms.Button();
@@ -54,7 +56,6 @@
             this.progressUnpackDefaultData = new Sys.Platform.Forms.ProgressControl();
             this.pageCreateDefaultTables = new DevExpress.XtraWizard.WizardPage();
             this.progressCreateDefaultTables = new Sys.Platform.Forms.ProgressControl();
-            this.chkSingleUserSystem = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.wizardControl1)).BeginInit();
             this.wizardControl1.SuspendLayout();
             this.pageConnectServer.SuspendLayout();
@@ -101,6 +102,7 @@
             // 
             // pageConnectServer
             // 
+            this.pageConnectServer.Controls.Add(this.lbStatus);
             this.pageConnectServer.Controls.Add(this.btnNewDatabase);
             this.pageConnectServer.Controls.Add(this.label2);
             this.pageConnectServer.Controls.Add(this.sqlServerControl1);
@@ -111,10 +113,18 @@
             this.pageConnectServer.Size = new System.Drawing.Size(598, 277);
             this.pageConnectServer.Text = "Connect to SQL Server";
             // 
+            // lbStatus
+            // 
+            this.lbStatus.AutoSize = true;
+            this.lbStatus.Location = new System.Drawing.Point(100, 259);
+            this.lbStatus.Name = "lbStatus";
+            this.lbStatus.Size = new System.Drawing.Size(0, 13);
+            this.lbStatus.TabIndex = 19;
+            // 
             // btnNewDatabase
             // 
             this.btnNewDatabase.Enabled = false;
-            this.btnNewDatabase.Location = new System.Drawing.Point(368, 250);
+            this.btnNewDatabase.Location = new System.Drawing.Point(467, 162);
             this.btnNewDatabase.Name = "btnNewDatabase";
             this.btnNewDatabase.Size = new System.Drawing.Size(117, 23);
             this.btnNewDatabase.TabIndex = 18;
@@ -141,9 +151,9 @@
             // btnConnectServer
             // 
             this.btnConnectServer.Enabled = false;
-            this.btnConnectServer.Location = new System.Drawing.Point(491, 250);
+            this.btnConnectServer.Location = new System.Drawing.Point(467, 191);
             this.btnConnectServer.Name = "btnConnectServer";
-            this.btnConnectServer.Size = new System.Drawing.Size(88, 24);
+            this.btnConnectServer.Size = new System.Drawing.Size(117, 24);
             this.btnConnectServer.TabIndex = 15;
             this.btnConnectServer.Text = "&Connect";
             this.btnConnectServer.Click += new System.EventHandler(this.btnConnectServer_Click);
@@ -213,6 +223,17 @@
             this.pageCreateService.Size = new System.Drawing.Size(598, 277);
             this.pageCreateService.Text = "Create Service";
             // 
+            // chkSingleUserSystem
+            // 
+            this.chkSingleUserSystem.AutoSize = true;
+            this.chkSingleUserSystem.Location = new System.Drawing.Point(133, 257);
+            this.chkSingleUserSystem.Name = "chkSingleUserSystem";
+            this.chkSingleUserSystem.Size = new System.Drawing.Size(282, 17);
+            this.chkSingleUserSystem.TabIndex = 20;
+            this.chkSingleUserSystem.Text = "Is this a single user application (logon is not required) ?";
+            this.chkSingleUserSystem.UseVisualStyleBackColor = true;
+            this.chkSingleUserSystem.CheckedChanged += new System.EventHandler(this.chkSingleUserSystem_CheckedChanged);
+            // 
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(406, 50);
@@ -265,6 +286,7 @@
             this.txtServiceName.Name = "txtServiceName";
             this.txtServiceName.Size = new System.Drawing.Size(189, 20);
             this.txtServiceName.TabIndex = 12;
+            this.txtServiceName.Text = "default";
             // 
             // label3
             // 
@@ -308,17 +330,6 @@
             this.progressCreateDefaultTables.Name = "progressCreateDefaultTables";
             this.progressCreateDefaultTables.Size = new System.Drawing.Size(598, 277);
             this.progressCreateDefaultTables.TabIndex = 1;
-            // 
-            // chkSingleUserSystem
-            // 
-            this.chkSingleUserSystem.AutoSize = true;
-            this.chkSingleUserSystem.Location = new System.Drawing.Point(133, 257);
-            this.chkSingleUserSystem.Name = "chkSingleUserSystem";
-            this.chkSingleUserSystem.Size = new System.Drawing.Size(282, 17);
-            this.chkSingleUserSystem.TabIndex = 20;
-            this.chkSingleUserSystem.Text = "Is this a single user application (logon is not required) ?";
-            this.chkSingleUserSystem.UseVisualStyleBackColor = true;
-            this.chkSingleUserSystem.CheckedChanged += new System.EventHandler(this.chkSingleUserSystem_CheckedChanged);
             // 
             // InstallWizard
             // 
@@ -373,5 +384,6 @@
         private SqlServerControl sqlServerControl1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.CheckBox chkSingleUserSystem;
+        private System.Windows.Forms.Label lbStatus;
     }
 }
