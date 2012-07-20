@@ -18,6 +18,7 @@ namespace App.Executable
     {
         const string applicationName = "Median System";
         const string softwareCompanyName = "Datum Connect Inc.";
+        const string softwareCompanyShortName = "datconn";
 
         [STAThread]
         static void Main()
@@ -27,8 +28,14 @@ namespace App.Executable
             Application.SetCompatibleTextRenderingDefault(false);
 
             string executable = Assembly.GetExecutingAssembly().GetName().Name;
-            string ini = executable + ".ini";
+            string ini = string.Format("{0}\\{1}\\{2}\\{3}.ini", 
+                    Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), 
+                    softwareCompanyShortName, 
+                    applicationName, 
+                    executable);
+
             Icon applicationIcon = App.Executable.Properties.Resources.kiwi;
+
 
             //Form wizard = new Sys.Platform.Forms.InstallWizard();
             //Application.Run(wizard);

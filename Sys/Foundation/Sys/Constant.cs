@@ -31,6 +31,10 @@ namespace Sys
 
         public static void Save(string ini)
         {
+            string path = System.IO.Path.GetDirectoryName(ini);
+            if (!System.IO.Directory.Exists(path))
+                System.IO.Directory.CreateDirectory(path);
+
             StreamWriter sw = new StreamWriter(ini);
             VAL json = new VAL();
 
