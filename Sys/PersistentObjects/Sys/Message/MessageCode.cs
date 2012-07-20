@@ -13,7 +13,8 @@ namespace Sys
         AccountClosed = 1002,
         AccountLocked = 1003,
 
-        RecordOverwritten =2011
+        RecordOverwritten =2011,
+        TableNotExist = 2012
     }
 
 }
