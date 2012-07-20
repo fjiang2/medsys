@@ -8,6 +8,11 @@ using System.ComponentModel;
 
 namespace Sys.Data
 {
+    /// <summary>
+    /// override Fill(DataRow) to initialize varibles in this class, 
+    /// if typeof(T).BaseType != typeof(DPObject) and instantiate class from System.Data.DataTable or TableReader
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class DPList<T> : PersistentList<T>, IBindingList
         where T: class,  IDPObject, new()
     {

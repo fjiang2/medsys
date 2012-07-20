@@ -68,6 +68,11 @@ namespace Sys.Data
             }
         }
 
+        /// <summary>
+        /// override T.Fill(DataRow) to initialize varibles in the class T, if typeof(T).BaseType != typeof(DPObject)
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         public List<T> ToList<T>() where T: class, IDPObject, new()
         {
             return new DPList<T>(this).ToList();
@@ -122,6 +127,10 @@ namespace Sys.Data
             }
         }
 
+        /// <summary>
+        /// override T.Fill(DataRow) to initialize varibles in the class T, if typeof(T).BaseType != typeof(DPObject)
+        /// </summary>
+        /// <returns></returns>
         public List<T> ToList()
         {
             //List<T> list = new List<T>();
