@@ -7,31 +7,28 @@ using System.IO;
 using Sys.Foundation.DpoClass;
 using Sys.Data.Manager;
 using Sys.Data;
+using System.Data;
 
 namespace Sys.Modules
 {
     public class RegisteredAssembly: AssemblyDpo
     {
-        Assembly assembly;
+        private Assembly assembly;
 
-        public RegisteredAssembly(Assembly assembly)
-            :base(assembly.GetName().Name)
-        {
-            if (!Exists)
-                throw new SysException("Assembly {0} is not regiested", assembly.GetName().Name);
-
-            this.assembly = assembly;
+        public RegisteredAssembly()
+        { 
         }
 
-        public RegisteredAssembly(string assemblyName)
-            :base(assemblyName)
+  
+        public override void Fill(DataRow dataRow)
         {
-            if (!Exists)
-                throw new SysException("Assembly {0} is not regiested", assemblyName);
+            base.Fill(dataRow);
+            this.assembly = Assembly.Load(this.FullName);
+        }
 
-            this.assembly = Assembly.Load(assemblyName);
-            if(assembly == null)
-                throw new SysException("Assembly {0} doesn't exist", assemblyName);
+        public Assembly Assembly
+        {
+            get { return this.assembly;}
         }
 
         /// <summary>
@@ -52,6 +49,9 @@ namespace Sys.Modules
                 return Path() + "\\" + subpath;
         }
 
-
+        public override string ToString()
+        {
+            return this.AssemblyName;
+        }
     }
 }

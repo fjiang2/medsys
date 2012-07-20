@@ -13,7 +13,7 @@ namespace Sys.Modules
 
         public IModuleImpl(string moduleName)
         {
-            this.assembly = Library.GetAssembly(moduleName);
+            this.assembly = Library.Instance.Find(moduleName).Assembly;
         }
 
         public void initialize()

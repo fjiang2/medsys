@@ -15,7 +15,7 @@ namespace Sys.Modules
     public class Library
     {
         private static Library instance = null;
-        private static Library Instance
+        public static Library Instance
         {
             get
             {
@@ -26,60 +26,70 @@ namespace Sys.Modules
             }
         }
 
-        /// <summary>
-        /// Dictionary<moduleName, Assembly>
-        /// </summary>
-        private Dictionary<string, Assembly> assemblies;
+
+        private List<RegisteredAssembly> list;
 
         private Library()
         {
-            var list = new TableReader<AssemblyDpo>(new ColumnValue(AssemblyDpo._Inactive, 0)).ToList();
-            
-            this.assemblies = new Dictionary<string, Assembly>();
-            foreach (AssemblyDpo assembly in list)
-            {
-                string name = assembly.AssemblyName;
-
-                try
-                {
-                    this.assemblies.Add(name, Assembly.Load(name));
-                }
-                catch (System.IO.FileNotFoundException e)
-                {
-                    throw e;
-                }
-            }
-
+            this.list = new TableReader<RegisteredAssembly>(new ColumnValue(AssemblyDpo._Inactive, 0)).ToList();
         }
 
 
-        public static Assembly GetAssembly(string moduleName)
+        public RegisteredAssembly Find(string moduleName)
         {
-            if (Library.Instance.assemblies.ContainsKey(moduleName))
-                return Library.Instance.assemblies[moduleName];
+            if (this.list.Exists(dpo => dpo.AssemblyName == moduleName))
+                return this.list.Find(dpo => dpo.AssemblyName == moduleName);
             else
                 return null;
         }
-
-
-        public static IEnumerable<string> AssemblyNames
+        
+        public Assembly GetAssembly(string moduleName)
         {
-            get
-            {
-                return Library.Instance.assemblies.Keys.ToArray();
-            }
+            var dpo = Library.Instance.Find(moduleName);
+            if (dpo == null)
+                return null;
+
+            return dpo.Assembly;
         }
+
+
+        public override string ToString()
+        {
+            return string.Format("Library has {0} assemblies", list.Count);
+        }
+
+
 
         public static IEnumerable<Assembly> Assemblies
         {
             get
             {
-                return Library.Instance.assemblies.Values.ToArray();
+                return Library.Instance.list.Select(dpo => dpo.Assembly).ToArray();
             }
         }
     
 
+        public static IEnumerable<string> AssemblyNames
+        {
+            get
+            {
+                return Library.Assemblies.Select(assembly => assembly.GetName().Name);
+            }
+        }
 
+      
+
+        public static string AssemblyPath(Assembly assembly, string subpath)
+        {
+            return AssemblyPath(assembly.GetName().Name, subpath);
+        }
+
+        public static string AssemblyPath(string assemblyName, string subpath)
+        {
+            return Library.Instance.Find(assemblyName).Path(subpath);
+        }
+
+    
 
         /// <summary>
         /// return Dictionary<tableName, typeof(DPObject)>
@@ -129,5 +139,8 @@ namespace Sys.Modules
             return list;
         }
 
+
+        
+    
     }
 }

@@ -177,7 +177,7 @@ namespace Sys.Platform.Forms
                     if(external)
                         path = new Path(assembly).SimplePath + "\\"+ Setting.DPO_PACKAGE_PATH;
                     else
-                        path = new RegisteredAssembly(assembly).Path(Setting.DPO_PACKAGE_PATH);
+                        path = Library.AssemblyPath(assembly, Setting.DPO_PACKAGE_PATH);
 
                     string fileName = string.Format("{0}.cs", packing.ClassName);
                     File.WriteFile(path, fileName, packing.ToString());

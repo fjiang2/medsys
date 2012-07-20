@@ -31,7 +31,7 @@ namespace X12
 
             Assembly assembly = Assembly.GetExecutingAssembly();
             Manager mgr = new Manager(assembly);
-            string path = new RegisteredAssembly(assembly).Path(Setting.DPO_CLASS_PATH);
+            string path = Library.AssemblyPath(assembly, Setting.DPO_CLASS_PATH);
 
 #if CREATE_DPOBJECT
             Manager.CreateClass(new string[] {
