@@ -15,9 +15,20 @@ namespace Sys.Data
         { 
         }
 
+        /// <summary>
+        /// override Fill(DataRow) to initialize varibles in this class, if typeof(T).BaseType != typeof(DPObject)
+        /// </summary>
+        /// <param name="dataTable"></param>
         protected PersistentList(DataTable dataTable)
         {
-            InitTable(dataTable);
+            this.dataTable = dataTable;
+
+            foreach (DataRow dataRow in dataTable.Rows)
+            {
+                T t = new T();
+                t.Fill(dataRow);
+                this.Add(t);
+            }
         }
 
         protected PersistentList(IEnumerable<T> records)
@@ -101,18 +112,6 @@ namespace Sys.Data
         #endregion
 
 
-
-        private void InitTable(DataTable dataTable)
-        {
-            this.dataTable = dataTable;
-
-            foreach (DataRow dataRow in dataTable.Rows)
-            {
-                T t = new T();
-                t.Fill(dataRow);
-                this.Add(t);
-            }
-        }
 
         public F[] ToArray<F>(string fieldName)
         {
