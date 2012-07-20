@@ -40,6 +40,8 @@
             this.label4 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.lbServerName = new System.Windows.Forms.Label();
+            this.txtServerName = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picAvatar)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -120,9 +122,9 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(22, 45);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(54, 13);
+            this.label3.Size = new System.Drawing.Size(46, 13);
             this.label3.TabIndex = 0;
-            this.label3.Text = "Company:";
+            this.label3.Text = "Service:";
             // 
             // txtDepartment
             // 
@@ -166,6 +168,23 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(284, 107);
             this.tableLayoutPanel1.TabIndex = 6;
             // 
+            // lbServerName
+            // 
+            this.lbServerName.AutoSize = true;
+            this.lbServerName.Location = new System.Drawing.Point(429, 34);
+            this.lbServerName.Name = "lbServerName";
+            this.lbServerName.Size = new System.Drawing.Size(41, 13);
+            this.lbServerName.TabIndex = 0;
+            this.lbServerName.Text = "Server:";
+            // 
+            // txtServerName
+            // 
+            this.txtServerName.Location = new System.Drawing.Point(476, 31);
+            this.txtServerName.Name = "txtServerName";
+            this.txtServerName.ReadOnly = true;
+            this.txtServerName.Size = new System.Drawing.Size(204, 20);
+            this.txtServerName.TabIndex = 1;
+            // 
             // HomeForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -173,6 +192,8 @@
             this.ClientSize = new System.Drawing.Size(706, 521);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.txtServerName);
+            this.Controls.Add(this.lbServerName);
             this.Name = "HomeForm";
             this.Text = "Home";
             this.groupBox1.ResumeLayout(false);
@@ -180,6 +201,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.picAvatar)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -197,5 +219,7 @@
         private System.Windows.Forms.PictureBox picAvatar;
         private System.Windows.Forms.TextBox txtDepartment;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label lbServerName;
+        private System.Windows.Forms.TextBox txtServerName;
     }
 }
