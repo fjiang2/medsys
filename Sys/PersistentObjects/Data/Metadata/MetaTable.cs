@@ -19,13 +19,6 @@ namespace Sys.Data
         private MetaTable(TableName tname)
         {
             this.tname = tname;
-
-            //Visual studio cann't open form in design mode, so.....
-#if !DEBUG
-            if (!Exists)
-                throw new Sys.SysException("Invalid table name {0} or database name {1}", this.tname.Name, this.tname.DatabaseName);
-#endif
-
         }
 
 
