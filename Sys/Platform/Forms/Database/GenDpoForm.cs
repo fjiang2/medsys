@@ -184,7 +184,7 @@ namespace Sys.Platform.Forms
                 this.txtNamespace.Text = string.Format("{0}.{1}", moduleName, Setting.DPO_CLASS_SUB_NAMESPACE);
 
 
-            this.txtPath.Text = new RegisteredAssembly(moduleName).Path(Setting.DPO_CLASS_PATH);
+            this.txtPath.Text = Library.AssemblyPath(moduleName, Setting.DPO_CLASS_PATH);
             if (chkFolder.Checked && Level == Level.Fixed)
                 this.txtPath.Text += string.Format("\\{0}", DatabaseName);
         }
@@ -313,7 +313,7 @@ namespace Sys.Platform.Forms
                     continue;
 
                 Type ty = dpoDict[tname];
-                string path = new RegisteredAssembly(ty.Assembly).Path(Setting.DPO_CLASS_PATH);  
+                string path = Library.AssemblyPath(ty.Assembly, Setting.DPO_CLASS_PATH);  
 
                 DPObject dpo = (DPObject)Activator.CreateInstance(ty);
                 ClassName cname = new ClassName(dpo);
@@ -472,7 +472,7 @@ namespace Sys.Platform.Forms
         private void comboModule_SelectedIndexChanged(object sender, EventArgs e)
         {
             SetNamespaceAndPath();
-            Assembly asm = Library.GetAssembly((string)comboModule.SelectedItem);
+            Assembly asm = Library.Instance.GetAssembly((string)comboModule.SelectedItem);
             this.txtAssembly.Text = asm.FullName;
         }
 
