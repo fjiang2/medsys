@@ -37,9 +37,9 @@ namespace App.Executable
             Icon applicationIcon = App.Executable.Properties.Resources.kiwi;
 
 
-            //Form wizard = new Sys.Platform.Forms.InstallWizard();
-            //Application.Run(wizard);
-            //return;
+            Form wizard = new Sys.Platform.Forms.InstallWizard();
+            Application.Run(wizard);
+            return;
 
 
             //Connect to SQLServer

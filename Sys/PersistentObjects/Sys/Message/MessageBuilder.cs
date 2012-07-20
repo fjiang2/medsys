@@ -11,6 +11,15 @@ namespace Sys
         { 
         }
 
+        public override string ToString()
+        {
+            StringBuilder builder = new StringBuilder();
+            foreach (Message message in this)
+            {
+                builder.AppendLine(message.ToString());
+            }
 
+            return builder.ToString();
+        }
     }
 }

@@ -26,6 +26,7 @@ namespace Sys.ViewManager.Forms
             label.Text = promptText;
             textBox.Text = value;
             textBox.Mask = mask;
+            textBox.SelectAll();
 
             buttonOk.Text = "OK";
             buttonCancel.Text = "Cancel";

@@ -39,7 +39,7 @@ namespace Sys.Data.Manager
 
         private static void Unpack(Level level, Assembly asm, Worker worker, SqlTrans transaction, bool insert)
         {
-            StringBuilder sb = new StringBuilder();
+            
             foreach (Type type in asm.GetExportedTypes())
             {
                 if (type.HasInterface<IPacking>() && type != typeof(BasePackage<>))
@@ -61,7 +61,7 @@ namespace Sys.Data.Manager
         {
             SqlTrans transaction = new SqlTrans();
 
-            StringBuilder sb = new StringBuilder();
+            
             foreach (Type type in asm.GetExportedTypes())
             {
                 if (type.HasInterface<IPacking>())
@@ -129,7 +129,7 @@ namespace Sys.Data.Manager
             foreach (Assembly asm in assemblies)
             {
 
-                StringBuilder sb = new StringBuilder();
+                MessageBuilder messages = new MessageBuilder();
                 foreach (Type type in asm.GetTypes())
                 {
                     if (type.BaseType != typeof(DPObject))
@@ -144,10 +144,10 @@ namespace Sys.Data.Manager
 
       
                     if (A[0].Level == level)
-                        sb.Append(CreateTable(type));
+                        messages.AddRange(CreateTable(type));
                 }
 
-                worker.ReportProgress((int)(i * 100.0 / assemblies.Length), sb.ToString());
+                worker.ReportProgress((int)(i * 100.0 / assemblies.Length), messages.ToString());
                 i++;
 
             }
