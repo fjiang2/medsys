@@ -16,7 +16,7 @@ namespace App.Executable
 {
     static class Program
     {
-        const string applicationName = "Blue Express Solutions";
+        const string applicationName = "Median System";
         const string softwareCompanyName = "Datum Connect Inc.";
 
         [STAThread]
@@ -28,7 +28,7 @@ namespace App.Executable
 
             string executable = Assembly.GetExecutingAssembly().GetName().Name;
             string ini = executable + ".ini";
-            Icon applicationIcon = App.Executable.Properties.Resources.logoicon;
+            Icon applicationIcon = App.Executable.Properties.Resources.kiwi;
 
             //Form wizard = new Sys.Platform.Forms.InstallWizard();
             //Application.Run(wizard);
@@ -57,7 +57,7 @@ namespace App.Executable
                 return;
 
             //DataManager.Helper.Start();
-            if (!LoginForm.Run(App.Executable.Properties.Resources.logoicon))
+            if (!LoginForm.Run(applicationIcon))
                return;
 
             SysInformation.Stop();

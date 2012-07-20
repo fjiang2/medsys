@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Executable")]
+[assembly: AssemblyTitle("Median System")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Datum Connect Inc.")]
-[assembly: AssemblyProduct("Executable")]
+[assembly: AssemblyProduct("Median System")]
 [assembly: AssemblyCopyright("Copyright © DCI 2012")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
