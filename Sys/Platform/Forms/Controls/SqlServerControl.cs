@@ -31,6 +31,11 @@ namespace Sys.Platform.Forms
         public string ServerName
         {
             get { return comboBoxServer.Text; }
+            set
+            {
+                RefreshComboBoxServer();
+                this.comboBoxServer.SelectedItem = value;
+            }
         }
 
         private string GetConnection()
@@ -53,6 +58,11 @@ namespace Sys.Platform.Forms
         }
 
         private void comboBoxServer_DropDown(object sender, EventArgs e)
+        {
+            RefreshComboBoxServer();
+        }
+
+        private void RefreshComboBoxServer()
         {
             try
             {

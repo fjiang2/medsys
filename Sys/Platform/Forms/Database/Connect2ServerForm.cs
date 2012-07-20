@@ -138,6 +138,8 @@ namespace Sys.Platform.Forms
                     == System.Windows.Forms.DialogResult.Yes)
                 {
                     var form = new Sys.Platform.Forms.InstallWizard();
+                    form.ServerName = sqlServerControl1.ServerName;
+
                     if (form.ShowDialog(this) == System.Windows.Forms.DialogResult.Cancel)
                     {
                         this.Close();
