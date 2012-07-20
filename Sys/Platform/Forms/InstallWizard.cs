@@ -37,8 +37,12 @@ namespace Sys.Platform.Forms
             };
         }
 
-        
 
+        public string ServerName
+        {
+            get { return sqlServerControl1.ServerName; }
+            set { sqlServerControl1.ServerName = value; }
+        }
 
         private void wizardControl1_PrevClick(object sender, DevExpress.XtraWizard.WizardCommandButtonClickEventArgs e)
         {
