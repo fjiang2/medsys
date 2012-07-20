@@ -32,22 +32,16 @@ namespace Sys.IO
         
         public static void WriteFile(string fileName, string text)
         {
+            string path = System.IO.Path.GetDirectoryName(fileName);
+            if (!System.IO.Directory.Exists(path))
+                System.IO.Directory.CreateDirectory(path);
+
             StreamWriter sw = new StreamWriter(fileName);
             sw.Write(text);
             sw.Close();
         }
 
-        public static void WriteFile(string path, string simpleFileName, string text)
-        {
-            if (!Directory.Exists(path))
-                Directory.CreateDirectory(path);
-
-            StreamWriter sw = new StreamWriter(path + "\\" + simpleFileName);
-            sw.Write(text);
-            sw.Close();
-        }
-
-
+      
         public static void ExecuteFile(string fileName)
         {
             System.Diagnostics.Process process = new System.Diagnostics.Process();

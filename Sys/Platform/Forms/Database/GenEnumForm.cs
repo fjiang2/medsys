@@ -251,16 +251,16 @@ namespace Sys.Platform.Forms
 
                 string sourceCode = selectedEnumType.ToCode(this.Namespace);
 
-    
-                string fileName = string.Format("{0}.cs", selectedEnumType.ClassName);
-                Sys.IO.File.WriteFile(this.Path, fileName, sourceCode);
+
+                string fileName = string.Format("{0}\\{1}.cs", this.Path, selectedEnumType.ClassName);
+                Sys.IO.File.WriteFile(fileName, sourceCode);
 
                 if (this.treeEnumList.SelectedNode.ImageIndex == 2)
                 {
                     treeEnumList.SelectedNode.ImageIndex = 1;
                 }
 
-                this.InformationMessage = string.Format("enum {0} is created at {1}\\{2}", cname, Path, fileName);
+                this.InformationMessage = string.Format("enum {0} is created at {1}", cname, fileName);
             }
             catch (Exception ex)
             {

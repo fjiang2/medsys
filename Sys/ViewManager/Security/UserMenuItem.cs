@@ -128,7 +128,6 @@ namespace Sys.ViewManager.Security
         public bool NodeSave()
         {
             this.Enabled = true;
-            this.Controlled = true;
             this.Save();
 
             return true;

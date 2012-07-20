@@ -72,13 +72,7 @@ namespace Sys.Platform.Forms
                     this.pageUnpackSystemdata.AllowNext = true;
                 };
 
-                //Generate Enum Type Dictionary
-                foreach (Type type in Sys.Modules.Library.GetEnumTypeList())
-                {
-                    EnumType enumType = new EnumType(type);
-                    enumType.Save();
-                }
-
+  
             }
             else if (e.Page == this.pageUnpackSystemdata)
             {
@@ -86,6 +80,13 @@ namespace Sys.Platform.Forms
             }
             else if (e.Page == this.pageCreateService)
             {
+                //Generate Enum Type Dictionary
+                foreach (Type type in Sys.Modules.Library.GetEnumTypeList())
+                {
+                    EnumType enumType = new EnumType(type);
+                    enumType.Save();
+                }
+
                 progressCreateDefaultTables.ActionButton.Text = "Create Service Table";
                 progressCreateDefaultTables.Action = delegate(Worker worker)
                 {
