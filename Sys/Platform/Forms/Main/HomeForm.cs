@@ -23,7 +23,20 @@ namespace Sys.Platform.Forms
             this.txtComputerName.Text = SystemInformation.ComputerName;
             this.txtEmployeeName.Text = account.Name;
             this.txtCompanyName.Text = SysInformation.CompanyName;
+
+
+            if (this.account.IsDeveloper)
+            {
+                this.txtServerName.Text = new System.Data.SqlClient.SqlConnection(Const.CONNECTION_STRING).DataSource;
+            }
+            else
+            {
+                this.lbServerName.Visible = false;
+                this.txtServerName.Visible = false;
+            }
+
             this.picAvatar.Image = account.AvatarImage;
+
         }
 
         private void linkLabelQS_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
