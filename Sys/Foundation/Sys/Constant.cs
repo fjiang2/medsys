@@ -31,11 +31,6 @@ namespace Sys
 
         public static void Save(string ini)
         {
-            string path = System.IO.Path.GetDirectoryName(ini);
-            if (!System.IO.Directory.Exists(path))
-                System.IO.Directory.CreateDirectory(path);
-
-            StreamWriter sw = new StreamWriter(ini);
             VAL json = new VAL();
 
             FieldInfo[] fields = GetFields();
@@ -47,28 +42,21 @@ namespace Sys
             string config = json.ToJson();
 #if !DEBUG
             config = config.Encrypt();
+#else
+            ini += ".debug";
 #endif
-            sw.Write(config);
-
-            sw.Close();
+            Sys.IO.File.WriteFile(ini, config);
         }
 
         public static bool Load(string ini)
         {
-            StreamReader sr;
-            try
-            {
-                sr = new StreamReader(ini);
-            }
-            catch (Exception)
-            {
-                return false;
-            }
 
-            string config = sr.ReadToEnd();
-            sr.Close();
+#if DEBUG
+            ini += ".debug";
+#endif
+            string config = Sys.IO.File.ReadFile(ini);
 
-            if (config == "")
+            if (config == null)
                 return false;
 
 #if !DEBUG
