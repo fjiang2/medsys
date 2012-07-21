@@ -69,10 +69,10 @@ namespace Sys.Data
                     MetaColumn metaColumn = metaTable[field.Name];
 
                     if (!metaColumn.Nullable && (column.Value == System.DBNull.Value || column.Value == null))
-                        throw new Sys.SysException("Column[{0}] value cannot be null", field.Name);
+                        throw new Sys.JException("Column[{0}] value cannot be null", field.Name);
 
                     if (metaColumn.Oversize(column.Value))
-                        throw new Sys.SysException("Column[{0}] is oversize, limit={1}, actual={2}", field.Name, metaColumn.Length, ((string)(column.Value)).Length);
+                        throw new Sys.JException("Column[{0}] is oversize, limit={1}, actual={2}", field.Name, metaColumn.Length, ((string)(column.Value)).Length);
                 }
             }
         }

@@ -96,8 +96,8 @@ namespace Sys.Data
 
         protected virtual void ExceptionHandler(string message)
         {
-            if (SysException.DefaultExceptionHandler != null)
-                SysException.DefaultExceptionHandler("SQL Exception", message);
+            if (JException.DefaultExceptionHandler != null)
+                JException.DefaultExceptionHandler("SQL Exception", message);
             else
                 throw new Exception(message);
 

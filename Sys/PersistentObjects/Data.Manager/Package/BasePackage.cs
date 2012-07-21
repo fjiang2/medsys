@@ -70,7 +70,7 @@ namespace Sys.Data.Manager
 
         protected abstract void Pack();
 
-        public void Unpack(Worker worker, SqlTrans transaction, bool insert)
+        public void Unpack(JBackgroundWorker worker, SqlTrans transaction, bool insert)
         {
   
             int i = 0;

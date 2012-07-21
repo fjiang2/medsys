@@ -68,7 +68,7 @@ namespace Sys.Data.Manager
             {
 
                 if (!log_transaction)
-                    throw new SysException("TransactionID is not assgined yet.");
+                    throw new JException("TransactionID is not assgined yet.");
 
                 if (this.rowID == 0)
                 {
@@ -84,7 +84,7 @@ namespace Sys.Data.Manager
                             this.rowID = (int)e.adapter.Row[this.rowIdColumnName];
                         }
                         else
-                            throw new SysException("DPO Type is not defined");
+                            throw new JException("DPO Type is not defined");
                     }
                     else
                         return;

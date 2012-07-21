@@ -69,7 +69,7 @@ namespace Sys.Data
                     
             }
 
-            throw new SysException("Type {0} is not supported", dataType);
+            throw new JException("Type {0} is not supported", dataType);
             
         }
 

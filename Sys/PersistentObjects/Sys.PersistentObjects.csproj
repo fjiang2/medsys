@@ -43,18 +43,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Builder\Argument.cs" />
-    <Compile Include="Builder\ClassBuilder.cs" />
-    <Compile Include="Builder\Constructor.cs" />
-    <Compile Include="Builder\Format.cs" />
-    <Compile Include="Builder\Property.cs" />
-    <Compile Include="Builder\Field.cs" />
-    <Compile Include="Builder\Method.cs" />
-    <Compile Include="Builder\Modifier.cs" />
-    <Compile Include="Builder\ModifierType.cs" />
-    <Compile Include="Builder\Statement.cs" />
-    <Compile Include="Builder\Statements.cs" />
-    <Compile Include="Builder\TypeInfo.cs" />
+    <Compile Include="Sys\CodeBuilder\Argument.cs" />
+    <Compile Include="Sys\CodeBuilder\ClassBuilder.cs" />
+    <Compile Include="Sys\CodeBuilder\Constructor.cs" />
+    <Compile Include="Sys\CodeBuilder\Format.cs" />
+    <Compile Include="Sys\CodeBuilder\Property.cs" />
+    <Compile Include="Sys\CodeBuilder\Field.cs" />
+    <Compile Include="Sys\CodeBuilder\Method.cs" />
+    <Compile Include="Sys\CodeBuilder\Modifier.cs" />
+    <Compile Include="Sys\CodeBuilder\ModifierType.cs" />
+    <Compile Include="Sys\CodeBuilder\Statement.cs" />
+    <Compile Include="Sys\CodeBuilder\Statements.cs" />
+    <Compile Include="Sys\CodeBuilder\TypeInfo.cs" />
     <Compile Include="Data.Manager\Dictionary\DictColumn.cs" />
     <Compile Include="Data.Manager\Dictionary\DictDatabase.cs" />
     <Compile Include="Data.Manager\Dictionary\DictTable.cs" />
@@ -174,9 +174,9 @@
     <Compile Include="Sys\DataStructure\Identifier.cs" />
     <Compile Include="Sys\Message\MessageLevel.cs" />
     <Compile Include="Sys\Message\Message.cs" />
-    <Compile Include="Sys\SysException.cs" />
+    <Compile Include="Sys\JException.cs" />
     <Compile Include="Sys\SysExtensiton.cs" />
-    <Compile Include="Sys\Worker.cs">
+    <Compile Include="Sys\JBackgroundWorker.cs">
       <SubType>Component</SubType>
     </Compile>
   </ItemGroup>

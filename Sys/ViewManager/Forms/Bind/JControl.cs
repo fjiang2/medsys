@@ -18,7 +18,7 @@ namespace Sys.ViewManager.Forms
 
             propertyInfo = type.GetProperty(property);
             if (property == null)
-                throw new Sys.SysException("wrong property name {0} in {1}", property, type.FullName);
+                throw new Sys.JException("wrong property name {0} in {1}", property, type.FullName);
         }
 
         public override void Fill()

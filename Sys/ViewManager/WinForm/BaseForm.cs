@@ -559,7 +559,7 @@ namespace Sys.ViewManager.Forms
         /// background worker
         /// </summary>
         private Progress progress;
-        protected Worker StartProgressBar(Action<Worker> action)
+        protected JBackgroundWorker StartProgressBar(Action<JBackgroundWorker> action)
         {
             this.progress = new Progress(this.ProgressBarItem);
             progress.Action = action;

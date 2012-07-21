@@ -55,7 +55,7 @@ namespace Sys.Platform.Forms
             if (e.Page == pageConnectServer)
             {
                 progressCreateSystemTables.ActionButton.Text = "Create System Table";
-                progressCreateSystemTables.Action = delegate(Worker worker)
+                progressCreateSystemTables.Action = delegate(JBackgroundWorker worker)
                 {
                     Unpacking.CreateTable(Level.System, worker);
                 };
@@ -70,7 +70,7 @@ namespace Sys.Platform.Forms
             else if (e.Page == this.pageCreateSystemTables)
             {
                 progressUnpackSystemData.ActionButton.Text = "Unpack System Data";
-                progressUnpackSystemData.Action = delegate(Worker worker)
+                progressUnpackSystemData.Action = delegate(JBackgroundWorker worker)
                 {
                     Unpacking.Unpack(Level.System, worker, true);
                 };
@@ -97,7 +97,7 @@ namespace Sys.Platform.Forms
                 }
 
                 progressCreateDefaultTables.ActionButton.Text = "Create Service Table";
-                progressCreateDefaultTables.Action = delegate(Worker worker)
+                progressCreateDefaultTables.Action = delegate(JBackgroundWorker worker)
                 {
                     Unpacking.CreateTable(Level.Application, worker);
                 };
@@ -111,7 +111,7 @@ namespace Sys.Platform.Forms
             else if (e.Page == this.pageCreateDefaultTables)
             {
                 progressUnpackDefaultData.ActionButton.Text = "Unpack Service Data";
-                progressUnpackDefaultData.Action = delegate(Worker worker)
+                progressUnpackDefaultData.Action = delegate(JBackgroundWorker worker)
                 {
                     Unpacking.Unpack(Level.Application, worker, true);
                 };

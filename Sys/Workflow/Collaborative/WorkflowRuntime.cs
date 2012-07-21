@@ -111,7 +111,7 @@ namespace Sys.Workflow.Collaborative
                     if (!activity.IsTaskAssignedToMe)
                     {
                         if (!activity.AssignTaskToMyself())
-                            throw new SysException("Cannot assign task to myself.");
+                            throw new JException("Cannot assign task to myself.");
 
                     }
                     activity.Start();

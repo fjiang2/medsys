@@ -14,7 +14,7 @@ namespace Sys
             this.id = id;
 
             if (!Validate())
-                throw new SysException("Invalid Identifier: {0}", id);
+                throw new JException("Invalid Identifier: {0}", id);
         }
 
         private bool Validate()

@@ -104,7 +104,7 @@ namespace Sys.Data
                 this.sqlDbType = SqlDbType.UniqueIdentifier;
             }
             else
-                throw new SysException("{0} is not supported", type.FullName);
+                throw new JException("{0} is not supported", type.FullName);
         }
 
         public string ColumnName

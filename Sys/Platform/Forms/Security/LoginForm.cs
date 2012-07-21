@@ -65,7 +65,7 @@ namespace Sys.Platform.Forms
                 }
 
             }
-            catch (Sys.SysException ex)
+            catch (Sys.JException ex)
             {
                 ep.SetError(txtUserName, ex.Message);
                 return;

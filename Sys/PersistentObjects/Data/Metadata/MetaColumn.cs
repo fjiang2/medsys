@@ -312,7 +312,7 @@ namespace Sys.Data
 
             }
 
-            throw new SysException("data type [{0}] is not supported", sqlType);
+            throw new JException("data type [{0}] is not supported", sqlType);
         }
 
 

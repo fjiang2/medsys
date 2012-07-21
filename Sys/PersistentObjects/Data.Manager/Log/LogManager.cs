@@ -66,7 +66,7 @@ namespace Sys.Data.Manager
             else
             {
 #if DEBUG
-                throw new Sys.SysException("Logee type {0} is defined", transactionType);
+                throw new Sys.JException("Logee type {0} is defined", transactionType);
 #else
                 return new DefaultLogee();  //use default logee
 #endif

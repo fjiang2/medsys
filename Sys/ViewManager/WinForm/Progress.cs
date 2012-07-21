@@ -10,8 +10,8 @@ namespace Sys.ViewManager.Forms
 {
     class Progress
     {
-        private Worker worker;
-        private Action<Worker> action = null;
+        private JBackgroundWorker worker;
+        private Action<JBackgroundWorker> action = null;
         
         private RepositoryItemMarqueeProgressBar progressBar;
         private BarEditItem pogressBarItem;
@@ -20,7 +20,7 @@ namespace Sys.ViewManager.Forms
         {
             this.pogressBarItem = pogressBarItem;
             this.progressBar = (RepositoryItemMarqueeProgressBar)pogressBarItem.Edit;
-            this.worker = new Worker();
+            this.worker = new JBackgroundWorker();
             this.worker.WorkerReportsProgress = true;
 
             worker.ProgressChanged += delegate(object s, ProgressChangedEventArgs e1)
@@ -41,13 +41,13 @@ namespace Sys.ViewManager.Forms
             };
         }
 
-        public Action<Worker> Action
+        public Action<JBackgroundWorker> Action
         {
             get { return this.action; }
             set { this.action = value; }
         }
 
-        public Worker Worker
+        public JBackgroundWorker Worker
         {
             get { return this.worker; }
         }

@@ -13,8 +13,8 @@ namespace Sys.Platform.Forms
 {
     public partial class ProgressControl : UserControl
     {
-        Worker worker;
-        private Action<Worker> action = null;
+        JBackgroundWorker worker;
+        private Action<JBackgroundWorker> action = null;
       //  private Action<RunWorkerCompletedEventArgs> completed = null;
 
         public ProgressControl()
@@ -32,11 +32,11 @@ namespace Sys.Platform.Forms
             }
         }
 
-        private Worker GetWorker()
+        private JBackgroundWorker GetWorker()
         {
             this.txtMessage.Text = "";
 
-            Worker worker = new Worker();
+            JBackgroundWorker worker = new JBackgroundWorker();
 
             worker.ProgressChanged += delegate(object s, ProgressChangedEventArgs e1)
             {
@@ -95,12 +95,12 @@ namespace Sys.Platform.Forms
         }
 
 
-        public Worker Worker
+        public JBackgroundWorker Worker
         {
             get { return this.worker; }
         }
 
-        public Action<Worker> Action
+        public Action<JBackgroundWorker> Action
         {
             get { return this.action; }
             set { this.action = value; }

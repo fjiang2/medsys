@@ -257,7 +257,7 @@ namespace Sys.Data
             if (A.Length > 0)
                 return A[0].Level;
 
-            throw new SysException("Table Level is not defined");
+            throw new JException("Table Level is not defined");
         }
 
         internal static MetaTable GetCachedMetaTable(this TableName tname)
@@ -382,7 +382,7 @@ namespace Sys.Data
             else if (type == typeof(Guid))
                 return SqlDbType.UniqueIdentifier;
 
-            throw new SysException("Type {0} cannot be converted into SqlDbType", type.FullName);
+            throw new JException("Type {0} cannot be converted into SqlDbType", type.FullName);
         }
 
 
@@ -446,7 +446,7 @@ namespace Sys.Data
 
             }
 
-            throw new SysException("SqlDbType {0} cannot be converted into Type", type);
+            throw new JException("SqlDbType {0} cannot be converted into Type", type);
         }
         
         #endregion

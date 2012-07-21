@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Reflection;
 
-namespace Sys.Builder
+namespace Sys.CodeBuilder
 {
     class ClassBuilder
     {

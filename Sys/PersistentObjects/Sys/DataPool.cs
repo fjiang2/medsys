@@ -42,7 +42,7 @@ namespace Sys
     /// <summary>
     /// Pooling support LRU and LFU policy
     /// 
-    /// Must implemte constructor: T(K key)
+    /// Must implement constructor: T(K key)
     /// </summary>
     /// <typeparam name="K">typeof(Key)</typeparam>
     /// <typeparam name="T">typeof(Value)</typeparam>
