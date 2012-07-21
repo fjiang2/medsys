@@ -17,12 +17,12 @@ namespace Sys
         }
     }
 
-    public class Worker : BackgroundWorker
+    public class JBackgroundWorker : BackgroundWorker
     {
         private UserState state = new UserState();
         private bool cancelled = false;
 
-        public Worker()
+        public JBackgroundWorker()
         {
             this.WorkerReportsProgress = true;
         }

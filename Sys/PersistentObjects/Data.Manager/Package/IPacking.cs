@@ -9,7 +9,7 @@ namespace Sys.Data.Manager
     public interface IPacking
     {
       //  void Pack();
-        void Unpack(Worker worker, SqlTrans transaction, bool insert);
+        void Unpack(JBackgroundWorker worker, SqlTrans transaction, bool insert);
         void Unpack(SqlTrans transaction, bool insert);
         int Count { get; }
         string TableName { get; }

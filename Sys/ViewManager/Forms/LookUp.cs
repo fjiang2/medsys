@@ -149,7 +149,7 @@ namespace Sys.ViewManager.Forms
             this.CenterToParent();
 
             if (dataTable.Rows.Count == 0)
-                throw new SysException("Row count == 0");
+                throw new JException("Row count == 0");
 
             
             this.ShowInTaskbar = false;

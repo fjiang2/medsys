@@ -361,7 +361,7 @@ namespace X12.Forms
                 rootLoop.Nodes.Clear();
             }
             
-            Worker worker = this.StartProgressBar(delegate(Worker worker1)
+            JBackgroundWorker worker = this.StartProgressBar(delegate(JBackgroundWorker worker1)
             {
                 this.x12.Parse(worker1);
             });

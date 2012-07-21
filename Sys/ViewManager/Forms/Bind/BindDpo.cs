@@ -237,7 +237,7 @@ namespace Sys.ViewManager.Forms
         {
             //Check it is valid column name?
             if (this.columnNameFields.Where(fieldInfo => fieldInfo.GetValue(null).Equals(columnName)).Count() != 1)
-                throw new SysException("Invalid column name [{0}] in {1}", columnName, typeof(T).FullName);
+                throw new JException("Invalid column name [{0}] in {1}", columnName, typeof(T).FullName);
          
             return base.Bind(control, columnName);
         }

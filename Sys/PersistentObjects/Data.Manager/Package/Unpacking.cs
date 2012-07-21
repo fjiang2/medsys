@@ -15,7 +15,7 @@ namespace Sys.Data.Manager
     public class Unpacking
     {
 
-        public static void Unpack(Level level, Worker worker, bool insert)
+        public static void Unpack(Level level, JBackgroundWorker worker, bool insert)
         {
             SqlTrans transaction = new SqlTrans();
 
@@ -37,7 +37,7 @@ namespace Sys.Data.Manager
             return;
         }
 
-        private static void Unpack(Level level, Assembly asm, Worker worker, SqlTrans transaction, bool insert)
+        private static void Unpack(Level level, Assembly asm, JBackgroundWorker worker, SqlTrans transaction, bool insert)
         {
             
             foreach (Type type in asm.GetExportedTypes())
@@ -117,7 +117,7 @@ namespace Sys.Data.Manager
         /// </summary>
         /// <param name="level"></param>
         /// <param name="worker"></param>
-        public static void CreateTable(Level level, Worker worker)
+        public static void CreateTable(Level level, JBackgroundWorker worker)
         {
 
             Type[] baiscTypes = CreateBasicTable();

@@ -54,7 +54,7 @@ namespace Sys.Data.Manager
                     if ((File.GetAttributes(fileName) & FileAttributes.ReadOnly) == FileAttributes.ReadOnly)    //this file is not checked out
                     {
                         if (dpoClass.IsTableChanged(tname))
-                            throw new SysException("{0} is modified, please check out class {1} to refresh", tname, cname.Class);
+                            throw new JException("{0} is modified, please check out class {1} to refresh", tname, cname.Class);
 
                         return false;
                     }
@@ -65,7 +65,7 @@ namespace Sys.Data.Manager
             }
 
             if (metaTable.TableID == -1)
-                throw new SysException("Table ID {0} is not defined", tname);
+                throw new JException("Table ID {0} is not defined", tname);
             
             StreamWriter sw = new StreamWriter(fileName);
             sw.Write(sourceCode);

@@ -57,13 +57,13 @@ namespace Sys.Data
         {
 
             if (source == null)
-                throw new SysException("source cannot be null");
+                throw new JException("source cannot be null");
 
             Type t1 = this.GetType();
             Type t2 = source.GetType();
 
             if (t1 != t2 && !t2.IsSubclassOf(t1))
-                throw new SysException("class type {0} is not matched to {1}.", t2.FullName, t1.FullName);
+                throw new JException("class type {0} is not matched to {1}.", t2.FullName, t1.FullName);
 
             foreach (FieldInfo fieldInfo in this.publicFields)
             {
@@ -181,7 +181,7 @@ namespace Sys.Data
                 if(this.Primary.Length != 0)
                     return new Locator(this.Primary);
 
-                throw new SysException("There is no locator defined.");
+                throw new JException("There is no locator defined.");
             }
         }
 
@@ -207,7 +207,7 @@ namespace Sys.Data
                 if (dataTableAttribute != null)
                     return dataTableAttribute.TableName;
 
-                throw new SysException("There is no table name defined.");
+                throw new JException("There is no table name defined.");
             }
         }
 
@@ -613,11 +613,11 @@ namespace Sys.Data
         {
             Type fieldType = fieldInfo.FieldType;
             if (!fieldType.IsGenericType)
-                throw new SysException("DPCollection is not generic type");
+                throw new JException("DPCollection is not generic type");
 
             Type[] typeParameters = fieldType.GetGenericArguments();
             if (typeParameters.Length != 1)
-                throw new SysException("Too many generic parameters, DPCollection must declare like DPCollection<T> Children");
+                throw new JException("Too many generic parameters, DPCollection must declare like DPCollection<T> Children");
             
             if(typeParameters[0].IsSubclassOf(typeof(PersistentObject)))
                 return  typeParameters[0];
@@ -681,12 +681,12 @@ namespace Sys.Data
         {
             Type fieldType = fieldInfo.FieldType;
             if (!fieldType.IsSubclassOf(typeof(PersistentObject)))
-                throw new SysException("ERROR: {0} is not DataPersistentObject", fieldInfo.Name);
+                throw new JException("ERROR: {0} is not DataPersistentObject", fieldInfo.Name);
 
 
             ConstructorInfo constructorInfo= fieldType.GetConstructor(new Type[]{});
             if(constructorInfo == null)
-                throw new SysException("ERROR: class {0} does not has default constructor", fieldType.FullName);
+                throw new JException("ERROR: class {0} does not has default constructor", fieldType.FullName);
 
             PersistentObject dpo = (PersistentObject)Activator.CreateInstance(fieldType, null);
 

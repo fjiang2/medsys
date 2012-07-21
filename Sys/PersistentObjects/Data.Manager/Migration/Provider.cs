@@ -22,7 +22,7 @@ namespace Sys.Data.Manager
         public void AddPrimaryKey(string name, TableName table, params string[] columns)
         {
             if (ConstraintExists(table, name))
-                throw new SysException("Primary key {0} already exists", name);
+                throw new JException("Primary key {0} already exists", name);
 
             SqlCmd.ExecuteNonQuery("ALTER TABLE {0} ADD CONSTRAINT {1} PRIMARY KEY ({2}) ", table, name, string.Join(",", columns));
         }
@@ -50,7 +50,7 @@ namespace Sys.Data.Manager
         public void RenameTable(TableName oldName, TableName newName)
 		{
 			if (TableExists(newName))
-				throw new SysException("Table with name '{0}' already exists", newName);
+				throw new JException("Table with name '{0}' already exists", newName);
 
 			if (TableExists(oldName))
                 SqlCmd.ExecuteNonQuery("ALTER TABLE {0} RENAME TO {1}", oldName, newName);
@@ -72,7 +72,7 @@ namespace Sys.Data.Manager
         public void AddColumn(TableName table, string column, SqlDbType type, int size, object defaultValue)
         {
             if (ColumnExists(table, column))
-                throw new SysException("Column {0}.{1} already exists", table, column);
+                throw new JException("Column {0}.{1} already exists", table, column);
 
             SqlCmd.ExecuteNonQuery("ALTER TABLE {0} ADD {1} {2} NULL", table, column, type);
         }
@@ -81,7 +81,7 @@ namespace Sys.Data.Manager
         public void RenameColumn(TableName tableName, string oldColumnName, string newColumnName)
 		{
 			if (ColumnExists(tableName, newColumnName))
-                throw new SysException("Table '{0}' has column named '{1}' already", tableName, newColumnName);
+                throw new JException("Table '{0}' has column named '{1}' already", tableName, newColumnName);
 
 			if (ColumnExists(tableName, oldColumnName))
                 SqlCmd.ExecuteNonQuery("ALTER TABLE {0} RENAME COLUMN {1} TO {2}", tableName, oldColumnName, newColumnName);
@@ -99,7 +99,7 @@ namespace Sys.Data.Manager
         public void ChangeColumn(TableName table, string sqlColumn)
 		{
             if (!ColumnExists(table, sqlColumn))
-                throw new SysException("Column {0}.{1} does not exist", table, sqlColumn);
+                throw new JException("Column {0}.{1} does not exist", table, sqlColumn);
 
             SqlCmd.ExecuteNonQuery("ALTER TABLE {0} ALTER COLUMN {1}", table, sqlColumn);
 		}
@@ -112,7 +112,7 @@ namespace Sys.Data.Manager
         public void AddUniqueConstraint(string name, TableName table, params string[] columns)
 		{
 			if (ConstraintExists(table, name))
-				throw new SysException("Constraint {0} already exists", name);
+				throw new JException("Constraint {0} already exists", name);
 				
             SqlCmd.ExecuteNonQuery("ALTER TABLE {0} ADD CONSTRAINT {1} UNIQUE({2}) ", table, name, string.Join(", ", columns));
 		}
@@ -120,7 +120,7 @@ namespace Sys.Data.Manager
         public void AddCheckConstraint(string name, TableName table, string checkSql)
 		{
 			if (ConstraintExists(table, name))
-                throw new SysException("Constraint {0} already exists", name);
+                throw new JException("Constraint {0} already exists", name);
 
             SqlCmd.ExecuteNonQuery("ALTER TABLE {0} ADD CONSTRAINT {1} CHECK ({2}) ", table, name, checkSql);
 		}
