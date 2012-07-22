@@ -5,14 +5,26 @@ using System.Linq;
 using System.Text;
 using System.Data;
 using System.Reflection;
+using System.ComponentModel;
 
 namespace Sys.Data
 {
-    public abstract class PersistentList<T> : CollectionBase, IPersistentCollection, IEnumerable<T>, IEnumerable
+    public abstract class PersistentList<T> : BindingList<T>, IPersistentCollection, IEnumerable<T>, IEnumerable
         where T: class,  IDPObject, new()
     {
         protected PersistentList()
-        { 
+        {
+            this.AllowNew = true;
+            this.AllowRemove = true;
+            this.AllowEdit = true;
+
+            this.AddingNew += new AddingNewEventHandler(PersistentList_AddingNew);
+        }
+
+        private void PersistentList_AddingNew(object sender, AddingNewEventArgs e)
+        {
+            T t = new T();
+            e.NewObject = t;
         }
 
         /// <summary>
@@ -20,6 +32,7 @@ namespace Sys.Data
         /// </summary>
         /// <param name="dataTable"></param>
         protected PersistentList(DataTable dataTable)
+            :this()
         {
             this.dataTable = dataTable;
 
@@ -32,6 +45,7 @@ namespace Sys.Data
         }
 
         protected PersistentList(IEnumerable<T> records)
+            :this()
         {
             foreach (T t in records)
             {
@@ -39,80 +53,6 @@ namespace Sys.Data
             }
         }
       
-
-
-        #region IEnumerable<T>, IEnumerable
-
-        public new IEnumerator<T> GetEnumerator()
-        {
-            return new ListEnumerator(this);
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return base.GetEnumerator();
-        }
-
-
-        private class ListEnumerator : IDisposable, IEnumerator<T>, IEnumerator
-        {
-            PersistentList<T> list;
-            int cursor = -1;
-
-            public ListEnumerator(PersistentList<T> list)
-            {
-                this.list = list;
-            }
-
-            public T Current
-            {
-                get
-                {
-                    if (cursor > list.Count - 1)
-                        throw new InvalidOperationException("Enumeration already finished");
-
-                    if (cursor == -1)
-                        throw new InvalidOperationException("Enumeration not started");
-
-                    return this.list[cursor];
-                }
-            }
-
-            object IEnumerator.Current
-            {
-                get
-                {
-                    return Current;
-                }
-            }
-
-            public bool MoveNext()
-            {
-                cursor++;
-
-                if (cursor > list.Count - 1)
-                    return false;
-                else
-                    return true;
-            }
-
-
-            public void Reset()
-            {
-                cursor = -1;
-            }
-
-            public void Dispose()
-            {
-                cursor = -1;
-            }
-        }
-
-
-        #endregion
-
-
-
         public F[] ToArray<F>(string fieldName)
         {
             FieldInfo fieldInfo = typeof(T).GetField(fieldName, BindingFlags.Instance | BindingFlags.Public| BindingFlags.NonPublic);
@@ -176,44 +116,20 @@ namespace Sys.Data
 
 
 
-        public T this[int index]
-        {
-            get { return (T)base.List[index]; }
-        }
 
-        public int IndexOf(T t)
+        public void Add(IPersistentObject value)
         {
-            return List.IndexOf(t);
+            this.Items.Add((T)value);
         }
 
 
-        public bool Add(IPersistentObject value)
+
+        public void Remove(IPersistentObject value)
         {
-            return this.Add((T)value);
-        }
-
-
-        public bool Add(T value)
-        {
-            value.SetCollection(this);
-            List.Add(value);
-
-            return true;
-        }
-
-        public bool Remove(IPersistentObject value)
-        {
-            List.Remove((T)value);
+            this.Items.Remove((T)value);
             
-            return true;
         }
 
-        public bool Remove(T value)
-        {
-            List.Remove(value);
-
-            return true;
-        }
 
         public void UpdateDataRow(IPersistentObject value)
         {

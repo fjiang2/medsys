@@ -18,17 +18,7 @@ namespace Sys.Platform.Scheduler
             this.User_ID = Active.Account.UserID;
         }
 
-        private void OnListChanged()
-        {
-            TaskList events = (TaskList)this.collection;
-            
-            if (events == null)
-                return;
-
-            int index = events.IndexOf(this);
-            events.OnListChanged(new ListChangedEventArgs(ListChangedType.ItemChanged, index));
-        }
-
+     
         public DateTime xStartTime 
         { 
             get { return StartDate; } 

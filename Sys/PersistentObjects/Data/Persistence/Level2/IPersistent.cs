@@ -52,8 +52,8 @@ namespace Sys.Data
         DataTable Table { get; }
         void UpdateDataRow(IPersistentObject p);
 
-        bool Add(IPersistentObject p);
-        bool Remove(IPersistentObject p);
+        void Add(IPersistentObject p);
+        void Remove(IPersistentObject p);
     }
 
  
