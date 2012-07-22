@@ -182,9 +182,9 @@ namespace Sys.Data
 
         public IPersistentObject GetObject(int index) { return this[index]; }
         public IPersistentObject GetObject(DataRow dataRow) { return this[dataRow]; }
-        public bool Add(IPersistentObject p) { return Add((T)p); }
+        public void Add(IPersistentObject p) { Add((T)p); }
         public bool InsertAfter(IPersistentObject p1, IPersistentObject p2) { return InsertAfter((T)p1, (T)p2);}
-        public bool Remove(IPersistentObject p) { return Remove((T)p); }
+        public void Remove(IPersistentObject p) { Remove((T)p); }
         public void UpdateDataRow(IPersistentObject p) { UpdateDataRow((T)p); }
         public void Swap(IPersistentObject p1, IPersistentObject p2) { Swap((T)p1, (T)p2);}
         public IPersistentObject NewInstance()
