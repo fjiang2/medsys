@@ -28,7 +28,7 @@ namespace X12.Specification
                 switch (this.DataType)
                 {
                     case "R": return typeof(decimal);       //Decimal
-                    case "ID": return typeof(Identifier);   //Identifier
+                    case "ID": return typeof(ident);   //Identifier
                     case "AN": return typeof(string);       //String
                     case "DT": return typeof(DateTime);     //Date, YYMMDD 
                     case "TM": return typeof(TimeSpan);     //Time, HHMMSS
