@@ -29,7 +29,7 @@ namespace Sys
             {
                 ch = id[i++];
 
-                if (!char.IsLetterOrDigit(ch))
+                if (ch != '_' && !char.IsLetterOrDigit(ch))
                     return false;
             } 
 
@@ -57,9 +57,9 @@ namespace Sys
         }
 
 
-        public static implicit operator ident(string ident)
+        public static explicit operator string(ident ident)
         {
-            return new ident(ident); 
+            return ident.id; 
         }
 
         public int CompareTo(object obj)

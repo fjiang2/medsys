@@ -666,9 +666,16 @@ namespace Sys.Data
             }
 
             DataTable dataTable = cmd.FillDataTable();
-            dataTable.TableName = tname.FullName; 
+            dataTable.TableName = tname.FullName;
 
-            fieldInfo.SetValue(this, Activator.CreateInstance(fieldInfo.FieldType, new object[] { dataTable }));
+            //if association collection was not instatiated
+            if (fieldInfo.GetValue(this) == null)
+                fieldInfo.SetValue(this, Activator.CreateInstance(fieldInfo.FieldType, new object[] { dataTable }));
+            else
+            {
+                IPersistentCollection collection = (IPersistentCollection)fieldInfo.GetValue(this);
+                collection.Table = dataTable;
+            }
         }
 
 
@@ -688,9 +695,8 @@ namespace Sys.Data
             if(constructorInfo == null)
                 throw new JException("ERROR: class {0} does not has default constructor", fieldType.FullName);
 
-            PersistentObject dpo = (PersistentObject)Activator.CreateInstance(fieldType, null);
-
-            string SQL = string.Format("SELECT * FROM {0} WHERE {1}", dpo.TableName, association.Locator);
+            
+            string SQL = string.Format("SELECT * FROM {0} WHERE {1}", fieldType.TableName(), association.Locator);
             SqlCmd cmd = new SqlCmd(SQL);
 
             foreach (FieldInfo info in this.publicFields)
@@ -709,8 +715,18 @@ namespace Sys.Data
             if (dataRow == null)
                 return;
 
-            dpo.Fill(dataRow);
-            fieldInfo.SetValue(this, dpo);
+            //if association object was not instatiated
+            if (fieldInfo.GetValue(this) == null)
+            {
+                PersistentObject dpo = (PersistentObject)Activator.CreateInstance(fieldType, null);
+                dpo.Fill(dataRow);
+                fieldInfo.SetValue(this, dpo);
+            }
+            else
+            {
+                IDPObject obj = (IDPObject)fieldInfo.GetValue(this);
+                obj.Fill(dataRow);
+            }
         }
 
 

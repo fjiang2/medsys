@@ -109,7 +109,7 @@ namespace X12.Specification
                 .SELECT
                 .COLUMNS()
                 .FROM(this)
-                .WHERE( new SqlExpr(_ParentID) == parentID)
+                .WHERE(_ParentID.ColumName() == parentID)
                 .ORDER_BY(_Sequence);
             DataTable dt = sql.FillDataTable(); //new TableReader<LoopDpo>(new ColumnValue(_ParentID, parentID)).Table;
 

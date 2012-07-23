@@ -23,29 +23,26 @@ namespace Sys.Data
         protected ObjectPermission objectPermission = ObjectPermission.AllowUpdateObject;
     
         private object sender;      //who changed datatable?
-        private Dictionary<IDPObject, DataRow> mapping = new Dictionary<IDPObject, DataRow>();
+        private Dictionary<IDPObject, DataRow> mapping;
 
         public PersistentCollection(DataTable dataTable)
         {
-            this.dataTable = dataTable;
-
-            this.Table.RowChanged += RowChanged;
-            this.Table.RowDeleted += RowChanged;
+            this.Table = dataTable;
         }
 
         public PersistentCollection()
         {
+            DataTable dataTable;
             if (TableName.TableExists())
             {
-                this.dataTable = SqlCmd.FillDataTable("SELECT TOP 1 * FROM {0}", TableName);
-                this.dataTable.TableName = TableName.Name;
-                this.dataTable.Clear();
+                dataTable = SqlCmd.FillDataTable("SELECT TOP 1 * FROM {0}", TableName);
+                dataTable.TableName = TableName.Name;
+                dataTable.Clear();
             }
             else
-                this.dataTable = Reflex.GetEmptyDataTable<T>();
+                dataTable = Reflex.GetEmptyDataTable<T>();
 
-            this.Table.RowChanged += RowChanged;
-            this.Table.RowDeleted += RowChanged;
+            this.Table = dataTable;
         }
 
         public override string ToString()
@@ -211,6 +208,16 @@ namespace Sys.Data
             {
                 return this.dataTable;
             }
+            set
+            {
+                this.dataTable = value;
+
+                this.Table.RowChanged += RowChanged;
+                this.Table.RowDeleted += RowChanged;
+
+                this.mapping = new Dictionary<IDPObject, DataRow>();
+            }
+
         }
 
       

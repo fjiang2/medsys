@@ -49,7 +49,7 @@ namespace Sys.Data
     /// </summary>
     public interface IPersistentCollection : IEnumerable
     {
-        DataTable Table { get; }
+        DataTable Table { get; set; }
         void UpdateDataRow(IPersistentObject p);
 
         void Add(IPersistentObject p);

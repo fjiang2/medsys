@@ -12,14 +12,17 @@ namespace PTA
 {
     public class StudentDpo : ptaStudentDpo
     {
-        [Association("Person_ID=@Adult_ID")]
-        public PersonDpo Person;
+        [ForeignKey(StudentDpo._Student_ID, PersonDpo._Person_ID)]
+        [Association("Person_ID=@Student_ID")]
+        public PersonDpo Person = new PersonDpo();
 
+        [ForeignKey(StudentDpo._Address_ID, AddressDpo._Address_ID)]
         [Association("Address_ID=@Address_ID")]
-        public AddressDpo Address;
+        public AddressDpo Address = new AddressDpo();
 
-        [Association("Phone_ID=@Hone_Phone_ID")]
-        public PhoneDpo Phone;
+        [ForeignKey(StudentDpo._Phone_ID, PhoneDpo._Phone_ID)]
+        [Association("Phone_ID=@Phone_ID")]
+        public PhoneDpo Phone = new PhoneDpo();
 
         
         public StudentDpo()

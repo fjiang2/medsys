@@ -187,6 +187,7 @@
             this.txtStudent_LastName.Name = "txtStudent_LastName";
             this.txtStudent_LastName.Size = new System.Drawing.Size(127, 20);
             this.txtStudent_LastName.TabIndex = 22;
+            this.txtStudent_LastName.Leave += new System.EventHandler(this.txtStudentName_Leave);
             // 
             // btnStudentSearch
             // 
@@ -196,6 +197,7 @@
             this.btnStudentSearch.Size = new System.Drawing.Size(29, 20);
             this.btnStudentSearch.TabIndex = 21;
             this.btnStudentSearch.UseVisualStyleBackColor = true;
+            this.btnStudentSearch.Click += new System.EventHandler(this.btnStudentSearch_Click);
             // 
             // btnAdultSearch
             // 
@@ -303,18 +305,18 @@
             // 
             // txtHomePhone
             // 
-            this.txtHomePhone.Location = new System.Drawing.Point(192, 266);
+            this.txtHomePhone.Location = new System.Drawing.Point(191, 266);
             this.txtHomePhone.Mask = "(999) 000-0000";
             this.txtHomePhone.Name = "txtHomePhone";
-            this.txtHomePhone.Size = new System.Drawing.Size(100, 20);
+            this.txtHomePhone.Size = new System.Drawing.Size(101, 20);
             this.txtHomePhone.TabIndex = 10;
             // 
             // txtCellPhone
             // 
-            this.txtCellPhone.Location = new System.Drawing.Point(192, 242);
+            this.txtCellPhone.Location = new System.Drawing.Point(191, 242);
             this.txtCellPhone.Mask = "(999) 000-0000";
             this.txtCellPhone.Name = "txtCellPhone";
-            this.txtCellPhone.Size = new System.Drawing.Size(100, 20);
+            this.txtCellPhone.Size = new System.Drawing.Size(101, 20);
             this.txtCellPhone.TabIndex = 9;
             // 
             // txtAdult_FirstName
@@ -337,6 +339,7 @@
             this.txtStudent_FirstName.Name = "txtStudent_FirstName";
             this.txtStudent_FirstName.Size = new System.Drawing.Size(182, 20);
             this.txtStudent_FirstName.TabIndex = 4;
+            this.txtStudent_FirstName.Leave += new System.EventHandler(this.txtStudentName_Leave);
             // 
             // layoutControlGroup1
             // 
