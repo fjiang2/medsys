@@ -24,5 +24,11 @@ namespace App.Data
             : base(address_id)
         {
         }
+
+        public override string ToString()
+        {
+            return string.Format("{0} {1} {2}\r\n{3},{4} {5}", this.Street_Number, this.Street_Name,this.Apartment, 
+                this.City, this.State, this.Postal_Code);
+        }
     }
 }

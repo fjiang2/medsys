@@ -30,5 +30,10 @@ namespace App.Data
             get { return (RelationshipEnum)this.Relationship_Enum; }
             set { this.Relationship_Enum = (int)value; }
         }
+
+        public override string ToString()
+        {
+            return string.Format("{0} --{1}--> {2}", this.Person_ID1, this.RelationShipEnum, this.Person_ID2);
+        }
     }
 }

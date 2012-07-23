@@ -5,6 +5,7 @@ using System.Text;
 using System.Data;
 using Sys.Data;
 using App.Data;
+using App.Data.DataEnum;
 using PTA.DpoClass;
 
 namespace PTA
@@ -110,6 +111,16 @@ namespace PTA
                 }
             }
 
+            foreach (StudentDpo student in students)
+            {
+                PersonRelationshipDpo dpo = new PersonRelationshipDpo(this.Adult_ID, student.Student_ID);
+                if(student.Person.GenderEnum ==  GenderEnum.Male)
+                    dpo.RelationShipEnum = RelationshipEnum.Son;
+                else
+                    dpo.RelationShipEnum = RelationshipEnum.Daughter;
+                
+                dpo.Save();
+            }
 
             return base.Save();
         }
