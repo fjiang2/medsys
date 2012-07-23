@@ -66,7 +66,7 @@ namespace Sys.Platform.Forms
             int count = schedulerStorage1.Resources.Count;
             //Resource resource = schedulerStorage1.Resources[0];
 
-            TaskList eventList = new TaskList( new SqlExpr(Task._User_ID) == this.account.User_ID);
+            TaskList eventList = new TaskList(Task._User_ID.ColumName() == this.account.User_ID);
 
             schedulerStorage1.BeginUpdate();
             this.schedulerStorage1.Appointments.DataSource = eventList;

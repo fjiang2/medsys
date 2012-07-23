@@ -112,6 +112,11 @@ namespace Sys.Data
 
                 return dataTable;
             }
+            set
+            {
+                //cannot use it here
+                throw new NotImplementedException();
+            }
         }
 
 

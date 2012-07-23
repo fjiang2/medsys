@@ -14,12 +14,12 @@ namespace Sys.Data
         }
 
 
-        public SqlExpr(object obj)
+        private SqlExpr(object obj)
         {
             script.Append(obj);
         }
 
-
+       
         public SqlExpr AppendValue(object value)
         {
             script.Append(new SqlValue(value).Text);
@@ -144,10 +144,16 @@ namespace Sys.Data
         }
 
 
+        public static implicit operator SqlExpr(int value)
+        {
+            return new SqlExpr(value);
+        }
+
         public static implicit operator SqlExpr(short value)
         {
             return new SqlExpr(value);
         }
+
         public static implicit operator SqlExpr(ushort value)
         {
             return new SqlExpr(value);
@@ -186,7 +192,15 @@ namespace Sys.Data
         }
 
 
-
+        /// <summary>
+        /// string s = (string)expr;
+        /// </summary>
+        /// <param name="expr"></param>
+        /// <returns></returns>
+        public static explicit operator string(SqlExpr expr)
+        {
+            return expr.ToString();
+        }
 
         public SqlExpr AS(string alias)
         {
@@ -248,7 +262,7 @@ namespace Sys.Data
 
         #region +-*/, compare, logical operation
 
-        private static SqlExpr OPR(SqlExpr s1, string opr, object s2)
+        private static SqlExpr OPR(SqlExpr s1, string opr, SqlExpr s2)
         {
             SqlExpr exp = new SqlExpr()
                 .Append(string.Format("({0}) {1} ({2})", s1, opr, s2));
@@ -256,7 +270,7 @@ namespace Sys.Data
             return exp;
         }
 
-        private static SqlExpr OPR(string opr, object s)
+        private static SqlExpr OPR(string opr, SqlExpr s)
         {
             SqlExpr exp = new SqlExpr()
                 .Append(string.Format("{0} ({1})", opr, s));
@@ -264,30 +278,30 @@ namespace Sys.Data
             return exp;
         }
 
-        public static SqlExpr operator +(SqlExpr s1, object s2)
+        public static SqlExpr operator +(SqlExpr s1, SqlExpr s2)
          {
              return OPR(s1, "+", s2);
          }
 
-         public static SqlExpr operator -(SqlExpr s1, object s2)
+        public static SqlExpr operator -(SqlExpr s1, SqlExpr s2)
          {
              return OPR(s1, "-", s2);
          }
 
-         public static SqlExpr operator *(SqlExpr s1, object s2)
+        public static SqlExpr operator *(SqlExpr s1, SqlExpr s2)
          {
              return OPR(s1, "*", s2);
          }
 
-         public static SqlExpr operator /(SqlExpr s1, object s2)
+        public static SqlExpr operator /(SqlExpr s1, SqlExpr s2)
          {
              return OPR(s1, "/", s2);
          }
 
 
-        public static SqlExpr operator ==(SqlExpr s1, object s2)
+        public static SqlExpr operator ==(SqlExpr s1, SqlExpr s2)
         {
-            if (s2 == null || s2 == DBNull.Value)
+            if (s2.ToString() == "NULL")
             {
                 return new SqlExpr(s1).Append(" IS NULL");
             }
@@ -296,9 +310,9 @@ namespace Sys.Data
         }
 
 
-        public static SqlExpr operator !=(SqlExpr s1, object s2)
+        public static SqlExpr operator !=(SqlExpr s1, SqlExpr s2)
         {
-            if (s2 == null || s2 == DBNull.Value)
+            if (s2.ToString() == "NULL")
             {
                 return new SqlExpr(s1).Append(" IS NOT NULL");
             }
@@ -316,33 +330,33 @@ namespace Sys.Data
             return base.GetHashCode();
         }
 
-        public static SqlExpr operator >(SqlExpr s1, object s2)
+        public static SqlExpr operator >(SqlExpr s1, SqlExpr s2)
         {
             return OPR(s1, ">", s2);
         }
 
-        public static SqlExpr operator <(SqlExpr s1, object s2)
+        public static SqlExpr operator <(SqlExpr s1, SqlExpr s2)
         {
             return OPR(s1, "<", s2);
         }
 
-        public static SqlExpr operator >=(SqlExpr s1, object s2)
+        public static SqlExpr operator >=(SqlExpr s1, SqlExpr s2)
         {
             return OPR(s1, ">=", s2);
         }
 
-        public static SqlExpr operator <=(SqlExpr s1, object s2)
+        public static SqlExpr operator <=(SqlExpr s1, SqlExpr s2)
         {
             return OPR(s1, "<=", s2);
         }
 
 
-        public static SqlExpr operator &(SqlExpr s1, object s2)
+        public static SqlExpr operator &(SqlExpr s1, SqlExpr s2)
         {
             return OPR(s1, "AND", s2);
         }
 
-        public static SqlExpr operator |(SqlExpr s1, object s2)
+        public static SqlExpr operator |(SqlExpr s1, SqlExpr s2)
         {
             return OPR(s1, "OR", s2);
         }

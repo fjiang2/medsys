@@ -12,7 +12,7 @@ namespace App.Data
     {
         [ForeignKey(PersonDpo._Person_ID, PersonRelationshipDpo._Person_ID1)]
         [Association("Person_ID1=@Person_ID")]
-        public DPCollection<PersonRelationshipDpo> Relationships;
+        public DPCollection<PersonRelationshipDpo> Relationships = new DPCollection<PersonRelationshipDpo>();
 
         public PersonDpo()
         {

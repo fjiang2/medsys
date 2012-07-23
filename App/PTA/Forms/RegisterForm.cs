@@ -7,8 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Sys.ViewManager.Forms;
+using Sys;
 using App.Data.DpoClass;
 using App.Data;
+using Sys.Data;
 using PTA.DpoClass;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
@@ -150,6 +152,34 @@ namespace PTA.Forms
             bdStudent.SaveDpo();
            
             bdAdult.SaveDpo();
+        }
+
+        private void btnStudentSearch_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtStudentName_Leave(object sender, EventArgs e)
+        {
+            if (this.txtStudent_FirstName.Text != "" && this.txtStudent_LastName.Text != "")
+            {
+                bdStudentDemography.Apply();
+
+                
+                var list = new TableReader<PersonDpo>(
+                      PersonDpo._First_Name.ColumName() == student.Person.First_Name
+                    & PersonDpo._Last_Name.ColumName() == student.Person.Last_Name)
+                    .ToDPList();
+
+                if (list.Count() == 0)
+                    return;
+
+                if (list.Count() == 1)
+                {
+                    this.txtGrade.Text = "";
+                }
+
+            }
         }
     }
 }

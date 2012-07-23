@@ -13,15 +13,18 @@ namespace PTA
     public class AdultDpo : ptaAdultDpo
     {
 
+
+        [ForeignKey(AdultDpo._Adult_ID, PersonDpo._Person_ID)]
         [Association("Person_ID=@Adult_ID")]
-        public PersonDpo Person;
+        public PersonDpo Person = new PersonDpo();
 
         [ForeignKey(AdultDpo._Address_ID, AddressDpo._Address_ID)]
         [Association("Address_ID=@Address_ID")]
-        public AddressDpo Address;
+        public AddressDpo Address = new AddressDpo();
 
-        [Association("Phone_ID=@Hone_Phone_ID")]
-        public PhoneDpo Phone;
+        [ForeignKey(AdultDpo._Home_Phone_ID, PhoneDpo._Phone_ID)]
+        [Association("Phone_ID=@Home_Phone_ID")]
+        public PhoneDpo Phone = new PhoneDpo();
 
         List<StudentDpo> students = new List<StudentDpo>();
 

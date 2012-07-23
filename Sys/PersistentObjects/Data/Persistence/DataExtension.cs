@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data;
+using Sys;
 
 namespace Sys.Data
 {
@@ -476,6 +477,17 @@ namespace Sys.Data
 
 
         #endregion
+
+
+        public static ident ToIdent(this string name)
+        {
+            return new ident(name);
+        }
+
+        public static SqlExpr ColumName(this string name)
+        {
+            return (SqlExpr)(new ident(name));
+        }
 
     }
 }

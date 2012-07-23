@@ -113,7 +113,7 @@ namespace Sys.SmartList
         public List<ITreeDpoNode> GetNodes(int parentID)
         {
             //SELECT * FROM {0} WHERE ParentID = @parentID ORDER BY OrderBy
-            SqlBuilder sql = new SqlBuilder().SELECT.COLUMNS().FROM(this).WHERE( new SqlExpr(_ParentID) == parentID).ORDER_BY(_OrderBy);
+            SqlBuilder sql = new SqlBuilder().SELECT.COLUMNS().FROM(this).WHERE( _ParentID.ColumName() == parentID).ORDER_BY(_OrderBy);
             DataTable dt = sql.FillDataTable();
 
             List<ITreeDpoNode> list = new List<ITreeDpoNode>();
