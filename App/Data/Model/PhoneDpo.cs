@@ -23,6 +23,9 @@ namespace App.Data
          
         }
 
-    
+        public override string ToString()
+        {
+            return string.Format("Phone:{0}, Mobile:{1}", this.Phone, this.Mobile);
+        }
     }
 }

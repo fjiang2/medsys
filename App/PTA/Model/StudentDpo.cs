@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Data;
 using App.Data;
+using App.Data.DataEnum;
 using PTA.DpoClass;
 using Sys.Data;
 
@@ -123,6 +124,18 @@ namespace PTA
                     this.address.Address_ID = (int)this.Address_ID;
                     this.address.Save();
                 }
+            }
+
+
+            foreach (AdultDpo adult in adults)
+            {
+                PersonRelationshipDpo dpo = new PersonRelationshipDpo(this.Student_ID, adult.Adult_ID);
+                if (adult.Person.GenderEnum == GenderEnum.Male)
+                    dpo.RelationShipEnum = RelationshipEnum.Father;
+                else
+                    dpo.RelationShipEnum = RelationshipEnum.Mother;
+
+                dpo.Save();
             }
 
             return base.Save();
