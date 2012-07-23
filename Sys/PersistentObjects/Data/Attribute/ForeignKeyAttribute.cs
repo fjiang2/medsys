@@ -21,10 +21,9 @@ namespace Sys.Data
             this.ChildColumnName = childColumnName;
         }
 
-
         public override string ToString()
         {
-            return string.Format("{0}=@{1}", this.ChildColumnName, this.ParentColumnName);
+            return string.Format("[{0}]=@{1}", this.ChildColumnName, this.ParentColumnName);
         }
     }
 }

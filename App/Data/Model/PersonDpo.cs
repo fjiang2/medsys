@@ -10,8 +10,13 @@ namespace App.Data
 {
     public class PersonDpo : DpoClass.appPersonDpo
     {
+        [ForeignKey(PersonDpo._Person_ID, PersonRelationshipDpo._Person_ID1)]
+        [Association("Person_ID1=@Person_ID")]
+        public DPCollection<PersonRelationshipDpo> Relationships;
+
         public PersonDpo()
         {
+            this.Person_ID = -1;
             this.Inactive = false;
         }
 
@@ -26,12 +31,18 @@ namespace App.Data
         
         }
 
-        public GenderEnum GenderEnum
+        public GenderEnum Gender
         {
             get { return (GenderEnum)this.Gender_Enum; }
             set { this.Gender_Enum = (int)value; }
         }
 
+        public MaritalStatusEnum MaritalStatus
+        {
+            get { return (MaritalStatusEnum)this.MaritalStatus_Enum; }
+            set { this.MaritalStatus_Enum = (int)value; }
+        }
+            
 
 
         public override string ToString()
@@ -40,44 +51,51 @@ namespace App.Data
         }
 
 
+        public override DataRow Load()
+        {
+            DataRow row = base.Load();
+
+            if (this.Exists)
+            {
+                if (Relationships.Count > 0)
+                {
+                    int[] ID2List = this.Relationships.Table.ToArray<int>(PersonRelationshipDpo._Person_ID2);
+                    
+                    var reader2 = new TableReader<PersonDpo>(new ColumnValue(PersonDpo._Person_ID, ID2List));
+                    this.cached__relatives = new DPCollection<PersonDpo>(reader2.Table);
+                }
+            }
+
+            return row;
+        }
+
+
         /// <summary>
         /// don't use this, use property Relatives instead
         /// </summary>
         private DPCollection<PersonDpo> cached__relatives;
-        private DPCollection<PersonRelationshipDpo> cached__relationships;
 
         public DPCollection<PersonDpo> Relatives
         {
             get
             {
-                if (cached__relatives == null)
-                {
-                    //Get all relatives' id
-                    var reader1 = new TableReader<PersonRelationshipDpo>(new ColumnValue(PersonRelationshipDpo._Person_ID1, this.Person_ID));
-                    cached__relationships = new DPCollection<PersonRelationshipDpo>(reader1.Table);
-                    int[] ID2List = reader1.Table.ToArray<int>(PersonRelationshipDpo._Person_ID2);
-                    if (ID2List.Length == 0)
-                        return null;
-
-
-                    var reader2 = new TableReader<PersonDpo>(new ColumnValue(PersonDpo._Person_ID, ID2List));
-                    this.cached__relatives = new DPCollection<PersonDpo>(reader2.Table);
-                }
-
                 return cached__relatives;
             }
         }
 
 
-        public void AddRelativeAndSave(PersonDpo relative, RelationshipEnum relationship)
+        public void Add(PersonDpo relative, RelationshipEnum relationship)
         {
-            
             Relatives.Add(relative);
-            relative.Save(); //return Person_ID
-            
-            PersonRelationshipDpo dpo = new PersonRelationshipDpo(this.Person_ID, relative.Person_ID);
-            dpo.RelationShipEnum = relationship;
-            cached__relationships.Add(dpo);
+
+            if (relative.Person_ID == -1 
+                || this.Relationships.Where(dpo => dpo.Person_ID1 == this.Person_ID && dpo.Person_ID2 == relative.Person_ID).Count() == 0
+                )
+            {
+                PersonRelationshipDpo dpo = new PersonRelationshipDpo(this.Person_ID, relative.Person_ID);
+                dpo.RelationShipEnum = relationship;
+                this.Relationships.Add(dpo);
+            }
         }
 
     }

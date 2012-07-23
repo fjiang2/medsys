@@ -33,7 +33,13 @@ namespace App.Data.DataEnum
 		[Field("Spouse")]
 		Spouse = 10,
 
+		[Field("Guardian")]
+		Guardian = 101,
+
+		[Field("Student")]
+		Student = 102,
+
 		[Field("Other")]
-		Other = 99
+		Other = 9999
     }
 }
