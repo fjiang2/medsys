@@ -8,7 +8,7 @@ namespace Sys.Data
     /// <summary>
     /// a value can be used on SQL statement
     /// </summary>
-    public class SqlValue
+    internal class SqlValue
     {
         private object value;
 

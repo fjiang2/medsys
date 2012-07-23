@@ -43,6 +43,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\Persistence\TableReader`1.cs" />
+    <Compile Include="Data\Persistence\Level4\MappedColumn.cs" />
+    <Compile Include="Data\Persistence\Level4\IMapping.cs" />
+    <Compile Include="Data\Persistence\Level4\Many2ManyDpo.cs" />
+    <Compile Include="Data\Persistence\Level4\One2OneDpo.cs" />
+    <Compile Include="Data\Persistence\Level4\One2ManyDpo.cs" />
+    <Compile Include="Data\Persistence\TableReader`2.cs" />
     <Compile Include="Sys\CodeBuilder\Argument.cs" />
     <Compile Include="Sys\CodeBuilder\ClassBuilder.cs" />
     <Compile Include="Sys\CodeBuilder\Constructor.cs" />

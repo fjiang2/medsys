@@ -429,7 +429,12 @@ namespace Sys.Data
             return cmd.ExecuteNonQuery();
         }
 
-      
+        public static DataSet FillDataSet(string script, params object[] args)
+        {
+            SqlCmd cmd = new SqlCmd(script, args);
+            return cmd.FillDataSet();
+        }
+
         public static DataTable FillDataTable(string script, params object[] args)
         {
             SqlCmd cmd = new SqlCmd(script, args);
