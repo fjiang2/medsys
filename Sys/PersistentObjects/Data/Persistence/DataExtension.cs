@@ -132,7 +132,7 @@ namespace Sys.Data
         #region  DataTable.Rows[][x] -> Array[x]
 
 
-        public static F[] GetArray<F>(this DataTable dataTable, string columnName)
+        public static F[] ToArray<F>(this DataTable dataTable, string columnName)
         {
             F[] values = new F[dataTable.Rows.Count];
             int i = 0;
@@ -143,7 +143,7 @@ namespace Sys.Data
             return values;
         }
 
-        public static F[] GetArray<F>(this DataTable dataTable, int columnIndex)
+        public static F[] ToArray<F>(this DataTable dataTable, int columnIndex)
         {
             F[] values = new F[dataTable.Rows.Count];
             int i = 0;

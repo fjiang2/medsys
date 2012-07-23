@@ -178,7 +178,7 @@
     <Compile Include="Sys\Message\MessageLocation.cs" />
     <Compile Include="Sys\Message\MessageCode.cs" />
     <Compile Include="Sys\IAccount.cs" />
-    <Compile Include="Sys\DataStructure\Identifier.cs" />
+    <Compile Include="Sys\DataStructure\ident.cs" />
     <Compile Include="Sys\Message\MessageLevel.cs" />
     <Compile Include="Sys\Message\Message.cs" />
     <Compile Include="Sys\JException.cs" />

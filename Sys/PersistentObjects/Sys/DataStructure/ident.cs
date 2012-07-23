@@ -5,16 +5,16 @@ using System.Text;
 
 namespace Sys
 {
-    public class Identifier : IComparable,IComparable<string>
+    public sealed class ident : IComparable,IComparable<string>
     {
         private string id;
 
-        public Identifier(string id)
+        public ident(string id)
         {
             this.id = id;
 
             if (!Validate())
-                throw new JException("Invalid Identifier: {0}", id);
+                throw new JException("Invalid ident: {0}", id);
         }
 
         private bool Validate()
@@ -42,9 +42,9 @@ namespace Sys
         }
 
 
-        public static implicit operator Identifier(string ident)
+        public static implicit operator ident(string ident)
         {
-            return new Identifier(ident); 
+            return new ident(ident); 
         }
 
         public int CompareTo(object obj)

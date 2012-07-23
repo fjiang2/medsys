@@ -112,7 +112,7 @@ namespace Sys.Data
        // ----------------------------------------------
 
 
-        public static implicit operator SqlExpr(Identifier ident)
+        public static implicit operator SqlExpr(ident ident)
         {
             return new SqlExpr().Append(ident);    // s= ident
         }

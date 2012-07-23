@@ -62,14 +62,14 @@ namespace Sys.Data
 
         public static string[] GetDatabaseNames()
         {
-             return "SELECT name FROM sys.databases ORDER BY Name".FillDataTable().GetArray<string>("name");
+             return "SELECT name FROM sys.databases ORDER BY Name".FillDataTable().ToArray<string>("name");
         }
 
 
         public static string[] GetTableNames(string databaseName)
         {
             DataTable dt = SqlCmd.FillDataTable("USE {0} ; SELECT Name FROM sys.Tables ORDER BY Name", databaseName);
-            return dt.GetArray<string>("name");
+            return dt.ToArray<string>("name");
         }
     }
 }
