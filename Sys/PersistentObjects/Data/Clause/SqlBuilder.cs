@@ -16,11 +16,6 @@ namespace Sys.Data
         { 
         }
 
-        public SqlBuilder(string script)
-        {
-            this.script.Append(script);
-        }
-
         //public static implicit operator SqlBuilder(string sql)
         //{
         //    return new SqlBuilder(sql);

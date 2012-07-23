@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Sys.Data
 {
-    public class SqlExpr
+    public sealed class SqlExpr
     {
         private StringBuilder script = new StringBuilder();
 
@@ -19,14 +19,14 @@ namespace Sys.Data
             script.Append(obj);
         }
 
-       
-        public SqlExpr AppendValue(object value)
+
+        private SqlExpr AppendValue(object value)
         {
             script.Append(new SqlValue(value).Text);
             return this;
         }
 
-        public SqlExpr Append(object x)
+        private SqlExpr Append(object x)
         {
             script.Append(x);
             return this;
@@ -102,7 +102,7 @@ namespace Sys.Data
 
         public static explicit operator DBNull(SqlExpr x)
         {
-            if ((object)x == null)
+            if (script.ToString() == "NULL")
                 return System.DBNull.Value;
             else
                 throw new SysException("cannot cast value {0} to System.DBNull", x);
@@ -209,7 +209,7 @@ namespace Sys.Data
         }
         
         
-        public SqlExpr this[object obj]
+        public SqlExpr this[SqlExpr obj]
         {
             get
             {
@@ -230,7 +230,7 @@ namespace Sys.Data
             return this;
         }
 
-        public SqlExpr IN(SqlExpr exp, params object[] expr)
+        public SqlExpr IN(SqlExpr exp, params SqlExpr[] expr)
         {
             script
                 .Append(exp)
@@ -240,7 +240,7 @@ namespace Sys.Data
 
             script
                 .Append("(")
-                .Append(string.Join(",", expr))
+                .Append(string.Join<SqlExpr>(",", expr))
                 .Append(")");
 
             return this;
@@ -248,7 +248,7 @@ namespace Sys.Data
 
 
 
-        public SqlExpr BETWEEN(SqlExpr exp, object exp1, object exp2)
+        public SqlExpr BETWEEN(SqlExpr exp, SqlExpr exp1, SqlExpr exp2)
         {
             script
                 .Append(exp)
@@ -320,15 +320,7 @@ namespace Sys.Data
             return OPR(s1, "<>", s2);
         }
 
-        public override bool Equals(object obj)
-        {
-            return base.Equals(obj);
-        }
-
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
+        
 
         public static SqlExpr operator >(SqlExpr s1, SqlExpr s2)
         {
@@ -371,7 +363,7 @@ namespace Sys.Data
 
         #region SQL Function
 
-        private static SqlExpr Func(string func, object x)
+        private static SqlExpr Func(string func, SqlExpr x)
         {
             SqlExpr exp = new SqlExpr(func)
                 .Append("(")
@@ -381,38 +373,48 @@ namespace Sys.Data
         }
 
 
-        public static SqlExpr SUM(object x)
+        public static SqlExpr SUM(SqlExpr x)
         {
             return Func("SUM", x);
         }
 
-        public static SqlExpr MAX(object x)
+        public static SqlExpr MAX(SqlExpr x)
         {
             return Func("MAX", x);
         }
 
-        public static SqlExpr MIN(object x)
+        public static SqlExpr MIN(SqlExpr x)
         {
             return Func("MIN", x);
         }
 
-        public static SqlExpr COUNT(object x)
+        public static SqlExpr COUNT(SqlExpr x)
         {
             return Func("COUNT", x);
         }
 
-        public static SqlExpr ISNULL(object x)
+        public static SqlExpr ISNULL(SqlExpr x)
         {
             return Func("ISNULL", x);
         }
 
-        public static SqlExpr GETDATE(object x)
+        public static SqlExpr GETDATE(SqlExpr x)
         {
             return new SqlExpr("GETDATE()");
         }
 
         #endregion
 
+
+        public override bool Equals(object obj)
+        {
+            return script.Equals(((SqlExpr)obj).script);
+        }
+
+        public override int GetHashCode()
+        {
+            return script.GetHashCode();
+        }
 
         public override string ToString()
         {
