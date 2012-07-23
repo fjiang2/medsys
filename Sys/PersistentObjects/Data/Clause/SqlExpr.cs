@@ -301,7 +301,7 @@ namespace Sys.Data
 
         public static SqlExpr operator ==(SqlExpr s1, SqlExpr s2)
         {
-            if (s2.ToString() == "NULL")
+            if ((object)s2 == null || s2.ToString() == "NULL")
             {
                 return new SqlExpr(s1).Append(" IS NULL");
             }
@@ -312,7 +312,7 @@ namespace Sys.Data
 
         public static SqlExpr operator !=(SqlExpr s1, SqlExpr s2)
         {
-            if (s2.ToString() == "NULL")
+            if ((object)s2 == null || s2.ToString() == "NULL")
             {
                 return new SqlExpr(s1).Append(" IS NOT NULL");
             }
