@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Sys
 {
-    public sealed class ident : IComparable,IComparable<string>
+    public sealed class ident : IComparable, IComparable<string>, IEquatable<ident>
     {
         private string id;
 
@@ -34,6 +34,21 @@ namespace Sys
             } 
 
             return true;
+        }
+
+        public override int GetHashCode()
+        {
+            return id.GetHashCode();
+        }
+
+        public override bool Equals(object obj)
+        {
+            return id.Equals(((ident)obj).id);
+        }
+
+        public bool Equals(ident obj)
+        {
+            return id.Equals(obj.id);
         }
 
         public override string ToString()
