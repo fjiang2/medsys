@@ -136,7 +136,7 @@ namespace Sys.ViewManager.Security
         public List<ITreeDpoNode> GetNodes(int parentID)
         {
             //@"SELECT ID, ParentID, Label FROM {0} WHERE Ty=0 AND Controlled=1 ORDER BY orderBy";
-            SqlBuilder sql = new SqlBuilder()
+            SqlClause sql = new SqlClause()
                 .SELECT
                 .COLUMNS()
                 .FROM(this)

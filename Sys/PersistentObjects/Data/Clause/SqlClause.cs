@@ -6,30 +6,30 @@ using System.Text;
 namespace Sys.Data
 {
     /// <summary>
-    /// SQL statement builder
+    /// SQL clauses builder
     /// </summary>
-    public class SqlBuilder : ISqlScript
+    public class SqlClause : ISqlScript
     {
         private StringBuilder script = new StringBuilder();
 
-        public SqlBuilder()
+        public SqlClause()
         { 
         }
 
-        //public static implicit operator SqlBuilder(string sql)
+        //public static implicit operator SqlClause(string sql)
         //{
-        //    return new SqlBuilder(sql);
+        //    return new SqlClause(sql);
         //}
 
-        //public static explicit operator string(SqlBuilder sql)
-        //{
-        //    return sql.Script;
-        //}
+        public static explicit operator string(SqlClause sql)
+        {
+            return sql.Script;
+        }
 
 
         #region SELECT clause
 
-        public SqlBuilder SELECT
+        public SqlClause SELECT
         {
             get
             {
@@ -38,7 +38,7 @@ namespace Sys.Data
             }
         }
 
-        public SqlBuilder DISTINCT
+        public SqlClause DISTINCT
         {
             get
             {
@@ -47,7 +47,7 @@ namespace Sys.Data
             }
         }
 
-        public SqlBuilder ALL
+        public SqlClause ALL
         {
             get
             {
@@ -57,14 +57,14 @@ namespace Sys.Data
         }
 
 
-        public SqlBuilder TOP(int n)
+        public SqlClause TOP(int n)
         {
             script.Append(" TOP ").Append(n);
             return this;
         }
 
 
-        public SqlBuilder COLUMNS(params string[] columns)
+        public SqlClause COLUMNS(params string[] columns)
         {
             if (columns.Length == 0)
                 script.Append(" * ");
@@ -75,7 +75,7 @@ namespace Sys.Data
         }
 
 
-        public SqlBuilder INTO(string tableName)
+        public SqlClause INTO(string tableName)
         {
             script
                 .Append(" INTO ")
@@ -84,7 +84,7 @@ namespace Sys.Data
             return this;
         }
 
-        public SqlBuilder INTO(TableName tableName)
+        public SqlClause INTO(TableName tableName)
         {
             script
                 .Append(" INTO ")
@@ -98,22 +98,22 @@ namespace Sys.Data
 
         #region FROM clause
 
-        public SqlBuilder FROM(string from)
+        public SqlClause FROM(string from)
         {
             return FROM(from, null);
         }
 
-        public SqlBuilder FROM(DPObject dpo)
+        public SqlClause FROM(DPObject dpo)
         {
             return FROM(dpo.TableName);
         }
 
-        public SqlBuilder FROM(TableName tableName)
+        public SqlClause FROM(TableName tableName)
         {
             return FROM(tableName.FullName, null);
         }
 
-        public SqlBuilder FROM(string from, string alias)
+        public SqlClause FROM(string from, string alias)
         {
             script.Append(" FROM ").Append(from);
             if (alias != null)
@@ -125,7 +125,7 @@ namespace Sys.Data
         #endregion
 
 
-        public SqlBuilder UPDATE(string tableName)
+        public SqlClause UPDATE(string tableName)
         {
            script.Append("UPDATE ").Append(tableName);
 
@@ -133,14 +133,14 @@ namespace Sys.Data
         }
 
 
-        public SqlBuilder SET(params string[] assignments)
+        public SqlClause SET(params string[] assignments)
         {
             script.Append("SET ").Append(string.Join(",",assignments));
 
             return this.CRLF;
         }
 
-        public SqlBuilder SET(string[] columns, string[] values)
+        public SqlClause SET(string[] columns, string[] values)
         {
             string[] namesAndValues = new string[columns.Length];
             for (int i = 0; i < columns.Length; i++)
@@ -154,7 +154,7 @@ namespace Sys.Data
             return this.CRLF;
         }
 
-        public SqlBuilder SET(ColumnValue[] assignments)
+        public SqlClause SET(ColumnValue[] assignments)
         {
             script.Append(string.Join<ColumnValue>(", ", assignments));
 
@@ -163,7 +163,7 @@ namespace Sys.Data
 
 
    
-        public SqlBuilder INSERT(string tableName, params string[] columns)
+        public SqlClause INSERT(string tableName, params string[] columns)
         {
             script
                 .Append("INSERT INTO")
@@ -176,7 +176,7 @@ namespace Sys.Data
         }
 
 
-        public SqlBuilder VALUES(params object[] values)
+        public SqlClause VALUES(params object[] values)
         {
             script
                 .Append("VALUES ")
@@ -185,7 +185,7 @@ namespace Sys.Data
             return this.CRLF;
         }
 
-        public SqlBuilder DELETE(string tableName)
+        public SqlClause DELETE(string tableName)
         {
             script.Append("DELETE FROM ").Append(tableName);
 
@@ -196,7 +196,7 @@ namespace Sys.Data
 
         #region WHERE clause
 
-        public SqlBuilder WHERE(SqlExpr exp)
+        public SqlClause WHERE(SqlExpr exp)
         {
             script.Append(" WHERE ").Append(exp);
             return this.CRLF;
@@ -207,7 +207,7 @@ namespace Sys.Data
 
         #region INNER/OUT JOIN clause
 
-        public SqlBuilder LEFT
+        public SqlClause LEFT
         {
             get
             {
@@ -216,7 +216,7 @@ namespace Sys.Data
             }
         }
 
-        public SqlBuilder RIGHT
+        public SqlClause RIGHT
         {
             get
             {
@@ -225,7 +225,7 @@ namespace Sys.Data
             }
         }
 
-        public SqlBuilder INNER
+        public SqlClause INNER
         {
             get
             {
@@ -234,7 +234,7 @@ namespace Sys.Data
             }
         }
 
-        public SqlBuilder OUTTER
+        public SqlClause OUTTER
         {
             get
             {
@@ -243,27 +243,27 @@ namespace Sys.Data
             }
         }
 
-        public SqlBuilder JOIN(string tableName)
+        public SqlClause JOIN(string tableName)
         {
             return JOIN(tableName, null);
         }
 
-        public SqlBuilder JOIN(DPObject dpo)
+        public SqlClause JOIN(DPObject dpo)
         {
             return JOIN(dpo.TableName, null);
         }
 
-        public SqlBuilder JOIN(DPObject dpo, string alias)
+        public SqlClause JOIN(DPObject dpo, string alias)
         {
             return JOIN(dpo.TableName, alias);
         }
 
-        private SqlBuilder JOIN(TableName tableName, string alias)
+        private SqlClause JOIN(TableName tableName, string alias)
         {
             return JOIN(tableName.FullName, alias);
         }
         
-        private SqlBuilder JOIN(string tableName, string alias)
+        private SqlClause JOIN(string tableName, string alias)
         {
             script
                 .Append(" JOIN ")
@@ -275,7 +275,7 @@ namespace Sys.Data
             return this;
         }
 
-        public SqlBuilder ON(SqlExpr exp)
+        public SqlClause ON(SqlExpr exp)
         {
             script.Append(" ON ").Append(exp);
             return this;
@@ -286,13 +286,13 @@ namespace Sys.Data
 
 
         #region GROUP BY / HAVING clause
-        public SqlBuilder GROUP_BY(params string[] columns)
+        public SqlClause GROUP_BY(params string[] columns)
         {
             script.Append(" GROUP BY ").Append(ConcatColumns(columns));
             return this;
         }
 
-        public SqlBuilder HAVING(params string[] columns)
+        public SqlClause HAVING(params string[] columns)
         {
             script.Append(" HAVING ").Append(ConcatColumns(columns));
             return this;
@@ -302,14 +302,14 @@ namespace Sys.Data
 
 
 
-        public SqlBuilder ORDER_BY(params string[] columns)
+        public SqlClause ORDER_BY(params string[] columns)
         {
             script.Append(" ORDER BY ").Append(ConcatColumns(columns));
             return this;
         }
 
 
-        public SqlBuilder UNION
+        public SqlClause UNION
         {
             get
             {
@@ -319,7 +319,7 @@ namespace Sys.Data
         }
 
 
-        public SqlBuilder DESC
+        public SqlClause DESC
         {
             get
             {
@@ -332,7 +332,7 @@ namespace Sys.Data
 
 
         private int tab = 0;
-        public SqlBuilder TAB(int n)
+        private SqlClause TAB(int n)
         {
             tab += n;
             for (int i = 0; i < tab; i++)
@@ -342,7 +342,7 @@ namespace Sys.Data
         }
 
 
-        public SqlBuilder CRLF
+        private SqlClause CRLF
         {
             get
             {
@@ -351,7 +351,7 @@ namespace Sys.Data
             }
         }
 
-        public SqlBuilder PAR(string exp)
+        private SqlClause PAR(string exp)
         {
             script.Append("(").Append(exp).Append(")");
             return this;
@@ -399,7 +399,7 @@ namespace Sys.Data
         #endregion
 
 
-        public SqlBuilder Append(object any)
+        public SqlClause Append(object any)
         {
             script.Append(any);
             return this;
