@@ -7,19 +7,19 @@ namespace Sys.Data
 {
     public class MappedColumn
     {
-        public readonly string ColumnName;
-        public readonly string MappedColumnName;
+        public readonly string RelationName;
+        public readonly string Name;
 
         public MappedColumn(string columnName, string mappedColumnName)
         {
-            this.ColumnName = columnName;
-            this.MappedColumnName = mappedColumnName;
+            this.RelationName = columnName;
+            this.Name = mappedColumnName;
         }
 
         public MappedColumn(string columnName)
         {
-            this.ColumnName = columnName;
-            this.MappedColumnName = columnName;
+            this.RelationName = columnName;
+            this.Name = columnName;
         }
     }
 }

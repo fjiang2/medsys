@@ -8,7 +8,7 @@ namespace Sys.Data
     /// <summary>
     /// SQL clauses builder
     /// </summary>
-    public class SqlClause : ISqlScript
+    public class SqlClause : ISqlClause
     {
         private StringBuilder script = new StringBuilder();
 
@@ -23,7 +23,7 @@ namespace Sys.Data
 
         public static explicit operator string(SqlClause sql)
         {
-            return sql.Script;
+            return sql.Clause;
         }
 
 
@@ -112,6 +112,12 @@ namespace Sys.Data
         {
             return FROM(dpoType.TableName());
         }
+
+        public SqlClause FROM<T>()
+        {
+            return FROM(typeof(T).TableName());
+        }
+
 
         public SqlClause FROM(TableName tableName)
         {
@@ -395,14 +401,43 @@ namespace Sys.Data
      
         #endregion
 
-
-        public SqlClause Append(object any)
+        /// <summary>
+        /// concatenate 2 clauses in TWO lines
+        /// </summary>
+        /// <param name="clause1"></param>
+        /// <param name="clause2"></param>
+        /// <returns></returns>
+        public static SqlClause operator +(SqlClause clause1, SqlClause clause2)
         {
-            script.Append(any);
-            return this;
+            var clause = new SqlClause();
+                
+            clause.script
+                .Append(clause1)
+                .AppendLine()
+                .Append(clause2);
+            return clause;
         }
 
-        public string Script
+        /// <summary>
+        /// concatenate 2 clauses in one line
+        /// </summary>
+        /// <param name="clause1"></param>
+        /// <param name="clause2"></param>
+        /// <returns></returns>
+        public static SqlClause operator -(SqlClause clause1, SqlClause clause2)
+        {
+            var clause = new SqlClause();
+
+            clause.script
+                .Append(clause1)
+                .Append(" ")
+                .Append(clause2);
+            return clause;
+        }
+
+      
+
+        public string Clause
         {
             get { return script.ToString(); }
         }
