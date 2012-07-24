@@ -21,7 +21,7 @@ namespace Sys.Data
             this.table = SqlCmd.FillDataTable(sql);
         }
 
-        public TableReader(SqlBuilder sql)
+        public TableReader(SqlClause sql)
             :this(sql.Script)
         {
         }

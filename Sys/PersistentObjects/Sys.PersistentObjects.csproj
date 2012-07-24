@@ -112,7 +112,7 @@
     <Compile Include="Data\Attribute\RevisionAttribute.cs" />
     <Compile Include="Data\Attribute\TableAttribute.cs" />
     <Compile Include="Data\Clause\SqlExpr.cs" />
-    <Compile Include="Data\Clause\SqlBuilder.cs" />
+    <Compile Include="Data\Clause\SqlClause.cs" />
     <Compile Include="Data\Clause\SqlValue.cs" />
     <Compile Include="Data\Persistence\ColumnValue.cs" />
     <Compile Include="Data\Persistence\DataExtension.cs" />

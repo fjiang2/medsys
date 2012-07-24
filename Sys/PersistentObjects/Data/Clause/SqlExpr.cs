@@ -110,8 +110,6 @@ namespace Sys.Data
 
 #endif
        // ----------------------------------------------
-
-
         public static implicit operator SqlExpr(ident ident)
         {
             return new SqlExpr().Append(ident);    // s= ident
@@ -179,8 +177,6 @@ namespace Sys.Data
             return new SqlExpr(value);
         }
 
-
-
         public static implicit operator SqlExpr(DateTime value)
         {
             return new SqlExpr().AppendValue(value);    //dt = '10/20/2012'
@@ -202,7 +198,7 @@ namespace Sys.Data
             return expr.ToString();
         }
 
-        public SqlExpr AS(string alias)
+        public SqlExpr AS(SqlExpr alias)
         {
             script.Append(" AS ").Append(alias);
             return this;
@@ -219,24 +215,27 @@ namespace Sys.Data
         }
 
 
-        public SqlExpr IN(SqlExpr exp, SqlBuilder select)
+        public SqlExpr IN(SqlClause select)
         {
             script
-                    .Append(exp)
                     .Append(" IN (")
                     .Append(select.Script)
                     .Append(" )");
 
             return this;
         }
+        
+        public SqlExpr IN(IEnumerable<SqlExpr> expr)
+        {
+            return IN(expr.ToArray());
+        }
 
         public SqlExpr IN(SqlExpr exp, params SqlExpr[] expr)
         {
             script
-                .Append(exp)
                 .Append(" IN ");
             if (expr.Length == 0)
-                return this;
+                throw new NotSupportedException();
 
             script
                 .Append("(")
@@ -248,10 +247,9 @@ namespace Sys.Data
 
 
 
-        public SqlExpr BETWEEN(SqlExpr exp, SqlExpr exp1, SqlExpr exp2)
+        public SqlExpr BETWEEN(SqlExpr exp1, SqlExpr exp2)
         {
             script
-                .Append(exp)
                 .Append(" BETWEEN ")
                 .Append(exp1)
                 .Append(" AND ")
