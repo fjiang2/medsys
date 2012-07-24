@@ -11,7 +11,7 @@ namespace Sys.SmartList
     {
 
         public RepxItemList(Configuration configuration)
-            :base(new TableReader<RepxItem>(new ColumnValue(RepxItem._Command_ID, configuration.ID)))
+            :base(new TableReader<RepxItem>(RepxItem._Command_ID.ColumName() == configuration.ID))
         {
         }
 
