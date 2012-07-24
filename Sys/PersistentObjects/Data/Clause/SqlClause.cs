@@ -69,7 +69,7 @@ namespace Sys.Data
             if (columns.Length == 0)
                 script.Append(" * ");
             else
-                script.Append(ConcatColumns(columns));
+                script.Append(" ").Append(ConcatColumns(columns));
 
             return this;
         }
@@ -106,6 +106,11 @@ namespace Sys.Data
         public SqlClause FROM(DPObject dpo)
         {
             return FROM(dpo.TableName);
+        }
+
+        public SqlClause FROM(Type dpoType)
+        {
+            return FROM(dpoType.TableName());
         }
 
         public SqlClause FROM(TableName tableName)

@@ -188,6 +188,11 @@ namespace Sys.Data
             return new SqlExpr().AppendValue(value);    // NULL
         }
 
+        public static implicit operator SqlExpr(Enum value)
+        {
+            return new SqlExpr(Convert.ToInt32(value));    // NULL
+        }
+
 
         /// <summary>
         /// string s = (string)expr;

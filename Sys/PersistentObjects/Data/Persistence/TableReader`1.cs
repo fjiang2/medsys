@@ -24,14 +24,6 @@ namespace Sys.Data
             this.reader = new TableReader(new SqlClause().SELECT.COLUMNS().FROM(TableName).WHERE(where));
         }
 
-        public TableReader(string where, params object[] args)
-        {
-            this.reader = new TableReader(TableName, where, args);
-        }
-
-
-       
-
         private TableName TableName
         {
             get

@@ -21,10 +21,20 @@ namespace Sys.ViewManager.Security
         
         public FormConsumer(string formID)
         {
-            DataTable dataTable = new TableReader<FormPermission>(@"Ty =1 AND Role_ID IN (SELECT Role_ID FROM {0} WHERE User_ID = {1}) AND Key_Name='{2}'",
-                UserRoleDpo.TABLE_NAME,
-                Account.CurrentUser.UserID, 
-                formID).Table;
+            //@"Ty =1 AND Role_ID IN (SELECT Role_ID FROM {0} WHERE User_ID = {1}) AND Key_Name='{2}'",
+            //  UserRoleDpo.TABLE_NAME,
+            //  Account.CurrentUser.UserID, 
+            // formID;
+            DataTable dataTable = new TableReader<FormPermission>(
+                    FormPermission._Ty.ColumName() == 1
+                    & FormPermission._Role_ID.ColumName().IN(
+                        new SqlClause()
+                            .SELECT.COLUMNS(UserRoleDpo._Role_ID)
+                            .FROM(typeof(UserRoleDpo))
+                            .WHERE(UserRoleDpo._User_ID.ColumName() ==Account.CurrentUser.UserID)
+                            )
+                    & FormPermission._Key_Name.ColumName() == formID)
+                    .Table;
 
             if (dataTable == null || dataTable.Rows.Count == 0)
                 return;
