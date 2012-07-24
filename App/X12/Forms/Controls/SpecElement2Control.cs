@@ -42,7 +42,7 @@ namespace X12.Forms
             set
             {
                 bind.Dpo = value;
-                DataTable table = new TableReader<X12CodeDefinitionDpo>(new ColumnValue(X12CodeDefinitionDpo._ElementInstance_ID, value.ID)).Table;
+                DataTable table = new TableReader<X12CodeDefinitionDpo>(X12CodeDefinitionDpo._ElementInstance_ID.ColumName() == value.ID).Table;
                 gridControl1.DataSource = table;
                 bind.Reset();
             }

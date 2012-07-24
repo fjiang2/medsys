@@ -114,7 +114,6 @@
     <Compile Include="Data\Clause\SqlExpr.cs" />
     <Compile Include="Data\Clause\SqlClause.cs" />
     <Compile Include="Data\Clause\SqlValue.cs" />
-    <Compile Include="Data\Persistence\ColumnValue.cs" />
     <Compile Include="Data\Persistence\DataExtension.cs" />
     <Compile Include="Data\Persistence\Level0\ISqlScript.cs" />
     <Compile Include="Data\Persistence\Level0\SqlCmd.cs" />

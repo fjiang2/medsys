@@ -30,10 +30,7 @@ namespace Sys.Data
         }
 
 
-        public TableReader(ColumnValue ands)
-        {
-            this.reader = new TableReader(TableName, ands.ToString());
-        }
+       
 
         private TableName TableName
         {

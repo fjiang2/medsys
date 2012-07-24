@@ -31,7 +31,7 @@ namespace Sys.Modules
 
         private Library()
         {
-            this.list = new TableReader<RegisteredAssembly>(new ColumnValue(AssemblyDpo._Inactive, 0)).ToList();
+            this.list = new TableReader<RegisteredAssembly>(AssemblyDpo._Inactive.ColumName() == 0).ToList();
         }
 
 

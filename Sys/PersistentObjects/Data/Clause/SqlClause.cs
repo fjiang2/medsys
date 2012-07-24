@@ -154,15 +154,7 @@ namespace Sys.Data
             return this.CRLF;
         }
 
-        public SqlClause SET(ColumnValue[] assignments)
-        {
-            script.Append(string.Join<ColumnValue>(", ", assignments));
-
-            return this.CRLF;
-        }
-
-
-   
+     
         public SqlClause INSERT(string tableName, params string[] columns)
         {
             script
