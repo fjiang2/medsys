@@ -225,7 +225,7 @@ namespace Sys.Data
         {
             script
                     .Append(" IN (")
-                    .Append(select.Script)
+                    .Append(select.Clause)
                     .Append(")");
 
             return this;

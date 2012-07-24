@@ -60,45 +60,45 @@ namespace Sys.Data
             return cmd.ReadDataTable();
         }
 
-        public static object ExecuteScalar(this ISqlScript sql)
+        public static object ExecuteScalar(this ISqlClause sql)
         {
-            SqlCmd cmd = new SqlCmd(sql.Script);
+            SqlCmd cmd = new SqlCmd(sql.Clause);
             return cmd.ExecuteScalar();
         }
 
-        public static int ExecuteNonQuery(this ISqlScript sql)
+        public static int ExecuteNonQuery(this ISqlClause sql)
         {
-            SqlCmd cmd = new SqlCmd(sql.Script);
+            SqlCmd cmd = new SqlCmd(sql.Clause);
             return cmd.ExecuteNonQuery();
         }
 
-        public static DataSet FillDataSet(this ISqlScript sql)
+        public static DataSet FillDataSet(this ISqlClause sql)
         {
-            SqlCmd cmd = new SqlCmd(sql.Script);
+            SqlCmd cmd = new SqlCmd(sql.Clause);
             return cmd.FillDataSet();
         }
 
-        public static DataTable FillDataTable(this ISqlScript sql)
+        public static DataTable FillDataTable(this ISqlClause sql)
         {
-            SqlCmd cmd = new SqlCmd(sql.Script);
+            SqlCmd cmd = new SqlCmd(sql.Clause);
             return cmd.FillDataTable();
         }
 
-        public static DataTable FillDataTable(this ISqlScript sql, DataSet ds, string tableName)
+        public static DataTable FillDataTable(this ISqlClause sql, DataSet ds, string tableName)
         {
-            SqlCmd cmd = new SqlCmd(sql.Script);
+            SqlCmd cmd = new SqlCmd(sql.Clause);
             return cmd.FillDataTable(ds, tableName);
         }
 
-        public static DataTable FillDataTable(this ISqlScript sql, DataTable dataTable)
+        public static DataTable FillDataTable(this ISqlClause sql, DataTable dataTable)
         {
-            SqlCmd cmd = new SqlCmd(sql.Script);
+            SqlCmd cmd = new SqlCmd(sql.Clause);
             return cmd.FillDataTable(dataTable);
         }
 
-        public static DataRow FillDataRow(this ISqlScript sql)
+        public static DataRow FillDataRow(this ISqlClause sql)
         {
-            SqlCmd cmd = new SqlCmd(sql.Script);
+            SqlCmd cmd = new SqlCmd(sql.Clause);
             return cmd.FillDataRow();
         }
 

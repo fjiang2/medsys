@@ -5,8 +5,8 @@ using System.Text;
 
 namespace Sys.Data
 {
-    public interface ISqlScript
+    public interface ISqlClause
     {
-        string Script { get; }
+        string Clause { get; }
     }
 }

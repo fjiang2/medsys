@@ -29,8 +29,8 @@ namespace Sys.Data
 
         }
 
-        public SqlCmd(ISqlScript sql)
-            : this(sql.Script)
+        public SqlCmd(ISqlClause sql)
+            : this(sql.Clause)
         { 
         
         }

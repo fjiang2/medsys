@@ -22,7 +22,7 @@ namespace Sys.Data
         }
 
         public TableReader(SqlClause sql)
-            :this(sql.Script)
+            :this(sql.Clause)
         {
         }
 

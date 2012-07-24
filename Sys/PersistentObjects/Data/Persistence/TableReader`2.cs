@@ -20,25 +20,28 @@ namespace Sys.Data.Persistence.Level4
 
         DataSet dataset;
 
-        public TableReader(MappedColumn column1, MappedColumn column2, object value)
+        public TableReader(MappedColumn column1, MappedColumn column2, int value)
         {
-            string tableName1 =  typeof(T1).TableName().ToString();
-            string tableName2 =  typeof(T2).TableName().ToString();
 
-            string sql = @"
-SELECT * FROM @T1 WHERE {1} = {4}
-SELECT * FROM @T2 WHERE {2} IN (SELECT {3} FROM @T1 WHERE {1} = {4})
-";
-            sql = sql
-                .Replace("@T1", tableName1)
-                .Replace("@T2", tableName2);
+            SqlClause relationships = new SqlClause()
+                .SELECT.COLUMNS().FROM<T1>().WHERE(column1.RelationName.ColumName() == value);
 
-            sql = string.Format(sql, column1.ColumnName, column1.MappedColumnName, column2.ColumnName, column2.MappedColumnName, new SqlValue(value));
+            SqlClause many = new SqlClause()
+                .SELECT.COLUMNS()
+                .FROM<T2>()
+                .WHERE(column2.Name.ColumName()
+                    .IN(
+                         new SqlClause()
+                            .SELECT
+                            .COLUMNS(column2.RelationName)
+                            .FROM<T1>()
+                            .WHERE(column1.RelationName.ColumName() == value)
+                        )
+                    );
 
-            this.dataset = SqlCmd.FillDataSet(sql);
+
+            this.dataset = (relationships + many).FillDataSet();
             
-            this.dataset.Tables[0].TableName = tableName1;
-            this.dataset.Tables[1].TableName = tableName2;
         }
 
         public DataTable ManyTable
