@@ -211,7 +211,11 @@ namespace Sys.ViewManager.Security
 
         public static void Load(int roleID, SecurityType ty, List<EntityNode> list)
         {
-            DataTable dataTable = new TableReader<FormPermission>("Role_ID={0} AND Ty={1}", roleID, (int)ty).Table;
+            //"Role_ID={0} AND Ty={1}"
+            DataTable dataTable = new TableReader<FormPermission>(
+                FormPermission._Role_ID.ColumName() == roleID 
+                & FormPermission._Ty.ColumName() == ty).Table;
+            
             foreach (EntityNode entity in list)
             {
                 entity.Clear();
@@ -262,7 +266,12 @@ namespace Sys.ViewManager.Security
             FormPermission permission = new FormPermission();
 
             int ty = (int)SecurityType.WinForm;
-            DataTable dataTable = new TableReader<FormPermission>("Role_ID={0} AND Ty={1}", from, ty).Table;
+            //Role_ID={0} AND Ty={1}
+            DataTable dataTable = new TableReader<FormPermission>(
+                FormPermission._Role_ID.ColumName() == from
+                & FormPermission._Ty.ColumName() == ty)
+                .Table;
+
             permission.TableName.SqlDelete("Role_ID={0} AND Ty={1}", to, ty);
             foreach (DataRow dr in dataTable.Rows)
             {

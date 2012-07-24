@@ -117,14 +117,22 @@ namespace Sys.ViewManager.Security
         public static void Load(ItemNode entity, SecurityType ty, int roleID)
         {
             ItemPermission permission = new ItemPermission();
-            DataTable dataTable = new TableReader<ItemPermission>("{0}={1} AND {2}={3}", ItemPermission._Role_ID, roleID, ItemPermission._Ty, (int)ty).Table;
+            
+            //"{0}={1} AND {2}={3}", ItemPermission._Role_ID, roleID, ItemPermission._Ty, (int)ty
+            DataTable dataTable = new TableReader<ItemPermission>(
+                ItemPermission._Role_ID.ColumName() == roleID
+                & ItemPermission._Ty.ColumName() == ty)
+                .Table;
+            
             entity.Load(dataTable);
         }
 
         public static void CloneIRole(int from, int to)
         {
             ItemPermission permission = new ItemPermission();
-            DataTable dataTable = new TableReader<ItemPermission>("{0}={1}", ItemPermission._Role_ID, from).Table;
+            //"{0}={1}", ItemPermission._Role_ID, from
+            DataTable dataTable = new TableReader<ItemPermission>(ItemPermission._Role_ID.ColumName() == from).Table;
+            
             permission.TableName.SqlDelete("{0}={1}", ItemPermission._Role_ID, to);
 
             foreach (DataRow dr in dataTable.Rows)
