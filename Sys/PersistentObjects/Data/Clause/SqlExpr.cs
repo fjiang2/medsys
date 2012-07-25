@@ -31,17 +31,20 @@ namespace Sys.Data
         internal static SqlExpr AddColumn(string name)
         {
             SqlExpr exp = new SqlExpr().Next("[" + name + "]");
-            exp.Columns.Add(name);
             return exp;
         }
 
-        internal static SqlExpr AddParameter(string name)
+        internal static SqlExpr AddParameter(string columnName, string parameterName)
         {
-            SqlExpr exp = new SqlExpr().Next("@" + name.SqlParameterName());
-            exp.Parameters.Add(name);
+            SqlExpr exp = new SqlExpr()
+                .Next("[" + columnName + "]")
+                .Next("=")
+                .Next("@" + parameterName.SqlParameterName());
+
+            exp.Add(parameterName, columnName);
+            
             return exp;
         }
-
 
 #if USE
         public static explicit operator string(SqlExpr x)
