@@ -63,7 +63,7 @@ namespace Sys.Data.Manager
                     line = string.Format("{0}{1}\r\n", tab, column.ForeignKey.GetAttribute(type)) + line;
                 }
                 else
-                    throw new JException("Generate Dpo class for {0} before generate {1}", column.ForeignKey.TableName, dpoClass.MetaTable.TableName);
+                    throw new JException("cannot generate Dpo class for Table {0} before generate {1}",  dpoClass.MetaTable.TableName, column.ForeignKey.TableName);
             }
 
             return line;

@@ -10,19 +10,22 @@ using PTA.DpoClass;
 
 namespace PTA
 {
+    [ConstraintForeignKey(AdultDpo._Adult_ID, typeof(PersonDpo), PersonDpo._Person_ID)]
+    [ConstraintForeignKey(AdultDpo._Address_ID, typeof(AddressDpo), AddressDpo._Address_ID)]
+    [ConstraintForeignKey(AdultDpo._Home_Phone_ID, typeof(PhoneDpo), PhoneDpo._Phone_ID)]
     public class AdultDpo : ptaAdultDpo
     {
 
 
-        [Map(AdultDpo._Adult_ID, PersonDpo._Person_ID)]
+        [Map(_Adult_ID, PersonDpo._Person_ID)]
         [Association("Person_ID=@Adult_ID"), ]
         public PersonDpo Person = new PersonDpo();
 
-        [Map(AdultDpo._Address_ID, AddressDpo._Address_ID)]
+        [Map(_Address_ID, AddressDpo._Address_ID)]
         [Association("Address_ID=@Address_ID")]
         public AddressDpo Address = new AddressDpo();
 
-        [Map(AdultDpo._Home_Phone_ID,  PhoneDpo._Phone_ID), ]
+        [Map(_Home_Phone_ID,  PhoneDpo._Phone_ID), ]
         [Association("Phone_ID=@Home_Phone_ID")]
         public PhoneDpo Phone = new PhoneDpo();
 
