@@ -43,6 +43,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\Clause\SqlClauseInfo.cs" />
     <Compile Include="Data\Persistence\TableReader`1.cs" />
     <Compile Include="Data\Persistence\Level4\MappedColumn.cs" />
     <Compile Include="Data\Persistence\Level4\IMapping.cs" />

@@ -495,7 +495,7 @@ namespace Sys.Data
         /// <returns></returns>
         public static SqlExpr ColumName(this string name)
         {
-            return (SqlExpr)(new ident("[" + name + "]"));
+            return SqlExpr.AddColumn(name);
         }
 
         /// <summary>
@@ -505,7 +505,7 @@ namespace Sys.Data
         /// <returns></returns>
         public static SqlExpr Parameter(this string name)
         {
-            return (SqlExpr)(new ident("@" + name.SqlParameterName()));
+            return SqlExpr.AddParameter(name);
         }
 
     }
