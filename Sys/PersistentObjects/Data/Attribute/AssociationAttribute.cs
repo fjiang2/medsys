@@ -11,7 +11,6 @@ namespace Sys.Data
         private Locator locator = null;
         public string OrderBy;
 
-
         public AssociationAttribute(string stringCollectionLocator)
         {
             this.locator = new Locator(stringCollectionLocator);
