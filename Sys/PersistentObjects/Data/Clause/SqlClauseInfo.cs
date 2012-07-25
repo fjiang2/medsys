@@ -7,38 +7,28 @@ namespace Sys.Data
 {
     public abstract class SqlClauseInfo
     {
-        private List<string> columnNames = new List<string>();
-        private List<string> parameters = new List<string>();
+        //<parameter, column>
+        private Dictionary<string, string> parameters = new Dictionary<string,string>();
 
         public SqlClauseInfo()
         { 
         }
 
-        internal List<string> Columns
-        {
-            get { return this.columnNames; }
-        }
-
-        internal List<string> Parameters
+        internal Dictionary<string, string> Parameters
         {
             get { return this.parameters; }
         }
 
-        private static List<string> Merge(List<string> L1, List<string> L2)
+        protected void Add(string parameterName, string columnName)
         {
-            foreach (string name in L2)
-            {
-                if (!L1.Exists(x => x == name))
-                    L1.Add(name);
-            }
-            
-            return L1;
+            if (!this.parameters.ContainsKey(parameterName))
+                this.parameters.Add(parameterName, columnName);
         }
 
         internal SqlClauseInfo Merge(SqlClauseInfo info)
         {
-            Merge(this.columnNames, info.columnNames);
-            Merge(this.parameters, info.parameters);
+            foreach (KeyValuePair<string, string> kvp in info.parameters)
+                 this.Add(kvp.Key, kvp.Value);
 
             return this;
         }

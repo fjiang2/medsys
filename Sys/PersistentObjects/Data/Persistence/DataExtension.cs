@@ -499,14 +499,25 @@ namespace Sys.Data
         }
 
         /// <summary>
-        /// "name" -> "@name"
+        /// "name" -> "name=@name"
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        public static SqlExpr Parameter(this string name)
+        public static SqlExpr Parameter(this string columnName)
         {
-            return SqlExpr.AddParameter(name);
+            return SqlExpr.AddParameter(columnName, columnName);
         }
 
+        /// <summary>
+        /// Add SQL parameter
+        /// e.g. NodeDpo._ID.Parameter(TaskDpo._ParentID) -> "ID=@ParentID"
+        /// </summary>
+        /// <param name="columnName"></param>
+        /// <param name="parameterName"></param>
+        /// <returns></returns>
+        public static SqlExpr Parameter(this string columnName, string parameterName)
+        {
+            return SqlExpr.AddParameter(columnName, parameterName);
+        }
     }
 }
