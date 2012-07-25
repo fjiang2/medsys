@@ -346,7 +346,7 @@ namespace Sys.Data
 
                 foreach (ForeignKeyAttribute relation in relations)
                 {
-                    relation.value = dataRow[relation.ParentColumnName];
+                    relation.ReferenceValue = dataRow[relation.ReferenceColumnName];
                 }
 
                 Type fieldType = fieldInfo.FieldType;

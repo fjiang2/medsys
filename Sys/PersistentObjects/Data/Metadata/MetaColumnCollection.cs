@@ -24,6 +24,14 @@ namespace Sys.Data
 
         }
 
+        public void UpdateForeign(ForeignKeys foreign)
+        {
+            foreach (ForeignKey key in foreign.Keys)
+            {
+                MetaColumn column = this.Find(col => col.ColumnName == key.FK_Column);
+                column.ForeignKey = key;
+            }
+        }
 
     }
 }

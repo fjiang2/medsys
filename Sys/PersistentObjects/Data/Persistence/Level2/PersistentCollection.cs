@@ -324,10 +324,10 @@ namespace Sys.Data
             {
                 foreach (ForeignKeyAttribute relation in relations)
                 {
-                    if (relation.value == null)
-                        dataRow[relation.ChildColumnName] = System.DBNull.Value;
+                    if (relation.ReferenceValue == null)
+                        dataRow[relation.ForeignKey] = System.DBNull.Value;
                     else
-                        dataRow[relation.ChildColumnName] = relation.value;
+                        dataRow[relation.ForeignKey] = relation.ReferenceValue;
                 }
 
                 IDPObject x = Search(dataRow);
