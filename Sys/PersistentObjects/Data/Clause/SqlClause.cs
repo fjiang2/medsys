@@ -8,13 +8,14 @@ namespace Sys.Data
     /// <summary>
     /// SQL clauses builder
     /// </summary>
-    public class SqlClause : ISqlClause
+    public class SqlClause : SqlClauseInfo, ISqlClause
     {
         private StringBuilder script = new StringBuilder();
 
         public SqlClause()
         { 
         }
+
 
         //public static implicit operator SqlClause(string sql)
         //{
@@ -202,6 +203,7 @@ namespace Sys.Data
         public SqlClause WHERE(SqlExpr exp)
         {
             script.Append(" WHERE ").Append(exp);
+            this.Merge(exp);
             return this.CRLF;
         }
 
@@ -281,6 +283,7 @@ namespace Sys.Data
         public SqlClause ON(SqlExpr exp)
         {
             script.Append(" ON ").Append(exp);
+            this.Merge(exp);
             return this;
         }
 
