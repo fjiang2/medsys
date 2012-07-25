@@ -127,51 +127,7 @@ namespace Sys.Data.Manager
             Unpacking.Unpack(assembly, true);
         }
 
-        /// <summary>
-        /// Crearte DPO classes for all tables in a database
-        /// </summary>
-        /// <param name="path"></param>
-        /// <param name="mustGenerate"></param>
-        /// <param name="databaseName"></param>
-        /// <param name="nameSpace"></param>
-        /// <param name="hasColumnAttribute"></param>
-        /// <param name="modifier"></param>
-        /// <param name="subNameSpace"></param>
-        /// <returns></returns>
-        public static int CreateClass(string path, bool mustGenerate, string databaseName, string nameSpace, bool hasColumnAttribute, AccessModifier modifier, bool subNameSpace)
-        {
-
-            string[] tableNames = MetaDatabase.GetTableNames(databaseName);
-            if (tableNames.Length == 0)
-                return 0;
-
-
-            int count = 0;
-            foreach (string tableName in tableNames)
-            {
-                if (tableName.StartsWith(Sys.Const.DB_SYSTEM_TABLE_PREFIX)) //================SKIP system tables
-                    continue;
-
-                ClassTableName tname = new ClassTableName(databaseName, tableName);
-                ClassName cname = new ClassName(nameSpace, modifier, tname, subNameSpace);
-                DpoGenerator gen = new DpoGenerator(tname, cname, hasColumnAttribute);
-
-                string p = path;
-                if (subNameSpace)  //create folder for each database
-                    p = path + "\\" + tname.SubNamespace;
-
-
-                if (!Directory.Exists(p))
-                {
-                    Directory.CreateDirectory(p);
-                }
-
-                if (gen.WriteFile(string.Format("{0}\\{1}.cs", p, cname.Class), mustGenerate))
-                    count++;
-            }
-
-            return count;
-        }
+       
 
     }
 }

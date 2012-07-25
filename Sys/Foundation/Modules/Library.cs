@@ -103,8 +103,11 @@ namespace Sys.Modules
                 {
                     if (type.BaseType == typeof(DPObject))
                     {
-                        DPObject dpo = (DPObject)Activator.CreateInstance(type);
-                        dict.Add(dpo.TableName, type);
+                        if (type.GetAttributes<TableAttribute>().Length != 0)
+                        {
+                            DPObject dpo = (DPObject)Activator.CreateInstance(type);
+                            dict.Add(dpo.TableName, type);
+                        }
                     }
                 }
         
