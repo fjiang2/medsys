@@ -477,33 +477,7 @@ namespace Sys.Platform.Forms
         }
 
 
-        #region XXXX
-      
-
-        private void GenDefaultDpo()
-        {
-            try
-            {
-                int count;
-                if (DatabaseName == Sys.Constant.DB_APPLICATION)
-                {
-                    count = Manager.CreateClass(Path, MustGenerate, DatabaseName, Namespace, true, Modifier, chkFolder.Checked);
-                    if (count != 0)
-                        this.InformationMessage = string.Format("class {0} DPO classes from database [{1}] are created at {2}.", count, DatabaseName, Path);
-                }
-
-            }
-            catch (Exception ex)
-            {
-                this.ShowMessageBox(ex);
-            }
-
-            return;
-        
-        }
-        
-        #endregion
-
+   
     
         private void comboDatabase_SelectedIndexChanged(object sender, EventArgs e)
         {

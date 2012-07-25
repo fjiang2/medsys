@@ -38,7 +38,10 @@ WHERE FK.TABLE_NAME='{1}'
             ";
 
             this.keys = new DPList<ForeignKey>(SqlCmd.FillDataTable(SQL, tname.DatabaseName, tname.Name)).ToArray();
-        
+            foreach (var key in this.keys)
+            {
+                key.DatabaseName = tname.DatabaseName;
+            }
         }
 
         public ForeignKey[] Keys
@@ -63,6 +66,7 @@ WHERE FK.TABLE_NAME='{1}'
     {
 #pragma warning disable
 
+        public string DatabaseName;
         public string FK_Table;
         public string FK_Column;
         public string PK_Table;
@@ -79,6 +83,26 @@ WHERE FK.TABLE_NAME='{1}'
             : base(dataRow)
         { 
         }
+
+        public override TableName TableName
+        {
+            get
+            {
+                return new TableName(DatabaseName, PK_Table);
+            }
+        }
+
+        public string Attribute
+        {
+            get
+            {
+                return string.Format("[{0}(typeof({1}),{1}._{2})]", 
+                    typeof(ForeignKeyAttribute).Name.Replace("Attribute", ""), 
+                    typeof(object).Name, 
+                    PK_Column);
+            }
+        }
+
 
         public override string ToString()
         {

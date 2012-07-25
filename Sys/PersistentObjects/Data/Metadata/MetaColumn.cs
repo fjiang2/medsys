@@ -182,7 +182,7 @@ namespace Sys.Data
         {
             get
             {
-                return GetAttribute(this.sqlDbType); 
+                return  GetAttribute(this.sqlDbType);
             }
         }
 

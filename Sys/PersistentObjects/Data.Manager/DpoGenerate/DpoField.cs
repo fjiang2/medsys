@@ -28,10 +28,10 @@ namespace Sys.Data.Manager
         public string GenerateField()
         {
             string line = "";
-
+            string tab = "        ";
             if (dpoClass.HasColumnAttribute || column.ColumnName != column.FieldName)
             {
-                line = string.Format("        {0}", column.Attribute);
+                line = string.Format("{0}{1}", tab, column.Attribute);
                 if(line.Length < 90)
                     line += new string(' ', 90 - line.Length);      //padding
             }
@@ -55,7 +55,11 @@ namespace Sys.Data.Manager
 
             dpoClass.dict_column_field.Add(column.ColumnName, new FieldDefinition(ty, column.FieldName));
 
-            
+            if (column.ForeignKey != null)
+            {
+                line = string.Format("{0}{1}\r\n", tab, column.ForeignKey.Attribute) + line;
+            }
+
             return line;
         }
 
