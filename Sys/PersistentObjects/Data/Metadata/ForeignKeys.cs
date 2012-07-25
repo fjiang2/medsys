@@ -92,15 +92,12 @@ WHERE FK.TABLE_NAME='{1}'
             }
         }
 
-        public string Attribute
+        public string GetAttribute(Type pkTable)
         {
-            get
-            {
-                return string.Format("[{0}(typeof({1}),{1}._{2})]", 
-                    typeof(ForeignKeyAttribute).Name.Replace("Attribute", ""), 
-                    typeof(object).Name, 
-                    PK_Column);
-            }
+            return string.Format("[{0}(typeof({1}), {1}._{2})]", 
+                typeof(ForeignKeyAttribute).Name.Replace("Attribute", ""),
+                pkTable.FullName, 
+                PK_Column);
         }
 
 

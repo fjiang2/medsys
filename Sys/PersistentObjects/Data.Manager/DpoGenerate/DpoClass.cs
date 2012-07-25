@@ -39,20 +39,33 @@ namespace Sys.Data.Manager
 
         public Dictionary<string, FieldDefinition> dict_column_field = new Dictionary<string, FieldDefinition>();
         public bool HasColumnAttribute = true;
+        
+        Dictionary<TableName, Type> dict;
 
-        public DpoClass(MetaTable metaTable, ClassName cname)
+        public DpoClass(MetaTable metaTable, ClassName cname,  Dictionary<TableName, Type> dict)
         {
             this.metaTable = metaTable;
-
+            
             this.nameSpace = cname.Namespace;
             this.className = cname.Class;
+
+            this.dict = dict;
 
             nonvalized = NonvalizedList(nameSpace, className);
             nullableFields = NullableList(nameSpace, className);
         }
 
 
+        public Dictionary<TableName, Type> Dict
+        {
+            get { return this.dict; }
+        }
         
+        public MetaTable MetaTable
+        {
+            get { return this.metaTable; }
+        }
+
         public List<string> Nonvalized
         {
             get

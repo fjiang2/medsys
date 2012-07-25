@@ -87,6 +87,7 @@
     <Compile Include="MgCode\DpoPackage\UserDpoPackage.cs" />
     <Compile Include="MgCode\DpoPackage\UserRoleDpoPackage.cs" />
     <Compile Include="Modules\RegisteredAssembly.cs" />
+    <Compile Include="Modules\TableDpoDictionary.cs" />
     <Compile Include="Security\Companies.cs" />
     <Compile Include="Security\Company.cs" />
     <Compile Include="MgCode\DpoClass\CompanyDpo.cs" />
@@ -96,7 +97,6 @@
     <Compile Include="MgCode\DpoClass\UserDpo.cs" />
     <Compile Include="MgCode\DpoClass\UserProfileDpo.cs" />
     <Compile Include="MgCode\DpoClass\UserRoleDpo.cs" />
-    <Compile Include="Modules\TableDpoDictionary.cs" />
     <Compile Include="Modules\IModule.cs" />
     <Compile Include="Modules\IModuleImpl.cs" />
     <Compile Include="MgCode\DpoClass\AssemblyDpo.cs" />

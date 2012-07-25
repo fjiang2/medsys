@@ -25,7 +25,7 @@ namespace Sys.Data.Manager
         /// <param name="nameSpace"></param>
         /// <param name="level"></param>
         /// <param name="isPack"></param>
-        public static void CreateClass(string[] tableNames, string path, string nameSpace, Level level, bool isPack)
+        public static void CreateClass(string[] tableNames, string path, string nameSpace, Level level, bool isPack, Dictionary<TableName, Type> dict)
         {
             foreach (string fullName in tableNames)
             {
@@ -34,7 +34,7 @@ namespace Sys.Data.Manager
 
                 ClassName cname = new ClassName(nameSpace, AccessModifier.Public, tname);
                 tname.SetLevel(level, isPack);
-                tname.GenTableDpo(path, true, cname, true);
+                tname.GenTableDpo(path, true, cname, true, dict);
             }
         }
 
@@ -42,7 +42,7 @@ namespace Sys.Data.Manager
         /// Upgrade DPO classes from SQL SERVER
         /// </summary>
         /// <param name="path"></param>
-        public void UpgradeClass(string path)
+        public void UpgradeClass(string path, Dictionary<TableName, Type> dict)
         {
             foreach (Type type in assembly.GetTypes())
             {
@@ -55,7 +55,7 @@ namespace Sys.Data.Manager
 
                     ClassName cname = new ClassName(dpo);
                     tname.SetLevel(dpo.Level, dpo.IsPack);
-                    tname.GenTableDpo(path, true, cname, true);
+                    tname.GenTableDpo(path, true, cname, true, dict);
                 }
             }
         }
