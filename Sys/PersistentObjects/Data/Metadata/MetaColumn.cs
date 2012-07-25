@@ -22,6 +22,7 @@ namespace Sys.Data
         private SqlDbType sqlDbType;
         private string fieldName;
         private bool isPrimary = false;
+        private ForeignKey foreignKey;
 
         public MetaColumn(DataRow dataRow)
             : base(dataRow)
@@ -106,7 +107,13 @@ namespace Sys.Data
             set { this.isPrimary = value; }
         }
 
-   
+        public ForeignKey ForeignKey
+        {
+            get { return this.foreignKey; }
+            set { this.foreignKey = value; }
+        }
+
+
         public override string ToString()
         {
             return string.Format("Column={0}(Type={1}, Null={2}, Length={3})", ColumnName, DataType, Nullable, Length);

@@ -87,6 +87,7 @@ namespace Sys.Data
                 {
                     LoadSchema();
                     this._columns.UpdatePrimary(this.Primary);
+                    this._columns.UpdateForeign(this.Foreign);
                 }
 
                 return this._columns;
@@ -104,6 +105,7 @@ namespace Sys.Data
                 {
                     LoadSchema();
                     this._columns.UpdatePrimary(this.Primary);
+                    this._columns.UpdateForeign(this.Foreign);
                 } 
                 
                 return this._identity;
@@ -118,12 +120,23 @@ namespace Sys.Data
             get
             {
                 if (this._primary == null)
-                   this._primary = new Data.PrimaryKeys(tname);
+                   this._primary = new PrimaryKeys(tname);
 
                 return this._primary;
             }
         }
 
+        private ForeignKeys _foreign = null;
+        public ForeignKeys Foreign
+        {
+            get
+            {
+                if (this._foreign == null)
+                    this._foreign = new ForeignKeys(tname);
+
+                return this._foreign;
+            }
+        }
 
 
 

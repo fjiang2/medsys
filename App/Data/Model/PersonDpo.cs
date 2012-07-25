@@ -10,8 +10,8 @@ namespace App.Data
 {
     public class PersonDpo : DpoClass.appPersonDpo
     {
-        [ForeignKey(PersonDpo._Person_ID, PersonRelationshipDpo._Person_ID1)]
-        [Association("Person_ID1=@Person_ID")]
+        [ForeignKey(PersonRelationshipDpo._Person_ID1, typeof(PersonDpo), PersonDpo._Person_ID)]
+        [Association("Person_ID1=@Person_ID"), Aggregated]
         public DPCollection<PersonRelationshipDpo> Relationships = new DPCollection<PersonRelationshipDpo>();
 
         public PersonDpo()

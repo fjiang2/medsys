@@ -7,23 +7,32 @@ namespace Sys.Data
     [System.AttributeUsage(System.AttributeTargets.Field)]
     public class ForeignKeyAttribute : Attribute
     {
-        public string ParentColumnName;
-        public string ChildColumnName;
+        public readonly Type ReferenceTableName;
+        public readonly string ReferenceColumnName;
+        public readonly string ForeignKey;
         
         /// <summary>
         /// Get value from parent table, assign value to child table
         /// </summary>
-        internal object value = null;
+        internal object ReferenceValue = null;
 
-        public ForeignKeyAttribute(string parentColumnName, string childColumnName)
+        /// <summary>
+        /// FOREIGN KEY (P_Id) REFERENCES Persons(P_Id)
+        /// </summary>
+        /// <param name="foreignKey"></param>
+        /// <param name="ReferenceTableName"></param>
+        /// <param name="referenceColumnName"></param>
+        public ForeignKeyAttribute(string foreignKey, Type referenceTableName, string referenceColumnName)
         {
-            this.ParentColumnName = parentColumnName;
-            this.ChildColumnName = childColumnName;
+            this.ForeignKey = foreignKey;
+
+            this.ReferenceTableName = referenceTableName;
+            this.ReferenceColumnName = referenceColumnName;
         }
 
         public override string ToString()
         {
-            return string.Format("[{0}]=@{1}", this.ChildColumnName, this.ParentColumnName);
+            return string.Format("[{0}]=@{1}", this.ForeignKey, this.ReferenceColumnName);
         }
     }
 }
