@@ -12,7 +12,7 @@ namespace Sys.Workflow.Collaborative
     public class WorkflowDpo : wfWorkflowDpo, IWorkflowData
     {
         [NonValized]
-        [Association("Workflow_Name=@Name", OrderBy = "[Index]"), Aggregated]
+        [Association("Workflow_Name=@Name", OrderBy = StateDpo._Index), Aggregated]
         public DPCollection<StateDpo> StateList;
 
         [NonValized]
