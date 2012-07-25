@@ -478,6 +478,9 @@ namespace Sys.Data
 
         #endregion
 
+
+        #region SqlExpr/SqlClause: ColumName/ParameterName/AddParameter
+
         internal static string SqlParameterName(this string name)
         {
             return "@" + name.Replace(" ", "").Replace("#", "");
@@ -495,29 +498,43 @@ namespace Sys.Data
         /// <returns></returns>
         public static SqlExpr ColumName(this string name)
         {
-            return SqlExpr.AddColumn(name);
+            return SqlExpr.ColumnName(name);
         }
 
         /// <summary>
-        /// "name" -> "name=@name"
+        /// "name" -> "@name"
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        public static SqlExpr Parameter(this string columnName)
+        public static SqlExpr ParameterName(this string name)
+        {
+            return SqlExpr.ParameterName(name);
+        }
+
+
+        /// <summary>
+        /// "name" -> "[name]=@name"
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public static SqlExpr AddParameter(this string columnName)
         {
             return SqlExpr.AddParameter(columnName, columnName);
         }
 
         /// <summary>
         /// Add SQL parameter
-        /// e.g. NodeDpo._ID.Parameter(TaskDpo._ParentID) -> "ID=@ParentID"
+        /// e.g. NodeDpo._ID.AddParameter(TaskDpo._ParentID) -> "[ID]=@ParentID"
         /// </summary>
         /// <param name="columnName"></param>
         /// <param name="parameterName"></param>
         /// <returns></returns>
-        public static SqlExpr Parameter(this string columnName, string parameterName)
+        public static SqlExpr AddParameter(this string columnName, string parameterName)
         {
             return SqlExpr.AddParameter(columnName, parameterName);
         }
+
+        #endregion
+
     }
 }

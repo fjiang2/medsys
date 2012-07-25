@@ -28,9 +28,15 @@ namespace Sys.Data
             return this;
         }
 
-        internal static SqlExpr AddColumn(string name)
+        internal static SqlExpr ColumnName(string name)
         {
             SqlExpr exp = new SqlExpr().Next("[" + name + "]");
+            return exp;
+        }
+
+        internal static SqlExpr ParameterName(string name)
+        {
+            SqlExpr exp = new SqlExpr().Next(name.SqlParameterName());
             return exp;
         }
 
@@ -39,7 +45,7 @@ namespace Sys.Data
             SqlExpr exp = new SqlExpr()
                 .Next("[" + columnName + "]")
                 .Next("=")
-                .Next("@" + parameterName.SqlParameterName());
+                .Next(parameterName.SqlParameterName());
 
             exp.Add(parameterName, columnName);
             
