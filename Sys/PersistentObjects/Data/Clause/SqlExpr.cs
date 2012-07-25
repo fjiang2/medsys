@@ -14,13 +14,6 @@ namespace Sys.Data
         {
         }
 
-
-        private SqlExpr(object obj)
-        {
-            script.Append(obj);
-        }
-
-
         private SqlExpr AppendValue(object value)
         {
             script.Append(new SqlValue(value).Text);
@@ -32,14 +25,6 @@ namespace Sys.Data
             script.Append(x);
             return this;
         }
-
-        //private string expr
-        //{
-        //    get
-        //    {
-        //        return this.ToString();
-        //    }
-        //}
 
 #if USE
         public static explicit operator string(SqlExpr x)
@@ -134,48 +119,48 @@ namespace Sys.Data
 
         public static implicit operator SqlExpr(byte value)
         {
-            return new SqlExpr(value);
+            return new SqlExpr().Append(value);
         }
 
         public static implicit operator SqlExpr(sbyte value)
         {
-            return new SqlExpr(value);
+            return new SqlExpr().Append(value);
         }
 
 
         public static implicit operator SqlExpr(int value)
         {
-            return new SqlExpr(value);
+            return new SqlExpr().Append(value);
         }
 
         public static implicit operator SqlExpr(short value)
         {
-            return new SqlExpr(value);
+            return new SqlExpr().Append(value);
         }
 
         public static implicit operator SqlExpr(ushort value)
         {
-            return new SqlExpr(value);
+            return new SqlExpr().Append(value);
         }
 
         public static implicit operator SqlExpr(uint value)
         {
-            return new SqlExpr(value);
+            return new SqlExpr().Append(value);
         }
 
         public static implicit operator SqlExpr(long value)
         {
-            return new SqlExpr(value);
+            return new SqlExpr().Append(value);
         }
 
         public static implicit operator SqlExpr(ulong value)
         {
-            return new SqlExpr(value);
+            return new SqlExpr().Append(value);
         }
 
         public static implicit operator SqlExpr(float value)
         {
-            return new SqlExpr(value);
+            return new SqlExpr().Append(value);
         }
 
         public static implicit operator SqlExpr(DateTime value)
@@ -190,7 +175,7 @@ namespace Sys.Data
 
         public static implicit operator SqlExpr(Enum value)
         {
-            return new SqlExpr(Convert.ToInt32(value));    // NULL
+            return new SqlExpr().Append(Convert.ToInt32(value));    // NULL
         }
 
 
@@ -314,7 +299,7 @@ namespace Sys.Data
         {
             if ((object)exp2 == null || exp2.ToString() == "NULL")
             {
-                return new SqlExpr(exp1).Append(" IS NULL");
+                return new SqlExpr().Append(exp1).Append(" IS NULL");
             }
 
             return OPR(exp1, "=", exp2);
@@ -325,7 +310,7 @@ namespace Sys.Data
         {
             if ((object)exp2 == null || exp2.ToString() == "NULL")
             {
-                return new SqlExpr(exp1).Append(" IS NOT NULL");
+                return new SqlExpr().Append(exp1).Append(" IS NOT NULL");
             }
 
             return OPR(exp1, "<>", exp2);
@@ -374,7 +359,8 @@ namespace Sys.Data
 
         private static SqlExpr Func(string func, SqlExpr x)
         {
-            SqlExpr exp = new SqlExpr(func)
+            SqlExpr exp = new SqlExpr()
+                .Append(func)
                 .Append("(")
                 .Append(x)
                 .Append(")");
@@ -409,7 +395,7 @@ namespace Sys.Data
 
         public static SqlExpr GETDATE(SqlExpr x)
         {
-            return new SqlExpr("GETDATE()");
+            return new SqlExpr().Append("GETDATE()");
         }
 
         #endregion

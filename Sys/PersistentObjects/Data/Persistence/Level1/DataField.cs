@@ -96,7 +96,7 @@ namespace Sys.Data
         {
             get
             {
-                return "@" + fieldName.Replace(" ", "").Replace("#", "");
+                return fieldName.SqlParameterName();
             }
         }
 

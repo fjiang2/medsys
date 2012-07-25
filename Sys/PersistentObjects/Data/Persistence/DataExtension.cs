@@ -478,15 +478,34 @@ namespace Sys.Data
 
         #endregion
 
+        internal static string SqlParameterName(this string name)
+        {
+            return "@" + name.Replace(" ", "").Replace("#", "");
+        }
 
         public static ident ToIdent(this string name)
         {
             return new ident(name);
         }
 
+        /// <summary>
+        /// "name" -> "[name]"
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public static SqlExpr ColumName(this string name)
         {
-            return (SqlExpr)(new ident(name));
+            return (SqlExpr)(new ident("[" + name + "]"));
+        }
+
+        /// <summary>
+        /// "name" -> "@name"
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public static SqlExpr Parameter(this string name)
+        {
+            return (SqlExpr)(new ident("@" + name.SqlParameterName()));
         }
 
     }
