@@ -340,11 +340,11 @@ namespace Sys.Data
 
             foreach (FieldInfo fieldInfo in this.publicFields)
             {
-                ForeignKeyAttribute[] relations = (ForeignKeyAttribute[])fieldInfo.GetCustomAttributes(typeof(ForeignKeyAttribute), true);
+                MapAttribute[] relations = (MapAttribute[])fieldInfo.GetCustomAttributes(typeof(MapAttribute), true);
                 if (relations.Length == 0)
                     continue;
 
-                foreach (ForeignKeyAttribute relation in relations)
+                foreach (MapAttribute relation in relations)
                 {
                     relation.ReferenceValue = dataRow[relation.ReferenceColumnName];
                 }
@@ -730,7 +730,7 @@ namespace Sys.Data
         }
 
 
-        private void FillIdentityAssociationCollection<T>(FieldInfo fieldInfo, ForeignKeyAttribute[] relations) where T : class, IDPObject, new()
+        private void FillIdentityAssociationCollection<T>(FieldInfo fieldInfo, MapAttribute[] relations) where T : class, IDPObject, new()
         {
             Type fieldType = fieldInfo.FieldType;
 

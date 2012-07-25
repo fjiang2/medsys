@@ -14,15 +14,15 @@ namespace PTA
     {
 
 
-        [ForeignKey(AdultDpo._Adult_ID, typeof(PersonDpo), PersonDpo._Person_ID)]
+        [Map(AdultDpo._Adult_ID, PersonDpo._Person_ID)]
         [Association("Person_ID=@Adult_ID"), ]
         public PersonDpo Person = new PersonDpo();
 
-        [ForeignKey(AdultDpo._Address_ID, typeof(AddressDpo), AddressDpo._Address_ID)]
+        [Map(AdultDpo._Address_ID, AddressDpo._Address_ID)]
         [Association("Address_ID=@Address_ID")]
         public AddressDpo Address = new AddressDpo();
 
-        [ForeignKey(AdultDpo._Home_Phone_ID, typeof(PhoneDpo), PhoneDpo._Phone_ID), ]
+        [Map(AdultDpo._Home_Phone_ID,  PhoneDpo._Phone_ID), ]
         [Association("Phone_ID=@Home_Phone_ID")]
         public PhoneDpo Phone = new PhoneDpo();
 
