@@ -13,23 +13,23 @@ namespace Sys.Workflow.Collaborative
 {
     public class TaskDpo : wfTaskDpo, ICollaborativeTask, IActivityInstanceData
     {
-        [ForeignKey(NodeDpo._ParentID, typeof(TaskDpo), TaskDpo._ID)]
+        [Map(TaskDpo._ID, NodeDpo._ParentID)]
         [Association("Ty=1 AND ParentID=@ID"), Aggregated]
         public DPCollection<NodeDpo> ReceivedCollection;
 
-        [ForeignKey(NodeDpo._ParentID, typeof(TaskDpo), TaskDpo._ID)]
+        [Map(TaskDpo._ID, NodeDpo._ParentID)]
         [Association("Ty=2 AND ParentID=@ID"), Aggregated]
         public DPCollection<NodeDpo> AssignedCollection;
 
-        [ForeignKey(NodeDpo._ParentID, typeof(TaskDpo), TaskDpo._ID)]
+        [Map(TaskDpo._ID, NodeDpo._ParentID)]
         [Association("Ty=3 AND ParentID=@ID"), Aggregated]
         public DPCollection<NodeDpo> RepliedCollection;
 
-        [ForeignKey(NodeDpo._ParentID, typeof(TaskDpo), TaskDpo._ID)]
+        [Map(TaskDpo._ID, NodeDpo._ParentID)]
         [Association("Ty=4 AND ParentID=@ID"), Aggregated]
         public DPCollection<NodeDpo> NotifiedCollection;
 
-        [ForeignKey(NodeDpo._ParentID, typeof(TaskDpo), TaskDpo._ID)]
+        [Map(TaskDpo._ID, NodeDpo._ParentID)]
         [Association("Ty=5 AND ParentID=@ID"), Aggregated]
         public DPCollection<NodeDpo> AssociatedCollection;
 

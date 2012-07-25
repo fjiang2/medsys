@@ -20,7 +20,6 @@ namespace PTA.DpoClass
     {
 
 #pragma warning disable
-
         [Column(_Adult_ID, SqlDbType.Int, Primary = true)]                                        public int Adult_ID;          //int(4) not null
         [Column(_Address_ID, SqlDbType.Int)]                                                      public int Address_ID;        //int(4) not null
         [Column(_Home_Phone_ID, SqlDbType.Int)]                                                   public int Home_Phone_ID;     //int(4) not null

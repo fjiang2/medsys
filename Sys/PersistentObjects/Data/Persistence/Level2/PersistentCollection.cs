@@ -317,17 +317,17 @@ namespace Sys.Data
 
     
 
-        internal void FillIdentity(ForeignKeyAttribute[] relations)
+        internal void FillIdentity(MapAttribute[] relations)
         {
 
             foreach (DataRow dataRow in dataTable.Rows)
             {
-                foreach (ForeignKeyAttribute relation in relations)
+                foreach (MapAttribute relation in relations)
                 {
                     if (relation.ReferenceValue == null)
-                        dataRow[relation.ForeignKey] = System.DBNull.Value;
+                        dataRow[relation.ThisColumnName] = System.DBNull.Value;
                     else
-                        dataRow[relation.ForeignKey] = relation.ReferenceValue;
+                        dataRow[relation.ThisColumnName] = relation.ReferenceValue;
                 }
 
                 IDPObject x = Search(dataRow);
