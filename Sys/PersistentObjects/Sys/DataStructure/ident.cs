@@ -17,12 +17,24 @@ namespace Sys
                 throw new JException("Invalid ident: {0}", id);
         }
 
+
+        /// <summary>
+        /// valid ident:
+        ///     "[Last Name#]"
+        ///     "@LastName"
+        ///     "_LastName"
+        ///     "LastName2"
+        /// </summary>
+        /// <returns></returns>
         private bool Validate()
         {
+            if (id[0] == '[' && id[id.Length - 1] == ']')
+                return true;
+
             int i = 0;
             char ch = id[i++];
 
-            if (!char.IsLetter(ch) && ch != '_')
+            if (!char.IsLetter(ch) && ch != '_' && ch != '@')
                 return false;
 
             while (i < id.Length) 
