@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 7/19/2012 12:12:38 AM
+//   by devel at 7/25/2012 2:03:07 PM
 //
 
 using System;
@@ -14,15 +14,18 @@ using Sys.Data.Manager;
 
 namespace PTA.DpoClass
 {
-    [Revision(7)]
+    [Revision(10)]
     [Table("ptaStudents", Level.Application, Pack = false)]    //Primary Keys = Student_ID;  Identity = ;
     public class ptaStudentDpo : DPObject
     {
 
 #pragma warning disable
 
+        [ForeignKey(typeof(App.Data.DpoClass.appPersonDpo), App.Data.DpoClass.appPersonDpo._Person_ID)]
         [Column(_Student_ID, SqlDbType.Int, Primary = true)]                                      public int Student_ID;        //int(4) not null
+        [ForeignKey(typeof(App.Data.DpoClass.appAddressDpo), App.Data.DpoClass.appAddressDpo._Address_ID)]
         [Column(_Address_ID, SqlDbType.Int, Nullable = true)]                                     public int? Address_ID;       //int(4) null
+        [ForeignKey(typeof(App.Data.DpoClass.appPhoneDpo), App.Data.DpoClass.appPhoneDpo._Phone_ID)]
         [Column(_Phone_ID, SqlDbType.Int, Nullable = true)]                                       public int? Phone_ID;         //int(4) null
         [Column(_Grade, SqlDbType.VarChar, Length = 20)]                                          public string Grade;          //varchar(20) not null
 

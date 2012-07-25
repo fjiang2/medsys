@@ -277,7 +277,7 @@ namespace Sys.Platform.Forms
             }
             try
             {
-                if (tname.GenTableDpo(Path, this.chkMustGenerate.Checked, cname, true))
+                if (tname.GenTableDpo(Path, this.chkMustGenerate.Checked, cname, true, dpoDict))
                 {
                     if (treeTables.SelectedNode.ImageIndex == 2)
                     {
@@ -319,7 +319,7 @@ namespace Sys.Platform.Forms
                 ClassName cname = new ClassName(dpo);
                 tname.SetLevel(dpo.Level, dpo.IsPack);
 
-                if (tname.GenTableDpo(path, this.chkMustGenerate.Checked, cname, true))
+                if (tname.GenTableDpo(path, this.chkMustGenerate.Checked, cname, true, dpoDict))
                     output += string.Format("class {0} is upgraded from table {1} at {2}\r\n", cname, tname, path);
                 else
                     output += string.Format("class {0} is skipped from table {1}\r\n", cname, tname);
@@ -365,7 +365,7 @@ namespace Sys.Platform.Forms
                 
                try
                 {
-                    if (tname.GenTableDpo(path, this.chkMustGenerate.Checked, cname, true))
+                    if (tname.GenTableDpo(path, this.chkMustGenerate.Checked, cname, true, dpoDict))
                     {
                         if (node.ImageIndex == 2)
                             node.ImageIndex = 1;

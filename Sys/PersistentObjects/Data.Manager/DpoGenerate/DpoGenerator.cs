@@ -21,13 +21,11 @@ namespace Sys.Data.Manager
         MetaTable metaTable;
         DpoClass dpoClass;
 
-
-
-        public DpoGenerator(ClassTableName tname, ClassName cname, bool hasColumnAttribute)
+        public DpoGenerator(ClassTableName tname, ClassName cname, bool hasColumnAttribute, Dictionary<TableName, Type> dict)
         {
             this.tname = tname;
             this.cname = cname;
-
+            
             metaTable = tname.GetMetaTable();
 
             if (metaTable.TableID == -1)
@@ -35,7 +33,7 @@ namespace Sys.Data.Manager
                 DictTable.MustRegister(tname);
             }
 
-            dpoClass = new DpoClass(metaTable, cname);
+            dpoClass = new DpoClass(metaTable, cname, dict);
             dpoClass.HasColumnAttribute = hasColumnAttribute;
 
             this.sourceCode = dpoClass.Generate(cname.Modifier, tname.Level, tname.Pack);

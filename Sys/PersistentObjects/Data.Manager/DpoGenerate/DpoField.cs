@@ -57,7 +57,13 @@ namespace Sys.Data.Manager
 
             if (column.ForeignKey != null)
             {
-                line = string.Format("{0}{1}\r\n", tab, column.ForeignKey.Attribute) + line;
+                if (dpoClass.Dict.ContainsKey(column.ForeignKey.TableName))
+                {
+                    Type type = dpoClass.Dict[column.ForeignKey.TableName];
+                    line = string.Format("{0}{1}\r\n", tab, column.ForeignKey.GetAttribute(type)) + line;
+                }
+                else
+                    throw new JException("Generate Dpo class for {0} before generate {1}", column.ForeignKey.TableName, dpoClass.MetaTable.TableName);
             }
 
             return line;

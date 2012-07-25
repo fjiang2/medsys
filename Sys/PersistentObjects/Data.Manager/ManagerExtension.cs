@@ -88,7 +88,7 @@ namespace Sys.Data.Manager
         #region Dpo Generate
 
 
-        public static bool GenTableDpo(this ClassTableName tname, string path, bool mustGenerate, ClassName cname, bool hasColumnAttribute)
+        public static bool GenTableDpo(this ClassTableName tname, string path, bool mustGenerate, ClassName cname, bool hasColumnAttribute, Dictionary<TableName, Type> dict)
         {
             //make description to sys tables
             if (tname.Level == Level.System)
@@ -104,7 +104,7 @@ namespace Sys.Data.Manager
                 dt.Save();
             }
 
-            DpoGenerator gen = new DpoGenerator(tname, cname, hasColumnAttribute);
+            DpoGenerator gen = new DpoGenerator(tname, cname, hasColumnAttribute, dict);
 
             if (!Directory.Exists(path))
             {
