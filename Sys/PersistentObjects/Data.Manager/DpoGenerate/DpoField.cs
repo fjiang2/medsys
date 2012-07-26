@@ -55,7 +55,7 @@ namespace Sys.Data.Manager
 
             dpoClass.dict_column_field.Add(column.ColumnName, new FieldDefinition(ty, column.FieldName));
 
-            if (column.ForeignKey != null)
+            if (column.ForeignKey != null && dpoClass.Dict != null)
             {
                 if (dpoClass.Dict.ContainsKey(column.ForeignKey.TableName))
                 {

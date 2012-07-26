@@ -42,7 +42,7 @@ namespace X12
                 "medsys..X12ElementInstance", 
                 "medsys..X12CodeDefinition" 
                 }, 
-                path, "X12.Dpo", Level.Fixed, true); 
+                path, "X12.Dpo", Level.Fixed, true, null); 
 #endif
 
 #if UPGRADE_DPOBJECT
