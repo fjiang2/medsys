@@ -7,8 +7,8 @@ namespace Sys.Data
     [System.AttributeUsage(System.AttributeTargets.Field)]
     public class MapAttribute : Attribute
     {
-        public readonly string ReferenceColumnName;
-        public readonly string ThisColumnName;
+        public readonly string Column1;
+        public readonly string Column2;
         
         /// <summary>
         /// Get value from parent table, assign value to child table
@@ -18,14 +18,14 @@ namespace Sys.Data
     
         public MapAttribute(string referenceColumnName, string thisColumnName)
         {
-            this.ThisColumnName = thisColumnName;
+            this.Column2 = thisColumnName;
 
-            this.ReferenceColumnName = referenceColumnName;
+            this.Column1 = referenceColumnName;
         }
 
         public override string ToString()
         {
-            return string.Format("[{0}]=@{1}", this.ThisColumnName, this.ReferenceColumnName);
+            return string.Format("[{0}]=@{1}", this.Column2, this.Column1);
         }
     }
 }

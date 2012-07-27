@@ -18,8 +18,9 @@ namespace Sys.Data
     {
         private AssociationAttribute association;
         private MappingType mappingType;
+        private PersistentObject dpoInstance;
+
         
-        private object value1;      //UserDpo.ID  =100;
       
         FieldInfo fieldInfo1;              //fieldof(UserDpo._ID)
         FieldInfo fieldInfo2;              //fieldof(DPCollection<RoleDpo>)  or fieldof(xxxDpo)
@@ -35,12 +36,13 @@ namespace Sys.Data
             if (association == null)
                 return;
 
+            this.dpoInstance = dpo;
             this.fieldInfo2 = fieldInfo2;
 
             Type dpoType2;            //typeof(RoleDpo)
             if (fieldInfo2.FieldType.IsGenericType)
             {
-                dpoType2 = GetCollectionGenericType(fieldInfo2);
+                dpoType2 = PersistentObject.GetCollectionGenericType(fieldInfo2);
 
                 if (this.association.TRelation == null)
                     mappingType = MappingType.One2Many;
@@ -56,7 +58,7 @@ namespace Sys.Data
             
 
             this.fieldInfo1 = dpo.GetType().GetField(association.Column1);
-            this.value1 = fieldInfo1.GetValue(dpo);
+           
            
             if (mappingType == MappingType.Many2Many)
             {
@@ -90,22 +92,7 @@ namespace Sys.Data
         }
 
 
-        private static Type GetCollectionGenericType(FieldInfo fieldInfo)
-        {
-            Type fieldType = fieldInfo.FieldType;
-            if (!fieldType.IsGenericType)
-                throw new JException("DPCollection is not generic type");
-
-            Type[] typeParameters = fieldType.GetGenericArguments();
-            if (typeParameters.Length != 1)
-                throw new JException("Too many generic parameters, DPCollection must declare like DPCollection<T> Children");
-
-            if (typeParameters[0].IsSubclassOf(typeof(PersistentObject)))
-                return typeParameters[0];
-
-            return null;
-        }
-
+   
 
         /// <summary>
         /// return -> { UserRoles.Role1, UserRoles.Role2, ...}
@@ -114,6 +101,7 @@ namespace Sys.Data
         {
             get
             {
+                object value1 = fieldInfo1.GetValue(dpoInstance);
                 SqlCmd cmd = new SqlCmd(this.clause1);
                 cmd.AddParameter(association.Column1.SqlParameterName(), value1);
                 return cmd.FillDataTable().ToArray<object>(association.Relation1);
@@ -123,9 +111,9 @@ namespace Sys.Data
         public void SetValue()
         {
             if (association == null)
-                return;
+                return ;
 
-
+            object value1 = fieldInfo1.GetValue(dpoInstance);
             SqlCmd cmd = new SqlCmd(this.clause2);
             cmd.AddParameter(association.Column1.SqlParameterName(), value1);
             DataTable dataTable =  cmd.FillDataTable();
@@ -156,10 +144,37 @@ namespace Sys.Data
                     collection.Table = dataTable;
                 }
             }
-          
+
         }
 
-    
+
+        private bool IsColumn1Identity()
+        {
+            ColumnAttribute[] attributes = (ColumnAttribute[])fieldInfo1.GetCustomAttributes(typeof(ColumnAttribute), true);
+            if (attributes.Length == 0)
+                return false;
+
+            return attributes[0].Identity;
+        }
+
+
+        public void FillIdentity()
+        {
+            if (!IsColumn1Identity())
+                return;
+
+            if (mappingType == MappingType.One2Many)
+            {
+                object value1 = fieldInfo1.GetValue(dpoInstance);
+                IDPCollection collection = (IDPCollection)fieldInfo2.GetValue(this);
+                foreach (DataRow row in collection.Table.Rows)
+                {
+                    row[association.Column2] = value1;
+                    IDPObject dpo = (IDPObject)collection.GetObject(row);
+                    dpo.FillIdentity(row);
+                }
+            }
+        }
 
     }
 }

@@ -304,7 +304,10 @@ namespace Sys.Data
             foreach (FieldInfo fieldInfo in this.publicFields)
             {
                 if (Reflex.FillField(this, fieldInfo, dataRow, dataTableAttribute.DefaultValueUsed) == null)
-                    FillAssoication(fieldInfo);
+                { 
+                    Mapping mapping = new Mapping(this, fieldInfo);
+                    mapping.SetValue();
+                }
             }
         }
 
@@ -346,7 +349,7 @@ namespace Sys.Data
 
                 foreach (MapAttribute relation in relations)
                 {
-                    relation.ReferenceValue = dataRow[relation.ReferenceColumnName];
+                    relation.ReferenceValue = dataRow[relation.Column1];
                 }
 
                 Type fieldType = fieldInfo.FieldType;
@@ -587,29 +590,8 @@ namespace Sys.Data
         
         
         #region Assoication Field
-        private bool FillAssoication(FieldInfo fieldInfo)
-        {
-            AssociationAttribute association = Reflex.GetAssociationAttribute(fieldInfo);
-            if (association != null)
-            {
-                Type fieldType = fieldInfo.FieldType;
-                if (fieldType.IsGenericType)
-                {
-                    Type T = GetCollectionGenericType(fieldInfo);
-                    FillAssociationCollection(T, association, fieldInfo);
-                }
-                else
-                    FillAssociationObject(association, fieldInfo);
-
-                return true;
-            }
-
-            return false;
-        }
-
-
-
-        private static Type GetCollectionGenericType(FieldInfo fieldInfo)
+      
+        internal static Type GetCollectionGenericType(FieldInfo fieldInfo)
         {
             Type fieldType = fieldInfo.FieldType;
             if (!fieldType.IsGenericType)
@@ -636,100 +618,9 @@ namespace Sys.Data
             return true;
         }
 
-    
-        /// <summary>
-        /// (1..n) Association
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="association"></param>
-        /// <param name="fieldInfo"></param>
-        private void FillAssociationCollection(Type T, AssociationAttribute association, FieldInfo fieldInfo)
-        {
-            PersistentObject obj = (PersistentObject)Activator.CreateInstance(T, new object[] { });
-            TableName tname = obj.TableName;
-            string SQL = string.Format("SELECT * FROM {0} WHERE {1}", tname, association.Locator);
-            if (association.OrderBy != "")
-                SQL += " ORDER BY " + association.OrderBy;
-
-            SqlCmd cmd = new SqlCmd(SQL);
-
-            foreach (FieldInfo info in this.publicFields)
-            {
-                ColumnAttribute a = Reflex.GetColumnAttribute(info);
-                if (a != null)
-                {
-                    object v = info.GetValue(this);
-                    if (v == null)
-                        v = System.DBNull.Value;
-                    cmd.AddParameter(a.ColumnNameSaved, v);
-                }
-            }
-
-            DataTable dataTable = cmd.FillDataTable();
-            dataTable.TableName = tname.FullName;
-
-            //if association collection was not instatiated
-            if (fieldInfo.GetValue(this) == null)
-                fieldInfo.SetValue(this, Activator.CreateInstance(fieldInfo.FieldType, new object[] { dataTable }));
-            else
-            {
-                IPersistentCollection collection = (IPersistentCollection)fieldInfo.GetValue(this);
-                collection.Table = dataTable;
-            }
-        }
 
 
-        /// <summary>
-        /// (1..1) Association
-        /// </summary>
-        /// <param name="association"></param>
-        /// <param name="fieldInfo"></param>
-        private void FillAssociationObject(AssociationAttribute association, FieldInfo fieldInfo)
-        {
-            Type fieldType = fieldInfo.FieldType;
-            if (!fieldType.IsSubclassOf(typeof(PersistentObject)))
-                throw new JException("ERROR: {0} is not DataPersistentObject", fieldInfo.Name);
-
-
-            ConstructorInfo constructorInfo= fieldType.GetConstructor(new Type[]{});
-            if(constructorInfo == null)
-                throw new JException("ERROR: class {0} does not has default constructor", fieldType.FullName);
-
-            
-            string SQL = string.Format("SELECT * FROM {0} WHERE {1}", fieldType.TableName(), association.Locator);
-            SqlCmd cmd = new SqlCmd(SQL);
-
-            foreach (FieldInfo info in this.publicFields)
-            {
-                ColumnAttribute a = Reflex.GetColumnAttribute(info);
-                if (a != null)
-                {
-                    object v = info.GetValue(this);
-                    if (v == null)
-                        v = System.DBNull.Value;
-                    cmd.AddParameter(a.ColumnNameSaved, v);
-                }
-            }
-
-            DataRow dataRow = cmd.FillDataRow();
-            if (dataRow == null)
-                return;
-
-            //if association object was not instatiated
-            if (fieldInfo.GetValue(this) == null)
-            {
-                PersistentObject dpo = (PersistentObject)Activator.CreateInstance(fieldType, null);
-                dpo.Fill(dataRow);
-                fieldInfo.SetValue(this, dpo);
-            }
-            else
-            {
-                IDPObject obj = (IDPObject)fieldInfo.GetValue(this);
-                obj.Fill(dataRow);
-            }
-        }
-
-
+        //Invoked by methodname(string), don't change method name
         private void FillIdentityAssociationCollection<T>(FieldInfo fieldInfo, MapAttribute[] relations) where T : class, IDPObject, new()
         {
             Type fieldType = fieldInfo.FieldType;
@@ -742,6 +633,7 @@ namespace Sys.Data
 
         }
 
+        //Invoked by methodname(string), don't change method name
         private void SaveAssociationCollection<T>(FieldInfo fieldInfo) where T : class, IDPObject, new()
         {
             Type fieldType = fieldInfo.FieldType;
