@@ -11,7 +11,7 @@ namespace App.Data
     public class PersonDpo : DpoClass.appPersonDpo
     {
         [Map( PersonDpo._Person_ID, PersonRelationshipDpo._Person_ID1)]
-        [Association("Person_ID1=@Person_ID"), Aggregated]
+        [Association(PersonDpo._Person_ID, PersonRelationshipDpo._Person_ID1)]
         public DPCollection<PersonRelationshipDpo> Relationships = new DPCollection<PersonRelationshipDpo>();
 
         public PersonDpo()

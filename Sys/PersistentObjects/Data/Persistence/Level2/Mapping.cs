@@ -64,20 +64,28 @@ namespace Sys.Data
                     .SELECT.COLUMNS(association.Relation2)
                     .FROM(association.TRelation)
                     .WHERE(association.Relation1.ColumName() == association.Column1.ParameterName());
-                
+
                 this.clause2 = new SqlClause()
                     .SELECT
                     .COLUMNS()
                     .FROM(dpoType2)
                     .WHERE(association.Relation2.ColumName().IN(this.clause1));
+                    
             }
             else
             {
+                SqlExpr where = association.Column2.ColumName() == association.Column1.ParameterName();
+                if (association.Filter != null)
+                    where = where & association.Filter;
+
                 this.clause2 = new SqlClause()
                     .SELECT
                     .COLUMNS()
                     .FROM(dpoType2)
-                    .WHERE(association.Column2.ColumName() == association.Column1.ParameterName());
+                    .WHERE(where);
+
+                if(association.OrderBy != null)
+                    this.clause2 = clause2.ORDER_BY(association.OrderBy);
             }
         }
 

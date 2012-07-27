@@ -7,7 +7,7 @@ namespace Sys.Workflow.Collaborative
 {
     public class WorkflowInstanceDataView : WorkflowInstanceDpo, IWorkflowInstanceData 
     {
-        [Association("WorkflowInstance_ID=@ID"), Aggregated]
+        [Association(WorkflowInstanceDpo._ID, TaskDpo._WorkflowInstance_ID)]
         public PersistentCollection<TaskDpo> ActivityInstanceList;
 
         public WorkflowInstanceDataView(int instantID)

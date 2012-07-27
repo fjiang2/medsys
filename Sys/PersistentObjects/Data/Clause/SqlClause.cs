@@ -310,6 +310,9 @@ namespace Sys.Data
 
         public SqlClause ORDER_BY(params string[] columns)
         {
+            if (columns == null)
+                return this;
+
             script.Append(" ORDER BY ").Append(ConcatColumns(columns));
             return this;
         }
