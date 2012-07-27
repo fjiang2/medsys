@@ -609,7 +609,7 @@ namespace Sys.Data
 
 
 
-        private Type GetCollectionGenericType(FieldInfo fieldInfo)
+        private static Type GetCollectionGenericType(FieldInfo fieldInfo)
         {
             Type fieldType = fieldInfo.FieldType;
             if (!fieldType.IsGenericType)
