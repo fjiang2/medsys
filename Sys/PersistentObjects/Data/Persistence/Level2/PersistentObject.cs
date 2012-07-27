@@ -343,30 +343,10 @@ namespace Sys.Data
 
             foreach (FieldInfo fieldInfo in this.publicFields)
             {
-                MapAttribute[] relations = (MapAttribute[])fieldInfo.GetCustomAttributes(typeof(MapAttribute), true);
-                if (relations.Length == 0)
-                    continue;
+              Mapping mapping = new Mapping(this, fieldInfo);
+              mapping.FillIdentity();
 
-                foreach (MapAttribute relation in relations)
-                {
-                    relation.ReferenceValue = dataRow[relation.Column1];
-                }
-
-                Type fieldType = fieldInfo.FieldType;
-                if (fieldType.IsGenericType)
-                {
-                    InvokeGenericMethod(fieldInfo, "FillIdentityAssociationCollection", new object[] { fieldInfo, relations });
-                }
-                else
-                {
-                    //used for many-many relationship, 
-
-                    //if (!fieldType.IsSubclassOf(typeof(DataPersistentObject)))
-                    //    throw new ApplicationException(string.Format("ERROR: {0} is not DataPersistentObject", fieldInfo.Name));
-
-                    //DataPersistentObject dpo = (DataPersistentObject)fieldInfo.GetValue(this);
-                }
-                
+              
 
             }
         }
@@ -476,7 +456,7 @@ namespace Sys.Data
                 Attribute[] association = (Attribute[])fieldInfo.GetCustomAttributes(typeof(AssociationAttribute), true);
                 if (association.Length != 0)
                 {
-                    InvokeGenericMethod(fieldInfo, "SaveAssociationCollection", new object[] {fieldInfo });
+                    SaveAssociationCollection(fieldInfo);
                 }
             }
         }
@@ -608,40 +588,18 @@ namespace Sys.Data
         }
 
        
-        private bool InvokeGenericMethod(FieldInfo fieldInfo, string methodName, object[] parameters)
-        {
-            Type T = GetCollectionGenericType(fieldInfo);
-            MethodInfo methodInfo = typeof(PersistentObject).GetMethod(methodName, BindingFlags.NonPublic | BindingFlags.Instance);
-            methodInfo = methodInfo.MakeGenericMethod(T);
-            methodInfo.Invoke(this, parameters);
-
-            return true;
-        }
-
+     
 
 
         //Invoked by methodname(string), don't change method name
-        private void FillIdentityAssociationCollection<T>(FieldInfo fieldInfo, MapAttribute[] relations) where T : class, IDPObject, new()
+        private void SaveAssociationCollection(FieldInfo fieldInfo)
         {
             Type fieldType = fieldInfo.FieldType;
 
             if (!fieldType.IsGenericType)
                 return;
 
-            PersistentCollection<T> collection = (PersistentCollection<T>)fieldInfo.GetValue(this);
-            collection.FillIdentity(relations);
-
-        }
-
-        //Invoked by methodname(string), don't change method name
-        private void SaveAssociationCollection<T>(FieldInfo fieldInfo) where T : class, IDPObject, new()
-        {
-            Type fieldType = fieldInfo.FieldType;
-
-            if (!fieldType.IsGenericType)
-                return;
-
-            PersistentCollection<T> collection = (PersistentCollection<T>)fieldInfo.GetValue(this);
+            IDPCollection collection = (IDPCollection)fieldInfo.GetValue(this);
             collection.Save();
 
         }

@@ -160,6 +160,9 @@ namespace Sys.Data
 
         public void FillIdentity()
         {
+            if (association == null)
+                return;
+
             if (!IsColumn1Identity())
                 return;
 
