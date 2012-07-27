@@ -16,15 +16,15 @@ namespace PTA
     public class StudentDpo : ptaStudentDpo
     {
         [Map(_Student_ID,  PersonDpo._Person_ID)]
-        [Association("Person_ID=@Student_ID")]
+        [Association(StudentDpo._Student_ID, PersonDpo._Person_ID)]
         public PersonDpo Person = new PersonDpo();
 
         [Map(_Address_ID,  AddressDpo._Address_ID)]
-        [Association("Address_ID=@Address_ID")]
+        [Association(StudentDpo._Address_ID, AddressDpo._Address_ID)]
         public AddressDpo Address = new AddressDpo();
 
         [Map(_Phone_ID, PhoneDpo._Phone_ID)]
-        [Association("Phone_ID=@Phone_ID")]
+        [Association(StudentDpo._Phone_ID, PhoneDpo._Phone_ID)]
         public PhoneDpo Phone = new PhoneDpo();
 
         

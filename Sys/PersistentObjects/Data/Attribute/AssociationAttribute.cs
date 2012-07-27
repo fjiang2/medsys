@@ -12,15 +12,9 @@ namespace Sys.Data
 
         private Locator locator = null;
         public string OrderBy;
+        public string Filter;
 
-        public AssociationAttribute(string stringCollectionLocator)
-        {
-            this.locator = new Locator(stringCollectionLocator);
-            this.locator.Unique = false;
-
-            this.OrderBy = "";
-        }
-
+    
         public Locator Locator
         {
             get

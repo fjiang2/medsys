@@ -18,15 +18,15 @@ namespace PTA
 
 
         [Map(_Adult_ID, PersonDpo._Person_ID)]
-        [Association("Person_ID=@Adult_ID"), ]
+        [Association(AdultDpo._Adult_ID, PersonDpo._Person_ID)]
         public PersonDpo Person = new PersonDpo();
 
         [Map(_Address_ID, AddressDpo._Address_ID)]
-        [Association("Address_ID=@Address_ID")]
+        [Association(AdultDpo._Address_ID, AddressDpo._Address_ID)]
         public AddressDpo Address = new AddressDpo();
 
         [Map(_Home_Phone_ID,  PhoneDpo._Phone_ID), ]
-        [Association("Phone_ID=@Home_Phone_ID")]
+        [Association(AdultDpo._Home_Phone_ID, PhoneDpo._Phone_ID)]
         public PhoneDpo Phone = new PhoneDpo();
 
         List<StudentDpo> students = new List<StudentDpo>();

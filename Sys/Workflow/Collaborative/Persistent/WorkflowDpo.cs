@@ -12,11 +12,11 @@ namespace Sys.Workflow.Collaborative
     public class WorkflowDpo : wfWorkflowDpo, IWorkflowData
     {
         [NonValized]
-        [Association("Workflow_Name=@Name", OrderBy = StateDpo._Index), Aggregated]
+        [Association(WorkflowDpo._Name, StateDpo._Workflow_Name, OrderBy = StateDpo._Index), Aggregated]
         public DPCollection<StateDpo> StateList;
 
         [NonValized]
-        [Association("Workflow_Name=@Name"), Aggregated]
+        [Association(WorkflowDpo._Name, TransitionDpo._Workflow_Name)]
         public DPCollection<TransitionDpo> TransitionList;
 
         //create a workflow, used by designer tools
