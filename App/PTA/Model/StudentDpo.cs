@@ -15,15 +15,12 @@ namespace PTA
     [ConstraintForeignKey(StudentDpo._Phone_ID, typeof(PhoneDpo), PhoneDpo._Phone_ID)]
     public class StudentDpo : ptaStudentDpo
     {
-        [Map(_Student_ID,  PersonDpo._Person_ID)]
         [Association(StudentDpo._Student_ID, PersonDpo._Person_ID)]
         public PersonDpo Person = new PersonDpo();
 
-        [Map(_Address_ID,  AddressDpo._Address_ID)]
         [Association(StudentDpo._Address_ID, AddressDpo._Address_ID)]
         public AddressDpo Address = new AddressDpo();
 
-        [Map(_Phone_ID, PhoneDpo._Phone_ID)]
         [Association(StudentDpo._Phone_ID, PhoneDpo._Phone_ID)]
         public PhoneDpo Phone = new PhoneDpo();
 

@@ -15,17 +15,12 @@ namespace PTA
     [ConstraintForeignKey(AdultDpo._Home_Phone_ID, typeof(PhoneDpo), PhoneDpo._Phone_ID)]
     public class AdultDpo : ptaAdultDpo
     {
-
-
-        [Map(_Adult_ID, PersonDpo._Person_ID)]
         [Association(AdultDpo._Adult_ID, PersonDpo._Person_ID)]
         public PersonDpo Person = new PersonDpo();
 
-        [Map(_Address_ID, AddressDpo._Address_ID)]
         [Association(AdultDpo._Address_ID, AddressDpo._Address_ID)]
         public AddressDpo Address = new AddressDpo();
 
-        [Map(_Home_Phone_ID,  PhoneDpo._Phone_ID), ]
         [Association(AdultDpo._Home_Phone_ID, PhoneDpo._Phone_ID)]
         public PhoneDpo Phone = new PhoneDpo();
 

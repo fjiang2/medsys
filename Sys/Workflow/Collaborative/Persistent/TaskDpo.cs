@@ -13,23 +13,18 @@ namespace Sys.Workflow.Collaborative
 {
     public class TaskDpo : wfTaskDpo, ICollaborativeTask, IActivityInstanceData
     {
-        [Map(TaskDpo._ID, NodeDpo._ParentID)]
         [Association(TaskDpo._ID, NodeDpo._ParentID, Filter = "Ty=1")]
         public DPCollection<NodeDpo> ReceivedCollection;
 
-        [Map(TaskDpo._ID, NodeDpo._ParentID)]
         [Association(TaskDpo._ID, NodeDpo._ParentID, Filter = "Ty=2")]
         public DPCollection<NodeDpo> AssignedCollection;
 
-        [Map(TaskDpo._ID, NodeDpo._ParentID)]
         [Association(TaskDpo._ID, NodeDpo._ParentID, Filter = "Ty=3")]
         public DPCollection<NodeDpo> RepliedCollection;
 
-        [Map(TaskDpo._ID, NodeDpo._ParentID)]
         [Association(TaskDpo._ID, NodeDpo._ParentID, Filter = "Ty=4")]
         public DPCollection<NodeDpo> NotifiedCollection;
 
-        [Map(TaskDpo._ID, NodeDpo._ParentID)]
         [Association(TaskDpo._ID, NodeDpo._ParentID, Filter = "Ty=5")]
         public DPCollection<NodeDpo> AssociatedCollection;
 

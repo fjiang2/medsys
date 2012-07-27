@@ -44,7 +44,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\Attribute\AggregatedAttribute.cs" />
-    <Compile Include="Data\Attribute\MapAttribute.cs" />
     <Compile Include="Data\Clause\SqlClauseInfo.cs" />
     <Compile Include="Data\Metadata\ForeignKeys.cs" />
     <Compile Include="Data\Persistence\Level2\Mapping.cs" />

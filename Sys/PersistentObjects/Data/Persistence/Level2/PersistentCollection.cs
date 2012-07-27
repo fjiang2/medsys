@@ -315,29 +315,6 @@ namespace Sys.Data
 
         #region Saving
 
-    
-
-        internal void FillIdentity(MapAttribute[] relations)
-        {
-
-            foreach (DataRow dataRow in dataTable.Rows)
-            {
-                foreach (MapAttribute relation in relations)
-                {
-                    if (relation.ReferenceValue == null)
-                        dataRow[relation.Column2] = System.DBNull.Value;
-                    else
-                        dataRow[relation.Column2] = relation.ReferenceValue;
-                }
-
-                IDPObject x = Search(dataRow);
-                if (x != null)
-                {
-                    x.FillIdentity(dataRow);
-                }
-            }
-        }
-
 
         private RowAdapter NewSqlRow(Selector columnNames)
         {
