@@ -37,6 +37,11 @@ namespace Sys.Data
         {
         }
 
+        public Locator(SqlExpr exp)
+        {
+            this.where = exp.ToString();
+        }
+
         /// <summary>
         /// One record is operated when [Unique] is true; Treat all records like one record when [Unique] is false
         /// </summary>

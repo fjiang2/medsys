@@ -19,7 +19,7 @@ namespace Sys.Data
             get { return this.parameters; }
         }
 
-        protected void Add(string parameterName, string columnName)
+        protected void AddParam(string parameterName, string columnName)
         {
             if (!this.parameters.ContainsKey(parameterName))
                 this.parameters.Add(parameterName, columnName);
@@ -28,7 +28,7 @@ namespace Sys.Data
         internal SqlClauseInfo Merge(SqlClauseInfo info)
         {
             foreach (KeyValuePair<string, string> kvp in info.parameters)
-                 this.Add(kvp.Key, kvp.Value);
+                this.AddParam(kvp.Key, kvp.Value);
 
             return this;
         }

@@ -25,7 +25,8 @@ namespace Sys.Platform.DataImporter
         {
             InitializeComponent();
             var dpo = new Sys.ViewManager.DpoClass.DataImportDpo();
-            binding = new BindRow(dpo, new Locator("[Label]=@Label"));
+            //"[Label]=@Label"
+            binding = new BindRow(dpo, new Locator(DataImportDpo._Label.AddParameter()));
             binding.Bind(this.tbTemplate, DataImportDpo._Label);
             binding.Bind(this.tbDescription, DataImportDpo._Description);
             binding.Bind(this.tbDataSource, DataImportDpo._DataSource);

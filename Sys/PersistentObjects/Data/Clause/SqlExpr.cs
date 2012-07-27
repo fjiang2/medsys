@@ -37,6 +37,7 @@ namespace Sys.Data
         internal static SqlExpr ParameterName(string name)
         {
             SqlExpr exp = new SqlExpr().Next(name.SqlParameterName());
+            exp.AddParam(name, null);
             return exp;
         }
 
@@ -47,7 +48,7 @@ namespace Sys.Data
                 .Next("=")
                 .Next(parameterName.SqlParameterName());
 
-            exp.Add(parameterName, columnName);
+            exp.AddParam(parameterName, columnName);
             
             return exp;
         }
