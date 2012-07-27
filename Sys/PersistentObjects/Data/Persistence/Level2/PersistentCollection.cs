@@ -325,9 +325,9 @@ namespace Sys.Data
                 foreach (MapAttribute relation in relations)
                 {
                     if (relation.ReferenceValue == null)
-                        dataRow[relation.ThisColumnName] = System.DBNull.Value;
+                        dataRow[relation.Column2] = System.DBNull.Value;
                     else
-                        dataRow[relation.ThisColumnName] = relation.ReferenceValue;
+                        dataRow[relation.Column2] = relation.ReferenceValue;
                 }
 
                 IDPObject x = Search(dataRow);
