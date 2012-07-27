@@ -44,11 +44,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\Attribute\AggregatedAttribute.cs" />
-    <Compile Include="Data\Attribute\MappingAttribute.cs" />
     <Compile Include="Data\Attribute\MapAttribute.cs" />
     <Compile Include="Data\Clause\SqlClauseInfo.cs" />
     <Compile Include="Data\Metadata\ForeignKeys.cs" />
-    <Compile Include="Data\Persistence\Level1\ManyToManyMapping.cs" />
+    <Compile Include="Data\Persistence\Level2\Mapping.cs" />
     <Compile Include="Data\Persistence\TableReader`1.cs" />
     <Compile Include="Data\Persistence\Level4\MappedColumn.cs" />
     <Compile Include="Data\Persistence\Level4\IMapping.cs" />
