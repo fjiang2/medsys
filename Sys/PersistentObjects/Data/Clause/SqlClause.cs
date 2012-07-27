@@ -438,11 +438,18 @@ namespace Sys.Data
             return clause;
         }
 
-      
+        
+
+        public void AddParameterValue(string name, object value)
+        { 
+        }
 
         public string Clause
         {
-            get { return script.ToString(); }
+            get 
+            { 
+                return script.ToString(); 
+            }
         }
    
 

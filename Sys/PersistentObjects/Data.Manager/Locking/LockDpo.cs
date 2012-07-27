@@ -27,7 +27,9 @@ namespace Sys.Data.Manager
         {
             get
             {
-                return new Locator("Ty=@Ty AND LockID=@LockID AND CI_Time IS NULL");
+                //"Ty=@Ty AND LockID=@LockID AND CI_Time IS NULL"
+                SqlExpr exp = _Ty.AddParameter() & _LockID.AddParameter() & _CI_Time.ColumName() == null;
+                return new Locator(exp);
             }
         }
 
