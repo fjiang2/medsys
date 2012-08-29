@@ -19,6 +19,17 @@ namespace Sys.ViewManager.Forms
 
         }
 
+        public Button ButtonAdd
+        {
+            get { return this.buttonAdd; }
+        }
+
+        public Button ButtonRemove
+        {
+            get { return this.buttonRemove; }
+        }
+
+
         public bool AllowAddNew
         {
             set {
@@ -33,6 +44,10 @@ namespace Sys.ViewManager.Forms
             {
                 this.gridView1.DataSource = value[0];
                 this.gridView2.DataSource = value[1];
+            }
+            get
+            {
+                return new DataTable[] { this.gridView1.DataSource, this.gridView2.DataSource };
             }
         }
 
