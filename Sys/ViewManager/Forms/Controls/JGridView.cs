@@ -117,10 +117,19 @@ namespace Sys.ViewManager.Forms
 
             set
             {
-                this.dataTable = value;
+                if (this.dataTable == null)
+                {
+                    this.dataTable = value;
 
-                this.gridView1.Columns.Clear();
-                DevEx.Grid.InitializeGridViewColumns(gridControl1, gridView1, dataTable);
+                    this.gridView1.Columns.Clear();
+                    DevEx.Grid.InitializeGridViewColumns(gridControl1, gridView1, dataTable);
+                }
+                else
+                {
+                    this.dataTable.Clear();
+                    this.dataTable.Merge(value);
+                    this.dataTable.AcceptChanges();
+                }
             }
         }
 
@@ -198,6 +207,12 @@ namespace Sys.ViewManager.Forms
         {
             get
             {
+                if (this.selectedDataRow == null)
+                {
+                    if (dataTable != null && dataTable.Rows.Count > 0)  //return the first row
+                        return dataTable.Rows[0];
+                }
+
                 return this.selectedDataRow;
             }
         }
