@@ -12,4 +12,7 @@
   </PropertyGroup>
   <PropertyGroup>
   </PropertyGroup>
+  <PropertyGroup>
+    <ReferencePath>C:\devel\medsys\Lib\DevExpress\</ReferencePath>
+  </PropertyGroup>
 </Project>
