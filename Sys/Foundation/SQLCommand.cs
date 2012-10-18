@@ -95,11 +95,11 @@ namespace Sys.Data
 
             try
             {
-                sqlConnection.Open();
+                Connection.Open();
 
-                using (sqlConnection)
+                using (Connection)
                 {
-                    reader = sqlCommand.ExecuteReader();
+                    reader = command.ExecuteReader();
                     
                     do
                     {
@@ -161,7 +161,7 @@ namespace Sys.Data
                 if(reader!=null)
                     reader.Close();
 
-                sqlConnection.Close();
+                Connection.Close();
             }
 
             return null;
