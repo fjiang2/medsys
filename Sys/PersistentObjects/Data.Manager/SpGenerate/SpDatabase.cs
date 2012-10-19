@@ -39,7 +39,7 @@ namespace Sys.Data.Manager
             ORDER BY name
             ";
 
-            SqlCmd cmd = new SqlCmd(SQL, databaseName);
+            SqlCmd cmd = new SqlCmd(string.Format(SQL, databaseName));
             cmd.ChangeConnection(sa, password);
             DataTable dt = cmd.FillDataTable();
             

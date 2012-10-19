@@ -6,27 +6,26 @@ using System.Data;
 
 namespace Sys.Data
 {
-    public class SqlCmd
+    public class SqlCmd : DbCmd
     {
-        string script;
-       
-        protected SqlCommand command;
 
-        public SqlCmd(string script, params object[] args)
+        protected SqlCmd(string script, string connectionString)
+            :base(script)
         {
-            this.script = string.Format(script, args)
-                        .Replace("$DB_SYSTEM", Const.DB_SYSTEM)
-                        .Replace("$DB_APPLICATION", Const.DB_APPLICATION);
-
-
-            SqlConnection connection = new SqlConnection(Const.CONNECTION_STRING);
-            this.command = new SqlCommand(this.script, connection);
+            this.connection = new SqlConnection(connectionString);
+            this.command = new SqlCommand(this.script, (SqlConnection)connection);
 
             if (this.script.Contains(" "))  //Stored Procedure Name does not contain a space letter
                 command.CommandType = CommandType.Text;
             else
                 command.CommandType = CommandType.StoredProcedure;
 
+        
+        }
+
+        public SqlCmd(string script)
+            : this(script, Const.CONNECTION_STRING)
+        {
         }
 
         public SqlCmd(ISqlClause sql)
@@ -35,16 +34,7 @@ namespace Sys.Data
         
         }
 
-        protected SqlConnection Connection
-        {
-            get {  return this.command.Connection;  }
-        }
-
-        public override string ToString()
-        {
-            return this.script;
-        }
-
+     
         public void ChangeConnection(string serverName, bool integratedSecurity, string initialCatalog, string userName, string password)
         {
             string security = "integrated security=SSPI;";
@@ -82,43 +72,30 @@ namespace Sys.Data
 
         public void ChangeConnection(string connectionString)
         {
-            if (this.Connection.State != ConnectionState.Closed)
-                this.Connection.Close();
+            if (this.connection.State != ConnectionState.Closed)
+                this.connection.Close();
 
             this.command.Connection = new SqlConnection(connectionString);
         }
 
 
-        public void ChangeDatabase(string database)
-        {
-            this.Connection.ChangeDatabase(database);
-        }
+      
 
-        protected virtual void ExceptionHandler(string message)
-        {
-            if (JException.DefaultExceptionHandler != null)
-                JException.DefaultExceptionHandler("SQL Exception", message);
-            else
-                throw new Exception(message);
+        //public SqlCmd AddParameter(String parameterName, SqlDbType dbType)
+        //{
+        //    SqlParameter param = new SqlParameter(parameterName, dbType);
+        //    param.Direction = ParameterDirection.Output;
+        //    command.Parameters.Add(param);
+        //    return this;
+        //}
 
-            //System.Windows.Forms.MessageBox.Show(message, "SQL Exception", System.Windows.Forms.MessageBoxButtons.OK);
-        }
-
-        public SqlCmd AddParameter(String parameterName, SqlDbType dbType)
-        {
-            SqlParameter param = new SqlParameter(parameterName, dbType);
-            param.Direction = ParameterDirection.Output;
-            command.Parameters.Add(param);
-            return this;
-        }
-
-        public SqlCmd AddParameter(String parameterName, int size)
-        {
-            SqlParameter param = new SqlParameter(parameterName, SqlDbType.NVarChar, size);
-            param.Direction = ParameterDirection.Output;
-            command.Parameters.Add(param);
-            return this;
-        }
+        //public SqlCmd AddParameter(String parameterName, int size)
+        //{
+        //    SqlParameter param = new SqlParameter(parameterName, SqlDbType.NVarChar, size);
+        //    param.Direction = ParameterDirection.Output;
+        //    command.Parameters.Add(param);
+        //    return this;
+        //}
 
         public SqlCmd AddParameter(String parameterName, Object value)
         {
@@ -143,14 +120,14 @@ namespace Sys.Data
             return this;
         }
 
-        public SqlCmd AddParameter(String parameterName, SqlDbType dbType, object value)
-        {
-            SqlParameter param = new SqlParameter(parameterName, dbType);
-            param.Value = value;
-            param.Direction = ParameterDirection.Input;
-            command.Parameters.Add(param);
-            return this;
-        }
+        //public SqlCmd AddParameter(String parameterName, SqlDbType dbType, object value)
+        //{
+        //    SqlParameter param = new SqlParameter(parameterName, dbType);
+        //    param.Value = value;
+        //    param.Direction = ParameterDirection.Input;
+        //    command.Parameters.Add(param);
+        //    return this;
+        //}
 
         public SqlCmd AddParameter(String parameterName, int size, object value)
         {
@@ -162,22 +139,22 @@ namespace Sys.Data
         }
 
 
-        public SqlCmd AddParameter(String parameterName, SqlDbType dbType, int size)
-        {
-            SqlParameter param = new SqlParameter(parameterName, dbType, size);
-            param.Direction = ParameterDirection.Output;
-            command.Parameters.Add(param);
-            return this;
-        }
+        //public SqlCmd AddParameter(String parameterName, SqlDbType dbType, int size)
+        //{
+        //    SqlParameter param = new SqlParameter(parameterName, dbType, size);
+        //    param.Direction = ParameterDirection.Output;
+        //    command.Parameters.Add(param);
+        //    return this;
+        //}
 
-        public SqlCmd AddParameter(String parameterName, SqlDbType dbType, int size, object value)
-        {
-            SqlParameter param = new SqlParameter(parameterName, dbType, size);
-            param.Value = value;
-            param.Direction = ParameterDirection.Input;
-            command.Parameters.Add(param);
-            return this;
-        }
+        //public SqlCmd AddParameter(String parameterName, SqlDbType dbType, int size, object value)
+        //{
+        //    SqlParameter param = new SqlParameter(parameterName, dbType, size);
+        //    param.Value = value;
+        //    param.Direction = ParameterDirection.Input;
+        //    command.Parameters.Add(param);
+        //    return this;
+        //}
 
 
         //native in .net 3.0+
@@ -189,133 +166,23 @@ namespace Sys.Data
 
         public SqlCommand Command
         {
-            get { return command; }
+            get { return (SqlCommand)command; }
         }
 
-        public SqlConnection SqlConnection
-        {
-            get { return Connection; }
-        }
+      
+
+      
 
 
-        public DataTable ReadDataTable()
-        {
-            try
-            {
-                Connection.Open();
-                SqlDataReader reader = command.ExecuteReader();
-                
-                DataTable table = new DataTable();
-                for (int i = 0; i < reader.FieldCount; i++)
-                {
-                    DataColumn column = new DataColumn(reader.GetName(i), reader.GetFieldType(i));
-                    table.Columns.Add(column);
-                }
-                
-                try
-                {
-                    DataRow row;
-                    while (reader.Read())
-                    {
-                        row = table.NewRow();
-                        for (int i = 0; i < reader.FieldCount; i++)
-                        {
-                            row[i] = reader.GetValue(i);
-                        }
+     
 
-                        table.Rows.Add(row);
-                    }
-                }
-                finally
-                {
-                    reader.Close();
-                }
-
-                table.AcceptChanges();
-                return table;
-            }
-            catch (Exception ex)
-            {
-#if DEBUG
-                ExceptionHandler(ex.Message + " :: " + command.CommandText);
-#else
-                ExceptionHandler(ex.Message);
-#endif
-            }
-            finally
-            {
-                Connection.Close();
-            }
-
-            return null;
-        }
-
-        public object ExecuteScalar()
-        {
-
-            try
-            {
-                 Connection.Open();
-
-                return command.ExecuteScalar();
-            }
-            catch (Exception ex)
-            {
-                ExceptionHandler(ex.Message);
-            }
-            finally
-            {
-                Connection.Close();
-            }
-
-            return null;
-        }
-
-		public int ExecuteNonQuery()
-		{
-            int n = 0;
-			try
-			{
-                //
-                //Transaction on INSERT/UPDATE/DELETE
-                //these commands use ExecuteNonQuery()
-                //
-                if (command.Transaction == null)
-				    Connection.Open();
-
-				n = command.ExecuteNonQuery();
-			}
-			catch (Exception ex)
-			{
-                ExceptionHandler(ex.Message);
-			}
-			finally
-			{
-                if (command.Transaction == null)
-				    Connection.Close();
-			}
-
-            return n;
-		}
-		 
-        public DataSet FillDataSet()
-        {
-
-            DataSet ds = new DataSet();
-            
-            if(FillDataSet(ds) == null)
-                return null;
-            
-            return ds;
-        }
-
-        public DataSet FillDataSet(DataSet ds)
+        public override DataSet FillDataSet(DataSet ds)
         {
             try
             {
-                Connection.Open();
+                connection.Open();
                 SqlDataAdapter adapter = new SqlDataAdapter();
-                adapter.SelectCommand = command;
+                adapter.SelectCommand = this.Command;
                 adapter.Fill(ds);
                 return ds;
             }
@@ -329,7 +196,7 @@ namespace Sys.Data
             }
             finally
             {
-                Connection.Close();
+                connection.Close();
             }
 
             return null;
@@ -340,9 +207,9 @@ namespace Sys.Data
         {
             try
             {
-                Connection.Open();
+                connection.Open();
                 SqlDataAdapter adapter = new SqlDataAdapter();
-                adapter.SelectCommand = command;
+                adapter.SelectCommand = this.Command;
                 adapter.Fill(ds, tableName);
              
             }
@@ -352,31 +219,21 @@ namespace Sys.Data
             }
             finally
             {
-                Connection.Close();
+                connection.Close();
             }
 
             return ds.Tables[tableName];
         }
 
-        public DataTable FillDataTable()
-        {
-            DataSet ds = FillDataSet();
-            if (ds == null)
-                return null;
-
-            if (ds.Tables.Count >= 1)
-                return ds.Tables[0];
-
-            return null;
-        }
+       
 
         public DataTable FillDataTable(DataTable dt)
         {
             try
             {
-                Connection.Open();
+                connection.Open();
                 SqlDataAdapter adapter = new SqlDataAdapter();
-                adapter.SelectCommand = command;
+                adapter.SelectCommand = this.Command;
                 adapter.Fill(dt);
                 return dt;
             }
@@ -386,58 +243,40 @@ namespace Sys.Data
             }
             finally
             {
-                Connection.Close();
+                connection.Close();
             }
 
             return null;
         }
 
-        public DataRow FillDataRow()
-        {
-            DataTable dt = FillDataTable();
-            if (dt == null)
-                return null;
+      
 
-            if (dt.Rows.Count >= 1)
-                return dt.Rows[0];
-
-            return null;
-        }
-
-        /// <summary>
-        /// Get stored procedure's return value
-        /// </summary>
-        /// <param name="parameterName"></param>
-        /// <returns></returns>
-        public object GetReturnValue(string parameterName)
-        {
-             return command.Parameters[parameterName].Value;
-        }
+     
 
 
         //--------------------------------------------------------------------------------------
         public static object ExecuteScalar(string script, params object[] args)
         {
-            SqlCmd cmd = new SqlCmd(script, args);
+            SqlCmd cmd = new SqlCmd(string.Format(script, args));
             return cmd.ExecuteScalar();
         }
 
        
         public static int ExecuteNonQuery(string script, params object[] args)
         {
-            SqlCmd cmd = new SqlCmd(script, args);
+            SqlCmd cmd = new SqlCmd(string.Format(script, args));
             return cmd.ExecuteNonQuery();
         }
 
         public static DataSet FillDataSet(string script, params object[] args)
         {
-            SqlCmd cmd = new SqlCmd(script, args);
+            SqlCmd cmd = new SqlCmd(string.Format(script, args));
             return cmd.FillDataSet();
         }
 
         public static DataTable FillDataTable(string script, params object[] args)
         {
-            SqlCmd cmd = new SqlCmd(script, args);
+            SqlCmd cmd = new SqlCmd(string.Format(script, args));
             return cmd.FillDataTable();
         }
 
@@ -445,7 +284,7 @@ namespace Sys.Data
 
         public static DataRow FillDataRow(string script, params object[] args)
         {
-            SqlCmd cmd = new SqlCmd(script, args);
+            SqlCmd cmd = new SqlCmd(string.Format(script, args));
             return cmd.FillDataRow();
         }
 

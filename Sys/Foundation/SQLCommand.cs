@@ -22,8 +22,8 @@ namespace Sys.Data
         private bool isDataLoaded = false;
 
 
-        public SQLCommand(string script, params object[] args)
-            :base(script, args)
+        public SQLCommand(string script)
+            :base(script)
         { 
         
         }
@@ -95,11 +95,11 @@ namespace Sys.Data
 
             try
             {
-                Connection.Open();
+                connection.Open();
 
-                using (Connection)
+                using (connection)
                 {
-                    reader = command.ExecuteReader();
+                    reader = this.Command.ExecuteReader();
                     
                     do
                     {
@@ -161,7 +161,7 @@ namespace Sys.Data
                 if(reader!=null)
                     reader.Close();
 
-                Connection.Close();
+                connection.Close();
             }
 
             return null;
