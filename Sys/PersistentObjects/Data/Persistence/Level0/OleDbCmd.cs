@@ -6,27 +6,25 @@ using System.Data;
 
 namespace Sys.Data
 {
-    public class OleDbCmd
+    public class OleDbCmd : DbCmd
     {
-        string script;
-
-        protected OleDbCommand command;
-
-        public OleDbCmd(string script, params object[] args)
+        protected OleDbCmd(string script, string connectionString)
+            :base(script)
         {
-            this.script = string.Format(script, args)
-                        .Replace("$DB_SYSTEM", Const.DB_SYSTEM)
-                        .Replace("$DB_APPLICATION", Const.DB_APPLICATION);
-
-
-            OleDbConnection connection = new OleDbConnection(Const.CONNECTION_STRING);
-            this.command = new OleDbCommand(this.script, connection);
+            this.connection = new OleDbConnection(connectionString);
+            this.command = new OleDbCommand(this.script, (OleDbConnection)connection);
 
             if (this.script.Contains(" "))  //Stored Procedure Name does not contain a space letter
                 command.CommandType = CommandType.Text;
             else
                 command.CommandType = CommandType.StoredProcedure;
 
+        
+        }
+
+        public OleDbCmd(string script)
+            :this(script, Const.CONNECTION_STRING)
+        {
         }
 
         public OleDbCmd(ISqlClause sql)
@@ -35,39 +33,17 @@ namespace Sys.Data
         
         }
 
-        protected OleDbConnection Connection
-        {
-            get {  return this.command.Connection;  }
-        }
-
-        public override string ToString()
-        {
-            return this.script;
-        }
 
         public void ChangeConnection(string connectionString)
         {
-            if (this.Connection.State != ConnectionState.Closed)
-                this.Connection.Close();
+            if (this.connection.State != ConnectionState.Closed)
+                this.connection.Close();
 
             this.command.Connection = new OleDbConnection(connectionString);
         }
 
 
-        public void ChangeDatabase(string database)
-        {
-            this.Connection.ChangeDatabase(database);
-        }
-
-        protected virtual void ExceptionHandler(string message)
-        {
-            if (JException.DefaultExceptionHandler != null)
-                JException.DefaultExceptionHandler("SQL Exception", message);
-            else
-                throw new Exception(message);
-
-            //System.Windows.Forms.MessageBox.Show(message, "SQL Exception", System.Windows.Forms.MessageBoxButtons.OK);
-        }
+      
 
         public OleDbCmd AddParameter(String parameterName, OleDbType dbType)
         {
@@ -154,133 +130,22 @@ namespace Sys.Data
 
         public OleDbCommand Command
         {
-            get { return command; }
-        }
-
-        public OleDbConnection OleDbConnection
-        {
-            get { return Connection; }
+            get { return (OleDbCommand)command; }
         }
 
 
-        public DataTable ReadDataTable()
-        {
-            try
-            {
-                Connection.Open();
-                OleDbDataReader reader = command.ExecuteReader();
-                
-                DataTable table = new DataTable();
-                for (int i = 0; i < reader.FieldCount; i++)
-                {
-                    DataColumn column = new DataColumn(reader.GetName(i), reader.GetFieldType(i));
-                    table.Columns.Add(column);
-                }
-                
-                try
-                {
-                    DataRow row;
-                    while (reader.Read())
-                    {
-                        row = table.NewRow();
-                        for (int i = 0; i < reader.FieldCount; i++)
-                        {
-                            row[i] = reader.GetValue(i);
-                        }
+     
 
-                        table.Rows.Add(row);
-                    }
-                }
-                finally
-                {
-                    reader.Close();
-                }
+       
+     
 
-                table.AcceptChanges();
-                return table;
-            }
-            catch (Exception ex)
-            {
-#if DEBUG
-                ExceptionHandler(ex.Message + " :: " + command.CommandText);
-#else
-                ExceptionHandler(ex.Message);
-#endif
-            }
-            finally
-            {
-                Connection.Close();
-            }
-
-            return null;
-        }
-
-        public object ExecuteScalar()
-        {
-
-            try
-            {
-                 Connection.Open();
-
-                return command.ExecuteScalar();
-            }
-            catch (Exception ex)
-            {
-                ExceptionHandler(ex.Message);
-            }
-            finally
-            {
-                Connection.Close();
-            }
-
-            return null;
-        }
-
-		public int ExecuteNonQuery()
-		{
-            int n = 0;
-			try
-			{
-                //
-                //Transaction on INSERT/UPDATE/DELETE
-                //these commands use ExecuteNonQuery()
-                //
-                if (command.Transaction == null)
-				    Connection.Open();
-
-				n = command.ExecuteNonQuery();
-			}
-			catch (Exception ex)
-			{
-                ExceptionHandler(ex.Message);
-			}
-			finally
-			{
-                if (command.Transaction == null)
-				    Connection.Close();
-			}
-
-            return n;
-		}
-		 
-        public DataSet FillDataSet()
-        {
-
-            DataSet ds = new DataSet();
-            
-            if(FillDataSet(ds) == null)
-                return null;
-            
-            return ds;
-        }
-
-        public DataSet FillDataSet(DataSet ds)
+        public override DataSet FillDataSet(DataSet ds)
         {
             try
             {
-                Connection.Open();
+                connection.Open();
                 OleDbDataAdapter adapter = new OleDbDataAdapter();
-                adapter.SelectCommand = command;
+                adapter.SelectCommand = this.Command;
                 adapter.Fill(ds);
                 return ds;
             }
@@ -294,7 +159,7 @@ namespace Sys.Data
             }
             finally
             {
-                Connection.Close();
+                connection.Close();
             }
 
             return null;
@@ -305,9 +170,9 @@ namespace Sys.Data
         {
             try
             {
-                Connection.Open();
+                connection.Open();
                 OleDbDataAdapter adapter = new OleDbDataAdapter();
-                adapter.SelectCommand = command;
+                adapter.SelectCommand = this.Command;
                 adapter.Fill(ds, tableName);
              
             }
@@ -317,31 +182,21 @@ namespace Sys.Data
             }
             finally
             {
-                Connection.Close();
+                connection.Close();
             }
 
             return ds.Tables[tableName];
         }
 
-        public DataTable FillDataTable()
-        {
-            DataSet ds = FillDataSet();
-            if (ds == null)
-                return null;
-
-            if (ds.Tables.Count >= 1)
-                return ds.Tables[0];
-
-            return null;
-        }
+     
 
         public DataTable FillDataTable(DataTable dt)
         {
             try
             {
-                Connection.Open();
+                connection.Open();
                 OleDbDataAdapter adapter = new OleDbDataAdapter();
-                adapter.SelectCommand = command;
+                adapter.SelectCommand = this.Command;
                 adapter.Fill(dt);
                 return dt;
             }
@@ -351,58 +206,37 @@ namespace Sys.Data
             }
             finally
             {
-                Connection.Close();
+                connection.Close();
             }
 
             return null;
         }
 
-        public DataRow FillDataRow()
-        {
-            DataTable dt = FillDataTable();
-            if (dt == null)
-                return null;
-
-            if (dt.Rows.Count >= 1)
-                return dt.Rows[0];
-
-            return null;
-        }
-
-        /// <summary>
-        /// Get stored procedure's return value
-        /// </summary>
-        /// <param name="parameterName"></param>
-        /// <returns></returns>
-        public object GetReturnValue(string parameterName)
-        {
-             return command.Parameters[parameterName].Value;
-        }
-
+      
 
         //--------------------------------------------------------------------------------------
         public static object ExecuteScalar(string script, params object[] args)
         {
-            OleDbCmd cmd = new OleDbCmd(script, args);
+            OleDbCmd cmd = new OleDbCmd(string.Format(script, args));
             return cmd.ExecuteScalar();
         }
 
        
         public static int ExecuteNonQuery(string script, params object[] args)
         {
-            OleDbCmd cmd = new OleDbCmd(script, args);
+            OleDbCmd cmd = new OleDbCmd(string.Format(script, args));
             return cmd.ExecuteNonQuery();
         }
 
         public static DataSet FillDataSet(string script, params object[] args)
         {
-            OleDbCmd cmd = new OleDbCmd(script, args);
+            OleDbCmd cmd = new OleDbCmd(string.Format(script, args));
             return cmd.FillDataSet();
         }
 
         public static DataTable FillDataTable(string script, params object[] args)
         {
-            OleDbCmd cmd = new OleDbCmd(script, args);
+            OleDbCmd cmd = new OleDbCmd(string.Format(script, args));
             return cmd.FillDataTable();
         }
 
@@ -410,7 +244,7 @@ namespace Sys.Data
 
         public static DataRow FillDataRow(string script, params object[] args)
         {
-            OleDbCmd cmd = new OleDbCmd(script, args);
+            OleDbCmd cmd = new OleDbCmd(string.Format(script, args));
             return cmd.FillDataRow();
         }
 

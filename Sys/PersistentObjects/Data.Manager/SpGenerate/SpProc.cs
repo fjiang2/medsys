@@ -53,7 +53,7 @@ namespace Sys.Data.Manager
             ORDER BY parameter_id
             ";
 
-            SqlCmd cmd = new SqlCmd(SQL, databaseName, spName);
+            SqlCmd cmd = new SqlCmd(string.Format(SQL, databaseName, spName));
             cmd.ChangeConnection(sa,password);
             DataTable dt = cmd.FillDataTable();
             DPCollection<SpParamDpo> parameters = new DPCollection<SpParamDpo>(dt);
