@@ -11,14 +11,22 @@ namespace Sys.Data
         protected string script;
         protected DbCommand command;
         protected DbConnection connection;
- 
-        public DbCmd(string script)
+
+        private Type type;
+
+        public DbCmd(Type type, string script)
         {
+            this.type = type;
             this.script = script
                           .Replace("$DB_SYSTEM", Const.DB_SYSTEM)
                           .Replace("$DB_APPLICATION", Const.DB_APPLICATION);
         }
 
+        public virtual void ChangeConnection(string connectionString)
+        {
+            if (this.connection.State != ConnectionState.Closed)
+                this.connection.Close();
+        }
 
         public void ChangeDatabase(string database)
         {
@@ -42,7 +50,6 @@ namespace Sys.Data
             try
             {
                 connection.Open();
-
                 return command.ExecuteScalar();
             }
             catch (Exception ex)
@@ -97,7 +104,17 @@ namespace Sys.Data
 
 
       
-        public virtual DataSet FillDataSet(DataSet ds)
+        public virtual DataSet FillDataSet(DataSet dataSet)
+        {
+            return null;
+        }
+
+        public virtual DataTable FillDataTable(DataSet dataSet, string tableName)
+        {
+            return null;
+        }
+
+        public virtual DataTable FillDataTable(DataTable table)
         {
             return null;
         }
@@ -194,5 +211,8 @@ namespace Sys.Data
         {
             return this.script;
         }
+
+
+
     }
 }
