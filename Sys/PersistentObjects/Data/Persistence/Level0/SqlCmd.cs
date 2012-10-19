@@ -9,8 +9,8 @@ namespace Sys.Data
     public class SqlCmd : DbCmd
     {
 
-        protected SqlCmd(string script, string connectionString)
-            :base(script)
+        public SqlCmd(string script, string connectionString)
+            :base(typeof(SqlCmd), script)
         {
             this.connection = new SqlConnection(connectionString);
             this.command = new SqlCommand(this.script, (SqlConnection)connection);
@@ -19,8 +19,7 @@ namespace Sys.Data
                 command.CommandType = CommandType.Text;
             else
                 command.CommandType = CommandType.StoredProcedure;
-
-        
+     
         }
 
         public SqlCmd(string script)
@@ -50,7 +49,7 @@ namespace Sys.Data
         {
             string serverName = "";
             string initialCatalog = "";
-            string[] L1 = Const.CONNECTION_STRING.Split(new char[] { ';' });
+            string[] L1 = connection.ConnectionString.Split(new char[] { ';' });
             foreach (string s1 in L1)
             {
                 string[] L2 = s1.Split(new char[] { '=' });
@@ -70,34 +69,22 @@ namespace Sys.Data
             ChangeConnection(connectionString);
         }
 
-        public void ChangeConnection(string connectionString)
+        public override void ChangeConnection(string connectionString)
         {
-            if (this.connection.State != ConnectionState.Closed)
-                this.connection.Close();
-
-            this.command.Connection = new SqlConnection(connectionString);
+            base.ChangeConnection(connectionString);
+            this.connection = new SqlConnection(connectionString);
+            this.command.Connection = (SqlConnection)connection;
         }
 
+        public SqlParameter AddParameter(string parameterName, SqlDbType dbType)
+        {
+            SqlParameter param = new SqlParameter(parameterName, dbType);
+            param.Direction = ParameterDirection.Output;
+            command.Parameters.Add(param);
+            return param;
+        }
 
-      
-
-        //public SqlCmd AddParameter(String parameterName, SqlDbType dbType)
-        //{
-        //    SqlParameter param = new SqlParameter(parameterName, dbType);
-        //    param.Direction = ParameterDirection.Output;
-        //    command.Parameters.Add(param);
-        //    return this;
-        //}
-
-        //public SqlCmd AddParameter(String parameterName, int size)
-        //{
-        //    SqlParameter param = new SqlParameter(parameterName, SqlDbType.NVarChar, size);
-        //    param.Direction = ParameterDirection.Output;
-        //    command.Parameters.Add(param);
-        //    return this;
-        //}
-
-        public SqlCmd AddParameter(String parameterName, Object value)
+        public SqlParameter AddParameter(string parameterName, object value)
         {
             SqlDbType dbType = SqlDbType.NVarChar;
             if (value is Int32)
@@ -117,74 +104,25 @@ namespace Sys.Data
             param.Value = value;
             param.Direction = ParameterDirection.Input;
             command.Parameters.Add(param);
-            return this;
+            return param;
         }
 
-        //public SqlCmd AddParameter(String parameterName, SqlDbType dbType, object value)
-        //{
-        //    SqlParameter param = new SqlParameter(parameterName, dbType);
-        //    param.Value = value;
-        //    param.Direction = ParameterDirection.Input;
-        //    command.Parameters.Add(param);
-        //    return this;
-        //}
-
-        public SqlCmd AddParameter(String parameterName, int size, object value)
-        {
-            SqlParameter param = new SqlParameter(parameterName, SqlDbType.NVarChar, size);
-            param.Value = value;
-            param.Direction = ParameterDirection.Input;
-            command.Parameters.Add(param);
-            return this;
-        }
-
-
-        //public SqlCmd AddParameter(String parameterName, SqlDbType dbType, int size)
-        //{
-        //    SqlParameter param = new SqlParameter(parameterName, dbType, size);
-        //    param.Direction = ParameterDirection.Output;
-        //    command.Parameters.Add(param);
-        //    return this;
-        //}
-
-        //public SqlCmd AddParameter(String parameterName, SqlDbType dbType, int size, object value)
-        //{
-        //    SqlParameter param = new SqlParameter(parameterName, dbType, size);
-        //    param.Value = value;
-        //    param.Direction = ParameterDirection.Input;
-        //    command.Parameters.Add(param);
-        //    return this;
-        //}
-
-
-        //native in .net 3.0+
-        public SqlCmd SetParameter(String parameterName, Object value)
-        {
-            command.Parameters[parameterName].Value = value;
-            return this;
-        }
 
         public SqlCommand Command
         {
             get { return (SqlCommand)command; }
         }
 
-      
-
-      
-
-
-     
-
-        public override DataSet FillDataSet(DataSet ds)
+    
+        public override DataSet FillDataSet(DataSet dataSet)
         {
             try
             {
                 connection.Open();
                 SqlDataAdapter adapter = new SqlDataAdapter();
                 adapter.SelectCommand = this.Command;
-                adapter.Fill(ds);
-                return ds;
+                adapter.Fill(dataSet);
+                return dataSet;
             }
             catch (Exception ex)
             {
@@ -203,14 +141,14 @@ namespace Sys.Data
         }
 
 
-        public DataTable FillDataTable(DataSet ds, string tableName)
+        public override DataTable FillDataTable(DataSet dataSet, string tableName)
         {
             try
             {
                 connection.Open();
                 SqlDataAdapter adapter = new SqlDataAdapter();
                 adapter.SelectCommand = this.Command;
-                adapter.Fill(ds, tableName);
+                adapter.Fill(dataSet, tableName);
              
             }
             catch (Exception ex)
@@ -222,20 +160,20 @@ namespace Sys.Data
                 connection.Close();
             }
 
-            return ds.Tables[tableName];
+            return dataSet.Tables[tableName];
         }
 
-       
 
-        public DataTable FillDataTable(DataTable dt)
+
+        public override DataTable FillDataTable(DataTable table)
         {
             try
             {
                 connection.Open();
                 SqlDataAdapter adapter = new SqlDataAdapter();
                 adapter.SelectCommand = this.Command;
-                adapter.Fill(dt);
-                return dt;
+                adapter.Fill(table);
+                return table;
             }
             catch (Exception ex)
             {
@@ -248,10 +186,6 @@ namespace Sys.Data
 
             return null;
         }
-
-      
-
-     
 
 
         //--------------------------------------------------------------------------------------
@@ -287,15 +221,6 @@ namespace Sys.Data
             SqlCmd cmd = new SqlCmd(string.Format(script, args));
             return cmd.FillDataRow();
         }
-
-     
-//------------------------------------------------------------------------------------------------------
-
-     
-
-   
-     
-
 
        
     }

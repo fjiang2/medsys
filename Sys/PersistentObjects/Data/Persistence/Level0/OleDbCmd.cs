@@ -8,8 +8,8 @@ namespace Sys.Data
 {
     public class OleDbCmd : DbCmd
     {
-        protected OleDbCmd(string script, string connectionString)
-            :base(script)
+        public OleDbCmd(string script, string connectionString)
+            : base(typeof(OleDbCmd), script)
         {
             this.connection = new OleDbConnection(connectionString);
             this.command = new OleDbCommand(this.script, (OleDbConnection)connection);
@@ -18,8 +18,6 @@ namespace Sys.Data
                 command.CommandType = CommandType.Text;
             else
                 command.CommandType = CommandType.StoredProcedure;
-
-        
         }
 
         public OleDbCmd(string script)
@@ -34,34 +32,27 @@ namespace Sys.Data
         }
 
 
-        public void ChangeConnection(string connectionString)
+        public override void ChangeConnection(string connectionString)
         {
-            if (this.connection.State != ConnectionState.Closed)
-                this.connection.Close();
-
-            this.command.Connection = new OleDbConnection(connectionString);
+            base.ChangeConnection(connectionString);
+            this.connection = new OleDbConnection(connectionString);
+            this.command.Connection = (OleDbConnection)connection;
         }
 
 
-      
 
-        public OleDbCmd AddParameter(String parameterName, OleDbType dbType)
+
+        public OleDbParameter AddParameter(string parameterName, OleDbType dbType)
         {
             OleDbParameter param = new OleDbParameter(parameterName, dbType);
             param.Direction = ParameterDirection.Output;
             command.Parameters.Add(param);
-            return this;
+            return param;
         }
 
-        public OleDbCmd AddParameter(String parameterName, int size)
-        {
-            OleDbParameter param = new OleDbParameter(parameterName, OleDbType.WChar, size);
-            param.Direction = ParameterDirection.Output;
-            command.Parameters.Add(param);
-            return this;
-        }
 
-        public OleDbCmd AddParameter(String parameterName, Object value)
+
+        public OleDbParameter AddParameter(string parameterName, object value)
         {
             OleDbType dbType = OleDbType.WChar;
             if (value is Int32)
@@ -81,51 +72,7 @@ namespace Sys.Data
             param.Value = value;
             param.Direction = ParameterDirection.Input;
             command.Parameters.Add(param);
-            return this;
-        }
-
-        public OleDbCmd AddParameter(String parameterName, OleDbType dbType, object value)
-        {
-            OleDbParameter param = new OleDbParameter(parameterName, dbType);
-            param.Value = value;
-            param.Direction = ParameterDirection.Input;
-            command.Parameters.Add(param);
-            return this;
-        }
-
-        public OleDbCmd AddParameter(String parameterName, int size, object value)
-        {
-            OleDbParameter param = new OleDbParameter(parameterName, OleDbType.WChar, size);
-            param.Value = value;
-            param.Direction = ParameterDirection.Input;
-            command.Parameters.Add(param);
-            return this;
-        }
-
-
-        public OleDbCmd AddParameter(String parameterName, OleDbType dbType, int size)
-        {
-            OleDbParameter param = new OleDbParameter(parameterName, dbType, size);
-            param.Direction = ParameterDirection.Output;
-            command.Parameters.Add(param);
-            return this;
-        }
-
-        public OleDbCmd AddParameter(String parameterName, OleDbType dbType, int size, object value)
-        {
-            OleDbParameter param = new OleDbParameter(parameterName, dbType, size);
-            param.Value = value;
-            param.Direction = ParameterDirection.Input;
-            command.Parameters.Add(param);
-            return this;
-        }
-
-
-        //native in .net 3.0+
-        public OleDbCmd SetParameter(String parameterName, Object value)
-        {
-            command.Parameters[parameterName].Value = value;
-            return this;
+            return param;
         }
 
         public OleDbCommand Command
@@ -134,20 +81,15 @@ namespace Sys.Data
         }
 
 
-     
-
-       
-     
-
-        public override DataSet FillDataSet(DataSet ds)
+        public override DataSet FillDataSet(DataSet dataSet)
         {
             try
             {
                 connection.Open();
                 OleDbDataAdapter adapter = new OleDbDataAdapter();
                 adapter.SelectCommand = this.Command;
-                adapter.Fill(ds);
-                return ds;
+                adapter.Fill(dataSet);
+                return dataSet;
             }
             catch (Exception ex)
             {
@@ -166,14 +108,14 @@ namespace Sys.Data
         }
 
 
-        public DataTable FillDataTable(DataSet ds, string tableName)
+        public override DataTable FillDataTable(DataSet dataSet, string tableName)
         {
             try
             {
                 connection.Open();
                 OleDbDataAdapter adapter = new OleDbDataAdapter();
                 adapter.SelectCommand = this.Command;
-                adapter.Fill(ds, tableName);
+                adapter.Fill(dataSet, tableName);
              
             }
             catch (Exception ex)
@@ -185,20 +127,20 @@ namespace Sys.Data
                 connection.Close();
             }
 
-            return ds.Tables[tableName];
+            return dataSet.Tables[tableName];
         }
 
-     
 
-        public DataTable FillDataTable(DataTable dt)
+
+        public override DataTable FillDataTable(DataTable table)
         {
             try
             {
                 connection.Open();
                 OleDbDataAdapter adapter = new OleDbDataAdapter();
                 adapter.SelectCommand = this.Command;
-                adapter.Fill(dt);
-                return dt;
+                adapter.Fill(table);
+                return table;
             }
             catch (Exception ex)
             {
