@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("X12")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("App.X12")]
+[assembly: AssemblyDescription("X12-5010A analyzer")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("X12")]
-[assembly: AssemblyCopyright("Copyright © Microsoft 2012")]
+[assembly: AssemblyCompany("Datum Connect Inc.")]
+[assembly: AssemblyProduct("X12 5010A analyzer")]
+[assembly: AssemblyCopyright("Copyright © DATCONN 2012")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

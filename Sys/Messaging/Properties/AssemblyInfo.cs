@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Messaging")]
+[assembly: AssemblyTitle("Sys.Messaging")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Blue Express Solutions")]
-[assembly: AssemblyProduct("Messaging")]
-[assembly: AssemblyCopyright("Copyright © BES 2010")]
+[assembly: AssemblyCompany("Datum Connect Inc.")]
+[assembly: AssemblyProduct("XMPP Messaging")]
+[assembly: AssemblyCopyright("Copyright © DATCONN 2010")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
