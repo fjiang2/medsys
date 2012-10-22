@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("SmartList")]
+[assembly: AssemblyTitle("Sys.SmartList")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Blue Express Solutions")]
+[assembly: AssemblyCompany("Datum Connect Inc.")]
 [assembly: AssemblyProduct("SmartList")]
-[assembly: AssemblyCopyright("Copyright © BES 2012")]
+[assembly: AssemblyCopyright("Copyright © DATCONN 2012")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("SystemFoundation")]
+[assembly: AssemblyTitle("Sys.Foundation")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Blue Express Solutions")]
-[assembly: AssemblyProduct("SystemFoundation")]
-[assembly: AssemblyCopyright("Copyright © BES 2012")]
+[assembly: AssemblyCompany("Datum Connect Inc.")]
+[assembly: AssemblyProduct("System Foundation")]
+[assembly: AssemblyCopyright("Copyright © DATCONN 2012")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

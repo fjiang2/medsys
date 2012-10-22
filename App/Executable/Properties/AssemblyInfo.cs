@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Datum Connect Inc.")]
 [assembly: AssemblyProduct("Median System")]
-[assembly: AssemblyCopyright("Copyright © DCI 2012")]
+[assembly: AssemblyCopyright("Copyright © DATCONN 2012")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
