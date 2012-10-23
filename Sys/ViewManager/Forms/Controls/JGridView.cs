@@ -117,7 +117,7 @@ namespace Sys.ViewManager.Forms
 
             set
             {
-                if (this.dataTable == null || this.dataTable!= value)
+                if (this.dataTable == null || IsTableStructureChanged(value))
                 {
                     this.dataTable = value;
 
@@ -133,7 +133,27 @@ namespace Sys.ViewManager.Forms
             }
         }
 
+        /// <summary>
+        /// Table Structure is changed?
+        /// </summary>
+        /// <param name="table"></param>
+        /// <returns></returns>
+        private bool IsTableStructureChanged(DataTable table)
+        {
+            if (this.dataTable.Columns.Count != table.Columns.Count)
+                return true;
 
+            foreach (DataColumn column in this.dataTable.Columns)
+            {
+                if (!table.Columns.Contains(column.ColumnName))
+                    return true;
+                
+                if(table.Columns[column.ColumnName].DataType != column.DataType)
+                    return true;
+            }
+
+            return false;
+        }
 
         public override ContextMenuStrip ContextMenuStrip
         {
