@@ -117,7 +117,7 @@ namespace Sys.ViewManager.Forms
 
             set
             {
-                if (this.dataTable == null)
+                if (this.dataTable == null || this.dataTable!= value)
                 {
                     this.dataTable = value;
 
