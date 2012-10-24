@@ -72,7 +72,7 @@ namespace Sys
                     field.SetValue(null, val.HostValue);
             }
 
-
+            DataProviderManager.Register(DataProviderType.SqlServer, Const.CONNECTION_STRING);
 
 
             Const.Revision = (int)Configuration.Instance["Revision"];
@@ -82,7 +82,6 @@ namespace Sys
             {
                 System.Windows.Forms.MessageBox.Show(message, title, System.Windows.Forms.MessageBoxButtons.OK);
             };
-
 
 
             return SqlServer.IsGoodConnectionString();
