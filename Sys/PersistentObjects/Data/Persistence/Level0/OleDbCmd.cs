@@ -8,20 +8,13 @@ namespace Sys.Data
 {
     public class OleDbCmd : DbCmd
     {
-        public OleDbCmd(string script, string connectionString)
-            : base(typeof(OleDbCmd), script)
+        public OleDbCmd(DataProvider provider, string script)
+            : base(provider,script)
         {
-            this.connection = new OleDbConnection(connectionString);
-            this.command = new OleDbCommand(this.script, (OleDbConnection)connection);
-
-            if (this.script.Contains(" "))  //Stored Procedure Name does not contain a space letter
-                command.CommandType = CommandType.Text;
-            else
-                command.CommandType = CommandType.StoredProcedure;
         }
 
         public OleDbCmd(string script)
-            :this(script, Const.CONNECTION_STRING)
+            : this(DataProviderManager.ActiveProvider, script)
         {
         }
 

@@ -9,21 +9,13 @@ namespace Sys.Data
     public class SqlCmd : DbCmd
     {
 
-        public SqlCmd(string script, string connectionString)
-            :base(typeof(SqlCmd), script)
+        public SqlCmd(DataProvider provider, string script)
+            :base(provider, script)
         {
-            this.connection = new SqlConnection(connectionString);
-            this.command = new SqlCommand(this.script, (SqlConnection)connection);
-
-            if (this.script.Contains(" "))  //Stored Procedure Name does not contain a space letter
-                command.CommandType = CommandType.Text;
-            else
-                command.CommandType = CommandType.StoredProcedure;
-     
         }
 
         public SqlCmd(string script)
-            : this(script, Const.CONNECTION_STRING)
+            : this(DataProviderManager.ActiveProvider, script)
         {
         }
 

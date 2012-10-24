@@ -12,7 +12,9 @@ namespace Sys.Data
     public class DataProviderManager
     {
         private static DataProviderManager instance = null;
-        Dictionary<string, DataProvider> providers = new Dictionary<string,DataProvider>();
+
+        Dictionary<string, DataProvider> providers = new Dictionary<string, DataProvider>();
+        Stack<DataProvider> stacks = new Stack<DataProvider>();
 
         private DataProviderManager()
         { 
@@ -34,14 +36,28 @@ namespace Sys.Data
         {
             if (providers.ContainsKey(provider.ConnectionString))
             {
-                providers.Remove(provider.ConnectionString);
+                return providers[provider.ConnectionString];
             }
 
             providers.Add(provider.ConnectionString, provider);
+            stacks.Push(provider);
 
             return provider;
         }
 
+        private void Remove()
+        {
+             DataProvider provider = stacks.Pop();
+             providers.Remove(provider.ConnectionString);
+        }
+
+        private DataProvider Top
+        {
+            get
+            {
+                return stacks.Peek();
+            }
+        }
 
         public override string ToString()
         {
@@ -49,7 +65,11 @@ namespace Sys.Data
         }
 
 
+
+
 //-----------------------------------------------------------------------------------------------------------------------------------
+
+
 
         const string Excel2010 = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=@XLS;Extended Properties=\"Excel 12.0 Xml;HDR=No\"";
         const string Excel2007 = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=@XLS;Extended Properties=\"Excel 8.0;HDR=NO;\"";
@@ -84,6 +104,13 @@ namespace Sys.Data
             Instance.providers.Remove(provider.ConnectionString);
         }
 
+        public static DataProvider ActiveProvider
+        {
+            get
+            {
+                return Instance.Top;
+            }
+        }
     }
 }
 

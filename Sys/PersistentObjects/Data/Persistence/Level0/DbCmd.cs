@@ -12,14 +12,17 @@ namespace Sys.Data
         protected DbCommand command;
         protected DbConnection connection;
 
-        private Type type;
+        private DataProvider provider;
 
-        public DbCmd(Type type, string script)
+        public DbCmd(DataProvider provider, string script)
         {
-            this.type = type;
+            this.provider = provider;
             this.script = script
                           .Replace("$DB_SYSTEM", Const.DB_SYSTEM)
                           .Replace("$DB_APPLICATION", Const.DB_APPLICATION);
+
+            this.connection= provider.DbConnection;
+            this.command = provider.DbCommand(script, this.connection);
         }
 
         public virtual void ChangeConnection(string connectionString)
@@ -103,21 +106,10 @@ namespace Sys.Data
         }
 
 
-      
-        public virtual DataSet FillDataSet(DataSet dataSet)
-        {
-            return null;
-        }
 
-        public virtual DataTable FillDataTable(DataSet dataSet, string tableName)
-        {
-            return null;
-        }
-
-        public virtual DataTable FillDataTable(DataTable table)
-        {
-            return null;
-        }
+        public abstract DataSet FillDataSet(DataSet dataSet);
+        public abstract DataTable FillDataTable(DataSet dataSet, string tableName);
+        public abstract DataTable FillDataTable(DataTable table);
 
         public DataSet FillDataSet()
         {
