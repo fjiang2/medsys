@@ -46,6 +46,9 @@
     <Compile Include="Data\Attribute\AggregatedAttribute.cs" />
     <Compile Include="Data\Clause\SqlClauseInfo.cs" />
     <Compile Include="Data\Metadata\ForeignKeys.cs" />
+    <Compile Include="Data\Persistence\Level0\DataProviderManager.cs" />
+    <Compile Include="Data\Persistence\Level0\DataProvider.cs" />
+    <Compile Include="Data\Persistence\Level0\DataProviderType.cs" />
     <Compile Include="Data\Persistence\Level0\DbCmd.cs" />
     <Compile Include="Data\Persistence\Level0\OleDbCmd.cs" />
     <Compile Include="Data\Persistence\Level2\Mapping.cs" />
