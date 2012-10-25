@@ -39,6 +39,10 @@ namespace Sys.Data
 
         }
 
+        protected bool SQLDB
+        {
+            get { return this.provider.DbType == DbType.SqlDb; }
+        }
 
         public virtual void ChangeConnection(DataProvider provider)
         {
