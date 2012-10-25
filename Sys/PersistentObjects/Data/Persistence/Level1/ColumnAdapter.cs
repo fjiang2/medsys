@@ -108,7 +108,7 @@ namespace Sys.Data
 
             param.Value = value;
             param.Direction = ParameterDirection.Input;
-            sqlCmd.Command.Parameters.Add(param);
+            sqlCmd.SqlCommand.Parameters.Add(param);
         }
 
 
@@ -121,7 +121,7 @@ namespace Sys.Data
                 param.Value = 0;
 
             param.Direction = ParameterDirection.Output;
-            sqlCmd.Command.Parameters.Add(param);
+            sqlCmd.SqlCommand.Parameters.Add(param);
             return param;
         }
 

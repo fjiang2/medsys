@@ -25,12 +25,12 @@ namespace Sys.Data
         
         public void Add(SqlCmd cmd)
         {
-            if (cmd.Command.Connection.State != ConnectionState.Closed)
-                cmd.Command.Connection.Close();
+            if (cmd.SqlCommand.Connection.State != ConnectionState.Closed)
+                cmd.SqlCommand.Connection.Close();
 
 
-            cmd.Command.Transaction = sqlTransaction;
-            cmd.Command.Connection = this.connection;
+            cmd.SqlCommand.Transaction = sqlTransaction;
+            cmd.SqlCommand.Connection = this.connection;
      
         }
 
