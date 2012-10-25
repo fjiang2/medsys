@@ -100,7 +100,7 @@ namespace Sys
         /// <returns></returns>
         public static bool ValidDatabase()
         {
-            SqlConnection conn = new SqlConnection(Constant.CONNECTION_STRING);
+            SqlConnection conn =  (SqlConnection)Sys.Data.DataProviderManager.DefaultProvider.DbConnection;
             try
             {
                 conn.Open();

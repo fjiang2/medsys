@@ -6,15 +6,16 @@ using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
 using System.Data.OleDb;
+using DataProviderHandle = System.Int32;
 
 namespace Sys.Data
 {
+    
     public class DataProviderManager
     {
         private static DataProviderManager instance = null;
 
-        Dictionary<string, DataProvider> providers = new Dictionary<string, DataProvider>();
-        Stack<DataProvider> stacks = new Stack<DataProvider>();
+        Dictionary<DataProviderHandle, DataProvider> providers = new Dictionary<DataProviderHandle, DataProvider>();
 
         private DataProviderManager()
         { 
@@ -32,32 +33,32 @@ namespace Sys.Data
 
         }
 
-        private DataProvider Add(DataProvider provider)
+        private DataProvider Add(DataProviderHandle handle, DataProvider provider)
         {
-            if (providers.ContainsKey(provider.ConnectionString))
+            if (providers.ContainsKey(handle))
             {
-                return providers[provider.ConnectionString];
+                return providers[handle];
             }
 
-            providers.Add(provider.ConnectionString, provider);
-            stacks.Push(provider);
+            providers.Add(handle, provider);
 
             return provider;
         }
 
-        private void Remove()
-        {
-             DataProvider provider = stacks.Pop();
-             providers.Remove(provider.ConnectionString);
-        }
-
-        private DataProvider Top
+        private DataProvider this[DataProviderHandle handle]
         {
             get
             {
-                return stacks.Peek();
+                return providers[handle];
             }
         }
+
+        private void Remove(DataProviderHandle handle)
+        {
+             providers.Remove(handle);
+        }
+
+
 
         public override string ToString()
         {
@@ -71,46 +72,49 @@ namespace Sys.Data
 
 
 
-        const string Excel2010 = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=@XLS;Extended Properties=\"Excel 12.0 Xml;HDR=No\"";
-        const string Excel2007 = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=@XLS;Extended Properties=\"Excel 8.0;HDR=NO;\"";
-        const string SqlServer = "data source=@SVR;initial catalog=@DB;integrated security=SSPI;packet size=4096";
+ 
+        #region Default Data Provider
 
-        public static DataProvider Register(DataProviderType type, string connectionString)
+        internal const DataProviderHandle DEFAULT_PROVIDER = 0;
+
+        public static void RegisterDefaultProvider(string connectionString)
         {
-            return Instance.Add(new DataProvider(type, connectionString));
+            Instance.Add(DEFAULT_PROVIDER, new DataProvider(DataProviderType.SqlServer, connectionString));
         }
 
-        public static DataProvider RegisterSqlServerSSPI(string serverName, string database)
-        {
-            string connectionString = SqlServer.Replace("@SVR", serverName).Replace("@DB", database);
-            return Instance.Add(new DataProvider(DataProviderType.SqlServer, connectionString));
-        }
-
-        public static DataProvider RegisterExcel2007(string xlsName)
-        {
-            string connectionString = Excel2007.Replace("@XLS", xlsName);
-            return Instance.Add(new DataProvider(DataProviderType.Excel2007, connectionString));
-        }
-
-        public static DataProvider RegisterExcel2010(string xlsName)
-        {
-            string connectionString = Excel2007.Replace("@XLS", xlsName);
-            return Instance.Add(new DataProvider(DataProviderType.Excel2010, connectionString));
-        }
-
-
-        public static void Unregister(DataProvider provider)
-        {
-            Instance.providers.Remove(provider.ConnectionString);
-        }
-
-        public static DataProvider ActiveProvider
+        public static DataProvider DefaultProvider
         {
             get
             {
-                return Instance.Top;
+                return Instance[DEFAULT_PROVIDER];
             }
         }
+
+        #endregion
+
+
+
+        private static DataProviderHandle handle = DEFAULT_PROVIDER + 1000;
+        public static DataProviderHandle Register(DataProviderType type, string connectionString)
+        {
+            handle++;
+
+            Instance.Add(handle, new DataProvider(type, connectionString));
+            return handle;
+        }
+
+        public static DataProvider GetProvider(DataProviderHandle handle)
+        {
+            return Instance[handle];
+        }
+
+
+        public static void Unregister(DataProviderHandle handle)
+        {
+            Instance.Remove(handle);
+        }
+
+      
     }
 }
 

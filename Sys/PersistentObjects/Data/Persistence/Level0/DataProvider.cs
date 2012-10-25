@@ -27,6 +27,7 @@ namespace Sys.Data
             this.connectionString = connectionString;
         }
 
+
         internal DbType DbType
         {
             get
@@ -53,38 +54,18 @@ namespace Sys.Data
             }
         }
 
-        public DbCommand DbCommand(string script)
-        {
-            return DbCommand(script, this.DbConnection);
-        }
 
-        public DbCommand DbCommand(string script, DbConnection connection)
-        {
-             DbCommand command;
-
-            if (DbType == DbType.SqlDb)
-                command = new SqlCommand(script, (SqlConnection)connection);
-            else
-                command = new OleDbCommand(script, (OleDbConnection)connection);
-
-            if (script.Contains(" "))  //Stored Procedure Name does not contain a space letter
-                command.CommandType = CommandType.Text;
-            else
-                command.CommandType = CommandType.StoredProcedure;
-
-            return command;
-        }
-
-
-        internal string ConnectionString
-        {
-            get { return this.connectionString; }
-        }
-
+     
         public override string ToString()
         {
             return this.connectionString;;
         }
+
+
+
+      
+
+  
     }
 
    

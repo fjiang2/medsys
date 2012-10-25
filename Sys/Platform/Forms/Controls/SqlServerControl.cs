@@ -38,7 +38,7 @@ namespace Sys.Platform.Forms
             }
         }
 
-        private string GetConnection()
+        private string GetConnectionString()
         {
             string server, userName, password;
             bool integratedSecurity;
@@ -164,7 +164,7 @@ namespace Sys.Platform.Forms
                     comboBoxDatabase.Items.Add(database);
                 }
 
-                Sys.Constant.CONNECTION_STRING = GetConnection();
+                DataProviderManager.RegisterDefaultProvider(GetConnectionString());
                 if (Connected != null)
                     Connected(this, new ConnectionEventArgs(true));
             }

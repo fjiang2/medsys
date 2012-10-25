@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Data.Common;
+using System.Data.OleDb;
+using System.Data.SqlClient;
 using System.Data;
+using DataProviderHandle = System.Int32;
 
 namespace Sys.Data
 {
@@ -14,22 +17,45 @@ namespace Sys.Data
 
         private DataProvider provider;
 
-        public DbCmd(DataProvider provider, string script)
+        public DbCmd(DataProviderHandle handle, string script)
         {
-            this.provider = provider;
+            this.provider = DataProviderManager.GetProvider(handle);
+            
             this.script = script
                           .Replace("$DB_SYSTEM", Const.DB_SYSTEM)
                           .Replace("$DB_APPLICATION", Const.DB_APPLICATION);
 
             this.connection= provider.DbConnection;
-            this.command = provider.DbCommand(script, this.connection);
+
+            if (provider.DbType == DbType.SqlDb)
+                this.command = new SqlCommand(script, (SqlConnection)connection);
+            else
+                this.command = new OleDbCommand(script, (OleDbConnection)connection);
+
+            if (script.Contains(" "))  //Stored Procedure Name does not contain a space letter
+                this.command.CommandType = CommandType.Text;
+            else
+                this.command.CommandType = CommandType.StoredProcedure;
+
         }
 
-        public virtual void ChangeConnection(string connectionString)
+
+        public virtual void ChangeConnection(DataProvider provider)
         {
             if (this.connection.State != ConnectionState.Closed)
                 this.connection.Close();
+
+            this.provider = provider;
+            this.connection = provider.DbConnection;
+
+            if (provider.DbType == DbType.SqlDb)
+                this.command.Connection = (SqlConnection)connection;
+            else
+                this.command.Connection = (OleDbConnection)connection;
         }
+
+
+      
 
         public void ChangeDatabase(string database)
         {
@@ -45,6 +71,18 @@ namespace Sys.Data
                 throw new Exception(message);
 
             //System.Windows.Forms.MessageBox.Show(message, "SQL Exception", System.Windows.Forms.MessageBoxButtons.OK);
+        }
+
+
+        public DbDataAdapter DbDataAdapter
+        {
+            get
+            {
+                if (provider.DbType == DbType.SqlDb)
+                    return new SqlDataAdapter();
+                else
+                    return new OleDbDataAdapter();
+            }
         }
 
         public object ExecuteScalar()
