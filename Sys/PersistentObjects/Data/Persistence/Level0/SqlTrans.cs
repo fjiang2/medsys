@@ -4,20 +4,21 @@ using System.Linq;
 using System.Text;
 using System.Data;
 using System.Data.SqlClient;
+using System.Data.Common;
 
 namespace Sys.Data
 {
    
     public sealed class SqlTrans
     {
-        private SqlConnection sqlConnection;
+        private SqlConnection connection;
         private SqlTransaction sqlTransaction;
 
         public SqlTrans()
         {
-            this.sqlConnection = new SqlConnection(Const.CONNECTION_STRING);
-            this.sqlConnection.Open();
-            this.sqlTransaction = sqlConnection.BeginTransaction();
+            this.connection = (SqlConnection)DataProviderManager.DefaultProvider.DbConnection;
+            this.connection.Open();
+            this.sqlTransaction = connection.BeginTransaction();
         }
 
 
@@ -29,7 +30,7 @@ namespace Sys.Data
 
 
             cmd.Command.Transaction = sqlTransaction;
-            cmd.Command.Connection = this.sqlConnection;
+            cmd.Command.Connection = this.connection;
      
         }
 
@@ -69,7 +70,7 @@ namespace Sys.Data
             }
             finally
             {
-                sqlConnection.Close();
+                connection.Close();
             }
 
         }

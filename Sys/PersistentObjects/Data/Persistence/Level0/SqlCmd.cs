@@ -3,19 +3,20 @@ using System.Collections.Generic;
 using System.Text;
 using System.Data.SqlClient;
 using System.Data;
+using DataProviderHandle = System.Int32;
 
 namespace Sys.Data
 {
     public class SqlCmd : DbCmd
     {
 
-        public SqlCmd(DataProvider provider, string script)
-            :base(provider, script)
+        public SqlCmd(DataProviderHandle handle, string script)
+            : base(handle, script)
         {
         }
 
         public SqlCmd(string script)
-            : this(DataProviderManager.ActiveProvider, script)
+            : this(DataProviderManager.DEFAULT_PROVIDER, script)
         {
         }
 
@@ -25,17 +26,6 @@ namespace Sys.Data
         
         }
 
-     
-        public void ChangeConnection(string serverName, bool integratedSecurity, string initialCatalog, string userName, string password)
-        {
-            string security = "integrated security=SSPI;";
-            if(!integratedSecurity)
-                security = string.Format("user id= {0}; password={1};", userName, password);
-
-            string connectionString = string.Format("data source={0}; initial catalog={1}; {2} pooling=false", serverName, initialCatalog, security);
-
-            ChangeConnection(connectionString);
-        }
 
         public void ChangeConnection(string userName, string password)
         {
@@ -58,15 +48,10 @@ namespace Sys.Data
                 userName, 
                 password);
 
-            ChangeConnection(connectionString);
+            ChangeConnection(new DataProvider(DataProviderType.SqlServer, connectionString));
         }
 
-        public override void ChangeConnection(string connectionString)
-        {
-            base.ChangeConnection(connectionString);
-            this.connection = new SqlConnection(connectionString);
-            this.command.Connection = (SqlConnection)connection;
-        }
+  
 
         public SqlParameter AddParameter(string parameterName, SqlDbType dbType)
         {

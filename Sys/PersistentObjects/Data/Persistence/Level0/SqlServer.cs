@@ -129,7 +129,7 @@ namespace Sys.Data
 
         public static bool IsGoodConnectionString()
         {
-            SqlConnection conn = new SqlConnection(Const.CONNECTION_STRING);
+            SqlConnection conn = (SqlConnection)DataProviderManager.DefaultProvider.DbConnection;
             try
             {
                 conn.Open();
@@ -148,6 +148,37 @@ namespace Sys.Data
             return true;
         }
 
+
+        #region Register SQL SERVER
+
+        public static int Register(string connectionString)
+        {
+            return DataProviderManager.Register(DataProviderType.SqlServer, connectionString);
+        }
+
+        
+        private static int Register(string serverName, bool integratedSecurity, string database, string userName, string password)
+        {
+            string security = "integrated security=SSPI;";
+            if (!integratedSecurity)
+                security = string.Format("user id= {0}; password={1};", userName, password);
+
+            string connectionString = string.Format("data source={0}; initial catalog={1}; {2} pooling=false", serverName, database, security);
+
+            return DataProviderManager.Register(DataProviderType.SqlServer, connectionString);
+        }
+
+        public static int Register(string serverName, string database, string userName, string password)
+        {
+            return Register(serverName, false, database, userName, password);
+        }
+
+        public static int Register(string serverName, string database)
+        {
+            return Register(serverName, true, database, null, null);
+        }
+
+        #endregion
 
     }
 }

@@ -3,18 +3,19 @@ using System.Collections.Generic;
 using System.Text;
 using System.Data.OleDb;
 using System.Data;
+using DataProviderHandle = System.Int32;
 
 namespace Sys.Data
 {
     public class OleDbCmd : DbCmd
     {
-        public OleDbCmd(DataProvider provider, string script)
-            : base(provider,script)
+        public OleDbCmd(DataProviderHandle handle, string script)
+            : base(handle, script)
         {
         }
 
         public OleDbCmd(string script)
-            : this(DataProviderManager.ActiveProvider, script)
+            : this(DataProviderManager.DEFAULT_PROVIDER, script)
         {
         }
 
@@ -25,14 +26,7 @@ namespace Sys.Data
         }
 
 
-        public override void ChangeConnection(string connectionString)
-        {
-            base.ChangeConnection(connectionString);
-            this.connection = new OleDbConnection(connectionString);
-            this.command.Connection = (OleDbConnection)connection;
-        }
-
-
+       
 
 
         public OleDbParameter AddParameter(string parameterName, OleDbType dbType)

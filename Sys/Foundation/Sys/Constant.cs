@@ -72,7 +72,7 @@ namespace Sys
                     field.SetValue(null, val.HostValue);
             }
 
-            DataProviderManager.Register(DataProviderType.SqlServer, Const.CONNECTION_STRING);
+            DataProviderManager.RegisterDefaultProvider(Const.CONNECTION_STRING);
 
 
             Const.Revision = (int)Configuration.Instance["Revision"];

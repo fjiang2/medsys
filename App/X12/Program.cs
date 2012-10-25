@@ -26,8 +26,9 @@ namespace X12
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            Sys.Const.CONNECTION_STRING = "data source=localhost\\SQLSERVER2008;initial catalog=medsys;integrated security=SSPI;packet size=4096";
-            //Sys.Const.CONNECTION_STRING = "data source=localhost\\SQLEXPRESS;initial catalog=medsys;integrated security=SSPI;packet size=4096";
+            string connetionString = "data source=localhost\\SQLSERVER2008;initial catalog=medsys;integrated security=SSPI;packet size=4096";
+            //connetionString = "data source=localhost\\SQLEXPRESS;initial catalog=medsys;integrated security=SSPI;packet size=4096";
+            DataProviderManager.RegisterDefaultProvider(connetionString);
 
             Assembly assembly = Assembly.GetExecutingAssembly();
             Manager mgr = new Manager(assembly);
