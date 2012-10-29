@@ -28,11 +28,11 @@ namespace Sys.Data
             this.connection= provider.DbConnection;
 
             if (provider.DbType == DbType.SqlDb)
-                this.command = new SqlCommand(script, (SqlConnection)connection);
+                this.command = new SqlCommand(this.script, (SqlConnection)connection);
             else
-                this.command = new OleDbCommand(script, (OleDbConnection)connection);
+                this.command = new OleDbCommand(this.script, (OleDbConnection)connection);
 
-            if (script.Contains(" "))  //Stored Procedure Name does not contain a space letter
+            if (this.script.Contains(" "))  //Stored Procedure Name does not contain a space letter
                 this.command.CommandType = CommandType.Text;
             else
                 this.command.CommandType = CommandType.StoredProcedure;
