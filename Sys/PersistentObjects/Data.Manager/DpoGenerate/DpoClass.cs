@@ -315,7 +315,11 @@ namespace Sys.Data.Manager
 //   by {0} at {1}
 //
 ";
-            comment = string.Format(comment, Active.Account.UserName, DateTime.Now);
+            string who = "devel";
+            if (Active.Account != null)
+                who = Active.Account.UserName;
+
+            comment = string.Format(comment, who, DateTime.Now);
             string usingString = @"{0}
 using System;
 using System.Collections.Generic;
