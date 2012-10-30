@@ -79,6 +79,22 @@ namespace Sys.Data
 
         public static void RegisterDefaultProvider(string connectionString)
         {
+            RegisterDefaultProvider(connectionString, null);
+        }
+
+        public static void RegisterDefaultProvider(string connectionString, string sysDatabase)
+        {
+            const string INITIAL = "initial catalog";
+            string initial = connectionString.Split(new char[] { ';' }).Where(segment => segment.StartsWith(INITIAL)).First();
+            string appDatabase = initial.Replace(INITIAL, "").Replace("=", "").Trim();
+
+
+            Sys.Const.DB_APPLICATION = appDatabase;
+            if (sysDatabase == null)
+                Sys.Const.DB_SYSTEM = appDatabase;
+            else
+                Sys.Const.DB_SYSTEM = sysDatabase;
+
             Instance.Add(DEFAULT_PROVIDER, new DataProvider(DataProviderType.SqlServer, connectionString));
         }
 
