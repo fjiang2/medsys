@@ -85,7 +85,7 @@ namespace Sys.Data
         public static void RegisterDefaultProvider(string connectionString, string sysDatabase)
         {
             const string INITIAL = "initial catalog";
-            string initial = connectionString.Split(new char[] { ';' }).Where(segment => segment.StartsWith(INITIAL)).First();
+            string initial = connectionString.Split(new char[] { ';' }).Where(segment => segment.Trim().StartsWith(INITIAL)).First();
             string appDatabase = initial.Replace(INITIAL, "").Replace("=", "").Trim();
 
 

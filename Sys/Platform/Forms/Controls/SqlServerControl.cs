@@ -164,7 +164,6 @@ namespace Sys.Platform.Forms
                     comboBoxDatabase.Items.Add(database);
                 }
 
-                DataProviderManager.RegisterDefaultProvider(GetConnectionString());
                 if (Connected != null)
                     Connected(this, new ConnectionEventArgs(true));
             }
@@ -191,9 +190,11 @@ namespace Sys.Platform.Forms
                 return false;
             }
 
+            DataProviderManager.RegisterDefaultProvider(GetConnectionString());
+            
             Sys.Constant.DB_SYSTEM = databaseName;
             Sys.Constant.DB_APPLICATION = databaseName;
-
+            
             return true;
         }
 
