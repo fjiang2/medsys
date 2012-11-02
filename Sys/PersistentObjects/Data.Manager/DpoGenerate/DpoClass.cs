@@ -319,7 +319,7 @@ namespace Sys.Data.Manager
             if (Active.Account != null)
                 who = Active.Account.UserName;
 
-            comment = string.Format(comment, who, DateTime.Now);
+            comment = string.Format(comment, who, DateTime.Now.ToShortDateString());
             string usingString = @"{0}
 using System;
 using System.Collections.Generic;
