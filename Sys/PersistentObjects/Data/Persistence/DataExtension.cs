@@ -126,7 +126,15 @@ namespace Sys.Data
         #endregion
 
 
-   
+        public static T Cell<T>(this DataTable dataTable, int row, int column, T defaultValue)
+        {
+            return dataTable.Rows[row][column].IsNull<T>(defaultValue);
+        }
+
+        public static T Cell<T>(this DataTable dataTable, int row, int column)
+        {
+            return (T)dataTable.Rows[row][column];
+        }
 
 
 
