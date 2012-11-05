@@ -185,9 +185,17 @@ namespace Sys.Data
             }
         }
 
-        public void SetLocator(string[] columns)
+        /// <summary>
+        /// set new locator and return old locator
+        /// </summary>
+        /// <param name="columns"></param>
+        /// <returns></returns>
+        public Locator SetLocator(string[] columns)
         {
+            Locator old = this.locator;
             this.locator = new Locator(columns);
+            
+            return old;
         }
 
         /// <summary>
