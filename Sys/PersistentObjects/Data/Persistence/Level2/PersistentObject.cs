@@ -48,6 +48,22 @@ namespace Sys.Data
             this.UpdateObject(dataRow);
         }
 
+        /// <summary>
+        /// Update object by unique identityId
+        /// </summary>
+        /// <param name="identityId"></param>
+        public void UpdateObject(int identityId)
+        {
+            if (this.Identity.Length == 0)
+                throw new JException("no identity columns found");
+
+            if (this.Identity.Length > 1)
+                throw new JException("multiple identity columns defined {0}", this.Identity);
+
+            DataRow row = SqlCmd.FillDataRow("SELECT * FROM {0} WHERE [{1}]={2}", this.TableName, this.Identity.Keys[0], identityId);
+            this.UpdateObject(row);
+
+        }
 
         /// <summary>
         /// Copy constructor
