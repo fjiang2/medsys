@@ -241,30 +241,32 @@ namespace Sys.Data
         public string GetTableAttribute(Level level, bool pack)
         {
             string comment = string.Format("//Primary Keys = {0};  Identity = {1};", Primary, Identity);
-            string attr = "";
+            StringBuilder attr = new StringBuilder("[Table(");
             switch (level)
             {
 
                 case Level.Application:
-                    if (pack)
-                        attr = string.Format(@"[Table(""{0}"", Level.Application)]", tname.Name);
-                    else
-                        attr = string.Format(@"[Table(""{0}"", Level.Application, Pack = false)]", tname.Name);
+                    attr.AppendFormat("\"{0}\", Level.Application", tname.Name);
                     break;
                 
                 case Level.System:
-                    if(pack)
-                        attr = string.Format(@"[Table(""{0}"", Level.System)]", tname.Name);
-                    else
-                        attr = string.Format(@"[Table(""{0}"", Level.System, Pack = false)]", tname.Name);
+                    attr.AppendFormat("\"{0}\", Level.System", tname.Name);
                     break;
                  
                 case Level.Fixed:
-                    attr = string.Format(@"[Table(""{0}..[{1}]"")]", tname.DatabaseName, tname.Name);
+                    attr = attr.AppendFormat("\"{0}..[{1}]\"", tname.DatabaseName, tname.Name);
                     break;
             }
-                
-            return string.Format("{0}    {1}",attr, comment);
+
+            if (!this.tname.Provider.Equals(DataProvider.DefaultProvider))
+                attr.AppendFormat(", Provider = {0}", (int)tname.Provider);
+
+            if (!pack)
+                attr.AppendFormat(", Pack = false", tname.Name);
+
+            attr.Append(")]");
+
+            return string.Format("{0}    {1}", attr, comment);
         }
 
    
