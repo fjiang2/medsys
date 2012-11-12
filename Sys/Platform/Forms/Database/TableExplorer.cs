@@ -15,7 +15,7 @@ namespace Sys.Platform.Forms
 {
     public partial class TableExplorer : WinForm
     {
-        string tableName;
+        TableName tableName;
         TreeNode root;
 
         public TableExplorer()
@@ -30,23 +30,25 @@ namespace Sys.Platform.Forms
             if (!account.IsDeveloper)
                 return;
 
-
             treeView1.ImageList = new ImageList();
             treeView1.ImageList.Images.Add("database", global::Sys.Platform.Properties.Resources.database);
             treeView1.ImageList.Images.Add("datatable", global::Sys.Platform.Properties.Resources.database_table);
 
-
-            DataTable dataTable = SqlCmd.FillDataTable("SELECT name FROM sys.databases ORDER BY Name");
-            dataTable.TableName = "databases";
-
-            root = treeView1.Nodes.Add("Databases");
-            foreach (DataRow dataRow in dataTable.Rows)
+            foreach (var pair in DataProviderManager.Instance.Providers)
             {
-                TreeNode treeNode = new TreeNode(dataRow["Name"] as string);
-                treeNode.ImageKey = "database";
-                treeNode.SelectedImageKey = treeNode.ImageKey;
-                root.Nodes.Add(treeNode); 
+                DataTable dataTable = SqlCmd.FillDataTable(pair.Key, "SELECT name FROM sys.databases ORDER BY Name");
+                dataTable.TableName = "databases";
+
+                root = treeView1.Nodes.Add(pair.Value.Name);
+                foreach (DataRow dataRow in dataTable.Rows)
+                {
+                    TreeNode treeNode = new DatabaseNode(pair.Key, dataRow["Name"] as string);
+                    treeNode.ImageKey = "database";
+                    treeNode.SelectedImageKey = treeNode.ImageKey;
+                    root.Nodes.Add(treeNode);
+                }
             }
+
 
             treeView1.AfterSelect += delegate(object sender, TreeViewEventArgs e)
             {
@@ -56,14 +58,20 @@ namespace Sys.Platform.Forms
                 if (e.Action == TreeViewAction.ByMouse)
                 {
                     TreeNode treeNode = e.Node;
-                    if (treeNode.Parent == root && treeNode.Nodes.Count == 0)
+                    if (treeNode is DatabaseNode)
                     {
+                        DatabaseNode databaseNode = (DatabaseNode)treeNode;
                         Cursor.Current = Cursors.WaitCursor;
-                        DataTable dt = SqlCmd.FillDataTable("USE {0} ; SELECT Name FROM sys.Tables ORDER BY Name", treeNode.Text);
+                        DataTable dt = SqlCmd.FillDataTable(databaseNode.DataProviderHandle, 
+                            "USE {0} ; SELECT Name FROM sys.Tables ORDER BY Name", 
+                            databaseNode.DatabaseName);
 
                         foreach (DataRow dataRow in dt.Rows)
                         {
-                            TreeNode node = new TreeNode(string.Format("{0}..[{1}]", treeNode.Text, dataRow["name"]));
+                            TableName name = new TableName(databaseNode.DatabaseName, (string)dataRow["name"]);
+                            name.ProviderHandle = databaseNode.DataProviderHandle;
+                            
+                            TreeNode node = new TableNode(name);
                             node.ImageKey = "datatable";
                             node.SelectedImageKey = node.ImageKey;
                             treeNode.Nodes.Add(node);
@@ -75,10 +83,11 @@ namespace Sys.Platform.Forms
                         return;
                     }
                     
-                    if (treeNode.Parent != null && treeNode.Parent.Parent == root)
+                    if (treeNode is TableNode)
                     {
+                        TableNode tableNode = (TableNode)treeNode; 
                         Cursor.Current = Cursors.WaitCursor;
-                        this.tableName = treeNode.Text;
+                        this.tableName = tableNode.TableName;
                         this.Text = "Data Table Editor [" + this.tableName +"]";
                         
                         DataLoad();
@@ -137,7 +146,7 @@ namespace Sys.Platform.Forms
 
             this.Text = text;
 
-            this.tableName = tableName;
+            this.tableName = new TableName(tableName);
             DataLoad();
 
         }
@@ -155,15 +164,15 @@ namespace Sys.Platform.Forms
         {
             set
             {
-                this.tableName = (string)value;
+                this.tableName = new TableName((string)value);
                 DataLoad();
             }
         }
 
         public override bool DataLoad()
         {
-            DataTable dataTable = SqlCmd.FillDataTable("SELECT * FROM "+ this.tableName);
-            dataTable.TableName = this.tableName;
+            DataTable dataTable = SqlCmd.FillDataTable(this.tableName.ProviderHandle, "SELECT * FROM " + this.tableName);
+            dataTable.TableName = this.tableName.FullName;
             jGridView1.DataSource = dataTable;
             return true;
 
@@ -203,7 +212,7 @@ namespace Sys.Platform.Forms
                 return true;
             }
 
-            string key =  this.tableName;
+            string key =  this.tableName.GetHashCode().ToString();
             string caption = "TE:" + this.tableName;
 
             if (this.ShortcutManager.Add(pinned, key, caption, this.GetType(), new object[] { this.Text, this.tableName}))
@@ -227,5 +236,41 @@ namespace Sys.Platform.Forms
     }
 
 
+    class DatabaseNode : TreeNode
+    {
+        DataProviderHandle handle;
 
+        public DatabaseNode(DataProviderHandle handle, string databaseName)
+            : base(databaseName)
+        {
+            this.handle = handle;
+        }
+
+        public string DatabaseName
+        {
+            get { return this.Text; }
+        }
+
+        public DataProviderHandle DataProviderHandle
+        {
+            get { return this.handle; }
+        }
+    }
+
+    class TableNode : TreeNode
+    {
+        TableName tableName;
+
+        public TableNode(TableName tableName)
+            : base(tableName.Name)
+        {
+            this.tableName = tableName;
+        }
+
+        public TableName TableName
+        {
+            get { return this.tableName; }
+        }
+      
+    }
 }
