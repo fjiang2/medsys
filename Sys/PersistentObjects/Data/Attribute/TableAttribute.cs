@@ -12,6 +12,7 @@ namespace Sys.Data
         public bool DefaultValueUsed;
         public Level Level;
         public bool Pack = true;
+        public int Provider = DataProvider.DEFAULT_HANDLE;
 
         public TableAttribute(string tableName)
             : this(tableName, Level.Fixed)
@@ -29,18 +30,24 @@ namespace Sys.Data
         {
             get 
             {
+                TableName name;
                 switch (this.Level)
                 {
                     case Level.System:
-                        return new TableName(Const.DB_SYSTEM, this.tableName);
+                        name = new TableName(Const.DB_SYSTEM, this.tableName);
+                        break;
 
                     case Level.Application:
-                        return new TableName(Const.DB_APPLICATION, this.tableName);
-                         
+                        name = new TableName(Const.DB_APPLICATION, this.tableName);
+                        break; 
 
                     default:
-                         return new TableName(this.tableName);
+                         name = new TableName(this.tableName);
+                         break;
                 }
+
+                name.Provider = new DataProvider(this.Provider);
+                return name;
             }
         }
 

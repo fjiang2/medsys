@@ -49,7 +49,7 @@ namespace Sys.Data
                 userName, 
                 password);
 
-            ChangeConnection(new DataProviderDefinition(serverName, DataProviderType.SqlServer, connectionString));
+            ChangeConnection(new DataProviderConnection(serverName, DataProviderType.SqlServer, connectionString));
         }
 
   
@@ -264,15 +264,15 @@ namespace Sys.Data
 
 
 
-        public static DataTable FillDataTable(DataProvider handle, string script, params object[] args)
+        public static DataTable FillDataTable(DataProvider provider, string script, params object[] args)
         {
-            SqlCmd cmd = new SqlCmd(handle, string.Format(script, args));
+            SqlCmd cmd = new SqlCmd(provider, string.Format(script, args));
             return cmd.FillDataTable();
         }
 
-        public static DataRow FillDataRow(DataProvider handle, string script, params object[] args)
+        public static DataRow FillDataRow(DataProvider provider, string script, params object[] args)
         {
-            SqlCmd cmd = new SqlCmd(handle, string.Format(script, args));
+            SqlCmd cmd = new SqlCmd(provider, string.Format(script, args));
             return cmd.FillDataRow();
         }
 

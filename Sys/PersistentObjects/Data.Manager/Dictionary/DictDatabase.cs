@@ -22,7 +22,7 @@ namespace Sys.Data.Manager
             DataTable dt = new TableReader<dictDatabaseDpo>().Table;
             foreach (DataRow row in dt.Rows)
             {
-                DataProvider handle = DataProviderManager.Instance.GetHandle((int)row[dictDatabaseDpo._provider_id]);
+                DataProvider handle = new DataProvider((int)row[dictDatabaseDpo._provider_id]);
                 DatabaseName databaseName = new DatabaseName(handle, (string)row[dictDatabaseDpo._name]);
                 bases.Add(databaseName, (int)row[dictDatabaseDpo._database_id]);
             }
@@ -61,7 +61,8 @@ namespace Sys.Data.Manager
         {
 #if SLOW
             dictDatabaseDpo dpo = new dictDatabaseDpo();
-            dpo.name = databaseName;
+            dpo.name = databaseName.Name;
+            dpo.provider_id = databaseName.Provider.Handle;
             dpo.Load();
 
             if (dpo.Exists)
@@ -82,7 +83,7 @@ namespace Sys.Data.Manager
             dpo.CreateTable();
 
             dpo.name = databaseName.Name;
-            dpo.provider_id = databaseName.Provider.Handle;
+            dpo.provider_id = (int)databaseName.Provider;
             dpo.enabled = true;
             dpo.version = Const.Revision;
             dpo.Save();

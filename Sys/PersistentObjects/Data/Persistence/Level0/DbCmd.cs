@@ -15,19 +15,19 @@ namespace Sys.Data
         protected DbCommand command;
         protected DbConnection connection;
 
-        private DataProviderDefinition provider;
+        private DataProviderConnection providerConnection;
 
-        public DbCmd(DataProvider handle, string script)
+        public DbCmd(DataProvider provider, string script)
         {
-            this.provider = DataProviderManager.Instance.GetProvider(handle);
+            this.providerConnection = DataProviderManager.Instance.GetProvider(provider);
             
             this.script = script
                           .Replace("$DB_SYSTEM", Const.DB_SYSTEM)
                           .Replace("$DB_APPLICATION", Const.DB_APPLICATION);
 
-            this.connection= provider.DbConnection;
+            this.connection= providerConnection.DbConnection;
 
-            if (provider.DbType == DbType.SqlDb)
+            if (providerConnection.DbType == DbType.SqlDb)
                 this.command = new SqlCommand(this.script, (SqlConnection)connection);
             else
                 this.command = new OleDbCommand(this.script, (OleDbConnection)connection);
@@ -41,15 +41,15 @@ namespace Sys.Data
 
         protected bool SQLDB
         {
-            get { return this.provider.DbType == DbType.SqlDb; }
+            get { return this.providerConnection.DbType == DbType.SqlDb; }
         }
 
-        public virtual void ChangeConnection(DataProviderDefinition provider)
+        public virtual void ChangeConnection(DataProviderConnection provider)
         {
             if (this.connection.State != ConnectionState.Closed)
                 this.connection.Close();
 
-            this.provider = provider;
+            this.providerConnection = provider;
             this.connection = provider.DbConnection;
 
             if (provider.DbType == DbType.SqlDb)
@@ -82,7 +82,7 @@ namespace Sys.Data
         {
             get
             {
-                if (provider.DbType == DbType.SqlDb)
+                if (providerConnection.DbType == DbType.SqlDb)
                     return new SqlDataAdapter();
                 else
                     return new OleDbDataAdapter();
