@@ -17,7 +17,7 @@ namespace Sys.Data
         }
 
         public SqlCmd(string script)
-            : this(DataProviderHandle.DEFAULT_PROVIDER, script)
+            : this(DataProviderHandle.DefaultProviderHandle, script)
         {
         }
 
@@ -49,7 +49,7 @@ namespace Sys.Data
                 userName, 
                 password);
 
-            ChangeConnection(new DataProvider(DataProviderType.SqlServer, connectionString));
+            ChangeConnection(new DataProvider(serverName, DataProviderType.SqlServer, connectionString));
         }
 
   

@@ -6,6 +6,7 @@ using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
 using System.Data.OleDb;
+using Tie;
 
 namespace Sys.Data
 {
@@ -16,13 +17,15 @@ namespace Sys.Data
         SqlDb
     }
 
-    public class DataProvider
+    public class DataProvider : IValizable
     {
         private DataProviderType providerType;
         private string connectionString;
+        private string name;
 
-        internal DataProvider(DataProviderType type, string connectionString)
+        internal DataProvider(string name, DataProviderType type, string connectionString)
         {
+            this.name = name;
             this.providerType = type;
             this.connectionString = connectionString;
         }
@@ -54,18 +57,33 @@ namespace Sys.Data
             }
         }
 
-
+        public string Name
+        {
+            get { return this.name; }
+        }
      
         public override string ToString()
         {
-            return this.connectionString;;
+            return string.Format("{0}({1})",this.name, this.connectionString);
         }
 
 
+        internal DataProvider(VAL val)
+        {
+            this.name = val["name"].Str;
+            this.providerType = (DataProviderType)val["type"].Intcon;
+            this.connectionString = val["connection"].Str;
+        }
 
-      
+        public VAL GetValData()
+        {
+            VAL val = new VAL();
+            val["name"] = new VAL(this.name);
+            val["type"] = new VAL((int)this.providerType);
+            val["connection"] = new VAL(this.connectionString);
 
-  
+            return val;
+        }
     }
 
    
