@@ -25,14 +25,14 @@ namespace Sys.DataManager
             if(rowObject.RowId != -1)
                 //"Table_id={0} AND Row_ID = {1}"
                 dt = new TableReader<PictureDpo>(
-                    PictureDpo._Table_Id.ColumName() == rowObject.TableId 
-                    & PictureDpo._Row_Id.ColumName() == rowObject.RowId).Table;
+                    PictureDpo._Table_Id.ColumnName() == rowObject.TableId 
+                    & PictureDpo._Row_Id.ColumnName() == rowObject.RowId).Table;
             else
                 //"Table_id={0} AND Row_ID = -1 AND Owner = {1}"
                 dt = new TableReader<PictureDpo>(
-                    PictureDpo._Table_Id.ColumName() == rowObject.TableId
-                    & PictureDpo._Row_Id.ColumName() == -1
-                    & PictureDpo._Owner.ColumName() == Sys.Security.Account.CurrentUser.UserID).Table;
+                    PictureDpo._Table_Id.ColumnName() == rowObject.TableId
+                    & PictureDpo._Row_Id.ColumnName() == -1
+                    & PictureDpo._Owner.ColumnName() == Sys.Security.Account.CurrentUser.UserID).Table;
         }
 
 

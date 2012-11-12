@@ -70,6 +70,8 @@
             this.toolStripButtonGenSP = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
+            this.label11 = new System.Windows.Forms.Label();
+            this.comboServer = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -97,7 +99,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 41);
+            this.label2.Location = new System.Drawing.Point(178, 41);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(56, 13);
             this.label2.TabIndex = 0;
@@ -143,9 +145,9 @@
             // 
             this.comboDatabase.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboDatabase.Location = new System.Drawing.Point(74, 38);
+            this.comboDatabase.Location = new System.Drawing.Point(240, 38);
             this.comboDatabase.Name = "comboDatabase";
-            this.comboDatabase.Size = new System.Drawing.Size(160, 21);
+            this.comboDatabase.Size = new System.Drawing.Size(121, 21);
             this.comboDatabase.TabIndex = 1;
             this.comboDatabase.SelectedIndexChanged += new System.EventHandler(this.comboDatabase_SelectedIndexChanged);
             // 
@@ -211,7 +213,7 @@
             this.treeTables.CheckBoxes = true;
             this.treeTables.Location = new System.Drawing.Point(0, 135);
             this.treeTables.Name = "treeTables";
-            this.treeTables.Size = new System.Drawing.Size(274, 501);
+            this.treeTables.Size = new System.Drawing.Size(364, 445);
             this.treeTables.TabIndex = 7;
             // 
             // splitContainer1
@@ -223,9 +225,11 @@
             // splitContainer1.Panel1
             // 
             this.splitContainer1.Panel1.Controls.Add(this.label10);
+            this.splitContainer1.Panel1.Controls.Add(this.label11);
             this.splitContainer1.Panel1.Controls.Add(this.label2);
             this.splitContainer1.Panel1.Controls.Add(this.txtDatabaseId);
             this.splitContainer1.Panel1.Controls.Add(this.treeTables);
+            this.splitContainer1.Panel1.Controls.Add(this.comboServer);
             this.splitContainer1.Panel1.Controls.Add(this.comboDatabase);
             this.splitContainer1.Panel1.Controls.Add(this.chkCheckAll);
             this.splitContainer1.Panel1.Controls.Add(this.chkShowNewTables);
@@ -260,8 +264,8 @@
             this.splitContainer1.Panel2.Controls.Add(this.btnCreateDpo);
             this.splitContainer1.Panel2.Controls.Add(this.chkMustGenerate);
             this.splitContainer1.Panel2.Controls.Add(this.chkFolder);
-            this.splitContainer1.Size = new System.Drawing.Size(832, 636);
-            this.splitContainer1.SplitterDistance = 274;
+            this.splitContainer1.Size = new System.Drawing.Size(1106, 580);
+            this.splitContainer1.SplitterDistance = 364;
             this.splitContainer1.TabIndex = 8;
             // 
             // label10
@@ -367,7 +371,7 @@
             this.txtOutput.Name = "txtOutput";
             this.txtOutput.ReadOnly = true;
             this.txtOutput.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtOutput.Size = new System.Drawing.Size(519, 211);
+            this.txtOutput.Size = new System.Drawing.Size(703, 155);
             this.txtOutput.TabIndex = 18;
             // 
             // btnGenDpoClass
@@ -457,7 +461,7 @@
             this.toolStripSeparator1});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(832, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(1106, 25);
             this.toolStrip1.TabIndex = 9;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -492,11 +496,28 @@
             this.imageList1.ImageSize = new System.Drawing.Size(16, 16);
             this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
             // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(4, 41);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(41, 13);
+            this.label11.TabIndex = 0;
+            this.label11.Text = "Server:";
+            // 
+            // comboServer
+            // 
+            this.comboServer.Location = new System.Drawing.Point(51, 38);
+            this.comboServer.Name = "comboServer";
+            this.comboServer.Size = new System.Drawing.Size(121, 21);
+            this.comboServer.TabIndex = 1;
+            this.comboServer.SelectedIndexChanged += new System.EventHandler(this.comboServer_SelectedIndexChanged);
+            // 
             // GenDpoForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(832, 636);
+            this.ClientSize = new System.Drawing.Size(1106, 580);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.splitContainer1);
             this.Name = "GenDpoForm";
@@ -557,5 +578,7 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TextBox txtDatabaseId;
         private System.Windows.Forms.CheckBox chkPack;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.ComboBox comboServer;
     }
 }

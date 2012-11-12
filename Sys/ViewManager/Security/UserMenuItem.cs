@@ -141,7 +141,7 @@ namespace Sys.ViewManager.Security
                 .COLUMNS()
                 .FROM(this)
                 .WHERE(
-                    _ParentID.ColumName() == parentID & _Ty.ColumName() == 0 & _Controlled.ColumName() == 1)
+                    _ParentID.ColumnName() == parentID & _Ty.ColumnName() == 0 & _Controlled.ColumnName() == 1)
                 .ORDER_BY(_OrderBy);
             DataTable dt = sql.FillDataTable();
 

@@ -14,7 +14,7 @@ namespace Sys.Security
 
         private Companies()
         {
-            companies = new DPCollection<Company>(new TableReader<Company>(Company._Inactive.ColumName() == 0).Table);
+            companies = new DPCollection<Company>(new TableReader<Company>(Company._Inactive.ColumnName() == 0).Table);
         }
 
         public DPCollection<Company> Collection

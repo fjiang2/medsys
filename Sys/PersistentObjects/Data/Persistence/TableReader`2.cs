@@ -24,18 +24,18 @@ namespace Sys.Data.Persistence.Level4
         {
 
             SqlClause relationships = new SqlClause()
-                .SELECT.COLUMNS().FROM<T1>().WHERE(column1.RelationName.ColumName() == value);
+                .SELECT.COLUMNS().FROM<T1>().WHERE(column1.RelationName.ColumnName() == value);
 
             SqlClause many = new SqlClause()
                 .SELECT.COLUMNS()
                 .FROM<T2>()
-                .WHERE(column2.Name.ColumName()
+                .WHERE(column2.Name.ColumnName()
                     .IN(
                          new SqlClause()
                             .SELECT
                             .COLUMNS(column2.RelationName)
                             .FROM<T1>()
-                            .WHERE(column1.RelationName.ColumName() == value)
+                            .WHERE(column1.RelationName.ColumnName() == value)
                         )
                     );
 
