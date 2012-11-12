@@ -151,13 +151,13 @@ namespace Sys.Data
 
         #region Register SQL SERVER
 
-        public static int Register(string connectionString)
+        public static DataProviderHandle Register(string connectionString)
         {
             return DataProviderManager.Register(DataProviderType.SqlServer, connectionString);
         }
 
-        
-        private static int Register(string serverName, bool integratedSecurity, string database, string userName, string password)
+
+        private static DataProviderHandle Register(string serverName, bool integratedSecurity, string database, string userName, string password)
         {
             string security = "integrated security=SSPI;";
             if (!integratedSecurity)
@@ -168,12 +168,12 @@ namespace Sys.Data
             return DataProviderManager.Register(DataProviderType.SqlServer, connectionString);
         }
 
-        public static int Register(string serverName, string database, string userName, string password)
+        public static DataProviderHandle Register(string serverName, string database, string userName, string password)
         {
             return Register(serverName, false, database, userName, password);
         }
 
-        public static int Register(string serverName, string database)
+        public static DataProviderHandle Register(string serverName, string database)
         {
             return Register(serverName, true, database, null, null);
         }
