@@ -73,7 +73,10 @@ namespace Sys.Workflow.Collaborative.Forms
       
         private void btnInstanceLookup_Click(object sender, EventArgs e)
         {
-            LookUp lookUp = new LookUp("Select Workflow", new TableReader(bind.Dpo.TableName,"Workflow_Name='{0}'", this.tbWorkflowName.Text).Table);
+            LookUp lookUp = new LookUp("Select Workflow", 
+                new TableReader(bind.Dpo.TableName,"Workflow_Name='{0}'", this.tbWorkflowName.Text).Table
+                );
+
             lookUp.Text = "Workflow Instance";
             DataRow wfInstanceRow = lookUp.PopUp(this);
             if (wfInstanceRow != null)

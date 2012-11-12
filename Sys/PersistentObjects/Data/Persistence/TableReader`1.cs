@@ -21,7 +21,7 @@ namespace Sys.Data
 
         public TableReader(SqlExpr where)
         {
-            this.reader = new TableReader(new SqlClause().SELECT.COLUMNS().FROM(TableName).WHERE(where));
+            this.reader = new TableReader(TableName, new SqlClause().SELECT.COLUMNS().FROM(TableName).WHERE(where).Clause);
         }
 
         private TableName TableName
