@@ -6,7 +6,6 @@ using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
 using System.Data.OleDb;
-using DataProviderHandle = System.Int32;
 
 namespace Sys.Data
 {
@@ -49,7 +48,10 @@ namespace Sys.Data
         {
             get
             {
-                return providers[handle];
+                if(providers.ContainsKey(handle))
+                    return providers[handle];
+                else
+                    return null;
             }
         }
 
@@ -75,8 +77,7 @@ namespace Sys.Data
  
         #region Default Data Provider
 
-        internal const DataProviderHandle DEFAULT_PROVIDER = 0;
-
+        
         public static void RegisterDefaultProvider(string connectionString)
         {
             RegisterDefaultProvider(connectionString, null);
@@ -95,14 +96,14 @@ namespace Sys.Data
             else
                 Sys.Const.DB_SYSTEM = sysDatabase;
 
-            Instance.Add(DEFAULT_PROVIDER, new DataProvider(DataProviderType.SqlServer, connectionString));
+            Instance.Add(DataProviderHandle.DEFAULT_PROVIDER, new DataProvider(DataProviderType.SqlServer, connectionString));
         }
 
         public static DataProvider DefaultProvider
         {
             get
             {
-                return Instance[DEFAULT_PROVIDER];
+                return Instance[DataProviderHandle.DEFAULT_PROVIDER];
             }
         }
 
@@ -110,7 +111,7 @@ namespace Sys.Data
 
 
 
-        private static DataProviderHandle handle = DEFAULT_PROVIDER + 1000;
+        private static DataProviderHandle handle = DataProviderHandle.USER_BASE_PROVIDER;
         public static DataProviderHandle Register(DataProviderType type, string connectionString)
         {
             handle++;

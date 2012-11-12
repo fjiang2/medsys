@@ -5,7 +5,6 @@ using System.Data.Common;
 using System.Data.SqlClient;
 using System.Data.OleDb;
 using System.Data;
-using DataProviderHandle = System.Int32;
 
 namespace Sys.Data
 {
@@ -18,7 +17,7 @@ namespace Sys.Data
         }
 
         public SqlCmd(string script)
-            : this(DataProviderManager.DEFAULT_PROVIDER, script)
+            : this(DataProviderHandle.DEFAULT_PROVIDER, script)
         {
         }
 
@@ -269,38 +268,38 @@ namespace Sys.Data
         }
 
         //--------------------------------------------------------------------------------------
-        public static object ExecuteScalar(DataProviderHandle handle, string script, params object[] args)
-        {
-            SqlCmd cmd = new SqlCmd(handle, string.Format(script, args));
-            return cmd.ExecuteScalar();
-        }
+        //public static object ExecuteScalar(DataProviderHandle handle, string script, params object[] args)
+        //{
+        //    SqlCmd cmd = new SqlCmd(handle, string.Format(script, args));
+        //    return cmd.ExecuteScalar();
+        //}
 
 
-        public static int ExecuteNonQuery(DataProviderHandle handle, string script, params object[] args)
-        {
-            SqlCmd cmd = new SqlCmd(handle, string.Format(script, args));
-            return cmd.ExecuteNonQuery();
-        }
+        //public static int ExecuteNonQuery(DataProviderHandle handle, string script, params object[] args)
+        //{
+        //    SqlCmd cmd = new SqlCmd(handle, string.Format(script, args));
+        //    return cmd.ExecuteNonQuery();
+        //}
 
-        public static DataSet FillDataSet(DataProviderHandle handle, string script, params object[] args)
-        {
-            SqlCmd cmd = new SqlCmd(handle, string.Format(script, args));
-            return cmd.FillDataSet();
-        }
+        //public static DataSet FillDataSet(DataProviderHandle handle, string script, params object[] args)
+        //{
+        //    SqlCmd cmd = new SqlCmd(handle, string.Format(script, args));
+        //    return cmd.FillDataSet();
+        //}
 
-        public static DataTable FillDataTable(DataProviderHandle handle, string script, params object[] args)
-        {
-            SqlCmd cmd = new SqlCmd(handle, string.Format(script, args));
-            return cmd.FillDataTable();
-        }
+        //public static DataTable FillDataTable(DataProviderHandle handle, string script, params object[] args)
+        //{
+        //    SqlCmd cmd = new SqlCmd(handle, string.Format(script, args));
+        //    return cmd.FillDataTable();
+        //}
 
 
 
-        public static DataRow FillDataRow(DataProviderHandle handle, string script, params object[] args)
-        {
-            SqlCmd cmd = new SqlCmd(handle, string.Format(script, args));
-            return cmd.FillDataRow();
-        }
+        //public static DataRow FillDataRow(DataProviderHandle handle, string script, params object[] args)
+        //{
+        //    SqlCmd cmd = new SqlCmd(handle, string.Format(script, args));
+        //    return cmd.FillDataRow();
+        //}
        
     }
 }

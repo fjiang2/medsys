@@ -8,6 +8,7 @@ namespace Sys.Data
 {
     public class TableName : IComparable<TableName>, IComparable
     {
+        protected DataProviderHandle handle = DataProviderHandle.DEFAULT_PROVIDER;
         protected string databaseName;
         protected string tableName;
        
@@ -33,17 +34,18 @@ namespace Sys.Data
 
         public int CompareTo(TableName n)
         {
-            return FullName.CompareTo(n);
+            return string.Format("{0}::{1}",this.handle, FullName).CompareTo(n);
         }
 
         public override bool Equals(object obj)
         {
- 	         return FullName.Equals(((TableName)obj).FullName);
+            TableName name = (TableName)obj;
+            return FullName.Equals(name.FullName) && this.handle.Equals(name.handle);
         }
 
         public override int GetHashCode()
         {
-            return FullName.GetHashCode();
+            return FullName.GetHashCode()*100 + this.handle.GetHashCode();
         }
     
         public string Name
@@ -66,6 +68,12 @@ namespace Sys.Data
             }
         }
 
+        public DataProviderHandle Handle
+        {
+            get { return this.handle; }
+            set { this.handle = value; }
+        }
+            
             
         public override string ToString()
         {
