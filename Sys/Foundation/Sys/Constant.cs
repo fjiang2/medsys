@@ -39,7 +39,7 @@ namespace Sys
                 json[field.Name] = VAL.Boxing(field.GetValue(null));
             }
 
-            json["dataprovider"] = DataProviderManager.Instance.Json;
+            json["dataprovider"] = DataProviderManager.Instance.Configuration;
 
             string config = json.ToJson();
 #if !DEBUG
@@ -74,7 +74,7 @@ namespace Sys
                     field.SetValue(null, val.HostValue);
             }
 
-            DataProviderManager.Instance.Json = json["dataprovider"];
+            DataProviderManager.Instance.Configuration = json["dataprovider"];
 
             DataProviderManager.RegisterDefaultProvider(Const.CONNECTION_STRING);
 

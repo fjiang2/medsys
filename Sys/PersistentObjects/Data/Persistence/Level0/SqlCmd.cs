@@ -267,6 +267,14 @@ namespace Sys.Data
             return cmd.FillDataRow();
         }
 
+
+
+        public static DataTable FillDataTable(DataProviderHandle handle, string script, params object[] args)
+        {
+            SqlCmd cmd = new SqlCmd(handle, string.Format(script, args));
+            return cmd.FillDataTable();
+        }
+
        
     }
 }

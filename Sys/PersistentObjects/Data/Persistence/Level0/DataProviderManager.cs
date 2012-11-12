@@ -70,7 +70,31 @@ namespace Sys.Data
             return string.Format("Registered Providers = #{0}", providers.Count);
         }
 
-        public VAL Json
+
+        internal DataProvider GetProvider(DataProviderHandle handle)
+        {
+            return this[handle];
+        }
+
+        public IEnumerable<KeyValuePair<DataProviderHandle, DataProvider>> Providers
+        {
+            get { return this.providers; }
+        }
+
+        public DataProviderHandle GetProviderHandle(string name)
+        {
+            foreach (KeyValuePair<DataProviderHandle, DataProvider> pair in this.providers)
+            {
+                if (pair.Value.Name == name)
+                    return pair.Key;
+            }
+
+            return DataProviderHandle.DefaultProviderHandle;
+
+        }
+
+
+        public VAL Configuration
         {
             get
             {
@@ -166,23 +190,7 @@ namespace Sys.Data
         }
 
 
-        internal static DataProvider GetProvider(DataProviderHandle handle)
-        {
-            return Instance[handle];
-        }
-
-        public static DataProviderHandle GetProviderHandle(string name)
-        {
-            foreach (KeyValuePair<DataProviderHandle, DataProvider> pair in Instance.providers)
-            {
-                if (pair.Value.Name == name)
-                    return pair.Key;
-            }
-            
-            return DataProviderHandle.DefaultProviderHandle;
-            
-        }
-
+    
        
       
     }
