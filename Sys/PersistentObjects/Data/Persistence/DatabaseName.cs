@@ -7,8 +7,8 @@ namespace Sys.Data
 {
     public class DatabaseName
     {
-        private DataProvider provider = DataProvider.DefaultProvider;
-        private string databaseName;
+        private DataProvider provider;
+        private string name;
 
         public DatabaseName(string databaseName)
             :this(DataProvider.DefaultProvider, databaseName)
@@ -19,12 +19,12 @@ namespace Sys.Data
         public DatabaseName(DataProvider handle, string databaseName)
         {
             this.provider = handle;
-            this.databaseName = databaseName;
+            this.name = databaseName;
         }
 
         public string Name
         {
-            get { return this.databaseName; }
+            get { return this.name; }
         }
 
         internal DataProvider Provider
@@ -35,18 +35,18 @@ namespace Sys.Data
 
         public override int GetHashCode()
         {
-            return databaseName.GetHashCode() + this.provider.GetHashCode() * 1000000;
+            return name.GetHashCode() + this.provider.GetHashCode() * 324819;
         }
 
         public override bool Equals(object obj)
         {
-            DatabaseName name = (DatabaseName)obj;
-            return databaseName.Equals(name.databaseName) && this.provider.Equals(name.provider);
+            DatabaseName dname = (DatabaseName)obj;
+            return this.name.Equals(dname.name) && this.provider.Equals(dname.provider);
         }
 
         public override string ToString()
         {
-            return this.databaseName;
+            return this.name;
         }
     }
 }

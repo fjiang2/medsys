@@ -17,13 +17,13 @@ namespace Sys.Data
         SqlDb
     }
 
-    public class DataProviderDefinition : IValizable
+    public class DataProviderConnection : IValizable
     {
         private DataProviderType providerType;
         private string connectionString;
         private string name;
 
-        internal DataProviderDefinition(string name, DataProviderType type, string connectionString)
+        internal DataProviderConnection(string name, DataProviderType type, string connectionString)
         {
             this.name = name;
             this.providerType = type;
@@ -68,7 +68,7 @@ namespace Sys.Data
         }
 
 
-        internal DataProviderDefinition(VAL val)
+        internal DataProviderConnection(VAL val)
         {
             this.name = val["name"].Str;
             this.providerType = (DataProviderType)val["type"].Intcon;

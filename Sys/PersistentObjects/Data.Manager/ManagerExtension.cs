@@ -95,7 +95,7 @@ namespace Sys.Data.Manager
             {
                 dictDatabaseDpo db = new dictDatabaseDpo();
                 db.name = tname.DatabaseName.Name;
-                db.provider_id = tname.Provider.Handle;
+                db.provider_id = (int)tname.Provider;
                 db.Load();
 
                 dictDataTableDpo dt = new dictDataTableDpo();

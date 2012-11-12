@@ -49,7 +49,7 @@
     <Compile Include="Data\Persistence\DatabaseName.cs" />
     <Compile Include="Data\Persistence\Level0\DataProvider.cs" />
     <Compile Include="Data\Persistence\Level0\DataProviderManager.cs" />
-    <Compile Include="Data\Persistence\Level0\DataProviderDefinition.cs" />
+    <Compile Include="Data\Persistence\Level0\DataProviderConnection.cs" />
     <Compile Include="Data\Persistence\Level0\DataProviderType.cs" />
     <Compile Include="Data\Persistence\Level0\DbCmd.cs" />
     <Compile Include="Data\Persistence\Level0\OleDbServer.cs" />
