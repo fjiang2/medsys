@@ -18,7 +18,7 @@ namespace Sys.Data
         internal TableReader(TableName tableName, string sql)
         {
             this.sql = sql;
-            SqlCmd cmd = new SqlCmd(tableName.ProviderHandle, sql);
+            SqlCmd cmd = new SqlCmd(tableName.Provider, sql);
             this.table = cmd.FillDataTable();
         }
 

@@ -215,7 +215,7 @@ namespace Sys.Data
         }
 
 
-        public string DatabaseName { get { return this.tname.DatabaseName; } }
+        public string DatabaseName { get { return this.tname.DatabaseName.Name; } }
         public string TableName { get { return this.tname.Name; } }
 
 

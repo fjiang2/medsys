@@ -11,13 +11,13 @@ namespace Sys.Data
     public class SqlCmd : DbCmd
     {
 
-        public SqlCmd(DataProviderHandle handle, string script)
+        public SqlCmd(DataProvider handle, string script)
             : base(handle, script)
         {
         }
 
         public SqlCmd(string script)
-            : this(DataProviderHandle.DefaultProviderHandle, script)
+            : this(DataProvider.DefaultProvider, script)
         {
         }
 
@@ -49,7 +49,7 @@ namespace Sys.Data
                 userName, 
                 password);
 
-            ChangeConnection(new DataProvider(serverName, DataProviderType.SqlServer, connectionString));
+            ChangeConnection(new DataProviderDefinition(serverName, DataProviderType.SqlServer, connectionString));
         }
 
   
@@ -247,12 +247,7 @@ namespace Sys.Data
             return cmd.ExecuteNonQuery();
         }
 
-        public static DataSet FillDataSet(string script, params object[] args)
-        {
-            SqlCmd cmd = new SqlCmd(string.Format(script, args));
-            return cmd.FillDataSet();
-        }
-
+      
         public static DataTable FillDataTable(string script, params object[] args)
         {
             SqlCmd cmd = new SqlCmd(string.Format(script, args));
@@ -269,13 +264,19 @@ namespace Sys.Data
 
 
 
-        public static DataTable FillDataTable(DataProviderHandle handle, string script, params object[] args)
+        public static DataTable FillDataTable(DataProvider handle, string script, params object[] args)
         {
             SqlCmd cmd = new SqlCmd(handle, string.Format(script, args));
             return cmd.FillDataTable();
         }
 
-       
+        public static DataRow FillDataRow(DataProvider handle, string script, params object[] args)
+        {
+            SqlCmd cmd = new SqlCmd(handle, string.Format(script, args));
+            return cmd.FillDataRow();
+        }
+
+
     }
 }
 

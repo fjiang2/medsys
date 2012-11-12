@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 7/19/2012 12:12:39 AM
+//   by devel at 11/12/2012
 //
 
 using System;
@@ -14,8 +14,8 @@ using Sys.Data.Manager;
 
 namespace Sys.PersistentObjects.DpoClass
 {
-    [Revision(13)]
-    [Table("sys00201", Level.System, Pack = false)]    //Primary Keys = name;  Identity = database_id;
+    [Revision(14)]
+    [Table("sys00201", Level.System, Pack = false)]    //Primary Keys = name + provider_id;  Identity = database_id;
     internal class dictDatabaseDpo : DPObject
     {
 
@@ -23,6 +23,7 @@ namespace Sys.PersistentObjects.DpoClass
 
         [Column(_database_id, SqlDbType.Int, Identity = true)]                                    public int database_id;       //int(4) not null
         [Column(_name, SqlDbType.VarChar, Primary = true, Length = 50)]                           public string name;           //varchar(50) not null
+        [Column(_provider_id, SqlDbType.Int, Primary = true)]                                     public int provider_id;       //int(4) not null
         [Column(_label, SqlDbType.NVarChar, Nullable = true, Length = 50)]                        public string label;          //nvarchar(50) null
         [Column(_description, SqlDbType.NVarChar, Nullable = true, Length = 128)]                 public string description;    //nvarchar(128) null
         [Column(_enabled, SqlDbType.Bit)]                                                         public bool enabled;          //bit(1) not null
@@ -40,14 +41,14 @@ namespace Sys.PersistentObjects.DpoClass
         }
 
 
-        public dictDatabaseDpo(string name)
+        public dictDatabaseDpo(string name, int provider_id)
         {
-           this.name = name; 
+           this.name = name; this.provider_id = provider_id; 
 
            this.Load();
            if(!this.Exists)
            {
-              this.name = name;     
+              this.name = name; this.provider_id = provider_id;     
            }
         }
         
@@ -67,7 +68,7 @@ namespace Sys.PersistentObjects.DpoClass
         {
             get
             {
-                return new PrimaryKeys(new string[]{ _name });
+                return new PrimaryKeys(new string[]{ _name, _provider_id });
             }
         }
 
@@ -96,6 +97,7 @@ namespace Sys.PersistentObjects.DpoClass
 
         public const string _database_id = "database_id";
         public const string _name = "name";
+        public const string _provider_id = "provider_id";
         public const string _label = "label";
         public const string _description = "description";
         public const string _enabled = "enabled";

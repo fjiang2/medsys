@@ -11,9 +11,9 @@ namespace Sys.Data.Manager
 {
     class DictDatabase 
     {
-     
 
-        private Dictionary<string, int> bases = new Dictionary<string, int>();
+
+        private Dictionary<DatabaseName, int> bases = new Dictionary<DatabaseName, int>();
 
         private static DictDatabase instance = null;
         
@@ -22,14 +22,18 @@ namespace Sys.Data.Manager
             DataTable dt = new TableReader<dictDatabaseDpo>().Table;
             foreach (DataRow row in dt.Rows)
             {
-                bases.Add((string)row[dictDatabaseDpo._name], (int)row[dictDatabaseDpo._database_id]);
+                DataProvider handle = DataProviderManager.Instance.GetHandle((int)row[dictDatabaseDpo._provider_id]);
+                DatabaseName databaseName = new DatabaseName(handle, (string)row[dictDatabaseDpo._name]);
+                bases.Add(databaseName, (int)row[dictDatabaseDpo._database_id]);
             }
 
         }
 
-        private int getId(string databaseName)
+        private int getId(DatabaseName databaseName)
         {
-            if (databaseName == Const.DB_SYSTEM)
+            if (databaseName.Provider.Equals(DataProvider.DefaultProvider) 
+                && databaseName.Name == Const.DB_SYSTEM)
+                
                 return Const.DB_SYSTEM_ID;
 
             //if (databaseName == Constant.DB_DEFAULT)
@@ -53,7 +57,7 @@ namespace Sys.Data.Manager
         }
 
 
-        public static int GetId(string databaseName)
+        public static int GetId(DatabaseName databaseName)
         {
 #if SLOW
             dictDatabaseDpo dpo = new dictDatabaseDpo();
@@ -72,12 +76,13 @@ namespace Sys.Data.Manager
 
 
 
-        public static int RegisterOnly(string databaseName)
+        public static int RegisterOnly(DatabaseName databaseName)
         {
             dictDatabaseDpo dpo = new dictDatabaseDpo();
             dpo.CreateTable();
 
-            dpo.name = databaseName;
+            dpo.name = databaseName.Name;
+            dpo.provider_id = databaseName.Provider.Handle;
             dpo.enabled = true;
             dpo.version = Const.Revision;
             dpo.Save();
@@ -90,13 +95,13 @@ namespace Sys.Data.Manager
 
 
 
-        public static int Register(string databaseName)
+        public static int Register(DatabaseName databaseName)
         {
             int database_id = DictDatabase.RegisterOnly(databaseName);
 
             string[] names = MetaDatabase.GetTableNames(databaseName);
             foreach (string name in names)
-                DictTable.Register(database_id, new TableName(databaseName, name));
+                DictTable.Register(database_id, new TableName(databaseName.Name, name));
 
             return names.Length;
 

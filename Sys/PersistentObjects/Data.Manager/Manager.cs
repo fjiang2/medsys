@@ -30,7 +30,7 @@ namespace Sys.Data.Manager
             foreach (string fullName in tableNames)
             {
                 TableName tableName = new TableName(fullName);
-                ClassTableName tname = new ClassTableName(tableName.DatabaseName, tableName.Name);
+                ClassTableName tname = new ClassTableName(tableName.DatabaseName.Name, tableName.Name);
 
                 ClassName cname = new ClassName(nameSpace, AccessModifier.Public, tname);
                 tname.SetLevel(level, isPack);
@@ -51,7 +51,7 @@ namespace Sys.Data.Manager
                 {
 
                     DPObject dpo = (DPObject)Activator.CreateInstance(type);
-                    ClassTableName tname = new ClassTableName(dpo.TableName.DatabaseName, dpo.TableName.Name);
+                    ClassTableName tname = new ClassTableName(dpo.TableName.DatabaseName.Name, dpo.TableName.Name);
 
                     ClassName cname = new ClassName(dpo);
                     tname.SetLevel(dpo.Level, dpo.IsPack);

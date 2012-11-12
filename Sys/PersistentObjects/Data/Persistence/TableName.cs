@@ -8,21 +8,36 @@ namespace Sys.Data
 {
     public class TableName : IComparable<TableName>, IComparable
     {
-        protected DataProviderHandle provider = DataProviderHandle.DefaultProviderHandle;
-        protected string databaseName;
+        protected DatabaseName baseName;
         protected string tableName;
        
         public TableName(string fullTableName)
         {
-            ParseTableName(fullTableName, this);
+            //tableName may have format like [db.dbo.tableName], [db..tableName], or [tableName]
+            string[] t = fullTableName.Split(new char[] { '.' });
 
-            if (this.databaseName == "")
-                this.databaseName = MetaDatabase.CurrentDatabaseName;
+            string databaseName = "";
+            tableName = "";
+            if (t.Length > 1)
+            {
+                databaseName = t[0];
+                tableName = t[2];
+            }
+            else
+                tableName = fullTableName;
+
+            databaseName = databaseName.Replace("[", "").Replace("]", "");
+            this.tableName = tableName.Replace("[", "").Replace("]", "");
+
+            if (databaseName == "")
+                databaseName = MetaDatabase.CurrentDatabaseName;
+
+            this.baseName = new DatabaseName(databaseName);
         }
 
         public TableName(string databaseName, string tableName)
         {
-            this.databaseName = databaseName;
+            this.baseName = new DatabaseName(databaseName);
             this.tableName = tableName;
         }
 
@@ -34,46 +49,40 @@ namespace Sys.Data
 
         public int CompareTo(TableName n)
         {
-            return string.Format("{0}::{1}",this.provider, FullName).CompareTo(n);
+            return string.Format("{0}::{1}",this.baseName.Provider, FullName).CompareTo(n);
         }
 
         public override bool Equals(object obj)
         {
             TableName name = (TableName)obj;
-            return FullName.Equals(name.FullName) && this.provider.Equals(name.provider);
+            return FullName.Equals(name.FullName) && this.baseName.Equals(name.baseName);
         }
 
         public override int GetHashCode()
         {
-            return FullName.GetHashCode()*100 + this.provider.GetHashCode();
+            return FullName.GetHashCode()*100 + this.baseName.GetHashCode();
         }
     
         public string Name
         {
             get { return this.tableName; }
         }
-        
-        public string DatabaseName
+
+
+        public DatabaseName DatabaseName
         {
-            get { return this.databaseName; }
+            get { return this.baseName; }
         }
 
-    
         public string FullName
         {
             get 
             {
                 //Visual Studio 2010 Windows Form Design Mode, does not support format [database]..[table]
-                return string.Format("{0}..[{1}]", this.databaseName, this.tableName);  
+                return string.Format("{0}..[{1}]", this.baseName.Name, this.tableName);  
             }
         }
 
-        public DataProviderHandle ProviderHandle
-        {
-            get { return this.provider; }
-            set { this.provider = value; }
-        }
-            
             
         public override string ToString()
         {
@@ -105,31 +114,16 @@ namespace Sys.Data
         {
             get
             {
-                return DictDatabase.GetId(this.databaseName);
+                return DictDatabase.GetId(this.baseName);
             }
         }
 
- 
 
-        private static void ParseTableName(string fullTableName, TableName tname)
+
+        public DataProvider Provider
         {
-            //tableName may have format like [db.dbo.tableName], [db..tableName], or [tableName]
-            string[] t = fullTableName.Split(new char[] { '.' });
-
-            string databaseName = "";
-            string tableName = "";
-            if (t.Length > 1)
-            {
-                databaseName = t[0];
-                tableName = t[2];
-            }
-            else
-                tableName = fullTableName;
-
-            tname.databaseName = databaseName.Replace("[", "").Replace("]", "");
-            tname.tableName = tableName.Replace("[", "").Replace("]", "");
+            get { return this.baseName.Provider; }
+            set { this.baseName.Provider = value; }
         }
-
-
     }
 }
