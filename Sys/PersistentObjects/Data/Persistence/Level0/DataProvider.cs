@@ -8,7 +8,7 @@ namespace Sys.Data
 {
     public struct DataProvider : IValizable
     {
-        internal const int DEFAULT_HANDLE = 0;
+        const int DEFAULT_HANDLE = 0;
         const int USER_HANDLE_BASE = DEFAULT_HANDLE + 1000;
 
         internal static readonly DataProvider DefaultProvider = new DataProvider(DEFAULT_HANDLE);
@@ -47,11 +47,6 @@ namespace Sys.Data
         {
             return string.Format("Handle={0}", this.handle);
         }
-
-        //public int Handle
-        //{
-        //    get { return this.handle; }
-        //}
 
         public static explicit operator int(DataProvider provider)
         {

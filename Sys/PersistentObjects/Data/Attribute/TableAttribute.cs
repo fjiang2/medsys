@@ -12,7 +12,7 @@ namespace Sys.Data
         public bool DefaultValueUsed;
         public Level Level;
         public bool Pack = true;
-        public int Provider = DataProvider.DEFAULT_HANDLE;
+        public int Provider = (int)DataProvider.DefaultProvider;
 
         public TableAttribute(string tableName)
             : this(tableName, Level.Fixed)
