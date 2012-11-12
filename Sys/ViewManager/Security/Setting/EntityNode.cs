@@ -213,8 +213,8 @@ namespace Sys.ViewManager.Security
         {
             //"Role_ID={0} AND Ty={1}"
             DataTable dataTable = new TableReader<FormPermission>(
-                FormPermission._Role_ID.ColumName() == roleID 
-                & FormPermission._Ty.ColumName() == ty).Table;
+                FormPermission._Role_ID.ColumnName() == roleID 
+                & FormPermission._Ty.ColumnName() == ty).Table;
             
             foreach (EntityNode entity in list)
             {
@@ -268,8 +268,8 @@ namespace Sys.ViewManager.Security
             int ty = (int)SecurityType.WinForm;
             //Role_ID={0} AND Ty={1}
             DataTable dataTable = new TableReader<FormPermission>(
-                FormPermission._Role_ID.ColumName() == from
-                & FormPermission._Ty.ColumName() == ty)
+                FormPermission._Role_ID.ColumnName() == from
+                & FormPermission._Ty.ColumnName() == ty)
                 .Table;
 
             permission.TableName.SqlDelete("Role_ID={0} AND Ty={1}", to, ty);

@@ -29,7 +29,7 @@ namespace X12.Specification
 
         public static LoopTemplateDpo[] GetLoopTemplates(int parentID)
         {
-            DataTable dt = new TableReader<LoopTemplateDpo>(X12LoopTemplateDpo._ParentID.ColumName() == parentID).Table;
+            DataTable dt = new TableReader<LoopTemplateDpo>(X12LoopTemplateDpo._ParentID.ColumnName() == parentID).Table;
             var loops = new DPList<LoopTemplateDpo>(dt);
 
 
@@ -39,7 +39,7 @@ namespace X12.Specification
 
         public static X12SegmentInstanceDpo[] GetSegementInstances(X12LoopTemplateDpo loop)
         {
-            DataTable dt = new TableReader<X12SegmentInstanceDpo>(X12SegmentInstanceDpo._LoopName.ColumName() == loop.Name).Table;
+            DataTable dt = new TableReader<X12SegmentInstanceDpo>(X12SegmentInstanceDpo._LoopName.ColumnName() == loop.Name).Table;
             var segments = new DPList<X12SegmentInstanceDpo>(dt);
 
             return segments.OrderBy(segment=>segment.Sequence).ToArray();
@@ -50,7 +50,7 @@ namespace X12.Specification
 
         public static  ElementTemplateDpo[] GetElementTemplates(X12SegmentInstanceDpo segment)
         {
-            DataTable dt = new TableReader<ElementTemplateDpo>(ElementTemplateDpo._SegmentName.ColumName() == segment.Name).Table;
+            DataTable dt = new TableReader<ElementTemplateDpo>(ElementTemplateDpo._SegmentName.ColumnName() == segment.Name).Table;
             var elements = new DPList<ElementTemplateDpo>(dt);
 
             return elements.OrderBy(dpo => dpo.RefDes).ToArray();

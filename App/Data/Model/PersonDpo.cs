@@ -60,7 +60,7 @@ namespace App.Data
                 {
                     int[] ID2List = this.Relationships.Table.ToArray<int>(PersonRelationshipDpo._Person_ID2);
                     
-                    var reader2 = new TableReader<PersonDpo>(PersonDpo._Person_ID.ColumName().IN(ID2List));
+                    var reader2 = new TableReader<PersonDpo>(PersonDpo._Person_ID.ColumnName().IN(ID2List));
                     this.cached__relatives = new DPCollection<PersonDpo>(reader2.Table);
                 }
             }

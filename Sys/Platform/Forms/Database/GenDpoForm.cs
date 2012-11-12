@@ -63,14 +63,13 @@ namespace Sys.Platform.Forms
             this.dpoDict = Library.GetTableDpoDict();
             treeTables.AfterSelect += new TreeViewEventHandler(treeTables_AfterSelect);
 
-
-            foreach(string db in MetaDatabase.GetDatabaseNames(provider))
-                comboDatabase.Items.Add(db);
-       
-
-            this.comboDatabase.SelectedItem = databaseName;
-            showTreeTables(false);
-           
+            foreach (var provider in DataProviderManager.Instance.Providers)
+            {
+                comboServer.Items.Add(new MyProvider(provider));
+            }
+            this.comboServer.SelectedIndex = 0;
+            
+      
         }
 
         private void chkShowNewTables_CheckedChanged(object sender, EventArgs e)
@@ -267,6 +266,8 @@ namespace Sys.Platform.Forms
 
             string className = this.txtClass.Text;
             ClassTableName tname = new ClassTableName(DatabaseName, TableName);
+            tname.Provider = this.provider;
+
             ClassName cname = new ClassName(Namespace, Modifier, className);
             tname.SetLevel(this.Level, this.Pack);
 
@@ -485,6 +486,43 @@ namespace Sys.Platform.Forms
             showTreeTables(false);
         }
 
+        private void comboServer_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.provider = ((MyProvider)comboServer.SelectedItem).Provider;
+            
+            comboDatabase.Items.Clear();
+            foreach (string db in MetaDatabase.GetDatabaseNames(this.provider))
+                comboDatabase.Items.Add(db);
+
+
+            this.comboDatabase.SelectedIndex= 0;
+            showTreeTables(false);
+           
+        }
+
        
+    }
+
+
+    class MyProvider
+    {
+        DataProvider provider;
+        string text;
+        
+        public MyProvider(KeyValuePair<DataProvider, DataProviderConnection> pair)
+        {
+            this.provider = pair.Key;
+            this.text = pair.Value.Name;
+        }
+
+        public DataProvider Provider
+        {
+            get { return this.provider; }
+        }
+
+        public override string ToString()
+        {
+            return this.text;
+        }
     }
 }

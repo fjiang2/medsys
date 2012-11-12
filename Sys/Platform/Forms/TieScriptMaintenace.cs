@@ -38,7 +38,7 @@ namespace Sys.Platform.Forms
         private void comboModules_DropDown(object sender, EventArgs e)
         {
             comboModules.Items.Clear();
-            DataTable dt = new TableReader<ScriptDpo>(ScriptDpo._Released.ColumName() == 1).Table;
+            DataTable dt = new TableReader<ScriptDpo>(ScriptDpo._Released.ColumnName() == 1).Table;
             foreach (DataRow row in dt.Rows)
             {
                 comboModules.Items.Add(row[ScriptDpo._Module]);

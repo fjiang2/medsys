@@ -504,7 +504,7 @@ namespace Sys.Data
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        public static SqlExpr ColumName(this string name)
+        public static SqlExpr ColumnName(this string name)
         {
             return SqlExpr.ColumnName(name);
         }

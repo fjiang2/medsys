@@ -25,8 +25,8 @@ namespace Sys.DataManager
             
             //"Table_id={0} AND Row_ID = {1}
             dt = new TableReader<Doc01Dpo>(
-                Doc01Dpo._Table_Id.ColumName() == rowObject.TableId
-                & Doc01Dpo._Row_Id.ColumName() == rowObject.RowId).Table;
+                Doc01Dpo._Table_Id.ColumnName() == rowObject.TableId
+                & Doc01Dpo._Row_Id.ColumnName() == rowObject.RowId).Table;
         }
 
 

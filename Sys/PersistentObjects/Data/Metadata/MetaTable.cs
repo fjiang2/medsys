@@ -55,21 +55,32 @@ namespace Sys.Data
                 c.precision,
                 c.scale,
                 c.is_identity AS IsIdentity,
-                d3.column_id AS ColumnID,
-                d3.label
+                NULL AS ColumnID,
+                NULL AS label
              FROM sys.tables t 
                   INNER JOIN sys.columns c ON t.object_id = c.object_id 
                   INNER JOIN sys.types ty ON ty.system_type_id =c.system_type_id AND ty.name<>'sysname'
-                  LEFT JOIN {2} d3 ON d3.table_id = {3} AND c.name = d3.name
             WHERE t.name = '{1}' 
             ORDER BY c.column_id 
             ";
 
-            DataTable dt = SqlCmd.FillDataTable(SQL, tname.DatabaseName, tname.Name, dictDataColumnDpo.TABLE_NAME, TableID);
+            DataTable dt1 = SqlCmd.FillDataTable(tname.Provider, SQL, tname.DatabaseName, tname.Name);
+            var list = new TableReader<dictDataColumnDpo>( dictDataColumnDpo._table_id.ColumnName() == TableID).ToList();
 
             this._columns = new MetaColumnCollection();
-            foreach (DataRow row in dt.Rows)
+            foreach (DataRow row in dt1.Rows)
+            {
+                var result = list.Where(column=>column.name == (string)row["ColumnName"]).FirstOrDefault();
+                if (result != null)
+                {
+                    row["ColumnID"] = result.column_id;
+                    
+                    if(result.label!=null)
+                        row["label"] = result.label;
+                }
+
                 this._columns.Add(new MetaColumn(row));
+            }
 
             this._identity = new IdentityKeys(this._columns);
 
@@ -198,7 +209,7 @@ namespace Sys.Data
             {
                 if (_thisDataTable == null)
                 {
-                    _thisDataTable = SqlCmd.FillDataTable("SELECT TOP 1 * FROM {0}", tname);
+                    _thisDataTable = SqlCmd.FillDataTable(tname.Provider, "SELECT TOP 1 * FROM {0}", tname);
                     _thisDataTable.Rows.Clear();
                 }
 

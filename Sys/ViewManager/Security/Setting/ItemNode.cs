@@ -120,8 +120,8 @@ namespace Sys.ViewManager.Security
             
             //"{0}={1} AND {2}={3}", ItemPermission._Role_ID, roleID, ItemPermission._Ty, (int)ty
             DataTable dataTable = new TableReader<ItemPermission>(
-                ItemPermission._Role_ID.ColumName() == roleID
-                & ItemPermission._Ty.ColumName() == ty)
+                ItemPermission._Role_ID.ColumnName() == roleID
+                & ItemPermission._Ty.ColumnName() == ty)
                 .Table;
             
             entity.Load(dataTable);
@@ -131,7 +131,7 @@ namespace Sys.ViewManager.Security
         {
             ItemPermission permission = new ItemPermission();
             //"{0}={1}", ItemPermission._Role_ID, from
-            DataTable dataTable = new TableReader<ItemPermission>(ItemPermission._Role_ID.ColumName() == from).Table;
+            DataTable dataTable = new TableReader<ItemPermission>(ItemPermission._Role_ID.ColumnName() == from).Table;
             
             permission.TableName.SqlDelete("{0}={1}", ItemPermission._Role_ID, to);
 
