@@ -267,39 +267,6 @@ namespace Sys.Data
             return cmd.FillDataRow();
         }
 
-        //--------------------------------------------------------------------------------------
-        //public static object ExecuteScalar(DataProviderHandle handle, string script, params object[] args)
-        //{
-        //    SqlCmd cmd = new SqlCmd(handle, string.Format(script, args));
-        //    return cmd.ExecuteScalar();
-        //}
-
-
-        //public static int ExecuteNonQuery(DataProviderHandle handle, string script, params object[] args)
-        //{
-        //    SqlCmd cmd = new SqlCmd(handle, string.Format(script, args));
-        //    return cmd.ExecuteNonQuery();
-        //}
-
-        //public static DataSet FillDataSet(DataProviderHandle handle, string script, params object[] args)
-        //{
-        //    SqlCmd cmd = new SqlCmd(handle, string.Format(script, args));
-        //    return cmd.FillDataSet();
-        //}
-
-        //public static DataTable FillDataTable(DataProviderHandle handle, string script, params object[] args)
-        //{
-        //    SqlCmd cmd = new SqlCmd(handle, string.Format(script, args));
-        //    return cmd.FillDataTable();
-        //}
-
-
-
-        //public static DataRow FillDataRow(DataProviderHandle handle, string script, params object[] args)
-        //{
-        //    SqlCmd cmd = new SqlCmd(handle, string.Format(script, args));
-        //    return cmd.FillDataRow();
-        //}
        
     }
 }

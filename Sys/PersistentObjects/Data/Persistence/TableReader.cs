@@ -15,24 +15,21 @@ namespace Sys.Data
         private string sql;
 
 
-        public TableReader(string sql)
+        internal TableReader(TableName tableName, string sql)
         {
             this.sql = sql;
-            this.table = SqlCmd.FillDataTable(sql);
+            SqlCmd cmd = new SqlCmd(tableName.ProviderHandle, sql);
+            this.table = cmd.FillDataTable();
         }
 
-        public TableReader(SqlClause sql)
-            :this(sql.Clause)
-        {
-        }
-
+       
         public TableReader(TableName tableName)
-            :this(string.Format("SELECT * FROM {0}", tableName))
+            : this(tableName, string.Format("SELECT * FROM {0}", tableName))
         {
         }
 
         public TableReader(TableName tableName, string where, params object[] args)
-            :this( string.Format("SELECT * FROM {0} WHERE {1}", tableName, string.Format(where, args)))
+            :this(tableName, string.Format("SELECT * FROM {0} WHERE {1}", tableName, string.Format(where, args)))
         {
         }
 
