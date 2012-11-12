@@ -153,7 +153,12 @@ namespace Sys.Data
 
         public static DataProviderHandle Register(string connectionString)
         {
-            return DataProviderManager.Register(DataProviderType.SqlServer, connectionString);
+            const string SERVER = "data source";
+            string server = connectionString.Split(new char[] { ';' }).Where(segment => segment.Trim().StartsWith(SERVER)).First();
+            string serverName = server.Replace(SERVER, "").Replace("=", "").Trim();
+
+
+            return DataProviderManager.Register(serverName, DataProviderType.SqlServer, connectionString);
         }
 
 
@@ -165,7 +170,7 @@ namespace Sys.Data
 
             string connectionString = string.Format("data source={0}; initial catalog={1}; {2} pooling=false", serverName, database, security);
 
-            return DataProviderManager.Register(DataProviderType.SqlServer, connectionString);
+            return DataProviderManager.Register(serverName, DataProviderType.SqlServer, connectionString);
         }
 
         public static DataProviderHandle Register(string serverName, string database, string userName, string password)

@@ -6,21 +6,22 @@ using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
 using System.Data.OleDb;
+using Tie;
 
 namespace Sys.Data
 {
     
-    public class DataProviderManager
+    public class DataProviderManager 
     {
         private static DataProviderManager instance = null;
 
-        Dictionary<DataProviderHandle, DataProvider> providers = new Dictionary<DataProviderHandle, DataProvider>();
+        private Dictionary<DataProviderHandle, DataProvider> providers = new Dictionary<DataProviderHandle, DataProvider>();
 
         private DataProviderManager()
         { 
         }
 
-        private static DataProviderManager Instance
+        public static DataProviderManager Instance
         {
             get
             {
@@ -62,11 +63,42 @@ namespace Sys.Data
 
 
 
+
+
         public override string ToString()
         {
             return string.Format("Registered Providers = #{0}", providers.Count);
         }
 
+        public VAL Json
+        {
+            get
+            {
+                VAL val = VAL.Array(this.providers.Count);
+                int i = 0;
+                foreach (var pair in this.providers)
+                {
+                    val[i]["handle"] = pair.Key.GetValData();
+                    val[i]["provider"] = pair.Value.GetValData();
+                    i++;
+                }
+
+                return val;
+
+            }
+            set
+            {
+                VAL val = value;
+                for (int i = 0; i < val.Size; i++)
+                {
+                    DataProviderHandle handle = new DataProviderHandle(val[i]["handle"]);
+                    DataProvider provider = new DataProvider(val[i]["provider"]);
+                    Add(handle, provider);
+                }
+            }
+        }
+
+        
 
 
 
@@ -96,14 +128,14 @@ namespace Sys.Data
             else
                 Sys.Const.DB_SYSTEM = sysDatabase;
 
-            Instance.Add(DataProviderHandle.DEFAULT_PROVIDER, new DataProvider(DataProviderType.SqlServer, connectionString));
+            Instance.Add(DataProviderHandle.DefaultProviderHandle, new DataProvider("Default", DataProviderType.SqlServer, connectionString));
         }
 
         public static DataProvider DefaultProvider
         {
             get
             {
-                return Instance[DataProviderHandle.DEFAULT_PROVIDER];
+                return Instance[DataProviderHandle.DefaultProviderHandle];
             }
         }
 
@@ -111,18 +143,20 @@ namespace Sys.Data
 
 
 
-        private static DataProviderHandle handle = DataProviderHandle.USER_BASE_PROVIDER;
-        public static DataProviderHandle Register(DataProviderType type, string connectionString)
+        private static DataProviderHandle handle = DataProviderHandle.USER_PROVIDER_HANDLE_BASE;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="name">used to display and search</param>
+        /// <param name="type"></param>
+        /// <param name="connectionString"></param>
+        /// <returns></returns>
+        public static DataProviderHandle Register(string name, DataProviderType type, string connectionString)
         {
             handle++;
-
-            Instance.Add(handle, new DataProvider(type, connectionString));
+            Instance.Add(handle, new DataProvider(name, type, connectionString));
             return handle;
-        }
-
-        public static DataProvider GetProvider(DataProviderHandle handle)
-        {
-            return Instance[handle];
         }
 
 
@@ -131,6 +165,25 @@ namespace Sys.Data
             Instance.Remove(handle);
         }
 
+
+        internal static DataProvider GetProvider(DataProviderHandle handle)
+        {
+            return Instance[handle];
+        }
+
+        public static DataProviderHandle GetProviderHandle(string name)
+        {
+            foreach (KeyValuePair<DataProviderHandle, DataProvider> pair in Instance.providers)
+            {
+                if (pair.Value.Name == name)
+                    return pair.Key;
+            }
+            
+            return DataProviderHandle.DefaultProviderHandle;
+            
+        }
+
+       
       
     }
 }

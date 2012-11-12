@@ -8,7 +8,7 @@ namespace Sys.Data
 {
     public class TableName : IComparable<TableName>, IComparable
     {
-        protected DataProviderHandle provider = DataProviderHandle.DEFAULT_PROVIDER;
+        protected DataProviderHandle provider = DataProviderHandle.DefaultProviderHandle;
         protected string databaseName;
         protected string tableName;
        

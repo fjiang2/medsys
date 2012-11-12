@@ -13,12 +13,12 @@ namespace Sys.Data
 
         public static DataProviderHandle RegisterExcel2007(string xlsName)
         {
-            return DataProviderManager.Register(DataProviderType.Excel2007, Excel2007.Replace("@XLS", xlsName));
+            return DataProviderManager.Register(xlsName, DataProviderType.Excel2007, Excel2007.Replace("@XLS", xlsName));
         }
 
         public static DataProviderHandle RegisterExcel2010(string xlsName)
         {
-            return DataProviderManager.Register(DataProviderType.Excel2010, Excel2010.Replace("@XLS", xlsName));
+            return DataProviderManager.Register(xlsName, DataProviderType.Excel2010, Excel2010.Replace("@XLS", xlsName));
         }
 
     }
