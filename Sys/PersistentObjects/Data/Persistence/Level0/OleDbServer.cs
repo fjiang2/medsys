@@ -11,12 +11,12 @@ namespace Sys.Data
         private const string Excel2007 = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=@XLS;Extended Properties=\"Excel 8.0;HDR=NO;\"";
 
 
-        public static DataProviderHandle RegisterExcel2007(string xlsName)
+        public static DataProvider RegisterExcel2007(string xlsName)
         {
             return DataProviderManager.Register(xlsName, DataProviderType.Excel2007, Excel2007.Replace("@XLS", xlsName));
         }
 
-        public static DataProviderHandle RegisterExcel2010(string xlsName)
+        public static DataProvider RegisterExcel2010(string xlsName)
         {
             return DataProviderManager.Register(xlsName, DataProviderType.Excel2010, Excel2010.Replace("@XLS", xlsName));
         }

@@ -60,7 +60,7 @@ namespace Sys.Data.Manager
         /// <param name="databaseName"></param>
         /// <param name="thread"></param>
         /// <returns></returns>
-        public static int RegisterEntireDatabase(this string databaseName, BackgroundWorker thread)
+        public static int RegisterEntireDatabase(this DatabaseName databaseName, BackgroundWorker thread)
         {
             int database_id = DictDatabase.RegisterOnly(databaseName);
 
@@ -72,7 +72,7 @@ namespace Sys.Data.Manager
                 thread.ReportProgress((int)(i * 100.0 / names.Length));
                 i++;
 
-                DictTable.Register(database_id, new TableName(databaseName, name));
+                DictTable.Register(database_id, new TableName(databaseName.Name, name));
             }
 
             return names.Length;
@@ -94,7 +94,8 @@ namespace Sys.Data.Manager
             if (tname.Level == Level.System)
             {
                 dictDatabaseDpo db = new dictDatabaseDpo();
-                db.name = tname.DatabaseName;
+                db.name = tname.DatabaseName.Name;
+                db.provider_id = tname.Provider.Handle;
                 db.Load();
 
                 dictDataTableDpo dt = new dictDataTableDpo();

@@ -69,7 +69,7 @@ namespace Sys.Platform.Forms
                         foreach (DataRow dataRow in dt.Rows)
                         {
                             TableName name = new TableName(databaseNode.DatabaseName, (string)dataRow["name"]);
-                            name.ProviderHandle = databaseNode.DataProviderHandle;
+                            name.Provider = databaseNode.DataProviderHandle;
                             
                             TreeNode node = new TableNode(name);
                             node.ImageKey = "datatable";
@@ -171,7 +171,7 @@ namespace Sys.Platform.Forms
 
         public override bool DataLoad()
         {
-            DataTable dataTable = SqlCmd.FillDataTable(this.tableName.ProviderHandle, "SELECT * FROM " + this.tableName);
+            DataTable dataTable = SqlCmd.FillDataTable(this.tableName.Provider, "SELECT * FROM " + this.tableName);
             dataTable.TableName = this.tableName.FullName;
             jGridView1.DataSource = dataTable;
             return true;
@@ -238,9 +238,9 @@ namespace Sys.Platform.Forms
 
     class DatabaseNode : TreeNode
     {
-        DataProviderHandle handle;
+        DataProvider handle;
 
-        public DatabaseNode(DataProviderHandle handle, string databaseName)
+        public DatabaseNode(DataProvider handle, string databaseName)
             : base(databaseName)
         {
             this.handle = handle;
@@ -251,7 +251,7 @@ namespace Sys.Platform.Forms
             get { return this.Text; }
         }
 
-        public DataProviderHandle DataProviderHandle
+        public DataProvider DataProviderHandle
         {
             get { return this.handle; }
         }

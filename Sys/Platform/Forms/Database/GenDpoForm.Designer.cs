@@ -70,8 +70,6 @@
             this.toolStripButtonGenSP = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
-            ((System.ComponentModel.ISupportInitialize)(this.rgModifier.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.rgDpoLevel.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -211,9 +209,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.treeTables.CheckBoxes = true;
-            this.treeTables.Location = new System.Drawing.Point(0, 132);
+            this.treeTables.Location = new System.Drawing.Point(0, 135);
             this.treeTables.Name = "treeTables";
-            this.treeTables.Size = new System.Drawing.Size(274, 504);
+            this.treeTables.Size = new System.Drawing.Size(274, 501);
             this.treeTables.TabIndex = 7;
             // 
             // splitContainer1
@@ -503,8 +501,6 @@
             this.Controls.Add(this.splitContainer1);
             this.Name = "GenDpoForm";
             this.Text = "Generate Dpo Class";
-            ((System.ComponentModel.ISupportInitialize)(this.rgModifier.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.rgDpoLevel.Properties)).EndInit();
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);

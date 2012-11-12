@@ -151,7 +151,7 @@ namespace Sys.Data
 
         #region Register SQL SERVER
 
-        public static DataProviderHandle Register(string connectionString)
+        public static DataProvider Register(string connectionString)
         {
             const string SERVER = "data source";
             string server = connectionString.Split(new char[] { ';' }).Where(segment => segment.Trim().StartsWith(SERVER)).First();
@@ -162,7 +162,7 @@ namespace Sys.Data
         }
 
 
-        private static DataProviderHandle Register(string serverName, bool integratedSecurity, string database, string userName, string password)
+        private static DataProvider Register(string serverName, bool integratedSecurity, string database, string userName, string password)
         {
             string security = "integrated security=SSPI;";
             if (!integratedSecurity)
@@ -173,12 +173,12 @@ namespace Sys.Data
             return DataProviderManager.Register(serverName, DataProviderType.SqlServer, connectionString);
         }
 
-        public static DataProviderHandle Register(string serverName, string database, string userName, string password)
+        public static DataProvider Register(string serverName, string database, string userName, string password)
         {
             return Register(serverName, false, database, userName, password);
         }
 
-        public static DataProviderHandle Register(string serverName, string database)
+        public static DataProvider Register(string serverName, string database)
         {
             return Register(serverName, true, database, null, null);
         }

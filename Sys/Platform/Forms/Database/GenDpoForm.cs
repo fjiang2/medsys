@@ -25,6 +25,7 @@ namespace Sys.Platform.Forms
         string rootPath = "C:\\temp";
         private BackgroundWorker worker;
 
+        DataProvider provider;
 
         public GenDpoForm()
             : this(Sys.Constant.DB_APPLICATION)
@@ -63,7 +64,7 @@ namespace Sys.Platform.Forms
             treeTables.AfterSelect += new TreeViewEventHandler(treeTables_AfterSelect);
 
 
-            foreach(string db in MetaDatabase.GetDatabaseNames())
+            foreach(string db in MetaDatabase.GetDatabaseNames(provider))
                 comboDatabase.Items.Add(db);
        
 
@@ -144,7 +145,7 @@ namespace Sys.Platform.Forms
             treeTables.Nodes.Clear();
 
             this.txtDatabaseId.Text = new TableName(DatabaseName, "any").DatabaseId.ToString();
-            string[] tableNames = MetaDatabase.GetTableNames(DatabaseName);
+            string[] tableNames = MetaDatabase.GetTableNames(new DatabaseName(provider, DatabaseName));
             if (showNewTables)
             {
                 foreach (string tableName in tableNames)
@@ -412,7 +413,7 @@ namespace Sys.Platform.Forms
 
             progressBar1.Visible = true;
             txtCounter.Visible = true;
-            string db = this.DatabaseName;
+            DatabaseName db = new DatabaseName(provider, this.DatabaseName);
 
             worker = new BackgroundWorker();
             worker.WorkerReportsProgress = true;

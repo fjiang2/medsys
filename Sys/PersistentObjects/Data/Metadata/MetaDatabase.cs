@@ -10,11 +10,11 @@ namespace Sys.Data
     public static class MetaDatabase
     {
 
-        public static bool DatabaseExists(this string databaseName)
+        public static bool DatabaseExists(this DatabaseName databaseName)
         {
             try
             {
-                return SqlCmd.FillDataRow("SELECT * FROM sys.databases WHERE name = '{0}'", databaseName) != null;
+                return SqlCmd.FillDataRow(databaseName.Provider, "SELECT * FROM sys.databases WHERE name = '{0}'", databaseName.Name) != null;
             }
             catch (Exception)
             {
@@ -34,7 +34,7 @@ namespace Sys.Data
                 if (!DatabaseExists(tname.DatabaseName))
                     return false;
 
-                return SqlCmd.FillDataRow("USE {0} ; SELECT * FROM sys.Tables WHERE Name='{1}'", tname.DatabaseName, tname.Name) != null;
+                return SqlCmd.FillDataRow(tname.Provider, "USE {0} ; SELECT * FROM sys.Tables WHERE Name='{1}'", tname.DatabaseName, tname.Name) != null;
             }
             catch (Exception)
             {
@@ -62,13 +62,17 @@ namespace Sys.Data
 
         public static string[] GetDatabaseNames()
         {
-             return "SELECT name FROM sys.databases ORDER BY Name".FillDataTable().ToArray<string>("name");
+             return GetDatabaseNames(DataProvider.DefaultProvider);
         }
 
-
-        public static string[] GetTableNames(string databaseName)
+        public static string[] GetDatabaseNames(DataProvider handle)
         {
-            DataTable dt = SqlCmd.FillDataTable("USE {0} ; SELECT Name FROM sys.Tables ORDER BY Name", databaseName);
+            return SqlCmd.FillDataTable(handle, "SELECT name FROM sys.databases ORDER BY Name").ToArray<string>("name");
+        }
+
+        public static string[] GetTableNames(DatabaseName databaseName)
+        {
+            DataTable dt = SqlCmd.FillDataTable(databaseName.Provider, "USE {0} ; SELECT Name FROM sys.Tables ORDER BY Name", databaseName);
             return dt.ToArray<string>("name");
         }
     }

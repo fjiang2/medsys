@@ -2,90 +2,66 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Data;
-using System.Data.Common;
-using System.Data.SqlClient;
-using System.Data.OleDb;
 using Tie;
 
 namespace Sys.Data
 {
-  
-    internal enum DbType
+    public struct DataProvider : IValizable
     {
-        OleDb,
-        SqlDb
-    }
+        const int DEFAULT_HANDLE = 0;
+        const int USER_HANDLE_BASE = DEFAULT_HANDLE + 1000;
 
-    public class DataProvider : IValizable
-    {
-        private DataProviderType providerType;
-        private string connectionString;
-        private string name;
+        internal static readonly DataProvider DefaultProvider = new DataProvider(DEFAULT_HANDLE);
+        internal static readonly DataProvider Handle1 = new DataProvider(DEFAULT_HANDLE + 1);
+        internal static readonly DataProvider Handle2 = new DataProvider(DEFAULT_HANDLE + 2);
+        internal static readonly DataProvider Handle3 = new DataProvider(DEFAULT_HANDLE + 3);
+        internal static readonly DataProvider Handle4 = new DataProvider(DEFAULT_HANDLE + 4);
 
-        internal DataProvider(string name, DataProviderType type, string connectionString)
-        {
-            this.name = name;
-            this.providerType = type;
-            this.connectionString = connectionString;
-        }
-
-
-        internal DbType DbType
-        {
-            get
-            {
-                switch (providerType)
-                {
-                    case DataProviderType.SqlServer:
-                        return DbType.SqlDb;
-
-                    default:
-                        return DbType.OleDb;
-                }
-            }
-        }
-
-        public DbConnection DbConnection
-        {
-            get
-            {
-                if (DbType == DbType.SqlDb)
-                    return new SqlConnection(connectionString);
-                else
-                    return new OleDbConnection(connectionString);
-            }
-        }
-
-        public string Name
-        {
-            get { return this.name; }
-        }
+        internal static readonly DataProvider USER_PROVIDER_HANDLE_BASE = new DataProvider(USER_HANDLE_BASE);
      
+        private int handle;
+
+        private DataProvider(int handle)
+        {
+            this.handle = handle;
+        }
+
+        public static DataProvider operator ++(DataProvider handle)
+        {
+            return new DataProvider(handle.handle + 1);
+        }
+
+        public override bool Equals(object obj)
+        {
+            DataProvider name = (DataProvider)obj;
+            return this.handle.Equals(name.handle) ;
+        }
+
+        public override int GetHashCode()
+        {
+            return this.handle.GetHashCode();
+        }
+
+
         public override string ToString()
         {
-            return string.Format("{0}({1})",this.name, this.connectionString);
+            return string.Format("Handle={0}", this.handle);
         }
 
-
-        internal DataProvider(VAL val)
+        public int Handle
         {
-            this.name = val["name"].Str;
-            this.providerType = (DataProviderType)val["type"].Intcon;
-            this.connectionString = val["connection"].Str;
+            get { return this.handle; }
+        }
+
+                
+        public DataProvider(VAL val)
+        {
+            this.handle = val.Intcon;
         }
 
         public VAL GetValData()
         {
-            VAL val = new VAL();
-            val["name"] = new VAL(this.name);
-            val["type"] = new VAL((int)this.providerType);
-            val["connection"] = new VAL(this.connectionString);
-
-            return val;
+            return new VAL(this.handle);
         }
     }
-
-   
 }
-

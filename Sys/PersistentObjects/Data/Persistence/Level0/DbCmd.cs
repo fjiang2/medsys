@@ -15,9 +15,9 @@ namespace Sys.Data
         protected DbCommand command;
         protected DbConnection connection;
 
-        private DataProvider provider;
+        private DataProviderDefinition provider;
 
-        public DbCmd(DataProviderHandle handle, string script)
+        public DbCmd(DataProvider handle, string script)
         {
             this.provider = DataProviderManager.Instance.GetProvider(handle);
             
@@ -44,7 +44,7 @@ namespace Sys.Data
             get { return this.provider.DbType == DbType.SqlDb; }
         }
 
-        public virtual void ChangeConnection(DataProvider provider)
+        public virtual void ChangeConnection(DataProviderDefinition provider)
         {
             if (this.connection.State != ConnectionState.Closed)
                 this.connection.Close();
