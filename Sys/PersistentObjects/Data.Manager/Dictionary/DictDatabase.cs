@@ -22,8 +22,8 @@ namespace Sys.Data.Manager
             DataTable dt = new TableReader<dictDatabaseDpo>().Table;
             foreach (DataRow row in dt.Rows)
             {
-                DataProvider handle = new DataProvider((int)row[dictDatabaseDpo._provider_id]);
-                DatabaseName databaseName = new DatabaseName(handle, (string)row[dictDatabaseDpo._name]);
+                DataProvider provider = new DataProvider((int)row[dictDatabaseDpo._provider_id]);
+                DatabaseName databaseName = new DatabaseName(provider, (string)row[dictDatabaseDpo._name]);
                 bases.Add(databaseName, (int)row[dictDatabaseDpo._database_id]);
             }
 

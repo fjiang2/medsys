@@ -94,12 +94,14 @@ namespace Sys.Platform.Forms
             string tableName = node.Text;
             this.txtTableName.Text = tableName;
 
-            ClassTableName name = new ClassTableName(DatabaseName, tableName);
-            this.txtTableId.Text = name.Id.ToString();
+            ClassTableName tname = new ClassTableName(DatabaseName, tableName);
+            tname.Provider = this.provider;
 
-            if (dpoDict.ContainsKey(name))
+            this.txtTableId.Text = tname.Id.ToString();
+
+            if (dpoDict.ContainsKey(tname))
             {
-                Type ty = dpoDict[name];
+                Type ty = dpoDict[tname];
                 string moduleName = ty.Assembly.GetName().Name;
 
                 this.comboModule.SelectedItem = moduleName;
@@ -123,19 +125,32 @@ namespace Sys.Platform.Forms
             }
             else
             {
-                //this.comboModule.SelectedIndex = -1;
-                //this.txtAssembly.Text = "";
-                //this.txtNamespace.Text = "";
-                this.txtClass.Text = name.ClassName;
-                //this.txtPath.Text = "";
+                LogDpoClass log = new LogDpoClass(tname);
+                if (log.Exists)
+                {
+                    this.comboModule.SelectedIndex = -1;
+                    this.txtAssembly.Text = "";
+                    
+                    this.txtNamespace.Text = log.name_space;
+                    this.txtPath.Text = log.path;
 
-                this.Modifier = Data.Manager.AccessModifier.Public;
-                this.Level = Data.Level.Fixed;
+                    this.Modifier = (AccessModifier)log.modifier;
+                    this.Level = (Level)log.Level;
+                    this.Pack = log.packed;
+                }
+                else
+                {
+                    this.Modifier = AccessModifier.Public;
+                    this.Level = Level.Fixed;
+                    this.Pack = false;
+                }
+ 
+                this.txtClass.Text = tname.ClassName;
 
-                this.txtNamespace.Enabled = true;
-                this.txtClass.Enabled = true;
-                this.btnBrowse.Enabled = true;
-                this.comboModule.Enabled = true;
+                this.txtNamespace.Enabled = !log.Exists;
+                this.txtClass.Enabled = !log.Exists;
+                this.btnBrowse.Enabled = !log.Exists;
+                this.comboModule.Enabled = !log.Exists;
             }
         }
 
@@ -143,7 +158,10 @@ namespace Sys.Platform.Forms
         {
             treeTables.Nodes.Clear();
 
-            this.txtDatabaseId.Text = new TableName(DatabaseName, "any").DatabaseId.ToString();
+            TableName tname = new TableName(DatabaseName, "any");
+            tname.Provider = this.provider;
+            
+            this.txtDatabaseId.Text = tname.DatabaseId.ToString();
             string[] tableNames = MetaDatabase.GetTableNames(new DatabaseName(provider, DatabaseName));
             if (showNewTables)
             {
