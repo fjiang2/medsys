@@ -24,7 +24,6 @@ namespace Sys.Data
         internal DataProvider Provider
         {
             get { return this.provider; }
-            set { this.provider = value; }
         }
 
         public override int GetHashCode()

@@ -69,7 +69,6 @@ namespace Sys.Platform.Forms
                         foreach (DataRow dataRow in dt.Rows)
                         {
                             TableName name = new TableName(databaseNode.Provider, databaseNode.DatabaseName, (string)dataRow["name"]);
-                            name.Provider = databaseNode.Provider;
                             
                             TreeNode node = new TableNode(name);
                             node.ImageKey = "datatable";
