@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Data.Manager\LogDpoClass.cs" />
     <Compile Include="Data\Attribute\AggregatedAttribute.cs" />
+    <Compile Include="Data\Attribute\Provider.cs" />
     <Compile Include="Data\Clause\SqlClauseInfo.cs" />
     <Compile Include="Data\Metadata\ForeignKeys.cs" />
     <Compile Include="Data\Persistence\DatabaseName.cs" />
@@ -103,7 +104,7 @@
     <Compile Include="Data.Manager\ManagerExtension.cs" />
     <Compile Include="Data.Manager\Migration\Migration.cs" />
     <Compile Include="Data.Manager\Migration\MigrationAttribute.cs" />
-    <Compile Include="Data.Manager\Migration\Provider.cs" />
+    <Compile Include="Data.Manager\Migration\MigrationProvider.cs" />
     <Compile Include="Data.Manager\Package\BasePackage.cs" />
     <Compile Include="Data.Manager\Package\IPacking.cs" />
     <Compile Include="Data.Manager\Package\Packing.cs" />

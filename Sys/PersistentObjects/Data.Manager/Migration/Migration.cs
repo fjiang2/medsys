@@ -4,7 +4,7 @@ namespace Sys.Data.Manager
     
     public abstract class Migration
     {
-        private Provider provider;
+        private MigrationProvider provider;
 
         public string Name
         {
@@ -23,7 +23,7 @@ namespace Sys.Data.Manager
         {
         }
 
-        public Provider Database
+        public MigrationProvider Database
         {
             get { return provider; }
             set { provider = value; }

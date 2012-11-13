@@ -36,7 +36,7 @@ namespace Sys.Data
             if (attributes.Length > 0)
                 dataTableAttribute = attributes[0];
             else
-                dataTableAttribute = new TableAttribute(type.Name);
+                dataTableAttribute = new TableAttribute(type.Name, Level.Application);
 
             this.publicFields = type.GetFields(BindingFlags.Public | BindingFlags.Instance);    //ignore public const fields
 

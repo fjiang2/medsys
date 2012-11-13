@@ -6,7 +6,7 @@ using Tie;
 
 namespace Sys.Data
 {
-    public struct DataProvider : IValizable
+    public struct DataProvider : IValizable, IComparable<DataProvider>, IComparable
     {
         const int DEFAULT_HANDLE = 0;
         const int USER_HANDLE_BASE = DEFAULT_HANDLE + 1000;
@@ -43,9 +43,20 @@ namespace Sys.Data
         }
 
 
+        public int CompareTo(object obj)
+        {
+            return CompareTo((DataProvider)obj);
+        }
+
+        public int CompareTo(DataProvider n)
+        {
+            return handle.CompareTo(n.handle);
+        }
+
+
         public override string ToString()
         {
-            return string.Format("Handle={0}", this.handle);
+            return string.Format("Provider Handle={0}", this.handle);
         }
 
         public static explicit operator int(DataProvider provider)
