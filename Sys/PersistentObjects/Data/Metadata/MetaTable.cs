@@ -254,7 +254,7 @@ namespace Sys.Data
                     break;
                  
                 case Level.Fixed:
-                    attr = attr.AppendFormat("\"{0}..[{1}]\"", tname.DatabaseName, tname.Name);
+                    attr = attr.AppendFormat("\"{0}..[{1}]\", Level.Fixed", tname.DatabaseName, tname.Name);
                     break;
             }
 
