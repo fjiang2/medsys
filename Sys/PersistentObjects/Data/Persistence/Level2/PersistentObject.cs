@@ -60,9 +60,16 @@ namespace Sys.Data
             if (this.Identity.Length > 1)
                 throw new JException("multiple identity columns defined {0}", this.Identity);
 
-            DataRow row = SqlCmd.FillDataRow("SELECT * FROM {0} WHERE [{1}]={2}", this.TableName, this.Identity.Keys[0], identityId);
-            this.UpdateObject(row);
+            UpdateObject(this.Identity.Keys[0].ColumnName() == identityId);
+        }
 
+        public void UpdateObject(SqlExpr where)
+        {
+            DataRow row = SqlCmd.FillDataRow(this.TableName.Provider, new SqlClause().SELECT.COLUMNS().FROM(TableName).WHERE(where).Clause);
+            this.exists = row != null;
+            
+            if(exists)
+                this.UpdateObject(row);
         }
 
         /// <summary>
