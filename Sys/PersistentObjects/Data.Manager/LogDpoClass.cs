@@ -18,7 +18,7 @@ namespace Sys.Data.Manager
         { 
         }
 
-        public LogDpoClass(ClassTableName tname)
+        public LogDpoClass(TableName tname)
         {
             this.table_id = tname.Id;
             this.user_id = Active.Account.UserID;
