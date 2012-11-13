@@ -168,8 +168,16 @@ namespace Sys.Platform.Forms
                 foreach (string tableName in tableNames)
                 {
                     TableName name = new TableName(DatabaseName, tableName);
+                    name.Provider = this.provider;
+
                     if (dpoDict.ContainsKey(name))
                         continue;
+                    else
+                    {
+                        LogDpoClass log = new LogDpoClass(name);
+                        if (log.Exists)
+                            continue;
+                    }
 
                     TreeNode node = new TreeNode(tableName);
                     node.ImageIndex = 2;
@@ -182,10 +190,18 @@ namespace Sys.Platform.Forms
                 {
                     TreeNode node = new TreeNode(tableName);
                     TableName name = new TableName(DatabaseName, tableName);
+                    name.Provider = this.provider;
+
                     if (dpoDict.ContainsKey(name))
                         node.ImageIndex = 1;
                     else
-                        node.ImageIndex = 2;
+                    {
+                        LogDpoClass log = new LogDpoClass(name);
+                        if (log.Exists)
+                            node.ImageIndex = 1;
+                        else
+                            node.ImageIndex = 2;
+                    }
 
                     treeTables.Nodes.Add(node);
                 }
