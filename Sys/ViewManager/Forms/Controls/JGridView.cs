@@ -171,34 +171,33 @@ namespace Sys.ViewManager.Forms
         }
 
 
-        public TableAdapter DataSave()
+        public TableAdapter DataSave(TableName tableName)
         {
-            return DataSave(null, null, null, null);
+            return DataSave(tableName, null, null, null, null);
         }
 
 
-        public TableAdapter DataSave(string[] columnNames)
+        public TableAdapter DataSave(TableName tableName, string[] columnNames)
         {
-            return DataSave(columnNames, null, null, null);
+            return DataSave(tableName, columnNames, null, null, null);
         }
 
-        public TableAdapter DataSave(string[] columnNames, Locator locator)
+        public TableAdapter DataSave(TableName tableName, string[] columnNames, Locator locator)
         {
-            return DataSave(columnNames, locator, null, null);
+            return DataSave(tableName, columnNames, locator, null, null);
         }
 
-        public TableAdapter DataSave(string[] columnNames, Locator locator, RowChangedHandler rowHandler, ValueChangedHandler columnHandler)
+        public TableAdapter DataSave(TableName tableName, string[] columnNames, Locator locator, RowChangedHandler rowHandler, ValueChangedHandler columnHandler)
         {
             if (dataTable != null)
             {
-                TableName tname = new TableName(this.dataTable.TableName);
 
                 if (locator == null)
                 {
-                    locator = new Locator(tname);
+                    locator = new Locator(tableName);
                 }
 
-                TableAdapter dt = new TableAdapter(this.dataTable, tname, locator);
+                TableAdapter dt = new TableAdapter(this.dataTable, tableName, locator);
                 
                 if (rowHandler != null)
                     dt.DataRowChangedHandler += rowHandler;

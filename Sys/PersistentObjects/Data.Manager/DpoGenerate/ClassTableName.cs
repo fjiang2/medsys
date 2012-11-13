@@ -11,11 +11,12 @@ namespace Sys.Data.Manager
         private Level level = Level.Fixed;
         private bool pack = true;
 
-        public ClassTableName(string databaseName, string tableName)
-            : base(databaseName, tableName)
-        { 
-        
+        public ClassTableName(DataProvider provider, string databaseName, string tableName)
+            : base(provider, databaseName, tableName)
+        {
+
         }
+
 
         public Level Level
         {

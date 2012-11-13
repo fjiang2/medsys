@@ -41,6 +41,7 @@ WHERE FK.TABLE_NAME='{1}'
             foreach (var key in this.keys)
             {
                 key.DatabaseName = tname.DatabaseName.Name;
+                key.Provider = tname.Provider;
             }
         }
 
@@ -75,6 +76,8 @@ WHERE FK.TABLE_NAME='{1}'
 
 #pragma warning restore
 
+        public DataProvider Provider;
+
         public ForeignKey()
         { 
         }
@@ -88,7 +91,7 @@ WHERE FK.TABLE_NAME='{1}'
         {
             get
             {
-                return new TableName(DatabaseName, PK_Table);
+                return new TableName(this.Provider, DatabaseName, PK_Table);
             }
         }
 

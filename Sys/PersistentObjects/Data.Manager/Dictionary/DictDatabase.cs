@@ -102,7 +102,7 @@ namespace Sys.Data.Manager
 
             string[] names = MetaDatabase.GetTableNames(databaseName);
             foreach (string name in names)
-                DictTable.Register(database_id, new TableName(databaseName.Name, name));
+                DictTable.Register(database_id, new TableName(databaseName, name));
 
             return names.Length;
 

@@ -62,14 +62,14 @@ namespace Sys.Platform.Forms
                     {
                         DatabaseNode databaseNode = (DatabaseNode)treeNode;
                         Cursor.Current = Cursors.WaitCursor;
-                        DataTable dt = SqlCmd.FillDataTable(databaseNode.DataProviderHandle, 
+                        DataTable dt = SqlCmd.FillDataTable(databaseNode.Provider, 
                             "USE {0} ; SELECT Name FROM sys.Tables ORDER BY Name", 
                             databaseNode.DatabaseName);
 
                         foreach (DataRow dataRow in dt.Rows)
                         {
-                            TableName name = new TableName(databaseNode.DatabaseName, (string)dataRow["name"]);
-                            name.Provider = databaseNode.DataProviderHandle;
+                            TableName name = new TableName(databaseNode.Provider, databaseNode.DatabaseName, (string)dataRow["name"]);
+                            name.Provider = databaseNode.Provider;
                             
                             TreeNode node = new TableNode(name);
                             node.ImageKey = "datatable";
@@ -133,7 +133,7 @@ namespace Sys.Platform.Forms
 
 
 
-        public TableExplorer(string text, string tableName)
+        public TableExplorer(string text, DataProvider provider, string tableName)
             :base(tableName)
         {
 
@@ -146,7 +146,7 @@ namespace Sys.Platform.Forms
 
             this.Text = text;
 
-            this.tableName = new TableName(tableName);
+            this.tableName = new TableName(provider, tableName);
             DataLoad();
 
         }
@@ -164,7 +164,7 @@ namespace Sys.Platform.Forms
         {
             set
             {
-                this.tableName = new TableName((string)value);
+                this.tableName = (TableName)value;
                 DataLoad();
             }
         }
@@ -184,7 +184,7 @@ namespace Sys.Platform.Forms
             if (MessageBox.Show(this, "Are you sure to save your changes?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)
                 return false;
 
-            TableAdapter dt =jGridView1.DataSave();
+            TableAdapter dt =jGridView1.DataSave(this.tableName);
             if(dt == null)
             {
                 this.InformationMessage = "Data is not saved.";
@@ -238,12 +238,12 @@ namespace Sys.Platform.Forms
 
     class DatabaseNode : TreeNode
     {
-        DataProvider handle;
+        DataProvider provider;
 
         public DatabaseNode(DataProvider handle, string databaseName)
             : base(databaseName)
         {
-            this.handle = handle;
+            this.provider = handle;
         }
 
         public string DatabaseName
@@ -251,9 +251,9 @@ namespace Sys.Platform.Forms
             get { return this.Text; }
         }
 
-        public DataProvider DataProviderHandle
+        public DataProvider Provider
         {
-            get { return this.handle; }
+            get { return this.provider; }
         }
     }
 
