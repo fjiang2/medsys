@@ -112,9 +112,11 @@ namespace Sys.Data.Manager
                 Directory.CreateDirectory(path);
             }
 
-            return gen.WriteFile(string.Format("{0}\\{1}.cs", path, cname.Class), mustGenerate);
+            bool result =  gen.WriteFile(string.Format("{0}\\{1}.cs", path, cname.Class), mustGenerate);
 
-
+            //log class dpo 
+            LogDpoClass.Log(tname, path, cname);
+            return result;
         }
 
     
