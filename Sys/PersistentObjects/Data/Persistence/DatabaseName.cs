@@ -10,12 +10,6 @@ namespace Sys.Data
         private DataProvider provider;
         private string name;
 
-        public DatabaseName(string databaseName)
-            :this(DataProvider.DefaultProvider, databaseName)
-        { 
-
-        }
-
         public DatabaseName(DataProvider handle, string databaseName)
         {
             this.provider = handle;

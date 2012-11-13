@@ -31,22 +31,22 @@ namespace Sys.Data
             get 
             {
                 TableName name;
+                DataProvider provider = new DataProvider(this.Provider);
                 switch (this.Level)
                 {
                     case Level.System:
-                        name = new TableName(Const.DB_SYSTEM, this.tableName);
+                        name = new TableName(provider, Const.DB_SYSTEM, this.tableName);
                         break;
 
                     case Level.Application:
-                        name = new TableName(Const.DB_APPLICATION, this.tableName);
+                        name = new TableName(provider, Const.DB_APPLICATION, this.tableName);
                         break; 
 
                     default:
-                         name = new TableName(this.tableName);
+                        name = new TableName(provider, this.tableName);
                          break;
                 }
 
-                name.Provider = new DataProvider(this.Provider);
                 return name;
             }
         }

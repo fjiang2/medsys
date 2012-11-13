@@ -10,8 +10,8 @@ namespace Sys.Data
     {
         protected DatabaseName baseName;
         protected string tableName;
-       
-        public TableName(string fullTableName)
+
+        public TableName(DataProvider provider, string fullTableName)
         {
             //tableName may have format like [db.dbo.tableName], [db..tableName], or [tableName]
             string[] t = fullTableName.Split(new char[] { '.' });
@@ -32,16 +32,23 @@ namespace Sys.Data
             if (databaseName == "")
                 databaseName = MetaDatabase.CurrentDatabaseName;
 
-            this.baseName = new DatabaseName(databaseName);
+            this.baseName = new DatabaseName(provider, databaseName);
         }
 
-        public TableName(string databaseName, string tableName)
+      
+
+        public TableName(DatabaseName databaseName, string tableName)
         {
-            this.baseName = new DatabaseName(databaseName);
+            this.baseName = databaseName;
             this.tableName = tableName;
         }
 
-       
+        public TableName(DataProvider provider, string databaseName, string tableName)
+        {
+            this.baseName = new DatabaseName(provider, databaseName);
+            this.tableName = tableName;
+        }
+
         public int CompareTo(object obj)
         {
             return CompareTo((TableName)obj);

@@ -72,7 +72,7 @@ namespace Sys.Data.Manager
                 thread.ReportProgress((int)(i * 100.0 / names.Length));
                 i++;
 
-                DictTable.Register(database_id, new TableName(databaseName.Name, name));
+                DictTable.Register(database_id, new TableName(databaseName, name));
             }
 
             return names.Length;

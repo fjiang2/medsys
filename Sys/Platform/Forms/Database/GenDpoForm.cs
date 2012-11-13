@@ -94,9 +94,8 @@ namespace Sys.Platform.Forms
             string tableName = node.Text;
             this.txtTableName.Text = tableName;
 
-            ClassTableName tname = new ClassTableName(DatabaseName, tableName);
-            tname.Provider = this.provider;
-
+            ClassTableName tname = new ClassTableName(this.provider, DatabaseName, tableName);
+            
             this.txtTableId.Text = tname.Id.ToString();
 
             if (dpoDict.ContainsKey(tname))
@@ -158,8 +157,7 @@ namespace Sys.Platform.Forms
         {
             treeTables.Nodes.Clear();
 
-            TableName tname = new TableName(DatabaseName, "any");
-            tname.Provider = this.provider;
+            TableName tname = new TableName(this.provider, DatabaseName, "any");
             
             this.txtDatabaseId.Text = tname.DatabaseId.ToString();
             string[] tableNames = MetaDatabase.GetTableNames(new DatabaseName(provider, DatabaseName));
@@ -167,8 +165,7 @@ namespace Sys.Platform.Forms
             {
                 foreach (string tableName in tableNames)
                 {
-                    TableName name = new TableName(DatabaseName, tableName);
-                    name.Provider = this.provider;
+                    TableName name = new TableName(this.provider, DatabaseName, tableName);
 
                     if (dpoDict.ContainsKey(name))
                         continue;
@@ -189,8 +186,7 @@ namespace Sys.Platform.Forms
                 foreach (string tableName in tableNames)
                 {
                     TreeNode node = new TreeNode(tableName);
-                    TableName name = new TableName(DatabaseName, tableName);
-                    name.Provider = this.provider;
+                    TableName name = new TableName(this.provider, DatabaseName, tableName);
 
                     if (dpoDict.ContainsKey(name))
                         node.ImageIndex = 1;
@@ -299,8 +295,7 @@ namespace Sys.Platform.Forms
             this.txtOutput.Text = "";
 
             string className = this.txtClass.Text;
-            ClassTableName tname = new ClassTableName(DatabaseName, TableName);
-            tname.Provider = this.provider;
+            ClassTableName tname = new ClassTableName(this.provider, DatabaseName, TableName);
 
             ClassName cname = new ClassName(Namespace, Modifier, className);
             tname.SetLevel(this.Level, this.Pack);
@@ -344,7 +339,7 @@ namespace Sys.Platform.Forms
                 if (!node.Checked)
                     continue;
 
-                ClassTableName tname = new ClassTableName(DatabaseName, node.Text);
+                ClassTableName tname = new ClassTableName(this.provider, DatabaseName, node.Text);
                 if (!dpoDict.ContainsKey(tname))
                     continue;
 
@@ -387,7 +382,7 @@ namespace Sys.Platform.Forms
                 if (!node.Checked)
                     continue;
 
-                ClassTableName tname = new ClassTableName(DatabaseName, node.Text);
+                ClassTableName tname = new ClassTableName(this.provider, DatabaseName, node.Text);
                 tname.SetLevel(this.Level, this.Pack);
                 
                 if (dpoDict.ContainsKey(tname))
