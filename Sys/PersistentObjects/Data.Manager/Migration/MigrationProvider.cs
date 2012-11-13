@@ -7,10 +7,10 @@ using Sys.PersistentObjects.DpoClass;
 namespace Sys.Data.Manager
 {
 	
-	public class Provider 
+	public class MigrationProvider 
 	{
 	
-        public Provider()
+        public MigrationProvider()
 		{
 		}
         

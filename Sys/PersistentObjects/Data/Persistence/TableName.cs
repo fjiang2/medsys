@@ -56,7 +56,10 @@ namespace Sys.Data
 
         public int CompareTo(TableName n)
         {
-            return string.Format("{0}::{1}",this.baseName.Provider, FullName).CompareTo(n);
+            if (this.baseName.CompareTo(n.baseName) == 0)
+                return this.tableName.CompareTo(n.tableName);
+
+            return this.baseName.CompareTo(n.baseName);
         }
 
         public override bool Equals(object obj)
