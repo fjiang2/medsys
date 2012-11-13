@@ -17,17 +17,17 @@ namespace Sys.Data
             string[] t = fullTableName.Split(new char[] { '.' });
 
             string databaseName = "";
-            tableName = "";
+            this.tableName = "";
             if (t.Length > 1)
             {
                 databaseName = t[0];
-                tableName = t[2];
+                this.tableName = t[2];
             }
             else
-                tableName = fullTableName;
+                this.tableName = fullTableName;
 
             databaseName = databaseName.Replace("[", "").Replace("]", "");
-            this.tableName = tableName.Replace("[", "").Replace("]", "");
+            this.tableName = this.tableName.Replace("[", "").Replace("]", "");
 
             if (databaseName == "")
                 databaseName = MetaDatabase.CurrentDatabaseName;
@@ -130,7 +130,6 @@ namespace Sys.Data
         public DataProvider Provider
         {
             get { return this.baseName.Provider; }
-            set { this.baseName.Provider = value; }
         }
     }
 }

@@ -140,13 +140,13 @@ namespace Sys.Data
  
         #region Default Data Provider
 
-        
-        public static void RegisterDefaultProvider(string connectionString)
+
+        public static DataProvider RegisterDefaultProvider(string connectionString)
         {
-            RegisterDefaultProvider(connectionString, null);
+            return RegisterDefaultProvider(connectionString, null);
         }
 
-        public static void RegisterDefaultProvider(string connectionString, string sysDatabase)
+        public static DataProvider RegisterDefaultProvider(string connectionString, string sysDatabase)
         {
             const string INITIAL = "initial catalog";
             string initial = connectionString.Split(new char[] { ';' }).Where(segment => segment.Trim().StartsWith(INITIAL)).First();
@@ -160,6 +160,8 @@ namespace Sys.Data
                 Sys.Const.DB_SYSTEM = sysDatabase;
 
             Instance.Add(DataProvider.DefaultProvider, new DataProviderConnection("Default", DataProviderType.SqlServer, connectionString));
+            
+            return DataProvider.DefaultProvider;
         }
 
         public static DataProviderConnection DefaultProvider
