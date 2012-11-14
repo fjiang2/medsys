@@ -68,7 +68,8 @@ namespace Sys.Platform.Forms
                 comboServer.Items.Add(new MyProvider(provider));
             }
             this.comboServer.SelectedIndex = 0;
-            
+
+            this.comboDatabase.SelectedItem = databaseName;
       
         }
 

@@ -7,6 +7,7 @@ using System.Data.Common;
 using System.Data.SqlClient;
 using System.Data.OleDb;
 using Tie;
+using Sys.PersistentObjects.DpoClass;
 
 namespace Sys.Data
 {
@@ -126,10 +127,22 @@ namespace Sys.Data
                     DataProviderConnection provider = new DataProviderConnection(val[i]["provider"]);
                     Add(handle, provider);
                 }
+
+              
             }
         }
 
-        
+
+        public void LoadDataProviders()
+        {
+            var list = new TableReader<DataProviderDpo>(DataProviderDpo._inactive.ColumnName() == 0).ToList();
+            foreach (DataProviderDpo dpo in list)
+            {
+                DataProvider handle = new DataProvider(dpo.handle);
+                DataProviderConnection provider = new DataProviderConnection(dpo.name, (DataProviderType)dpo.type, dpo.connection);
+                Add(handle, provider);
+            }
+        }
 
 
 
