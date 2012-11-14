@@ -175,9 +175,11 @@ namespace Sys.Data
         #endregion
 
 
-
-        private static DataProvider handle = DataProvider.USER_PROVIDER_HANDLE_BASE;
-
+        /// <summary>
+        /// provider's handle is assigned during runtime
+        /// </summary>
+        private static DataProvider dynamicProvider = new DataProvider(DataProvider.USER_HANDLE_BASE);
+            
         /// <summary>
         /// 
         /// </summary>
@@ -187,9 +189,9 @@ namespace Sys.Data
         /// <returns></returns>
         public static DataProvider Register(string name, DataProviderType type, string connectionString)
         {
-            handle++;
-            Instance.Add(handle, new DataProviderConnection(name, type, connectionString));
-            return handle;
+            dynamicProvider = new DataProvider((int)dynamicProvider + 1);
+            Instance.Add(dynamicProvider, new DataProviderConnection(name, type, connectionString));
+            return dynamicProvider;
         }
 
 
