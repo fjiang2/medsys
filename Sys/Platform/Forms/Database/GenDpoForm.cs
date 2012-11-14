@@ -525,7 +525,6 @@ namespace Sys.Platform.Forms
 
 
             this.comboDatabase.SelectedIndex= 0;
-            showTreeTables(false);
            
         }
 

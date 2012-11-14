@@ -39,7 +39,7 @@ namespace Sys.Data
 
         public override string ToString()
         {
-            return string.Format("{0}..[{1}], Id={2}", tname.DatabaseName, tname.Name, TableID);
+            return string.Format("{0}..[{1}], Id={2}", tname.DatabaseName.Name, tname.Name, TableID);
         }
 
         private void LoadSchema()
@@ -64,7 +64,7 @@ namespace Sys.Data
             ORDER BY c.column_id 
             ";
 
-            DataTable dt1 = SqlCmd.FillDataTable(tname.Provider, SQL, tname.DatabaseName, tname.Name);
+            DataTable dt1 = SqlCmd.FillDataTable(tname.Provider, SQL, tname.DatabaseName.Name, tname.Name);
             var list = new TableReader<dictDataColumnDpo>( dictDataColumnDpo._table_id.ColumnName() == TableID).ToList();
 
             this._columns = new MetaColumnCollection();
@@ -226,8 +226,10 @@ namespace Sys.Data
         }
 
 
-        public string DatabaseName { get { return this.tname.DatabaseName.Name; } }
-        public string TableName { get { return this.tname.Name; } }
+        public TableName TableName 
+        { 
+            get { return this.tname; } 
+        }
 
 
         #region Table Attribute Generate
@@ -254,12 +256,22 @@ namespace Sys.Data
                     break;
                  
                 case Level.Fixed:
-                    attr = attr.AppendFormat("\"{0}..[{1}]\", Level.Fixed", tname.DatabaseName, tname.Name);
+                    attr = attr.AppendFormat("\"{0}..[{1}]\", Level.Fixed", tname.DatabaseName.Name, tname.Name);
                     break;
             }
 
             if (!this.tname.Provider.Equals(DataProvider.DefaultProvider))
-                attr.AppendFormat(", Provider = {0}", (int)tname.Provider);
+            {
+                foreach (Provider x in Enum.GetValues(typeof(Provider)))
+                {
+                    if (x == (Provider)(int)tname.Provider)
+                    {
+                        attr.AppendFormat(", DataProvider.{0}", x);
+                        break;
+                    }
+                }
+                
+            }
 
             if (!pack)
                 attr.AppendFormat(", Pack = false", tname.Name);

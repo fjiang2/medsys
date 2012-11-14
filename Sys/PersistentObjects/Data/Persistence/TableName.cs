@@ -124,7 +124,7 @@ namespace Sys.Data
         {
             get
             {
-                return DictDatabase.GetId(this.baseName);
+                return this.baseName.Id;
             }
         }
 

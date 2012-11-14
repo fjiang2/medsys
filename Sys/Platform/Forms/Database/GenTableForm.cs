@@ -121,7 +121,7 @@ namespace Sys.Platform.Forms
                         int i = 0;
                         row[i++] = type.Namespace;
                         row[i++] = type.Name;
-                        row[i++] = dpo.TableName.DatabaseName;
+                        row[i++] = dpo.TableName.DatabaseName.Name;
                         row[i++] = dpo.TableName.Name;
                         row[i++] = A[0].Pack;
                         dt.Rows.Add(row);

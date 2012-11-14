@@ -9,15 +9,24 @@ namespace Sys.Data
     {
         private string tableName;
         private Level level;
+        private Provider provider;
 
         public bool DefaultValueUsed = false;
         public bool Pack = true;
-        public int Provider = (int)DataProvider.DefaultProvider;
+       
 
         public TableAttribute(string tableName, Level level)
+            :this(tableName, level, Provider.DefaultDataSource)
         {
             this.tableName = tableName;
             this.level = level;
+        }
+
+        public TableAttribute(string tableName, Level level, Provider provider)
+        {
+            this.tableName = tableName;
+            this.level = level;
+            this.provider = provider;
         }
 
         public Level Level
@@ -30,19 +39,19 @@ namespace Sys.Data
             get 
             {
                 TableName tname;
-                DataProvider provider = new DataProvider(this.Provider);
+                DataProvider dataProvider = new DataProvider((int)this.provider);
                 switch (this.Level)
                 {
                     case Level.System:
-                        tname = new TableName(provider, Const.DB_SYSTEM, this.tableName);
+                        tname = new TableName(dataProvider, Const.DB_SYSTEM, this.tableName);
                         break;
 
                     case Level.Application:
-                        tname = new TableName(provider, Const.DB_APPLICATION, this.tableName);
+                        tname = new TableName(dataProvider, Const.DB_APPLICATION, this.tableName);
                         break; 
 
                     default:
-                        tname = new TableName(provider, this.tableName);
+                        tname = new TableName(dataProvider, this.tableName);
                         break;
                 }
 

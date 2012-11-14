@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Sys.Data.Manager;
 
 namespace Sys.Data
 {
@@ -19,6 +20,14 @@ namespace Sys.Data
         public string Name
         {
             get { return this.name; }
+        }
+
+        public int Id
+        {
+            get
+            {
+                return DictDatabase.GetId(this);
+            }
         }
 
         internal DataProvider Provider

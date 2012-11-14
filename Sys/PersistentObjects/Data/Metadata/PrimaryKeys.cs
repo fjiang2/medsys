@@ -28,7 +28,7 @@ namespace Sys.Data
                       AND c.CONSTRAINT_NAME = pk.CONSTRAINT_NAME
             ";
 
-            this.keys = SqlCmd.FillDataTable(tname.Provider, SQL, tname.DatabaseName, tname.Name).ToArray<string>(0);
+            this.keys = SqlCmd.FillDataTable(tname.Provider, SQL, tname.DatabaseName.Name, tname.Name).ToArray<string>(0);
         
         }
 

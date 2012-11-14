@@ -673,7 +673,7 @@ namespace Sys.Data
             if (MetaDatabase.TableExists(this.TableName))
                 return false;
 
-            string SQL = string.Format("USE {0};", TableName.DatabaseName) + string.Format(this.CreateTableString, TableName.Name);
+            string SQL = string.Format("USE {0};", TableName.DatabaseName.Name) + string.Format(this.CreateTableString, TableName.Name);
             SqlCmd.ExecuteNonQuery(SQL);
 
             return true;

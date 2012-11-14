@@ -34,7 +34,7 @@ namespace Sys.Data
 	            JOIN sys.columns c ON t.object_id = c.object_id 
             WHERE t.name = '{1}' AND c.is_identity = 1";
 
-            this.keys = SqlCmd.FillDataTable(tname.Provider, SQL, tname.DatabaseName, tname.Name).ToArray<string>(0);
+            this.keys = SqlCmd.FillDataTable(tname.Provider, SQL, tname.DatabaseName.Name, tname.Name).ToArray<string>(0);
         
         }
 

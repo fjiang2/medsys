@@ -37,7 +37,7 @@ FROM    INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS C
 WHERE FK.TABLE_NAME='{1}'       
             ";
 
-            this.keys = new DPList<ForeignKey>(SqlCmd.FillDataTable(tname.Provider, SQL, tname.DatabaseName, tname.Name)).ToArray();
+            this.keys = new DPList<ForeignKey>(SqlCmd.FillDataTable(tname.Provider, SQL, tname.DatabaseName.Name, tname.Name)).ToArray();
             foreach (var key in this.keys)
             {
                 key.DatabaseName = tname.DatabaseName.Name;
