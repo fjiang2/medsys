@@ -266,7 +266,7 @@ namespace Sys.Data
                 {
                     if (x == (Provider)(int)tname.Provider)
                     {
-                        attr.AppendFormat(", DataProvider.{0}", x);
+                        attr.AppendFormat(", {0}.{1}", typeof(Provider).Name, x);
                         break;
                     }
                 }
