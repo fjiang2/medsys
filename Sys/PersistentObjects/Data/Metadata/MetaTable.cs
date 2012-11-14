@@ -262,15 +262,7 @@ namespace Sys.Data
 
             if (!this.tname.Provider.Equals(DataProvider.DefaultProvider))
             {
-                foreach (Provider x in Enum.GetValues(typeof(Provider)))
-                {
-                    if (x == (Provider)(int)tname.Provider)
-                    {
-                        attr.AppendFormat(", {0}.{1}", typeof(Provider).Name, x);
-                        break;
-                    }
-                }
-                
+                  attr.AppendFormat(", Provider = {0}", (int)tname.Provider);
             }
 
             if (!pack)
