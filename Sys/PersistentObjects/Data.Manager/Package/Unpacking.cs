@@ -92,7 +92,9 @@ namespace Sys.Data.Manager
                 typeof(logDataSetDpo), 
                 typeof(logDataTableDpo), 
                 typeof(logDataColumnDpo),
-                typeof(RecordLockDpo)
+                typeof(RecordLockDpo),
+                typeof(DataProviderDpo),
+                typeof(logDpoClassDpo)
             };
 
             foreach (Type type in basicTypes)

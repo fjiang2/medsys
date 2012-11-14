@@ -48,7 +48,7 @@ namespace Sys.IO
         {
             get
             {
-                return partial(2);
+                return partial(3);
             }
         }
 
@@ -56,7 +56,7 @@ namespace Sys.IO
         {
             get
             {
-                return partial(1);
+                return partial(2);
             }
         }
     }

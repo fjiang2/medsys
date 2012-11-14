@@ -63,6 +63,7 @@
     <Compile Include="Data\Persistence\Level4\One2OneDpo.cs" />
     <Compile Include="Data\Persistence\Level4\One2ManyDpo.cs" />
     <Compile Include="Data\Persistence\TableReader`2.cs" />
+    <Compile Include="MgCode\DpoClass\DataProviderDpo.cs" />
     <Compile Include="MgCode\DpoClass\logDpoClassDpo.cs" />
     <Compile Include="Sys\CodeBuilder\Argument.cs" />
     <Compile Include="Sys\CodeBuilder\ClassBuilder.cs" />
