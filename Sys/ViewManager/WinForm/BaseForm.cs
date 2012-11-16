@@ -416,7 +416,7 @@ namespace Sys.ViewManager.Forms
                     mainForm.ShowForm(this, place);
                 }
                 else
-                    this.Show();
+                    ShowFormImpl(this.owner);
 
                 this.Cursor = Cursors.Default;
             }
@@ -460,7 +460,7 @@ namespace Sys.ViewManager.Forms
                 if (!this.allAccess && !account.IsDeveloper)
                     setting.SetFieldSecurity(this);
 
-                return ShowDialog(owner);
+                return ShowDialogImpl(owner);
             }
             else
             {
@@ -468,6 +468,32 @@ namespace Sys.ViewManager.Forms
             }
 
             return DialogResult.Abort;
+        }
+
+        
+        /// <summary>
+        /// It can be implemented in other platform
+        /// </summary>
+        /// <param name="owner"></param>
+        /// <returns></returns>
+        public virtual DialogResult ShowDialogImpl(IWin32Window owner)
+        {
+            if (owner != null)
+                return this.ShowDialog(owner);
+            else
+                return this.ShowDialog();
+        }
+
+
+        /// <summary>
+        /// It can be implemented in other platform
+        /// </summary>
+        public virtual void ShowFormImpl(IWin32Window owner)
+        {
+            if (owner != null)
+                this.Show(owner);
+            else
+                this.Show();
         }
 
        #endregion
@@ -801,7 +827,7 @@ namespace Sys.ViewManager.Forms
         #region Shortcut/Help
 
 
-        protected ShortcutControl ShortcutManager
+        protected virtual ShortcutControl ShortcutManager
         {
             get
             {
