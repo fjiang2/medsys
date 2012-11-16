@@ -157,7 +157,7 @@ namespace Sys.Data
             Validate();
 #endif
 
-            SqlCmd sqlCmd = new SqlCmd(SQL);
+            SqlCmd sqlCmd = new SqlCmd(this.TableName.Provider, SQL);
             foreach (ColumnAdapter column  in columns)
             {
                 if (column.Field.Identity)
@@ -218,7 +218,7 @@ namespace Sys.Data
             Validate();
 #endif
 
-            SqlCmd sqlCmd = new SqlCmd(SQL);
+            SqlCmd sqlCmd = new SqlCmd(this.TableName.Provider, SQL);
             foreach (ColumnAdapter column in columns)
             {
                 if (column.Field.Saved || column.Field.Identity || column.Field.Primary)
@@ -272,7 +272,7 @@ namespace Sys.Data
                 return false;
 
 
-            SqlCmd sqlCmd = new SqlCmd(deleteQuery());
+            SqlCmd sqlCmd = new SqlCmd(this.TableName.Provider, deleteQuery());
             foreach (ColumnAdapter column in columns)
             {
                 column.AddParameter(sqlCmd);

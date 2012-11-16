@@ -223,7 +223,7 @@ namespace Sys.Data
 
         protected bool RefreshRow()
         {
-            SqlCmd sqlCmd = new SqlCmd(selectQuery());
+            SqlCmd sqlCmd = new SqlCmd(this.tableName.Provider, selectQuery());
             foreach (ColumnAdapter column in columns)
             {
                 column.AddParameter(sqlCmd);
