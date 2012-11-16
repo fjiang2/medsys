@@ -215,7 +215,10 @@ namespace Sys.ViewManager.Manager
                 }
                 
                 form.MdiParent = owner;     //Dock on tab
-                form.Show();
+                if (form is BaseForm)
+                    (form as BaseForm).ShowFormImpl(null);
+                else
+                    form.Show();
             }
             else
             {

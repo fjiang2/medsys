@@ -71,12 +71,12 @@ namespace Sys.Platform.Forms
 
                 case FormPlace.WindowForm:
                     windowManager.AddWindow(form);
-                    form.Show(this);
+                    form.ShowFormImpl(this);
                     break;
 
                 case FormPlace.Floating :
                     windowManager.AddWindow(form);
-                    form.Show(this);
+                    form.ShowFormImpl(this);
 
                     //formManager.OpenFloatingForm(form);
                     break;
