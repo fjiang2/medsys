@@ -58,7 +58,7 @@ namespace Sys.Data
 
 
 
-        protected void Validate()
+        public void Validate()
         {
             MetaTable metaTable = tableName.GetCachedMetaTable();
             foreach (ColumnAdapter column in columns)

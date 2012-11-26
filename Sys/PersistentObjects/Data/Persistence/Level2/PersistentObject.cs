@@ -18,7 +18,8 @@ namespace Sys.Data
         {
             Insert,
             Update,
-            Save
+            Save,
+            Validate
         }
 
 
@@ -424,6 +425,11 @@ namespace Sys.Data
             return save(new Selector(), SaveMode.Insert);
         }
 
+        public virtual DataRow Validate()
+        {
+            return save(new Selector(), SaveMode.Validate);
+        }
+
         public virtual DataRow Update(string[] columnNames)
         {
             return save(new Selector(columnNames), SaveMode.Insert);
@@ -454,6 +460,10 @@ namespace Sys.Data
 
                 case SaveMode.Save:
                     d.Save();
+                    break;
+
+                case SaveMode.Validate:
+                    d.Validate();
                     break;
             }
 
