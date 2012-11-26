@@ -66,7 +66,7 @@ namespace Sys.Security
 
         public static DataTable AllRoles()
         {
-            return SqlCmd.FillDataTable("SELECT * FROM {0} WHERE Role_ID <> {1}", RoleDpo.TABLE_NAME, (int)PredefinedRole.devel);
+            return new TableReader<RoleDpo>(RoleDpo._Role_ID.ColumnName() != (int)PredefinedRole.devel).Table;
         }
 
         public static DataTable UserRoles(string userName)

@@ -90,7 +90,10 @@ namespace Sys.DataManager
         public static void DeleteTempDocuments(DPObject rowObject)
         {
             string tableName = Doc01Dpo.TABLE_NAME;
-            DataTable dt = SqlCmd.FillDataTable("SELECT * FROM {0} WHERE Table_Id={1} AND Row_Id = -1 AND Owner = {2}", tableName, rowObject.TableId, Sys.Security.Account.CurrentUser.User_ID);
+            
+            DataTable dt = new TableReader<Doc01Dpo>(Doc01Dpo._Table_Id.ColumnName() == rowObject.TableId
+                                        & Doc01Dpo._Row_Id.ColumnName() == -1
+                                        & Doc01Dpo._Owner.ColumnName() == Sys.Security.Account.CurrentUser.User_ID).Table;
 
             foreach (DataRow row in dt.Rows)
             {

@@ -70,7 +70,7 @@ namespace Sys.DataManager
         public void DeleteDocument()
         {
             string tableName = Doc02Dpo.TABLE_NAME;
-            DataTable dt = SqlCmd.FillDataTable("SELECT * FROM {0} WHERE Doc_Id={1}", tableName, this.ID);
+            DataTable dt = new TableReader<Doc02Dpo>(Doc02Dpo._Doc_Id.ColumnName() == this.ID).Table;
 
             foreach (DataRow row in dt.Rows)
             {
