@@ -18,7 +18,7 @@ namespace Sys.ViewManager.Manager
 
         public AppLink(Account account)
         {
-            DataTable dt = SqlCmd.FillDataTable("SELECT * FROM {0}", AppLinkDpo.TABLE_NAME);
+            DataTable dt = new TableReader<AppLinkDpo>().Table;
             links = new DPCollection<AppLinkDpo>(dt);
 
      

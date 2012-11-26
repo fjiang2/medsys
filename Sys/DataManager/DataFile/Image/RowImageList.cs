@@ -142,7 +142,10 @@ namespace Sys.DataManager
         public static void DeleteTempImages(DPObject rowObject)
         {
             string tableName = PictureDpo.TABLE_NAME;
-            DataTable dt = SqlCmd.FillDataTable("SELECT * FROM {0} WHERE Table_Id={1} AND Row_Id = -1 AND Owner = {2}", tableName, rowObject.TableId, Sys.Security.Account.CurrentUser.User_ID);
+            DataTable dt = new TableReader<PictureDpo>(PictureDpo._Table_Id.ColumnName() == rowObject.TableId
+                                      & PictureDpo._Row_Id.ColumnName() == -1
+                                      & PictureDpo._Owner.ColumnName() == Sys.Security.Account.CurrentUser.User_ID).Table;
+
 
             foreach (DataRow row in dt.Rows)
             {

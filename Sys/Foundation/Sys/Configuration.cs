@@ -15,7 +15,7 @@ namespace Sys
 
         private Configuration()
         {
-            DataTable dataTable = SqlCmd.FillDataTable("SELECT * FROM {0} WHERE Inactive=0", ConfigurationDpo.TABLE_NAME);
+            DataTable dataTable = new TableReader<ConfigurationDpo>(ConfigurationDpo._Inactive.ColumnName() == false).Table;
             StringBuilder code = new StringBuilder();
             foreach (DataRow dataRow in dataTable.Rows)
             { 
