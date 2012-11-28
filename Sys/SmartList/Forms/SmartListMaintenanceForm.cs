@@ -73,6 +73,11 @@ namespace Sys.SmartList.Forms
             this.rgViewMode.LoadEnum<DataViewMode>();
             this.icbImage.Load(CommandTree.ImageList, CommandTree.Items);
 
+            foreach (var provider in DataProviderManager.Instance.Providers)
+            {
+                this.comboDataProviders.Items.Add(provider.Value.Name);
+            }
+
             CommandNodeDpo dpo1 = new CommandNodeDpo();
             binding = new BindDpo<CommandNodeDpo>(dpo1);
 
@@ -99,6 +104,10 @@ namespace Sys.SmartList.Forms
             binding.Bind(this.richEditControl1, "HtmlText", CommandDpo._Help);
             binding.Bind(this.icbImage, CommandDpo._Image_Index);
 
+            binding.Bind<ComboBox, int>(this.comboDataProviders,
+                    (control, value) => control.SelectedItem = DataProviderManager.Instance.GetProviderConnection(value).Name,
+                    (control) => (int)DataProviderManager.Instance.GetProvider((string)control.SelectedItem),
+                    CommandDpo._Data_Provider);
 
             if (tbproperties.Text != "")
             {
