@@ -71,6 +71,8 @@
             this.tbParameter = new System.Windows.Forms.RichTextBox();
             this.tabHep = new System.Windows.Forms.TabPage();
             this.richEditControl1 = new DevExpress.XtraRichEdit.RichEditControl();
+            this.comboDataProviders = new System.Windows.Forms.ComboBox();
+            this.label6 = new System.Windows.Forms.Label();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -156,6 +158,7 @@
             // 
             // tabBasic
             // 
+            this.tabBasic.Controls.Add(this.comboDataProviders);
             this.tabBasic.Controls.Add(this.btnEditReport);
             this.tabBasic.Controls.Add(this.btnBuildReport);
             this.tabBasic.Controls.Add(this.icbImage);
@@ -165,6 +168,7 @@
             this.tabBasic.Controls.Add(this.groupBox2);
             this.tabBasic.Controls.Add(this.tbLabel);
             this.tabBasic.Controls.Add(this.label1);
+            this.tabBasic.Controls.Add(this.label6);
             this.tabBasic.Controls.Add(this.label9);
             this.tabBasic.Controls.Add(this.label2);
             this.tabBasic.Controls.Add(this.tbDescription);
@@ -467,7 +471,7 @@
             this.tbScript.Font = new System.Drawing.Font("Courier New", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbScript.Location = new System.Drawing.Point(3, 3);
             this.tbScript.Name = "tbScript";
-            this.tbScript.Size = new System.Drawing.Size(600, 623);
+            this.tbScript.Size = new System.Drawing.Size(760, 648);
             this.tbScript.TabIndex = 21;
             this.tbScript.Text = "";
             this.tbScript.WordWrap = false;
@@ -489,7 +493,7 @@
             this.tbSetting.Font = new System.Drawing.Font("Courier New", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbSetting.Location = new System.Drawing.Point(3, 3);
             this.tbSetting.Name = "tbSetting";
-            this.tbSetting.Size = new System.Drawing.Size(600, 623);
+            this.tbSetting.Size = new System.Drawing.Size(760, 648);
             this.tbSetting.TabIndex = 21;
             this.tbSetting.Text = "";
             this.tbSetting.WordWrap = false;
@@ -511,7 +515,7 @@
             this.tbParameter.Font = new System.Drawing.Font("Courier New", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbParameter.Location = new System.Drawing.Point(3, 3);
             this.tbParameter.Name = "tbParameter";
-            this.tbParameter.Size = new System.Drawing.Size(600, 623);
+            this.tbParameter.Size = new System.Drawing.Size(760, 648);
             this.tbParameter.TabIndex = 21;
             this.tbParameter.Text = "";
             this.tbParameter.WordWrap = false;
@@ -532,9 +536,26 @@
             this.richEditControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.richEditControl1.Location = new System.Drawing.Point(3, 3);
             this.richEditControl1.Name = "richEditControl1";
-            this.richEditControl1.Size = new System.Drawing.Size(600, 623);
+            this.richEditControl1.Size = new System.Drawing.Size(760, 648);
             this.richEditControl1.TabIndex = 0;
             this.richEditControl1.Text = "richEditControl1";
+            // 
+            // comboDataProviders
+            // 
+            this.comboDataProviders.FormattingEnabled = true;
+            this.comboDataProviders.Location = new System.Drawing.Point(590, 16);
+            this.comboDataProviders.Name = "comboDataProviders";
+            this.comboDataProviders.Size = new System.Drawing.Size(142, 21);
+            this.comboDataProviders.TabIndex = 42;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(512, 19);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(72, 13);
+            this.label6.TabIndex = 0;
+            this.label6.Text = "Data Provider";
             // 
             // SmartListMaintenanceForm
             // 
@@ -613,5 +634,7 @@
         private DevExpress.XtraEditors.ImageComboBoxEdit icbImage;
         private System.Windows.Forms.Button btnBuildReport;
         private System.Windows.Forms.Button btnEditReport;
+        private System.Windows.Forms.ComboBox comboDataProviders;
+        private System.Windows.Forms.Label label6;
     }
 }

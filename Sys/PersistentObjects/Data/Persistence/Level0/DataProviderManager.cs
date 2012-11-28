@@ -68,6 +68,24 @@ namespace Sys.Data
             return string.Format("Registered Providers = #{0}", providers.Count);
         }
 
+      
+
+        internal DataProviderConnection GetProviderConnection(DataProvider provider)
+        {
+            return this[provider];
+        }
+
+        public DataProviderConnection GetProviderConnection(int handle)
+        {
+            return GetProviderConnection(GetProvider(handle));
+        }
+
+
+        public IEnumerable<KeyValuePair<DataProvider, DataProviderConnection>> Providers
+        {
+            get { return this.providers; }
+        }
+
         public DataProvider GetProvider(int handle)
         {
             foreach (DataProvider provider in this.providers.Keys)
@@ -79,17 +97,7 @@ namespace Sys.Data
             return DataProvider.DefaultProvider;
         }
 
-        internal DataProviderConnection GetProvider(DataProvider handle)
-        {
-            return this[handle];
-        }
-
-        public IEnumerable<KeyValuePair<DataProvider, DataProviderConnection>> Providers
-        {
-            get { return this.providers; }
-        }
-
-        public DataProvider GetProviderHandle(string name)
+        public DataProvider GetProvider(string name)
         {
             foreach (KeyValuePair<DataProvider, DataProviderConnection> pair in this.providers)
             {

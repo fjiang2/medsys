@@ -19,7 +19,7 @@ namespace Sys.Data
 
         public DbCmd(DataProvider provider, string script)
         {
-            this.providerConnection = DataProviderManager.Instance.GetProvider(provider);
+            this.providerConnection = DataProviderManager.Instance.GetProviderConnection(provider);
             
             this.script = script
                           .Replace("$DB_SYSTEM", Const.DB_SYSTEM)
