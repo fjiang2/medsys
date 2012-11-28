@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 7/19/2012 12:12:45 AM
+//   by devel at 11/28/2012
 //
 
 using System;
@@ -14,7 +14,7 @@ using Sys.Data.Manager;
 
 namespace Sys.SmartList.DpoClass
 {
-    [Revision(15)]
+    [Revision(17)]
     [Table("sys01101", Level.System)]    //Primary Keys = ID;  Identity = ID;
     public class CommandDpo : DPObject
     {
@@ -29,6 +29,7 @@ namespace Sys.SmartList.DpoClass
         [Column(_Label, SqlDbType.NVarChar, Length = 50)]                                         public string Label;          //nvarchar(50) not null
         [Column(_Description, SqlDbType.Text, Nullable = true)]                                   public string Description;    //text(16) null
         [Column(_Header_Footer, SqlDbType.NVarChar, Length = 512)]                                public string Header_Footer;  //nvarchar(512) not null
+        [Column(_Data_Provider, SqlDbType.Int)]                                                   public int Data_Provider;     //int(4) not null
         [Column(_Sql_Command, SqlDbType.VarChar, Length = -1)]                                    public string Sql_Command;    //varchar(-1) not null
         [Column(_User_Layout, SqlDbType.NVarChar, Length = 4000)]                                 public string User_Layout;    //nvarchar(4000) not null
         [Column(_Setting_Script, SqlDbType.NText)]                                                public string Setting_Script; //ntext(16) not null
@@ -115,6 +116,7 @@ namespace Sys.SmartList.DpoClass
         public const string _Label = "Label";
         public const string _Description = "Description";
         public const string _Header_Footer = "Header_Footer";
+        public const string _Data_Provider = "Data_Provider";
         public const string _Sql_Command = "Sql_Command";
         public const string _User_Layout = "User_Layout";
         public const string _Setting_Script = "Setting_Script";

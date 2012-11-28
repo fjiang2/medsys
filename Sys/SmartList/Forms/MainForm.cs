@@ -328,7 +328,7 @@ namespace Sys.SmartList.Forms
 			}
 
 
-            LoadingSqlCmd = DataTableLoading(configuration.Sql_Command, userLayout, openbyTreeView);
+            LoadingSqlCmd = DataTableLoading(configuration.Data_Provider, configuration.Sql_Command, userLayout, openbyTreeView);
 
 		}
 
@@ -337,12 +337,13 @@ namespace Sys.SmartList.Forms
 
 
 		#region DataTable Loading Thread
-		private SQLCommand DataTableLoading(string script, VAL parameters, bool openbyTreeView)
+		private SQLCommand DataTableLoading(int handle, string script, VAL parameters, bool openbyTreeView)
 		{
 			hasCriteriaForm = false;
 			VAL controls = parameters[ParameterForm._Controls];
 
-			SQLCommand cmd = new SQLCommand(script);
+            DataProvider provider = DataProviderManager.Instance.GetProvider(handle);
+            SQLCommand cmd = new SQLCommand(provider, script);
 			if (controls.Defined)
 			{
 				hasCriteriaForm = true;
