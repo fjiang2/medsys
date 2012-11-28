@@ -22,8 +22,8 @@ namespace Sys.Data
         private bool isDataLoaded = false;
 
 
-        public SQLCommand(string script)
-            :base(script)
+        public SQLCommand(DataProvider provider, string script)
+            : base(provider, script)
         { 
         
         }

@@ -68,7 +68,7 @@ namespace Sys.Data
             return string.Format("Registered Providers = #{0}", providers.Count);
         }
 
-        internal DataProvider GetHandle(int handle)
+        public DataProvider GetProvider(int handle)
         {
             foreach (DataProvider provider in this.providers.Keys)
             {

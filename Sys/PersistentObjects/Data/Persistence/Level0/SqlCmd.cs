@@ -11,8 +11,8 @@ namespace Sys.Data
     public class SqlCmd : DbCmd
     {
 
-        public SqlCmd(DataProvider handle, string script)
-            : base(handle, script)
+        public SqlCmd(DataProvider provider, string script)
+            : base(provider, script)
         {
         }
 
