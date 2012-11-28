@@ -135,7 +135,7 @@ namespace Sys.Platform.Forms
                     this.txtPath.Text = log.path;
 
                     this.Modifier = (AccessModifier)log.modifier;
-                    this.Level = (Level)log.Level;
+                    this.Level = (Level)log.table_level;
                     this.Pack = log.packed;
                 }
                 else
