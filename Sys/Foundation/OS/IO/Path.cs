@@ -5,12 +5,15 @@ using System.Text;
 using System.Reflection;
 using System.IO;
 using Sys.Data.Manager;
+using Sys.OS;
 
 namespace Sys.IO
 {
     public class Path
     {
-        string[] paths;
+        private string simplePath;
+        private string solution;
+        private string application;
 
         public Path()
             :this(Assembly.GetExecutingAssembly())
@@ -20,17 +23,30 @@ namespace Sys.IO
 
         public Path(Assembly assembly)
         {
-            string path = System.IO.Path.GetDirectoryName(assembly.GetName().CodeBase)
-                .Replace("file:\\", "")
-                .Replace("\\bin", "")
-                .Replace("\\x86", "")
-                .Replace("\\Debug", "");
+            if (!System.Deployment.Application.ApplicationDeployment.IsNetworkDeployed)
+            {
+                string path = System.IO.Path.GetDirectoryName(assembly.GetName().CodeBase)
+                    .Replace("file:\\", "")
+                    .Replace("\\bin", "")
+                    .Replace("\\x86", "")
+                    .Replace("\\Debug", "");
 
-            this.paths = path.Split(new char[] { '\\' });
+                string[] paths = path.Split(new char[] { '\\' });
 
+                this.simplePath = partial(paths, 0);        //C:\devel\medsys\App\Executable\Release
+                this.solution = partial(paths, 3);          //C:\devel\medsys
+                this.application = partial(paths, 2);       //C:\devel\medsys\App
+            }
+            else
+            {
+                string devel = (string)Configuration.Instance["Path.devel"];
+                this.simplePath = System.IO.Path.GetDirectoryName(assembly.GetName().CodeBase);
+                this.solution = devel+"\\medsys";
+                this.application = this.solution+"\\App";
+            }
         }
 
-        private string partial(int n)
+        private string partial(string[] paths, int n)
         {
             string path = paths[0];
             for (int i = 1; i < paths.Length - n; i++)
@@ -41,14 +57,14 @@ namespace Sys.IO
 
         public string SimplePath
         {
-            get { return partial(0); }
+            get { return this.simplePath; }
         }
 
         public string Solution
         {
             get
             {
-                return partial(3);
+                return this.solution;
             }
         }
 
@@ -56,7 +72,7 @@ namespace Sys.IO
         {
             get
             {
-                return partial(2);
+                return this.application;
             }
         }
     }
