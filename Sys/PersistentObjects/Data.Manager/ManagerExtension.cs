@@ -138,8 +138,10 @@ namespace Sys.Data.Manager
         /// <param name="tableName"></param>
         /// <param name="reader"></param>
         /// <param name="separator"></param>
-        public static void ImportFromTextStream(this TableName tableName, TextReader reader, char[] separator)
+        public static void ImportFromTextReader(this TableName tableName, TextReader reader, char[] separator)
         {
+            MetaTable meta = MetaTable.GetCachedInstance(tableName);
+
             SqlCmd cmd;
             string line;
             while (true)
@@ -148,7 +150,7 @@ namespace Sys.Data.Manager
                 if (line == null)
                     break;
 
-                string insertCommand = tableName.InsertCommand(line, separator);
+                string insertCommand = meta.InsertCommand(line, separator);
                 cmd = new SqlCmd(tableName.Provider, insertCommand);
                 cmd.ExecuteNonQuery();
             }

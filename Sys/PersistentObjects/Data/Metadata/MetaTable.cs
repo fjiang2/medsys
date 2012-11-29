@@ -344,7 +344,7 @@ CREATE TABLE [dbo].[{0}]
                 else if (obj is DateTime)
                     values[i] = DELIMETER + ((DateTime)obj).ToShortDateString() + DELIMETER;
                 else if (obj is string)
-                    values[i] = DELIMETER + VAL.Boxing(obj).ToString2() + DELIMETER;
+                    values[i] = "N" + DELIMETER + VAL.Boxing(obj).ToString2() + DELIMETER;
                 else
                     values[i] = obj.ToString();
 
