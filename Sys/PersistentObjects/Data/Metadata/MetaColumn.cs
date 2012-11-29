@@ -478,9 +478,9 @@ namespace Sys.Data
                 case SqlDbType.NVarChar:
                 case SqlDbType.Char:
                 case SqlDbType.NChar:
-                    if (val.Length > this.Length)
-                        throw new JException("length of value \"{0}\" > {1}", val);
-                    else
+                    //if (Oversize(val))
+                    //    throw new JException("length of value \"{0}\" {1} > {2}", val, val.Length, this.AdjuestedLength);
+                    //else
                         return val;
            
                 case SqlDbType.VarBinary:
