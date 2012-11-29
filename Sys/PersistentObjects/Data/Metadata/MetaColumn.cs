@@ -465,5 +465,78 @@ namespace Sys.Data
         }
     
         #endregion
+
+
+        public object ToObject(string val)
+        {
+            if (this.Nullable && val == "")
+                return null;
+
+            switch (sqlDbType)
+            {
+                case SqlDbType.VarChar:
+                case SqlDbType.NVarChar:
+                case SqlDbType.Char:
+                case SqlDbType.NChar:
+                    if (val.Length > this.Length)
+                        throw new JException("length of value \"{0}\" > {1}", val);
+                    else
+                        return val;
+           
+                case SqlDbType.VarBinary:
+                case SqlDbType.Binary:
+                    throw new NotImplementedException(string.Format("cannot convert {0} into type of {1}", val, sqlDbType));
+                    
+
+                case SqlDbType.DateTime:
+                    if(val.IndexOf("-") > 0)    //2011-10-30
+                    {
+                        string[] date = val.Split('-');
+                        return new DateTime(Convert.ToInt32(date[0]), Convert.ToInt32(date[1]), Convert.ToInt32(date[2]));
+                    }
+                    else if(val.Length == 8)    //20111030
+                    {
+                        return new DateTime(Convert.ToInt32(val.Substring(0, 4)), Convert.ToInt32(val.Substring(4, 2)), Convert.ToInt32(val.Substring(6, 2)));
+                    }
+                    else 
+                    {
+                        return Convert.ToDateTime(val);
+                    }
+
+                case SqlDbType.Float:
+                    return Convert.ToDouble(val);
+
+                case SqlDbType.Real:
+                    return Convert.ToSingle(val);
+
+
+                case SqlDbType.Bit:
+                    if (val == "0")
+                        return false;
+                    else if (val == "1")
+                        return true;
+                    else 
+                        return Convert.ToBoolean(val);
+
+                case SqlDbType.Decimal:
+                    return Convert.ToDecimal(val);
+
+                case SqlDbType.TinyInt:
+                    return Convert.ToByte(val);
+
+                case SqlDbType.SmallInt:
+                    return Convert.ToInt16(val);
+
+                case SqlDbType.Int:
+                    return Convert.ToInt32(val);
+                
+                case SqlDbType.BigInt:
+                    return Convert.ToInt64(val);
+
+                default:
+                    throw new NotImplementedException(string.Format("cannot convert {0} into type of {1}", val, sqlDbType));
+            }
+
+        }
     }
 }

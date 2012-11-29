@@ -318,6 +318,41 @@ CREATE TABLE [dbo].[{0}]
 ";
             return string.Format(SQL, "{0}", fields, primaryKey);
         }
+
+
+        /// <summary>
+        /// Create SQL INSERT INTO ... VALUES() command 
+        /// </summary>
+        /// <param name="line"></param>
+        /// <param name="separator"></param>
+        /// <returns></returns>
+        public string InsertCommand(string line, char[] separator)
+        {
+            string DELIMETER = "'";
+            string[] items = line.Split(separator);
+
+            if (items.Length != this.Columns.Count)
+                new JException("#line(#{0}) data not match to table(#{1})", items.Length, this.Columns.Count);
+
+            string[] values = new string[this.Columns.Count];
+            int i = 0;
+            foreach (MetaColumn column in this.Columns)
+            {
+                object obj = column.ToObject(items[i]);
+                if (obj == null)
+                    values[i] = "NULL";
+                else if (obj is DateTime)
+                    values[i] = DELIMETER + ((DateTime)obj).ToShortDateString() + DELIMETER;
+                else if (obj is string)
+                    values[i] = DELIMETER + VAL.Boxing(obj).ToString2() + DELIMETER;
+                else
+                    values[i] = obj.ToString();
+
+                i++;
+            }
+
+            return string.Format("INSERT INTO {0} VALUES ({1})", this.TableName, string.Join(",", values));
+        }
     }
 
 
