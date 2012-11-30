@@ -496,7 +496,15 @@ namespace Sys.Data
                     }
                     else if(val.Length == 8)    //20111030
                     {
-                        return new DateTime(Convert.ToInt32(val.Substring(0, 4)), Convert.ToInt32(val.Substring(4, 2)), Convert.ToInt32(val.Substring(6, 2)));
+                        int month = Convert.ToInt32(val.Substring(4, 2));
+                        int day = Convert.ToInt32(val.Substring(6, 2));
+                        if(month==0)
+                           month =1;
+                        
+                        if(day ==0)
+                            day = 1;
+
+                        return new DateTime(Convert.ToInt32(val.Substring(0, 4)), month, day);
                     }
                     else 
                     {
