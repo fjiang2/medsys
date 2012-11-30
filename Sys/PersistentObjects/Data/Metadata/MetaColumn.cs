@@ -6,7 +6,7 @@ using System.Data;
 
 namespace Sys.Data
 {
-    class MetaColumn : PersistentObject
+    public class MetaColumn : PersistentObject
     {
         public string ColumnName;
         public string DataType;
@@ -107,7 +107,7 @@ namespace Sys.Data
             set { this.isPrimary = value; }
         }
 
-        public ForeignKey ForeignKey
+        internal ForeignKey ForeignKey
         {
             get { return this.foreignKey; }
             set { this.foreignKey = value; }
@@ -121,12 +121,12 @@ namespace Sys.Data
 
         #region C# Dpo class Field
 
-        public bool IsImageField
+        internal bool IsImageField
         {
             get { return sqlDbType == System.Data.SqlDbType.Image; }
         }
 
-        public string FieldName
+        internal string FieldName
         {
             get { return this.fieldName; }
         }
@@ -178,7 +178,7 @@ namespace Sys.Data
         
         #region Dpo field's Attribute
          
-        public string Attribute
+        internal string Attribute
         {
             get
             {
@@ -478,9 +478,9 @@ namespace Sys.Data
                 case SqlDbType.NVarChar:
                 case SqlDbType.Char:
                 case SqlDbType.NChar:
-                    //if (Oversize(val))
-                    //    throw new JException("length of value \"{0}\" {1} > {2}", val, val.Length, this.AdjuestedLength);
-                    //else
+                    if (Oversize(val))
+                        throw new JException("Column Name={0}, length of value \"{1}\" {2} > {3}", ColumnName, val, val.Length, this.AdjuestedLength);
+                    else
                         return val;
            
                 case SqlDbType.VarBinary:

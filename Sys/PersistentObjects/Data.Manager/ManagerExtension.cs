@@ -125,35 +125,11 @@ namespace Sys.Data.Manager
 
         #endregion
 
-
-        public static string InsertCommand(this TableName tableName, string line, char[] separator)
+        public static MetaColumnCollection MetaColumns(this TableName tableName)
         {
             MetaTable meta = MetaTable.GetCachedInstance(tableName);
-            return meta.InsertCommand(line, separator);
+            return meta.Columns;
         }
 
-        /// <summary>
-        /// Import text file into table in the SQL server
-        /// </summary>
-        /// <param name="tableName"></param>
-        /// <param name="reader"></param>
-        /// <param name="separator"></param>
-        public static void ImportFromTextReader(this TableName tableName, TextReader reader, char[] separator)
-        {
-            MetaTable meta = MetaTable.GetCachedInstance(tableName);
-
-            SqlCmd cmd;
-            string line;
-            while (true)
-            {
-                line = reader.ReadLine();
-                if (line == null)
-                    break;
-
-                string insertCommand = meta.InsertCommand(line, separator);
-                cmd = new SqlCmd(tableName.Provider, insertCommand);
-                cmd.ExecuteNonQuery();
-            }
-        }   
     }
 }
