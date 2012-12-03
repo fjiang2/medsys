@@ -114,20 +114,50 @@ namespace Sys.Platform.Forms
             menuSysDpo.Click += delegate(object sender, EventArgs e)
             {
                 TreeNode node = treeView1.SelectedNode;
-                string tableName = node.Text; //database..tablename
-
-                if (tableName.IndexOf(".") == -1)
+                if (node is DatabaseNode)
                 {
-                    string databaseName = node.Text;
-                    Form f = new GenDpoForm(databaseName);
+                    DatabaseNode dnode = (DatabaseNode)node;
+
+                    Form f = new GenDpoForm(dnode.DatabaseName);
                     f.ShowDialog(this);
                     return;
                 }
             };
 
 
-           
-         
+            ToolStripMenuItem menuViewColumns = new ToolStripMenuItem("View Columns ...");
+            contextMenuStrip.Items.Add(menuViewColumns);
+
+            menuViewColumns.Click += delegate(object sender, EventArgs e)
+            {
+                TreeNode node = treeView1.SelectedNode;
+                if (node is TableNode)
+                {
+                    TableNode tableNode = (TableNode)node;
+                    TableName tname = tableNode.TableName;
+
+                    string SQL = @"
+            USE {0}
+            SELECT 
+                c.name AS ColumnName,
+                ty.name AS DataType,
+                c.max_length AS Length,
+                c.is_nullable AS Nullable,
+                c.precision,
+                c.scale,
+                c.is_identity AS IsIdentity
+             FROM sys.tables t 
+                  INNER JOIN sys.columns c ON t.object_id = c.object_id 
+                  INNER JOIN sys.types ty ON ty.system_type_id =c.system_type_id AND ty.name<>'sysname'
+            WHERE t.name = '{1}' 
+            --ORDER BY c.column_id 
+            ";
+                    DataTable table = SqlCmd.FillDataTable(tname.Provider, SQL, tname.DatabaseName.Name, tname.Name);
+                    table.TableName = this.tableName.FullName;
+                    jGridView1.DataSource = table;
+                    return;
+                }
+            };
         }
 
 
