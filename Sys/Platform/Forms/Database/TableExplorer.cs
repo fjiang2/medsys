@@ -135,7 +135,7 @@ namespace Sys.Platform.Forms
                 if (node is TableNode)
                 {
                     TableNode tableNode = (TableNode)node;
-                    TableName tname = tableNode.TableName;
+                    this.tableName = tableNode.TableName;
 
                     string SQL = @"
             USE {0}
@@ -153,8 +153,8 @@ namespace Sys.Platform.Forms
             WHERE t.name = '{1}' 
             ORDER BY c.column_id 
             ";
-                    DataTable table = SqlCmd.FillDataTable(tname.Provider, SQL, tname.DatabaseName.Name, tname.Name);
-                    table.TableName = this.tableName.FullName;
+                    DataTable table = SqlCmd.FillDataTable(tableName.Provider, SQL, tableName.DatabaseName.Name, tableName.Name);
+                    table.TableName = tableName.FullName;
                     jGridView1.DataSource = table;
                     return;
                 }
