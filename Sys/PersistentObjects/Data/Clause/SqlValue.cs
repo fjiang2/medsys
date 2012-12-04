@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,6 +17,19 @@ namespace Sys.Data
             this.value = value;
         }
 
+        public static bool gb2312text(string text)
+        {
+            Encoding encoding = System.Text.Encoding.GetEncoding("gb2312");
+            
+            for (int i = 0; i < text.Length; i++)
+            {
+                byte[] s2 = encoding.GetBytes(text.Substring(i, 1));
+                if (s2.Length == 2)
+                    return true;
+            }
+
+            return false;
+        }
 
         public string Text
         {
@@ -29,7 +42,11 @@ namespace Sys.Data
 
                 if (value is string)
                 {
-                    sb.Append("'")
+                    //N: used for SQL Type nvarchar
+                    if (gb2312text(value as string))
+                        sb.Append("N");
+
+                    sb.Append("'") 
                       .Append((value as string).Replace("'", "''"))
                       .Append("'");
                 }
