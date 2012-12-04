@@ -716,8 +716,33 @@ namespace Sys.Data
             }
         }
 
+        /// <summary>
+        /// return value of column
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="columnName"></param>
+        /// <returns></returns>
+        public T GetColumnValue<T>(string columnName)
+        {
+            foreach (FieldInfo field in this.publicFields)
+            {
+                if (field.Name == columnName)
+                    return (T)field.GetValue(this);
+            }
 
+            throw new JException("Column name ({0}) not found.");
+        }
+
+        public object GetColumnValue(string columnName)
+        {
+            foreach (FieldInfo field in this.publicFields)
+            {
+                if (field.Name == columnName)
+                    return field.GetValue(this);
+            }
+
+            throw new JException("Column name ({0}) not found.");
+        }
       
-
     }
 }
