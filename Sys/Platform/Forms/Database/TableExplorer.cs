@@ -58,7 +58,7 @@ namespace Sys.Platform.Forms
                 if (e.Action == TreeViewAction.ByMouse)
                 {
                     TreeNode treeNode = e.Node;
-                    if (treeNode is DatabaseNode)
+                    if (treeNode is DatabaseNode && treeNode.Nodes.Count == 0)
                     {
                         DatabaseNode databaseNode = (DatabaseNode)treeNode;
                         Cursor.Current = Cursors.WaitCursor;
@@ -81,50 +81,51 @@ namespace Sys.Platform.Forms
                         Cursor.Current = Cursors.Default;
                         return;
                     }
-                    
-                    if (treeNode is TableNode)
-                    {
-                        TableNode tableNode = (TableNode)treeNode; 
-                        Cursor.Current = Cursors.WaitCursor;
-                        this.tableName = tableNode.TableName;
-                        this.Text = "Data Table Editor [" + this.tableName +"]";
+                    else
+                        treeNode.ExpandAll();
+
+                    //if (treeNode is TableNode)
+                    //{
+                    //    TableNode tableNode = (TableNode)treeNode; 
+                    //    Cursor.Current = Cursors.WaitCursor;
+                    //    this.tableName = tableNode.TableName;
+                    //    this.Text = "Data Table Editor [" + this.tableName +"]";
                         
-                        DataLoad();
-                        Cursor.Current = Cursors.Default;
-                    }
+                    //    DataLoad();
+                    //    Cursor.Current = Cursors.Default;
+                    //}
                 }
             };
 
+            treeView1.MouseDoubleClick += delegate(object sender, MouseEventArgs e)
+            {
+                TreeNode treeNode = treeView1.SelectedNode;
 
+                if (treeNode is TableNode)
+                {
+                    TableNode tableNode = (TableNode)treeNode;
+                    Cursor.Current = Cursors.WaitCursor;
+                    this.tableName = tableNode.TableName;
+                    this.Text = "Data Table Editor [" + this.tableName + "]";
+
+                    DataLoad();
+                    Cursor.Current = Cursors.Default;
+                }
+            };
+            
             treeView1.ExpandAll();
 
             if (account.IsDeveloper)
             {
                 treeView1.ContextMenuStrip = new ContextMenuStrip();
-                DpoGenerateMenu(treeView1.ContextMenuStrip);
+                ShowContextMenu(treeView1.ContextMenuStrip);
             }
         }
 
-        private void DpoGenerateMenu(ContextMenuStrip contextMenuStrip)
+       
+
+        private void ShowContextMenu(ContextMenuStrip contextMenuStrip)
         {
-            ToolStripMenuItem menuSysDpo = new ToolStripMenuItem("Generate DPO ...");
-          
-            contextMenuStrip.Items.Add(menuSysDpo);
-          
-            menuSysDpo.Click += delegate(object sender, EventArgs e)
-            {
-                TreeNode node = treeView1.SelectedNode;
-                if (node is DatabaseNode)
-                {
-                    DatabaseNode dnode = (DatabaseNode)node;
-
-                    Form f = new GenDpoForm(dnode.DatabaseName);
-                    f.ShowDialog(this);
-                    return;
-                }
-            };
-
-
             ToolStripMenuItem menuViewColumns = new ToolStripMenuItem("View Columns ...");
             contextMenuStrip.Items.Add(menuViewColumns);
 
@@ -150,7 +151,7 @@ namespace Sys.Platform.Forms
                   INNER JOIN sys.columns c ON t.object_id = c.object_id 
                   INNER JOIN sys.types ty ON ty.system_type_id =c.system_type_id AND ty.name<>'sysname'
             WHERE t.name = '{1}' 
-            --ORDER BY c.column_id 
+            ORDER BY c.column_id 
             ";
                     DataTable table = SqlCmd.FillDataTable(tname.Provider, SQL, tname.DatabaseName.Name, tname.Name);
                     table.TableName = this.tableName.FullName;
