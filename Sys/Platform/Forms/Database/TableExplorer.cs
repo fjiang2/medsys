@@ -65,6 +65,10 @@ namespace Sys.Platform.Forms
                         DataTable dt = SqlCmd.FillDataTable(databaseNode.Provider, 
                             "USE {0} ; SELECT Name FROM sys.Tables ORDER BY Name", 
                             databaseNode.DatabaseName);
+                        
+                        //you are not allowed to open this database
+                        if (dt == null)
+                            return;
 
                         foreach (DataRow dataRow in dt.Rows)
                         {
