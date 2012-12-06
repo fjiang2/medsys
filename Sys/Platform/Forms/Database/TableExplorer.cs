@@ -15,7 +15,7 @@ namespace Sys.Platform.Forms
 {
     public partial class TableExplorer : WinForm
     {
-        TableName tableName;
+        TableName selectedTableName;
         TreeNode root;
 
         public TableExplorer()
@@ -88,16 +88,6 @@ namespace Sys.Platform.Forms
                     else
                         treeNode.ExpandAll();
 
-                    //if (treeNode is TableNode)
-                    //{
-                    //    TableNode tableNode = (TableNode)treeNode; 
-                    //    Cursor.Current = Cursors.WaitCursor;
-                    //    this.tableName = tableNode.TableName;
-                    //    this.Text = "Data Table Editor [" + this.tableName +"]";
-                        
-                    //    DataLoad();
-                    //    Cursor.Current = Cursors.Default;
-                    //}
                 }
             };
 
@@ -109,10 +99,8 @@ namespace Sys.Platform.Forms
                 {
                     TableNode tableNode = (TableNode)treeNode;
                     Cursor.Current = Cursors.WaitCursor;
-                    this.tableName = tableNode.TableName;
-                    this.Text = "Data Table Editor [" + this.tableName + "]";
 
-                    DataLoad();
+                    AddTabPage(tableNode.TableName);
                     Cursor.Current = Cursors.Default;
                 }
             };
@@ -139,7 +127,7 @@ namespace Sys.Platform.Forms
                 if (node is TableNode)
                 {
                     TableNode tableNode = (TableNode)node;
-                    this.tableName = tableNode.TableName;
+                    TableName tname = tableNode.TableName;
 
                     string SQL = @"
             USE {0}
@@ -157,9 +145,11 @@ namespace Sys.Platform.Forms
             WHERE t.name = '{1}' 
             ORDER BY c.column_id 
             ";
-                    DataTable table = SqlCmd.FillDataTable(tableName.Provider, SQL, tableName.DatabaseName.Name, tableName.Name);
-                    table.TableName = tableName.FullName;
-                    jGridView1.DataSource = table;
+                    DataTable table = SqlCmd.FillDataTable(tname.Provider, 
+                        SQL,
+                        tname.DatabaseName.Name,
+                        tname.Name);
+                    AddTabPage(tname, table, true);
                     return;
                 }
             };
@@ -180,46 +170,58 @@ namespace Sys.Platform.Forms
 
             this.Text = text;
 
-            this.tableName = new TableName(provider, tableName);
-            DataLoad();
+            AddTabPage(new TableName(provider, tableName));
 
+        }
+
+        private void AddTabPage(TableName tname, DataTable table, bool readOnly)
+        {
+            this.selectedTableName = tname;
+            this.Text = "Table Explorer (" + tname + ")";
+
+            table.TableName = tname.FullName;
+
+            TabPage page = new TabPage(tname.ToString());
+            JGridView jGridView1 = new JGridView();
+            jGridView1.Dock = DockStyle.Fill;
+            page.Controls.Add(jGridView1);
+            jGridView1.DataSource = table;
+            jGridView1.TableName = tname;
+            jGridView1.ReadOnly = readOnly;
+
+            this.tabControl1.TabPages.Add(page);
+            this.tabControl1.SelectedTab = page;
+        }
+
+        private void AddTabPage(TableName tname)
+        {
+            DataTable table = SqlCmd.FillDataTable(tname.Provider, string.Format("SELECT * FROM {0}", tname));
+            AddTabPage(tname, table, false);
         }
 
         private void DataTableExplorer_Load(object sender, EventArgs e)
         {
-            if (account.IsDeveloper)
-            {
-                jGridView1.Visible = true;
-                jGridView1.Enabled = true;
-            }
         }
 
         public override object MaintenanceEntry
         {
             set
             {
-                this.tableName = (TableName)value;
-                DataLoad();
+                AddTabPage( (TableName)value);
             }
         }
 
-        public override bool DataLoad()
-        {
-            DataTable dataTable = SqlCmd.FillDataTable(this.tableName.Provider, "SELECT * FROM " + this.tableName);
-            dataTable.TableName = this.tableName.FullName;
-            jGridView1.DataSource = dataTable;
-            return true;
-
-        }
 
         public override bool DataSave()
         {
+            if (SelectedGrid == null || SelectedGrid.ReadOnly)
+                return false;
 
             if (MessageBox.Show(this, "Are you sure to save your changes?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)
                 return false;
 
-            TableAdapter dt =jGridView1.DataSave(this.tableName);
-            if(dt == null)
+            TableAdapter dt = SelectedGrid.DataSave(SelectedGrid.TableName);
+            if (dt == null)
             {
                 this.InformationMessage = "Data is not saved.";
                 return false;
@@ -231,8 +233,13 @@ namespace Sys.Platform.Forms
 
         public override bool DataPrint()
         {
-            this.jGridView1.PrintPreview(new string[] {"", this.Text, ""});
-            return true;
+            if (SelectedGrid != null)
+            {
+                this.SelectedGrid.PrintPreview(new string[] { "", this.Text, "" });
+                return true;
+            }
+            else
+                return false;
         }
 
     
@@ -240,18 +247,20 @@ namespace Sys.Platform.Forms
 
         protected override bool AddShortCut(bool pinned)
         {
-            if (this.tableName == null)
+            TableName tname = this.selectedTableName;
+
+            if (tname == null)
             {
                 base.AddShortCut(pinned);
                 return true;
             }
 
-            string key =  this.tableName.GetHashCode().ToString();
-            string caption = "TE:" + this.tableName;
+            string key = tname.GetHashCode().ToString();
+            string caption = "TE:" + tname;
 
-            if (this.ShortcutManager.Add(pinned, key, caption, this.GetType(), new object[] { this.Text, this.tableName}))
+            if (this.ShortcutManager.Add(pinned, key, caption, this.GetType(), new object[] { this.Text, tname }))
             {
-                this.InformationMessage = string.Format("Table Editor:[{0}] is added.", this.tableName);
+                this.InformationMessage = string.Format("Table Editor:[{0}] is added.", tname);
                 this.ShortcutManager.Save();
 
                 return true;
@@ -260,6 +269,28 @@ namespace Sys.Platform.Forms
             return false;
         }
 
+        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            TabPage page = tabControl1.SelectedTab;
+            if(page == null)
+                return;
+
+            this.selectedTableName = SelectedGrid.TableName;
+
+        }
+
+        private JGridView SelectedGrid
+        {
+            get
+            {
+                TabPage page = tabControl1.SelectedTab;
+                if (page == null)
+                    return null;
+
+                JGridView grid = (JGridView)page.Controls[0];
+                return grid;
+            }
+        }
 
         //protected override void ShowHelpForm()
         //{
