@@ -52,9 +52,6 @@ namespace Sys.Platform.Forms
 
             treeView1.AfterSelect += delegate(object sender, TreeViewEventArgs e)
             {
-                if (!account.IsDeveloper)
-                    return;
-
                 if (e.Action == TreeViewAction.ByMouse)
                 {
                     TreeNode treeNode = e.Node;
@@ -114,7 +111,23 @@ namespace Sys.Platform.Forms
             }
         }
 
-       
+
+        public TableExplorer(string text, DataProvider provider, string tableName)
+            : base(tableName)
+        {
+
+            InitializeComponent();
+            ButtonDelete.Visible = false;
+            ButtonNew.Visible = false;
+            ButtonSerach.Visible = false;
+            ButtonOpen.Visible = false;
+            splitContainer1.Panel1Collapsed = true;
+
+            this.Text = text;
+
+            AddTabPage(new TableName(provider, tableName));
+
+        }
 
         private void ShowContextMenu(ContextMenuStrip contextMenuStrip)
         {
@@ -157,22 +170,6 @@ namespace Sys.Platform.Forms
 
 
 
-        public TableExplorer(string text, DataProvider provider, string tableName)
-            :base(tableName)
-        {
-
-            InitializeComponent();
-            ButtonDelete.Visible = false;
-            ButtonNew.Visible = false;
-            ButtonSerach.Visible = false;
-            ButtonOpen.Visible = false;
-            splitContainer1.Panel1Collapsed = true;
-
-            this.Text = text;
-
-            AddTabPage(new TableName(provider, tableName));
-
-        }
 
         private void AddTabPage(TableName tname, DataTable table, bool readOnly)
         {
