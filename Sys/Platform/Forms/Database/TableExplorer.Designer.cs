@@ -28,23 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.jGridView1 = new Sys.ViewManager.Forms.JGridView();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.treeView1 = new System.Windows.Forms.TreeView();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // jGridView1
-            // 
-            this.jGridView1.DataSource = null;
-            this.jGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.jGridView1.Location = new System.Drawing.Point(0, 0);
-            this.jGridView1.Name = "jGridView1";
-            this.jGridView1.Size = new System.Drawing.Size(472, 458);
-            this.jGridView1.TabIndex = 2;
             // 
             // splitContainer1
             // 
@@ -58,7 +49,7 @@
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.jGridView1);
+            this.splitContainer1.Panel2.Controls.Add(this.tabControl1);
             this.splitContainer1.Size = new System.Drawing.Size(714, 458);
             this.splitContainer1.SplitterDistance = 238;
             this.splitContainer1.TabIndex = 3;
@@ -71,13 +62,23 @@
             this.treeView1.Size = new System.Drawing.Size(238, 458);
             this.treeView1.TabIndex = 0;
             // 
-            // DataTableExplorer
+            // tabControl1
+            // 
+            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl1.Location = new System.Drawing.Point(0, 0);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(472, 458);
+            this.tabControl1.TabIndex = 0;
+            this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
+            // 
+            // TableExplorer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(714, 483);
             this.Controls.Add(this.splitContainer1);
-            this.Name = "DataTableExplorer";
+            this.Name = "TableExplorer";
             this.Text = "Table Explorer";
             this.Load += new System.EventHandler(this.DataTableExplorer_Load);
             this.Controls.SetChildIndex(this.splitContainer1, 0);
@@ -92,8 +93,8 @@
 
         #endregion
 
-        private Sys.ViewManager.Forms.JGridView jGridView1;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.TreeView treeView1;
+        private System.Windows.Forms.TabControl tabControl1;
     }
 }

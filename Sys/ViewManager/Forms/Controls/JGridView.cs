@@ -83,6 +83,10 @@ namespace Sys.ViewManager.Forms
 
         public bool ReadOnly
         {
+            get 
+            {
+                return !gridView1.OptionsBehavior.Editable;
+            }
             set
             {
                 gridView1.OptionsBehavior.Editable = !value;
@@ -132,6 +136,8 @@ namespace Sys.ViewManager.Forms
                 }
             }
         }
+
+        public TableName TableName;
 
         /// <summary>
         /// Table Structure is changed?
