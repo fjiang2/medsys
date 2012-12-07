@@ -18,6 +18,24 @@ namespace Sys.Platform.Forms
         TableName selectedTableName;
         TreeNode root;
 
+        public TableExplorer(string text, DataProvider provider, string tableName)
+            : base(tableName)
+        {
+
+            InitializeComponent();
+            ButtonDelete.Visible = false;
+            ButtonNew.Visible = false;
+            ButtonSerach.Visible = false;
+            ButtonOpen.Visible = false;
+            splitContainer1.Panel1Collapsed = true;
+
+            this.Text = text;
+
+            AddTabPage(new TableName(provider, tableName));
+
+        }
+
+
         public TableExplorer()
         {
             InitializeComponent();
@@ -49,87 +67,78 @@ namespace Sys.Platform.Forms
                 }
             }
 
-
-            treeView1.AfterSelect += delegate(object sender, TreeViewEventArgs e)
-            {
-                if (e.Action == TreeViewAction.ByMouse)
-                {
-                    TreeNode treeNode = e.Node;
-                    if (treeNode is DatabaseNode && treeNode.Nodes.Count == 0)
-                    {
-                        DatabaseNode databaseNode = (DatabaseNode)treeNode;
-                        Cursor.Current = Cursors.WaitCursor;
-                        DataTable dt = SqlCmd.FillDataTable(databaseNode.Provider, 
-                            "USE {0} ; SELECT Name FROM sys.Tables ORDER BY Name", 
-                            databaseNode.DatabaseName);
-                        
-                        //you are not allowed to open this database
-                        if (dt == null)
-                            return;
-
-                        foreach (DataRow dataRow in dt.Rows)
-                        {
-                            TableName name = new TableName(databaseNode.Provider, databaseNode.DatabaseName, (string)dataRow["name"]);
-                            
-                            TreeNode node = new TableNode(name);
-                            node.ImageKey = "datatable";
-                            node.SelectedImageKey = node.ImageKey;
-                            treeNode.Nodes.Add(node);
-                        }
-
-                        treeNode.ExpandAll();
- 
-                        Cursor.Current = Cursors.Default;
-                        return;
-                    }
-                    else
-                        treeNode.ExpandAll();
-
-                }
-            };
-
-            treeView1.MouseDoubleClick += delegate(object sender, MouseEventArgs e)
-            {
-                TreeNode treeNode = treeView1.SelectedNode;
-
-                if (treeNode is TableNode)
-                {
-                    TableNode tableNode = (TableNode)treeNode;
-                    Cursor.Current = Cursors.WaitCursor;
-
-                    AddTabPage(tableNode.TableName);
-                    Cursor.Current = Cursors.Default;
-                }
-            };
-            
+            treeView1.AfterSelect += new TreeViewEventHandler(treeView1_AfterSelect);
+            treeView1.MouseDoubleClick += new MouseEventHandler(treeView1_MouseDoubleClick);
             treeView1.ExpandAll();
 
-            if (account.IsDeveloper)
+            treeView1.ContextMenuStrip = new ContextMenuStrip();
+            ShowTreeViewContextMenu(treeView1.ContextMenuStrip);
+
+            tabControl1.ContextMenuStrip = new ContextMenuStrip();
+            ShowTabContextMenu(tabControl1.ContextMenuStrip);
+        }
+
+
+        #region treeView1.AfterSelect/MouseDoubleClick
+
+        void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            if (e.Action == TreeViewAction.ByMouse)
             {
-                treeView1.ContextMenuStrip = new ContextMenuStrip();
-                ShowContextMenu(treeView1.ContextMenuStrip);
+                TreeNode treeNode = e.Node;
+                if (treeNode is DatabaseNode && treeNode.Nodes.Count == 0)
+                {
+                    DatabaseNode databaseNode = (DatabaseNode)treeNode;
+                    Cursor.Current = Cursors.WaitCursor;
+                    DataTable dt = SqlCmd.FillDataTable(databaseNode.Provider,
+                        "USE {0} ; SELECT Name FROM sys.Tables ORDER BY Name",
+                        databaseNode.DatabaseName);
+
+                    //you are not allowed to open this database
+                    if (dt == null)
+                        return;
+
+                    foreach (DataRow dataRow in dt.Rows)
+                    {
+                        TableName name = new TableName(databaseNode.Provider, databaseNode.DatabaseName, (string)dataRow["name"]);
+
+                        TreeNode node = new TableNode(name);
+                        node.ImageKey = "datatable";
+                        node.SelectedImageKey = node.ImageKey;
+                        treeNode.Nodes.Add(node);
+                    }
+
+                    treeNode.ExpandAll();
+
+                    Cursor.Current = Cursors.Default;
+                    return;
+                }
+                else
+                    treeNode.ExpandAll();
+
             }
         }
 
-
-        public TableExplorer(string text, DataProvider provider, string tableName)
-            : base(tableName)
+        void treeView1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
+            TreeNode treeNode = treeView1.SelectedNode;
 
-            InitializeComponent();
-            ButtonDelete.Visible = false;
-            ButtonNew.Visible = false;
-            ButtonSerach.Visible = false;
-            ButtonOpen.Visible = false;
-            splitContainer1.Panel1Collapsed = true;
+            if (treeNode is TableNode)
+            {
+                TableNode tableNode = (TableNode)treeNode;
+                Cursor.Current = Cursors.WaitCursor;
 
-            this.Text = text;
-
-            AddTabPage(new TableName(provider, tableName));
-
+                AddTabPage(tableNode.TableName);
+                Cursor.Current = Cursors.Default;
+            }
         }
 
-        private void ShowContextMenu(ContextMenuStrip contextMenuStrip)
+        #endregion
+
+
+        #region Show Context Menu on treeView1 and tabControl1
+
+        private void ShowTreeViewContextMenu(ContextMenuStrip contextMenuStrip)
         {
             ToolStripMenuItem menuViewColumns = new ToolStripMenuItem("View Columns ...");
             contextMenuStrip.Items.Add(menuViewColumns);
@@ -169,6 +178,30 @@ namespace Sys.Platform.Forms
         }
 
 
+        private void ShowTabContextMenu(ContextMenuStrip contextMenuStrip)
+        {
+            ToolStripMenuItem menuItemClose = new ToolStripMenuItem("Close");
+            contextMenuStrip.Items.Add(menuItemClose);
+            ToolStripMenuItem menuItemCloseAll = new ToolStripMenuItem("Close All But this");
+            contextMenuStrip.Items.Add(menuItemCloseAll);
+
+            menuItemClose.Click += delegate(object sender, EventArgs e)
+            {
+                if (tabControl1.SelectedTab != null)
+                    tabControl1.TabPages.Remove(tabControl1.SelectedTab);
+            };
+
+            menuItemCloseAll.Click += delegate(object sender, EventArgs e)
+            {
+                foreach (TabPage page in tabControl1.TabPages)
+                {
+                    if (tabControl1.SelectedTab != page)
+                        tabControl1.TabPages.Remove(page);
+                }
+            };
+        }
+
+        #endregion
 
 
         private void AddTabPage(TableName tname, DataTable table, bool readOnly)
@@ -196,6 +229,8 @@ namespace Sys.Platform.Forms
             AddTabPage(tname, table, false);
         }
 
+
+
         private void DataTableExplorer_Load(object sender, EventArgs e)
         {
         }
@@ -208,6 +243,30 @@ namespace Sys.Platform.Forms
             }
         }
 
+        #region Data Save/Print
+
+        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            TabPage page = tabControl1.SelectedTab;
+            if (page == null)
+                return;
+
+            this.selectedTableName = SelectedGrid.TableName;
+
+        }
+
+        private JGridView SelectedGrid
+        {
+            get
+            {
+                TabPage page = tabControl1.SelectedTab;
+                if (page == null)
+                    return null;
+
+                JGridView grid = (JGridView)page.Controls[0];
+                return grid;
+            }
+        }
 
         public override bool DataSave()
         {
@@ -239,7 +298,8 @@ namespace Sys.Platform.Forms
                 return false;
         }
 
-    
+        #endregion
+
 
 
         protected override bool AddShortCut(bool pinned)
@@ -266,28 +326,7 @@ namespace Sys.Platform.Forms
             return false;
         }
 
-        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            TabPage page = tabControl1.SelectedTab;
-            if(page == null)
-                return;
-
-            this.selectedTableName = SelectedGrid.TableName;
-
-        }
-
-        private JGridView SelectedGrid
-        {
-            get
-            {
-                TabPage page = tabControl1.SelectedTab;
-                if (page == null)
-                    return null;
-
-                JGridView grid = (JGridView)page.Controls[0];
-                return grid;
-            }
-        }
+   
 
         //protected override void ShowHelpForm()
         //{
@@ -297,6 +336,8 @@ namespace Sys.Platform.Forms
         //}
     }
 
+
+    #region DatabaseNode / TableNode
 
     class DatabaseNode : TreeNode
     {
@@ -335,4 +376,8 @@ namespace Sys.Platform.Forms
         }
       
     }
+
+    #endregion
+
+
 }
