@@ -18,8 +18,8 @@ namespace Sys.Platform.Forms
         TableName selectedTableName;
         TreeNode root;
 
-        public TableExplorer(string text, DataProvider provider, string tableName)
-            : base(tableName)
+        public TableExplorer(string text, TableName tableName)
+            : base(tableName.FullName)
         {
 
             InitializeComponent();
@@ -31,7 +31,7 @@ namespace Sys.Platform.Forms
 
             this.Text = text;
 
-            AddTabPage(new TableName(provider, tableName));
+            AddTabPage(tableName);
 
         }
 
@@ -207,7 +207,7 @@ namespace Sys.Platform.Forms
         private void AddTabPage(TableName tname, DataTable table, bool readOnly)
         {
             this.selectedTableName = tname;
-            this.Text = "Table Explorer (" + tname + ")";
+            //this.Text = "Table Explorer (" + tname + ")";
 
             table.TableName = tname.FullName;
 
