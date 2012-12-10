@@ -481,7 +481,7 @@ namespace Sys.Platform.Forms
 
             try
             {
-                Sys.Data.Manager.SpDatabase sp = new SpDatabase(DatabaseName, Path);
+                Sys.Data.Manager.SpDatabase sp = new SpDatabase(new DatabaseName(provider, DatabaseName), Path);
                 int count = sp.Generate(Namespace, "sa", "password");
                 this.InformationMessage = string.Format("{0} stored procedures are updated at database [{1}].", count, DatabaseName);
             }

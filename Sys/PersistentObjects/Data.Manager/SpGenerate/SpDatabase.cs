@@ -14,14 +14,14 @@ namespace Sys.Data.Manager
         public const string SP_NAME = "name";
         public const string SP_DEFINITION = "sp";
 
-     
-        private string databaseName;
+
+        private DatabaseName databaseName;
         private string path;
 
-        public SpDatabase(string databaseName, string path)
+        public SpDatabase(DatabaseName databaseName, string path)
         {
             this.databaseName = databaseName;
-            this.path = string.Format("{0}\\{1}",path, databaseName);
+            this.path = string.Format("{0}\\{1}\\{2}",path, (int)databaseName.Provider, databaseName.Name);
 
             if (!Directory.Exists(this.path))
             {
@@ -39,8 +39,8 @@ namespace Sys.Data.Manager
             ORDER BY name
             ";
 
-            SqlCmd cmd = new SqlCmd(string.Format(SQL, databaseName));
-            cmd.ChangeConnection(sa, password);
+            SqlCmd cmd = new SqlCmd(databaseName.Provider, string.Format(SQL, databaseName.Name));
+           // cmd.ChangeConnection(sa, password);
             DataTable dt = cmd.FillDataTable();
             
             
@@ -48,8 +48,8 @@ namespace Sys.Data.Manager
             {
                 SpProc proc = new SpProc(databaseName, (string)row[SP_NAME], row[SP_DEFINITION].IsNull<string>(""));
                 
-                string sourceCode = proc.Proc(nameSpace, databaseName, sa, password);
-                WriteFile(proc.SpName, sourceCode, nameSpace, proc.IsSpChanged(nameSpace, databaseName));
+                string sourceCode = proc.Proc(nameSpace, databaseName.Name, sa, password);
+                WriteFile(proc.SpName, sourceCode, nameSpace, proc.IsSpChanged(nameSpace, databaseName.Name));
             }
             
             return dt.Rows.Count;
@@ -65,7 +65,11 @@ namespace Sys.Data.Manager
                 if ((File.GetAttributes(fileName) & FileAttributes.ReadOnly) == FileAttributes.ReadOnly)    //this file is not checked out
                 {
                     if (isSpChanged)
-                        throw new JException("Stored Procedure {0}..{1} is modified, please check out class {2}.{3} to refresh", databaseName, spName, nameSpace, databaseName);
+                        throw new JException("Stored Procedure {0}..{1} is modified, please check out class {2}.{3} to refresh", 
+                            databaseName.Name, 
+                            spName, 
+                            nameSpace, 
+                            databaseName.Name);
 
                     return false;
                 }
