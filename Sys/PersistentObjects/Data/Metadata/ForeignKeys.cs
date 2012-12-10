@@ -18,7 +18,7 @@ namespace Sys.Data
         public ForeignKeys(TableName tname)
         { 
             string SQL = @"
-USE {0}
+USE [{0}]
 SELECT  FK_Table = FK.TABLE_NAME ,
         FK_Column = CU.COLUMN_NAME ,
         PK_Table = PK.TABLE_NAME ,

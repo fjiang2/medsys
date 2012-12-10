@@ -92,7 +92,7 @@ namespace Sys.Platform.Forms
                     DatabaseNode databaseNode = (DatabaseNode)treeNode;
                     Cursor.Current = Cursors.WaitCursor;
                     DataTable dt = SqlCmd.FillDataTable(databaseNode.Provider,
-                        "USE {0} ; SELECT Name FROM sys.Tables ORDER BY Name",
+                        "USE [{0}] ; SELECT Name FROM sys.Tables ORDER BY Name",
                         databaseNode.DatabaseName);
 
                     //you are not allowed to open this database
@@ -153,7 +153,7 @@ namespace Sys.Platform.Forms
                     TableName tname = tableNode.TableName;
 
                     string SQL = @"
-            USE {0}
+            USE [{0}]
             SELECT 
                 c.name AS ColumnName,
                 ty.name AS DataType,

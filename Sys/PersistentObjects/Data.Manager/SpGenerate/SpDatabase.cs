@@ -32,7 +32,7 @@ namespace Sys.Data.Manager
         public int Generate(string nameSpace, string sa, string password)
         {
             string SQL = @"
-            USE {0}
+            USE [{0}]
             SELECT name, OBJECT_DEFINITION(OBJECT_ID) AS sp
             FROM sys.procedures
             WHERE is_ms_shipped <> 1

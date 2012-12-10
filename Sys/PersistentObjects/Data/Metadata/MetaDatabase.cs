@@ -34,7 +34,7 @@ namespace Sys.Data
                 if (!DatabaseExists(tname.DatabaseName))
                     return false;
 
-                return SqlCmd.FillDataRow(tname.Provider, "USE {0} ; SELECT * FROM sys.Tables WHERE Name='{1}'", tname.DatabaseName.Name, tname.Name) != null;
+                return SqlCmd.FillDataRow(tname.Provider, "USE [{0}] ; SELECT * FROM sys.Tables WHERE Name='{1}'", tname.DatabaseName.Name, tname.Name) != null;
             }
             catch (Exception)
             {
@@ -72,7 +72,7 @@ namespace Sys.Data
 
         public static string[] GetTableNames(DatabaseName databaseName)
         {
-            DataTable dt = SqlCmd.FillDataTable(databaseName.Provider, "USE {0} ; SELECT Name FROM sys.Tables ORDER BY Name", databaseName.Name);
+            DataTable dt = SqlCmd.FillDataTable(databaseName.Provider, "USE [{0}] ; SELECT Name FROM sys.Tables ORDER BY Name", databaseName.Name);
             return dt.ToArray<string>("name");
         }
     }

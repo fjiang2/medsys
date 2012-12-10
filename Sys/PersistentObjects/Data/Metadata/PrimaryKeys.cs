@@ -18,7 +18,7 @@ namespace Sys.Data
         public PrimaryKeys(TableName tname)
         { 
             string SQL = @"
-            USE {0}
+            USE [{0}]
             SELECT c.COLUMN_NAME 
                 FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS pk, 
                      INFORMATION_SCHEMA.KEY_COLUMN_USAGE c 
