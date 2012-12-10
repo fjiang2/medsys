@@ -12,12 +12,12 @@ namespace Sys.Data.Manager
 {
     class SpProc
     {
-        string databaseName;
+        DatabaseName databaseName;
         string spName;
         string spDef;
         string spDefVariable; //const variable name points to stored procedure definition
 
-        public SpProc(string databaseName, string spName, string spDef)
+        public SpProc(DatabaseName databaseName, string spName, string spDef)
         {
             this.databaseName = databaseName;
             this.spName = spName;
@@ -53,12 +53,12 @@ namespace Sys.Data.Manager
             ORDER BY parameter_id
             ";
 
-            SqlCmd cmd = new SqlCmd(string.Format(SQL, databaseName, spName));
-            cmd.ChangeConnection(sa,password);
+            SqlCmd cmd = new SqlCmd(databaseName.Provider, string.Format(SQL, databaseName.Name, spName));
+           // cmd.ChangeConnection(sa,password);
             DataTable dt = cmd.FillDataTable();
             DPCollection<SpParamDpo> parameters = new DPCollection<SpParamDpo>(dt);
 
-            string comment = string.Format("//Machine Generated Code by {0} at {1}", Active.Account.UserName, DateTime.Now);
+            string comment = string.Format("//Machine Generated Code by {0} at {1}", Active.Account.UserName, DateTime.Today);
             string usingString = @"{0}
 using System;
 using System.Data;
@@ -78,7 +78,7 @@ namespace {1}
         string func = @"
         private static object ___{0}(int __xtype{6}{1})
         {{
-            SqlCmd cmd = new SqlCmd(""{2}..{0}"");
+            SqlCmd cmd = new SqlCmd(""{2}..[{0}]"");
 {3}
             object __result = null;
             if(__xtype == 1)
@@ -132,10 +132,15 @@ namespace {1}
             }
 
             string method = string.Format(func,
-                spName, signuture1, databaseName, code1, code2, 
-                signuture2 == "" ? signuture2 : ", " + signuture2, 
+                spName, 
+                signuture1, 
+                databaseName.Name, 
+                code1, 
+                code2, 
+                signuture2 == "" ? "" : ", " + signuture2, 
                 signuture1 == "" ? "" : ", ",
-                this.spDefVariable, escapeSpDef()
+                this.spDefVariable, 
+                escapeSpDef()
                 );
 
 
