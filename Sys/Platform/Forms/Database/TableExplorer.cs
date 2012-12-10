@@ -10,6 +10,7 @@ using Sys.ViewManager;
 using Sys.Data;
 using Sys.Data.Manager;
 using System.Reflection;
+using Tie;
 
 namespace Sys.Platform.Forms
 {
@@ -326,7 +327,22 @@ namespace Sys.Platform.Forms
             return false;
         }
 
-   
+        protected override void Appearance(VAL p, bool saved)
+        {
+            base.Appearance(p, saved);
+
+            if (saved)
+            {
+                p["SplitterDistance"] = new VAL(this.splitContainer1.SplitterDistance);
+            }
+            else
+            {
+                if (p["SplitterDistance"].Defined)
+                {
+                    this.splitContainer1.SplitterDistance = p["SplitterDistance"].Intcon;
+                }
+            }
+        }
 
         //protected override void ShowHelpForm()
         //{

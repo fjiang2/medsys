@@ -71,7 +71,7 @@ namespace Sys.ViewManager.Forms
             WinFormEngine engine = new WinFormEngine(this, this.toolTip1, this.errorProvider1);
             validateProvider = engine.ValidatorProvider;
 
-            this.Load += new System.EventHandler(this.BaseWinForm_Load);
+            this.Load += new System.EventHandler(this.BaseForm_Load);
             this.Icon = SysInformation.Icon;
             this.KeyPreview = true;
             this.KeyDown += new KeyEventHandler(BaseWinForm_KeyDown);
@@ -169,13 +169,13 @@ namespace Sys.ViewManager.Forms
             // 
             this.ClientSize = new System.Drawing.Size(284, 262);
             this.Name = this.GetType().Name;
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.BaseWinForm_FormClosed);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.BaseForm_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
 
         }
 
-        private void BaseWinForm_Load(object sender, EventArgs e)
+        private void BaseForm_Load(object sender, EventArgs e)
         {
 
 
@@ -212,7 +212,7 @@ namespace Sys.ViewManager.Forms
         }
 
 
-        private void BaseWinForm_FormClosed(object sender, FormClosedEventArgs e)
+        private void BaseForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             Form_Closed();
 
@@ -248,19 +248,19 @@ namespace Sys.ViewManager.Forms
         /// <summary>
         /// keep win form size,location,... into user's profile
         /// </summary>
-        /// <param name="p">setting</param>
+        /// <param name="val">setting</param>
         /// <param name="saved">true: saving setting; false: loading setting</param>
-        protected virtual void Appearance(VAL p, bool saved)
+        protected virtual void Appearance(VAL val, bool saved)
         {
             if (saved)
             {
-                p["Location"] = new VAL();
-                p["Size"] = new VAL();
-                p["Location"]["X"] = new VAL(this.Location.X);
-                p["Location"]["Y"] = new VAL(this.Location.Y);
-                p["Size"]["Width"] = new VAL(this.Size.Width);
-                p["Size"]["Height"] = new VAL(this.Size.Height);
-           //     p["WindowState"] = new VAL((int)this.WindowState);
+                val["Location"] = new VAL();
+                val["Size"] = new VAL();
+                val["Location"]["X"] = new VAL(this.Location.X);
+                val["Location"]["Y"] = new VAL(this.Location.Y);
+                val["Size"]["Width"] = new VAL(this.Size.Width);
+                val["Size"]["Height"] = new VAL(this.Size.Height);
+                //     val["WindowState"] = new VAL((int)this.WindowState);
             }
             else
             {
@@ -268,30 +268,30 @@ namespace Sys.ViewManager.Forms
 
                 System.Drawing.Rectangle box = SystemInformation.VirtualScreen;
 
-                int x = p["Location"]["X"].Intcon;
+                int x = val["Location"]["X"].Intcon;
                 if (x < 0) x = 0;
                 if (x > box.Width)
                     x = box.Width - 50;
 
-                int y = p["Location"]["Y"].Intcon;
+                int y = val["Location"]["Y"].Intcon;
                 if (y < 0) y = 0;
                 if (y > box.Height)
                     y = box.Height - 50;
 
                 this.Location = new System.Drawing.Point(x, y);
 
-                int w = p["Size"]["Width"].Intcon;
+                int w = val["Size"]["Width"].Intcon;
                 if (w < 0) w = 320;
 
-                int h = p["Size"]["Height"].Intcon;
+                int h = val["Size"]["Height"].Intcon;
                 if (h < 0) h = 240;
 
                 if (this.FormBorderStyle == FormBorderStyle.Sizable)
                     this.Size = new System.Drawing.Size(w, h);
 
-                //if (p["WindowState"].Defined)
+                //if (val["WindowState"].Defined)
                 //{
-                //    FormWindowState windowState = (FormWindowState)p["WindowState"].Intcon;
+                //    FormWindowState windowState = (FormWindowState)val["WindowState"].Intcon;
 
                 //    if (this.FormBorderStyle != System.Windows.Forms.FormBorderStyle.Sizable) //tabbed windows don't restore state of Maximized/Minimized
                 //        this.WindowState = windowState;
