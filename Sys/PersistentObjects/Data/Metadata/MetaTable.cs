@@ -46,7 +46,7 @@ namespace Sys.Data
         {
             //Column Name must match class MetadataColumn
             string SQL = @"
-            USE {0}
+            USE [{0}]
             SELECT 
                 c.name AS ColumnName,
                 ty.name AS DataType,

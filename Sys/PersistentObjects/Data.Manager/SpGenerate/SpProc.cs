@@ -36,7 +36,7 @@ namespace Sys.Data.Manager
         public string Proc(string nameSpace, string className, string sa, string password)
         {
             string SQL = @"
-            USE {0}
+            USE [{0}]
             DECLARE @objid INT
             SELECT  @objid = object_id
             FROM sys.all_objects 
