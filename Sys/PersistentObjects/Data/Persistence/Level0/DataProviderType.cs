@@ -8,8 +8,13 @@ namespace Sys.Data
     public enum DataProviderType
     {
         SqlServer,
+        OleDbServer,
+        MySQL,
+        Oracle,
+        Access,
+        Excel,
         Excel2007,
-        Excel2010,
+        Excel2010
     }
 
 }

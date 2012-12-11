@@ -70,7 +70,7 @@ namespace Sys.Platform.Forms
 
             treeView1.AfterSelect += new TreeViewEventHandler(treeView1_AfterSelect);
             treeView1.MouseDoubleClick += new MouseEventHandler(treeView1_MouseDoubleClick);
-            treeView1.ExpandAll();
+            //treeView1.ExpandAll();
 
             treeView1.ContextMenuStrip = new ContextMenuStrip();
             ShowTreeViewContextMenu(treeView1.ContextMenuStrip);
