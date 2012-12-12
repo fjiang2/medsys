@@ -68,6 +68,15 @@ namespace Sys
             return this.id;
         }
 
+        public static bool operator == (ident id1, ident id2)
+        {
+            return id1.id.Equals(id2.id);
+        }
+
+        public static bool operator !=(ident id1, ident id2)
+        {
+            return !(id1==id2);
+        }
 
         public static explicit operator string(ident ident)
         {
@@ -86,7 +95,18 @@ namespace Sys
 
         internal static string Identifier(string s)
         {
-            return s.Replace("-", "_").Replace(" ", "_").Replace("$", "_").Replace(".", "_");
+            s = s.Trim();
+            StringBuilder sb = new StringBuilder();
+            
+            if (!char.IsLetter(s[0]))
+                sb.Append("_");
+            
+            for (int i = 0; i < s.Length; i++)
+                if (char.IsLetterOrDigit(s[i]) || s[i] == '_')
+                    sb.Append(s[i]);
+
+            return sb.ToString();
         }
+        
     }
 }
