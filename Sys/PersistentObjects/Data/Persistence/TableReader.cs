@@ -33,6 +33,11 @@ namespace Sys.Data
         {
         }
 
+        public TableReader(TableName tableName, SqlExpr where)
+            :this(tableName, new SqlClause().SELECT.COLUMNS().FROM(tableName).WHERE(where).Clause)
+        { 
+        
+        }
     
         public DataTable Table
         {

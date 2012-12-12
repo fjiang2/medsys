@@ -11,9 +11,9 @@ namespace Sys.Data
         private DataProvider provider;
         private string name;
 
-        public DatabaseName(DataProvider handle, string databaseName)
+        public DatabaseName(DataProvider provider, string databaseName)
         {
-            this.provider = handle;
+            this.provider = provider;
             this.name = databaseName;
         }
 

@@ -138,6 +138,14 @@ namespace {0}
             return string.Format(format, nameSpace, new DataEnumAttribute(), ClassName, string.Join(",\r\n\r\n", fields.Select(field => field.ToCode())));
         }
 
+
+        public void GenerateCode(string path, string nameSpace)
+        {
+            string sourceCode = this.ToCode(nameSpace);
+                string fileName = string.Format("{0}\\{1}.cs", path, this.ClassName);
+                SysExtension.WriteFile(fileName, sourceCode);
+        }
+
         public override string ToString()
         {
             return name;
