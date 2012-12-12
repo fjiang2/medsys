@@ -25,25 +25,13 @@ namespace Sys.Data.Manager
         {
         }
 
-        private static string Identifier(string s)
-        {
-            s = s.Trim();
-            if (!char.IsLetter(s[0]))
-                s += "_" + s;
-
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < s.Length; i++)
-                if (char.IsLetterOrDigit(s[i]) || s[i]=='_')
-                    sb.Append(s[i]);
-            
-            return sb.ToString();
-        }
+      
 
         public bool Validate(MessageBuilder messages)
         {
             this.Feature = this.Feature.Trim();
 
-            bool good = Identifier(this.Feature).Equals(this.Feature);
+            bool good = ident.Identifier(this.Feature).Equals(this.Feature);
            
             if (!good)
                 messages.Add(Message.Error(string.Format("Invalid identifier: {0}", this.Feature)));
