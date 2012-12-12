@@ -34,32 +34,22 @@ namespace Sys.Data
 
         }
 
-        private DataProviderConnection Add(DataProvider handle, DataProviderConnection provider)
+        private DataProviderConnection Add(DataProvider provider, DataProviderConnection connection)
         {
-            if (providers.ContainsKey(handle))
+            if (providers.ContainsKey(provider))
             {
-                return providers[handle];
+                return providers[provider];
             }
 
-            providers.Add(handle, provider);
+            providers.Add(provider, connection);
 
-            return provider;
+            return connection;
         }
 
-        private DataProviderConnection this[DataProvider handle]
+     
+        private void Remove(DataProvider provider)
         {
-            get
-            {
-                if(providers.ContainsKey(handle))
-                    return providers[handle];
-                else
-                    return null;
-            }
-        }
-
-        private void Remove(DataProvider handle)
-        {
-             providers.Remove(handle);
+             providers.Remove(provider);
         }
 
 
@@ -70,14 +60,17 @@ namespace Sys.Data
 
       
 
-        internal DataProviderConnection GetProviderConnection(DataProvider provider)
+        internal DataProviderConnection GetConnection(DataProvider provider)
         {
-            return this[provider];
+            if (providers.ContainsKey(provider))
+                return providers[provider];
+            else
+                return null;
         }
 
-        public DataProviderConnection GetProviderConnection(int handle)
+        public DataProviderConnection GetConnection(int handle)
         {
-            return GetProviderConnection(GetProvider(handle));
+            return GetConnection(GetProvider(handle));
         }
 
 
@@ -131,9 +124,9 @@ namespace Sys.Data
                 VAL val = value;
                 for (int i = 0; i < val.Size; i++)
                 {
-                    DataProvider handle = new DataProvider(val[i]["handle"]);
-                    DataProviderConnection provider = new DataProviderConnection(val[i]["provider"]);
-                    Add(handle, provider);
+                    DataProvider provider = new DataProvider(val[i]["handle"]);
+                    DataProviderConnection connection = new DataProviderConnection(val[i]["provider"]);
+                    Add(provider, connection);
                 }
 
               
@@ -146,9 +139,9 @@ namespace Sys.Data
             var list = new TableReader<DataProviderDpo>(DataProviderDpo._inactive.ColumnName() == 0).ToList();
             foreach (DataProviderDpo dpo in list)
             {
-                DataProvider handle = new DataProvider(dpo.handle);
-                DataProviderConnection provider = new DataProviderConnection(dpo.name, (DataProviderType)dpo.type, dpo.connection);
-                Add(handle, provider);
+                DataProvider provider = new DataProvider(dpo.handle);
+                DataProviderConnection connection = new DataProviderConnection(dpo.name, (DataProviderType)dpo.type, dpo.connection);
+                Add(provider, connection);
             }
         }
 
@@ -189,7 +182,7 @@ namespace Sys.Data
         {
             get
             {
-                return Instance[DataProvider.DefaultProvider];
+                return Instance.GetConnection(DataProvider.DefaultProvider);
             }
         }
 

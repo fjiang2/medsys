@@ -21,22 +21,22 @@ namespace Sys.Data.Manager
         MetaTable metaTable;
         DpoClass dpoClass;
 
-        public DpoGenerator(ClassTableName tname, ClassName cname, bool hasColumnAttribute, Dictionary<TableName, Type> dict)
+        public DpoGenerator(ClassTableName ctname, ClassName cname, bool hasColumnAttribute, Dictionary<TableName, Type> dict)
         {
-            this.tname = tname;
+            this.tname = ctname;
             this.cname = cname;
             
-            metaTable = tname.GetMetaTable();
+            metaTable = ctname.GetMetaTable();
 
             if (metaTable.TableID == -1)
             {
-                DictTable.MustRegister(tname);
+                DictTable.MustRegister(ctname);
             }
 
             dpoClass = new DpoClass(metaTable, cname, dict);
             dpoClass.HasColumnAttribute = hasColumnAttribute;
 
-            this.sourceCode = dpoClass.Generate(cname.Modifier, tname.Level, tname.Pack);
+            this.sourceCode = dpoClass.Generate(cname.Modifier, ctname);
 
         }
 

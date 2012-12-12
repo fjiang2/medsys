@@ -25,16 +25,18 @@ namespace Sys.Data.Manager
         /// <param name="nameSpace"></param>
         /// <param name="level"></param>
         /// <param name="isPack"></param>
-        public static void CreateClass(DataProvider provider, string[] tableNames, string path, string nameSpace, Level level, bool isPack, Dictionary<TableName, Type> dict)
+        public static void CreateClass(DataProvider provider, string[] tableNames, string path, string nameSpace, 
+            Level level, bool isPack, bool hasProvider,
+            Dictionary<TableName, Type> dict)
         {
             foreach (string fullName in tableNames)
             {
                 TableName tableName = new TableName(provider, fullName);
-                ClassTableName tname = new ClassTableName(provider, tableName.DatabaseName.Name, tableName.Name);
+                ClassTableName ctname = new ClassTableName(provider, tableName.DatabaseName.Name, tableName.Name);
 
-                ClassName cname = new ClassName(nameSpace, AccessModifier.Public, tname);
-                tname.SetLevel(level, isPack);
-                tname.GenTableDpo(path, true, cname, true, dict);
+                ClassName cname = new ClassName(nameSpace, AccessModifier.Public, ctname);
+                ctname.SetProperties(level, isPack, hasProvider);
+                ctname.GenTableDpo(path, true, cname, true, dict);
             }
         }
 
@@ -51,11 +53,11 @@ namespace Sys.Data.Manager
                 {
 
                     DPObject dpo = (DPObject)Activator.CreateInstance(type);
-                    ClassTableName tname = new ClassTableName(dpo.TableName.Provider, dpo.TableName.DatabaseName.Name, dpo.TableName.Name);
+                    ClassTableName ctname = new ClassTableName(dpo.TableName.Provider, dpo.TableName.DatabaseName.Name, dpo.TableName.Name);
 
                     ClassName cname = new ClassName(dpo);
-                    tname.SetLevel(dpo.Level, dpo.IsPack);
-                    tname.GenTableDpo(path, true, cname, true, dict);
+                    ctname.SetProperties(dpo.Level, dpo.IsPack, dpo.HasProvider);
+                    ctname.GenTableDpo(path, true, cname, true, dict);
                 }
             }
         }

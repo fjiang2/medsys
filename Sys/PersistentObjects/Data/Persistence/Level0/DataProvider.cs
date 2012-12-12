@@ -44,7 +44,12 @@ namespace Sys.Data
 
         public override string ToString()
         {
-            return string.Format("Provider Handle={0}", this.handle);
+            DataProviderConnection connection = DataProviderManager.Instance.GetConnection(this);
+
+            if (connection != null)
+                return string.Format("Provider Handle={0} Name={1}", this.handle, connection.Name);
+            else
+                return string.Format("Provider Handle={0}", this.handle);
         }
 
         public static explicit operator int(DataProvider provider)
