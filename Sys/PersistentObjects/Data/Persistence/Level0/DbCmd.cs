@@ -20,7 +20,9 @@ namespace Sys.Data
         public DbCmd(DataProvider provider, string script)
         {
             this.providerConnection = DataProviderManager.Instance.GetConnection(provider);
-            
+            if (this.providerConnection == null)
+                throw new JException("provider connection not registered.");
+
             this.script = script
                           .Replace("$DB_SYSTEM", Const.DB_SYSTEM)
                           .Replace("$DB_APPLICATION", Const.DB_APPLICATION);

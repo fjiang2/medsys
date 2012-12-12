@@ -53,9 +53,13 @@ namespace Sys.Data.Manager
 
         private void GenerateCode(string path, string nameSpace)
         {
+            MessageBuilder messages = new MessageBuilder();
             foreach (EnumType type in types)
             {
-                type.GenerateCode(path, nameSpace);
+                if (type.Validate(messages))
+                    type.GenerateCode(path, nameSpace);
+                else
+                    throw new JException(messages.ToString());
             }
         }
 
@@ -65,7 +69,10 @@ namespace Sys.Data.Manager
             List<EnumField> list = new List<EnumField>();
 
             foreach (string enumType in enumTypes)
-                list.Union(new TableReader(tname, EnumField._Category.ColumnName() == enumType).ToList<EnumField>());
+            {
+                foreach (var field in new TableReader(tname, EnumField._Category.ColumnName() == enumType).ToList<EnumField>())
+                    list.Add(field);
+            }
 
             EnumTypeManager manager = new EnumTypeManager(list);
             manager.GenerateCode(path, nameSpace);
@@ -77,7 +84,10 @@ namespace Sys.Data.Manager
             List<EnumField> list = new List<EnumField>();
 
             foreach (string enumType in enumTypes)
-                list.Union(new TableReader<EnumField>(EnumField._Category.ColumnName() == enumType).ToList());
+            {
+                foreach (var field in new TableReader<EnumField>(EnumField._Category.ColumnName() == enumType).ToList())
+                    list.Add(field);
+            }
 
             EnumTypeManager manager = new EnumTypeManager(list);
             manager.GenerateCode(path, nameSpace);

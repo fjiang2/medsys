@@ -19,7 +19,11 @@ namespace Sys.Data
         public override string ToString()
         {
             string attribute = typeof(FieldAttribute).Name.Replace("Attribute", "");
-            return string.Format("[{0}(\"{1}\")]", attribute, Caption);
+            
+            //handling escape letter in the Caption
+            string field = new VAL(Caption).ToString();
+
+            return string.Format("[{0}({1})]", attribute, field);
         }
     }
 
