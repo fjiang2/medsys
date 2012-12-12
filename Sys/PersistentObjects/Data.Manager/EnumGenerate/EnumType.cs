@@ -135,7 +135,12 @@ namespace {0}
 }}
 ";
 
-            return string.Format(format, nameSpace, new DataEnumAttribute(), ClassName, string.Join(",\r\n\r\n", fields.Select(field => field.ToCode())));
+            return string.Format(format, 
+                nameSpace, 
+                new DataEnumAttribute(), 
+                ClassName, 
+                string.Join(",\r\n\r\n", fields.Select(field => field.ToCode()))
+                );
         }
 
 

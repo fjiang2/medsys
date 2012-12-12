@@ -84,5 +84,9 @@ namespace Sys
             return this.id.CompareTo(other);
         }
 
+        internal static string Identifier(string s)
+        {
+            return s.Replace("-", "_").Replace(" ", "_").Replace("$", "_").Replace(".", "_");
+        }
     }
 }

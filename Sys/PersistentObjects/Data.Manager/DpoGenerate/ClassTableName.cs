@@ -41,14 +41,11 @@ namespace Sys.Data.Manager
             this.hasProvider = hasProvider;
         }
 
-        private static string Identifier(string s)
-        {
-            return s.Replace("-", "_").Replace(" ", "_").Replace("$", "_");
-        }
+      
 
         public string SubNamespace
         {
-            get { return Identifier(this.DatabaseName.Name); }
+            get { return ident.Identifier(this.DatabaseName.Name); }
         }
 
 
@@ -60,7 +57,7 @@ namespace Sys.Data.Manager
 
         private static string toClassName(string tableName)
         {
-            string className = Identifier(tableName);
+            string className = ident.Identifier(tableName);
 
             //remove plural
             if (className.EndsWith("s"))

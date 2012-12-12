@@ -16,7 +16,8 @@ namespace Sys.Data.Manager
 
         public EnumField(DataRow row)
             : base(row)
-        { 
+        {
+           
         }
 
         public EnumField(string category, string feature)
@@ -32,7 +33,7 @@ namespace Sys.Data.Manager
 
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < s.Length; i++)
-                if (char.IsLetterOrDigit(s[i]))
+                if (char.IsLetterOrDigit(s[i]) || s[i]=='_')
                     sb.Append(s[i]);
             
             return sb.ToString();
@@ -40,6 +41,8 @@ namespace Sys.Data.Manager
 
         public bool Validate(MessageBuilder messages)
         {
+            this.Feature = this.Feature.Trim();
+
             bool good = Identifier(this.Feature).Equals(this.Feature);
            
             if (!good)
@@ -61,7 +64,11 @@ namespace Sys.Data.Manager
 
         public string ToCode()
         {
-            return string.Format("\t\t{0}\r\n\t\t{1} = {2}", new FieldAttribute(this.Caption), this.Feature, this.Value);
+            return string.Format("\t\t{0}\r\n\t\t{1} = {2}", 
+                new FieldAttribute(this.Caption), 
+                ident.Identifier(this.Feature), 
+                this.Value
+                );
         }
 
         
