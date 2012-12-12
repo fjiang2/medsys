@@ -105,7 +105,7 @@ namespace Sys.SmartList.Forms
             binding.Bind(this.icbImage, CommandDpo._Image_Index);
 
             binding.Bind<ComboBox, int>(this.comboDataProviders,
-                    (control, value) => control.SelectedItem = DataProviderManager.Instance.GetProviderConnection(value).Name,
+                    (control, value) => control.SelectedItem = DataProviderManager.Instance.GetConnection(value).Name,
                     (control) => (int)DataProviderManager.Instance.GetProvider((string)control.SelectedItem),
                     CommandDpo._Data_Provider);
 

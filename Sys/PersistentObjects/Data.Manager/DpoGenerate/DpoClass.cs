@@ -291,7 +291,7 @@ namespace Sys.Data.Manager
         }
 
 
-        public string Generate(AccessModifier modifier, Level level, bool pack)
+        public string Generate(AccessModifier modifier, ClassTableName ctname)
         {
             //must run it first to form Dictionary
             string fields = Fields();
@@ -429,7 +429,7 @@ namespace @NAMESPACE
                       .Replace("@COMMENT", comment)
                       .Replace("@NAMESPACE", nameSpace)
                       .Replace("@REVISION", rev)
-                      .Replace("@ATTRIBUTE", metaTable.GetTableAttribute(level, pack))
+                      .Replace("@ATTRIBUTE", metaTable.GetTableAttribute(ctname))
                       .Replace("@MODIFIER", m)
                       .Replace("@PRIMARYCONSTRUCTOR", PrimaryConstructor())
                       .Replace("@CLASSNAME", className)

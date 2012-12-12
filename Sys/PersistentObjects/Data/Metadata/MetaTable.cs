@@ -14,11 +14,11 @@ namespace Sys.Data
 {
     class MetaTable
     {
-        private TableName tname;
+        private TableName tableName;
         
         private MetaTable(TableName tname)
         {
-            this.tname = tname;
+            this.tableName = tname;
         }
 
 
@@ -39,7 +39,7 @@ namespace Sys.Data
 
         public override string ToString()
         {
-            return string.Format("{0}..[{1}], Id={2}", tname.DatabaseName.Name, tname.Name, TableID);
+            return string.Format("{0}..[{1}], Id={2}", tableName.DatabaseName.Name, tableName.Name, TableID);
         }
 
         private void LoadSchema()
@@ -64,7 +64,7 @@ namespace Sys.Data
             ORDER BY c.column_id 
             ";
 
-            DataTable dt1 = SqlCmd.FillDataTable(tname.Provider, SQL, tname.DatabaseName.Name, tname.Name);
+            DataTable dt1 = SqlCmd.FillDataTable(tableName.Provider, SQL, tableName.DatabaseName.Name, tableName.Name);
             var list = new TableReader<dictDataColumnDpo>( dictDataColumnDpo._table_id.ColumnName() == TableID).ToList();
 
             this._columns = new MetaColumnCollection(this);
@@ -131,7 +131,7 @@ namespace Sys.Data
             get
             {
                 if (this._primary == null)
-                   this._primary = new PrimaryKeys(tname);
+                   this._primary = new PrimaryKeys(tableName);
 
                 return this._primary;
             }
@@ -143,7 +143,7 @@ namespace Sys.Data
             get
             {
                 if (this._foreign == null)
-                    this._foreign = new ForeignKeys(tname);
+                    this._foreign = new ForeignKeys(tableName);
 
                 return this._foreign;
             }
@@ -157,7 +157,7 @@ namespace Sys.Data
             get
             {
                 if (this._tableID == -1)
-                    this._tableID = DictTable.GetId(tname);
+                    this._tableID = DictTable.GetId(tableName);
 
                 return this._tableID;
             }
@@ -209,7 +209,7 @@ namespace Sys.Data
             {
                 if (_thisDataTable == null)
                 {
-                    _thisDataTable = SqlCmd.FillDataTable(tname.Provider, "SELECT TOP 1 * FROM {0}", tname);
+                    _thisDataTable = SqlCmd.FillDataTable(tableName.Provider, "SELECT TOP 1 * FROM {0}", tableName);
                     _thisDataTable.Rows.Clear();
                 }
 
@@ -221,14 +221,14 @@ namespace Sys.Data
         {
             get
             {
-                return MetaDatabase.TableExists(tname);
+                return MetaDatabase.TableExists(tableName);
             }
         }
 
 
         public TableName TableName 
         { 
-            get { return this.tname; } 
+            get { return this.tableName; } 
         }
 
 
@@ -240,33 +240,37 @@ namespace Sys.Data
         /// </summary>
         /// <param name="level"></param>
         /// <returns></returns>
-        public string GetTableAttribute(Level level, bool pack)
+        public string GetTableAttribute(ClassTableName ctname)
         {
             string comment = string.Format("//Primary Keys = {0};  Identity = {1};", Primary, Identity);
             StringBuilder attr = new StringBuilder("[Table(");
-            switch (level)
+            switch (ctname.Level)
             {
 
                 case Level.Application:
-                    attr.AppendFormat("\"{0}\", Level.Application", tname.Name);
+                    attr.AppendFormat("\"{0}\", Level.Application", tableName.Name);
                     break;
                 
                 case Level.System:
-                    attr.AppendFormat("\"{0}\", Level.System", tname.Name);
+                    attr.AppendFormat("\"{0}\", Level.System", tableName.Name);
                     break;
                  
                 case Level.Fixed:
-                    attr = attr.AppendFormat("\"{0}..[{1}]\", Level.Fixed", tname.DatabaseName.Name, tname.Name);
+                    attr = attr.AppendFormat("\"{0}..[{1}]\", Level.Fixed", tableName.DatabaseName.Name, tableName.Name);
                     break;
             }
 
-            if (!this.tname.Provider.Equals(DataProvider.DefaultProvider))
+            
+            if (ctname.HasProvider)
             {
-                  attr.AppendFormat(", Provider = {0}", (int)tname.Provider);
+                if (!this.tableName.Provider.Equals(DataProvider.DefaultProvider))
+                {
+                    attr.AppendFormat(", Provider = {0}", (int)tableName.Provider);
+                }
             }
 
-            if (!pack)
-                attr.AppendFormat(", Pack = false", tname.Name);
+            if (!ctname.Pack)
+                attr.AppendFormat(", Pack = false", tableName.Name);
 
             attr.Append(")]");
 

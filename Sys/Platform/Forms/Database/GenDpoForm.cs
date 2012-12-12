@@ -117,6 +117,7 @@ namespace Sys.Platform.Forms
                 DPObject dpo = (DPObject)Activator.CreateInstance(ty);
                 this.Level = dpo.Level;
                 this.Pack = dpo.IsPack;
+                this.HasProvier = dpo.HasProvider;
 
                 this.txtNamespace.Enabled = false;
                 this.txtClass.Enabled = false;
@@ -137,12 +138,14 @@ namespace Sys.Platform.Forms
                     this.Modifier = (AccessModifier)log.modifier;
                     this.Level = (Level)log.table_level;
                     this.Pack = log.packed;
+                    this.HasProvier = log.has_provider;
                 }
                 else
                 {
                     this.Modifier = AccessModifier.Public;
                     this.Level = Level.Fixed;
                     this.Pack = false;
+                    this.HasProvier = true;
                 }
  
                 this.txtClass.Text = tname.ClassName;
@@ -251,6 +254,12 @@ namespace Sys.Platform.Forms
             set { this.chkPack.Checked = value; }
         }
 
+        public bool HasProvier
+        {
+            get { return chkHasProvider.Checked; }
+            set { this.chkHasProvider.Checked = value; }
+        }
+
         private string Path
         {
             get
@@ -296,10 +305,10 @@ namespace Sys.Platform.Forms
             this.txtOutput.Text = "";
 
             string className = this.txtClass.Text;
-            ClassTableName tname = new ClassTableName(this.provider, DatabaseName, TableName);
+            ClassTableName ctname = new ClassTableName(this.provider, DatabaseName, TableName);
 
             ClassName cname = new ClassName(Namespace, Modifier, className);
-            tname.SetLevel(this.Level, this.Pack);
+            ctname.SetProperties(this.Level, this.Pack, this.HasProvier);
 
             if (className == "" || TableName == "" || Namespace == "")
             {
@@ -309,7 +318,7 @@ namespace Sys.Platform.Forms
             }
             try
             {
-                if (tname.GenTableDpo(Path, this.chkMustGenerate.Checked, cname, true, dpoDict))
+                if (ctname.GenTableDpo(Path, this.chkMustGenerate.Checked, cname, true, dpoDict))
                 {
                     if (treeTables.SelectedNode.ImageIndex == 2)
                     {
@@ -317,10 +326,10 @@ namespace Sys.Platform.Forms
                         //dpoDict.Add(tname, typeof(
                     }
 
-                    this.txtOutput.Text = string.Format("class {0} is created from {1} at {2}", cname, tname, Path);
+                    this.txtOutput.Text = string.Format("class {0} is created from {1} at {2}", cname, ctname, Path);
                 }
                 else
-                    this.txtOutput.Text = string.Format("class {0} matches table {1}, not generate class", cname, tname);
+                    this.txtOutput.Text = string.Format("class {0} matches table {1}, not generate class", cname, ctname);
             }
             catch (Exception ex)
             {
@@ -340,21 +349,21 @@ namespace Sys.Platform.Forms
                 if (!node.Checked)
                     continue;
 
-                ClassTableName tname = new ClassTableName(this.provider, DatabaseName, node.Text);
-                if (!dpoDict.ContainsKey(tname))
+                ClassTableName ctname = new ClassTableName(this.provider, DatabaseName, node.Text);
+                if (!dpoDict.ContainsKey(ctname))
                     continue;
 
-                Type ty = dpoDict[tname];
+                Type ty = dpoDict[ctname];
                 string path = Library.AssemblyPath(ty.Assembly, Setting.DPO_CLASS_PATH);  
 
                 DPObject dpo = (DPObject)Activator.CreateInstance(ty);
                 ClassName cname = new ClassName(dpo);
-                tname.SetLevel(dpo.Level, dpo.IsPack);
+                ctname.SetProperties(dpo.Level, dpo.IsPack, dpo.HasProvider);
 
-                if (tname.GenTableDpo(path, this.chkMustGenerate.Checked, cname, true, dpoDict))
-                    output += string.Format("class {0} is upgraded from table {1} at {2}\r\n", cname, tname, path);
+                if (ctname.GenTableDpo(path, this.chkMustGenerate.Checked, cname, true, dpoDict))
+                    output += string.Format("class {0} is upgraded from table {1} at {2}\r\n", cname, ctname, path);
                 else
-                    output += string.Format("class {0} is skipped from table {1}\r\n", cname, tname);
+                    output += string.Format("class {0} is skipped from table {1}\r\n", cname, ctname);
             }
 
             if(output != "")
@@ -383,26 +392,26 @@ namespace Sys.Platform.Forms
                 if (!node.Checked)
                     continue;
 
-                ClassTableName tname = new ClassTableName(this.provider, DatabaseName, node.Text);
-                tname.SetLevel(this.Level, this.Pack);
+                ClassTableName ctname = new ClassTableName(this.provider, DatabaseName, node.Text);
+                ctname.SetProperties(this.Level, this.Pack, this.HasProvier);
                 
-                if (dpoDict.ContainsKey(tname))
+                if (dpoDict.ContainsKey(ctname))
                     continue;
 
                 string path = Path;
                 if (chkFolder.Checked)
-                    path = Path + "\\" + tname.SubNamespace;
+                    path = Path + "\\" + ctname.SubNamespace;
 
-               ClassName cname = new ClassName(Namespace, Modifier, tname, chkFolder.Checked);
+               ClassName cname = new ClassName(Namespace, Modifier, ctname, chkFolder.Checked);
                 
                try
                 {
-                    if (tname.GenTableDpo(path, this.chkMustGenerate.Checked, cname, true, dpoDict))
+                    if (ctname.GenTableDpo(path, this.chkMustGenerate.Checked, cname, true, dpoDict))
                     {
                         if (node.ImageIndex == 2)
                             node.ImageIndex = 1;
 
-                        output += string.Format("class {0} is created from table {1} at {2}\r\n", cname, tname, path);
+                        output += string.Format("class {0} is created from table {1} at {2}\r\n", cname, ctname, path);
                     }
                 }
                 catch (Exception ex)

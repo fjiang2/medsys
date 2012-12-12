@@ -265,6 +265,17 @@ namespace Sys.Data
                 return true;
             }
         }
+
+        public bool HasProvider
+        {
+            get
+            {
+                if (dataTableAttribute != null)
+                    return !TableName.Provider.Equals(DataProvider.DefaultProvider);
+
+                return false;
+            }
+        }
       
         public virtual int TableId
         {

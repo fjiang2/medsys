@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 11/13/2012
+//   by devel at 12/12/2012
 //
 
 using System;
@@ -14,7 +14,7 @@ using Sys.Data.Manager;
 
 namespace Sys.PersistentObjects.DpoClass
 {
-    [Revision(2)]
+    [Revision(4)]
     [Table("sys00305", Level.System, Pack = false)]    //Primary Keys = table_id + user_id;  Identity = class_id;
     public class logDpoClassDpo : DPObject
     {
@@ -30,6 +30,7 @@ namespace Sys.PersistentObjects.DpoClass
         [Column(_class_name, SqlDbType.VarChar, Length = 50)]                                     public string class_name;     //varchar(50) not null
         [Column(_table_level, SqlDbType.Int)]                                                     public int table_level;       //int(4) not null
         [Column(_packed, SqlDbType.Bit)]                                                          public bool packed;           //bit(1) not null
+        [Column(_has_provider, SqlDbType.Bit)]                                                    public bool has_provider;     //bit(1) not null
 
 #pragma warning restore
 
@@ -106,6 +107,7 @@ namespace Sys.PersistentObjects.DpoClass
         public const string _class_name = "class_name";
         public const string _table_level = "table_level";
         public const string _packed = "packed";
+        public const string _has_provider = "has_provider";
 
        
         #endregion 

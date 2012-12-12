@@ -46,7 +46,9 @@
             this.treeTables = new System.Windows.Forms.TreeView();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.label10 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
             this.txtDatabaseId = new System.Windows.Forms.TextBox();
+            this.comboServer = new System.Windows.Forms.ComboBox();
             this.chkCheckAll = new System.Windows.Forms.CheckBox();
             this.chkShowNewTables = new System.Windows.Forms.CheckBox();
             this.chkPack = new System.Windows.Forms.CheckBox();
@@ -70,8 +72,7 @@
             this.toolStripButtonGenSP = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
-            this.label11 = new System.Windows.Forms.Label();
-            this.comboServer = new System.Windows.Forms.ComboBox();
+            this.chkHasProvider = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -236,6 +237,7 @@
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.chkHasProvider);
             this.splitContainer1.Panel2.Controls.Add(this.chkPack);
             this.splitContainer1.Panel2.Controls.Add(this.label9);
             this.splitContainer1.Panel2.Controls.Add(this.txtTableId);
@@ -277,6 +279,15 @@
             this.label10.TabIndex = 23;
             this.label10.Text = "Id#";
             // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(4, 41);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(41, 13);
+            this.label11.TabIndex = 0;
+            this.label11.Text = "Server:";
+            // 
             // txtDatabaseId
             // 
             this.txtDatabaseId.Location = new System.Drawing.Point(36, 105);
@@ -284,6 +295,14 @@
             this.txtDatabaseId.ReadOnly = true;
             this.txtDatabaseId.Size = new System.Drawing.Size(96, 20);
             this.txtDatabaseId.TabIndex = 22;
+            // 
+            // comboServer
+            // 
+            this.comboServer.Location = new System.Drawing.Point(51, 38);
+            this.comboServer.Name = "comboServer";
+            this.comboServer.Size = new System.Drawing.Size(121, 21);
+            this.comboServer.TabIndex = 1;
+            this.comboServer.SelectedIndexChanged += new System.EventHandler(this.comboServer_SelectedIndexChanged);
             // 
             // chkCheckAll
             // 
@@ -496,22 +515,14 @@
             this.imageList1.ImageSize = new System.Drawing.Size(16, 16);
             this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
             // 
-            // label11
+            // chkHasProvider
             // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(4, 41);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(41, 13);
-            this.label11.TabIndex = 0;
-            this.label11.Text = "Server:";
-            // 
-            // comboServer
-            // 
-            this.comboServer.Location = new System.Drawing.Point(51, 38);
-            this.comboServer.Name = "comboServer";
-            this.comboServer.Size = new System.Drawing.Size(121, 21);
-            this.comboServer.TabIndex = 1;
-            this.comboServer.SelectedIndexChanged += new System.EventHandler(this.comboServer_SelectedIndexChanged);
+            this.chkHasProvider.Location = new System.Drawing.Point(433, 220);
+            this.chkHasProvider.Name = "chkHasProvider";
+            this.chkHasProvider.Size = new System.Drawing.Size(90, 17);
+            this.chkHasProvider.TabIndex = 24;
+            this.chkHasProvider.Text = "Add Provider";
+            this.chkHasProvider.UseVisualStyleBackColor = true;
             // 
             // GenDpoForm
             // 
@@ -580,5 +591,6 @@
         private System.Windows.Forms.CheckBox chkPack;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.ComboBox comboServer;
+        private System.Windows.Forms.CheckBox chkHasProvider;
     }
 }

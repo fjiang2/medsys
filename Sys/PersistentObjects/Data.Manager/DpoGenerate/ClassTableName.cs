@@ -10,6 +10,7 @@ namespace Sys.Data.Manager
     {
         private Level level = Level.Fixed;
         private bool pack = true;
+        private bool hasProvider = true;
 
         public ClassTableName(DataProvider provider, string databaseName, string tableName)
             : base(provider, databaseName, tableName)
@@ -28,10 +29,16 @@ namespace Sys.Data.Manager
             get { return this.pack; }
         }
 
-        public void SetLevel(Level level, bool pack)
+        public bool HasProvider
+        {
+            get { return this.hasProvider; }
+        }
+
+        public void SetProperties(Level level, bool pack, bool hasProvider)
         {
             this.level = level;
             this.pack = pack;
+            this.hasProvider = hasProvider;
         }
 
         private static string Identifier(string s)
