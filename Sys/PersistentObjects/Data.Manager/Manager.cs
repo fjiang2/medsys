@@ -17,14 +17,18 @@ namespace Sys.Data.Manager
             this.assembly = assembly;
         }
 
+
         /// <summary>
         /// Create DPO classes from SQL SERVER
         /// </summary>
+        /// <param name="provider"></param>
         /// <param name="tableNames"></param>
         /// <param name="path"></param>
         /// <param name="nameSpace"></param>
         /// <param name="level"></param>
         /// <param name="isPack"></param>
+        /// <param name="hasProvider"></param>
+        /// <param name="dict"></param>
         public static void CreateClass(DataProvider provider, string[] tableNames, string path, string nameSpace, 
             Level level, bool isPack, bool hasProvider,
             Dictionary<TableName, Type> dict)
@@ -39,6 +43,8 @@ namespace Sys.Data.Manager
                 ctname.GenTableDpo(path, true, cname, true, dict);
             }
         }
+
+   
 
         /// <summary>
         /// Upgrade DPO classes from SQL SERVER

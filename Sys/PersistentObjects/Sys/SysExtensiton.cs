@@ -111,5 +111,17 @@ namespace Sys
             }
         }
 
+
+        public static void WriteFile(string fileName, string text)
+        {
+            string path = System.IO.Path.GetDirectoryName(fileName);
+            if (!System.IO.Directory.Exists(path))
+                System.IO.Directory.CreateDirectory(path);
+
+            System.IO.StreamWriter sw = new System.IO.StreamWriter(fileName);
+            sw.Write(text);
+            sw.Close();
+        }
+
     }
 }
