@@ -8,7 +8,9 @@ using Tie;
 namespace Sys.Data
 {
 
-
+    /// <summary>
+    /// represents a record in the table
+    /// </summary>
     public abstract class PersistentObject : PersistentValue, IDPObject, IValizable
     {
         public event DataRowChangeEventHandler AfterLoaded;
@@ -64,6 +66,10 @@ namespace Sys.Data
             UpdateObject(this.Identity.Keys[0].ColumnName() == identityId);
         }
 
+        /// <summary>
+        /// Instantiate an instant from select a record from database
+        /// </summary>
+        /// <param name="where"></param>
         public void UpdateObject(SqlExpr where)
         {
             DataRow row = SqlCmd.FillDataRow(this.TableName.Provider, new SqlClause().SELECT.COLUMNS().FROM(TableName).WHERE(where).Clause);

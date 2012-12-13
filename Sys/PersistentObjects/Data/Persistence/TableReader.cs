@@ -9,6 +9,9 @@ using Sys.Data.Manager;
 
 namespace Sys.Data
 {
+    /// <summary>
+    /// Read records from data base server into data table 
+    /// </summary>
     public class TableReader
     {
         private DataTable table;
@@ -23,22 +26,40 @@ namespace Sys.Data
         }
 
        
+        /// <summary>
+        /// read all records in the table defined
+        /// </summary>
+        /// <param name="tableName"></param>
         public TableReader(TableName tableName)
             : this(tableName, string.Format("SELECT * FROM {0}", tableName))
         {
         }
 
+        /// <summary>
+        /// read records by filiter
+        /// </summary>
+        /// <param name="tableName"></param>
+        /// <param name="where"></param>
+        /// <param name="args"></param>
         public TableReader(TableName tableName, string where, params object[] args)
             :this(tableName, string.Format("SELECT * FROM {0} WHERE {1}", tableName, string.Format(where, args)))
         {
         }
 
+        /// <summary>
+        /// read records by filter
+        /// </summary>
+        /// <param name="tableName"></param>
+        /// <param name="where"></param>
         public TableReader(TableName tableName, SqlExpr where)
             :this(tableName, new SqlClause().SELECT.COLUMNS().FROM(tableName).WHERE(where).Clause)
         { 
         
         }
     
+        /// <summary>
+        /// return data table retrieved from data base server
+        /// </summary>
         public DataTable Table
         {
             get
@@ -57,6 +78,10 @@ namespace Sys.Data
             return new DPList<T>(this).ToList();
         }
 
+        /// <summary>
+        /// returns SQL clause
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return this.sql;

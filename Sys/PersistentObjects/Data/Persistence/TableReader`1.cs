@@ -10,15 +10,26 @@ using Sys.Data.Manager;
 namespace Sys.Data
 {
   
+    /// <summary>
+    /// read records from database by DPO class
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class TableReader<T> where T : class,  IDPObject, new()
     {
         TableReader reader;
 
+        /// <summary>
+        /// read all records in the database
+        /// </summary>
         public TableReader()
         {
             this.reader = new TableReader(TableName);
         }
 
+        /// <summary>
+        /// read records by filter
+        /// </summary>
+        /// <param name="where"></param>
         public TableReader(SqlExpr where)
         {
             this.reader = new TableReader(TableName, new SqlClause().SELECT.COLUMNS().FROM(TableName).WHERE(where).Clause);
@@ -32,6 +43,9 @@ namespace Sys.Data
             }
         }
 
+        /// <summary>
+        /// return data table
+        /// </summary>
         public DataTable Table
         {
             get
@@ -59,6 +73,10 @@ namespace Sys.Data
         }
 
 
+        /// <summary>
+        /// returns the SQL clause
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return this.reader.ToString();
