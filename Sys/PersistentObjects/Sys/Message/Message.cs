@@ -5,9 +5,19 @@ using System.Text;
 
 namespace Sys
 {
+    /// <summary>
+    /// message description with message level
+    /// </summary>
     public class Message
     {
+        /// <summary>
+        /// message level
+        /// </summary>
         public readonly MessageLevel Level;
+
+        /// <summary>
+        /// message description
+        /// </summary>
         public readonly string Description;
 
         private int code;
@@ -19,44 +29,70 @@ namespace Sys
         private object sender;
 
 
-
+        /// <summary>
+        /// define new message
+        /// </summary>
+        /// <param name="level"></param>
+        /// <param name="description"></param>
         public Message(MessageLevel level, string description)
         {
             this.Level = level;
             this.Description = description;
         }
 
-
+        /// <summary>
+        /// has code in this message?
+        /// </summary>
+        /// <param name="code"></param>
+        /// <returns></returns>
         public Message HasCode(int code)
         {
             this.code = code;
             return this;
         }
         
+        /// <summary>
+        /// assign sender to message
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <returns></returns>
         public Message From(object sender)
         {
             this.sender = sender;
             return this;
         }
         
+        /// <summary>
+        /// assign location to message 
+        /// </summary>
+        /// <param name="location"></param>
+        /// <returns></returns>
         public Message At(MessageLocation location)
         {
             this.location = location;
             return this;
         }
 
-
+        /// <summary>
+        /// return message code
+        /// </summary>
         public int Code
         {
             get { return this.code; }
         }
 
       
+        /// <summary>
+        /// return message location
+        /// </summary>
         public MessageLocation Location
         {
             get { return this.location;}
         }
 
+        /// <summary>
+        /// message sender
+        /// </summary>
         public object Sender
         {
             get { return this.sender; }
@@ -95,11 +131,22 @@ namespace Sys
         
         #endregion
 
+        /// <summary>
+        /// emit error message
+        /// </summary>
+        /// <param name="description"></param>
+        /// <returns></returns>
         public static Message Error(string description)
         {
             return Error(0, description);
         }
 
+        /// <summary>
+        /// emit error message with code
+        /// </summary>
+        /// <param name="code"></param>
+        /// <param name="description"></param>
+        /// <returns></returns>
         public static Message Error(int code, string description)
         {
             Message message = new Message(MessageLevel.Error, description);
@@ -108,11 +155,22 @@ namespace Sys
         }
 
 
+        /// <summary>
+        /// emit warning message
+        /// </summary>
+        /// <param name="description"></param>
+        /// <returns></returns>
         public static Message Warning(string description)
         {
             return Warning(0, description);
         }
 
+        /// <summary>
+        /// emit warning message with code
+        /// </summary>
+        /// <param name="code"></param>
+        /// <param name="description"></param>
+        /// <returns></returns>
         public static Message Warning(int code, string description)
         {
             Message message = new Message(MessageLevel.Warning, description);
@@ -120,12 +178,23 @@ namespace Sys
             return message;
         }
 
+        /// <summary>
+        /// emit information message
+        /// </summary>
+        /// <param name="description"></param>
+        /// <returns></returns>
         public static Message Information(string description)
         {
             return Information(0, description);
         }
 
 
+        /// <summary>
+        /// emit information message with code
+        /// </summary>
+        /// <param name="code"></param>
+        /// <param name="description"></param>
+        /// <returns></returns>
         public static Message Information(int code, string description)
         {
             Message message = new Message(MessageLevel.Information, description);

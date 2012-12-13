@@ -5,6 +5,10 @@ using System.Text;
 
 namespace Sys
 {
+    /// <summary>
+    /// represents tree node in the class Tree
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class TreeNode<T> where T : class
     {
         private T item;
@@ -12,6 +16,10 @@ namespace Sys
         private int index;
         private TreeNodeCollection<T> nodes;
 
+        /// <summary>
+        /// create tree node from value item
+        /// </summary>
+        /// <param name="item"></param>
         public TreeNode(T item)
         {
             this.item = item;
@@ -40,6 +48,10 @@ namespace Sys
             internal set { this.parent = value; }
         }
 
+
+        /// <summary>
+        /// Gets the sibling of this node
+        /// </summary>
         public TreeNode<T>[] Sibling
         {
             get
@@ -160,23 +172,37 @@ namespace Sys
             }
         }
 
+        /// <summary>
+        /// Remove the current node from tree
+        /// </summary>
         public void Remove()
         {
             this.parent.Nodes.Remove(this);
         }
 
 
+        /// <summary>
+        /// returns the value item
+        /// </summary>
         public T Item
         {
             get { return this.item; }
             set { this.item = value; }
         }
 
+        /// <summary>
+        /// returns children nodes in array
+        /// </summary>
+        /// <returns></returns>
         public T[] ToArray()
         {
             return AsEnumerable().Select(node => node.Item).ToArray();
         }
 
+        /// <summary>
+        /// returns children nodes in enumerable
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<TreeNode<T>> AsEnumerable()
         {
             List<TreeNode<T>> list = new List<TreeNode<T>>();
@@ -195,6 +221,10 @@ namespace Sys
         }
 
 
+        /// <summary>
+        /// returns the description of node
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return string.Format("TreeNode<{0}>(Item={1}, Count={2})", typeof(T).Name, this.item, this.nodes.Count);
