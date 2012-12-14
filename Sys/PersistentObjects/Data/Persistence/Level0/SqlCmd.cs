@@ -256,13 +256,6 @@ namespace Sys.Data
             return cmd.ExecuteScalar();
         }
 
-       
-        public static int ExecuteNonQuery(string script, params object[] args)
-        {
-            SqlCmd cmd = new SqlCmd(string.Format(script, args));
-            return cmd.ExecuteNonQuery();
-        }
-
       
         public static DataTable FillDataTable(string script, params object[] args)
         {
@@ -270,14 +263,12 @@ namespace Sys.Data
             return cmd.FillDataTable();
         }
 
-        
 
-        public static DataRow FillDataRow(string script, params object[] args)
+        public static int ExecuteNonQuery(DataProvider provider, string script, params object[] args)
         {
-            SqlCmd cmd = new SqlCmd(string.Format(script, args));
-            return cmd.FillDataRow();
+            SqlCmd cmd = new SqlCmd(provider, string.Format(script, args));
+            return cmd.ExecuteNonQuery();
         }
-
 
 
         public static DataTable FillDataTable(DataProvider provider, string script, params object[] args)

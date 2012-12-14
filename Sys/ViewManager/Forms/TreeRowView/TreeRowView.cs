@@ -147,14 +147,14 @@ namespace Sys.ViewManager.Forms
             return (string)dataRow[DisplayField];
         }
 
-        public void SaveOrderBy(string tableName)
+        public void SaveOrderBy(TableName tableName)
         {
             foreach (DataRow row in dataTable.Rows)
             {
                 string SQL = string.Format("UPDATE @TableName SET {0} = {1} WHERE {2} = {3}", OrderByField, row[OrderByField], IdField, row[IdField])
-                    .Replace("@TableName", tableName);
+                    .Replace("@TableName", tableName.FullName);
                 
-                SqlCmd.ExecuteNonQuery(SQL);
+                SqlCmd.ExecuteNonQuery(tableName.Provider, SQL);
                 
             }
         }

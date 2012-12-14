@@ -40,7 +40,7 @@ namespace Sys.Data.Manager
             if (ConstraintExists(table, name))
                 throw new JException("Primary key {0} already exists", name);
 
-            SqlCmd.ExecuteNonQuery("ALTER TABLE {0} ADD CONSTRAINT {1} PRIMARY KEY ({2}) ", table, name, string.Join(",", columns));
+            SqlCmd.ExecuteNonQuery(table.Provider, "ALTER TABLE {0} ADD CONSTRAINT {1} PRIMARY KEY ({2}) ", table, name, string.Join(",", columns));
         }
 
         public void RemoveForeignKey(TableName table, string name)
@@ -52,7 +52,7 @@ namespace Sys.Data.Manager
 		{
 			if (TableExists(table) && ConstraintExists(table, name))
 			{
-				SqlCmd.ExecuteNonQuery("ALTER TABLE {0} DROP CONSTRAINT {1}", table, name);
+				SqlCmd.ExecuteNonQuery(table.Provider, "ALTER TABLE {0} DROP CONSTRAINT {1}", table, name);
 			}
 		}
 
@@ -60,7 +60,7 @@ namespace Sys.Data.Manager
         public void RemoveTable(TableName name)
 		{
 			if (TableExists(name))
-                SqlCmd.ExecuteNonQuery("DROP TABLE {0}", name);
+                SqlCmd.ExecuteNonQuery(name.Provider, "DROP TABLE {0}", name);
 		}
 
         public void RenameTable(TableName oldName, TableName newName)
@@ -69,7 +69,7 @@ namespace Sys.Data.Manager
 				throw new JException("Table with name '{0}' already exists", newName);
 
 			if (TableExists(oldName))
-                SqlCmd.ExecuteNonQuery("ALTER TABLE {0} RENAME TO {1}", oldName, newName);
+                SqlCmd.ExecuteNonQuery(newName.Provider, "ALTER TABLE {0} RENAME TO {1}", oldName, newName);
 		}
 
 
@@ -90,7 +90,7 @@ namespace Sys.Data.Manager
             if (ColumnExists(table, column))
                 throw new JException("Column {0}.{1} already exists", table, column);
 
-            SqlCmd.ExecuteNonQuery("ALTER TABLE {0} ADD {1} {2} NULL", table, column, type);
+            SqlCmd.ExecuteNonQuery(table.Provider, "ALTER TABLE {0} ADD {1} {2} NULL", table, column, type);
         }
 
 
@@ -100,7 +100,7 @@ namespace Sys.Data.Manager
                 throw new JException("Table '{0}' has column named '{1}' already", tableName, newColumnName);
 
 			if (ColumnExists(tableName, oldColumnName))
-                SqlCmd.ExecuteNonQuery("ALTER TABLE {0} RENAME COLUMN {1} TO {2}", tableName, oldColumnName, newColumnName);
+                SqlCmd.ExecuteNonQuery(tableName.Provider, "ALTER TABLE {0} RENAME COLUMN {1} TO {2}", tableName, oldColumnName, newColumnName);
 		}
 
         public void RemoveColumn(TableName table, string column)
@@ -108,7 +108,7 @@ namespace Sys.Data.Manager
 			if (ColumnExists(table, column))
 			{
                 DeleteColumnConstraints(table, column);
-                SqlCmd.ExecuteNonQuery("ALTER TABLE {0} DROP COLUMN {1} ", table, column);
+                SqlCmd.ExecuteNonQuery(table.Provider, "ALTER TABLE {0} DROP COLUMN {1} ", table, column);
 			}
 		}
      
@@ -117,7 +117,7 @@ namespace Sys.Data.Manager
             if (!ColumnExists(table, sqlColumn))
                 throw new JException("Column {0}.{1} does not exist", table, sqlColumn);
 
-            SqlCmd.ExecuteNonQuery("ALTER TABLE {0} ALTER COLUMN {1}", table, sqlColumn);
+            SqlCmd.ExecuteNonQuery(table.Provider, "ALTER TABLE {0} ALTER COLUMN {1}", table, sqlColumn);
 		}
 
         #endregion
@@ -130,7 +130,7 @@ namespace Sys.Data.Manager
 			if (ConstraintExists(table, name))
 				throw new JException("Constraint {0} already exists", name);
 				
-            SqlCmd.ExecuteNonQuery("ALTER TABLE {0} ADD CONSTRAINT {1} UNIQUE({2}) ", table, name, string.Join(", ", columns));
+            SqlCmd.ExecuteNonQuery(table.Provider, "ALTER TABLE {0} ADD CONSTRAINT {1} UNIQUE({2}) ", table, name, string.Join(", ", columns));
 		}
 
         public void AddCheckConstraint(string name, TableName table, string checkSql)
@@ -138,7 +138,7 @@ namespace Sys.Data.Manager
 			if (ConstraintExists(table, name))
                 throw new JException("Constraint {0} already exists", name);
 
-            SqlCmd.ExecuteNonQuery("ALTER TABLE {0} ADD CONSTRAINT {1} CHECK ({2}) ", table, name, checkSql);
+            SqlCmd.ExecuteNonQuery(table.Provider, "ALTER TABLE {0} ADD CONSTRAINT {1} CHECK ({2}) ", table, name, checkSql);
 		}
 
 
@@ -150,7 +150,7 @@ namespace Sys.Data.Manager
 
         public bool ConstraintExists(TableName table, string name)
         {
-            return SqlCmd.FillDataRow("SELECT TOP 1 * FROM sysobjects WHERE id = object_id('{0}')", name) != null;
+            return SqlCmd.FillDataRow(table.Provider, "SELECT TOP 1 * FROM sysobjects WHERE id = object_id('{0}')", name) != null;
         }
 
 

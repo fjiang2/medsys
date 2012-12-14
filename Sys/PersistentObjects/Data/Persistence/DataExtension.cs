@@ -222,7 +222,7 @@ namespace Sys.Data
         public static void SqlDelete(this TableName tableName, string where, params object[] args)
         {
             string sql = string.Format("DELETE FROM {0} WHERE {1}", tableName, string.Format(where, args));
-            SqlCmd.ExecuteNonQuery(sql);
+            SqlCmd.ExecuteNonQuery(tableName.Provider, sql);
         }
 
         internal static object Convert(object obj, Type type)
