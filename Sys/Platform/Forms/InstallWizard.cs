@@ -127,15 +127,16 @@ namespace Sys.Platform.Forms
 
         private void btnNewDatabase_Click(object sender, EventArgs e)
         {
-            string databaseName = "medsys";
-            if (InputTool.InputBox("Input ", "Database name:", "????????????", ref databaseName) == System.Windows.Forms.DialogResult.OK)
+            string text = "medsys";
+            if (InputTool.InputBox("Input ", "Database name:", "????????????", ref text) == System.Windows.Forms.DialogResult.OK)
             {
                 try
                 {
-                    databaseName = databaseName.Trim();
+                    text = text.Trim();
+                    DatabaseName databaseName = new DatabaseName(DataProviderManager.DefaultProvider, text);
                     databaseName.CreateDatabase();
                     MessageBox.Show("Database created", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    sqlServerControl1.RefreshDatabaseList(databaseName);
+                    sqlServerControl1.RefreshDatabaseList(databaseName.Name);
 
                     //automatically connect to new database
                     btnConnectServer_Click(this.btnConnectServer, new EventArgs());

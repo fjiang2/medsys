@@ -38,9 +38,9 @@ namespace Sys.Data
             }
         }
 
-        public static void CreateDatabase(this string databaseName)
+        public static void CreateDatabase(this DatabaseName databaseName)
         {
-            SqlCmd.ExecuteNonQuery("CREATE DATABASE {0}", databaseName);
+            SqlCmd.ExecuteNonQuery(databaseName.Provider, "CREATE DATABASE {0}", databaseName.Name);
         }
 
         public static bool TableExists(this TableName tname)

@@ -25,8 +25,9 @@ namespace Sys.Messaging.DpoClass
         
         public string LatestChat()
         {
-            DataRow dataRow = SqlCmd.FillDataRow(@"
-                                SELECT * FROM {0}
+            DataRow dataRow = SqlCmd.FillDataRow(
+                                this.TableName.Provider,
+                                @"SELECT * FROM {0}
                                 WHERE  User_Name='{1}' 
                                     AND Friend_Name ='{2}' 
 	                                AND End_Time = 

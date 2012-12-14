@@ -194,11 +194,19 @@ namespace Sys.Data
             return DataProvider.DefaultProvider;
         }
 
-        public static DataProviderConnection DefaultProvider
+        public static DataProviderConnection DefaultConnection
         {
             get
             {
                 return Instance.GetConnection(DataProvider.DefaultProvider);
+            }
+        }
+
+        public static DataProvider DefaultProvider
+        {
+            get
+            {
+                return DataProvider.DefaultProvider;
             }
         }
 

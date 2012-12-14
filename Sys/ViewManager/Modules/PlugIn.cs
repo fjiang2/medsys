@@ -120,8 +120,9 @@ namespace Sys.ViewManager.Modules
                 .Replace("@Permissions", Sys.ViewManager.DpoClass.FormPermissionDpo.TABLE_NAME)
                 .Replace("@UserMenus", Sys.ViewManager.DpoClass.UserMenuDpo.TABLE_NAME)
                 .Replace("@Assemblies", AssemblyDpo.TABLE_NAME);
-             
-            SqlCmd.ExecuteNonQuery(SQL, assemblyName, L);
+
+            DataProvider provider = typeof(Sys.ViewManager.DpoClass.ItemPermissionDpo).TableName().Provider;
+            SqlCmd.ExecuteNonQuery(provider, SQL, assemblyName, L);
             return true;
         }
 

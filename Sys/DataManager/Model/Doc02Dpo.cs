@@ -44,7 +44,8 @@ namespace Sys.DataManager
     
         public static Doc02Dpo GetLatestVersion(Doc01Dpo document)
         {
-            DataRow dataRow = SqlCmd.FillDataRow("SELECT TOP 1 * FROM {0} WHERE Doc_Id={1} ORDER BY Version DESC", Doc02Dpo.TABLE_NAME, document.ID);
+            DataRow dataRow = SqlCmd.FillDataRow(document.TableName.Provider, 
+                "SELECT TOP 1 * FROM {0} WHERE Doc_Id={1} ORDER BY Version DESC", Doc02Dpo.TABLE_NAME, document.ID);
             
             if(dataRow != null)
                 return  new Doc02Dpo(dataRow);

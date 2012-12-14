@@ -717,7 +717,7 @@ namespace Sys.Data
                 return false;
 
             string SQL = string.Format("USE [{0}];", TableName.DatabaseName.Name) + string.Format(this.CreateTableString, TableName.Name);
-            SqlCmd.ExecuteNonQuery(SQL);
+            SqlCmd.ExecuteNonQuery(this.TableName.Provider, SQL);
 
             return true;
         }
