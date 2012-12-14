@@ -48,7 +48,10 @@ namespace Sys.Platform.Forms
             this.gridControl1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.gridControl1_MouseClick);
 
             currentRoleID = roleID;
-            this.lblCurrentRole.Text = (string)SqlCmd.ExecuteScalar("SELECT Role_Name FROM {0} WHERE Role_ID={1}", RoleDpo.TABLE_NAME, roleID); 
+            TableName tableName = typeof(RoleDpo).TableName();
+            this.lblCurrentRole.Text = (string)SqlCmd.ExecuteScalar(
+                tableName.Provider,
+                "SELECT Role_Name FROM {0} WHERE Role_ID={1}", tableName.FullName, roleID); 
         }
         
         private void SecuritySetting_Load(object sender, EventArgs e)
@@ -397,9 +400,10 @@ namespace Sys.Platform.Forms
 
         private void toolStripButtonClean_Click(object sender, EventArgs e)
         {
+            TableName t1 = typeof(Sys.ViewManager.DpoClass.FormPermissionDpo).TableName();
+            TableName t2 = typeof(RoleDpo).TableName();
 
-            SqlCmd.ExecuteScalar("DELETE FROM {0} WHERE Role_ID NOT IN (SELECT Role_ID FROM {1})", Sys.ViewManager.DpoClass.FormPermissionDpo.TABLE_NAME, RoleDpo.TABLE_NAME);
-            SqlCmd.ExecuteScalar("DELETE FROM {0} WHERE Role_ID NOT IN (SELECT Role_ID FROM {1})", Sys.ViewManager.DpoClass.ItemPermissionDpo.TABLE_NAME, RoleDpo.TABLE_NAME);
+            SqlCmd.ExecuteScalar(t1.Provider, "DELETE FROM {0} WHERE Role_ID NOT IN (SELECT Role_ID FROM {1})", t1.FullName, t2.FullName);
             this.InformationMessage ="Role definition is cleaned.";
         }
 

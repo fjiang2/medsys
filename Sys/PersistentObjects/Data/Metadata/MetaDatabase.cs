@@ -59,19 +59,16 @@ namespace Sys.Data
         }
 
 
-        public static string CurrentDatabaseName
+        public static string CurrentDatabaseName(DataProvider provider)
         {
-            get
-            {
-                return (string)SqlCmd.ExecuteScalar("SELECT DB_NAME()");
-            }
+            return (string)SqlCmd.ExecuteScalar(provider, "SELECT DB_NAME()");
         }
 
         public static DateTime ServerTime
         {
             get
             {
-                return (DateTime)SqlCmd.ExecuteScalar("SELECT GETDATE()");
+                return (DateTime)SqlCmd.ExecuteScalar(DataProviderManager.DefaultProvider,  "SELECT GETDATE()");
             }
         }
 
