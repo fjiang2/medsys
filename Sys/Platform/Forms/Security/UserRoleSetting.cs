@@ -175,7 +175,10 @@ namespace Sys.Platform.Forms
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            int userID = (int)SqlCmd.ExecuteScalar("SELECT User_ID FROM {0} WHERE User_Name='{1}'", UserDpo.TABLE_NAME, currentUserName);
+            TableName tableName = typeof(UserDpo).TableName();
+            int userID = (int)SqlCmd.ExecuteScalar(
+                tableName.Provider,
+                "SELECT User_ID FROM {0} WHERE User_Name='{1}'", tableName.FullName, currentUserName);
 
             foreach (ListViewItem item in lvUserRoles.Items)
             {
@@ -203,7 +206,11 @@ namespace Sys.Platform.Forms
                 x += r.ToString();
             }
             if (x != "")
-                SqlCmd.ExecuteScalar("DELETE FROM {0} WHERE User_ID={1} AND Role_ID IN ({2})", UserRoleDpo.TABLE_NAME, userID, x);
+            {
+                TableName tableName2 = typeof(UserRoleDpo).TableName();
+                SqlCmd.ExecuteScalar(tableName.Provider,
+                    "DELETE FROM {0} WHERE User_ID={1} AND Role_ID IN ({2})", tableName2.FullName, userID, x);
+            }
 
             MessageBox.Show("Role changes are saved.");
             

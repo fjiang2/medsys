@@ -69,7 +69,7 @@ namespace Sys.DataManager
 
         public void DeleteDocument()
         {
-            string tableName = Doc02Dpo.TABLE_NAME;
+            TableName tableName = typeof(Doc02Dpo).TableName();
             DataTable dt = new TableReader<Doc02Dpo>(Doc02Dpo._Doc_Id.ColumnName() == this.ID).Table;
 
             foreach (DataRow row in dt.Rows)
@@ -79,7 +79,9 @@ namespace Sys.DataManager
                 man.Delete();
             }
 
-            SqlCmd.ExecuteScalar("DELETE FROM {0} WHERE Doc_Id={1}", tableName, this.ID);
+            SqlCmd.ExecuteScalar(
+                tableName.Provider,
+                "DELETE FROM {0} WHERE Doc_Id={1}", tableName, this.ID);
 
             this.Delete();
         }

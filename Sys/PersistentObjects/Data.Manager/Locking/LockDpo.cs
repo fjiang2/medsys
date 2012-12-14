@@ -104,7 +104,9 @@ namespace Sys.Data.Manager
             if (Locked)
                 return;
             
-            SqlCmd.ExecuteScalar("UPDATE {0} SET {1} = getdate() WHERE {2} = {3}", TableName, _Last_Access_Time,  _ID, this.ID);
+            SqlCmd.ExecuteScalar(
+                TableName.Provider,
+                "UPDATE {0} SET {1} = getdate() WHERE {2} = {3}", TableName, _Last_Access_Time,  _ID, this.ID);
         }
 
         public override string ToString()

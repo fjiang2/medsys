@@ -250,12 +250,7 @@ namespace Sys.Data
 
 
         //--------------------------------------------------------------------------------------
-        public static object ExecuteScalar(string script, params object[] args)
-        {
-            SqlCmd cmd = new SqlCmd(string.Format(script, args));
-            return cmd.ExecuteScalar();
-        }
-
+     
       
         public static DataTable FillDataTable(string script, params object[] args)
         {
@@ -263,6 +258,11 @@ namespace Sys.Data
             return cmd.FillDataTable();
         }
 
+        public static object ExecuteScalar(DataProvider provider, string script, params object[] args)
+        {
+            SqlCmd cmd = new SqlCmd(provider, string.Format(script, args));
+            return cmd.ExecuteScalar();
+        }
 
         public static int ExecuteNonQuery(DataProvider provider, string script, params object[] args)
         {
