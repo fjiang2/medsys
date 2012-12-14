@@ -71,6 +71,7 @@ namespace Sys.Security
 
         public static DataTable UserRoles(string userName)
         {
+            TableName tableName = typeof(UserDpo).TableName();
             string SQL = @"
                 SELECT U.User_ID, User_Name, First_Name, Last_Name, R.Role_ID, Role_Name 
                   FROM {0} U 
@@ -79,7 +80,9 @@ namespace Sys.Security
                 WHERE User_Name = '{3}' 
             ";
 
-            return SqlCmd.FillDataTable(SQL,
+            return SqlCmd.FillDataTable(
+                tableName.Provider,
+                SQL,
                 UserDpo.TABLE_NAME,
                 UserRoleDpo.TABLE_NAME,
                 RoleDpo.TABLE_NAME,

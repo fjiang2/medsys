@@ -44,7 +44,10 @@ namespace Sys.Platform.DataImporter
 
         private void btnTemplateLookUp_Click(object sender, EventArgs e)
         {
-            LookUp lookUp = new LookUp("Select template", SqlCmd.FillDataTable("SELECT ID, Label, Description FROM {0}", DataImportDpo.TABLE_NAME));
+            TableName tableName = typeof(DataImportDpo).TableName();
+
+            LookUp lookUp = new LookUp("Select template", 
+                SqlCmd.FillDataTable(tableName.Provider, "SELECT ID, Label, Description FROM {0}", tableName.FullName));
             DataRow dataRow = lookUp.PopUp(this);
             if (dataRow == null)
                 return;

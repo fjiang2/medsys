@@ -48,7 +48,8 @@ namespace Sys.BusinessRules
                     {3} 
                 ";
 
-            DataTable dt = SqlCmd.FillDataTable(SQL, RuleDpo.TABLE_NAME, workflowName, andStateName, andException);
+            TableName tableName = typeof(RuleDpo).TableName();
+            DataTable dt = SqlCmd.FillDataTable(tableName.Provider, SQL, tableName.FullName, workflowName, andStateName, andException);
 
 
             foreach (DataRow row in dt.Rows)

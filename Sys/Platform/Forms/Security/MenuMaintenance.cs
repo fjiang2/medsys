@@ -124,7 +124,7 @@ namespace Sys.Platform.Forms
 
 
             List<ITreeDpoNode> list = new List<ITreeDpoNode>();
-            foreach (DataRow dataRow in SqlCmd.FillDataTable(SQL).Rows)
+            foreach (DataRow dataRow in SqlCmd.FillDataTable <UserMenuDpo>(SQL).Rows)
             {
                 ITreeDpoNode dpo = new UserMenuItem(dataRow);
                 list.Add(dpo);
@@ -262,7 +262,7 @@ namespace Sys.Platform.Forms
             string SQL = "SELECT ID, Label, Command FROM @UserMenus"
                 .Replace("@UserMenus", Sys.ViewManager.DpoClass.UserMenuDpo.TABLE_NAME);
 
-            LookUp lookup = new LookUp("Select Menu Item", SqlCmd.FillDataTable(SQL));
+            LookUp lookup = new LookUp("Select Menu Item", SqlCmd.FillDataTable<Sys.ViewManager.DpoClass.UserMenuDpo>(SQL));
             DataRow dataRow = lookup.PopUp(this);
             if (dataRow == null)
                 return;

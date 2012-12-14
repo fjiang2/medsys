@@ -39,22 +39,7 @@ namespace Sys.ViewManager.Forms
         }
 
 
-        public string SqlSelectCommand
-        {
-            set
-            {
-                this.dataTable = SqlCmd.FillDataTable(value);
-                foreach (DataRow dataRow in this.dataTable.Rows)
-                {
-                    JDataRowItem item = new JDataRowItem(dataRow, valueField, displayField);
-                    this.Items.Add(item);
-                }
-
-            }
-        }
-
-       
-
+    
         public DataTable DataTable
         {
             set

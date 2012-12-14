@@ -182,7 +182,8 @@ namespace Sys.Workflow.Collaborative.Forms
                        .Replace("@RecordLocks", RecordLockDpo.TABLE_NAME);
 
 
-            this.taskTable = SqlCmd.FillDataTable(SQL, 
+            this.taskTable = SqlCmd.FillDataTable<TaskDpo>(
+                SQL, 
                 nodeTy, new TaskDpo().TableId, nodeChildID,
                 wfTaskDpo.TABLE_NAME
                 );
@@ -513,7 +514,7 @@ FROM {0} T
      INNER JOIN {3} S ON S.Workflow_Name = W.Name AND S.Name = T.State_Name AND (S.Ty & {4} = {4})
 WHERE Status= {5} OR Status= {6}
 ";
-            DataTable tasks = SqlCmd.FillDataTable(SQL,
+            DataTable tasks = SqlCmd.FillDataTable<wfTaskDpo>(SQL,
                 wfTaskDpo.TABLE_NAME,
                 wfWorkflowInstanceDpo.TABLE_NAME,
                 wfWorkflowDpo.TABLE_NAME,

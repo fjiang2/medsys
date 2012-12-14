@@ -210,7 +210,7 @@ namespace Sys.SmartList.Forms
 
             treeView1.ImageList = CommandTree.ImageList;
 
-            this.dtSmartList = SqlCmd.FillDataTable(selectCommand, (int)SecurityType.SmartList, collector.UserID);
+            this.dtSmartList = SqlCmd.FillDataTable<CommandDpo>(selectCommand, (int)SecurityType.SmartList, collector.UserID);
             List<ITreeDpoNode> list = new List<ITreeDpoNode>();
             foreach (DataRow dataRow in dtSmartList.Rows)
             {

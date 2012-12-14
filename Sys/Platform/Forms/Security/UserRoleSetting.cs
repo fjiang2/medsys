@@ -63,7 +63,7 @@ namespace Sys.Platform.Forms
             lvUsers.Columns.Add("Last Name", 80, HorizontalAlignment.Left);
             lvUsers.Columns.Add("Class", 80, HorizontalAlignment.Left);
 
-            DataTable dt = SqlCmd.FillDataTable(
+            DataTable dt = SqlCmd.FillDataTable<UserDpo>(
                 "SELECT User_Name, First_Name, Last_Name, Group_Name FROM {0} WHERE Inactive = 0 AND User_ID <> {1}",
                 UserDpo.TABLE_NAME,
                 (int)PredefinedRole.devel);

@@ -119,8 +119,11 @@ namespace Sys.Security
 
         private void GetRoles(List<int> roles)
         {
+            TableName tableName = typeof(UserRole).TableName();
+
             DataTable dt = SqlCmd.FillDataTable(
-                string.Format("SELECT Role_ID FROM {0} WHERE User_ID={1}", UserRole.TABLE_NAME, this.User_ID));
+                tableName.Provider,
+                string.Format("SELECT Role_ID FROM {0} WHERE User_ID={1}", tableName.FullName, this.User_ID));
 
             foreach (DataRow row in dt.Rows)
             {

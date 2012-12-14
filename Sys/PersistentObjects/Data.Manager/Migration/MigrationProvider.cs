@@ -164,7 +164,7 @@ namespace Sys.Data.Manager
                 table, column);
 
             List<string> constraints = new List<string>();
-            DataTable dt = SqlCmd.FillDataTable(SQL);
+            DataTable dt = SqlCmd.FillDataTable(table.Provider, SQL);
             foreach (DataRow row in dt.Rows)
             {
                 RemoveForeignKey(table, (string)row[0]);

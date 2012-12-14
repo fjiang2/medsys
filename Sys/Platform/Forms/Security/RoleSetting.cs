@@ -65,12 +65,12 @@ namespace Sys.Platform.Forms
             
             
             string SQL = @"SELECT ID, ParentID, Label FROM {0} WHERE Ty=0 AND Controlled=1 ORDER BY orderBy";
-            DataTable definition = SqlCmd.FillDataTable(SQL, Sys.ViewManager.DpoClass.UserMenuDpo.TABLE_NAME);
+            DataTable definition = SqlCmd.FillDataTable<Sys.ViewManager.DpoClass.UserMenuDpo>(SQL, Sys.ViewManager.DpoClass.UserMenuDpo.TABLE_NAME);
             HookTree hook = new HookTree(treeView1, "MENU", definition, SecurityType.MenuItem);
             hooks.Add(hook);
 
             SQL = @"SELECT ID, ParentID, Label FROM {0} WHERE ParentID IS NOT NULL AND Access_Level <> {1}";
-            definition = SqlCmd.FillDataTable(SQL, Sys.SmartList.DpoClass.CommandDpo.TABLE_NAME, (int)SecurityLevel.PrivateAccess);
+            definition = SqlCmd.FillDataTable<Sys.SmartList.DpoClass.CommandDpo>(SQL, Sys.SmartList.DpoClass.CommandDpo.TABLE_NAME, (int)SecurityLevel.PrivateAccess);
             hook = new HookTree(treeView1, "SMART LIST", definition, SecurityType.SmartList);
             hooks.Add(hook);
 
@@ -85,7 +85,7 @@ namespace Sys.Platform.Forms
                 INNER JOIN {0} W ON W.Name = S.Workflow_Name AND W.Released = 1
                 ORDER BY ParentID, ID
             ";
-            definition = SqlCmd.FillDataTable(SQL,
+            definition = SqlCmd.FillDataTable<Sys.Workflow.DpoClass.wfWorkflowDpo>(SQL,
                 Sys.Workflow.DpoClass.wfWorkflowDpo.TABLE_NAME,
                 Sys.Workflow.DpoClass.wfStateDpo.TABLE_NAME
                 );

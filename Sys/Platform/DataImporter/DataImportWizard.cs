@@ -37,10 +37,14 @@ namespace Sys.Platform.DataImporter
   
         private void btnTemplateLookUp_Click(object sender, EventArgs e)
         {
+            TableName tableName = typeof(Sys.ViewManager.DpoClass.DataImportDpo).TableName();
+
             LookUp lookUp = new LookUp(
                 "Select import template",
-                SqlCmd.FillDataTable("SELECT ID, Label, Description FROM @DataImports"
-                    .Replace("@DataImports", Sys.ViewManager.DpoClass.DataImportDpo.TABLE_NAME)
+                SqlCmd.FillDataTable(
+                    tableName.Provider,
+                    "SELECT ID, Label, Description FROM @DataImports"
+                    .Replace("@DataImports", tableName.FullName)
                     )
                     );
 
@@ -231,7 +235,7 @@ namespace Sys.Platform.DataImporter
         private void btnRetrieveDataSource_Click(object sender, EventArgs e)
         {
             if (this.tbDataSource.Text != "")
-                gridControl1.DataSource = SqlCmd.FillDataTable(this.tbDataSource.Text);
+                gridControl1.DataSource = SqlCmd.FillDataTable<DataImportDpo>(this.tbDataSource.Text);
         }
 
         private void tbClassName_Validating(object sender, CancelEventArgs e)
