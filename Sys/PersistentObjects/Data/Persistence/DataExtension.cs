@@ -27,67 +27,6 @@ namespace Sys.Data
     {
         #region SqlCmd
 
-        public static object ExecuteScalar(this string script)
-        {
-            SqlCmd cmd = new SqlCmd(script);
-            return cmd.ExecuteScalar();
-        }
-
-        public static int ExecuteNonQuery(this string script)
-        {
-            SqlCmd cmd = new SqlCmd(script);
-            return cmd.ExecuteNonQuery();
-        }
-
-        public static DataSet FillDataSet(this string script)
-        {
-            SqlCmd cmd = new SqlCmd(script);
-            return cmd.FillDataSet();
-        }
-
-        public static DataTable FillDataTable(this string script)
-        {
-            SqlCmd cmd = new SqlCmd(script);
-            return cmd.FillDataTable();
-        }
-
-        public static DataTable FillDataTable(this string script, DataSet ds, string tableName)
-        {
-            SqlCmd cmd = new SqlCmd(script);
-            return cmd.FillDataTable(ds, tableName);
-        }
-
-        public static DataTable FillDataTable(this string script, DataTable dataTable)
-        {
-            SqlCmd cmd = new SqlCmd(script);
-            return cmd.FillDataTable(dataTable);
-        }
-
-        public static DataRow FillDataRow(this string script)
-        {
-            SqlCmd cmd = new SqlCmd(script);
-            return cmd.FillDataRow();
-        }
-
-
-        public static DataTable ReadDataTable(this string script)
-        {
-            SqlCmd cmd = new SqlCmd(script);
-            return cmd.ReadDataTable();
-        }
-
-        public static object ExecuteScalar(this ISqlClause sql)
-        {
-            SqlCmd cmd = new SqlCmd(sql.Clause);
-            return cmd.ExecuteScalar();
-        }
-
-        public static int ExecuteNonQuery(this ISqlClause sql)
-        {
-            SqlCmd cmd = new SqlCmd(sql.Clause);
-            return cmd.ExecuteNonQuery();
-        }
-
         public static DataSet FillDataSet(this ISqlClause sql)
         {
             SqlCmd cmd = new SqlCmd(sql.Clause);
@@ -100,23 +39,7 @@ namespace Sys.Data
             return cmd.FillDataTable();
         }
 
-        public static DataTable FillDataTable(this ISqlClause sql, DataSet ds, string tableName)
-        {
-            SqlCmd cmd = new SqlCmd(sql.Clause);
-            return cmd.FillDataTable(ds, tableName);
-        }
 
-        public static DataTable FillDataTable(this ISqlClause sql, DataTable dataTable)
-        {
-            SqlCmd cmd = new SqlCmd(sql.Clause);
-            return cmd.FillDataTable(dataTable);
-        }
-
-        public static DataRow FillDataRow(this ISqlClause sql)
-        {
-            SqlCmd cmd = new SqlCmd(sql.Clause);
-            return cmd.FillDataRow();
-        }
 
         #endregion
 

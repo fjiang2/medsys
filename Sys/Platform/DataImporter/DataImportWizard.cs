@@ -38,10 +38,10 @@ namespace Sys.Platform.DataImporter
         private void btnTemplateLookUp_Click(object sender, EventArgs e)
         {
             LookUp lookUp = new LookUp(
-                "Select import template", 
-                "SELECT ID, Label, Description FROM @DataImports"
+                "Select import template",
+                SqlCmd.FillDataTable("SELECT ID, Label, Description FROM @DataImports"
                     .Replace("@DataImports", Sys.ViewManager.DpoClass.DataImportDpo.TABLE_NAME)
-                    .FillDataTable()
+                    )
                     );
 
             DataRow dataRow = lookUp.PopUp(this);
