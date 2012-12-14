@@ -9,6 +9,10 @@ using Sys;
 
 namespace Sys.Data.Manager
 {
+    
+    /// <summary>
+    /// represents Enum Type generated from database
+    /// </summary>
     public class EnumType
     {
         List<EnumField> fields;
@@ -25,7 +29,7 @@ namespace Sys.Data.Manager
         }
 
         /// <summary>
-        /// Used for creating new EnumType
+        /// Used to build new EnumType
         /// </summary>
         /// <param name="name"></param>
         public EnumType(string name)
@@ -34,6 +38,10 @@ namespace Sys.Data.Manager
             this.fields = new List<EnumField>();
         }
 
+        /// <summary>
+        /// Retrieve Field Attributes by reflection
+        /// </summary>
+        /// <param name="type"></param>
         public EnumType(Type type)
         {
             this.name = type.Name;
@@ -58,6 +66,11 @@ namespace Sys.Data.Manager
             }
         }
 
+        /// <summary>
+        /// Validate all fields, field not defined, duplicated field, duplicated value
+        /// </summary>
+        /// <param name="builder"></param>
+        /// <returns></returns>
         public bool Validate(MessageBuilder builder)
         {
             DPList<EnumField> list = new DPList<EnumField>(this.fields);
@@ -91,23 +104,35 @@ namespace Sys.Data.Manager
         }
 
 
+        /// <summary>
+        /// Save DataEnum into database
+        /// </summary>
         public void Save()
         {
             foreach (EnumField field in this.fields)
                 field.Save();
         }
 
-
+        /// <summary>
+        /// return name of date enum
+        /// </summary>
         public string Name
         {
             get { return this.name; }
         }
 
+        /// <summary>
+        /// return all fields of enum type
+        /// </summary>
         public List<EnumField> Fields
         {
             get { return this.fields; }
         }
 
+
+        /// <summary>
+        /// returns DataEnum class name 
+        /// </summary>
         public string ClassName
         {
             get
@@ -119,6 +144,12 @@ namespace Sys.Data.Manager
             }
         }
 
+
+        /// <summary>
+        /// generate DataEnum C# code in namespace defined
+        /// </summary>
+        /// <param name="nameSpace"></param>
+        /// <returns></returns>
         public string ToCode(string nameSpace)
         {
             string format = 
@@ -144,6 +175,11 @@ namespace {0}
         }
 
 
+        /// <summary>
+        /// generate DataEnum C# code in local drive
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="nameSpace"></param>
         public void GenerateCode(string path, string nameSpace)
         {
             string sourceCode = this.ToCode(nameSpace);
@@ -151,6 +187,11 @@ namespace {0}
                 SysExtension.WriteFile(fileName, sourceCode);
         }
 
+
+        /// <summary>
+        /// returns name of DataEnum 
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return name;
