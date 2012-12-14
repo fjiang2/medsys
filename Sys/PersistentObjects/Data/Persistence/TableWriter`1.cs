@@ -26,44 +26,59 @@ using Sys.Data.Manager;
 namespace Sys.Data
 {
     /// <summary>
-    /// write records of data table into database
+    /// write records of data table into database, meta table is given by typeof(T)
     /// </summary>
-    public class TableWriter
+    /// <typeparam name="T"></typeparam>
+    public class TableWriter<T> where T : class,  IDPObject, new()
     {
         private DataTable dataTable;
-        private TableName tableName;
-        private Locator locator;
 
         /// <summary>
-        /// use default locator to save records into database, primary keys must be defined
+        /// write data table
         /// </summary>
-        /// <param name="tableName"></param>
         /// <param name="dataTable"></param>
-        public TableWriter(TableName tableName, DataTable dataTable)
+        public TableWriter(DataTable dataTable)
         {
-            this.tableName = tableName;
             this.dataTable = dataTable;
-
-            PrimaryKeys primary = this.tableName.GetCachedMetaTable().Primary;
-            if (primary.Length != 0)
-                this.locator = new Locator(primary);
-            else
-                throw new JException("There is no locator defined.");
         }
 
         /// <summary>
-        /// use user defined locator to save records into database
+        /// writer table reader
         /// </summary>
-        /// <param name="tableName"></param>
-        /// <param name="locator"></param>
-        /// <param name="dataTable"></param>
-        public TableWriter(TableName tableName, Locator locator, DataTable dataTable)
+        /// <param name="reader"></param>
+        public TableWriter(TableReader<T> reader)
+            :this(reader.Table)
         {
-            this.tableName = tableName;
-            this.dataTable = dataTable;
-            this.locator = locator;
-
         }
+
+        /// <summary>
+        /// write a collection of records
+        /// </summary>
+        /// <param name="collection"></param>
+        public TableWriter(IEnumerable<T> collection)
+            :this(collection.ToTable<T>())
+        {
+        }
+
+
+        /// <summary>
+        /// write a list of records
+        /// </summary>
+        /// <param name="list"></param>
+        public TableWriter(DPList<T> list)
+            :this(list.Table)
+        {
+        }
+
+
+        private TableName TableName
+        {
+            get
+            {
+                return typeof(T).TableName();
+            }
+        }
+
 
         /// <summary>
         /// return data table
@@ -82,16 +97,18 @@ namespace Sys.Data
         /// </summary>
         public void Save()
         {
-            TableAdapter.WriteDataTable(dataTable, this.tableName, this.locator, null, null, null);
+            T dpo = new T();
+            TableAdapter.WriteDataTable(dataTable, dpo.TableName, dpo.Locator, null, null, null);
         }
 
+
         /// <summary>
-        /// return TableWriter description
+        /// return description TableWriter
         /// </summary>
         /// <returns></returns>
         public override string ToString()
         {
-            return string.Format("TableWriter<{0}> Count={1}", this.tableName.FullName, this.dataTable.Rows.Count);
+            return string.Format("TableWriter<{0}> Count={1}", typeof(T).FullName, this.dataTable.Rows.Count);
         }
     }
 }
