@@ -61,8 +61,8 @@ namespace Sys.Workflow.Collaborative
                       AND ( S1_Name = '{3}' OR S2_Name='{3}')
                 ORDER BY Date_Created
             ";
-      
-            DataTable dataTable = SqlCmd.FillDataTable(SQL, this.TableName, UserDpo.TABLE_NAME, activity.WorkflowInstance.Data.PIN, activity.State.StateName);
+
+            DataTable dataTable = SqlCmd.FillDataTable<UserDpo>(SQL, this.TableName, UserDpo.TABLE_NAME, activity.WorkflowInstance.Data.PIN, activity.State.StateName);
 
             NoteHistory history = new NoteHistory(rtf, activity.State.StateName);
             foreach (DataRow dataRow in dataTable.Rows)

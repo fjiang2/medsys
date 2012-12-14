@@ -101,7 +101,7 @@ namespace Sys.Platform.Forms
             string SQL = "SELECT ID, Label, Command FROM @AppLinks"
               .Replace("@AppLinks", AppLinkDpo.TABLE_NAME);
 
-            LookUp lookup = new LookUp("Select Application", SqlCmd.FillDataTable(SQL));
+            LookUp lookup = new LookUp("Select Application", SqlCmd.FillDataTable <AppLinkDpo>(SQL));
             DataRow dataRow = lookup.PopUp(this);
             if (dataRow == null)
                 return;

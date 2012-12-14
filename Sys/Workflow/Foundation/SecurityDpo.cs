@@ -101,7 +101,7 @@ namespace Sys.Workflow
                 ORDER BY ParentID, ID
                 ";
 
-                DataTable dt = SqlCmd.FillDataTable(SQL,
+                DataTable dt = SqlCmd.FillDataTable<Sys.Workflow.DpoClass.wfWorkflowDpo>(SQL,
                     Sys.Workflow.DpoClass.wfWorkflowDpo.TABLE_NAME,
                     Sys.Workflow.DpoClass.wfStateDpo.TABLE_NAME
                     );

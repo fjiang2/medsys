@@ -250,14 +250,6 @@ namespace Sys.Data
 
 
         //--------------------------------------------------------------------------------------
-     
-      
-        public static DataTable FillDataTable(string script, params object[] args)
-        {
-            SqlCmd cmd = new SqlCmd(string.Format(script, args));
-            return cmd.FillDataTable();
-        }
-
         public static object ExecuteScalar(DataProvider provider, string script, params object[] args)
         {
             SqlCmd cmd = new SqlCmd(provider, string.Format(script, args));
@@ -270,6 +262,12 @@ namespace Sys.Data
             return cmd.ExecuteNonQuery();
         }
 
+        public static DataTable FillDataTable<T>(string script, params object[] args) where T : class,  IDPObject, new()
+        {
+            TableName tableName = typeof(T).TableName();
+            SqlCmd cmd = new SqlCmd(tableName.Provider, string.Format(script, args));
+            return cmd.FillDataTable();
+        }
 
         public static DataTable FillDataTable(DataProvider provider, string script, params object[] args)
         {
