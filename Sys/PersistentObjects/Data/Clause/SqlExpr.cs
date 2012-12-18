@@ -278,6 +278,24 @@ namespace Sys.Data
             }
         }
 
+        public SqlExpr NULL
+        {
+            get
+            {
+                this.Next(" NULL");
+                return this;
+            }
+        }
+
+        public SqlExpr IS
+        {
+            get
+            {
+                this.Next(" IS");
+                return this;
+            }
+        }
+
         public SqlExpr IN(IEnumerable collection)
         {
             this.Next(" IN (")
