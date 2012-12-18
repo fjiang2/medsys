@@ -31,6 +31,7 @@ namespace Sys.Data
         public byte precision;
         public byte scale;
         public bool IsIdentity;
+        public bool IsComputed;
         
         public int ColumnID;    //column_id is from column dictionary
         public string label;    //label used as caption to support internationalization
@@ -59,6 +60,7 @@ namespace Sys.Data
             this.precision = attr.Precision;
             this.scale = attr.Scale;
             this.IsIdentity = attr.Identity;
+            this.IsComputed = attr.Computed;
             this.isPrimary = attr.Primary;
 
             this.ColumnID = -1; //useless here
@@ -240,6 +242,8 @@ namespace Sys.Data
             if (IsPrimary)
                 attribute += ", Primary = true";
 
+            if (IsComputed)
+                attribute += ", Computed = true";
 
             if (attr != "")
                 attribute += attr;

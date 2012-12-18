@@ -71,6 +71,7 @@ namespace Sys.Data
                 c.precision,
                 c.scale,
                 c.is_identity AS IsIdentity,
+                c.is_computed AS IsComputed,
                 NULL AS ColumnID,
                 NULL AS label
              FROM sys.tables t 
