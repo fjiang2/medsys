@@ -81,7 +81,17 @@ namespace Sys.Data
             ";
 
             DataTable dt1 = SqlCmd.FillDataTable(tableName.Provider, SQL, tableName.DatabaseName.Name, tableName.Name);
-            var list = new TableReader<dictDataColumnDpo>( dictDataColumnDpo._table_id.ColumnName() == TableID).ToList();
+            
+            List<dictDataColumnDpo> list; 
+            try
+            {
+                int tableId = this.TableID;
+                list = new TableReader<dictDataColumnDpo>(dictDataColumnDpo._table_id.ColumnName() == tableId).ToList();
+            }
+            catch (Exception)   //when dictDataColumnDpo doesn't exist
+            {
+                list = new List<dictDataColumnDpo>();
+            }
 
             this._columns = new MetaColumnCollection(this);
             foreach (DataRow row in dt1.Rows)

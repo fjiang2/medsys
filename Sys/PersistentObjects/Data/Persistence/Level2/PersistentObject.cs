@@ -398,10 +398,11 @@ namespace Sys.Data
             foreach (string key in Identity.Keys)
             {
                 FieldInfo fieldInfo = type.GetField(key, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-                if(fieldInfo!=null)
+                if(fieldInfo != null)
                 {
                    object value = dataRow[key];
-                   fieldInfo.SetValue(this, value);
+                   if(value != System.DBNull.Value)
+                       fieldInfo.SetValue(this, value);
                 }
             }
 
@@ -410,9 +411,6 @@ namespace Sys.Data
             {
               Mapping mapping = new Mapping(this, fieldInfo);
               mapping.FillIdentity();
-
-              
-
             }
         }
 
