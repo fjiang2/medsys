@@ -50,20 +50,31 @@ namespace Sys.Data
     [System.AttributeUsage(System.AttributeTargets.Field)]
     public class ForeignKeyAttribute : Attribute
     {
+        /// <summary>
+        /// PK Dpo class type for this table
+        /// </summary>
         public readonly Type PK_Table;
+
+        /// <summary>
+        /// PK column name
+        /// </summary>
         public readonly string PK_Column;
 
         /// <summary>
         /// FOREIGN KEY (this) REFERENCES pkTable(pkColumn)
         /// </summary>
-        /// <param name="pkTable"></param>
-        /// <param name="pkColumn"></param>
-        public ForeignKeyAttribute(Type pkTable, string pkColumn)
+        /// <param name="pkTableType"></param>
+        /// <param name="pkColumnName"></param>
+        public ForeignKeyAttribute(Type pkTableType, string pkColumnName)
         {
-            this.PK_Table = pkTable;
-            this.PK_Column = pkColumn;
+            this.PK_Table = pkTableType;
+            this.PK_Column = pkColumnName;
         }
 
+        /// <summary>
+        /// SQL reference description
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return string.Format("REFERENCES {0}({1})", this.PK_Table.TableName(), this.PK_Column);

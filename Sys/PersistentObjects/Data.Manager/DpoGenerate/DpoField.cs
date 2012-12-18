@@ -79,7 +79,19 @@ namespace Sys.Data.Manager
                     line = string.Format("{0}{1}\r\n", tab, column.ForeignKey.GetAttribute(type)) + line;
                 }
                 else
-                    throw new JException("cannot generate Dpo class for Table {0} before generate {1}",  dpoClass.MetaTable.TableName, column.ForeignKey.TableName);
+                {
+                    //ForeignKey check for external Dpo classes, they don't be load into dict
+                    LogDpoClass log = new LogDpoClass(column.ForeignKey.TableName);
+                    if (log.Exists)
+                    {
+                        string classFullName = string.Format("{0}.{1}", log.name_space, log.class_name);
+                        line = string.Format("{0}{1}\r\n", tab, column.ForeignKey.GetAttribute(classFullName)) + line;
+                    }
+                    else
+                        throw new JException("cannot generate Dpo class of FK {0} before generate Dpo class of PK {1}",
+                            dpoClass.MetaTable.TableName,
+                            column.ForeignKey.TableName);
+                }
             }
 
             return line;

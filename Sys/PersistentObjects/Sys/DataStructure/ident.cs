@@ -114,12 +114,14 @@ namespace Sys
             s = s.Trim();
             StringBuilder sb = new StringBuilder();
             
-            if (!char.IsLetter(s[0]))
+            if (!char.IsLetter(s[0]) && s[0] != '_')
                 sb.Append("_");
-            
+
             for (int i = 0; i < s.Length; i++)
                 if (char.IsLetterOrDigit(s[i]) || s[i] == '_')
                     sb.Append(s[i]);
+                else
+                    sb.Append('_');
 
             return sb.ToString();
         }

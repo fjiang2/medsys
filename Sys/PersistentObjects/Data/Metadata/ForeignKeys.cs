@@ -111,11 +111,16 @@ WHERE FK.TABLE_NAME='{1}'
             }
         }
 
-        public string GetAttribute(Type pkTable)
+        public string GetAttribute(Type pkTableType)
         {
-            return string.Format("[{0}(typeof({1}), {1}._{2})]", 
+            return GetAttribute(pkTableType.FullName);
+        }
+
+        public string GetAttribute(string dpoClassFullName)
+        {
+            return string.Format("[{0}(typeof({1}), {1}._{2})]",
                 typeof(ForeignKeyAttribute).Name.Replace("Attribute", ""),
-                pkTable.FullName, 
+                dpoClassFullName,
                 PK_Column);
         }
 
