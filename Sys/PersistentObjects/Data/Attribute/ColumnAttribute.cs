@@ -32,6 +32,7 @@ namespace Sys.Data
         
         public bool Primary = false;
         public bool Identity = false;
+        public bool Computed = false;
         public bool Saved = true;
 
         public short Length = 0;

@@ -59,7 +59,7 @@ namespace Sys.Data
                     column.Field.Identity = attribute.Identity;
                     column.Field.Primary = attribute.Primary;
 
-                    if (attribute.Identity || ! columnNames.Exists(attribute.ColumnNameSaved))
+                    if (attribute.Identity || attribute.Computed || ! columnNames.Exists(attribute.ColumnNameSaved))
                         column.Field.Saved = false;
                     else
                         column.Field.Saved = attribute.Saved;
