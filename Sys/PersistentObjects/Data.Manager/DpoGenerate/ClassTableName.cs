@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Sys.Data;
+using System.Globalization;
 
 namespace Sys.Data.Manager
 {
@@ -76,14 +77,37 @@ namespace Sys.Data.Manager
             string className = ident.Identifier(tableName);
 
             //remove plural
-            if (className.EndsWith("s"))
+            if (className.EndsWith("ees"))
                 className = className.Substring(0, className.Length - 1);
-
+            else if (className.EndsWith("ies"))
+                className = className.Substring(0, className.Length - 3) + "y";
+            else if (className.EndsWith("es"))
+            {
+                char ch1 = className[className.Length - 3];
+                char ch2 = className[className.Length - 4];
+                
+                if (!IsVowel(ch1) && IsVowel(ch2))
+                    className = className.Substring(0, className.Length - 1);
+                else
+                    className = className.Substring(0, className.Length - 2);
+            }
+            else if (className.EndsWith("s"))
+            {
+                char vowel = className[className.Length - 2];
+                if (vowel != 'u')
+                    className = className.Substring(0, className.Length - 1);
+            }
+             
             //Add "Dpo"
             className += Setting.DPO_CLASS_SUFFIX_CLASS_NAME;
 
             return className;
 
+        }
+
+        private static bool IsVowel(char ch)
+        {
+            return ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u' || ch == 'y';
         }
     }
 }
