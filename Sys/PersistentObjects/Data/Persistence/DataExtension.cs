@@ -426,7 +426,7 @@ namespace Sys.Data
         #endregion
 
 
-        #region SqlExpr/SqlClause: ColumName/ParameterName/AddParameter
+       
 
         internal static string SqlParameterName(this string name)
         {
@@ -438,50 +438,7 @@ namespace Sys.Data
             return new ident(name);
         }
 
-        /// <summary>
-        /// "name" -> "[name]"
-        /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
-        public static SqlExpr ColumnName(this string name)
-        {
-            return SqlExpr.ColumnName(name);
-        }
-
-        /// <summary>
-        /// "name" -> "@name"
-        /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
-        public static SqlExpr ParameterName(this string name)
-        {
-            return SqlExpr.ParameterName(name);
-        }
-
-
-        /// <summary>
-        /// "name" -> "[name]=@name"
-        /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
-        public static SqlExpr AddParameter(this string columnName)
-        {
-            return SqlExpr.AddParameter(columnName, columnName);
-        }
-
-        /// <summary>
-        /// Add SQL parameter
-        /// e.g. NodeDpo._ID.AddParameter(TaskDpo._ParentID) -> "[ID]=@ParentID"
-        /// </summary>
-        /// <param name="columnName"></param>
-        /// <param name="parameterName"></param>
-        /// <returns></returns>
-        public static SqlExpr AddParameter(this string columnName, string parameterName)
-        {
-            return SqlExpr.AddParameter(columnName, parameterName);
-        }
-
-        #endregion
+       
 
     }
 }

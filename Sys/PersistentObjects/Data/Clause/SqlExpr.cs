@@ -407,47 +407,57 @@ namespace Sys.Data
 
         #region SQL Function
 
-        private static SqlExpr Func(string func, SqlExpr exp1)
+        private static SqlExpr Func(string func, params SqlExpr[] expl)
         {
             SqlExpr exp = new SqlExpr()
                 .Next(func)
                 .Next("(")
-                .Next(exp1)
+                .Next(string.Join<SqlExpr>(",", expl))
                 .Next(")");
 
-            exp.Merge(exp1);
+            //exp.Merge(exp1);
             return exp;
         }
 
-
-        public static SqlExpr SUM(SqlExpr x)
+        public static SqlExpr LEN(SqlExpr expr)
         {
-            return Func("SUM", x);
+            return Func("LEN", expr);
         }
 
-        public static SqlExpr MAX(SqlExpr x)
+        public static SqlExpr SUBSTRING(SqlExpr expr, SqlExpr start, SqlExpr length)
         {
-            return Func("MAX", x);
+            return Func("SUBSTRING", expr, start, length);
         }
 
-        public static SqlExpr MIN(SqlExpr x)
+
+        public static SqlExpr SUM(SqlExpr expr)
         {
-            return Func("MIN", x);
+            return Func("SUM", expr);
         }
 
-        public static SqlExpr COUNT(SqlExpr x)
+        public static SqlExpr MAX(SqlExpr expr)
         {
-            return Func("COUNT", x);
+            return Func("MAX", expr);
         }
 
-        public static SqlExpr ISNULL(SqlExpr x)
+        public static SqlExpr MIN(SqlExpr expr)
         {
-            return Func("ISNULL", x);
+            return Func("MIN", expr);
         }
 
-        public static SqlExpr GETDATE(SqlExpr x)
+        public static SqlExpr COUNT(SqlExpr expr)
         {
-            return new SqlExpr().Next("GETDATE()");
+            return Func("COUNT", expr);
+        }
+
+        public static SqlExpr ISNULL(SqlExpr expr)
+        {
+            return Func("ISNULL", expr);
+        }
+
+        public static SqlExpr GETDATE()
+        {
+            return Func("GETDATE");
         }
 
         #endregion
