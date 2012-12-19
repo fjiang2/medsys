@@ -262,11 +262,15 @@ namespace Sys.Data
             return cmd.ExecuteNonQuery();
         }
 
+        public static DataTable FillDataTable(string script, params object[] args)
+        {
+            return FillDataTable(DataProviderManager.DefaultProvider, script, args);
+        }
+
         public static DataTable FillDataTable<T>(string script, params object[] args) where T : class,  IDPObject, new()
         {
             TableName tableName = typeof(T).TableName();
-            SqlCmd cmd = new SqlCmd(tableName.Provider, string.Format(script, args));
-            return cmd.FillDataTable();
+            return FillDataTable(tableName.Provider, script, args);
         }
 
         public static DataTable FillDataTable(DataProvider provider, string script, params object[] args)
