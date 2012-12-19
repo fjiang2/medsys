@@ -29,7 +29,7 @@ namespace Sys.ViewManager.Security
                     FormPermission._Ty.ColumnName() == 1
                     & FormPermission._Role_ID.ColumnName().IN(
                         new SqlClause()
-                            .SELECT.COLUMNS(UserRoleDpo._Role_ID)
+                            .SELECT.COLUMNS(UserRoleDpo._Role_ID.ColumnName())
                             .FROM<UserRoleDpo>()
                             .WHERE(UserRoleDpo._User_ID.ColumnName() ==Account.CurrentUser.UserID)
                             )

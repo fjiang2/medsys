@@ -34,8 +34,14 @@ namespace Sys.Data
         /// <returns></returns>
         public static SqlExpr ColumnName(this string name)
         {
-            return SqlExpr.ColumnName(name);
+            return SqlExpr.ColumnName(name, null);
         }
+
+        public static SqlExpr ColumnName(this string name, string alias)
+        {
+            return SqlExpr.ColumnName(name, alias);
+        }
+
 
         /// <summary>
         /// "name" -> "@name"

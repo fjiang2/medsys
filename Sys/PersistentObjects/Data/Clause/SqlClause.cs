@@ -44,6 +44,41 @@ namespace Sys.Data
         }
 
 
+        #region Table Name
+        private SqlClause TABLE_NAME(string tableName, string alias)
+        {
+            script.Append(tableName);
+            if (alias != null)
+                script.Append(" ").Append(alias);
+            
+            return this;
+        }
+
+        public SqlClause TABLE_NAME(TableName tableName, string alias = null)
+        {
+            return TABLE_NAME(tableName.FullName, alias);
+        }
+
+     
+        public SqlClause TABLE_NAME(DPObject dpo, string alias = null)
+        {
+            return TABLE_NAME(dpo.TableName, alias);
+        }
+
+        public SqlClause TABLE_NAME(Type dpoType, string alias = null)
+        {
+            return TABLE_NAME(dpoType.TableName(), alias);
+        }
+
+        public SqlClause TABLE<T>(string alias = null)
+        {
+            return TABLE_NAME(typeof(T).TableName(), alias);
+        }
+
+
+        
+        #endregion
+
         #region SELECT clause
 
         public SqlClause SELECT
@@ -81,12 +116,22 @@ namespace Sys.Data
         }
 
 
-        public SqlClause COLUMNS(params string[] columns)
+        //public SqlClause COLUMNS(params string[] columns)
+        //{
+        //    if (columns.Length == 0)
+        //        script.Append(" * ");
+        //    else
+        //        script.Append(" ").Append(ConcatColumns(columns));
+
+        //    return this;
+        //}
+
+        public SqlClause COLUMNS(params SqlExpr[] columns)
         {
             if (columns.Length == 0)
                 script.Append(" * ");
             else
-                script.Append(" ").Append(ConcatColumns(columns));
+                script.Append(" ").Append(string.Join(",", columns.Select(column=>column.ToString())));
 
             return this;
         }
@@ -115,33 +160,29 @@ namespace Sys.Data
 
         #region FROM clause
 
-        public SqlClause FROM(string from)
+        public SqlClause FROM(DPObject dpo, string alias = null)
         {
-            return FROM(from, null);
+            return FROM(dpo.TableName, alias);
         }
 
-        public SqlClause FROM(DPObject dpo)
+        public SqlClause FROM(Type dpoType, string alias = null)
         {
-            return FROM(dpo.TableName);
-        }
-
-        public SqlClause FROM(Type dpoType)
-        {
-            return FROM(dpoType.TableName());
-        }
-
-        public SqlClause FROM<T>()
-        {
-            return FROM(typeof(T).TableName());
+            return FROM(dpoType.TableName(), alias);
         }
 
 
-        public SqlClause FROM(TableName tableName)
+        public SqlClause FROM<T>(string alias = null)
         {
-            return FROM(tableName.FullName, null);
+            return FROM(typeof(T).TableName(), alias);
         }
 
-        public SqlClause FROM(string from, string alias)
+
+        public SqlClause FROM(TableName tableName, string alias = null)
+        {
+            return FROM(tableName.FullName, alias);
+        }
+
+        private SqlClause FROM(string from, string alias)
         {
             script.Append(" FROM ").Append(from);
             if (alias != null)
@@ -153,10 +194,34 @@ namespace Sys.Data
         #endregion
 
 
-        public SqlClause UPDATE(string tableName)
+
+        public SqlClause UPDATE(DPObject dpo, string alias = null)
+        {
+            return UPDATE(dpo.TableName, alias);
+        }
+
+        public SqlClause UPDATE<T>(string alias = null)
+        {
+            return UPDATE(typeof(T).TableName(), alias);
+        }
+
+        public SqlClause UPDATE(Type dpoType, string alias = null)
+        {
+            return UPDATE(dpoType.TableName(), alias);
+        }
+
+        public SqlClause UPDATE(TableName tableName, string alias = null)
+        {
+            return UPDATE(tableName.FullName, alias);
+        }
+
+
+        private SqlClause UPDATE(string tableName, string alias)
         {
            script.Append("UPDATE ").Append(tableName);
-
+            if(alias != null)
+                script.Append(" ").Append(alias);
+           
             return this;
         }
 
@@ -264,26 +329,29 @@ namespace Sys.Data
             }
         }
 
-        public SqlClause JOIN(string tableName)
-        {
-            return JOIN(tableName, null);
-        }
+     
 
-        public SqlClause JOIN(DPObject dpo)
-        {
-            return JOIN(dpo.TableName, null);
-        }
 
-        public SqlClause JOIN(DPObject dpo, string alias)
+        public SqlClause JOIN(DPObject dpo, string alias = null)
         {
             return JOIN(dpo.TableName, alias);
         }
 
-        private SqlClause JOIN(TableName tableName, string alias)
+        public SqlClause JOIN<T>(string alias = null)
+        {
+            return JOIN(typeof(T).TableName(), alias);
+        }
+
+        public SqlClause JOIN(Type dpoType, string alias = null)
+        {
+            return JOIN(dpoType.TableName(), alias);
+        }
+
+        public SqlClause JOIN(TableName tableName, string alias = null)
         {
             return JOIN(tableName.FullName, alias);
         }
-        
+
         private SqlClause JOIN(string tableName, string alias)
         {
             script

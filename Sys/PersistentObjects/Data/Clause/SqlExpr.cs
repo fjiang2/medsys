@@ -44,9 +44,26 @@ namespace Sys.Data
             return this;
         }
 
-        internal static SqlExpr ColumnName(string name)
+        internal static SqlExpr ColumnName(string name, string alias)
         {
-            SqlExpr exp = new SqlExpr().Next("[" + name + "]");
+            SqlExpr exp = new SqlExpr();
+            if (alias != null)
+                exp.Next(alias)
+                    .Next(".");
+
+            exp.Next("[" + name + "]");
+            
+            return exp;
+        }
+
+        internal static SqlExpr AllColumnNames(string alias)
+        {
+            SqlExpr exp = new SqlExpr();
+            if (alias != null)
+                exp.Next(alias)
+                    .Next(".");
+
+            exp.Next("*");
             return exp;
         }
 
