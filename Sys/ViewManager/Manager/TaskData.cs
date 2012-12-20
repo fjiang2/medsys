@@ -9,22 +9,52 @@ using System.Windows.Forms;
 
 namespace Sys.ViewManager.Manager
 {
+    enum TaskDataType
+    { 
+        Method  = 1,            //regular method
+        StaticMethod  = 2,      //static method
+        NewBaseForm   = 3,      //BaseForm
+    }
+
     class TaskData : IValizable, IComparer<TaskData>
     {
-        internal string key;
+        private string key;
         internal string caption;
-        string formClass;
-        object[] args;
         internal bool pinned;
         internal DateTime time;
+        internal readonly TaskDataType ty;
 
+        private Type hostType;
+        private string code;
+
+        // new BaseForm as command
         public TaskData(string key, bool pinned, string caption, Type formClassType, object[] args)
+            : this(key, pinned, caption, 
+                TaskDataType.NewBaseForm, 
+                formClassType, 
+                string.Format("new {0}({1})", formClassType, string.Join<VAL>(",",VAL.Boxing(args))))
+        { 
+        }
+
+
+        // static method as command
+        public TaskData(string key, bool pinned, string caption, Type hostType, string func, object[] args)
+            : this(key, pinned, caption, 
+                TaskDataType.StaticMethod, 
+                hostType, 
+                string.Format("{0}.{1}({2})", hostType.FullName, func, string.Join<VAL>(",", VAL.Boxing(args))))
+        {
+        }
+
+        public TaskData(string key, bool pinned, string caption, TaskDataType ty, Type hostType, string code)
         {
             this.key = key;
             this.pinned = pinned;
             this.caption = caption;
-            this.formClass = formClassType.FullName;
-            this.args = args;
+            this.ty = ty;
+
+            this.code = code;
+            this.hostType = hostType;
             
             this.time = DateTime.Now;
         }
@@ -33,9 +63,10 @@ namespace Sys.ViewManager.Manager
         public TaskData(VAL val)
         {
             key = val["Key"].Str;
-            caption = val["Caption"].Str; 
-            formClass = val["FormClass"].Str;
-            args = (object[])val["Arguments"];
+            caption = val["Caption"].Str;
+            ty = (TaskDataType)val["TaskType"].Intcon;
+            hostType = Tie.HostType.GetType(val["HostType"].Str);
+            code = val["Code"].Str;
 
             VAL x = val["Pinned"];
             if (x.Defined)
@@ -50,7 +81,7 @@ namespace Sys.ViewManager.Manager
                 time = DateTime.Now;
         }
 
-
+   
         public int Compare(TaskData x, TaskData y)
         {
             return y.time.CompareTo(x.time);
@@ -61,42 +92,61 @@ namespace Sys.ViewManager.Manager
             VAL val = new VAL();
             val["Key"] = VAL.Boxing(key);
             val["Caption"] = VAL.Boxing(caption);
-            val["FormClass"] = VAL.Boxing(formClass);
-            val["Arguments"] = VAL.Boxing(args);
+            val["TaskType"] = VAL.Boxing((int)ty);
+            val["HostType"] = VAL.Boxing(hostType.FullName);
+            val["Code"] = VAL.Boxing(code);
             val["Pinned"] = VAL.Boxing(pinned);
             val["Time"] = VAL.Boxing(time);
             return val;
         }
 
-        public string FormClass
+        public string Key
+        {
+            get { return this.key; }
+        }
+
+        public Type HostType
         {
             get
             {
-                return this.formClass;
+                return this.hostType;
             }
         }
 
-        public BaseForm NewFormInstance()
+        public object Evaluate()
         {
             try
             {
-                return (BaseForm)Reflector.NewInstance(formClass, args);
+                return Tie.Script.Evaluate(code).HostValue;
             }
             catch (Exception ex)
             {
-                string message = string.Format("invalid form [{0}], {1}", formClass, ex.Message);
+                string message = string.Format("invalid form [{0}], {1}", code, ex.Message);
                 MessageBox.Show(message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return null;
             }
         }
 
+        public void SaveNewShortcut(UserShortcut shortcut)
+        {
+            System.Drawing.Image icon = SysInformation.Icon.CreateIcon16X16().ToBitmap();
+
+            shortcut.Type = this.ty;
+            shortcut.Shortcut = this.key;
+            shortcut.Label = this.caption == null ? "Unknown" : caption;
+            shortcut.Description = "";
+            shortcut.Code = this.code;
+            shortcut.IconImage = icon;
+            shortcut.Save();
+        }
+      
  
         public override string ToString()
         {
             if (caption != null)
                 return caption;
 
-            return formClass;
+            return code;
         }
 
        

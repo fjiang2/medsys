@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Data;
 
 namespace Sys.ViewManager.Manager
 {
@@ -11,11 +12,37 @@ namespace Sys.ViewManager.Manager
         System
     }
 
-    public class UserShortcut
+    public class UserShortcut : DpoClass.ShortcutDpo
     {
+        public UserShortcut()
+        { 
+        }
+
+        public UserShortcut(DataRow row)
+            : base(row)
+        { 
+        }
+
+        public UserShortcut(string key)
+            : base(key)
+        {
+        }
+        
         public UserShortcut(ShortcutType type)
         {
             
+        }
+
+        internal TaskDataType Type
+        {
+            get
+            {
+                return (TaskDataType)base.Ty;
+            }
+            set
+            {
+                base.Ty = (int)value;
+            }
         }
     }
 }
