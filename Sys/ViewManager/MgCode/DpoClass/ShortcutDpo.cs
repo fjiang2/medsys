@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 7/19/2012 12:12:44 AM
+//   by devel at 12/20/2012
 //
 
 using System;
@@ -14,20 +14,21 @@ using Sys.Data.Manager;
 
 namespace Sys.ViewManager.DpoClass
 {
-    [Revision(11)]
-    [Table("sys00803", Level.System)]    //Primary Keys = ID;  Identity = ID;
+    [Revision(15)]
+    [Table("sys00803", Level.System)]    //Primary Keys = Shortcut;  Identity = ID;
     public class ShortcutDpo : DPObject
     {
 
 #pragma warning disable
 
-        [Column(_ID, SqlDbType.Int, Identity = true, Primary = true)]                             public int ID;                //int(4) not null
+        [Column(_ID, SqlDbType.Int, Identity = true)]                                             public int ID;                //int(4) not null
         [Column(_Ty, SqlDbType.Int)]                                                              public int Ty;                //int(4) not null
+        [Column(_Shortcut, SqlDbType.NVarChar, Primary = true, Length = 150)]                     public string Shortcut;       //nvarchar(150) not null
         [Column(_Label, SqlDbType.NVarChar, Length = 50)]                                         public string Label;          //nvarchar(50) not null
         [Column(_Description, SqlDbType.NVarChar, Nullable = true, Length = 128)]                 public string Description;    //nvarchar(128) null
-        [Column(_Command, SqlDbType.NVarChar, Length = 128)]                                      public string Command;        //nvarchar(128) not null
+        [Column(_Code, SqlDbType.NVarChar, Length = 256)]                                         public string Code;           //nvarchar(256) not null
         [Column(_Icon, SqlDbType.Image, Nullable = true)]                                         public byte[] Icon;           //image(16) null
-        [Column(_Time, SqlDbType.DateTime)]                                                       public DateTime Time;         //datetime(8) not null
+        [Column(_Help, SqlDbType.NText, Nullable = true)]                                         public string Help;           //ntext(16) null
 
         #region IMAGE PROPERTIES
         public Image IconImage
@@ -66,14 +67,14 @@ namespace Sys.ViewManager.DpoClass
         }
 
 
-        public ShortcutDpo(int id)
+        public ShortcutDpo(string shortcut)
         {
-           this.ID = id; 
+           this.Shortcut = shortcut; 
 
            this.Load();
            if(!this.Exists)
            {
-              this.ID = id;     
+              this.Shortcut = shortcut;     
            }
         }
         
@@ -93,7 +94,7 @@ namespace Sys.ViewManager.DpoClass
         {
             get
             {
-                return new PrimaryKeys(new string[]{ _ID });
+                return new PrimaryKeys(new string[]{ _Shortcut });
             }
         }
 
@@ -122,11 +123,12 @@ namespace Sys.ViewManager.DpoClass
 
         public const string _ID = "ID";
         public const string _Ty = "Ty";
+        public const string _Shortcut = "Shortcut";
         public const string _Label = "Label";
         public const string _Description = "Description";
-        public const string _Command = "Command";
+        public const string _Code = "Code";
         public const string _Icon = "Icon";
-        public const string _Time = "Time";
+        public const string _Help = "Help";
 
        
         #endregion 

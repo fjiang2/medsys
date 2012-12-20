@@ -15,26 +15,38 @@ namespace Sys.ViewManager.Manager
         public TaskItem(TaskData task)
         {
             this.task = task;
-
-            FormClass dpo = new FormClass(task.FormClass);
-            if (!dpo.Exists)
+            
+            switch(task.ty)
             {
-                BaseForm form = task.NewFormInstance();
-                if (form == null)
-                    return;
+                case TaskDataType.NewBaseForm:
+                    FormClass dpo = new FormClass(task.HostType.FullName);
+                    if (!dpo.Exists)
+                    {
 
-                this.Caption = task.caption == null ? form.Text : task.caption;
-                this.LargeImage = this.SmallImage = form.IconImage;
+                        BaseForm form = (BaseForm)task.Evaluate();
+                        if (form == null)
+                            return;
 
-                dpo.Form_Class = task.FormClass;
-                dpo.Label = form.Text;
-                dpo.IconImage = form.IconImage;
-                dpo.Save();
-            }
-            else
-            {
-                this.Caption = task.caption == null ? dpo.Label : task.caption;
-                this.LargeImage = this.SmallImage = dpo.IconImage;
+                        dpo.Form_Class = task.HostType.FullName;
+                        dpo.Label = form.Text;
+                        dpo.IconImage = form.IconImage;
+                        dpo.Save();
+
+                    }
+                    
+                    this.Caption = task.caption == null ? dpo.Label : task.caption;
+                    this.LargeImage = this.SmallImage = dpo.IconImage;
+
+                    break;
+            
+                case TaskDataType.StaticMethod:
+                    UserShortcut shortcut = new UserShortcut(task.Key);
+                    if (!shortcut.Exists)
+                        task.SaveNewShortcut(shortcut);
+
+                    this.Caption =  shortcut.Label;
+                    this.LargeImage = this.SmallImage = shortcut.IconImage;
+                    break;
             }
 
         }

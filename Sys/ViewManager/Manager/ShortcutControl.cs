@@ -142,24 +142,10 @@ namespace Sys.ViewManager.Manager
 
 
 
-        public bool Add(bool pinned, Form form)
+        internal bool Add(bool pinned, Form form)
         {
             Type ty = form.GetType();
             TaskData task = new TaskData(ty.FullName, pinned, form.Text, ty, new object[] { });
-
-            return AddItem(task);
-        }
-
-
-        public bool Add(bool pinned, Form form, object[] args)
-        {
-            Type formClassType = form.GetType();
-            
-            string key = formClassType.FullName;
-            foreach(object arg in args)
-                key += arg.ToString();
-
-            TaskData task = new TaskData(key, pinned, form.Text, formClassType, args);
 
             return AddItem(task);
         }
@@ -172,6 +158,13 @@ namespace Sys.ViewManager.Manager
             return AddItem(task);
         }
 
+        public bool Add(bool pinned, string key, string caption, Type hostType, string func, object[] args)
+        {
+            key = hostType.FullName + key;
+            TaskData task = new TaskData(key, pinned, caption, hostType, func, args);
+
+            return AddItem(task);
+        }
 
         private bool AddItem(TaskData task)
         {
@@ -194,7 +187,7 @@ namespace Sys.ViewManager.Manager
             foreach (KeyValuePair<NavBarItemLink, TaskData> kvp in navBarLinks)
             {
                 TaskData t = kvp.Value;
-                if (t.key == task.key)
+                if (t.Key == task.Key)
                 {
                     if (!t.pinned)
                     {
@@ -230,10 +223,17 @@ namespace Sys.ViewManager.Manager
                 item.LinkClicked += delegate(object sender, NavBarLinkEventArgs e)
                 {
                     Cursor = Cursors.WaitCursor;
-                    BaseForm form = task.NewFormInstance(); 
-                    if(form != null)
-                        form.PopUp(owner);
+                    object result = task.Evaluate();
+                    
+                    if (task.ty == TaskDataType.NewBaseForm)
+                    {
+                        BaseForm form = (BaseForm)result;
+                        if (form != null)
+                            form.PopUp(owner);
+                    }
+
                     Cursor = Cursors.Default;
+
                 };
 
                 this.Items.Add(item);
@@ -247,7 +247,7 @@ namespace Sys.ViewManager.Manager
                 
                
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return false;
             }
