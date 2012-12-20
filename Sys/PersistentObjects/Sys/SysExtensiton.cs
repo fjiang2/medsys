@@ -28,6 +28,16 @@ namespace Sys
     public static class SysExtension
     {
 
+        /// <summary>
+        /// Make any string be a valid ident, remove invaild letter
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static ident ToIdent(this string str)
+        {
+            string id = ident.Identifier(str);
+            return new ident(id);
+        }
    
         public static F[] GetArray<T, F>(this List<T> list, string fieldName)
         {
@@ -42,18 +52,35 @@ namespace Sys
             return values;
         }
 
-  
-      
+
+        /// <summary>
+        /// Has attribute(T) defined?
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="type"></param>
+        /// <returns></returns>
         public static bool HasAttribute<T>(this Type type) where T : Attribute
         {
             return GetAttributes<T>(type).Length != 0;
         }
 
+        /// <summary>
+        /// Get attributes(T) from type(argument)
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="type"></param>
+        /// <returns></returns>
         public static T[] GetAttributes<T>(this Type type) where T : Attribute
         {
             return (T[])type.GetCustomAttributes(typeof(T), true);
         }
 
+        /// <summary>
+        /// Has interface defined in the type(argument)
+        /// </summary>
+        /// <typeparam name="TInterface"></typeparam>
+        /// <param name="type"></param>
+        /// <returns></returns>
         public static bool HasInterface<TInterface>(this Type type)
         {
             Type[] I = type.GetInterfaces();
@@ -67,6 +94,11 @@ namespace Sys
 
         }
 
+        /// <summary>
+        /// get innullable type
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
         public static Type InnullableType(this Type type)
         {
             if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
@@ -110,6 +142,7 @@ namespace Sys
         }
 
 
+
         public static void CopyFields(object source, object sink)
         {
             Type t1 = source.GetType();
@@ -128,6 +161,11 @@ namespace Sys
         }
 
 
+        /// <summary>
+        /// write a file, create path/folds automatically
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <param name="text"></param>
         public static void WriteFile(string fileName, string text)
         {
             string path = System.IO.Path.GetDirectoryName(fileName);
