@@ -152,7 +152,7 @@ namespace Sys.ViewManager.Manager
 
         public bool Add(bool pinned, string key, string caption, Type formClassType, object[] args)
         {
-            key = formClassType.FullName + key;
+            key = formClassType.FullName + "#" + key.ToIdent(); 
             TaskData task = new TaskData(key, pinned, caption, formClassType, args);
 
             return AddItem(task);
@@ -160,7 +160,7 @@ namespace Sys.ViewManager.Manager
 
         public bool Add(bool pinned, string key, string caption, Type hostType, string func, object[] args)
         {
-            key = hostType.FullName + key;
+            key = hostType.FullName + "#" + key.ToIdent();
             TaskData task = new TaskData(key, pinned, caption, hostType, func, args);
 
             return AddItem(task);
