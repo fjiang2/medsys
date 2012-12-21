@@ -79,6 +79,19 @@ namespace Sys.Data
         
         #endregion
 
+        public SqlClause USE(string database)
+        {
+            script.Append("USE ").AppendLine(database);
+            return this;
+        }
+
+        public SqlClause USE(DatabaseName databaseName)
+        {
+            script.Append("USE ").AppendLine(databaseName.Name);
+            return this;
+        }
+
+
         #region SELECT clause
 
         public SqlClause SELECT

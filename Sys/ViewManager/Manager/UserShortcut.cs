@@ -12,6 +12,10 @@ namespace Sys.ViewManager.Manager
         System
     }
 
+
+    /// <summary>
+    /// user customerized shortcut, which mainly is a static method
+    /// </summary>
     public class UserShortcut : DpoClass.ShortcutDpo
     {
         public UserShortcut()

@@ -355,25 +355,40 @@ namespace Sys.Data
             return exp;
         }
 
+        public static SqlExpr operator -(SqlExpr exp1)
+        {
+            return OPR("-", exp1);
+        }
+
+        public static SqlExpr operator +(SqlExpr exp1)
+        {
+            return OPR("+", exp1);
+        }
+
         public static SqlExpr operator +(SqlExpr exp1, SqlExpr exp2)
-         {
+        {
              return OPR(exp1, "+", exp2);
-         }
+        }
 
         public static SqlExpr operator -(SqlExpr exp1, SqlExpr exp2)
-         {
+        {
              return OPR(exp1, "-", exp2);
-         }
+        }
 
         public static SqlExpr operator *(SqlExpr exp1, SqlExpr exp2)
-         {
+        {
              return OPR(exp1, "*", exp2);
-         }
+        }
 
         public static SqlExpr operator /(SqlExpr exp1, SqlExpr exp2)
-         {
+        {
              return OPR(exp1, "/", exp2);
-         }
+        }
+
+        public static SqlExpr operator %(SqlExpr exp1, SqlExpr exp2)
+        {
+            return OPR(exp1, "%", exp2);
+        }
 
 
         public static SqlExpr operator ==(SqlExpr exp1, SqlExpr exp2)
@@ -452,6 +467,16 @@ namespace Sys.Data
 
             //exp.Merge(exp1);
             return exp;
+        }
+
+        public static SqlExpr AND(SqlExpr exp1, SqlExpr exp2)
+        {
+            return OPR(exp1, "AND", exp2);
+        }
+
+        public static SqlExpr OR(SqlExpr exp1, SqlExpr exp2)
+        {
+            return OPR(exp1, "OR", exp2);
         }
 
         public static SqlExpr LEN(SqlExpr expr)
