@@ -28,6 +28,7 @@ namespace Sys.ViewManager.Manager
         private string code;
 
         // new BaseForm as command
+        //Tie code => new hostType(args)
         public TaskData(string key, bool pinned, string caption, Type formClassType, object[] args)
             : this(key, pinned, caption, 
                 TaskDataType.NewBaseForm, 
@@ -37,12 +38,14 @@ namespace Sys.ViewManager.Manager
         }
 
 
-        // static method as command
+        //static method as command
+        //Tie code =>typeof(hostType).func(args) because of static method
+        //or code  => hostType.func(args) after HostType.Register(typeof(hostType));
         public TaskData(string key, bool pinned, string caption, Type hostType, string func, object[] args)
             : this(key, pinned, caption, 
                 TaskDataType.StaticMethod, 
                 hostType, 
-                string.Format("{0}.{1}({2})", hostType.FullName, func, string.Join<VAL>(",", VAL.Boxing(args))))
+                string.Format("typeof({0}).{1}({2})", hostType.FullName, func, string.Join<VAL>(",", VAL.Boxing(args))))
         {
         }
 
