@@ -19,7 +19,7 @@ namespace Sys.ViewManager.Manager
     class TaskData : IValizable, IComparer<TaskData>
     {
         private string key;
-        internal string caption;
+        internal readonly string caption;
         internal bool pinned;
         internal DateTime time;
         internal readonly TaskDataType ty;
