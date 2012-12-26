@@ -125,7 +125,7 @@ namespace Sys.Data.Manager
 
             if (metaTable.Identity.Length > 0)
             {
-                return string.Format(DPObjectIdProperty, metaTable.Identity.Keys[0]);
+                return string.Format(DPObjectIdProperty, metaTable.Identity.ColumnNames[0]);
             }
             else if (metaTable.Primary.Length == 1)
             {
@@ -206,7 +206,7 @@ namespace Sys.Data.Manager
                 return prop1;
 
             if (metaTable.Identity.Length > 0)
-                return string.Format(prop2, stringQL(metaTable.Identity.Keys));
+                return string.Format(prop2, stringQL(metaTable.Identity.ColumnNames));
 
             return "";
         }

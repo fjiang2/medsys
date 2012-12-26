@@ -481,6 +481,9 @@ namespace Sys.Data
                 return line;
             }
 
+            if (this.IsComputed)
+                throw new JException("not support computed column: {0} during creating table",  ColumnName);
+
             return line;
         }
     

@@ -63,7 +63,7 @@ namespace Sys.Platform.Forms
                 }
                 catch (Exception) // no permisson to access this server
                 {
-                    MessageBox.Show(string.Format("not allow to access server: {0}", DataProviderManager.Instance.GetConnection((int)pair.Key).Name), 
+                    MessageBox.Show(string.Format("not allowed to access server: {0}", DataProviderManager.Instance.GetConnection((int)pair.Key).Name), 
                         "Warning", 
                         System.Windows.Forms.MessageBoxButtons.OK);
                     
