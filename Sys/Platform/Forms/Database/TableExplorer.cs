@@ -55,8 +55,20 @@ namespace Sys.Platform.Forms
 
             foreach (var pair in DataProviderManager.Instance.Providers)
             {
-                DataTable dataTable = SqlCmd.FillDataTable(pair.Key, "SELECT name FROM sys.databases ORDER BY Name");
-                dataTable.TableName = "databases";
+                DataTable dataTable;
+                try
+                {
+                    dataTable = SqlCmd.FillDataTable(pair.Key, "SELECT name FROM sys.databases ORDER BY Name");
+                    dataTable.TableName = "databases";
+                }
+                catch (Exception) // no permisson to access this server
+                {
+                    MessageBox.Show(string.Format("not allow to access server: {0}", DataProviderManager.Instance.GetConnection((int)pair.Key).Name), 
+                        "Warning", 
+                        System.Windows.Forms.MessageBoxButtons.OK);
+                    
+                    continue;
+                }
 
                 root = treeView1.Nodes.Add(pair.Value.Name);
                 foreach (DataRow dataRow in dataTable.Rows)
