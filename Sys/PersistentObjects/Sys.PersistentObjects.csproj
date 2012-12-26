@@ -50,6 +50,7 @@
     <Compile Include="Data\Attribute\Provider.cs" />
     <Compile Include="Data\Clause\SqlExprExtension.cs" />
     <Compile Include="Data\Clause\SqlClauseInfo.cs" />
+    <Compile Include="Data\Metadata\ComputedColumns.cs" />
     <Compile Include="Data\Metadata\ForeignKeys.cs" />
     <Compile Include="Data\Persistence\TableWriter.cs" />
     <Compile Include="Data\Persistence\TableWriter`1.cs" />

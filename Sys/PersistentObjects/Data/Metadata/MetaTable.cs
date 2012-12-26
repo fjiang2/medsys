@@ -110,8 +110,11 @@ namespace Sys.Data
             }
 
             this._identity = new IdentityKeys(this._columns);
+            this._computedColumns = new ComputedColumns(this._columns);
 
-        
+            this._columns.UpdatePrimary(this.Primary);
+            this._columns.UpdateForeign(this.Foreign);
+
         }
 
 
@@ -122,35 +125,14 @@ namespace Sys.Data
             get
             {
                 if (this._columns == null)
-                {
                     LoadSchema();
-                    this._columns.UpdatePrimary(this.Primary);
-                    this._columns.UpdateForeign(this.Foreign);
-                }
 
                 return this._columns;
             }
         }
 
 
-
-        private IdentityKeys _identity = null;
-        public IdentityKeys Identity
-        {
-            get
-            {
-                if (this._columns == null)
-                {
-                    LoadSchema();
-                    this._columns.UpdatePrimary(this.Primary);
-                    this._columns.UpdateForeign(this.Foreign);
-                } 
-                
-                return this._identity;
-            }
-        }
-
-
+        #region Primary/Foreign Key
 
         private PrimaryKeys _primary = null;
         public PrimaryKeys Primary
@@ -176,6 +158,39 @@ namespace Sys.Data
             }
         }
 
+
+        #endregion
+
+
+        
+        #region Identity/Computed column
+        
+        private IdentityKeys _identity = null;
+        public IdentityKeys Identity
+        {
+            get
+            {
+                if (this._columns == null)
+                    LoadSchema();
+
+                return this._identity;
+            }
+        }
+
+
+        private ComputedColumns _computedColumns = null;
+        public ComputedColumns ComputedColumns
+        {
+            get
+            {
+                if (this._columns == null)
+                    LoadSchema();
+
+                return this._computedColumns;
+            }
+        }
+
+        #endregion
 
 
         private int _tableID = -1;

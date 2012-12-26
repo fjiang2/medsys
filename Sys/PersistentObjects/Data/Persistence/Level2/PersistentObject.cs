@@ -336,6 +336,15 @@ namespace Sys.Data
             }
         }
 
+
+        public virtual ComputedColumns ComputedColumns
+        {
+            get
+            {
+                return Meta.ComputedColumns;
+            }
+        }
+
         protected virtual string CreateTableString
         {
             get
@@ -403,6 +412,19 @@ namespace Sys.Data
                    object value = dataRow[key];
                    if(value != System.DBNull.Value)
                        fieldInfo.SetValue(this, value);
+                }
+            }
+
+            foreach (string key in ComputedColumns.Keys)
+            {
+                FieldInfo fieldInfo = type.GetField(key, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+                if (fieldInfo != null)
+                {
+                    object value = dataRow[key];
+                    if (value != System.DBNull.Value)
+                        fieldInfo.SetValue(this, value);
+                    else
+                        fieldInfo.SetValue(this, null);
                 }
             }
 
