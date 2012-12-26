@@ -24,24 +24,24 @@ namespace Sys.Data
 {
     public class IdentityKeys
     {
-        private string[] keys;
+        private string[] columnNames;
 
         public IdentityKeys()
         {
-            this.keys = new string[0];
+            this.columnNames = new string[0];
         }
 
         public IdentityKeys(string[] columns)
         {
-            this.keys = columns;
+            this.columnNames = columns;
         }
 
         internal IdentityKeys(MetaColumnCollection columns)
         {
-            this.keys = columns.Where(column => column.IsIdentity).Select(column => column.ColumnName).ToArray();
+            this.columnNames = columns.Where(column => column.IsIdentity).Select(column => column.ColumnName).ToArray();
         }
 
-        public IdentityKeys(TableName tname)
+        internal IdentityKeys(TableName tname)
         { 
             string SQL = @"
             USE [{0}]
@@ -50,23 +50,23 @@ namespace Sys.Data
 	            JOIN sys.columns c ON t.object_id = c.object_id 
             WHERE t.name = '{1}' AND c.is_identity = 1";
 
-            this.keys = SqlCmd.FillDataTable(tname.Provider, SQL, tname.DatabaseName.Name, tname.Name).ToArray<string>(0);
+            this.columnNames = SqlCmd.FillDataTable(tname.Provider, SQL, tname.DatabaseName.Name, tname.Name).ToArray<string>(0);
         
         }
 
-        public string[] Keys
+        public string[] ColumnNames
         {
             get
             {
-                return this.keys;
+                return this.columnNames;
             }
         }
 
-        public int Length { get { return this.Keys.Length; } }
+        public int Length { get { return this.ColumnNames.Length; } }
 
         public override string ToString()
         {
-            return string.Join(" , ", keys);
+            return string.Join(" , ", columnNames);
         }
 
     }

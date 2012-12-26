@@ -40,7 +40,7 @@ namespace Sys.Data
         public void UpdatePrimaryIdentity(PrimaryKeys primary, IdentityKeys identity)
         {
             
-            foreach (string key in identity.Keys)
+            foreach (string key in identity.ColumnNames)
             {
                 DataField field = FindField(key); 
                 if (field != null)

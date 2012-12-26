@@ -79,7 +79,7 @@ namespace Sys.Data
             if (this.Identity.Length > 1)
                 throw new JException("multiple identity columns defined {0}", this.Identity);
 
-            UpdateObject(this.Identity.Keys[0].ColumnName() == identityId);
+            UpdateObject(this.Identity.ColumnNames[0].ColumnName() == identityId);
         }
 
         /// <summary>
@@ -404,7 +404,7 @@ namespace Sys.Data
         {
 
             Type type = this.GetType();
-            foreach (string key in Identity.Keys)
+            foreach (string key in Identity.ColumnNames)
             {
                 FieldInfo fieldInfo = type.GetField(key, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
                 if(fieldInfo != null)
@@ -415,7 +415,7 @@ namespace Sys.Data
                 }
             }
 
-            foreach (string key in ComputedColumns.Keys)
+            foreach (string key in ComputedColumns.ColumnNames)
             {
                 FieldInfo fieldInfo = type.GetField(key, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
                 if (fieldInfo != null)
