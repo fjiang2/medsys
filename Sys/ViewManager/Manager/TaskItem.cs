@@ -35,7 +35,8 @@ namespace Sys.ViewManager.Manager
                     }
                     
                     this.Caption = task.caption == null ? dpo.Label : task.caption;
-                    this.LargeImage = this.SmallImage = dpo.IconImage;
+                    this.SmallImage = dpo.IconImage;
+                    this.LargeImage = dpo.IconImage;
 
                     break;
             
@@ -45,7 +46,8 @@ namespace Sys.ViewManager.Manager
                         task.SaveNewShortcut(shortcut);
 
                     this.Caption =  shortcut.Label;
-                    this.LargeImage = this.SmallImage = shortcut.IconImage;
+                    this.SmallImage = shortcut.IconImage;
+                    this.LargeImage = shortcut.IconImage;
                     break;
             }
 

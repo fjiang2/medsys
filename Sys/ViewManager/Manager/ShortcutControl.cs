@@ -79,8 +79,13 @@ namespace Sys.ViewManager.Manager
 
             Load();
 
+            //this.Add(false, "Demo", "Hello World", this.GetType(), "func", new object[] { });
         }
 
+        //public static void func()
+        //{
+        //    MessageBox.Show("Hello World");
+        //}
 
         private bool AddApp(string caption, string app, Image image)
         {
