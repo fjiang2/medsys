@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.comboModule = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.btnCreateTable = new System.Windows.Forms.Button();
@@ -38,7 +37,6 @@
             this.btnPackModule = new System.Windows.Forms.Button();
             this.btnPackAll = new System.Windows.Forms.Button();
             this.btnBrowseModule = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.jGridView1 = new Sys.ViewManager.Forms.JGridView();
             this.SuspendLayout();
@@ -48,7 +46,7 @@
             this.comboModule.FormattingEnabled = true;
             this.comboModule.Location = new System.Drawing.Point(60, 12);
             this.comboModule.Name = "comboModule";
-            this.comboModule.Size = new System.Drawing.Size(217, 21);
+            this.comboModule.Size = new System.Drawing.Size(374, 21);
             this.comboModule.TabIndex = 8;
             this.comboModule.SelectedIndexChanged += new System.EventHandler(this.comboModule_SelectedIndexChanged);
             // 
@@ -64,9 +62,9 @@
             // btnCreateTable
             // 
             this.btnCreateTable.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnCreateTable.Location = new System.Drawing.Point(60, 372);
+            this.btnCreateTable.Location = new System.Drawing.Point(2, 530);
             this.btnCreateTable.Name = "btnCreateTable";
-            this.btnCreateTable.Size = new System.Drawing.Size(175, 40);
+            this.btnCreateTable.Size = new System.Drawing.Size(92, 55);
             this.btnCreateTable.TabIndex = 9;
             this.btnCreateTable.Text = "Create Tables of selected module";
             this.btnCreateTable.UseVisualStyleBackColor = true;
@@ -88,16 +86,16 @@
             this.txtAssembly.Location = new System.Drawing.Point(60, 39);
             this.txtAssembly.Name = "txtAssembly";
             this.txtAssembly.ReadOnly = true;
-            this.txtAssembly.Size = new System.Drawing.Size(600, 20);
+            this.txtAssembly.Size = new System.Drawing.Size(766, 20);
             this.txtAssembly.TabIndex = 11;
             this.txtAssembly.TextChanged += new System.EventHandler(this.txtAssembly_TextChanged);
             // 
             // btnCreateAllTable
             // 
             this.btnCreateAllTable.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnCreateAllTable.Location = new System.Drawing.Point(62, 418);
+            this.btnCreateAllTable.Location = new System.Drawing.Point(100, 530);
             this.btnCreateAllTable.Name = "btnCreateAllTable";
-            this.btnCreateAllTable.Size = new System.Drawing.Size(173, 45);
+            this.btnCreateAllTable.Size = new System.Drawing.Size(89, 55);
             this.btnCreateAllTable.TabIndex = 12;
             this.btnCreateAllTable.Text = "Create Tables of all modules";
             this.btnCreateAllTable.UseVisualStyleBackColor = true;
@@ -106,9 +104,9 @@
             // btnPackModule
             // 
             this.btnPackModule.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnPackModule.Location = new System.Drawing.Point(519, 372);
+            this.btnPackModule.Location = new System.Drawing.Point(642, 530);
             this.btnPackModule.Name = "btnPackModule";
-            this.btnPackModule.Size = new System.Drawing.Size(141, 40);
+            this.btnPackModule.Size = new System.Drawing.Size(92, 55);
             this.btnPackModule.TabIndex = 13;
             this.btnPackModule.Text = "Pack selected module";
             this.btnPackModule.UseVisualStyleBackColor = true;
@@ -117,9 +115,9 @@
             // btnPackAll
             // 
             this.btnPackAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnPackAll.Location = new System.Drawing.Point(519, 418);
+            this.btnPackAll.Location = new System.Drawing.Point(740, 530);
             this.btnPackAll.Name = "btnPackAll";
-            this.btnPackAll.Size = new System.Drawing.Size(141, 45);
+            this.btnPackAll.Size = new System.Drawing.Size(88, 55);
             this.btnPackAll.TabIndex = 13;
             this.btnPackAll.Text = "Pack all modules";
             this.btnPackAll.UseVisualStyleBackColor = true;
@@ -127,7 +125,7 @@
             // 
             // btnBrowseModule
             // 
-            this.btnBrowseModule.Location = new System.Drawing.Point(297, 10);
+            this.btnBrowseModule.Location = new System.Drawing.Point(440, 12);
             this.btnBrowseModule.Name = "btnBrowseModule";
             this.btnBrowseModule.Size = new System.Drawing.Size(142, 23);
             this.btnBrowseModule.TabIndex = 15;
@@ -135,23 +133,14 @@
             this.btnBrowseModule.UseVisualStyleBackColor = true;
             this.btnBrowseModule.Click += new System.EventHandler(this.btnBrowseModule_Click);
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(21, 85);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(27, 13);
-            this.label1.TabIndex = 7;
-            this.label1.Text = "Dpo";
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(13, 98);
+            this.label2.Location = new System.Drawing.Point(11, 69);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(35, 13);
+            this.label2.Size = new System.Drawing.Size(58, 13);
             this.label2.TabIndex = 7;
-            this.label2.Text = "Class:";
+            this.label2.Text = "Dpo Class:";
             // 
             // jGridView1
             // 
@@ -159,16 +148,17 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.jGridView1.DataSource = null;
-            this.jGridView1.Location = new System.Drawing.Point(62, 85);
+            this.jGridView1.Location = new System.Drawing.Point(2, 85);
             this.jGridView1.Name = "jGridView1";
-            this.jGridView1.Size = new System.Drawing.Size(598, 274);
+            this.jGridView1.ReadOnly = false;
+            this.jGridView1.Size = new System.Drawing.Size(836, 428);
             this.jGridView1.TabIndex = 16;
             // 
             // GenTableForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(672, 487);
+            this.ClientSize = new System.Drawing.Size(838, 586);
             this.Controls.Add(this.jGridView1);
             this.Controls.Add(this.btnBrowseModule);
             this.Controls.Add(this.btnPackAll);
@@ -178,10 +168,8 @@
             this.Controls.Add(this.btnCreateTable);
             this.Controls.Add(this.comboModule);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.lblAssembly);
             this.Controls.Add(this.label4);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "GenTableForm";
             this.ShowIcon = false;
             this.Text = "Generate Table from DPO";
@@ -202,7 +190,6 @@
         private System.Windows.Forms.Button btnPackModule;
         private System.Windows.Forms.Button btnPackAll;
         private System.Windows.Forms.Button btnBrowseModule;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private ViewManager.Forms.JGridView jGridView1;
     }

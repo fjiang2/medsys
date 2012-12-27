@@ -293,7 +293,7 @@ namespace Sys.ViewManager.DevEx
                     gridColumn.BestFit();
 
                 DataColumn dataColumn = dataTable.Columns[gridColumn.FieldName];
-                
+
                 if (!gridView1.OptionsBehavior.Editable)
                 {
                     gridColumn.AppearanceCell.Options.UseTextOptions = true;
@@ -306,13 +306,20 @@ namespace Sys.ViewManager.DevEx
                         edit.LinesCount = 0;
                         gridColumn.ColumnEdit = edit;
                     }
-            
+
+                    if (dataColumn.DataType == typeof(byte[]))
+                    {
+                        RepositoryItemImageEdit edit = new RepositoryItemImageEdit();
+                        gridColumn.ColumnEdit = edit;
+                    }
                 }
-                
-                if (dataColumn.DataType == typeof(byte[]))
+                else
                 {
-                    RepositoryItemImageEdit edit = new RepositoryItemImageEdit();
-                    gridColumn.ColumnEdit = edit;
+                    if (dataColumn.DataType == typeof(byte[]))
+                    {
+                        RepositoryItemPictureEdit edit = new RepositoryItemPictureEdit();
+                        gridColumn.ColumnEdit = edit;
+                    }
                 }
 
             }

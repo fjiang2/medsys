@@ -940,26 +940,22 @@ namespace Sys.ViewManager.Forms
         {
             get
             {
-#if DEBUG
-                try
+                if (iconImage == null)
                 {
-#endif
-                    if (iconImage == null)
-                    {
-                        if (this.Icon.Size.Height <= 16)
-                            return this.Icon.ToBitmap();
-                        else
+                    if (this.Icon.Size.Height <= 16)
+                        return this.Icon.ToBitmap();
+                    else
+                        try
+                        {
                             return SysInformation.Icon.CreateIcon16X16().ToBitmap();
-                    }
+                        }
+                        catch (Exception)
+                        {
+                            return null;
+                        }
+                }
 
-                    return iconImage;
-#if DEBUG
-                }
-                catch (Exception)
-                {
-                    return null;
-                }
-#endif
+                return iconImage;
             }
             set { this.iconImage = value; }
         }
