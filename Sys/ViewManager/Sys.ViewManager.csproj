@@ -119,6 +119,9 @@
     <Compile Include="DevEx\Grid.cs" />
     <Compile Include="DevEx\Pivot.cs" />
     <Compile Include="DevEx\Printing.cs" />
+    <Compile Include="Manager\MenuTreeView.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="MgCode\DpoClass\AppLinkDpo.cs" />
     <Compile Include="MgCode\DpoClass\DataImportDpo.cs" />
     <Compile Include="MgCode\DpoClass\DefaultLogHistory.cs" />
