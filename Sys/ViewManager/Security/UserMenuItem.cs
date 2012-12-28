@@ -29,6 +29,11 @@ namespace Sys.ViewManager.Security
         {
         }
 
+        public UserMenuItem(string key)
+        {
+            UpdateObject(_Key_Name.ColumnName() == key);
+        }
+
         public int MenuID
         {
             get { return ID; }
