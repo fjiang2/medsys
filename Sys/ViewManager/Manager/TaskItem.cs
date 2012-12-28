@@ -5,6 +5,7 @@ using System.Text;
 using DevExpress.XtraNavBar;
 using Sys.ViewManager.Forms;
 using Sys.ViewManager.Modules;
+using Sys.ViewManager.Security;
 
 namespace Sys.ViewManager.Manager
 {
@@ -41,13 +42,36 @@ namespace Sys.ViewManager.Manager
                     break;
             
                 case TaskDataType.StaticMethod:
+                    /*
                     UserShortcut shortcut = new UserShortcut(task.Key);
                     if (!shortcut.Exists)
                         task.SaveNewShortcut(shortcut);
 
+
                     this.Caption =  shortcut.Label;
                     this.SmallImage = shortcut.IconImage;
                     this.LargeImage = shortcut.IconImage;
+                    */
+                    UserMenuItem menuItem = new UserMenuItem(task.Key);
+                    if (menuItem.Exists)
+                    {
+                        this.Caption = menuItem.Label;
+                        if (menuItem.IconImage != null)
+                        {
+                            this.SmallImage = menuItem.IconImage;
+                            this.LargeImage = menuItem.IconImage;
+                        }
+                        else
+                        {
+                            this.SmallImage = SysInformation.Icon.CreateIcon16X16().ToBitmap();
+                            this.LargeImage = this.SmallImage;
+                        }
+                    }
+                    else
+                    {
+                        this.SmallImage = SysInformation.Icon.CreateIcon16X16().ToBitmap();
+                        this.LargeImage = this.SmallImage;
+                    }
                     break;
             }
 

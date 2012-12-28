@@ -25,7 +25,8 @@ namespace Sys.ViewManager.Manager
 
             foreach (var dpo in list)
             {
-                imageList.Images.Add(dpo.ID.ToString(), dpo.IconImage);
+                if(dpo.IconImage != null)
+                    imageList.Images.Add(dpo.ID.ToString(), dpo.IconImage);
             }
 
             //TreeNode selected image
@@ -93,7 +94,11 @@ namespace Sys.ViewManager.Manager
             : base(item.NodeText)
         {
             this.item = item;
-            this.ImageKey = item.ID.ToString();
+            if (item.IconImage != null)
+            {
+                this.ImageKey = item.ID.ToString();
+            }
+            
             this.SelectedImageKey = item.NodeSelectedImageKey;
             this.Checked = item.NodeChecked;
         }
