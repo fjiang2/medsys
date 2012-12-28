@@ -16,6 +16,14 @@ namespace Sys.ViewManager.Manager
         NewBaseForm   = 3,      //BaseForm
     }
 
+    enum TaskDataGroup
+    { 
+        Favorite,
+        Recent,
+        Application,
+        Menu
+    }
+
     class TaskData : IValizable, IComparer<TaskData>
     {
         private string key;
