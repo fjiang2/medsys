@@ -82,10 +82,44 @@ namespace Sys.ViewManager.Manager
             //this.Add(false, "Demo", "Hello World", this.GetType(), "func", new object[] { });
         }
 
+
         //public static void func()
         //{
         //    MessageBox.Show("Hello World");
         //}
+
+
+
+        #region User defined group 
+
+        public NavBarGroup AddGroup(string text)
+        {
+            NavBarGroup group = new DevExpress.XtraNavBar.NavBarGroup();
+            group.Caption = text;
+            this.Groups.Add(group);
+
+            return group;
+        }
+
+        public void AddItem(NavBarGroup group, string key, string caption, Type hostType, string func, object[] args)
+        {
+            TaskData task = new TaskData(key, false, caption, hostType, func, args);
+            TaskItem item = new TaskItem(task);
+
+            item.LinkClicked += delegate(object sender, NavBarLinkEventArgs e)
+            {
+                Cursor = Cursors.WaitCursor;
+                object result = task.Evaluate();
+                Cursor = Cursors.Default;
+
+            };
+
+            this.Items.Add(item);
+            NavBarItemLink link = group.ItemLinks.Add(item);
+        }
+
+        #endregion
+
 
         private bool AddApp(string caption, string app, Image image)
         {
@@ -107,6 +141,8 @@ namespace Sys.ViewManager.Manager
 
             return true;
         }
+
+        #region  Shortcuts Persistence
 
         private VAL Persistent(string key)
         {
@@ -145,6 +181,7 @@ namespace Sys.ViewManager.Manager
             Profile.Instance.Memory["ShortCuts"] = shortCuts;
         }
 
+        #endregion
 
 
         internal bool Add(bool pinned, Form form)
@@ -183,10 +220,18 @@ namespace Sys.ViewManager.Manager
             }
 
             this.ActiveGroup = group;
-            return AddItem(task, group);
+
+            if (AdjustItem(task, group))
+            {
+                return AddItem(task, group);
+            }
+            else
+                return false;
         }
 
-        private bool AddItem(TaskData task, NavBarGroup group)
+
+        //move [Recent] Item to [Favorite], keep last 10 tasks on the [Recent]
+        private bool AdjustItem(TaskData task, NavBarGroup group)
         {
 
             foreach (KeyValuePair<NavBarItemLink, TaskData> kvp in navBarLinks)
@@ -220,16 +265,21 @@ namespace Sys.ViewManager.Manager
                 while(recentlyused.ItemLinks.Count >= 10)   //keep last 10 tasks
                     RemoveOldestUnpinnedTask();
             }
-            
+
+            return true;
+        }
+
+        private bool AddItem(TaskData task, NavBarGroup group)
+        {
             try
             {
                 TaskItem item = new TaskItem(task);
-       
+
                 item.LinkClicked += delegate(object sender, NavBarLinkEventArgs e)
                 {
                     Cursor = Cursors.WaitCursor;
                     object result = task.Evaluate();
-                    
+
                     if (task.ty == TaskDataType.NewBaseForm)
                     {
                         BaseForm form = (BaseForm)result;
@@ -249,8 +299,8 @@ namespace Sys.ViewManager.Manager
                     group.ItemLinks.SortByCaption();
                 else
                     group.ItemLinks.Sort(item);         //Sort by time WinForm openned
-                
-               
+
+
             }
             catch (Exception e)
             {
