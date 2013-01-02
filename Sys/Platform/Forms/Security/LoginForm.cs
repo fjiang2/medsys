@@ -28,7 +28,8 @@ namespace Sys.Platform.Forms
               this.comboServerName.Items.Add(company);
             }
 
-            this.comboServerName.SelectedIndex = 0;
+            if (Companies.List.Count != 0)
+                this.comboServerName.SelectedIndex = 0;
         }
 
         private void chkForgotPassword_CheckedChanged(object sender, EventArgs e)
@@ -76,10 +77,12 @@ namespace Sys.Platform.Forms
             SysInformation.LoadProfile();
 
             Company company = (Company)this.comboServerName.SelectedItem;
-            SysInformation.SetCompany(company);
-            if (!string.IsNullOrEmpty(company.Default_DB))
-                Constant.DB_APPLICATION = company.Default_DB;
-
+            if (company != null)
+            {
+                SysInformation.SetCompany(company);
+                if (!string.IsNullOrEmpty(company.Default_DB))
+                    Constant.DB_APPLICATION = company.Default_DB;
+            }
 
             DialogResult = DialogResult.OK;
             //Close();

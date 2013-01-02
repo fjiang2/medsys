@@ -182,7 +182,7 @@ namespace Sys.Data
             string initial = connectionString.Split(new char[] { ';' }).Where(segment => segment.Trim().StartsWith(INITIAL)).First();
             string appDatabase = initial.Replace(INITIAL, "").Replace("=", "").Trim();
 
-
+            Sys.Const.CONNECTION_STRING = connectionString;
             Sys.Const.DB_APPLICATION = appDatabase;
             if (sysDatabase == null)
                 Sys.Const.DB_SYSTEM = appDatabase;
