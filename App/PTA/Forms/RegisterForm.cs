@@ -167,9 +167,9 @@ namespace PTA.Forms
 
                 
                 var list = new TableReader<PersonDpo>(
-                      PersonDpo._First_Name.ColumnName() == student.Person.First_Name
-                    & PersonDpo._Last_Name.ColumnName() == student.Person.Last_Name)
-                    .ToDPList();
+                      (PersonDpo._First_Name.ColumnName() == student.Person.First_Name)
+                    .AND(PersonDpo._Last_Name.ColumnName() == student.Person.Last_Name)
+                    ).ToDPList();
 
                 if (list.Count() == 0)
                     return;

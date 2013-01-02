@@ -336,7 +336,7 @@ namespace Sys.Data
 
         #region +-*/, compare, logical operation
 
-        private static SqlExpr OPR(SqlExpr exp1, string opr, SqlExpr exp2)
+        internal static SqlExpr OPR(SqlExpr exp1, string opr, SqlExpr exp2)
         {
             SqlExpr exp = new SqlExpr()
                 .Next(string.Format("({0}) {1} ({2})", exp1, opr, exp2));
@@ -347,21 +347,21 @@ namespace Sys.Data
         }
 
         // AND(A==1, B!=3, C>4) => "(A=1 AND B<>3 AND C>4)"
-        private static SqlExpr OPR(SqlExpr exp1, string opr, SqlExpr[] exps)
+        internal static SqlExpr OPR(SqlExpr exp1, string opr, SqlExpr[] exps)
         {
             SqlExpr exp = new SqlExpr();
             exp.Next("(")
-               .Next(string.Format("({0}) ", exp1));
+               .Next(string.Format("({0})", exp1));
             
             foreach(SqlExpr exp2 in exps)
             {
-                exp.Next(string.Format("{0} ({1})", opr, exp2));
+                exp.Next(string.Format(" {0} ({1})", opr, exp2));
             }
 
             return exp.Next(")");
         }
 
-        private static SqlExpr OPR(string opr, SqlExpr exp1)
+        internal static SqlExpr OPR(string opr, SqlExpr exp1)
         {
             SqlExpr exp = new SqlExpr()
                 .Next(string.Format("{0} ({1})", opr, exp1));
@@ -452,15 +452,15 @@ namespace Sys.Data
         }
 
 
-        public static SqlExpr operator &(SqlExpr exp1, SqlExpr exp2)
-        {
-            return OPR(exp1, "AND", exp2);
-        }
+        //public static SqlExpr operator &(SqlExpr exp1, SqlExpr exp2)
+        //{
+        //    return OPR(exp1, "AND", exp2);
+        //}
 
-        public static SqlExpr operator |(SqlExpr exp1, SqlExpr exp2)
-        {
-            return OPR(exp1, "OR", exp2);
-        }
+        //public static SqlExpr operator |(SqlExpr exp1, SqlExpr exp2)
+        //{
+        //    return OPR(exp1, "OR", exp2);
+        //}
 
         public static SqlExpr operator ~(SqlExpr exp)
         {
@@ -472,7 +472,7 @@ namespace Sys.Data
 
         #region SQL Function
 
-        private static SqlExpr Func(string func, params SqlExpr[] expl)
+        internal static SqlExpr Func(string func, params SqlExpr[] expl)
         {
             SqlExpr exp = new SqlExpr()
                 .Next(func)
@@ -484,56 +484,9 @@ namespace Sys.Data
             return exp;
         }
 
-        public static SqlExpr AND(SqlExpr exp1, params SqlExpr[] exps)
-        {
-            return OPR(exp1, "AND", exps);
-        }
+        
 
-        public static SqlExpr OR(SqlExpr exp1, params SqlExpr[] exps)
-        {
-            return OPR(exp1, "OR", exps);
-        }
-
-        public static SqlExpr LEN(SqlExpr expr)
-        {
-            return Func("LEN", expr);
-        }
-
-        public static SqlExpr SUBSTRING(SqlExpr expr, SqlExpr start, SqlExpr length)
-        {
-            return Func("SUBSTRING", expr, start, length);
-        }
-
-
-        public static SqlExpr SUM(SqlExpr expr)
-        {
-            return Func("SUM", expr);
-        }
-
-        public static SqlExpr MAX(SqlExpr expr)
-        {
-            return Func("MAX", expr);
-        }
-
-        public static SqlExpr MIN(SqlExpr expr)
-        {
-            return Func("MIN", expr);
-        }
-
-        public static SqlExpr COUNT(SqlExpr expr)
-        {
-            return Func("COUNT", expr);
-        }
-
-        public static SqlExpr ISNULL(SqlExpr expr)
-        {
-            return Func("ISNULL", expr);
-        }
-
-        public static SqlExpr GETDATE()
-        {
-            return Func("GETDATE");
-        }
+      
 
         #endregion
 

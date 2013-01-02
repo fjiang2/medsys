@@ -34,6 +34,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="agsXMPP, Version=1.1.0.0, Culture=neutral, PublicKeyToken=ff839b81f1debe86, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Lib\agsXMPP.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -41,10 +45,72 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="Tie, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Lib\Tie.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Sys\agsxmpp.ui\agsXMPP.ui.2008.csproj">
+      <Project>{1840C050-6A3F-48E0-9D8A-AB855797EE75}</Project>
+      <Name>agsXMPP.ui.2008</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Sys\BusinessRules\Sys.BusinessRules.csproj">
+      <Project>{21D52785-DCA0-46BB-B0FD-428FEFBD7B1D}</Project>
+      <Name>Sys.BusinessRules</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Sys\DataManager\Sys.DataManager.csproj">
+      <Project>{E5EC721B-1F83-41D2-ADFD-2E8E0B1E516D}</Project>
+      <Name>Sys.DataManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Sys\Foundation\Sys.Foundation.csproj">
+      <Project>{30FC8D52-477A-415A-9680-B29F0C5A1606}</Project>
+      <Name>Sys.Foundation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Sys\Messaging\Sys.Messaging.csproj">
+      <Project>{09DF51D9-CBDE-4FBC-AEF5-03E09E8501DC}</Project>
+      <Name>Sys.Messaging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Sys\PersistentObjects\Sys.PersistentObjects.csproj">
+      <Project>{FE52736A-BA94-41FC-9FD3-A481A790FC9C}</Project>
+      <Name>Sys.PersistentObjects</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Sys\Platform\Sys.Platform.csproj">
+      <Project>{7D1D5C6C-E462-458C-96F1-DCA2AF963F91}</Project>
+      <Name>Sys.Platform</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Sys\SmartList\Sys.SmartList.csproj">
+      <Project>{1E155570-E867-4CBA-9E2A-6A2084BBD9BE}</Project>
+      <Name>Sys.SmartList</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Sys\ViewManager\Sys.ViewManager.csproj">
+      <Project>{A5D0E475-F068-4DB0-BD4B-B5647B588E08}</Project>
+      <Name>Sys.ViewManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Sys\Workflow\Sys.Workflow.csproj">
+      <Project>{77EF5B24-DDBB-46EA-9296-8FDBB758B4AF}</Project>
+      <Name>Sys.Workflow</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Data\App.Data.csproj">
+      <Project>{78D1FDBF-3E84-4D8B-AC56-B8747311D2B2}</Project>
+      <Name>App.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Executable\App.Executable.csproj">
+      <Project>{D650025C-342C-4AD4-B980-B0BD4B5E2E2F}</Project>
+      <Name>App.Executable</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PTA\App.PTA.csproj">
+      <Project>{AC4B0A33-0804-409D-B5D4-AADA29206710}</Project>
+      <Name>App.PTA</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\X12\App.X12.csproj">
+      <Project>{BF2440C5-6467-4ADF-8BEF-52251189AC3D}</Project>
+      <Name>App.X12</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

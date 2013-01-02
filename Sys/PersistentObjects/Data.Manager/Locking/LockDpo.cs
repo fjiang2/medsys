@@ -44,7 +44,7 @@ namespace Sys.Data.Manager
             get
             {
                 //"Ty=@Ty AND LockID=@LockID AND CI_Time IS NULL"
-                SqlExpr exp = _Ty.AddParameter() & _LockID.AddParameter() & _CI_Time.ColumnName() == null;
+                SqlExpr exp = _Ty.AddParameter().AND(_LockID.AddParameter()).AND(_CI_Time.ColumnName() == null);
                 return new Locator(exp);
             }
         }
