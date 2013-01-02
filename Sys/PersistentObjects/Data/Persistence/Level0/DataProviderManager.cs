@@ -54,7 +54,7 @@ namespace Sys.Data
         {
             if (providers.ContainsKey(provider))
             {
-                return providers[provider];
+                providers.Remove(provider);
             }
 
             providers.Add(provider, connection);

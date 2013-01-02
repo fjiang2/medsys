@@ -901,6 +901,10 @@ namespace Sys.ViewManager.Forms
         /// <returns></returns>
         protected virtual bool AddShortCut(bool pinned)
         {
+            //when shorcut panel is not shown up
+            if (ShortcutManager == null)
+                return false;
+
             Type type = this.GetType();
 
 

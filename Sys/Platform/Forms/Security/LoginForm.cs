@@ -23,9 +23,14 @@ namespace Sys.Platform.Forms
             this.lblApplicationName.Text = SysInformation.ApplicatioName;
             this.lblSoftwareCompany.Text = SysInformation.SoftwareCompanyName;
 
-            foreach(Company company in Companies.List)
+            LoadCompanies();
+        }
+
+        private void LoadCompanies()
+        {
+            foreach (Company company in Companies.List)
             {
-              this.comboServerName.Items.Add(company);
+                this.comboServerName.Items.Add(company);
             }
 
             if (Companies.List.Count != 0)
@@ -166,5 +171,22 @@ namespace Sys.Platform.Forms
         }
         
         #endregion
+
+        private void picLogo_Click(object sender, EventArgs e)
+        {
+            Form server = new Sys.Platform.Forms.Connect2ServerForm();
+            server.ShowDialog();
+
+            if (server.DialogResult != DialogResult.OK)
+            {
+                DialogResult = DialogResult.Cancel;
+                Close();
+                
+                return;
+            }
+
+            LoadCompanies();
+        }
+
     }
 }
