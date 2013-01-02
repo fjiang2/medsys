@@ -96,11 +96,10 @@ namespace Sys.Security
                 //password has not set yet, set default password
                 ChangePassword(Constant.POLICY_DEFAULT_PASSWORD);
             }
-            else
-            {
-                if (!isPasswordValid(password, this.Password))
-                    return false;
-            }
+
+            if (!isPasswordValid(password, this.Password))
+                return false;
+            
 
             EnterLoginedState();
             return true;

@@ -190,8 +190,10 @@ namespace Sys.Platform.Forms
                 return false;
             }
 
-            DataProviderManager.RegisterDefaultProvider(GetConnectionString());
-            
+            string connectionString = GetConnectionString();
+            DataProviderManager.RegisterDefaultProvider(connectionString);
+
+          
             Sys.Constant.DB_SYSTEM = databaseName;
             Sys.Constant.DB_APPLICATION = databaseName;
             
