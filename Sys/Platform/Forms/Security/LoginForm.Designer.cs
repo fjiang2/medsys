@@ -28,13 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.bCancel = new System.Windows.Forms.Button();
             this.bLogin = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.txtUserName = new System.Windows.Forms.TextBox();
             this.txtPassword = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.ep = new System.Windows.Forms.ErrorProvider();
+            this.ep = new System.Windows.Forms.ErrorProvider(this.components);
             this.picLogo = new System.Windows.Forms.PictureBox();
             this.label3 = new System.Windows.Forms.Label();
             this.lblSoftwareCompany = new System.Windows.Forms.Label();
@@ -110,6 +111,7 @@
             this.picLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picLogo.TabIndex = 8;
             this.picLogo.TabStop = false;
+            this.picLogo.Click += new System.EventHandler(this.picLogo_Click);
             // 
             // label3
             // 
