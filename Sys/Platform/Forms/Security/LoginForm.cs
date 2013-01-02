@@ -28,6 +28,8 @@ namespace Sys.Platform.Forms
 
         private void LoadCompanies()
         {
+            this.comboServerName.SelectedItem = null;
+            this.comboServerName.Items.Clear();
             foreach (Company company in Companies.List)
             {
                 this.comboServerName.Items.Add(company);
@@ -177,15 +179,8 @@ namespace Sys.Platform.Forms
             Form server = new Sys.Platform.Forms.Connect2ServerForm();
             server.ShowDialog();
 
-            if (server.DialogResult != DialogResult.OK)
-            {
-                DialogResult = DialogResult.Cancel;
-                Close();
-                
-                return;
-            }
-
-            LoadCompanies();
+            if (server.DialogResult == DialogResult.OK)
+                LoadCompanies();
         }
 
     }
