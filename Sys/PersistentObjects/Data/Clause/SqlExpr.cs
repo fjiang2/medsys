@@ -346,6 +346,21 @@ namespace Sys.Data
             return exp;
         }
 
+        // AND(A==1, B!=3, C>4) => "(A=1 AND B<>3 AND C>4)"
+        private static SqlExpr OPR(SqlExpr exp1, string opr, SqlExpr[] exps)
+        {
+            SqlExpr exp = new SqlExpr();
+            exp.Next("(")
+               .Next(string.Format("({0}) ", exp1));
+            
+            foreach(SqlExpr exp2 in exps)
+            {
+                exp.Next(string.Format("{0} ({1})", opr, exp2));
+            }
+
+            return exp.Next(")");
+        }
+
         private static SqlExpr OPR(string opr, SqlExpr exp1)
         {
             SqlExpr exp = new SqlExpr()
@@ -469,14 +484,14 @@ namespace Sys.Data
             return exp;
         }
 
-        public static SqlExpr AND(SqlExpr exp1, SqlExpr exp2)
+        public static SqlExpr AND(SqlExpr exp1, params SqlExpr[] exps)
         {
-            return OPR(exp1, "AND", exp2);
+            return OPR(exp1, "AND", exps);
         }
 
-        public static SqlExpr OR(SqlExpr exp1, SqlExpr exp2)
+        public static SqlExpr OR(SqlExpr exp1, params SqlExpr[] exps)
         {
-            return OPR(exp1, "OR", exp2);
+            return OPR(exp1, "OR", exps);
         }
 
         public static SqlExpr LEN(SqlExpr expr)
