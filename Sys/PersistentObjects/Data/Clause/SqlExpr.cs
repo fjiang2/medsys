@@ -452,19 +452,19 @@ namespace Sys.Data
         }
 
 
-        //public static SqlExpr operator &(SqlExpr exp1, SqlExpr exp2)
-        //{
-        //    return OPR(exp1, "AND", exp2);
-        //}
+        public static SqlExpr operator &(SqlExpr exp1, SqlExpr exp2)
+        {
+            return OPR(exp1, "&", exp2);
+        }
 
-        //public static SqlExpr operator |(SqlExpr exp1, SqlExpr exp2)
-        //{
-        //    return OPR(exp1, "OR", exp2);
-        //}
+        public static SqlExpr operator |(SqlExpr exp1, SqlExpr exp2)
+        {
+            return OPR(exp1, "|", exp2);
+        }
 
         public static SqlExpr operator ~(SqlExpr exp)
         {
-            return OPR("NOT", exp);
+            return OPR("~", exp);
         }
         
         #endregion
