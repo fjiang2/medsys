@@ -78,45 +78,56 @@ namespace Sys.Data
 
         #endregion
 
+        public static SqlExpr AND(this SqlExpr exp1, SqlExpr exp2)
+        {
+            return SqlExpr.OPR(exp1, "AND", exp2);
+        }
+
+        public static SqlExpr OR(this SqlExpr exp1, SqlExpr exp2)
+        {
+            return SqlExpr.OPR(exp1, "OR", exp2);
+        }
+
 
         public static SqlExpr LEN(this SqlExpr expr)
         {
-            return SqlExpr.LEN(expr);
+            return SqlExpr.Func("LEN", expr);
         }
 
         public static SqlExpr SUBSTRING(this SqlExpr expr, SqlExpr start, SqlExpr length)
         {
-            return SqlExpr.SUBSTRING(expr, start, length);
+            return SqlExpr.Func("SUBSTRING", expr, start, length);
         }
+
 
         public static SqlExpr SUM(this SqlExpr expr)
         {
-            return SqlExpr.SUM(expr);
+            return SqlExpr.Func("SUM", expr);
         }
 
         public static SqlExpr MAX(this SqlExpr expr)
         {
-            return SqlExpr.MAX(expr);
+            return SqlExpr.Func("MAX", expr);
         }
 
         public static SqlExpr MIN(this SqlExpr expr)
         {
-            return SqlExpr.MIN(expr);
+            return SqlExpr.Func("MIN", expr);
         }
 
         public static SqlExpr COUNT(this SqlExpr expr)
         {
-            return SqlExpr.COUNT(expr);
+            return SqlExpr.Func("COUNT", expr);
         }
 
         public static SqlExpr ISNULL(this SqlExpr expr)
         {
-            return SqlExpr.ISNULL(expr);
+            return SqlExpr.Func("ISNULL", expr);
         }
 
-      
-
-
-
+        public static SqlExpr GETDATE()
+        {
+            return SqlExpr.Func("GETDATE");
+        }
     }
 }

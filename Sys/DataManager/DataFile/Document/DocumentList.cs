@@ -25,8 +25,8 @@ namespace Sys.DataManager
             
             //"Table_id={0} AND Row_ID = {1}
             dt = new TableReader<Doc01Dpo>(
-                Doc01Dpo._Table_Id.ColumnName() == rowObject.TableId
-                & Doc01Dpo._Row_Id.ColumnName() == rowObject.RowId).Table;
+                (Doc01Dpo._Table_Id.ColumnName() == rowObject.TableId)
+                .AND(Doc01Dpo._Row_Id.ColumnName() == rowObject.RowId)).Table;
         }
 
 
@@ -95,9 +95,11 @@ namespace Sys.DataManager
         {
             TableName tableName = typeof(Doc01Dpo).TableName();
             
-            DataTable dt = new TableReader<Doc01Dpo>(Doc01Dpo._Table_Id.ColumnName() == rowObject.TableId
-                                        & Doc01Dpo._Row_Id.ColumnName() == -1
-                                        & Doc01Dpo._Owner.ColumnName() == Sys.Security.Account.CurrentUser.User_ID).Table;
+            DataTable dt = new TableReader<Doc01Dpo>(
+                        (Doc01Dpo._Table_Id.ColumnName() == rowObject.TableId)
+                        .AND(Doc01Dpo._Row_Id.ColumnName() == -1)
+                        .AND(Doc01Dpo._Owner.ColumnName() == Sys.Security.Account.CurrentUser.User_ID)
+                        ).Table;
 
             foreach (DataRow row in dt.Rows)
             {

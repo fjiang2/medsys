@@ -120,8 +120,9 @@ namespace Sys.ViewManager.Security
             
             //"{0}={1} AND {2}={3}", ItemPermission._Role_ID, roleID, ItemPermission._Ty, (int)ty
             DataTable dataTable = new TableReader<ItemPermission>(
-                ItemPermission._Role_ID.ColumnName() == roleID
-                & ItemPermission._Ty.ColumnName() == ty)
+                (ItemPermission._Role_ID.ColumnName() == roleID)
+                .AND(ItemPermission._Ty.ColumnName() == ty)
+                )
                 .Table;
             
             entity.Load(dataTable);

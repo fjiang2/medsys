@@ -94,7 +94,7 @@ namespace Sys.Data
             {
                 SqlExpr where = association.Column2.ColumnName() == association.Column1.ParameterName();
                 if (association.Filter != null)
-                    where = where & association.Filter;
+                    where = where.AND(association.Filter);
 
                 this.clause2 = new SqlClause()
                     .SELECT

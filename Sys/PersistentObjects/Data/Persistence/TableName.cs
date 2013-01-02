@@ -104,8 +104,13 @@ namespace Sys.Data
         {
             get 
             {
-                //Visual Studio 2010 Windows Form Design Mode, does not support format [database]..[table]
-                return string.Format("{0}..[{1}]", this.baseName.Name, this.tableName);  
+                if (this.baseName.Name != "")
+                {
+                    //Visual Studio 2010 Windows Form Design Mode, does not support format [database]..[table]
+                    return string.Format("{0}..[{1}]", this.baseName.Name, this.tableName);
+                }
+                else
+                    return this.tableName;
             }
         }
 

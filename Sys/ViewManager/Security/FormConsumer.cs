@@ -26,15 +26,16 @@ namespace Sys.ViewManager.Security
             //  Account.CurrentUser.UserID, 
             // formID;
             DataTable dataTable = new TableReader<FormPermission>(
-                    FormPermission._Ty.ColumnName() == 1
-                    & FormPermission._Role_ID.ColumnName().IN(
-                        new SqlClause()
+                        (FormPermission._Ty.ColumnName() == 1)
+                    .AND(FormPermission._Role_ID.ColumnName().IN(
+                         new SqlClause()
                             .SELECT.COLUMNS(UserRoleDpo._Role_ID.ColumnName())
                             .FROM<UserRoleDpo>()
                             .WHERE(UserRoleDpo._User_ID.ColumnName() ==Account.CurrentUser.UserID)
                             )
-                    & FormPermission._Key_Name.ColumnName() == formID)
-                    .Table;
+                         )
+                    .AND(FormPermission._Key_Name.ColumnName() == formID)
+                    ).Table;
 
             if (dataTable == null || dataTable.Rows.Count == 0)
                 return;
