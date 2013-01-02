@@ -88,6 +88,10 @@ namespace Sys.Data
             return SqlExpr.OPR(exp1, "OR", exp2);
         }
 
+        public static SqlExpr NOT(this SqlExpr exp)
+        {
+            return SqlExpr.OPR("NOT", exp);
+        }
 
         public static SqlExpr LEN(this SqlExpr expr)
         {
