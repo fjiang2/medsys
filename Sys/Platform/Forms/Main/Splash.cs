@@ -35,7 +35,7 @@ namespace Sys.Platform.Forms
             else
             {
                 if (value > this.progressBar1.Maximum)
-                    this.progressBar1.Maximum = value + 20;
+                    this.progressBar1.Maximum = value + 5;
 
                 this.progressBar1.Value = value;
             }

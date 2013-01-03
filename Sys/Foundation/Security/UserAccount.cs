@@ -93,14 +93,13 @@ namespace Sys.Security
              
             if (Password == null)
             {
-                //password has not set yet, set default password
-                ChangePassword(Constant.POLICY_DEFAULT_PASSWORD);
+                //if password has not set yet, use plain_password as default password
+                ChangePassword(this.Plain_Password);
             }
 
             if (!isPasswordValid(password, this.Password))
                 return false;
             
-
             EnterLoginedState();
             return true;
         }
