@@ -40,7 +40,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.lblSoftwareCompany = new System.Windows.Forms.Label();
             this.lblApplicationName = new System.Windows.Forms.Label();
-            this.comboServerName = new System.Windows.Forms.ComboBox();
+            this.comboServiceName = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.ep)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picLogo)).BeginInit();
             this.SuspendLayout();
@@ -144,11 +144,11 @@
             // 
             // comboServerName
             // 
-            this.comboServerName.FormattingEnabled = true;
-            this.comboServerName.Location = new System.Drawing.Point(341, 88);
-            this.comboServerName.Name = "comboServerName";
-            this.comboServerName.Size = new System.Drawing.Size(131, 21);
-            this.comboServerName.TabIndex = 10;
+            this.comboServiceName.FormattingEnabled = true;
+            this.comboServiceName.Location = new System.Drawing.Point(341, 88);
+            this.comboServiceName.Name = "comboServerName";
+            this.comboServiceName.Size = new System.Drawing.Size(131, 21);
+            this.comboServiceName.TabIndex = 10;
             // 
             // LoginForm
             // 
@@ -158,7 +158,7 @@
             this.CancelButton = this.bCancel;
             this.ClientSize = new System.Drawing.Size(524, 226);
             this.ControlBox = false;
-            this.Controls.Add(this.comboServerName);
+            this.Controls.Add(this.comboServiceName);
             this.Controls.Add(this.lblApplicationName);
             this.Controls.Add(this.lblSoftwareCompany);
             this.Controls.Add(this.picLogo);
@@ -193,6 +193,6 @@
         private System.Windows.Forms.Label lblApplicationName;
         private System.Windows.Forms.Label lblSoftwareCompany;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.ComboBox comboServerName;
+        private System.Windows.Forms.ComboBox comboServiceName;
     }
 }
