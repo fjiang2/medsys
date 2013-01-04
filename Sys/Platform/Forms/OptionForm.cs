@@ -27,7 +27,7 @@ namespace Sys.Platform.Forms
         private void button1_Click(object sender, EventArgs e)
         {
             string command = "command";
-            this.ShortcutManager.Add(false, command, command, typeof(OptionForm), "MenuAction", new object[] { command });
+            this.ShortcutManager.Add(false, Guid.NewGuid(), command, typeof(OptionForm), "MenuAction", new object[] { command });
         }
     }
 }
