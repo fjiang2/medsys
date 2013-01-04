@@ -9,6 +9,7 @@ using DevExpress.XtraNavBar;
 using Sys.ViewManager.Forms;
 using Tie;
 using Sys.Security;
+using Sys.ViewManager.Security;
 
 namespace Sys.ViewManager.Manager
 {
@@ -200,13 +201,35 @@ namespace Sys.ViewManager.Manager
             return AddItem(task);
         }
 
-        public bool Add(bool pinned, string key, string caption, Type hostType, string func, object[] args)
+        public bool Add(bool pinned, Guid key, string caption, Type hostType, string func, object[] args)
         {
-            key = hostType.FullName + "#" + key.ToIdent();
-            TaskData task = new TaskData(key, pinned, caption, hostType, func, args);
+            TaskData task = new TaskData(key.ToString(), pinned, caption, hostType, func, args);
 
             return AddItem(task);
         }
+
+        public bool Add(bool pinned, UserMenuItem menuItem, Type hostType, string func, object[] args)
+        {
+            System.Guid key;
+            if(!Guid.TryParse(menuItem.Key_Name, out key))
+            {
+                key = System.Guid.NewGuid();
+                menuItem.Key_Name = key.ToString();
+                menuItem.Save();
+            }
+            else
+            {
+                key = new System.Guid(menuItem.Key_Name);
+            }
+
+            string caption = menuItem.Label;
+            this.BeginInit();
+            bool result = this.Add(pinned, key, caption, hostType, func, args);
+            this.EndInit();
+
+            return result;
+        }
+
 
         private bool AddItem(TaskData task)
         {
