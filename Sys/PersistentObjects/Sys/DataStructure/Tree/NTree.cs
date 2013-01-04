@@ -59,6 +59,14 @@ namespace Sys
 
         }
 
+        public IEnumerable<INTreeNode<T>> Collection
+        {
+            get
+            {
+                return this.collection;
+            }
+        }
+
         /// <summary>
         /// Returns this instance of NTree
         /// </summary>
