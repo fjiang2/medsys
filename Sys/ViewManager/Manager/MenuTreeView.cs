@@ -16,12 +16,13 @@ namespace Sys.ViewManager.Manager
     public class MenuTreeView : TreeView
     {
         ImageList imageList = new ImageList();
+        NTree<UserMenuItem> tree;
 
         public MenuTreeView()
         {
             var list = new TableReader<UserMenuItem>().ToList().Where(dpo => dpo.Released).OrderBy(dpo => dpo.OrderBy);
 
-            NTree<UserMenuItem> tree = new NTree<UserMenuItem>(list, 0);
+            tree = new NTree<UserMenuItem>(list, 0);
 
             foreach (var dpo in list)
             {
@@ -44,17 +45,38 @@ namespace Sys.ViewManager.Manager
             this.AfterSelect += new TreeViewEventHandler(MainMenu_AfterSelect);
         }
 
+        public NTree<UserMenuItem> Tree
+        {
+            get { return this.tree; }
+        }
+
+        public UserMenuItem GetMenuItem(int menuId)
+        {
+            var node = tree.AsEnumerable().Where(menuItem => menuItem.Item.ID == menuId).FirstOrDefault();
+
+            if (node != null)
+            {
+                return node.Item;
+            }
+            else
+                return null;
+        }
+
         void MainMenu_AfterSelect(object sender, TreeViewEventArgs e)
         {
             if (e.Action == TreeViewAction.ByMouse)
             {
-                string code = (e.Node as MenuTreeNode).Item.Command;
+                UserMenuItem item = (e.Node as MenuTreeNode).Item;
+                string code = item.Command;
                 if (code != "")
                 {
                     Cursor = Cursors.WaitCursor;
                     try
                     {
-                        Tie.Script.Evaluate(code);
+                        string scope = "MenuItem";
+                        Tie.Memory DS = new Tie.Memory();
+                        DS.AddHostObject(scope, item);
+                        Tie.Script.Evaluate(scope, code, DS, null);
                     }
                     catch (Exception ex)
                     {
