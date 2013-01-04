@@ -69,6 +69,7 @@ namespace Sys.ViewManager.Manager
                     }
                     else
                     {
+                        this.Caption = task.caption;
                         this.SmallImage = SysInformation.Icon.CreateIcon16X16().ToBitmap();
                         this.LargeImage = this.SmallImage;
                     }
