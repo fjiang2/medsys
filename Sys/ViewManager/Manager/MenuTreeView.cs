@@ -52,11 +52,11 @@ namespace Sys.ViewManager.Manager
 
         public UserMenuItem GetMenuItem(int menuId)
         {
-            var node = tree.AsEnumerable().Where(menuItem => menuItem.Item.ID == menuId).FirstOrDefault();
+            var node = tree.Collection.Where(menuItem => menuItem.NodeId == menuId).FirstOrDefault();
 
             if (node != null)
             {
-                return node.Item;
+                return node.NodeItem;
             }
             else
                 return null;
