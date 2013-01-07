@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data;
+using System.Drawing;
 using Sys;
 using Sys.ViewManager;
 using Sys.ViewManager.Forms;
@@ -11,23 +12,28 @@ using Sys.Data;
 using Sys.ViewManager.DpoClass;
 using Sys.ViewManager.Security;
 
-namespace Sys.ViewManager.Manager
+namespace Sys.ViewManager.Forms
 {
-    public class MenuTreeView : TreeView
+    public interface INTreeNode : ITreeDpoNode
+    {
+        Image IconImage { get; }
+        string Expression { get; }
+    }
+
+    public class NTreeView : TreeView
     {
         ImageList imageList = new ImageList();
-        NTree<UserMenuItem> tree;
+        NTree<INTreeNode> tree;
 
-        public MenuTreeView()
+        public NTreeView(IEnumerable<INTreeNode<INTreeNode>> collection, int parentID)
         {
-            var list = new TableReader<UserMenuItem>().ToList().Where(dpo => dpo.Released).OrderBy(dpo => dpo.OrderBy);
 
-            tree = new NTree<UserMenuItem>(list, 0);
+            tree = new NTree<INTreeNode>(collection, 0);
 
-            foreach (var dpo in list)
+            foreach (var node in collection)
             {
-                if(dpo.IconImage != null)
-                    imageList.Images.Add(dpo.ID.ToString(), dpo.IconImage);
+                if(node.NodeItem.IconImage != null)
+                    imageList.Images.Add(node.NodeId.ToString(), node.NodeItem.IconImage);
             }
 
             //TreeNode selected image
@@ -37,7 +43,7 @@ namespace Sys.ViewManager.Manager
             this.Nodes.Clear();
             foreach (var node in tree.Nodes)
             {
-                MenuTreeNode treeNode = new MenuTreeNode(node.Item);
+                NTreeNode treeNode = new NTreeNode(node.Item);
                 this.Nodes.Add(treeNode);
                 BuildTree(treeNode, node.Nodes);
             }
@@ -45,23 +51,25 @@ namespace Sys.ViewManager.Manager
             this.AfterSelect += new TreeViewEventHandler(MainMenu_AfterSelect);
         }
 
-        public NTree<UserMenuItem> Tree
+        public NTree<INTreeNode> Tree
         {
             get { return this.tree; }
         }
 
+      
         void MainMenu_AfterSelect(object sender, TreeViewEventArgs e)
         {
             if (e.Action == TreeViewAction.ByMouse)
             {
-                UserMenuItem item = (e.Node as MenuTreeNode).Item;
-                string code = item.Command;
+                NTreeNode node = (NTreeNode)(e.Node);
+                INTreeNode item = node.Item;
+                string code = item.Expression;
                 if (code != "")
                 {
                     Cursor = Cursors.WaitCursor;
                     try
                     {
-                        string scope = "MenuItem";
+                        string scope = "$NodeItem";
                         Tie.Memory DS = new Tie.Memory();
                         DS.AddHostObject(scope, item);
                         Tie.Script.Evaluate(scope, code, DS, null);
@@ -83,11 +91,11 @@ namespace Sys.ViewManager.Manager
             }
         }
 
-        private void BuildTree(MenuTreeNode root, TreeNodeCollection<UserMenuItem> nodes)
+        private void BuildTree(NTreeNode root, TreeNodeCollection<INTreeNode> nodes)
         {
             foreach (var node in nodes)
             {
-                MenuTreeNode treeNode = new MenuTreeNode(node.Item);
+                NTreeNode treeNode = new NTreeNode(node.Item);
                 root.Nodes.Add(treeNode);
                 BuildTree(treeNode, node.Nodes);
             }
@@ -96,24 +104,24 @@ namespace Sys.ViewManager.Manager
     }
 
 
-    public class MenuTreeNode : TreeNode
+    public class NTreeNode : TreeNode
     {
-        UserMenuItem item;
+        INTreeNode item;
 
-        public MenuTreeNode(UserMenuItem item)
+        public NTreeNode(INTreeNode item)
             : base(item.NodeText)
         {
             this.item = item;
             if (item.IconImage != null)
             {
-                this.ImageKey = item.ID.ToString();
+                this.ImageKey = item.NodeId.ToString();
             }
             
             this.SelectedImageKey = item.NodeSelectedImageKey;
             this.Checked = item.NodeChecked;
         }
 
-        public UserMenuItem Item
+        public INTreeNode Item
         {
             get { return this.item; }
         }
