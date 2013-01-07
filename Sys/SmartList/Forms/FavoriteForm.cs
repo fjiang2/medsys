@@ -27,7 +27,7 @@ namespace Sys.SmartList.Forms
             InitializeComponent();
 
             TreeDpoNode selectedNode = tree.SelectedDpoNode;
-            par = (CommandDpo)selectedNode.Dpo;
+            par = (CommandDpo)selectedNode.Item;
 
         
             this.securityType = securityType;
@@ -47,7 +47,7 @@ namespace Sys.SmartList.Forms
                     TreeDpoNode node = tree.SearchTreeNode(par.ParentID);
                     if (node != null)
                     {
-                        par = (CommandDpo)node.Dpo;
+                        par = (CommandDpo)node.Item;
 
                         if (par.Sql_Command != "")
                             break;

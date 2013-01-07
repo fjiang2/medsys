@@ -138,7 +138,7 @@ namespace Sys.ViewManager.Security
             return true;
         }
 
-        public List<ITreeDpoNode> GetNodes(int parentID)
+        public List<INTreeDpoNode> GetNodes(int parentID)
         {
             //@"SELECT ID, ParentID, Label FROM {0} WHERE Ty=0 AND Controlled=1 ORDER BY orderBy";
             SqlClause sql = new SqlClause()
@@ -150,10 +150,10 @@ namespace Sys.ViewManager.Security
                 .ORDER_BY(_OrderBy);
             DataTable dt = sql.FillDataTable();
 
-            List<ITreeDpoNode> list = new List<ITreeDpoNode>();
+            List<INTreeDpoNode> list = new List<INTreeDpoNode>();
             foreach (DataRow dataRow in dt.Rows)
             {
-                ITreeDpoNode dpo = new UserMenuItem(dataRow);
+                INTreeDpoNode dpo = new UserMenuItem(dataRow);
                 list.Add(dpo);
             }
 
@@ -167,5 +167,9 @@ namespace Sys.ViewManager.Security
             get { return this.Command; }
         }
 
+        public override string ToString()
+        {
+            return string.Format("[{0}] {1}", ID, Label);
+        }
     }
 }

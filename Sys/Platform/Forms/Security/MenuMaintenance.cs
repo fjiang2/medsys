@@ -123,10 +123,10 @@ namespace Sys.Platform.Forms
                 .Replace("@UserMenus", Sys.ViewManager.DpoClass.UserMenuDpo.TABLE_NAME);
 
 
-            List<ITreeDpoNode> list = new List<ITreeDpoNode>();
+            List<INTreeDpoNode> list = new List<INTreeDpoNode>();
             foreach (DataRow dataRow in SqlCmd.FillDataTable <UserMenuDpo>(SQL).Rows)
             {
-                ITreeDpoNode dpo = new UserMenuItem(dataRow);
+                INTreeDpoNode dpo = new UserMenuItem(dataRow);
                 list.Add(dpo);
             }
 
@@ -252,7 +252,7 @@ namespace Sys.Platform.Forms
             {
                 TreeDpoNode treeNode = (TreeDpoNode)e.Node;
                 if (treeNode != null)
-                    LoadMenuItem(treeNode.Dpo.NodeId);
+                    LoadMenuItem(treeNode.Item.NodeId);
             }
         }
 

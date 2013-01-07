@@ -123,7 +123,7 @@ namespace Sys.SmartList.Forms
 			}
 
 
-			this.Text = treeView1.SelectedDpoNode.Dpo.NodeText;
+			this.Text = treeView1.SelectedDpoNode.Item.NodeText;
 
 
 
@@ -211,10 +211,10 @@ namespace Sys.SmartList.Forms
             treeView1.ImageList = CommandTree.ImageList;
 
             this.dtSmartList = SqlCmd.FillDataTable<CommandDpo>(selectCommand, (int)SecurityType.SmartList, collector.UserID);
-            List<ITreeDpoNode> list = new List<ITreeDpoNode>();
+            List<INTreeDpoNode> list = new List<INTreeDpoNode>();
             foreach (DataRow dataRow in dtSmartList.Rows)
             {
-                ITreeDpoNode dpo = new CommandNodeDpo(dataRow);
+                INTreeDpoNode dpo = new CommandNodeDpo(dataRow);
                 list.Add(dpo);
             }
 
