@@ -59,12 +59,32 @@ namespace Sys
 
         }
 
+        /// <summary>
+        /// return node collection
+        /// </summary>
         public IEnumerable<INTreeNode<T>> Collection
         {
             get
             {
                 return this.collection;
             }
+        }
+
+        /// <summary>
+        /// get item by node id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public T GetNodeItem(int id)
+        {
+            var node = this.Collection.Where(item => item.NodeId == id).FirstOrDefault();
+
+            if (node != null)
+            {
+                return node.NodeItem;
+            }
+            else
+                return null;
         }
 
         /// <summary>
