@@ -19,7 +19,7 @@ namespace Sys.SmartList
     }
 
 
-    class CommandNodeDpo : Configuration, ITreeDpoNode, INTreeNode<CommandNodeDpo>
+    class CommandNodeDpo : Configuration, INTreeDpoNode, INTreeNode<CommandNodeDpo>
     {
         public CommandNodeDpo()
         {
@@ -110,23 +110,24 @@ namespace Sys.SmartList
             return true;
         }
 
-        public List<ITreeDpoNode> GetNodes(int parentID)
+        public List<INTreeDpoNode> GetNodes(int parentID)
         {
             //SELECT * FROM {0} WHERE ParentID = @parentID ORDER BY OrderBy
             SqlClause sql = new SqlClause().SELECT.COLUMNS().FROM(this).WHERE( _ParentID.ColumnName() == parentID).ORDER_BY(_OrderBy);
             DataTable dt = sql.FillDataTable();
 
-            List<ITreeDpoNode> list = new List<ITreeDpoNode>();
+            List<INTreeDpoNode> list = new List<INTreeDpoNode>();
             foreach (DataRow dataRow in dt.Rows)
             {
-                ITreeDpoNode dpo = new CommandNodeDpo(dataRow);
+                INTreeDpoNode dpo = new CommandNodeDpo(dataRow);
                 list.Add(dpo);
             }
 
             return list;
         }
 
-
+        public System.Drawing.Image IconImage { get { return null; }  }
+        public string Expression { get { return null; } }
   
 
         #endregion
@@ -135,7 +136,7 @@ namespace Sys.SmartList
 
 
 
-        public List<ITreeDpoNode> EntireCollection
+        public List<INTreeDpoNode> EntireCollection
         {
             get
             {
@@ -147,10 +148,10 @@ namespace Sys.SmartList
                 SqlClause sql = new SqlClause().SELECT.COLUMNS().FROM(this).ORDER_BY(_OrderBy);
                 DataTable dt = sql.FillDataTable();
 
-                List<ITreeDpoNode> list = new List<ITreeDpoNode>();
+                List<INTreeDpoNode> list = new List<INTreeDpoNode>();
                 foreach (DataRow dataRow in dt.Rows)
                 {
-                    ITreeDpoNode dpo = new CommandNodeDpo(dataRow);
+                    INTreeDpoNode dpo = new CommandNodeDpo(dataRow);
                     list.Add(dpo);
                 }
 

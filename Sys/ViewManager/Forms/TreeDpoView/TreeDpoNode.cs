@@ -8,14 +8,14 @@ using Sys.Data;
 
 namespace Sys.ViewManager.Forms
 {
-    public delegate string DisplayTreeDpoNode(ITreeDpoNode dpo);
+   
 
 
     public class TreeDpoNode : TreeNode
     {
-        private ITreeDpoNode dpo;
+        private INTreeDpoNode dpo;
 
-        public TreeDpoNode(ITreeDpoNode dpo, DisplayTreeDpoNode d)
+        public TreeDpoNode(INTreeDpoNode dpo, DisplayNTreeNode d)
         {
             this.dpo = dpo;
             this.Text =d(dpo);
@@ -24,16 +24,12 @@ namespace Sys.ViewManager.Forms
             this.Checked = dpo.NodeChecked;
         }
 
-        public void Add(TreeRowNode dataRowTreeNode)
-        {
-            this.Nodes.Add(dataRowTreeNode);
-        }
-
-        public ITreeDpoNode Dpo
+    
+        public INTreeDpoNode Item
         {
             get 
             {
-                return (ITreeDpoNode)this.dpo; 
+                return this.dpo; 
             }
         }
 

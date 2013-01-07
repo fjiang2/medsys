@@ -141,7 +141,7 @@ namespace Sys.SmartList.Forms
             if (node == null)
                 return;
 
-            var form = new MainForm(node.Dpo.NodeId);
+            var form = new MainForm(node.Item.NodeId);
             form.PopUp(this);
         }
 
@@ -164,7 +164,7 @@ namespace Sys.SmartList.Forms
                             binding.SaveDpo();
                     }
 
-                    binding.Dpo = (CommandNodeDpo)node.Dpo;
+                    binding.Dpo = (CommandNodeDpo)node.Item;
                     binding.Reset();
                 }
             }

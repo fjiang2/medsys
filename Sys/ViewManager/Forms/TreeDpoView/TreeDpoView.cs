@@ -11,8 +11,8 @@ namespace Sys.ViewManager.Forms
 {
     public class TreeDpoView : TreeView
     {
-        private List<ITreeDpoNode> list;
-        private DisplayTreeDpoNode d;
+        private List<INTreeDpoNode> list;
+        private DisplayNTreeNode d;
         private TreeDpoNode mySelectedNode;
         
         private TreeNode root;
@@ -41,7 +41,7 @@ namespace Sys.ViewManager.Forms
 
         }
 
-        public List<ITreeDpoNode> DataSource
+        public List<INTreeDpoNode> DataSource
         {
             get
             {
@@ -61,14 +61,14 @@ namespace Sys.ViewManager.Forms
             }
         }
 
-        public ITreeDpoNode SelectedDpo
+        public INTreeDpoNode SelectedDpo
         {
             get
             {
                 if (this.SelectedDpoNode == null)
                     return null;
 
-                return this.SelectedDpoNode.Dpo;
+                return this.SelectedDpoNode.Item;
             }
         }
 
@@ -170,9 +170,9 @@ namespace Sys.ViewManager.Forms
                         if (e.Node is TreeDpoNode)
                         {
                             TreeDpoNode dpoNode = (TreeDpoNode)e.Node;
-                            dpoNode.Dpo.NodeText = e.Node.Text;
+                            dpoNode.Item.NodeText = e.Node.Text;
                             //dpoNode.Text = d(dpoNode.Dpo);
-                            dpoNode.Dpo.NodeSave();
+                            dpoNode.Item.NodeSave();
                         }
                     }
                     else
@@ -199,21 +199,21 @@ namespace Sys.ViewManager.Forms
 
         #region Add/Move/Delete Node
 
-        private ITreeDpoNode AddNode(TreeDpoNode selectedNode, string nodeText)
+        private INTreeDpoNode AddNode(TreeDpoNode selectedNode, string nodeText)
         {
-            return AddNode(selectedNode, selectedNode.Dpo.NodeId, nodeText);
+            return AddNode(selectedNode, selectedNode.Item.NodeId, nodeText);
         }
 
 
-        private ITreeDpoNode AddNode(TreeNode selectedNode, int parentID, string nodeText)
+        private INTreeDpoNode AddNode(TreeNode selectedNode, int parentID, string nodeText)
         {
-            ITreeDpoNode dpo = (ITreeDpoNode)Activator.CreateInstance(this.nodeType);
+            INTreeDpoNode dpo = (INTreeDpoNode)Activator.CreateInstance(this.nodeType);
             dpo.NodeText = nodeText;
             dpo.NodeParentId = parentID;
             if (selectedNode.Nodes.Count > 0)
             {
                 TreeDpoNode last = (TreeDpoNode)selectedNode.Nodes[selectedNode.Nodes.Count - 1];
-                dpo.NodeOrderBy = last.Dpo.NodeOrderBy + 1;
+                dpo.NodeOrderBy = last.Item.NodeOrderBy + 1;
             }
             else
                 dpo.NodeOrderBy = 0;
@@ -231,21 +231,21 @@ namespace Sys.ViewManager.Forms
             if (from == to)
                 return false;
 
-            from.Dpo.NodeParentId = to.Dpo.NodeId;
+            from.Item.NodeParentId = to.Item.NodeId;
             if (to.Nodes.Count > 0)
             {
                 TreeDpoNode last = (TreeDpoNode)to.Nodes[to.Nodes.Count - 1];
-                from.Dpo.NodeOrderBy = last.Dpo.NodeOrderBy + 1;
+                from.Item.NodeOrderBy = last.Item.NodeOrderBy + 1;
             }
             else
-                from.Dpo.NodeOrderBy = 0;
+                from.Item.NodeOrderBy = 0;
 
             from.Remove(); //from.Parent.Nodes.Remove(from);
             to.Nodes.Add(from);
 
             
             from.AcceptChanges();
-            from.Dpo.NodeSave();
+            from.Item.NodeSave();
             return true;
         }
 
@@ -259,13 +259,13 @@ namespace Sys.ViewManager.Forms
             {
                 TreeNodeCollection nodes = from.Parent.Nodes;
                 int index = nodes.IndexOf(to);
-                from.Dpo.NodeOrderBy = to.Dpo.NodeOrderBy + 1;
+                from.Item.NodeOrderBy = to.Item.NodeOrderBy + 1;
                 from.Remove();
                 nodes.Insert(index, from);
             }
 
             from.AcceptChanges();
-            from.Dpo.NodeSave();
+            from.Item.NodeSave();
             return true;
         }
 
@@ -274,7 +274,7 @@ namespace Sys.ViewManager.Forms
         {
             dpoNode.Remove();
             list.Remove(SelectedDpo);
-            dpoNode.Dpo.Delete();
+            dpoNode.Item.Delete();
         }
 
         #endregion
@@ -369,7 +369,7 @@ namespace Sys.ViewManager.Forms
             BuildTreeView(root, parentID, DisplayDelegate);
         }
 
-        public void BuildTreeView(TreeNode root, int parentID, DisplayTreeDpoNode d)
+        public void BuildTreeView(TreeNode root, int parentID, DisplayNTreeNode d)
         {
             this.root = root;
             this.rootID = parentID;
@@ -387,9 +387,9 @@ namespace Sys.ViewManager.Forms
         }
 
 
-        private void BuildTreeView(TreeNodeCollection nodes, int parentID, DisplayTreeDpoNode d)
+        private void BuildTreeView(TreeNodeCollection nodes, int parentID, DisplayNTreeNode d)
         {
-            foreach(ITreeDpoNode dpo in list)
+            foreach(INTreeDpoNode dpo in list)
             {
                 if (dpo.NodeParentId != parentID)
                     continue;
@@ -406,7 +406,7 @@ namespace Sys.ViewManager.Forms
         }
 
 
-        private string DisplayDelegate(ITreeDpoNode dpo)
+        private string DisplayDelegate(INTreeDpoNode dpo)
         {
             return dpo.NodeText;
         }
@@ -426,7 +426,7 @@ namespace Sys.ViewManager.Forms
                 if (node is TreeDpoNode)
                 {
                     TreeDpoNode n = (TreeDpoNode)node;
-                    if(n.Dpo.NodeId == ID)
+                    if(n.Item.NodeId == ID)
                         return n;
 
                     SearchTreeNode(ID, n.Nodes);
@@ -449,7 +449,7 @@ namespace Sys.ViewManager.Forms
                 if (node is TreeDpoNode)
                 {
                     TreeDpoNode n = (TreeDpoNode)node;
-                    n.Dpo.NodeSave();
+                    n.Item.NodeSave();
                     SaveOrderBy(n.Nodes);
                 }
             }

@@ -59,7 +59,7 @@ namespace Sys.ViewManager.Forms
                 NTreeNode<T> node = (NTreeNode<T>)(e.Node);
                 INTreeDpoNode item = node.Item;
                 string code = item.Expression;
-                if (code != "")
+                if (!string.IsNullOrEmpty(code))
                 {
                     Cursor = Cursors.WaitCursor;
                     try
@@ -101,26 +101,5 @@ namespace Sys.ViewManager.Forms
     }
 
 
-    public class NTreeNode<T> : TreeNode where T : class, INTreeDpoNode
-    {
-        T item;
-
-        public NTreeNode(T item)
-            : base(item.NodeText)
-        {
-            this.item = item;
-            if (item.IconImage != null)
-            {
-                this.ImageKey = item.NodeId.ToString();
-            }
-            
-            this.SelectedImageKey = item.NodeSelectedImageKey;
-            this.Checked = item.NodeChecked;
-        }
-
-        public T Item
-        {
-            get { return this.item; }
-        }
-    }
+ 
 }
