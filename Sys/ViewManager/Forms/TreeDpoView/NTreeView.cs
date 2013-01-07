@@ -19,6 +19,7 @@ namespace Sys.ViewManager.Forms
     {
         ImageList imageList = new ImageList();
         NTree<T> tree;
+        Tie.Memory ds = new Tie.Memory();
 
         public NTreeView(IEnumerable<INTreeNode<T>> collection, int parentID)
         {
@@ -32,6 +33,7 @@ namespace Sys.ViewManager.Forms
             }
 
             //TreeNode selected image
+            imageList.Images.Add("Unknown", global::Sys.ViewManager.Properties.Resources.application);
             imageList.Images.Add(TreeRowNode.TREE_ROW_NODE_SELECTED_IMAGE, global::Sys.ViewManager.Properties.Resources.BreakpointHS);
 
             this.ImageList = imageList;
@@ -43,7 +45,7 @@ namespace Sys.ViewManager.Forms
                 BuildTree(treeNode, node.Nodes);
             }
 
-            this.AfterSelect += new TreeViewEventHandler(MainMenu_AfterSelect);
+            this.AfterSelect += new TreeViewEventHandler(NTreeView_AfterSelect);
         }
 
         public NTree<T> Tree
@@ -51,8 +53,14 @@ namespace Sys.ViewManager.Forms
             get { return this.tree; }
         }
 
-      
-        void MainMenu_AfterSelect(object sender, TreeViewEventArgs e)
+
+        public Tie.Memory DS
+        {
+            get { return this.ds; }
+            set { this.ds = value; }
+        }
+
+        private void NTreeView_AfterSelect(object sender, TreeViewEventArgs e)
         {
             if (e.Action == TreeViewAction.ByMouse)
             {
@@ -65,9 +73,8 @@ namespace Sys.ViewManager.Forms
                     try
                     {
                         string scope = "$NodeItem";
-                        Tie.Memory DS = new Tie.Memory();
                         DS.AddHostObject(scope, item);
-                        Tie.Script.Evaluate(scope, code, DS, null);
+                        Tie.Script.Execute(scope, code, ds, null);
                     }
                     catch (Exception ex)
                     {

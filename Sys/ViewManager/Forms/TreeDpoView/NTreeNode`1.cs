@@ -15,7 +15,7 @@ namespace Sys.ViewManager.Forms
 
         public NTreeNode(T item)
         {
-            this.Text = item.NodeText;
+            this.Text = item.NodeText.ToSentence();
 
             this.item = item;
             if (item.IconImage != null)
@@ -24,7 +24,8 @@ namespace Sys.ViewManager.Forms
             }
             else
             {
-                this.ImageIndex = item.NodeImageIndex;
+                if(item.NodeImageIndex >= 0 )
+                    this.ImageIndex = item.NodeImageIndex;
             }
 
             this.SelectedImageKey = item.NodeSelectedImageKey;
