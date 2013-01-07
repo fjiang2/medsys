@@ -122,9 +122,7 @@
     <Compile Include="Forms\Controls\NTreeView.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Manager\MenuTreeView.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="Forms\TreeDpoView\INTreeDpoNode.cs" />
     <Compile Include="MgCode\DpoClass\AppLinkDpo.cs" />
     <Compile Include="MgCode\DpoClass\DataImportDpo.cs" />
     <Compile Include="MgCode\DpoClass\DefaultLogHistory.cs" />

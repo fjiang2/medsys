@@ -10,7 +10,7 @@ using Sys.ViewManager.Forms;
 namespace Sys.ViewManager.Security
 {
 
-    public class UserMenuItem : DpoClass.UserMenuDpo, ITreeDpoNode , INTreeNode<UserMenuItem>
+    public class UserMenuItem : DpoClass.UserMenuDpo, INTreeDpoNode, INTreeNode<UserMenuItem>
     {
         int imageIndex = -1;
 
@@ -161,6 +161,11 @@ namespace Sys.ViewManager.Security
         }
 
         #endregion
+
+        public string Expression
+        {
+            get { return this.Command; }
+        }
 
     }
 }

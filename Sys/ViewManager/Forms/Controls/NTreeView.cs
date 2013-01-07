@@ -14,21 +14,16 @@ using Sys.ViewManager.Security;
 
 namespace Sys.ViewManager.Forms
 {
-    public interface INTreeNode : ITreeDpoNode
-    {
-        Image IconImage { get; }
-        string Expression { get; }
-    }
 
-    public class NTreeView : TreeView
+    public class NTreeView<T> : TreeView where T : class, INTreeDpoNode
     {
         ImageList imageList = new ImageList();
-        NTree<INTreeNode> tree;
+        NTree<T> tree;
 
-        public NTreeView(IEnumerable<INTreeNode<INTreeNode>> collection, int parentID)
+        public NTreeView(IEnumerable<INTreeNode<T>> collection, int parentID)
         {
 
-            tree = new NTree<INTreeNode>(collection, 0);
+            tree = new NTree<T>(collection, 0);
 
             foreach (var node in collection)
             {
@@ -43,7 +38,7 @@ namespace Sys.ViewManager.Forms
             this.Nodes.Clear();
             foreach (var node in tree.Nodes)
             {
-                NTreeNode treeNode = new NTreeNode(node.Item);
+                NTreeNode<T> treeNode = new NTreeNode<T>(node.Item);
                 this.Nodes.Add(treeNode);
                 BuildTree(treeNode, node.Nodes);
             }
@@ -51,7 +46,7 @@ namespace Sys.ViewManager.Forms
             this.AfterSelect += new TreeViewEventHandler(MainMenu_AfterSelect);
         }
 
-        public NTree<INTreeNode> Tree
+        public NTree<T> Tree
         {
             get { return this.tree; }
         }
@@ -61,8 +56,8 @@ namespace Sys.ViewManager.Forms
         {
             if (e.Action == TreeViewAction.ByMouse)
             {
-                NTreeNode node = (NTreeNode)(e.Node);
-                INTreeNode item = node.Item;
+                NTreeNode<T> node = (NTreeNode<T>)(e.Node);
+                INTreeDpoNode item = node.Item;
                 string code = item.Expression;
                 if (code != "")
                 {
@@ -80,8 +75,10 @@ namespace Sys.ViewManager.Forms
                         MessageBox.Show(message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
-
-                    Cursor = Cursors.Default;
+                    finally
+                    {
+                        Cursor = Cursors.Default;
+                    }
                 }
                 else
                 {
@@ -91,11 +88,11 @@ namespace Sys.ViewManager.Forms
             }
         }
 
-        private void BuildTree(NTreeNode root, TreeNodeCollection<INTreeNode> nodes)
+        private void BuildTree(NTreeNode<T> root, TreeNodeCollection<T> nodes)
         {
             foreach (var node in nodes)
             {
-                NTreeNode treeNode = new NTreeNode(node.Item);
+                NTreeNode<T> treeNode = new NTreeNode<T>(node.Item);
                 root.Nodes.Add(treeNode);
                 BuildTree(treeNode, node.Nodes);
             }
@@ -104,11 +101,11 @@ namespace Sys.ViewManager.Forms
     }
 
 
-    public class NTreeNode : TreeNode
+    public class NTreeNode<T> : TreeNode where T : class, INTreeDpoNode
     {
-        INTreeNode item;
+        T item;
 
-        public NTreeNode(INTreeNode item)
+        public NTreeNode(T item)
             : base(item.NodeText)
         {
             this.item = item;
@@ -121,7 +118,7 @@ namespace Sys.ViewManager.Forms
             this.Checked = item.NodeChecked;
         }
 
-        public INTreeNode Item
+        public T Item
         {
             get { return this.item; }
         }

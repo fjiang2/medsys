@@ -325,7 +325,7 @@ namespace Sys.ViewManager.Manager
 
 
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return false;
             }
