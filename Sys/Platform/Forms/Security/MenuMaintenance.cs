@@ -119,16 +119,10 @@ namespace Sys.Platform.Forms
 
         private void RefreshMenuTree()
         {
-            List<UserMenuItem> list = new List<UserMenuItem>();
-            foreach (var dpo in new TableReader<UserMenuItem>().ToList().OrderBy(dpo => dpo.OrderBy))
-            {
-                list.Add(dpo);
-            }
-
             treeMenu.Nodes.Clear();
             TreeNode root = new TreeNode("MENU");
             treeMenu.Nodes.Add(root);
-            treeMenu.DataSource = list;
+            treeMenu.DataSource = new TableReader<UserMenuItem>().ToList().OrderBy(dpo => dpo.OrderBy);
             treeMenu.BuildTreeView(root, 0, dpo => string.Format("[{0}] {1}", dpo.NodeId, dpo.NodeText));
             root.Expand();
             treeMenu.AllowDrop = true;

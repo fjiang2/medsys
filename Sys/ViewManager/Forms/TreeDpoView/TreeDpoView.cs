@@ -41,7 +41,7 @@ namespace Sys.ViewManager.Forms
 
         }
 
-        public List<T> DataSource
+        public IEnumerable<T> DataSource
         {
             get
             {
@@ -52,7 +52,9 @@ namespace Sys.ViewManager.Forms
                 if (value == null)
                     return;
 
-                this.list = value;
+                this.list = new List<T>();
+                foreach(var item in value)
+                    this.list.Add(item);
             }
         }
 
