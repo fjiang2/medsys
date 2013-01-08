@@ -9,23 +9,16 @@ namespace Sys.ViewManager.Forms
 {
     public interface INTreeDpoNode 
     {
-        int NodeId { get; }
-        int NodeParentId { get; set; }
+           int NodeId { get; }
+           int NodeParentId { get; set; }
         string NodeText { get; set; }
-        int NodeOrderBy { get; set; }
-        int NodeImageIndex { get; set; }
+           int NodeOrderBy { get; set; }
+           int NodeImageIndex { get; set; }
         string NodeSelectedImageKey { get; }
-        bool NodeChecked { get; set; }
+          bool NodeChecked { get; set; }
 
         bool Delete();
         bool NodeSave();
-
-        /// <summary>
-        /// Dynamic loading nodes
-        /// </summary>
-        /// <param name="parentID"></param>
-        /// <returns></returns>
-    //    List<ITreeDpoNode> GetNodes(int parentID);
 
         Image IconImage { get; }
         string Statement { get; }

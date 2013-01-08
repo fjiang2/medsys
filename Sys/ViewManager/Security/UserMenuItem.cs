@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 using System.Data;
 using System.Data.SqlClient;
 using System.Configuration;
@@ -138,26 +139,16 @@ namespace Sys.ViewManager.Security
             return true;
         }
 
-        public List<INTreeDpoNode> GetNodes(int parentID)
+        public IEnumerable<INTreeDpoNode> GetNodes(int parentID)
         {
-            //@"SELECT ID, ParentID, Label FROM {0} WHERE Ty=0 AND Controlled=1 ORDER BY orderBy";
-            SqlClause sql = new SqlClause()
-                .SELECT
-                .COLUMNS()
-                .FROM(this)
-                .WHERE(
-                    (_ParentID.ColumnName() == parentID).AND(_Ty.ColumnName() == 0).AND(_Controlled.ColumnName() == 1))
-                .ORDER_BY(_OrderBy);
-            DataTable dt = sql.FillDataTable();
-
-            List<INTreeDpoNode> list = new List<INTreeDpoNode>();
-            foreach (DataRow dataRow in dt.Rows)
-            {
-                INTreeDpoNode dpo = new UserMenuItem(dataRow);
-                list.Add(dpo);
-            }
-
-            return list;
+            return new TableReader<UserMenuItem>
+                (
+                    (_ParentID.ColumnName() == parentID)
+                    .AND(_Ty.ColumnName() == 0)
+                    .AND(_Controlled.ColumnName() == 1)
+                )
+                .ToList()
+                .OrderBy(dpo => dpo.OrderBy);
         }
 
         #endregion

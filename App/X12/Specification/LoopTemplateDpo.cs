@@ -102,25 +102,9 @@ namespace X12.Specification
             return true;
         }
 
-        public List<INTreeDpoNode> GetNodes(int parentID)
+        public IEnumerable<INTreeDpoNode> GetNodes(int parentID)
         {
-            //@"SELECT ID, ParentID, Label FROM {0} WHERE Ty=0 AND Controlled=1 ORDER BY orderBy";
-            SqlClause sql = new SqlClause()
-                .SELECT
-                .COLUMNS()
-                .FROM(this)
-                .WHERE(_ParentID.ColumnName() == parentID)
-                .ORDER_BY(_Sequence);
-            DataTable dt = sql.FillDataTable(); //new TableReader<LoopDpo>(new ColumnValue(_ParentID, parentID)).Table;
-
-            List<INTreeDpoNode> list = new List<INTreeDpoNode>();
-            foreach (DataRow dataRow in dt.Rows)
-            {
-                INTreeDpoNode dpo = new LoopTemplateDpo(dataRow);
-                list.Add(dpo);
-            }
-
-            return list;
+            return new TableReader<LoopTemplateDpo>(_ParentID.ColumnName() == parentID).ToList().OrderBy(dpo => dpo.Sequence);
         }
 
         public System.Drawing.Image IconImage { get { return null; } }

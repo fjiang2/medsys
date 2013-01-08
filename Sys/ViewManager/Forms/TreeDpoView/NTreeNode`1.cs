@@ -7,8 +7,6 @@ using Sys.Data;
 
 namespace Sys.ViewManager.Forms
 {
-    public delegate string DisplayNTreeNode(INTreeDpoNode dpo);
-    
     public enum TreeViewMode 
     { 
         Edit, 
@@ -21,7 +19,7 @@ namespace Sys.ViewManager.Forms
 
         public NTreeNode(T item)
         {
-            this.Text = item.NodeText.ToSentence();
+            this.Text = item.NodeText;
 
             this.item = item;
             if (item.IconImage != null)
@@ -39,10 +37,10 @@ namespace Sys.ViewManager.Forms
         }
 
 
-        public NTreeNode(T item, DisplayNTreeNode d)
+        public NTreeNode(T item, Func<T, string> toText)
             :this(item)
         {
-            this.Text = d(item);
+            this.Text = toText(item);
         }
 
         public T Item

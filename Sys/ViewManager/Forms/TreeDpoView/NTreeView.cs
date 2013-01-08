@@ -34,17 +34,15 @@ namespace Sys.ViewManager.Forms
             this.AfterSelect += new TreeViewEventHandler(NTreeView_AfterSelect);
         }
 
-        public NTree<T> NTree
+        public NTree<T> Tree
         {
-
-            get { return this.tree;}
-
+            get { return this.tree; }
             set
             {
                 if (value == null)
                     return;
 
-                this.tree = (NTree<T>)value;
+                this.tree = value;
                 BuildTree(tree);
             }
         }
@@ -72,19 +70,7 @@ namespace Sys.ViewManager.Forms
             }
         }
 
-        public NTree<T> Tree
-        {
-            get { return this.tree; }
-            set
-            {
-                if (value == null)
-                    return;
-
-                this.tree = value;
-                BuildTree(tree);
-            }
-        }
-
+     
 
         public Tie.Memory DS
         {
