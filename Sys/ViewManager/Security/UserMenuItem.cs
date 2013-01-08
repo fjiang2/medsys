@@ -162,7 +162,7 @@ namespace Sys.ViewManager.Security
 
         #endregion
 
-        public string Expression
+        public string Statement
         {
             get { return this.Command; }
         }

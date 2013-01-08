@@ -34,10 +34,25 @@ namespace Sys.ViewManager.Forms
             this.AfterSelect += new TreeViewEventHandler(NTreeView_AfterSelect);
         }
 
-        public object DataSource
+        public NTree<T> NTree
         {
 
             get { return this.tree;}
+
+            set
+            {
+                if (value == null)
+                    return;
+
+                this.tree = (NTree<T>)value;
+                BuildTree(tree);
+            }
+        }
+
+        public object DataSource
+        {
+
+            get { return this.tree; }
 
             set
             {
@@ -53,25 +68,21 @@ namespace Sys.ViewManager.Forms
                     this.tree = new NTree<T>((IEnumerable<INTreeNode<T>>)value, 0);
                 }
 
-                foreach (var node in tree.Collection)
-                {
-                    if (node.NodeItem.IconImage != null)
-                        imageList.Images.Add(node.NodeId.ToString(), node.NodeItem.IconImage);
-                }
-
-                this.Nodes.Clear();
-                foreach (var node in tree.Nodes)
-                {
-                    NTreeNode<T> treeNode = new NTreeNode<T>(node.Item);
-                    this.Nodes.Add(treeNode);
-                    BuildTree(treeNode, node.Nodes);
-                }
+                BuildTree(tree);
             }
         }
 
         public NTree<T> Tree
         {
             get { return this.tree; }
+            set
+            {
+                if (value == null)
+                    return;
+
+                this.tree = value;
+                BuildTree(tree);
+            }
         }
 
 
@@ -81,13 +92,19 @@ namespace Sys.ViewManager.Forms
             set { this.ds = value; }
         }
 
+
+        protected TreeViewMode Mode = TreeViewMode.Consume;
+
         private void NTreeView_AfterSelect(object sender, TreeViewEventArgs e)
         {
+            if (Mode != TreeViewMode.Consume)
+                return;
+
             if (e.Action == TreeViewAction.ByMouse)
             {
                 NTreeNode<T> node = (NTreeNode<T>)(e.Node);
                 INTreeDpoNode item = node.Item;
-                string code = item.Expression;
+                string code = item.Statement;
                 if (!string.IsNullOrEmpty(code))
                 {
                     Cursor = Cursors.WaitCursor;
@@ -113,6 +130,24 @@ namespace Sys.ViewManager.Forms
                     e.Node.Expand();
                     return;
                 }
+            }
+        }
+
+
+        private void BuildTree(NTree<T> tree)
+        {
+            foreach (var node in tree.Collection)
+            {
+                if (node.NodeItem.IconImage != null)
+                    imageList.Images.Add(node.NodeId.ToString(), node.NodeItem.IconImage);
+            }
+
+            this.Nodes.Clear();
+            foreach (var node in tree.Nodes)
+            {
+                NTreeNode<T> treeNode = new NTreeNode<T>(node.Item);
+                this.Nodes.Add(treeNode);
+                BuildTree(treeNode, node.Nodes);
             }
         }
 
