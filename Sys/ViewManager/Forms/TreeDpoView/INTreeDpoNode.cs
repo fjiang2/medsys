@@ -28,6 +28,6 @@ namespace Sys.ViewManager.Forms
     //    List<ITreeDpoNode> GetNodes(int parentID);
 
         Image IconImage { get; }
-        string Expression { get; }
+        string Statement { get; }
     }
 }

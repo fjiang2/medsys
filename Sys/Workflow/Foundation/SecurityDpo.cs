@@ -118,7 +118,7 @@ namespace Sys.Workflow
         }
 
         public System.Drawing.Image IconImage { get { return null; } }
-        public string Expression { get { return null; } }
+        public string Statement { get { return null; } }
 
     }
 }

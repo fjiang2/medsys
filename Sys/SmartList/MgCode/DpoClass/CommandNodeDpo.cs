@@ -127,7 +127,7 @@ namespace Sys.SmartList
         }
 
         public System.Drawing.Image IconImage { get { return null; }  }
-        public string Expression { get { return null; } }
+        public string Statement { get { return null; } }
   
 
         #endregion

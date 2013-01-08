@@ -8,6 +8,12 @@ using Sys.Data;
 namespace Sys.ViewManager.Forms
 {
     public delegate string DisplayNTreeNode(INTreeDpoNode dpo);
+    
+    public enum TreeViewMode 
+    { 
+        Edit, 
+        Consume
+    }
 
     public class NTreeNode<T> : TreeNode where T : class, INTreeDpoNode
     {
