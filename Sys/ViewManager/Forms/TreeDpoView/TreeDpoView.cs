@@ -9,18 +9,18 @@ using System.Drawing;
 
 namespace Sys.ViewManager.Forms
 {
-    public class TreeDpoView : TreeView
+    public class TreeDpoView<T> : NTreeView<T> where T : class, INTreeDpoNode
     {
-        private List<INTreeDpoNode> list;
+        private List<T> list;
         private DisplayNTreeNode d;
-        private TreeDpoNode mySelectedNode;
+        private NTreeNode<T> mySelectedNode;
         
         private TreeNode root;
         private int rootID;
-        private Type nodeType;
 
         public TreeDpoView()
         {
+            this.Mode = TreeViewMode.Edit;
             this.ContextMenuStrip = new ContextMenuStrip();
             treeMenuContextMenu(this.ContextMenuStrip);
 
@@ -33,15 +33,15 @@ namespace Sys.ViewManager.Forms
             this.MouseDown += delegate(object sender, System.Windows.Forms.MouseEventArgs e)
                 {
                     TreeNode node = this.GetNodeAt(e.X, e.Y);
-                    if(node is TreeDpoNode)
-                        mySelectedNode = (TreeDpoNode)node;
+                    if(node is NTreeNode<T>)
+                        mySelectedNode = (NTreeNode<T>)node;
                 };
 
             this.AfterLabelEdit += new NodeLabelEditEventHandler(TreeView_AfterLabelEdit);
 
         }
 
-        public List<INTreeDpoNode> DataSource
+        public List<T> DataSource
         {
             get
             {
@@ -52,16 +52,11 @@ namespace Sys.ViewManager.Forms
                 if (value == null)
                     return;
 
-                if (value.Count > 0)
-                    this.nodeType = value[0].GetType();
-                else
-                    this.nodeType = typeof(TreeNode);
-
                 this.list = value;
             }
         }
 
-        public INTreeDpoNode SelectedDpo
+        public T SelectedDpo
         {
             get
             {
@@ -73,17 +68,17 @@ namespace Sys.ViewManager.Forms
         }
 
 
-        public TreeDpoNode SelectedDpoNode
+        public NTreeNode<T> SelectedDpoNode
         {
             get
             {
                 if (this.SelectedNode == null)
                     return null;
 
-                if (!(this.SelectedNode is TreeDpoNode))
+                if (!(this.SelectedNode is NTreeNode<T>))
                     return null;
 
-                return (TreeDpoNode)this.SelectedNode;
+                return (NTreeNode<T>)this.SelectedNode;
             }
         }
 
@@ -103,14 +98,14 @@ namespace Sys.ViewManager.Forms
 
         void TreeDpoView_DragDrop(object sender, DragEventArgs e)
         {
-            TreeDpoNode node1;
+            NTreeNode<T> node1;
 
-            if (e.Data.GetDataPresent(typeof(TreeDpoNode).FullName, false))
+            if (e.Data.GetDataPresent(typeof(NTreeNode<T>).FullName, false))
             {
                 Point pt = ((TreeView)sender).PointToClient(new Point(e.X, e.Y));
-                TreeDpoNode node2 = (TreeDpoNode)((TreeView)sender).GetNodeAt(pt);
+                NTreeNode<T> node2 = (NTreeNode<T>)((TreeView)sender).GetNodeAt(pt);
 
-                node1 = (TreeDpoNode)e.Data.GetData(typeof(TreeDpoNode).FullName);
+                node1 = (NTreeNode<T>)e.Data.GetData(typeof(NTreeNode<T>).FullName);
                 if (node2.TreeView == node1.TreeView)
                 {
                     MoveNodeAsChild(node1, node2);
@@ -142,6 +137,9 @@ namespace Sys.ViewManager.Forms
 
         void TreeView_AfterSelect(object sender, TreeViewEventArgs e)
         {
+            if (this.Mode != TreeViewMode.Edit)
+                return;
+
             if (e.Action == TreeViewAction.ByMouse)
             {
                 if (e.Node == root)
@@ -150,7 +148,7 @@ namespace Sys.ViewManager.Forms
                     return;
                 }
 
-                TreeDpoNode treeNode = (TreeDpoNode)e.Node;
+                NTreeNode<T> treeNode = (NTreeNode<T>)e.Node;
                 //if (treeNode != null)
                     //LoadMenuItem(treeNode.Dpo);
             }
@@ -167,9 +165,9 @@ namespace Sys.ViewManager.Forms
                     {
                         // Stop editing without canceling the label change.
                         e.Node.EndEdit(false);
-                        if (e.Node is TreeDpoNode)
+                        if (e.Node is NTreeNode<T>)
                         {
-                            TreeDpoNode dpoNode = (TreeDpoNode)e.Node;
+                            NTreeNode<T> dpoNode = (NTreeNode<T>)e.Node;
                             dpoNode.Item.NodeText = e.Node.Text;
                             //dpoNode.Text = d(dpoNode.Dpo);
                             dpoNode.Item.NodeSave();
@@ -199,20 +197,20 @@ namespace Sys.ViewManager.Forms
 
         #region Add/Move/Delete Node
 
-        private INTreeDpoNode AddNode(TreeDpoNode selectedNode, string nodeText)
+        private T AddNode(NTreeNode<T> selectedNode, string nodeText)
         {
             return AddNode(selectedNode, selectedNode.Item.NodeId, nodeText);
         }
 
 
-        private INTreeDpoNode AddNode(TreeNode selectedNode, int parentID, string nodeText)
+        private T AddNode(TreeNode selectedNode, int parentID, string nodeText)
         {
-            INTreeDpoNode dpo = (INTreeDpoNode)Activator.CreateInstance(this.nodeType);
+            T dpo = (T)Activator.CreateInstance(typeof(T));
             dpo.NodeText = nodeText;
             dpo.NodeParentId = parentID;
             if (selectedNode.Nodes.Count > 0)
             {
-                TreeDpoNode last = (TreeDpoNode)selectedNode.Nodes[selectedNode.Nodes.Count - 1];
+                NTreeNode<T> last = (NTreeNode<T>)selectedNode.Nodes[selectedNode.Nodes.Count - 1];
                 dpo.NodeOrderBy = last.Item.NodeOrderBy + 1;
             }
             else
@@ -221,12 +219,12 @@ namespace Sys.ViewManager.Forms
             dpo.NodeSave();
             list.Add(dpo);
 
-            selectedNode.Nodes.Add(new TreeDpoNode(dpo, d));
+            selectedNode.Nodes.Add(new NTreeNode<T>(dpo, d));
 
             return dpo;
         }
 
-        private bool MoveNodeAsChild(TreeDpoNode from, TreeDpoNode to)
+        private bool MoveNodeAsChild(NTreeNode<T> from, NTreeNode<T> to)
         {
             if (from == to)
                 return false;
@@ -234,7 +232,7 @@ namespace Sys.ViewManager.Forms
             from.Item.NodeParentId = to.Item.NodeId;
             if (to.Nodes.Count > 0)
             {
-                TreeDpoNode last = (TreeDpoNode)to.Nodes[to.Nodes.Count - 1];
+                NTreeNode<T> last = (NTreeNode<T>)to.Nodes[to.Nodes.Count - 1];
                 from.Item.NodeOrderBy = last.Item.NodeOrderBy + 1;
             }
             else
@@ -250,7 +248,7 @@ namespace Sys.ViewManager.Forms
         }
 
 
-        private bool MoveNodeAsSibling(TreeDpoNode from, TreeDpoNode to)
+        private bool MoveNodeAsSibling(NTreeNode<T> from, NTreeNode<T> to)
         {
             if (from == to)
                 return false;
@@ -270,7 +268,7 @@ namespace Sys.ViewManager.Forms
         }
 
 
-        private void RemoveNode(TreeDpoNode dpoNode)
+        private void RemoveNode(NTreeNode<T> dpoNode)
         {
             dpoNode.Remove();
             list.Remove(SelectedDpo);
@@ -389,14 +387,17 @@ namespace Sys.ViewManager.Forms
 
         private void BuildTreeView(TreeNodeCollection nodes, int parentID, DisplayNTreeNode d)
         {
-            foreach(INTreeDpoNode dpo in list)
+            foreach(T dpo in list)
             {
                 if (dpo.NodeParentId != parentID)
                     continue;
 
                 dpo.NodeOrderBy = nodes.Count * 10;
-                TreeDpoNode treeNode2 = new TreeDpoNode(dpo, d);
+                NTreeNode<T> treeNode2 = new NTreeNode<T>(dpo, d);
                 nodes.Add(treeNode2);
+
+                if (treeNode2.Item.IconImage != null)
+                    this.ImageList.Images.Add(treeNode2.Item.NodeId.ToString(), treeNode2.Item.IconImage);
 
                 treeNode2.AcceptChanges();    //UPDATE dpc's DataTable
 
@@ -414,18 +415,18 @@ namespace Sys.ViewManager.Forms
         #endregion
 
 
-        public TreeDpoNode SearchTreeNode(int ID)
+        public NTreeNode<T> SearchTreeNode(int ID)
         {
             return SearchTreeNode(ID, myNodes);
         }
 
-        private TreeDpoNode SearchTreeNode(int ID, TreeNodeCollection nodes)
+        private NTreeNode<T> SearchTreeNode(int ID, TreeNodeCollection nodes)
         {
             foreach (TreeNode node in nodes)
             {
-                if (node is TreeDpoNode)
+                if (node is NTreeNode<T>)
                 {
-                    TreeDpoNode n = (TreeDpoNode)node;
+                    NTreeNode<T> n = (NTreeNode<T>)node;
                     if(n.Item.NodeId == ID)
                         return n;
 
@@ -446,9 +447,9 @@ namespace Sys.ViewManager.Forms
         {
             foreach (TreeNode node in nodes)
             {
-                if (node is TreeDpoNode)
+                if (node is NTreeNode<T>)
                 {
-                    TreeDpoNode n = (TreeDpoNode)node;
+                    NTreeNode<T> n = (NTreeNode<T>)node;
                     n.Item.NodeSave();
                     SaveOrderBy(n.Nodes);
                 }

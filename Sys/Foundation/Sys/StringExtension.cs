@@ -40,7 +40,11 @@ namespace Sys
 
         public static string ToSentence(this string sent)
         {
-            return string.Join(" ", sent.Trim().Split(new char[] { ' ' }).Select(word => word.Substring(0, 1).ToUpper() + word.Substring(1).ToLower()));
+            return string.Join(" ", 
+                sent.Trim().Split(new char[] { ' ' })
+                .Where(word => word !="")
+                .Select(word => word.Substring(0, 1).ToUpper() + word.Substring(1).ToLower())
+                );
         }
     }
 }

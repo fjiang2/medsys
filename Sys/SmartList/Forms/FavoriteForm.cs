@@ -22,11 +22,11 @@ namespace Sys.SmartList.Forms
 
         CommandDpo par;
 
-        public FavoriteForm(SecurityType securityType, TreeDpoView tree,  string value)
+        public FavoriteForm(SecurityType securityType, TreeDpoView<CommandNodeDpo> tree,  string value)
         {
             InitializeComponent();
 
-            TreeDpoNode selectedNode = tree.SelectedDpoNode;
+            NTreeNode<CommandNodeDpo> selectedNode = tree.SelectedDpoNode;
             par = (CommandDpo)selectedNode.Item;
 
         
@@ -44,7 +44,7 @@ namespace Sys.SmartList.Forms
             {
                 while (par.ParentID != 0)
                 {
-                    TreeDpoNode node = tree.SearchTreeNode(par.ParentID);
+                    NTreeNode<CommandNodeDpo> node = tree.SearchTreeNode(par.ParentID);
                     if (node != null)
                     {
                         par = (CommandDpo)node.Item;

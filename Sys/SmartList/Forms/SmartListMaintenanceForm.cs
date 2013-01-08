@@ -21,7 +21,7 @@ namespace Sys.SmartList.Forms
 {
     public partial class SmartListMaintenanceForm : BaseForm
     {
-        private TreeDpoView treeView = new TreeDpoView();
+        private TreeDpoView<CommandNodeDpo> treeView = new TreeDpoView<CommandNodeDpo>();
 
         BindDpo<CommandNodeDpo> binding = null;
 
@@ -137,7 +137,7 @@ namespace Sys.SmartList.Forms
 
         void treeView_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            TreeDpoNode node = treeView.SelectedDpoNode;
+            NTreeNode<CommandNodeDpo> node = treeView.SelectedDpoNode;
             if (node == null)
                 return;
 
@@ -150,7 +150,7 @@ namespace Sys.SmartList.Forms
 
             if (e.Action == TreeViewAction.ByMouse)
             {
-                TreeDpoNode node = (TreeDpoNode)e.Node;
+                NTreeNode<CommandNodeDpo> node = (NTreeNode<CommandNodeDpo>)e.Node;
                 if (node != null)
                 {
                     binding.Apply();
