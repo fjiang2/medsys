@@ -134,33 +134,6 @@ namespace Sys.SmartList
 
 
 
-
-
-        public List<CommandNodeDpo> EntireCollection
-        {
-            get
-            {
-                //int parentID = 10;
-                //SQL sql1 = new SqlBuilder().SELECT.COLUMNS().FROM(this).WHERE((EXPR)_ParentID == parentID & (EXPR)_Controlled == true).ORDER_BY(_OrderBy);
-
-
-                //SELECT * FROM {0} ORDER BY OrderBy
-                SqlClause sql = new SqlClause().SELECT.COLUMNS().FROM(this).ORDER_BY(_OrderBy);
-                DataTable dt = sql.FillDataTable();
-
-                List<CommandNodeDpo> list = new List<CommandNodeDpo>();
-                foreach (DataRow dataRow in dt.Rows)
-                {
-                    CommandNodeDpo dpo = new CommandNodeDpo(dataRow);
-                    list.Add(dpo);
-                }
-
-                return list;
-            }
-        }
-
-     
-
         public override string ToString()
         {
             return string.Format("{0}/{1}::{2} {3}",ID, ParentID, OrderBy, Label);

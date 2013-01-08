@@ -40,7 +40,7 @@ namespace Sys.SmartList.Forms
             this.splitContainer1.Panel1.Controls.Add(treeView);
             TreeNode root = new TreeNode("COMMAND");
             treeView.Nodes.Add(root);
-            treeView.DataSource = new CommandNodeDpo().EntireCollection;
+            treeView.DataSource = new TableReader<CommandNodeDpo>().ToList().OrderBy(dpo => dpo.OrderBy);
             treeView.BuildTreeView(root, 0, dpo => string.Format("[{0}] {1}", dpo.NodeId, dpo.NodeText));
 
             treeView.AfterSelect += new TreeViewEventHandler(treeView_AfterSelect);
