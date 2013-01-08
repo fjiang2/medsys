@@ -21,31 +21,52 @@ namespace Sys.ViewManager.Forms
         NTree<T> tree;
         Tie.Memory ds = new Tie.Memory();
 
-        public NTreeView(IEnumerable<INTreeNode<T>> collection, int parentID)
+        public NTreeView()
         {
-
-            tree = new NTree<T>(collection, 0);
-
-            foreach (var node in collection)
-            {
-                if(node.NodeItem.IconImage != null)
-                    imageList.Images.Add(node.NodeId.ToString(), node.NodeItem.IconImage);
-            }
-
-            //TreeNode selected image
+            //in case of no icon in the NTreeNode
             imageList.Images.Add("Unknown", global::Sys.ViewManager.Properties.Resources.application);
+            
+            //TreeNode selected image
             imageList.Images.Add(TreeRowNode.TREE_ROW_NODE_SELECTED_IMAGE, global::Sys.ViewManager.Properties.Resources.BreakpointHS);
 
             this.ImageList = imageList;
-            this.Nodes.Clear();
-            foreach (var node in tree.Nodes)
-            {
-                NTreeNode<T> treeNode = new NTreeNode<T>(node.Item);
-                this.Nodes.Add(treeNode);
-                BuildTree(treeNode, node.Nodes);
-            }
 
             this.AfterSelect += new TreeViewEventHandler(NTreeView_AfterSelect);
+        }
+
+        public object DataSource
+        {
+
+            get { return this.tree;}
+
+            set
+            {
+                if (value == null)
+                    return;
+
+                if (value is NTree<T>)
+                {
+                    this.tree = (NTree<T>)value;
+                }
+                else if (value is IEnumerable<INTreeNode<T>>)
+                {
+                    this.tree = new NTree<T>((IEnumerable<INTreeNode<T>>)value, 0);
+                }
+
+                foreach (var node in tree.Collection)
+                {
+                    if (node.NodeItem.IconImage != null)
+                        imageList.Images.Add(node.NodeId.ToString(), node.NodeItem.IconImage);
+                }
+
+                this.Nodes.Clear();
+                foreach (var node in tree.Nodes)
+                {
+                    NTreeNode<T> treeNode = new NTreeNode<T>(node.Item);
+                    this.Nodes.Add(treeNode);
+                    BuildTree(treeNode, node.Nodes);
+                }
+            }
         }
 
         public NTree<T> Tree

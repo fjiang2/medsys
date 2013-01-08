@@ -119,14 +119,9 @@ namespace Sys.Platform.Forms
 
         private void RefreshMenuTree()
         {
-            string SQL = @"SELECT * FROM @UserMenus ORDER BY orderBy"
-                .Replace("@UserMenus", Sys.ViewManager.DpoClass.UserMenuDpo.TABLE_NAME);
-
-
             List<INTreeDpoNode> list = new List<INTreeDpoNode>();
-            foreach (DataRow dataRow in SqlCmd.FillDataTable <UserMenuDpo>(SQL).Rows)
+            foreach (var dpo in new TableReader<UserMenuItem>().ToList().OrderBy(dpo => dpo.OrderBy))
             {
-                INTreeDpoNode dpo = new UserMenuItem(dataRow);
                 list.Add(dpo);
             }
 
