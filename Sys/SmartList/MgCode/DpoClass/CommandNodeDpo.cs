@@ -110,20 +110,9 @@ namespace Sys.SmartList
             return true;
         }
 
-        public List<INTreeDpoNode> GetNodes(int parentID)
+        public IEnumerable<INTreeDpoNode> GetNodes(int parentID)
         {
-            //SELECT * FROM {0} WHERE ParentID = @parentID ORDER BY OrderBy
-            SqlClause sql = new SqlClause().SELECT.COLUMNS().FROM(this).WHERE( _ParentID.ColumnName() == parentID).ORDER_BY(_OrderBy);
-            DataTable dt = sql.FillDataTable();
-
-            List<INTreeDpoNode> list = new List<INTreeDpoNode>();
-            foreach (DataRow dataRow in dt.Rows)
-            {
-                INTreeDpoNode dpo = new CommandNodeDpo(dataRow);
-                list.Add(dpo);
-            }
-
-            return list;
+            return new TableReader<CommandNodeDpo>(_ParentID.ColumnName() == parentID).ToList().OrderBy(dpo => dpo.OrderBy);
         }
 
         public System.Drawing.Image IconImage { get { return null; }  }

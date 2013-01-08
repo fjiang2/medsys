@@ -12,7 +12,7 @@ namespace Sys.ViewManager.Forms
     public class TreeDpoView<T> : NTreeView<T> where T : class, INTreeDpoNode
     {
         private List<T> list;
-        private DisplayNTreeNode d;
+        private Func<T, string> d;
         private NTreeNode<T> mySelectedNode;
         
         private TreeNode root;
@@ -369,7 +369,7 @@ namespace Sys.ViewManager.Forms
             BuildTreeView(root, parentID, DisplayDelegate);
         }
 
-        public void BuildTreeView(TreeNode root, int parentID, DisplayNTreeNode d)
+        public void BuildTreeView(TreeNode root, int parentID, Func<T, string> d)
         {
             this.root = root;
             this.rootID = parentID;
@@ -387,7 +387,7 @@ namespace Sys.ViewManager.Forms
         }
 
 
-        private void BuildTreeView(TreeNodeCollection nodes, int parentID, DisplayNTreeNode d)
+        private void BuildTreeView(TreeNodeCollection nodes, int parentID, Func<T, string> d)
         {
             foreach(T dpo in list)
             {
