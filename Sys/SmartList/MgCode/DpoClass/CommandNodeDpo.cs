@@ -19,7 +19,7 @@ namespace Sys.SmartList
     }
 
 
-    class CommandNodeDpo : Configuration, INTreeDpoNode, INTreeNode<CommandNodeDpo>
+    public class CommandNodeDpo : Configuration, INTreeDpoNode, INTreeNode<CommandNodeDpo>
     {
         public CommandNodeDpo()
         {
@@ -136,7 +136,7 @@ namespace Sys.SmartList
 
 
 
-        public List<INTreeDpoNode> EntireCollection
+        public List<CommandNodeDpo> EntireCollection
         {
             get
             {
@@ -148,10 +148,10 @@ namespace Sys.SmartList
                 SqlClause sql = new SqlClause().SELECT.COLUMNS().FROM(this).ORDER_BY(_OrderBy);
                 DataTable dt = sql.FillDataTable();
 
-                List<INTreeDpoNode> list = new List<INTreeDpoNode>();
+                List<CommandNodeDpo> list = new List<CommandNodeDpo>();
                 foreach (DataRow dataRow in dt.Rows)
                 {
-                    INTreeDpoNode dpo = new CommandNodeDpo(dataRow);
+                    CommandNodeDpo dpo = new CommandNodeDpo(dataRow);
                     list.Add(dpo);
                 }
 

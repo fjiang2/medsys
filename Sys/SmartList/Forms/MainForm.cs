@@ -211,10 +211,10 @@ namespace Sys.SmartList.Forms
             treeView1.ImageList = CommandTree.ImageList;
 
             this.dtSmartList = SqlCmd.FillDataTable<CommandDpo>(selectCommand, (int)SecurityType.SmartList, collector.UserID);
-            List<INTreeDpoNode> list = new List<INTreeDpoNode>();
+            List<CommandNodeDpo> list = new List<CommandNodeDpo>();
             foreach (DataRow dataRow in dtSmartList.Rows)
             {
-                INTreeDpoNode dpo = new CommandNodeDpo(dataRow);
+                CommandNodeDpo dpo = new CommandNodeDpo(dataRow);
                 list.Add(dpo);
             }
 

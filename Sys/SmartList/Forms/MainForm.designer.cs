@@ -43,7 +43,7 @@ namespace Sys.SmartList.Forms
             this.toolStripButtonSave = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonAbout = new System.Windows.Forms.ToolStripButton();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.treeView1 = new Sys.ViewManager.Forms.TreeDpoView();
+            this.treeView1 = new Sys.ViewManager.Forms.TreeDpoView<CommandNodeDpo>();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -258,7 +258,7 @@ namespace Sys.SmartList.Forms
         private System.Windows.Forms.ToolStripButton btnSwitchView;
         private System.Windows.Forms.ToolStripButton toolStripButtonAddFavorite;
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private Sys.ViewManager.Forms.TreeDpoView treeView1;
+        private Sys.ViewManager.Forms.TreeDpoView<CommandNodeDpo> treeView1;
         private System.Windows.Forms.ToolStripButton toolStripButtonRefresh;
         private System.Windows.Forms.ToolStripButton toolStripButtonPanelCollapse;
         private System.Windows.Forms.ToolStripButton toolStripButtonStop;

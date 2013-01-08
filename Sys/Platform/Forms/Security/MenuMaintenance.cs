@@ -119,7 +119,7 @@ namespace Sys.Platform.Forms
 
         private void RefreshMenuTree()
         {
-            List<INTreeDpoNode> list = new List<INTreeDpoNode>();
+            List<UserMenuItem> list = new List<UserMenuItem>();
             foreach (var dpo in new TableReader<UserMenuItem>().ToList().OrderBy(dpo => dpo.OrderBy))
             {
                 list.Add(dpo);
@@ -245,7 +245,7 @@ namespace Sys.Platform.Forms
         {
             if (e.Action == TreeViewAction.ByMouse)
             {
-                TreeDpoNode treeNode = (TreeDpoNode)e.Node;
+                NTreeNode<UserMenuItem> treeNode = (NTreeNode<UserMenuItem>)e.Node;
                 if (treeNode != null)
                     LoadMenuItem(treeNode.Item.NodeId);
             }

@@ -40,7 +40,7 @@ namespace Sys.SmartList.Forms
             this.dpdAccess = new System.Windows.Forms.DomainUpDown();
             this.label6 = new System.Windows.Forms.Label();
             this.btnDelete = new System.Windows.Forms.Button();
-            this.treeView1 = new Sys.ViewManager.Forms.TreeDpoView();
+            this.treeView1 = new Sys.ViewManager.Forms.TreeDpoView<CommandNodeDpo>();
             this.btnAdd = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
@@ -219,7 +219,7 @@ namespace Sys.SmartList.Forms
         private System.Windows.Forms.DomainUpDown dpdAccess;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button btnDelete;
-        private Sys.ViewManager.Forms.TreeDpoView treeView1;
+        private Sys.ViewManager.Forms.TreeDpoView<CommandNodeDpo> treeView1;
         private System.Windows.Forms.Button btnAdd;
     }
 }
