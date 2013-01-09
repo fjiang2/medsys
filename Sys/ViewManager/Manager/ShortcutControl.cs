@@ -58,7 +58,7 @@ namespace Sys.ViewManager.Manager
 
             favorites.Expanded = true;
             recentlyused.Expanded = true;
-            apps.Expanded = true;
+            apps.Expanded = false;
 
             //AddApp("Intranet", "http://intranet", global::Sys.ViewManager.Properties.Resources.world_link);
             //AddApp("Microsoft Excel", "EXCEL.EXE", global::Sys.ViewManager.Properties.Resources.page_excel);

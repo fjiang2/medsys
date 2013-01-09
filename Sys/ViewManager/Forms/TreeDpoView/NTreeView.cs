@@ -89,7 +89,7 @@ namespace Sys.ViewManager.Forms
             if (e.Action == TreeViewAction.ByMouse)
             {
                 NTreeNode<T> node = (NTreeNode<T>)(e.Node);
-                INTreeDpoNode item = node.Item;
+                T item = node.Item;
                 string code = item.Statement;
                 if (!string.IsNullOrEmpty(code))
                 {

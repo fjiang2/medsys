@@ -19,7 +19,9 @@ namespace App.Testing
         {
             //DataProviderManager.RegisterDefaultProvider("data source=hmt-tmbsql;initial catalog=ENGR;integrated security=SSPI;packet size=4096");
             DataProviderManager.RegisterDefaultProvider("data source=localhost\\sqlexpress;initial catalog=medsys;integrated security=SSPI;packet size=4096");
-            NTreeViewDemo();
+            //NTreeViewDemo();
+
+            SqlClauseJoinDemo();
         }
 
         static void SqlClauseDemo()
@@ -57,6 +59,26 @@ namespace App.Testing
             Form form = new Form();
             form.Controls.Add(treeView);
             Application.Run(form);
+        }
+
+        static void SqlClauseJoinDemo()
+        {
+            int userId = 1;
+
+            string U = "U";
+            string UR = "UR";
+            SqlClause clause = new SqlClause()
+                .SELECT.COLUMNS(
+                    UserDpo.AllColumnNames(U),       //U.*
+                    UserRoleDpo._Role_ID.ColumnName(UR) //UR.Role_ID
+                 )
+                .FROM<UserDpo>(U)
+                .INNER.JOIN<UserRoleDpo>(UR).ON(
+                    UserRoleDpo._User_ID.ColumnName(UR) == UserDpo._User_ID.ColumnName(U)
+                    )
+                .WHERE(UserDpo._User_ID.ColumnName(U) == userId);
+            
+            System.Data.DataTable table = new SqlCmd(clause).FillDataTable();
         }
     }
 }
