@@ -17,9 +17,10 @@ namespace Sys.ViewManager.Forms
 
     public class NTreeView<T> : TreeView where T : class, INTreeDpoNode
     {
-        ImageList imageList = new ImageList();
-        NTree<T> tree;
-        Tie.Memory ds = new Tie.Memory();
+        private ImageList imageList = new ImageList();
+        private NTree<T> tree;
+        private Tie.Memory ds = new Tie.Memory();
+        protected Func<T, string> toText = item => item.NodeText;
 
         public NTreeView()
         {
@@ -70,7 +71,14 @@ namespace Sys.ViewManager.Forms
             }
         }
 
-     
+
+        /// <summary>
+        /// define how to display Text on TreeNode
+        /// </summary>
+        public Func<T, string> ToNodeText
+        {
+            set { this.toText = value; }
+        }
 
         public Tie.Memory DS
         {
@@ -131,7 +139,7 @@ namespace Sys.ViewManager.Forms
             this.Nodes.Clear();
             foreach (var node in tree.Nodes)
             {
-                NTreeNode<T> treeNode = new NTreeNode<T>(node.Item);
+                NTreeNode<T> treeNode = new NTreeNode<T>(node.Item, this.toText);
                 this.Nodes.Add(treeNode);
                 BuildTree(treeNode, node.Nodes);
             }
@@ -141,7 +149,7 @@ namespace Sys.ViewManager.Forms
         {
             foreach (var node in nodes)
             {
-                NTreeNode<T> treeNode = new NTreeNode<T>(node.Item);
+                NTreeNode<T> treeNode = new NTreeNode<T>(node.Item, this.toText);
                 root.Nodes.Add(treeNode);
                 BuildTree(treeNode, node.Nodes);
             }

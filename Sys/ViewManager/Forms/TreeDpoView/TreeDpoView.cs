@@ -12,7 +12,6 @@ namespace Sys.ViewManager.Forms
     public class TreeDpoView<T> : NTreeView<T> where T : class, INTreeDpoNode
     {
         private List<T> list;
-        private Func<T, string> d;
         private NTreeNode<T> mySelectedNode;
         
         private TreeNode root;
@@ -221,7 +220,7 @@ namespace Sys.ViewManager.Forms
             dpo.NodeSave();
             list.Add(dpo);
 
-            selectedNode.Nodes.Add(new NTreeNode<T>(dpo, d));
+            selectedNode.Nodes.Add(new NTreeNode<T>(dpo, toText));
 
             return dpo;
         }
@@ -359,17 +358,12 @@ namespace Sys.ViewManager.Forms
 
         public void BuildTreeView()
         {
-            BuildTreeView(null, 0);
+            BuildTreeView((TreeNode)null, 0);
         }
 
       
+
         public void BuildTreeView(TreeNode root, int parentID)
-        {
-
-            BuildTreeView(root, parentID, DisplayDelegate);
-        }
-
-        public void BuildTreeView(TreeNode root, int parentID, Func<T, string> d)
         {
             this.root = root;
             this.rootID = parentID;
@@ -380,14 +374,13 @@ namespace Sys.ViewManager.Forms
             else
                 nodes = root.Nodes;
 
-            this.d = d;
             nodes.Clear();
-            BuildTreeView(nodes, parentID, d);
+            BuildTreeView(nodes, parentID);
             this.ExpandAll();
         }
 
 
-        private void BuildTreeView(TreeNodeCollection nodes, int parentID, Func<T, string> d)
+        private void BuildTreeView(TreeNodeCollection nodes, int parentID)
         {
             foreach(T dpo in list)
             {
@@ -395,7 +388,7 @@ namespace Sys.ViewManager.Forms
                     continue;
 
                 dpo.NodeOrderBy = nodes.Count * 10;
-                NTreeNode<T> treeNode2 = new NTreeNode<T>(dpo, d);
+                NTreeNode<T> treeNode2 = new NTreeNode<T>(dpo, base.toText);
                 nodes.Add(treeNode2);
 
                 if (treeNode2.Item.IconImage != null)
@@ -403,16 +396,13 @@ namespace Sys.ViewManager.Forms
 
                 treeNode2.AcceptChanges();    //UPDATE dpc's DataTable
 
-                BuildTreeView(treeNode2.Nodes, dpo.NodeId, d);
+                BuildTreeView(treeNode2.Nodes, dpo.NodeId);
             }
 
         }
 
 
-        private string DisplayDelegate(INTreeDpoNode dpo)
-        {
-            return dpo.NodeText;
-        }
+    
         
         #endregion
 

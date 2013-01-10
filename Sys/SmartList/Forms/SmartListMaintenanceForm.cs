@@ -40,8 +40,9 @@ namespace Sys.SmartList.Forms
             this.splitContainer1.Panel1.Controls.Add(treeView);
             TreeNode root = new TreeNode("COMMAND");
             treeView.Nodes.Add(root);
+            treeView.ToNodeText = dpo => string.Format("[{0}] {1}", dpo.NodeId, dpo.NodeText); 
             treeView.DataSource = new TableReader<CommandNodeDpo>().ToList().OrderBy(dpo => dpo.OrderBy);
-            treeView.BuildTreeView(root, 0, dpo => string.Format("[{0}] {1}", dpo.NodeId, dpo.NodeText));
+            treeView.BuildTreeView(root, 0);
 
             treeView.AfterSelect += new TreeViewEventHandler(treeView_AfterSelect);
             treeView.MouseDoubleClick += new MouseEventHandler(treeView_MouseDoubleClick);

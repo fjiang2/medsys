@@ -17,8 +17,11 @@ namespace App.Testing
     {
         static void Main(string[] args)
         {
-            //DataProviderManager.RegisterDefaultProvider("data source=hmt-tmbsql;initial catalog=ENGR;integrated security=SSPI;packet size=4096");
-            DataProviderManager.RegisterDefaultProvider("data source=localhost\\sqlexpress;initial catalog=medsys;integrated security=SSPI;packet size=4096");
+            if(SystemInformation.ComputerName != "T420")
+                DataProviderManager.RegisterDefaultProvider("data source=hmt-tmbsql;initial catalog=ENGR;integrated security=SSPI;packet size=4096");
+            else
+                DataProviderManager.RegisterDefaultProvider("data source=localhost\\sqlexpress;initial catalog=medsys;integrated security=SSPI;packet size=4096");
+            
             //NTreeViewDemo();
 
             SqlClauseJoinDemo();
