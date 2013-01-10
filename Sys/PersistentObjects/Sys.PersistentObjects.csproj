@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data.Manager\LogDpoClass.cs" />
+    <Compile Include="Data.Manager\Log\Log.cs" />
     <Compile Include="Data\Attribute\AggregatedAttribute.cs" />
     <Compile Include="Data\Attribute\Provider.cs" />
     <Compile Include="Data\Clause\SqlExprExtension.cs" />
