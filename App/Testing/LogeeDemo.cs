@@ -17,11 +17,11 @@ namespace App.Testing
     {
 
         public const string SysLog = "SysLog";
-
+        public static TransactionLogeeType SysLogType = new TransactionLogeeType(SysLog);
         public static void RegisterLogee()
         {
             //register LOG transaction implementation
-            new TransactionLogeeType(SysLog).Register(new SysLogLogee());
+            SysLogType.Register(new SysLogLogee());
 
             //register LOG datarow implemention
             typeof(UserDpo).TableName().Register(new UserDpoLogee());
@@ -37,9 +37,10 @@ namespace App.Testing
             UserDpo user = new UserDpo("devel");
             user.Plain_Password = "pass";
             user.Password = null;
-            
 
-            log.BeginLog(user);
+
+            log.BeginLog(SysLogType);
+            log.AddLog(user);
             user.Save();
             log.EndLog();
         }

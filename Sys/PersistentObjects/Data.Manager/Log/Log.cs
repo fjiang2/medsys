@@ -18,15 +18,14 @@ namespace Sys.Data.Manager
         /// <summary>
         /// Begin Log Transaction, all DPOs in Form are logged as a Transaction
         /// </summary>
-        public LogTransaction BeginLog()
+        public void BeginLog()
         {
-            return this.logTransaction = LogTransaction.BeginTransaction(type);
+            this.logTransaction = LogTransaction.BeginTransaction(type);
         }
 
-        public LogTransaction BeginLog(TransactionLogeeType typeName)
+        public void BeginLog(TransactionLogeeType typeName)
         {
-            return this.logTransaction = LogTransaction.BeginTransaction(typeName, type);
-
+            this.logTransaction = LogTransaction.BeginTransaction(typeName, type);
         }
 
      
@@ -35,20 +34,16 @@ namespace Sys.Data.Manager
         /// Begin log Transaction, and register DPO into Logger
         /// </summary>
         /// <param name="logs"></param>
-        public LogTransaction BeginLog(params ILogable[] logs)
+        public void BeginLog(params ILogable[] logs)
         {
             BeginLog();
             AddLog(logs);
-
-            return logTransaction;
         }
 
-        public LogTransaction BeginLog(TransactionLogeeType typeName, params ILogable[] logs)
+        public void BeginLog(TransactionLogeeType typeName, params ILogable[] logs)
         {
             BeginLog(typeName);
             AddLog(logs);
-
-            return this.logTransaction;
         }
 
         public void AddLog(params ILogable[] logs)
@@ -57,9 +52,10 @@ namespace Sys.Data.Manager
                 this.logTransaction.Add(log);
         }
 
-        public void RemoveLog(ILogable log)
+        public void RemoveLog(params ILogable[] logs)
         {
-            this.logTransaction.Remove(log);
+            foreach (ILogable log in logs)
+                this.logTransaction.Remove(log);
         }
 
         /// <summary>
@@ -67,7 +63,11 @@ namespace Sys.Data.Manager
         /// </summary>
         public void EndLog()
         {
+            if (this.logTransaction == null)
+                return;
+
             this.logTransaction.EndTransaction();
+            this.logTransaction = null;
         }
 
 
