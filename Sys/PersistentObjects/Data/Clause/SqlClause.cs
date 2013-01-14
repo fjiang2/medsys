@@ -18,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Data;
 
 namespace Sys.Data
 {
@@ -27,11 +28,16 @@ namespace Sys.Data
     public class SqlClause : SqlClauseInfo, ISqlClause
     {
         private StringBuilder script = new StringBuilder();
+        private DataProvider privider;
 
         public SqlClause()
-        { 
+        {
+            this.privider = DataProviderManager.DefaultProvider;
         }
-
+        public SqlClause(DataProvider privider)
+        {
+            this.privider = privider;
+        }
 
         //public static implicit operator SqlClause(string sql)
         //{
@@ -43,6 +49,19 @@ namespace Sys.Data
             return sql.Clause;
         }
 
+
+        
+        public DataProvider Provider
+        {
+            get
+            {
+                return privider;
+            }
+            set
+            {
+                this.privider = value;
+            }
+        }
 
         #region Table Name
         private SqlClause TABLE_NAME(string tableName, string alias)
@@ -246,15 +265,12 @@ namespace Sys.Data
             return this.CRLF;
         }
 
-        public SqlClause SET(string[] columns, string[] values)
-        {
-            string[] namesAndValues = new string[columns.Length];
-            for (int i = 0; i < columns.Length; i++)
-            {
-                namesAndValues[i] = string.Format("[{0}]={1}", columns[i], new SqlValue(values[i]));
-            }
+    
 
-            string s = string.Join(", ", namesAndValues);
+        public SqlClause SET(params SqlExpr[] assignments)
+        {
+            script.Append(" SET ");
+            string s = string.Join<SqlExpr>(", ", assignments);
             script.Append(s);
 
             return this.CRLF;
@@ -557,6 +573,20 @@ namespace Sys.Data
         {
             return script.ToString();
         }
+
+
+        public int ExecuteNonQuery()
+        {
+            SqlCmd cmd = new SqlCmd(this);
+            return cmd.ExecuteNonQuery();
+        }
+
+        public object ExecuteScalar()
+        {
+            SqlCmd cmd = new SqlCmd(this);
+            return cmd.ExecuteScalar();
+        }
+
     }
 
 

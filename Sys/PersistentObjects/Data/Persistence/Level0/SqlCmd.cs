@@ -38,7 +38,7 @@ namespace Sys.Data
         }
 
         public SqlCmd(ISqlClause sql)
-            : this(sql.Clause)
+            : this(sql.Provider, sql.Clause)
         { 
         
         }
@@ -286,6 +286,22 @@ namespace Sys.Data
         }
 
 
+      
+
+
+        /// <summary>
+        /// Delete records
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="where"></param>
+        public static void Delete<T>(SqlExpr where) where T : class,  IDPObject, new()
+        {
+            TableName tableName = typeof(T).TableName();
+            SqlCmd.ExecuteScalar(tableName.Provider,
+                    "DELETE FROM {0} WHERE {1}",
+                    tableName.FullName,
+                    where);
+        }
     }
 }
 

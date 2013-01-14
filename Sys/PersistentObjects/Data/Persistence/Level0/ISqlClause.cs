@@ -24,5 +24,6 @@ namespace Sys.Data
     public interface ISqlClause
     {
         string Clause { get; }
+        DataProvider Provider { get; }
     }
 }

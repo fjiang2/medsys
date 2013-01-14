@@ -336,13 +336,27 @@ namespace Sys.Data
 
         #region +-*/, compare, logical operation
 
+        /// <summary>
+        /// Compound expression
+        /// </summary>
+        private bool compound = false;
+
+        private static string ExpToString(SqlExpr exp)
+        {
+            if (exp.compound)
+                return string.Format("({0})", exp);
+            else
+                return exp.ToString();
+        }
+
         internal static SqlExpr OPR(SqlExpr exp1, string opr, SqlExpr exp2)
         {
             SqlExpr exp = new SqlExpr()
-                .Next(string.Format("({0}) {1} ({2})", exp1, opr, exp2));
+                .Next(string.Format("{0} {1} {2}", ExpToString(exp1), opr, ExpToString(exp2)));
 
             exp.Merge(exp1).Merge(exp2);
-
+            
+            exp.compound = true;
             return exp;
         }
 
@@ -351,20 +365,21 @@ namespace Sys.Data
         {
             SqlExpr exp = new SqlExpr();
             exp.Next("(")
-               .Next(string.Format("({0})", exp1));
+               .Next(string.Format("{0}", ExpToString(exp1)));
             
             foreach(SqlExpr exp2 in exps)
             {
-                exp.Next(string.Format(" {0} ({1})", opr, exp2));
+                exp.Next(string.Format(" {0} {1}", opr, ExpToString(exp2)));
             }
 
+            exp.compound = true;
             return exp.Next(")");
         }
 
         internal static SqlExpr OPR(string opr, SqlExpr exp1)
         {
             SqlExpr exp = new SqlExpr()
-                .Next(string.Format("{0} ({1})", opr, exp1));
+                .Next(string.Format("{0} {1}", opr, ExpToString(exp1)));
 
             exp.Merge(exp1);
             return exp;

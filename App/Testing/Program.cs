@@ -23,6 +23,7 @@ namespace App.Testing
                 DataProviderManager.RegisterDefaultProvider("data source=localhost\\sqlexpress;initial catalog=medsys;integrated security=SSPI;packet size=4096");
             
             //NTreeViewDemo();
+            SqlClauseDemo();
 
             SqlClauseJoinDemo();
         }
@@ -48,6 +49,21 @@ namespace App.Testing
             string x2 = sql2.ToString();
             Console.WriteLine(x1);
             Console.WriteLine(x2);
+
+
+
+            //potential bug, one user may open 1+ Image Windows
+            SqlClause clause = new SqlClause()
+                .UPDATE<UserDpo>()
+                .SET(
+                    UserDpo._Email.ColumnName() == "my.email.com", 
+                    UserDpo._Start_Date.ColumnName() == DateTime.Today
+                    )
+                .WHERE(UserDpo._User_ID.ColumnName() ==  5);
+            
+
+            string sql = clause.ToString();
+            Console.WriteLine(sql);
         }
 
 
