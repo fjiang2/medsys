@@ -475,7 +475,24 @@ namespace Sys.Data
 
         public virtual DataRow Update()
         {
-            return save(new Selector(), SaveMode.Insert);
+            return save(new Selector(), SaveMode.Update);
+        }
+
+        /// <summary>
+        /// Update record(s) based on WHERE condition
+        /// </summary>
+        /// <param name="where"></param>
+        /// <returns></returns>
+        public virtual DataRow Update(SqlExpr where)
+        {
+            Locator temp = this.locator;
+            
+            this.locator = new Locator(where);
+            DataRow row = save(new Selector(), SaveMode.Update);
+            
+            //restore Locator
+            this.locator = temp;
+            return row;
         }
 
         public virtual DataRow Validate()
@@ -485,7 +502,7 @@ namespace Sys.Data
 
         public virtual DataRow Update(string[] columnNames)
         {
-            return save(new Selector(columnNames), SaveMode.Insert);
+            return save(new Selector(columnNames), SaveMode.Update);
         }
 
 
@@ -610,6 +627,24 @@ namespace Sys.Data
             d.RowChanged += RowChanged;
 
             return d.Delete();
+        }
+
+
+        /// <summary>
+        /// delete record based on WHERE condition
+        /// </summary>
+        /// <param name="where"></param>
+        /// <returns></returns>
+        public virtual bool Delete(SqlExpr where)
+        {
+            Locator temp = this.locator;
+
+            this.locator = new Locator(where);
+            bool result = Delete();
+
+            //restore Locator
+            this.locator = temp;
+            return result;
         }
 
         public virtual void Clear()

@@ -14,7 +14,8 @@ namespace Sys.DataManager
         JPG,
         TIF,
         GIF,
-        BMP
+        BMP,
+        DWG
     }
 
     public class Document
