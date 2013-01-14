@@ -21,7 +21,7 @@ namespace Sys.DataManager
             this.letters = letters;
         }
 
-        public string PhysicalDirectory
+        public virtual string PhysicalDirectory
         {
             get
             {

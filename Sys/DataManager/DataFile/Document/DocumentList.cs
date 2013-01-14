@@ -23,7 +23,6 @@ namespace Sys.DataManager
         {
             this.rowObject = rowObject;
             
-            //"Table_id={0} AND Row_ID = {1}
             dt = new TableReader<Doc01Dpo>(
                 (Doc01Dpo._Table_Id.ColumnName() == rowObject.TableId)
                 .AND(Doc01Dpo._Row_Id.ColumnName() == rowObject.RowId)).Table;
@@ -78,17 +77,28 @@ namespace Sys.DataManager
 
         public static void AcceptTempDocuments(DPObject rowObject)
         {
-            TableName tableName = typeof(Doc01Dpo).TableName();
+            //TableName tableName = typeof(Doc01Dpo).TableName();
+
+            ////potential bug, one user may open 1+ documents Windows
+            //SqlCmd.ExecuteScalar(
+            //    tableName.Provider,
+            //    "UPDATE {0} SET Row_Id={1} WHERE Table_Id={2} AND Row_Id = -1 AND Owner = {3}",
+            //    tableName.FullName,
+            //    rowObject.RowId,
+            //    rowObject.TableId,
+            //    Sys.Security.Account.CurrentUser.User_ID
+            //    );
 
             //potential bug, one user may open 1+ documents Windows
-            SqlCmd.ExecuteScalar(
-                tableName.Provider,
-                "UPDATE {0} SET Row_Id={1} WHERE Table_Id={2} AND Row_Id = -1 AND Owner = {3}",
-                tableName.FullName,
-                rowObject.RowId,
-                rowObject.TableId,
-                Sys.Security.Account.CurrentUser.User_ID
-                );
+            new SqlClause()
+            .UPDATE<Doc01Dpo>()
+            .SET(Doc01Dpo._Row_Id.ColumnName() == rowObject.RowId)
+            .WHERE(
+                (Doc01Dpo._Table_Id.ColumnName() == rowObject.TableId)
+                .AND(Doc01Dpo._Row_Id.ColumnName() == -1)
+                .AND(Doc01Dpo._Owner.ColumnName() == Sys.Security.Account.CurrentUser.User_ID)
+                )
+             .ExecuteNonQuery();
         }
 
         public static void DeleteTempDocuments(DPObject rowObject)
@@ -107,12 +117,18 @@ namespace Sys.DataManager
                 doc.DeleteDocument();
             }
 
-            SqlCmd.ExecuteScalar(
-                tableName.Provider,
-                "DELETE FROM {0} WHERE Table_Id={1} AND Row_Id = -1 AND Owner = {2}", 
-                tableName, 
-                rowObject.TableId, 
-                Sys.Security.Account.CurrentUser.User_ID);
+            //SqlCmd.ExecuteScalar(
+            //    tableName.Provider,
+            //    "DELETE FROM {0} WHERE Table_Id={1} AND Row_Id = -1 AND Owner = {2}", 
+            //    tableName, 
+            //    rowObject.TableId, 
+            //    Sys.Security.Account.CurrentUser.User_ID);
+
+            SqlCmd.Delete<Doc01Dpo>(
+                (Doc01Dpo._Table_Id.ColumnName() == rowObject.TableId)
+                .AND(Doc01Dpo._Row_Id.ColumnName() == -1)
+                .AND(Doc01Dpo._Owner.ColumnName() == Sys.Security.Account.CurrentUser.User_ID)
+                );
         }
     }
 }

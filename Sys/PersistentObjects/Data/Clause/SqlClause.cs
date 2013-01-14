@@ -28,15 +28,15 @@ namespace Sys.Data
     public class SqlClause : SqlClauseInfo, ISqlClause
     {
         private StringBuilder script = new StringBuilder();
-        private DataProvider privider;
+        private DataProvider provider;
 
         public SqlClause()
         {
-            this.privider = DataProviderManager.DefaultProvider;
+            this.provider = DataProviderManager.DefaultProvider;
         }
         public SqlClause(DataProvider privider)
         {
-            this.privider = privider;
+            this.provider = privider;
         }
 
         //public static implicit operator SqlClause(string sql)
@@ -55,11 +55,11 @@ namespace Sys.Data
         {
             get
             {
-                return privider;
+                return provider;
             }
             set
             {
-                this.privider = value;
+                this.provider = value;
             }
         }
 
@@ -211,6 +211,7 @@ namespace Sys.Data
 
         public SqlClause FROM(TableName tableName, string alias = null)
         {
+            this.provider = tableName.Provider;
             return FROM(tableName.FullName, alias);
         }
 
@@ -244,6 +245,7 @@ namespace Sys.Data
 
         public SqlClause UPDATE(TableName tableName, string alias = null)
         {
+            this.provider = tableName.Provider;
             return UPDATE(tableName.FullName, alias);
         }
 
@@ -276,9 +278,15 @@ namespace Sys.Data
             return this.CRLF;
         }
 
-     
-        public SqlClause INSERT(string tableName, params string[] columns)
+
+        public SqlClause INSERT<T>(params string[] columns)
         {
+            return INSERT(typeof(T).TableName(), columns);
+        }
+
+        public SqlClause INSERT(TableName tableName, params string[] columns)
+        {
+            this.provider = tableName.Provider;
             script
                 .Append("INSERT INTO")
                 .Append(tableName);
@@ -299,14 +307,19 @@ namespace Sys.Data
             return this.CRLF;
         }
 
-        public SqlClause DELETE(string tableName)
+        public SqlClause DELETE(TableName tableName)
         {
+            this.provider = tableName.Provider;
+
             script.Append("DELETE FROM ").Append(tableName);
 
             return this;
         }
 
-
+        public SqlClause DELETE<T>()
+        {
+            return DELETE(typeof(T).TableName());
+        }
 
         #region WHERE clause
 
