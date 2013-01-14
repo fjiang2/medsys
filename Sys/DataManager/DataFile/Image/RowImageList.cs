@@ -133,39 +133,53 @@ namespace Sys.DataManager
             TableName tableName = typeof(PictureDpo).TableName();
 
             //potential bug, one user may open 1+ Image Windows
-            SqlCmd.ExecuteScalar(
-                tableName.Provider,
-                "UPDATE {0} SET Row_Id={1} WHERE Table_Id={2} AND Row_Id = -1 AND Owner = {3}",
-                tableName.FullName,
-                rowObject.RowId,
-                rowObject.TableId,
-                Sys.Security.Account.CurrentUser.User_ID
-                );
+            
+            //SqlCmd.ExecuteScalar(
+            //    tableName.Provider,
+            //    "UPDATE {0} SET Row_Id={1} WHERE Table_Id={2} AND Row_Id = -1 AND Owner = {3}",
+            //    tableName.FullName,
+            //    rowObject.RowId,
+            //    rowObject.TableId,
+            //    Sys.Security.Account.CurrentUser.User_ID
+            //    );
+
+            new SqlClause()
+                .UPDATE<PictureDpo>()
+                .SET(PictureDpo._Row_Id.ColumnName() == rowObject.RowId)
+                .WHERE(
+                    (PictureDpo._Table_Id.ColumnName() == rowObject.TableId)
+                    .AND(PictureDpo._Row_Id.ColumnName() == -1)
+                    .AND(PictureDpo._Owner.ColumnName() == Sys.Security.Account.CurrentUser.User_ID)
+                )
+               .ExecuteNonQuery();
         }
 
         public static void DeleteTempImages(DPObject rowObject)
         {
-            TableName tableName = typeof(PictureDpo).TableName();
-            DataTable dt = new TableReader<PictureDpo>(
+            var list = new TableReader<PictureDpo>(
                         (PictureDpo._Table_Id.ColumnName() == rowObject.TableId)
                         .AND(PictureDpo._Row_Id.ColumnName() == -1)
                         .AND(PictureDpo._Owner.ColumnName() == Sys.Security.Account.CurrentUser.User_ID)
-                        ).Table;
+                        ).ToList();
 
 
-            foreach (DataRow row in dt.Rows)
+            foreach (var pic in list)
             {
-                PictureDpo pic = new PictureDpo(row);
                 ImageMan man = new ImageMan(pic.File_Name, (DateTime)pic.Date_Created);
                 man.Delete();
             }
 
-            SqlCmd.ExecuteScalar(
-                tableName.Provider,
-                "DELETE FROM {0} WHERE Table_Id={1} AND Row_Id = -1 AND Owner = {2}", 
-                tableName.FullName, 
-                rowObject.TableId, 
-                Sys.Security.Account.CurrentUser.User_ID);
+            //SqlCmd.ExecuteScalar(
+            //    tableName.Provider,
+            //    "DELETE FROM {0} WHERE Table_Id={1} AND Row_Id = -1 AND Owner = {2}", 
+            //    tableName.FullName, 
+            //    rowObject.TableId, 
+            //    Sys.Security.Account.CurrentUser.User_ID);
+
+            SqlCmd.Delete<PictureDpo>(
+                (PictureDpo._Table_Id.ColumnName() == rowObject.TableId)
+                .AND(PictureDpo._Row_Id.ColumnName() == -1)
+                .AND(PictureDpo._Owner.ColumnName() == Sys.Security.Account.CurrentUser.User_ID));
         }
     }
 }
