@@ -44,6 +44,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataFile\Directory\FileRevision.cs" />
+    <Compile Include="DataFile\Directory\RevisionDirectory.cs" />
     <Compile Include="DataFile\Directory\DateDirectory.cs" />
     <Compile Include="DataFile\Directory\FilePath.cs" />
     <Compile Include="DataFile\Directory\IDirectory.cs" />
