@@ -1,0 +1,498 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{A5D0E475-F068-4DB0-BD4B-B5647B588E08}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Sys.ViewManager</RootNamespace>
+    <AssemblyName>Sys.ViewManager</AssemblyName>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="agsXMPP, Version=1.1.0.0, Culture=neutral, PublicKeyToken=ff839b81f1debe86, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Lib\agsXMPP.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Charts.v11.2.Core, Version=11.2.10.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Printing.v11.2.Core, Version=11.2.10.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Data.v11.2, Version=11.2.10.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.RichEdit.v11.2.Core, Version=11.2.10.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Utils.v11.2, Version=11.2.10.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraBars.v11.2, Version=11.2.10.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraCharts.v11.2, Version=11.2.10.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraCharts.v11.2.UI, Version=11.2.10.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraEditors.v11.2, Version=11.2.10.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraGrid.v11.2, Version=11.2.10.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraLayout.v11.2, Version=11.2.10.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraNavBar.v11.2, Version=11.2.10.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraPivotGrid.v11.2, Version=11.2.10.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.PivotGrid.v11.2.Core, Version=11.2.10.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraPrinting.v11.2, Version=11.2.10.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraRichEdit.v11.2, Version=11.2.10.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraTreeList.v11.2, Version=11.2.10.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraVerticalGrid.v11.2, Version=11.2.10.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Tie, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Lib\Tie.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DevEx\DevExtension.cs" />
+    <Compile Include="DevEx\JPivotTable.cs" />
+    <Compile Include="DevEx\Grid.cs" />
+    <Compile Include="DevEx\Pivot.cs" />
+    <Compile Include="DevEx\Printing.cs" />
+    <Compile Include="Forms\TreeDpoView\NTreeView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\TreeDpoView\NTreeNode`1.cs" />
+    <Compile Include="MgCode\DpoClass\AppLinkDpo.cs" />
+    <Compile Include="MgCode\DpoClass\DataImportDpo.cs" />
+    <Compile Include="MgCode\DpoClass\DefaultLogHistory.cs" />
+    <Compile Include="MgCode\DpoClass\FormClassDpo.cs" />
+    <Compile Include="MgCode\DpoClass\ImageDpo.cs" />
+    <Compile Include="MgCode\DpoClass\ItemPermissionDpo.cs" />
+    <Compile Include="MgCode\DpoClass\FormPermissionDpo.cs" />
+    <Compile Include="MgCode\DpoClass\ShortcutDpo.cs" />
+    <Compile Include="MgCode\DpoClass\UserMenuDpo.cs" />
+    <Compile Include="MgCode\DpoClass\FormRuleDpo.cs" />
+    <Compile Include="Forms\Bind\JGenericControl.cs" />
+    <Compile Include="Forms\Bind\JControl2.cs" />
+    <Compile Include="Forms\TieScript.cs" />
+    <Compile Include="Manager\AppLink.cs" />
+    <Compile Include="WinForm\Message\MessageEventArgs.cs" />
+    <Compile Include="WinForm\Message\MessageManager.cs" />
+    <Compile Include="WinForm\Message\MessagePlace.cs" />
+    <Compile Include="WinForm\Message\OutputControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="WinForm\Message\OutputControl.Designer.cs">
+      <DependentUpon>OutputControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Manager\TaskData.cs" />
+    <Compile Include="Manager\TaskItem.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Manager\UserShortcut.cs" />
+    <Compile Include="Modules\FormClass.cs" />
+    <Compile Include="Modules\IPlugInForm.cs" />
+    <Compile Include="Modules\IPlugInMenu.cs" />
+    <Compile Include="Modules\PlugIn.cs" />
+    <Compile Include="MgCode\DpoPackage\AppLinkDpoPackage.cs" />
+    <Compile Include="MgCode\DpoPackage\DataImportDpoPackage.cs" />
+    <Compile Include="MgCode\DpoPackage\FormClassDpoPackage.cs" />
+    <Compile Include="MgCode\DpoPackage\FormPermissionDpoPackage.cs" />
+    <Compile Include="MgCode\DpoPackage\ItemPermissionDpoPackage.cs" />
+    <Compile Include="MgCode\DpoPackage\UserMenuDpoPackage.cs" />
+    <Compile Include="Security\Setting\EntityNodeType.cs" />
+    <Compile Include="Security\Setting\ItemPermission.cs" />
+    <Compile Include="Security\Setting\IItemNode.cs" />
+    <Compile Include="Security\Setting\FormPermission.cs" />
+    <Compile Include="Security\Setting\EntityNode.cs" />
+    <Compile Include="Security\Setting\ItemNode.cs" />
+    <Compile Include="Security\Setting\ItemStore.cs" />
+    <Compile Include="Security\Setting\FormStore.cs" />
+    <Compile Include="Security\Setting\SecurityType.cs" />
+    <Compile Include="Security\FormConsumer.cs" />
+    <Compile Include="Forms\HtmlEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\HtmlEditor.Designer.cs">
+      <DependentUpon>HtmlEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WinForm\RichText.cs" />
+    <Compile Include="Security\Setting\HookTree.cs" />
+    <Compile Include="Utils\Function.cs" />
+    <Compile Include="Forms\LookUp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\LookUp.Designer.cs">
+      <DependentUpon>LookUp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Bind\BindEventArgs.cs" />
+    <Compile Include="Forms\Bind\JHostObject.cs" />
+    <Compile Include="Forms\Bind\JControl.cs" />
+    <Compile Include="Forms\Bind\JImageComboBoxEdit.cs" />
+    <Compile Include="Forms\Bind\JVal.cs" />
+    <Compile Include="Forms\Controls\CheckBoxList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\Controls\CheckBoxList.Designer.cs">
+      <DependentUpon>CheckBoxList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Controls\ColumnSorter.cs" />
+    <Compile Include="Forms\Controls\JAssociator2.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\Controls\JAssociator2.Designer.cs">
+      <DependentUpon>JAssociator2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Controls\JAssociator.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\Controls\JAssociator.Designer.cs">
+      <DependentUpon>JAssociator.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Bind\BindDpo.cs" />
+    <Compile Include="Forms\Bind\JLabel.cs" />
+    <Compile Include="Forms\Bind\JMemoExEdit.cs" />
+    <Compile Include="Forms\Bind\JCheckEdit.cs" />
+    <Compile Include="Forms\Controls\JSelectorTreeView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\Controls\JSelectorTreeView.Designer.cs">
+      <DependentUpon>JSelectorTreeView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Controls\JTreeList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\Controls\JTreeList.Designer.cs">
+      <DependentUpon>JTreeList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Security\MenuRuntime.cs" />
+    <Compile Include="Forms\Controls\JDataTableCombox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\Bind\JDomainUpDown.cs" />
+    <Compile Include="Forms\Controls\LogHistoryControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\Controls\LogHistoryControl.Designer.cs">
+      <DependentUpon>LogHistoryControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\TreeDpoView\INTreeDpoNode.cs" />
+    <Compile Include="Forms\TreeDpoView\TreeDpoView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\TreeRowView\TreeRowNode.cs" />
+    <Compile Include="Forms\TreeRowView\TreeRowNodeEventArgs.cs" />
+    <Compile Include="Manager\FormDockManager.cs" />
+    <Compile Include="WinForm\BaseUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\InputTool.cs" />
+    <Compile Include="Manager\WindowManager.cs" />
+    <Compile Include="WinForm\Message\ErrorListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WinForm\Message\ErrorListControl.Designer.cs">
+      <DependentUpon>ErrorListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WinForm\FormExtension.cs" />
+    <Compile Include="WinForm\Progress.cs" />
+    <Compile Include="WinForm\ValidateExtensions.cs" />
+    <Compile Include="WinForm\XmppForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Controls\ISeriesPoint.cs" />
+    <Compile Include="Forms\MessageQueueForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MessageQueueForm.Designer.cs">
+      <DependentUpon>MessageQueueForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Xmpp\Protocols\UserProtocol.cs" />
+    <Compile Include="Xmpp\Protocols\UserCollectionProtocol.cs" />
+    <Compile Include="Xmpp\XmppEventArgs.cs" />
+    <Compile Include="Xmpp\XmppMessageDispatcher.cs" />
+    <Compile Include="Xmpp\XmppAccount.cs" />
+    <Compile Include="Xmpp\XmppChannel.cs" />
+    <Compile Include="Xmpp\XmppChannelSubscriber.cs" />
+    <Compile Include="Xmpp\XmppElement.cs" />
+    <Compile Include="Xmpp\XmppListener.cs" />
+    <Compile Include="Xmpp\XmppMessage.cs" />
+    <Compile Include="Forms\TieEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\TieEditor.Designer.cs">
+      <DependentUpon>TieEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Xmpp\XmppClient.cs" />
+    <Compile Include="Forms\Controls\JGanttChart.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\Controls\JGanttChart.Designer.cs">
+      <DependentUpon>JGanttChart.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Bind\JPictureBox.cs" />
+    <Compile Include="Forms\Bind\JRichTextBox.cs" />
+    <Compile Include="Forms\Controls\JSelector.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\Controls\JSelector.Designer.cs">
+      <DependentUpon>JSelector.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Bind\JSpinEdit.cs" />
+    <Compile Include="Forms\Controls\JVerticalLabel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Manager\ShortcutControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Manager\ShortcutControl.Designer.cs">
+      <DependentUpon>ShortcutControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\HelpForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\HelpForm.Designer.cs">
+      <DependentUpon>HelpForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="WinForm\IReport.cs" />
+    <Compile Include="Security\MenuConsumer.cs" />
+    <Compile Include="Security\UserMenuItem.cs" />
+    <Compile Include="Forms\Bind\JComboBox.cs" />
+    <Compile Include="Forms\Bind\JCheckBox.cs" />
+    <Compile Include="Forms\Bind\BindRow.cs" />
+    <Compile Include="Forms\Controls\JDataTableControl.cs" />
+    <Compile Include="Forms\Bind\JDateEdit.cs" />
+    <Compile Include="Forms\Bind\JDateTimePicker.cs" />
+    <Compile Include="Forms\Bind\JLookUpEdit.cs" />
+    <Compile Include="Forms\Bind\JRadioButton.cs" />
+    <Compile Include="Forms\Bind\JRadioGroup.cs" />
+    <Compile Include="Forms\Bind\JTextBox.cs" />
+    <Compile Include="Forms\Bind\JTimeEdit.cs" />
+    <Compile Include="Forms\TreeRowView\TreeRowView.cs">
+    </Compile>
+    <Compile Include="Forms\Bind\JWinControl.cs" />
+    <Compile Include="WinForm\BaseForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WinForm\IMainForm.cs" />
+    <Compile Include="WinForm\IMaintenanceForm.cs" />
+    <Compile Include="DevEx\XtraGridFilterSerializer.cs" />
+    <Compile Include="Forms\Controls\JGridView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\Controls\JGridView.designer.cs">
+      <DependentUpon>JGridView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WinForm\WinForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WinForm\WinForm.Designer.cs">
+      <DependentUpon>WinForm.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Forms\HtmlEditor.resx">
+      <DependentUpon>HtmlEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\LookUp.resx">
+      <DependentUpon>LookUp.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Controls\CheckBoxList.resx">
+      <DependentUpon>CheckBoxList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Controls\JAssociator2.resx">
+      <DependentUpon>JAssociator2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Controls\LogHistoryControl.resx">
+      <DependentUpon>LogHistoryControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\TieEditor.resx">
+      <DependentUpon>TieEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Controls\JAssociator.resx">
+      <DependentUpon>JAssociator.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Controls\JGanttChart.resx">
+      <DependentUpon>JGanttChart.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Controls\JSelector.resx">
+      <DependentUpon>JSelector.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Controls\JSelectorTreeView.resx">
+      <DependentUpon>JSelectorTreeView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Controls\JTreeList.resx">
+      <DependentUpon>JTreeList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\HelpForm.resx">
+      <DependentUpon>HelpForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Manager\ShortcutControl.resx">
+      <DependentUpon>ShortcutControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\licenses.licx" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Controls\JGridView.resx">
+      <DependentUpon>JGridView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WinForm\Message\ErrorListControl.resx">
+      <DependentUpon>ErrorListControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WinForm\WinForm.resx">
+      <DependentUpon>WinForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MessageQueueForm.resx">
+      <DependentUpon>MessageQueueForm.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DataContainer_MoveNextHS.png" />
+    <None Include="Resources\saveHS.png" />
+    <None Include="Resources\PrintHS.png" />
+    <None Include="Resources\ArrangeSideBySideHS.png" />
+    <None Include="Resources\CopyHS.png" />
+    <None Include="Resources\PasteHS.png" />
+    <None Include="Resources\folder.png" />
+    <None Include="Resources\user.png" />
+    <None Include="Resources\RefreshDocViewHS.png" />
+    <None Include="Resources\EditInformationHS.png" />
+    <None Include="Resources\group.png" />
+    <None Include="Resources\cancel.png" />
+    <None Include="Resources\StopHS.png" />
+    <None Include="Resources\application_form_edit.png" />
+    <None Include="Resources\application_form_magnify.png" />
+    <None Include="Resources\DeleteHS.png" />
+    <None Include="Resources\help.png" />
+    <None Include="Resources\link.png" />
+    <None Include="Resources\CutHS.png" />
+    <None Include="Resources\Edit_UndoHS.png" />
+    <None Include="Resources\EditTableHS.png" />
+    <None Include="Resources\NewDocumentHS.png" />
+    <None Include="Resources\openHS.png" />
+    <None Include="Resources\application_view_list.png" />
+    <None Include="Resources\page_white_c.png" />
+    <None Include="Resources\star.png" />
+    <None Include="Resources\windows.png" />
+    <None Include="Resources\tick.png" />
+    <None Include="Resources\time.png" />
+    <None Include="Resources\application.png" />
+    <None Include="Resources\BreakpointHS.png" />
+    <Content Include="Resources\bug.png" />
+    <None Include="Resources\Web.png" />
+    <None Include="Resources\WarningHS.png" />
+    <None Include="Resources\information.png" />
+    <Content Include="Resources\ZoomHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Foundation\Sys.Foundation.csproj">
+      <Project>{30FC8D52-477A-415A-9680-B29F0C5A1606}</Project>
+      <Name>Sys.Foundation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PersistentObjects\Sys.PersistentObjects.csproj">
+      <Project>{FE52736A-BA94-41FC-9FD3-A481A790FC9C}</Project>
+      <Name>Sys.PersistentObjects</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BusinessRules\Sys.BusinessRules.csproj">
+      <Project>{21D52785-DCA0-46BB-B0FD-428FEFBD7B1D}</Project>
+      <Name>Sys.BusinessRules</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
