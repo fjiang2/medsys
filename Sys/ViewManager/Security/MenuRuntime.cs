@@ -129,6 +129,13 @@ namespace Sys.ViewManager.Security
         {
             BarItem barItem = e.Item;
             UserMenuItem menuItem = (UserMenuItem)barItem.Tag;
+            
+            //command not defined
+            if (string.IsNullOrEmpty(menuItem.Command))
+            {
+                MessageBox.Show(string.Format("undefined command in menu: {0}", menuItem), "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
             string code = menuItem.Command.Replace("Open", "This.Open");
             
@@ -141,14 +148,14 @@ namespace Sys.ViewManager.Security
             //When error occurs during invoking MenuConsumer.AddDockPanel(...), 
             //Clear Column[Configuration] in Table UserProfile(SYS00505), because formDockManager.RestoreLayout() may get inconsistant data
 
-            //try
-            //{
+            try
+            {
                 Script.Execute(_SCOPE, code, DS, new StaticFunction());
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show(ex.Message, "Error message for developer", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
-            //}
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(string.Format("command:{0} \n{1}", code, ex.Message));
+            }
 			
         }
     }
