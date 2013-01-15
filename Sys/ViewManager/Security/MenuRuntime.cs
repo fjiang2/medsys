@@ -141,14 +141,14 @@ namespace Sys.ViewManager.Security
             //When error occurs during invoking MenuConsumer.AddDockPanel(...), 
             //Clear Column[Configuration] in Table UserProfile(SYS00505), because formDockManager.RestoreLayout() may get inconsistant data
 
-            try
-            {
+            //try
+            //{
                 Script.Execute(_SCOPE, code, DS, new StaticFunction());
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Error message for developer", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message, "Error message for developer", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
+            //}
 			
         }
     }

@@ -180,10 +180,7 @@ namespace Sys.Platform.Forms
             this.Icon = SysInformation.Icon;
             this.repositoryItemMarqueeProgressBar1.Stopped = true;
             this.Visible = false;
-            this.Text = SysInformation.ApplicatioName + " Unreleased Version";
-            string version = App.ApplicationVersion();
-            if (version != "0.0.0.0")
-                this.Text = string.Format("{0} - v{1}", SysInformation.ApplicatioName, version);
+            this.Text = SysInformation.ApplicationVerisonText;
 
             if (!Constant.SINGLE_USER_SYSTEM)
             {

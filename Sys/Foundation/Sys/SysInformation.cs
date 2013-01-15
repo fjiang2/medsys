@@ -45,7 +45,17 @@ namespace Sys
             }
         }
 
-
+        public static string ApplicationVerisonText
+        {
+            get
+            {
+                string version = Sys.OS.App.ApplicationVersion();
+                if (version != "0.0.0.0")
+                    return string.Format("{0} - v{1}", SysInformation.ApplicatioName, version);
+                else
+                    return SysInformation.ApplicatioName + " Unreleased Version";
+            }
+        }
 
         public static string ApplicatioName
         {

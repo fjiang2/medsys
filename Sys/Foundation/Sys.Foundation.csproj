@@ -127,7 +127,11 @@
     <Compile Include="Sys\Constant.cs" />
     <Compile Include="Sys\DateTimeExtension.cs" />
     <Compile Include="Sys\EnumExtension.cs" />
+    <Compile Include="Sys\LogException\EmailLogger.cs" />
+    <Compile Include="Sys\LogException\EventLogLogger.cs" />
+    <Compile Include="Sys\LogException\ExceptionLogger.cs" />
     <Compile Include="Sys\Helper.cs" />
+    <Compile Include="Sys\LogException\TextFileLogger.cs" />
     <Compile Include="Sys\StringExtension.cs" />
     <Compile Include="Sys\SysInformation.cs" />
   </ItemGroup>
