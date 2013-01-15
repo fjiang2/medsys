@@ -11,6 +11,7 @@ namespace Sys
 {
     public static class Helper
     {
+
         public static void Start()
         {
             HostType.Register(new Type[]
@@ -24,6 +25,25 @@ namespace Sys
             Script.FunctionChain.Add(functions);
             RegisterValizableClass();
 
+            ExceptionLogHelper();
+        }
+
+
+        public static void ExceptionLogHelper()
+        {
+            ExceptionLogger logger = new ExceptionLogger();
+            logger.NotificationType = NotificationType.Inform;
+            logger.AddLogger(new TextFileLogger());
+
+            EmailLogger emailLogger = new EmailLogger();
+            emailLogger.EmailFrom = (string)Configuration.Instance["mail.application"];
+            emailLogger.EmailTo = (string)Configuration.Instance["mail.developer"];
+
+            VAL smtp = Configuration.Instance.GetValue("server.smtp");
+            emailLogger.EmailServer = (string)smtp["host"];
+            emailLogger.Port = (int)smtp["port"];
+            emailLogger.EnableSsl = (bool)smtp["ssl"];
+            logger.AddLogger(emailLogger);
         }
 
 
