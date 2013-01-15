@@ -31,19 +31,32 @@ namespace Sys
 
         public static void ExceptionLogHelper()
         {
+            bool log1 = (bool)Configuration.Instance["logger.textfile"];
+            bool log2 = (bool)Configuration.Instance["logger.mail"];
+
+            if (!log1 && !log2)
+                return;
+
             ExceptionLogger logger = new ExceptionLogger();
             logger.NotificationType = NotificationType.Inform;
-            logger.AddLogger(new TextFileLogger());
 
-            EmailLogger emailLogger = new EmailLogger();
-            emailLogger.EmailFrom = (string)Configuration.Instance["mail.application"];
-            emailLogger.EmailTo = (string)Configuration.Instance["mail.developer"];
+            if (log1)
+            {
+                logger.AddLogger(new TextFileLogger());
+            }
 
-            VAL smtp = Configuration.Instance.GetValue("server.smtp");
-            emailLogger.EmailServer = (string)smtp["host"];
-            emailLogger.Port = (int)smtp["port"];
-            emailLogger.EnableSsl = (bool)smtp["ssl"];
-            logger.AddLogger(emailLogger);
+            if (log2)
+            {
+                EmailLogger emailLogger = new EmailLogger();
+                emailLogger.EmailFrom = (string)Configuration.Instance["mail.application"];
+                emailLogger.EmailTo = (string)Configuration.Instance["mail.developer"];
+
+                VAL smtp = Configuration.Instance.GetValue("server.smtp");
+                emailLogger.EmailServer = (string)smtp["host"];
+                emailLogger.Port = (int)smtp["port"];
+                emailLogger.EnableSsl = (bool)smtp["ssl"];
+                logger.AddLogger(emailLogger);
+            }
         }
 
 
