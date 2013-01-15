@@ -218,7 +218,11 @@ namespace Sys.Platform.Forms
             
             //somebody may not have permission to access these Dock Panles below:
             menuConsumer.AddDockPanel("Shortcuts");
-            DockPanel dpSO = menuConsumer.AddDockPanel("Sales Order");
+            string salesOrder = (string)Configuration.Instance["Sales.Order.Name"];
+            if (salesOrder == null)
+                salesOrder = "Sales Order";
+
+            DockPanel dpSO = menuConsumer.AddDockPanel(salesOrder);
             if (dpSO != null)
                 formDockManager.HidePanel(dpSO);
             
