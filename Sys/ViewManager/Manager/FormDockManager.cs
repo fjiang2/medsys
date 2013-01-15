@@ -30,9 +30,12 @@ namespace Sys.ViewManager.Manager
             this.dockManager1 = new DevExpress.XtraBars.Docking.DockManager(components);
             this.dockManager1.Controller = this.barAndDockingController1;
             this.defaultLookAndFeel1 = new DevExpress.LookAndFeel.DefaultLookAndFeel(components);
-            this.defaultLookAndFeel1.LookAndFeel.SkinName = "VS2010";
 
+            string skinName= (string)Configuration.Instance["App.LookAndFeel.SkinName"];
+            if (skinName == null)
+                skinName = "VS2010";
             
+            this.defaultLookAndFeel1.LookAndFeel.SkinName = skinName;
 
             this.dockManager1.TopZIndexControls.AddRange(new string[] {
                 "DevExpress.XtraBars.BarDockControl",
