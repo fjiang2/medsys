@@ -137,7 +137,18 @@ namespace Sys.ViewManager.Security
             DS[_SO] = VAL.Boxing(Sys.Security.Profile.Instance[_SO]);
             DS[_SCOPE] = VAL.Boxing(menuItem);
 
-            Script.Execute(_SCOPE, code, DS, new StaticFunction());
+            //Note:
+            //When error occurs during invoking MenuConsumer.AddDockPanel(...), 
+            //Clear Column[Configuration] in Table UserProfile(SYS00505), because formDockManager.RestoreLayout() may get inconsistant data
+
+            try
+            {
+                Script.Execute(_SCOPE, code, DS, new StaticFunction());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error message for developer", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
+            }
 			
         }
     }

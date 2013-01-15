@@ -341,11 +341,12 @@ namespace Sys.ViewManager.Security
         /// <returns></returns>
         public DockPanel AddDockPanel(UserMenuItem menuItem, Control control)
         {
-            DockPanel dockPanel = formDockManager[new Guid(menuItem.Key_Name)];
+            Guid key = new Guid(menuItem.Key_Name);
+            DockPanel dockPanel = formDockManager.FindPanel(key);
             if (dockPanel == null)
             {
                 dockPanel = formDockManager.AddPanel(menuItem.Label, control, (DockingStyle)menuItem.Form_Place);
-                dockPanel.ID = new Guid(menuItem.Key_Name);
+                dockPanel.ID = key;
                 dockPanel.ImageIndex = menuItem.ImageIndex;
             }
             else
