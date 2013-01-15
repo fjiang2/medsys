@@ -34,6 +34,7 @@ namespace Sys.ViewManager.Security
             DS["This"] = VAL.Boxing(this);
             DS["CurrentUser"] = VAL.Boxing(Sys.Security.Account.CurrentUser);
             DS["owner"] = VAL.Boxing(mainForm.Form);
+            BaseForm.Mainform = mainForm;
         }
 
         public void OpenForm(string formClass)

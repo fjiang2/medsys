@@ -112,8 +112,8 @@ namespace Sys.ViewManager.Forms
             return null;
         }
 
-    
 
+        internal static IMainForm Mainform = null;
         private IMainForm MainForm
         {
             get
@@ -121,6 +121,8 @@ namespace Sys.ViewManager.Forms
                 IMainForm mainForm = GetMainForm(this.owner);
                 if (mainForm != null)
                     return GetMainForm(this.owner);
+                else if (Mainform != null)
+                    return Mainform;
                 else
                     throw new Exception("MainForm is not instantiated before using");
                     
