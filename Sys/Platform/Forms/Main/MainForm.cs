@@ -222,15 +222,25 @@ namespace Sys.Platform.Forms
             //somebody may not have permission to access these Dock Panles below:
             menuConsumer.AddDockPanel("Shortcuts");
             DockPanel dpSO = menuConsumer.AddDockPanel("Sales Order");
-            DockPanel dpWF = menuConsumer.AddDockPanel("Work List");
-            formDockManager.HidePanel(dpSO, dpWF);
+            if (dpSO != null)
+                formDockManager.HidePanel(dpSO);
             
+            DockPanel dpWF = menuConsumer.AddDockPanel("Work List");
+            if (dpWF != null)
+                formDockManager.HidePanel(dpWF);
+            
+
             DockPanel messagePanel = menuConsumer.AddDockPanel("Error List");
+            if (messagePanel != null)
+            {
+                formDockManager.HidePanel(messagePanel);
+                formDockManager.DockManager.ActivePanel = messagePanel;
+            }
+
             DockPanel outputPanel = menuConsumer.AddDockPanel("Output");
-
-            //formDockManager.HidePanel(messagePanel, outputPanel);
-            formDockManager.DockManager.ActivePanel = messagePanel;
-
+            if (outputPanel != null)
+                formDockManager.HidePanel(outputPanel);
+             
             if (Sys.Constant.USE_XMPP)
             {
                 DockPanel dpMessenger = menuConsumer.AddDockPanel("Messenger");

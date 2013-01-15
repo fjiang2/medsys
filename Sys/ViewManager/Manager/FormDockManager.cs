@@ -87,18 +87,15 @@ namespace Sys.ViewManager.Manager
         }
 
 
-        public DockPanel this[Guid Id]
+        public DockPanel FindPanel(Guid Id)
         {
-            get
+            foreach (DockPanel dockPanel in dockManager1.Panels)
             {
-                foreach (DockPanel dockPanel in dockManager1.Panels)
-                {
-                    if (dockPanel.ID.Equals(Id))
-                        return dockPanel;
-                }
-
-                return null;
+                if (dockPanel.ID.Equals(Id))
+                    return dockPanel;
             }
+
+            return null;
         }
 
         public DockPanel AddPanel(string caption, Control control, DockingStyle dockingStyle)
@@ -160,7 +157,13 @@ namespace Sys.ViewManager.Manager
            
 
             dockPanel.ControlContainer.Controls.Add(control);
-            this.controls.Add(control.GetType(), control);
+            if (!this.controls.ContainsKey(control.GetType()))
+                this.controls.Add(control.GetType(), control);
+            else
+            {
+                this.invalidLayoutData = true;
+                throw new Exception("invalid layout data, restart application to clear layout data in User Profile");
+            }
 
             dockPanel.ControlContainer.Name = "controlContainer" + panelCount;
                  
@@ -319,7 +322,7 @@ namespace Sys.ViewManager.Manager
 
         #endregion
 
-
+        private bool invalidLayoutData = false;
         public void RestoreLayout()
         {
             if (Sys.Security.Profile.Instance.Configuration != null)
@@ -335,6 +338,7 @@ namespace Sys.ViewManager.Manager
                 }
                 catch (Exception)
                 {
+                    invalidLayoutData = true;
                 }
                 finally
                 {
@@ -346,10 +350,17 @@ namespace Sys.ViewManager.Manager
 
         public void SaveLayout()
         {
-            System.IO.MemoryStream stream = new System.IO.MemoryStream();
-            this.DockManager.SaveLayoutToStream(stream);
-            Sys.Security.Profile.Instance.Configuration = stream.GetBuffer();
-            stream.Close();
+            if (!invalidLayoutData)
+            {
+                System.IO.MemoryStream stream = new System.IO.MemoryStream();
+                this.DockManager.SaveLayoutToStream(stream);
+                Sys.Security.Profile.Instance.Configuration = stream.GetBuffer();
+                stream.Close();
+            }
+            else
+            {
+                Sys.Security.Profile.Instance.Configuration = null;
+            }
         }
     }
 }

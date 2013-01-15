@@ -85,8 +85,10 @@ namespace Sys.Security
             }
             set
             {
-                if(value!=null)
+                if (value != null)
                     configuration = HostType.ByteArrayToHexString(value);
+                else
+                    configuration = null;
             }
         }
 
