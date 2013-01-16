@@ -184,11 +184,10 @@ namespace Sys.Platform.Forms
 
             if (!Constant.SINGLE_USER_SYSTEM)
             {
-                this.Text += string.Format(" : {0}({1}), {2}\\{3}@{4} of {5}", 
+                this.Text += string.Format(" : {0}({1}), {2}@{3} of {4}", 
                     Account.CurrentUser.Name,
                     Account.CurrentUser.UserName,
-                    SystemInformation.UserDomainName,
-                    SystemInformation.UserName,
+                    SysInformation.UserName,
                     SystemInformation.ComputerName, 
                     SysInformation.CompanyName);
             }

@@ -23,6 +23,7 @@ namespace Sys.Platform.Forms
             this.txtComputerName.Text = SystemInformation.ComputerName;
             this.txtEmployeeName.Text = account.Name;
             this.txtCompanyName.Text = SysInformation.CompanyName;
+            this.txtDepartment.Text = account.Department;
 
 
             if (this.account.IsDeveloper)
