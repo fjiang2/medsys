@@ -20,9 +20,10 @@ namespace Sys.Platform.Forms
             this.BackColor = Color.Transparent;
 
             InitializeComponent();
-            this.BackgroundImage = Sys.SysInformation.Logo;
-
-
+            if(Sys.SysInformation.BigLogo == null)
+                this.BackgroundImage = Sys.SysInformation.Logo;
+            else
+                this.BackgroundImage = Sys.SysInformation.BigLogo;
         }
 
       
@@ -55,14 +56,14 @@ namespace Sys.Platform.Forms
             splash.Show();
             while (!shouldClose)
             {
-                Application.DoEvents();
+                System.Windows.Forms.Application.DoEvents();
                 Thread.Sleep(100);
                 splash.SetProgress(i);
                 i += 5;
           }
             for (int n = 0; n < 18; n++)
             {
-                Application.DoEvents();
+                System.Windows.Forms.Application.DoEvents();
                 Thread.Sleep(60);
             }
             if (splash != null)

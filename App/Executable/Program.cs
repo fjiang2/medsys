@@ -29,8 +29,8 @@ namespace App.Executable
         static void Main()
         {
 
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
+            System.Windows.Forms.Application.EnableVisualStyles();
+            System.Windows.Forms.Application.SetCompatibleTextRenderingDefault(false);
 
             string executable = Assembly.GetExecutingAssembly().GetName().Name;
             string ini = string.Format("{0}\\{1}\\{2}\\{3}.ini", 
@@ -51,7 +51,7 @@ namespace App.Executable
             if (!Sys.Constant.Load(ini))
             {
                 Form server = new Sys.Platform.Forms.Connect2ServerForm();
-                Application.Run(server);
+                System.Windows.Forms.Application.Run(server);
 
                 if (server.DialogResult != DialogResult.OK)
                     return;
