@@ -72,6 +72,12 @@ namespace Sys
             get { return SysInformation.logo; }
         }
 
+        public static Image BigLogo
+        {
+            get;
+            set;
+        }
+
         public static Icon Icon
         {
             get { return SysInformation.icon; }
@@ -97,13 +103,29 @@ namespace Sys
             get { return (int)Profile.Instance["CompanyID"]; }
         }
 
+        
+
         public static void SetCompany(Company company)
         {
             Sys.Security.Profile.Instance.Add("Company", company.Name);
             Sys.Security.Profile.Instance.Add("CompanyID", company.Comany_ID);
         }
 
-
+        public static string UserName
+        {
+            get
+            {
+                object val = Configuration.Instance["Policy.UserName.DomainName"];
+                if (val == null)
+                {
+                    return System.Windows.Forms.SystemInformation.UserName;
+                }
+                else
+                {
+                    return string.Format("{0}\\{1}", System.Windows.Forms.SystemInformation.UserDomainName, System.Windows.Forms.SystemInformation.UserName);
+                }
+            }
+        }
         /// <summary>
         /// Is valid this application database?
         /// </summary>

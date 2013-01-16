@@ -98,7 +98,9 @@ namespace Sys.Platform.Forms
             txtPassword.Text = "";
 
             this.Visible = false;
+
             MainForm main = new MainForm();
+            Sys.Platform.Application.mainForm = main;
 
             switch (main.ShowDialog(this))
             {
@@ -109,7 +111,7 @@ namespace Sys.Platform.Forms
                     break;
 
                 case System.Windows.Forms.DialogResult.Abort:
-                    Application.Exit();
+                    System.Windows.Forms.Application.Exit();
                     break;
             }
         }
@@ -134,9 +136,16 @@ namespace Sys.Platform.Forms
         /// <returns>return true if application is login</returns>
         private static bool RunLogonRequired(Icon loginIcon)
         {
+            Account account = new Account(SysInformation.UserName, "password");
+            if (account.Windows_Authentication)
+            {
+                RunNotLogon(account);
+                return true;
+            }
+
             var login = new LoginForm();
             login.Icon = loginIcon;
-            Application.Run(login);
+            System.Windows.Forms.Application.Run(login);
             
             return login.DialogResult != DialogResult.Cancel;
         }
@@ -145,9 +154,8 @@ namespace Sys.Platform.Forms
         /// Run application without logon, default user: admin, company: the first company
         /// </summary>
         /// <param name="sysIcon"></param>
-        private static void RunNotLogon()
+        private static void RunNotLogon(Account account)
         {
-            Account account = new Account(PredefinedUser.singleuser, "password");
             Account.SetCurrentUser(account);
             SysInformation.LoadProfile();
 
@@ -157,7 +165,8 @@ namespace Sys.Platform.Forms
                 Sys.Constant.DB_APPLICATION = company.Default_DB;
 
             MainForm main = new MainForm();
-            Application.Run(main);
+            Sys.Platform.Application.mainForm = main;
+            System.Windows.Forms.Application.Run(main);
         }
 
 
@@ -167,7 +176,7 @@ namespace Sys.Platform.Forms
                 return RunLogonRequired(loginIcon);
             else
             {
-                LoginForm.RunNotLogon();
+                LoginForm.RunNotLogon(new Account(PredefinedUser.singleuser, "password"));
                 return true;
             }
         }

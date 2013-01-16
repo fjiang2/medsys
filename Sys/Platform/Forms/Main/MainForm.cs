@@ -372,6 +372,25 @@ namespace Sys.Platform.Forms
             }
         }
 
+        public DevExpress.XtraBars.BarButtonItem AddBarButtonItem(string text, Image icon)
+        {
+            DevExpress.XtraBars.BarButtonItem item = new DevExpress.XtraBars.BarButtonItem();
+            item.Caption = text;
+            item.Glyph = icon;
+
+            //item.Id = 4;
+            //item.Name = "btnAddShortcut";
+            //item.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnAddFavorite_ItemClick);
+
+            this.barManager1.Items.AddRange(new DevExpress.XtraBars.BarItem[]{ item });
+            this.barTools.LinksPersistInfo.AddRange(
+                new DevExpress.XtraBars.LinkPersistInfo[] {
+                    new DevExpress.XtraBars.LinkPersistInfo(item)
+                }
+             );
+
+            return item;
+        }
     }
 
 

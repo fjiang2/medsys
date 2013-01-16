@@ -63,6 +63,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Application.cs" />
     <Compile Include="MgCode\DpoClass\AppointmentDpo.cs" />
     <Compile Include="MgCode\DpoClass\ResourceDpo.cs" />
     <Compile Include="Forms\Database\GenEnumForm.cs">

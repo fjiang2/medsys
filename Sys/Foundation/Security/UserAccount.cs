@@ -66,7 +66,7 @@ namespace Sys.Security
 
         public virtual bool Login(string password)
         {
-            if (this.UserName == PredefinedUser.singleuser)
+            if (this.Windows_Authentication || this.UserName == PredefinedUser.singleuser)
             {
                 EnterLoginedState();
                 return true;

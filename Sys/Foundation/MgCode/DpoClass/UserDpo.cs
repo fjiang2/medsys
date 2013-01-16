@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 7/19/2012 12:12:38 AM
+//   by devel at 1/16/2013
 //
 
 using System;
@@ -14,7 +14,7 @@ using Sys.Data.Manager;
 
 namespace Sys.Foundation.DpoClass
 {
-    [Revision(15)]
+    [Revision(16)]
     [Table("sys00101", Level.System)]    //Primary Keys = User_Name;  Identity = User_ID;
     public class UserDpo : DPObject
     {
@@ -25,6 +25,7 @@ namespace Sys.Foundation.DpoClass
         [Column(_User_Name, SqlDbType.NVarChar, Primary = true, Length = 256)]                    public string User_Name;      //nvarchar(256) not null
         [Column(_Plain_Password, SqlDbType.NVarChar, Nullable = true, Length = 32)]               public string Plain_Password; //nvarchar(32) null
         [Column(_Password, SqlDbType.VarBinary, Nullable = true, Length = 64)]                    public byte[] Password;       //varbinary(64) null
+        [Column(_Windows_Authentication, SqlDbType.Bit)]                                          public bool Windows_Authentication;//bit(1) not null
         [Column(_Inactive, SqlDbType.Bit)]                                                        public bool Inactive;         //bit(1) not null
         [Column(_Last_Name, SqlDbType.NVarChar, Length = 50)]                                     public string Last_Name;      //nvarchar(50) not null
         [Column(_First_Name, SqlDbType.NVarChar, Length = 50)]                                    public string First_Name;     //nvarchar(50) not null
@@ -165,6 +166,7 @@ namespace Sys.Foundation.DpoClass
         public const string _User_Name = "User_Name";
         public const string _Plain_Password = "Plain_Password";
         public const string _Password = "Password";
+        public const string _Windows_Authentication = "Windows_Authentication";
         public const string _Inactive = "Inactive";
         public const string _Last_Name = "Last_Name";
         public const string _First_Name = "First_Name";
