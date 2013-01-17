@@ -1,0 +1,441 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{77EF5B24-DDBB-46EA-9296-8FDBB758B4AF}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Sys.Workflow</RootNamespace>
+    <AssemblyName>Sys.Workflow</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DevExpress.Charts.v11.2.Core, Version=11.2.10.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Printing.v11.2.Core, Version=11.2.10.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Data.v11.2, Version=11.2.10.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Utils.v11.2, Version=11.2.10.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraCharts.v11.2, Version=11.2.10.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraCharts.v11.2.UI, Version=11.2.10.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraEditors.v11.2, Version=11.2.10.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraGrid.v11.2, Version=11.2.10.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraNavBar.v11.2, Version=11.2.10.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraVerticalGrid.v11.2, Version=11.2.10.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Tie">
+      <HintPath>..\..\Lib\Tie.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Collaborative\DataView\WorkflowDataView.cs" />
+    <Compile Include="Collaborative\DataView\WorkflowInstanceDataView.cs" />
+    <Compile Include="Collaborative\Forms\StateEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Collaborative\Forms\StateEditor.Designer.cs">
+      <DependentUpon>StateEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Collaborative\Forms\TaskForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Collaborative\Forms\TaskForm.Designer.cs">
+      <DependentUpon>TaskForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Collaborative\Forms\TaskListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Collaborative\Forms\TaskListForm.Designer.cs">
+      <DependentUpon>TaskListForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Collaborative\Forms\WorkflowEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Collaborative\Forms\WorkflowEditor.Designer.cs">
+      <DependentUpon>WorkflowEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Collaborative\Forms\WorkflowForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Collaborative\Forms\WorkflowForm.Designer.cs">
+      <DependentUpon>WorkflowForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Collaborative\Forms\WorkflowInstanceForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Collaborative\Forms\WorkflowInstanceForm.Designer.cs">
+      <DependentUpon>WorkflowInstanceForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Collaborative\Forms\WorkListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Collaborative\Forms\WorkListControl.Designer.cs">
+      <DependentUpon>WorkListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Collaborative\Persistent\NodeDpo.cs" />
+    <Compile Include="Collaborative\Persistent\NoteDpo.cs" />
+    <Compile Include="Collaborative\Persistent\StateDpo.cs" />
+    <Compile Include="Collaborative\Persistent\TaskDpo.cs" />
+    <Compile Include="Collaborative\Persistent\TrackDpo.cs" />
+    <Compile Include="Collaborative\Persistent\TransitionDpo.cs" />
+    <Compile Include="Collaborative\Persistent\WorkflowInstanceDpo.cs" />
+    <Compile Include="Collaborative\Persistent\WorkflowDpo.cs" />
+    <Compile Include="Collaborative\Protocols\GanttChartProtocol.cs" />
+    <Compile Include="Collaborative\Protocols\WinFormProtocol.cs" />
+    <Compile Include="Collaborative\WorkflowRuntime.cs" />
+    <Compile Include="Control\WorkflowChartControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Control\WorkflowGridControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MgCode\DpoClass\wfSecurityDpo.cs" />
+    <Compile Include="MgCode\DpoClass\wfNodeDpo.cs" />
+    <Compile Include="MgCode\DpoClass\wfNoteDpo.cs" />
+    <Compile Include="MgCode\DpoClass\wfStateDpo.cs" />
+    <Compile Include="MgCode\DpoClass\wfTaskDpo.cs" />
+    <Compile Include="MgCode\DpoClass\wfTrackDpo.cs" />
+    <Compile Include="MgCode\DpoClass\wfTransitionDpo.cs" />
+    <Compile Include="MgCode\DpoClass\wfWorkflowDpo.cs" />
+    <Compile Include="MgCode\DpoClass\wfWorkflowInstanceDpo.cs" />
+    <Compile Include="Forms\ActivityForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ActivityForm.Designer.cs">
+      <DependentUpon>ActivityForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\SimpleForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SimpleForm.Designer.cs">
+      <DependentUpon>SimpleForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\MessageForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MessageForm.Designer.cs">
+      <DependentUpon>MessageForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\System\ActivityEventArgs.cs" />
+    <Compile Include="Forms\Controls\ApprovalControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\Controls\ApprovalControl.Designer.cs">
+      <DependentUpon>ApprovalControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\System\ActivityUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\System\ActivityWinForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\CollectForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\CollectForm.Designer.cs">
+      <DependentUpon>CollectForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ReviewForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ReviewForm.Designer.cs">
+      <DependentUpon>ReviewForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Controls\FeedbackUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\Controls\FeedbackUserControl.Designer.cs">
+      <DependentUpon>FeedbackUserControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\VerifyPassword.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\VerifyPassword.Designer.cs">
+      <DependentUpon>VerifyPassword.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\WorkflowChartForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\WorkflowChartForm.Designer.cs">
+      <DependentUpon>WorkflowChartForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Foundation\Activity.cs" />
+    <Compile Include="Foundation\ActivityResult.cs" />
+    <Compile Include="Foundation\Agent\Agent.cs" />
+    <Compile Include="Foundation\Agent\Polling.cs" />
+    <Compile Include="Foundation\CollaborativeActivity.cs" />
+    <Compile Include="Foundation\CollaborativeActivityCollection.cs" />
+    <Compile Include="Foundation\CollaborativeWorkflowInstance.cs" />
+    <Compile Include="Foundation\Graph\State.cs" />
+    <Compile Include="Foundation\Graph\StateCollection.cs" />
+    <Compile Include="Foundation\Graph\StateNodeType.cs" />
+    <Compile Include="Foundation\Graph\Transition.cs" />
+    <Compile Include="Foundation\Graph\TransitionCollection.cs" />
+    <Compile Include="Foundation\Graph\TransitionInstance.cs" />
+    <Compile Include="Foundation\Graph\Workflow.cs" />
+    <Compile Include="Foundation\Graph\WorkflowFunction.cs" />
+    <Compile Include="Foundation\IWorkflow.cs" />
+    <Compile Include="Foundation\SecurityDpo.cs" />
+    <Compile Include="Foundation\Task\CollaborativeTask.cs" />
+    <Compile Include="Foundation\Task\Task.cs" />
+    <Compile Include="Foundation\Task\TaskCollection.cs" />
+    <Compile Include="Foundation\Task\TaskNodeCollection.cs" />
+    <Compile Include="Foundation\Task\TaskNodeType.cs" />
+    <Compile Include="Foundation\Task\TaskPriority.cs" />
+    <Compile Include="Foundation\Task\TaskStatus.cs" />
+    <Compile Include="Foundation\WorkflowInstance.cs" />
+    <Compile Include="Foundation\IContext.cs" />
+    <Compile Include="Model\ActivityInstancePoint.cs" />
+    <Compile Include="Collaborative\NoteHistory.cs" />
+    <Compile Include="Model\StatePoint.cs" />
+    <Compile Include="Model\StatePointCollection.cs" />
+    <Compile Include="Model\TransitionLink.cs" />
+    <Compile Include="Model\TransitionLinkCollection.cs" />
+    <Compile Include="MgCode\DpoPackage\wfStateDpoPackage.cs" />
+    <Compile Include="MgCode\DpoPackage\wfTransitionDpoPackage.cs" />
+    <Compile Include="MgCode\DpoPackage\wfWorkflowDpoPackage.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Scheduling\AutoScheduling.cs" />
+    <Compile Include="Scheduling\WorkflowTracking.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Collaborative\Forms\StateEditor.resx">
+      <DependentUpon>StateEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Collaborative\Forms\TaskForm.resx">
+      <DependentUpon>TaskForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Collaborative\Forms\TaskListForm.resx">
+      <DependentUpon>TaskListForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Collaborative\Forms\WorkflowEditor.resx">
+      <DependentUpon>WorkflowEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Collaborative\Forms\WorkflowForm.resx">
+      <DependentUpon>WorkflowForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Collaborative\Forms\WorkflowInstanceForm.resx">
+      <DependentUpon>WorkflowInstanceForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Collaborative\Forms\WorkListControl.resx">
+      <DependentUpon>WorkListControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ActivityForm.resx">
+      <DependentUpon>ActivityForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\CollectForm.resx">
+      <DependentUpon>CollectForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Controls\ApprovalControl.resx">
+      <DependentUpon>ApprovalControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SimpleForm.resx">
+      <DependentUpon>SimpleForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MessageForm.resx">
+      <DependentUpon>MessageForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ReviewForm.resx">
+      <DependentUpon>ReviewForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Controls\FeedbackUserControl.resx">
+      <DependentUpon>FeedbackUserControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\VerifyPassword.resx">
+      <DependentUpon>VerifyPassword.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\WorkflowChartForm.resx">
+      <DependentUpon>WorkflowChartForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\licenses.licx" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\RefreshDocViewHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PasteHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\application_view_list.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PrintHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\application_form_edit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DeleteHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DataContainer_MoveNextHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ZoomHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\accept.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cross.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\emoticon_happy.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\emoticon_unhappy.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\emoticon_waii.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\disk.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\webcam.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\camera.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\time.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\door_out.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\door_in.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\door_open.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\page_white_wrench.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\disk_multiple.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\door.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tick.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cancel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\brick.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\wrench_orange.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Foundation\Sys.Foundation.csproj">
+      <Project>{30FC8D52-477A-415A-9680-B29F0C5A1606}</Project>
+      <Name>Sys.Foundation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PersistentObjects\Sys.PersistentObjects.csproj">
+      <Project>{FE52736A-BA94-41FC-9FD3-A481A790FC9C}</Project>
+      <Name>Sys.PersistentObjects</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BusinessRules\Sys.BusinessRules.csproj">
+      <Project>{21D52785-DCA0-46BB-B0FD-428FEFBD7B1D}</Project>
+      <Name>Sys.BusinessRules</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ViewManager\Sys.ViewManager.csproj">
+      <Project>{A5D0E475-F068-4DB0-BD4B-B5647B588E08}</Project>
+      <Name>Sys.ViewManager</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
