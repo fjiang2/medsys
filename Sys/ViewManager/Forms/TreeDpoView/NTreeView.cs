@@ -33,6 +33,15 @@ namespace Sys.ViewManager.Forms
             this.ImageList = imageList;
 
             this.AfterSelect += new TreeViewEventHandler(NTreeView_AfterSelect);
+         
+        }
+
+        protected override void OnNodeMouseClick(TreeNodeMouseClickEventArgs e)
+        {
+            if (Mode != TreeViewMode.Consume)
+                return;
+
+            NodeClicked((NTreeNode<T>)(e.Node));
         }
 
         public NTree<T> Tree
@@ -96,36 +105,45 @@ namespace Sys.ViewManager.Forms
 
             if (e.Action == TreeViewAction.ByMouse)
             {
-                NTreeNode<T> node = (NTreeNode<T>)(e.Node);
-                T item = node.Item;
-                string code = item.Statement;
-                if (!string.IsNullOrEmpty(code))
-                {
-                    Cursor = Cursors.WaitCursor;
-                    try
-                    {
-                        string scope = "$NodeItem";
-                        DS.AddHostObject(scope, item);
-                        Tie.Script.Execute(scope, code, ds, null);
-                    }
-                    catch (Exception ex)
-                    {
-                        string message = string.Format("invalid code [{0}], {1}", code, ex.Message);
-                        MessageBox.Show(message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
-                    finally
-                    {
-                        Cursor = Cursors.Default;
-                    }
-                }
-                else
-                {
-                    e.Node.Expand();
-                    return;
-                }
+                NodeClicked((NTreeNode<T>)(e.Node));
             }
         }
+
+        private void NodeClicked(NTreeNode<T> node)
+        {
+            T item = node.Item;
+            string code = item.Statement;
+            if (!string.IsNullOrEmpty(code))
+            {
+                Cursor = Cursors.WaitCursor;
+                try
+                {
+                    string scope = "$NodeItem";
+                    DS.AddHostObject(scope, item);
+                    Tie.Script.Execute(scope, code, ds, null);
+                }
+                catch (Exception ex)
+                {
+                    string message = string.Format("invalid code [{0}], {1}", code, ex.Message);
+                    MessageBox.Show(message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                finally
+                {
+                    Cursor = Cursors.Default;
+                }
+            }
+            else
+            {
+                node.Expand();
+                return;
+            }
+        }
+
+
+
+
+
 
 
         private void BuildTree(NTree<T> tree)

@@ -43,6 +43,17 @@ namespace Sys
             return Script.Evaluate(key, memory);
         }
 
+        public T GetValue<T>(string key)
+        {
+            VAL v = Script.Evaluate(key, memory);
+            object obj = v.HostValue;
+            if (obj != null)
+                return (T)obj;
+            else
+                return default(T);
+        }
+
+
         public object this[string key]
         {
             get
