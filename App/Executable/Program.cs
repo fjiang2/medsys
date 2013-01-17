@@ -69,7 +69,7 @@ namespace App.Executable
                 return;
 
             //DataManager.Helper.Start();
-            if (!LoginForm.Run(applicationIcon))
+            if (!LoginForm.Run(applicationIcon, true))
                return;
 
             SysInformation.Stop();

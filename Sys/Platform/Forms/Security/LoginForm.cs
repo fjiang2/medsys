@@ -128,6 +128,8 @@ namespace Sys.Platform.Forms
 
         #region Application Entry
 
+        static bool connectionAllowChange = false;
+
         /// <summary>
         /// Run application, logon is required.
         /// </summary>
@@ -170,8 +172,10 @@ namespace Sys.Platform.Forms
         }
 
 
-        public static bool Run(Icon loginIcon)
+        public static bool Run(Icon loginIcon, bool connectionAllowChange = false)
         {
+            LoginForm.connectionAllowChange = connectionAllowChange;
+
             if (!Constant.SINGLE_USER_SYSTEM)
                 return RunLogonRequired(loginIcon);
             else
@@ -185,6 +189,9 @@ namespace Sys.Platform.Forms
 
         private void picLogo_Click(object sender, EventArgs e)
         {
+            if (!LoginForm.connectionAllowChange)
+                return;
+
             Form server = new Sys.Platform.Forms.Connect2ServerForm();
             server.ShowDialog();
 
