@@ -116,7 +116,7 @@ namespace Sys
             get
             {
                 object val = Configuration.Instance["Policy.UserName.DomainName"];
-                if (val == null)
+                if (val == null || !(bool)val)
                 {
                     return System.Windows.Forms.SystemInformation.UserName;
                 }
