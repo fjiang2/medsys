@@ -22,10 +22,10 @@ namespace App.Testing
             else
                 DataProviderManager.RegisterDefaultProvider("data source=localhost\\sqlexpress;initial catalog=medsys;integrated security=SSPI;packet size=4096");
             
-            //NTreeViewDemo();
-            SqlClauseDemo();
+            NTreeViewDemo();
+            //SqlClauseDemo();
 
-            SqlClauseJoinDemo();
+            //SqlClauseJoinDemo();
         }
 
         static void SqlClauseDemo()
