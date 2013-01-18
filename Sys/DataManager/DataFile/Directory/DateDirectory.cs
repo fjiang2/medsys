@@ -21,7 +21,7 @@ namespace Sys.DataManager
         
         public DateDirectory(string virtualDirectory, DateTime dateCreated)
         {
-            VIRTUAL_DIRECTORY = (string)Sys.Configuration.Instance[virtualDirectory];
+            VIRTUAL_DIRECTORY = Sys.Configuration.Instance.GetValue<string>(virtualDirectory);
             this.dateCreated = dateCreated;
         }
 

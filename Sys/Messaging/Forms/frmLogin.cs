@@ -274,7 +274,7 @@ namespace Sys.Messaging.Forms
 
 		private void cmdLogin_Click(object sender, System.EventArgs e)
 		{
-			Jid jid = new Jid(txtJid.Text+"@"+(string)Configuration.Instance["Xmpp.Host"]);
+			Jid jid = new Jid(txtJid.Text+"@" + Configuration.Instance.GetValue<string>("Xmpp.Host"));
 			
 			xmppCon.Server			            = jid.Server;
 			xmppCon.Username		            = jid.User;

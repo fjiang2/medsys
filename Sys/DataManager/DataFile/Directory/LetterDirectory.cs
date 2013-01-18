@@ -17,7 +17,7 @@ namespace Sys.DataManager
      
         public LetterDirectory(string virtualDirectory, string letters)
         {
-            VIRTUAL_DIRECTORY = (string)Sys.Configuration.Instance[virtualDirectory];
+            VIRTUAL_DIRECTORY = Sys.Configuration.Instance.GetValue<string>(virtualDirectory);
             this.letters = letters;
         }
 

@@ -31,8 +31,8 @@ namespace Sys
 
         public static void ExceptionLogHelper()
         {
-            bool log1 = (bool)Configuration.Instance["logger.textfile"];
-            bool log2 = (bool)Configuration.Instance["logger.mail"];
+            bool log1 = Configuration.Instance.GetValue<bool>("logger.textfile");
+            bool log2 = Configuration.Instance.GetValue<bool>("logger.mail");
 
             if (!log1 && !log2)
                 return;
@@ -48,8 +48,8 @@ namespace Sys
             if (log2)
             {
                 EmailLogger emailLogger = new EmailLogger();
-                emailLogger.EmailFrom = (string)Configuration.Instance["mail.application"];
-                emailLogger.EmailTo = (string)Configuration.Instance["mail.developer"];
+                emailLogger.EmailFrom = Configuration.Instance.GetValue<string>("mail.application");
+                emailLogger.EmailTo = Configuration.Instance.GetValue<string>("mail.developer");
 
                 VAL smtp = Configuration.Instance.GetValue("server.smtp");
                 emailLogger.EmailServer = (string)smtp["host"];

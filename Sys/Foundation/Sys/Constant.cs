@@ -14,10 +14,10 @@ namespace Sys
         public static int XMPP_DATA_PROVIDER = 0;
         public static string XMPP_DATABASE_NAME = DB_APPLICATION;
 
-        public static bool USE_XMPP                     { get { return (bool)Configuration.Instance["Xmpp.Active"]; } }
-        public static int POLICY_PASSWORD_EXPRIED_DAYS  { get { return (int)Configuration.Instance["Policy.Password.Expired.Days"]; }  }
-        public static string POLICY_DEFAULT_PASSWORD    { get { return (string)Configuration.Instance["Policy.Password.Default"]; }    }
-        public static string PATH_EXECUTABLE_INSTALL    { get { return (string)Configuration.Instance["Path.Executable.Install"]; } }
+        public static bool USE_XMPP                     { get { return Configuration.Instance.GetValue<bool>("Xmpp.Active"); } }
+        public static int POLICY_PASSWORD_EXPRIED_DAYS  { get { return Configuration.Instance.GetValue<int>("Policy.Password.Expired.Days"); }  }
+        public static string POLICY_DEFAULT_PASSWORD    { get { return Configuration.Instance.GetValue<string>("Policy.Password.Default"); }    }
+        public static string PATH_EXECUTABLE_INSTALL    { get { return Configuration.Instance.GetValue<string>("Path.Executable.Install"); } }
 
 
 
@@ -80,7 +80,7 @@ namespace Sys
             DataProviderManager.RegisterDefaultProvider(Const.CONNECTION_STRING);
             DataProviderManager.Instance.LoadDataProviders();
 
-            Const.Revision = (int)Configuration.Instance["Revision"];
+            Const.Revision = Configuration.Instance.GetValue<int>("Revision");
             Const.COMPUTER_NAME = System.Windows.Forms.SystemInformation.ComputerName;
 
             JException.DefaultExceptionHandler = delegate(string title, string message)

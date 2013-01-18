@@ -224,7 +224,7 @@ namespace Sys.Messaging.Forms
         {
             treeViewConferences.TreeViewNodeSorter = new TreeNodeSorter();
 
-            object mucServices = Configuration.Instance["Xmpp.MucServices"];
+            object mucServices = Configuration.Instance.GetValue<object>("Xmpp.MucServices");
             if (mucServices == null)
                 return;
 

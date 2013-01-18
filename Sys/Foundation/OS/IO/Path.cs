@@ -39,7 +39,7 @@ namespace Sys.IO
             }
             else
             {
-                string devel = (string)Configuration.Instance["Path.devel"];
+                string devel = Configuration.Instance.GetValue<string>("Path.devel");
                 this.simplePath = System.IO.Path.GetDirectoryName(assembly.GetName().CodeBase);
                 this.solution = devel+"\\medsys";
                 this.application = this.solution+"\\App";
