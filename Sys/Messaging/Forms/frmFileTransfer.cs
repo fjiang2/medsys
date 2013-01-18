@@ -625,7 +625,7 @@ namespace Sys.Messaging.Forms
         {
             m_startDateTime = DateTime.Now;
 
-            string path = Configuration.Instance["Xmpp.ReceivedFiles"] as string;
+            string path = Configuration.Instance.GetValue<string>("Xmpp.ReceivedFiles");
 
             System.IO.Directory.CreateDirectory(path);
                 

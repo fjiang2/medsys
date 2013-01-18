@@ -24,7 +24,7 @@ namespace Sys
         {
             get
             {
-                string ver = (string)Configuration.Instance["Version.Database"];
+                string ver = Configuration.Instance.GetValue<string>("Version.Database");
                 return new Version(ver);
             }
         }
@@ -115,8 +115,7 @@ namespace Sys
         {
             get
             {
-                object val = Configuration.Instance["Policy.UserName.DomainName"];
-                if (val == null || !(bool)val)
+                if (Configuration.Instance.GetValue<bool>("Policy.UserName.DomainName"))
                 {
                     return System.Windows.Forms.SystemInformation.UserName;
                 }

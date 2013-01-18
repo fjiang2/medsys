@@ -217,7 +217,7 @@ namespace Sys.Platform.Forms
             
             //somebody may not have permission to access these Dock Panles below:
             menuConsumer.AddDockPanel("Shortcuts");
-            string salesOrder = (string)Configuration.Instance["Sales.Order.Name"];
+            string salesOrder = Configuration.Instance.GetValue<string>("Sales.Order.Name");
             if (salesOrder == null)
                 salesOrder = "Sales Order";
 
@@ -267,7 +267,7 @@ namespace Sys.Platform.Forms
             BarSubItem menuHelp = menuConsumer.AddBarSubItem("&Help");
             
             BarButtonItem menu;
-            menu = menuConsumer.AddWebLink(menuHelp, "Report a Bug", (string)Configuration.Instance["URL.ReportIssue"]);
+            menu = menuConsumer.AddWebLink(menuHelp, "Report a Bug", Configuration.Instance.GetValue<string>("URL.ReportIssue"));
             menu.Glyph = global::Sys.Platform.Properties.Resources.bug;
 
             menu = menuConsumer.AddBarButtonItem(menuHelp, "Check for Updates");
@@ -279,7 +279,7 @@ namespace Sys.Platform.Forms
                     MessageBox.Show("You already have the latest version installed.", "Updates", MessageBoxButtons.OK, MessageBoxIcon.Information);
             };
 
-            menuConsumer.AddWebLink(menuHelp, "Release Notes", (string)Configuration.Instance["URL.ReleaseNotes"]);
+            menuConsumer.AddWebLink(menuHelp, "Release Notes", Configuration.Instance.GetValue<string>("URL.ReleaseNotes"));
             menu.Glyph = global::Sys.Platform.Properties.Resources.page_edit;
 
             menu = menuConsumer.AddBarButtonItem(menuHelp, "About...");

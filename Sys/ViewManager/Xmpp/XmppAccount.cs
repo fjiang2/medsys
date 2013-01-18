@@ -46,8 +46,8 @@ namespace Sys.Xmpp
 
         public void Login()
         {
-            string resource = Configuration.Instance["Xmpp.Resource"] as string;
-            string caps = Configuration.Instance["Xmpp.Caps"] as string;
+            string resource = Configuration.Instance.GetValue<string>("Xmpp.Resource");
+            string caps = Configuration.Instance.GetValue<string>("Xmpp.Caps");
 
             resource = System.Windows.Forms.SystemInformation.ComputerName;
                 
@@ -66,7 +66,7 @@ namespace Sys.Xmpp
             get
             {
                 if(host==null)
-                    host = Configuration.Instance["Xmpp.Host"] as string;
+                    host = Configuration.Instance.GetValue<string>("Xmpp.Host");
 
                 return host;
             }
@@ -131,8 +131,8 @@ namespace Sys.Xmpp
             XmppCon.Username = jid.User;
             XmppCon.Password = password;
             XmppCon.Resource = resource;
-            XmppCon.Priority = (int)Configuration.Instance["Xmpp.Priority"];
-            XmppCon.Port = (int)Configuration.Instance["Xmpp.Port"];
+            XmppCon.Priority = Configuration.Instance.GetValue<int>("Xmpp.Priority");
+            XmppCon.Port = Configuration.Instance.GetValue<int>("Xmpp.Port");
             XmppCon.UseSSL = false;
             XmppCon.AutoResolveConnectServer = true;
             XmppCon.UseCompression = false;

@@ -31,7 +31,7 @@ namespace Sys.ViewManager.Manager
             this.dockManager1.Controller = this.barAndDockingController1;
             this.defaultLookAndFeel1 = new DevExpress.LookAndFeel.DefaultLookAndFeel(components);
 
-            string skinName= (string)Configuration.Instance["App.LookAndFeel.SkinName"];
+            string skinName= Configuration.Instance.GetValue<string>("App.LookAndFeel.SkinName");
             if (skinName == null)
                 skinName = "VS2010";
             

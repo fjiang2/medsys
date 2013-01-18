@@ -21,7 +21,7 @@ namespace Sys.ViewManager.Security
         public static bool IsCheckedClass(string className)
         {
             if(checkedClasses ==null)
-                checkedClasses = (object[])Configuration.Instance["Security.Classes"];
+                checkedClasses = Configuration.Instance.GetValue<object[]>("Security.Classes");
 
             foreach (object c in checkedClasses)
                 if ((string)c == className)
@@ -32,7 +32,7 @@ namespace Sys.ViewManager.Security
 
         public FormStore(TreeNode parent)
         {
-            checkedClasses = (object[])Configuration.Instance["Security.Classes"];
+            checkedClasses = Configuration.Instance.GetValue<object[]>("Security.Classes");
 
 
             foreach (string x in Sys.Modules.Library.AssemblyNames)

@@ -54,14 +54,14 @@ namespace Sys
         }
 
 
-        public object this[string key]
-        {
-            get
-            {
-                VAL v = Script.Evaluate(key, memory);
-                return v.HostValue;
-            }
-        }
+        //public object this[string key]
+        //{
+        //    get
+        //    {
+        //        VAL v = Script.Evaluate(key, memory);
+        //        return v.HostValue;
+        //    }
+        //}
 
         public void Save(string key, object value)
         {

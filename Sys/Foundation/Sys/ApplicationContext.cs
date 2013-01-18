@@ -52,6 +52,20 @@ namespace Sys
             }
         }
 
+        public VAL GetValue(string key)
+        {
+            return memory[key];
+        }
+
+        public T GetValue<T>(string key)
+        {
+            VAL v = memory[key];
+            object obj = v.HostValue;
+            if (obj != null)
+                return (T)obj;
+            else
+                return default(T);
+        }
 
         /*
          *  key="X.a";
