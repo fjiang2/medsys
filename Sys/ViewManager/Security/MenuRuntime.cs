@@ -77,7 +77,7 @@ namespace Sys.ViewManager.Security
                 MessageBox.Show("Please Select Sales Order before click Menu","Warning");          
                 return ;
             }
-            string SO = (string)Sys.Security.Profile.Instance[_SO];  
+            string SO = Sys.Security.Profile.Instance.GetValue<string>(_SO);  
             OpenForm(formClass, new object[] {SO});
         }
 
@@ -142,7 +142,7 @@ namespace Sys.ViewManager.Security
             
             DS["sender"] = VAL.Boxing(sender);
             DS["e"] = VAL.Boxing(e);
-            DS[_SO] = VAL.Boxing(Sys.Security.Profile.Instance[_SO]);
+            DS[_SO] = VAL.Boxing(Sys.Security.Profile.Instance.GetValue<string>(_SO));
             DS[_SCOPE] = VAL.Boxing(menuItem);
 
             //Note:

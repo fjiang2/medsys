@@ -90,17 +90,17 @@ namespace Sys
 
         public static string ComputerName
         {
-            get { return (string)Profile.Instance["Computer"]; }
+            get { return Profile.Instance.GetValue<string>("Computer"); }
         }
 
         public static string CompanyName
         {
-            get { return (string)Profile.Instance["Company"]; }
+            get { return Profile.Instance.GetValue<string>("Company"); }
         }
 
         public static int CompanyID
         {
-            get { return (int)Profile.Instance["CompanyID"]; }
+            get { return Profile.Instance.GetValue<int>("CompanyID"); }
         }
 
         

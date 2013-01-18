@@ -40,7 +40,7 @@ namespace Sys.ViewManager.Forms
 
         }
 
-        public IEnumerable<T> DataSource
+        public new IEnumerable<T> DataSource
         {
             get
             {
