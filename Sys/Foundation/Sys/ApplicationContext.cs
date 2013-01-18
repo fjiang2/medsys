@@ -44,13 +44,13 @@ namespace Sys
             }
         }
 
-        public object this[string key]
-        {
-            get
-            {
-                return memory[key].value;
-            }
-        }
+        //public object this[string key]
+        //{
+        //    get
+        //    {
+        //        return memory[key].value;
+        //    }
+        //}
 
         public VAL GetValue(string key)
         {
