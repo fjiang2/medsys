@@ -166,7 +166,7 @@ namespace Sys
         /// </summary>
         /// <param name="fileName"></param>
         /// <param name="text"></param>
-        public static void WriteFile(string fileName, string text)
+        public static void WriteFile(this string fileName, string text)
         {
             string path = System.IO.Path.GetDirectoryName(fileName);
             if (!System.IO.Directory.Exists(path))
