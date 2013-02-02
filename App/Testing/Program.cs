@@ -10,7 +10,7 @@ using Sys.Foundation.DpoClass;
 using Sys.ViewManager.DpoClass;
 using Sys.ViewManager.Security;
 using Sys.ViewManager.Forms;
-
+using Sys.ViewManager.DpoClass;
 namespace App.Testing
 {
     class Program
@@ -22,8 +22,8 @@ namespace App.Testing
             else
                 DataProviderManager.RegisterDefaultProvider("data source=localhost\\sqlexpress;initial catalog=medsys;integrated security=SSPI;packet size=4096");
             
-            NTreeViewDemo();
-            //SqlClauseDemo();
+           // NTreeViewDemo();
+           SqlClauseDemo();
 
             //SqlClauseJoinDemo();
         }
@@ -42,11 +42,12 @@ namespace App.Testing
                 .SELECT.COLUMNS()
                 .FROM<UserDpo>()
                 .WHERE(
-                    (UserDpo._Email.ColumnName()!= "").AND(UserDpo._First_Name.ColumnName() == "Unknown").OR(UserDpo._Last_Name.ColumnName()=="Devel")
+                    (UserDpo._Email.ColumnName()!= "").AND(UserDpo._First_Name.ColumnName() == "Unknown").OR(UserDpo._Last_Name.ColumnName()=="devel")
                     );
 
             string x1 = sql1.ToString();
-            string x2 = sql2.ToString();
+            string x2 = sql2.ToString();  //SELECT *  FROM medsys..[sys00101] WHERE (([Email] <> '') AND ([First_Name] = 'Unknown')) OR ([Last_Name] = 'devel')
+
             Console.WriteLine(x1);
             Console.WriteLine(x2);
 
@@ -71,6 +72,13 @@ namespace App.Testing
 
         public static void NTreeViewDemo()
         {
+            IEnumerable<UserMenuDpo> list = new TableReader<UserMenuDpo>(UserMenuItem._ParentID.ColumnName() == 10)
+               .ToList()
+               .Where(dpo => dpo.Released)
+               .OrderBy(dpo => dpo.OrderBy);
+
+
+
             var ntree = new NTree<UserMenuItem>(new TableReader<UserMenuItem>().ToList().Where(dpo => dpo.Released).OrderBy(dpo => dpo.OrderBy), 0);
             NTreeView<UserMenuItem> treeView = new NTreeView<UserMenuItem>();
             treeView.DataSource = ntree;

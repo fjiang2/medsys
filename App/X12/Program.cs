@@ -1,4 +1,4 @@
-﻿//#define CREATE_DPOBJECT
+﻿#define CREATE_DPOBJECT
 //#define UPGRADE_DPOBJECT
 //#define UPGRADE_PACKAGE
 //#define UPGRADE_SQL_SERVER
@@ -26,24 +26,23 @@ namespace X12
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            string connetionString = "data source=localhost\\SQLSERVER2008;initial catalog=medsys;integrated security=SSPI;packet size=4096";
-            //connetionString = "data source=localhost\\SQLEXPRESS;initial catalog=medsys;integrated security=SSPI;packet size=4096";
-            DataProviderManager.RegisterDefaultProvider(connetionString);
+            string connetionString = connetionString = "data source=localhost\\SQLEXPRESS;initial catalog=medsys;integrated security=SSPI;packet size=4096";
+            DataProvider provider = DataProviderManager.RegisterDefaultProvider(connetionString);
 
             Assembly assembly = Assembly.GetExecutingAssembly();
             Manager mgr = new Manager(assembly);
             string path = Library.AssemblyPath(assembly, Setting.DPO_CLASS_PATH);
 
 #if CREATE_DPOBJECT
-            Manager.CreateClass(new string[] {
-                "medsys..X12LoopTemplate", 
-                "medsys..X12SegmentTemplate", 
-                "medsys..X12SegmentInstance", 
-                "medsys..X12ElementTemplate", 
-                "medsys..X12ElementInstance", 
-                "medsys..X12CodeDefinition" 
+            Manager.CreateClass(provider, new string[] {
+                "medsys..[X12LoopTemplate]", 
+                "medsys..[X12SegmentTemplate]", 
+                "medsys..[X12SegmentInstance]", 
+                "medsys..[X12ElementTemplate]", 
+                "medsys..[X12ElementInstance]", 
+                "medsys..[X12CodeDefinition]" 
                 }, 
-                path, "X12.Dpo", Level.Fixed, true, null); 
+                path, "X12.Dpo", Level.Fixed, true, false, null); 
 #endif
 
 #if UPGRADE_DPOBJECT
