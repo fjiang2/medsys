@@ -178,10 +178,10 @@ namespace Sys.Data.Manager
         {
             string comment = @"//
 // Machine Packed Data
-//   by {0} at {1}
+//   by {0}
 //
 ";
-            comment = string.Format(comment, Active.Account.UserName, DateTime.Now);
+            comment = string.Format(comment, Active.Account.UserName);
             string classFormat = @"{0}{1}";
 
             return string.Format(classFormat, comment, this.clss);
