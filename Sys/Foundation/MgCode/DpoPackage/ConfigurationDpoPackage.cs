@@ -1,6 +1,6 @@
 //
 // Machine Packed Data
-//   by devel at 7/19/2012 2:59:10 PM
+//   by devel at 3/26/2013 6:51:01 AM
 //
 using System;
 using System.Data;
@@ -23,6 +23,51 @@ namespace Sys.Foundation.DpoPackage
 		protected override void Pack()
 		{
 			var dpo = new ConfigurationDpo();
+			dpo.ID = 23;
+			dpo.ParentID = 0;
+			dpo.OrderBy = 0;
+			dpo.key_name = "logger.mail";
+			dpo.value = "false";
+			dpo.Inactive = false;
+			list.Add(dpo);
+
+			dpo = new ConfigurationDpo();
+			dpo.ID = 24;
+			dpo.ParentID = 0;
+			dpo.OrderBy = 1;
+			dpo.key_name = "logger.textfile";
+			dpo.value = "false";
+			dpo.Inactive = false;
+			list.Add(dpo);
+
+			dpo = new ConfigurationDpo();
+			dpo.ID = 25;
+			dpo.ParentID = 0;
+			dpo.OrderBy = 0;
+			dpo.key_name = "mail.application";
+			dpo.value = "\"medsys@datconn.com\"";
+			dpo.Inactive = false;
+			list.Add(dpo);
+
+			dpo = new ConfigurationDpo();
+			dpo.ID = 26;
+			dpo.ParentID = 0;
+			dpo.OrderBy = 1;
+			dpo.key_name = "mail.developer";
+			dpo.value = "\"fjiang@datconn.com\"";
+			dpo.Inactive = false;
+			list.Add(dpo);
+
+			dpo = new ConfigurationDpo();
+			dpo.ID = 22;
+			dpo.ParentID = 0;
+			dpo.OrderBy = 0;
+			dpo.key_name = "Path.devel";
+			dpo.value = "\"c:\\\\devel\"";
+			dpo.Inactive = false;
+			list.Add(dpo);
+
+			dpo = new ConfigurationDpo();
 			dpo.ID = 1;
 			dpo.ParentID = 0;
 			dpo.OrderBy = 0;
@@ -68,11 +113,29 @@ namespace Sys.Foundation.DpoPackage
 			list.Add(dpo);
 
 			dpo = new ConfigurationDpo();
+			dpo.ID = 28;
+			dpo.ParentID = 0;
+			dpo.OrderBy = 0;
+			dpo.key_name = "Policy.UserName.DomainName";
+			dpo.value = "False";
+			dpo.Inactive = false;
+			list.Add(dpo);
+
+			dpo = new ConfigurationDpo();
 			dpo.ID = 6;
 			dpo.ParentID = 0;
 			dpo.OrderBy = 0;
 			dpo.key_name = "Revision";
 			dpo.value = "0";
+			dpo.Inactive = false;
+			list.Add(dpo);
+
+			dpo = new ConfigurationDpo();
+			dpo.ID = 29;
+			dpo.ParentID = 0;
+			dpo.OrderBy = 0;
+			dpo.key_name = "Sales.Order.Name";
+			dpo.value = "\"Sales Order\"";
 			dpo.Inactive = false;
 			list.Add(dpo);
 
@@ -158,7 +221,7 @@ namespace Sys.Foundation.DpoPackage
 			dpo.Label = "Caps";
 			dpo.OrderBy = 0;
 			dpo.key_name = "Xmpp.Caps";
-			dpo.value = " \"http://www.datconn.com/med/caps\"";
+			dpo.value = " \"http://www.datconn.com/medsys/caps\"";
 			dpo.Inactive = false;
 			list.Add(dpo);
 
@@ -178,7 +241,7 @@ namespace Sys.Foundation.DpoPackage
 			dpo.Label = "MucServices";
 			dpo.OrderBy = 0;
 			dpo.key_name = "Xmpp.MucServices";
-			dpo.value = "{\"conference.datconn.coml\",\"chat.datconn.com\"}";
+			dpo.value = "{\"conference.datconn.com\",\"chat.datconn.com\"}";
 			dpo.Inactive = false;
 			list.Add(dpo);
 
@@ -218,7 +281,7 @@ namespace Sys.Foundation.DpoPackage
 			dpo.Label = "Resource";
 			dpo.OrderBy = 0;
 			dpo.key_name = "Xmpp.Resource";
-			dpo.value = "\"MED\"";
+			dpo.value = "\"MEDSYS\"";
 			dpo.Inactive = false;
 			list.Add(dpo);
 

@@ -1,6 +1,6 @@
 //
 // Machine Packed Data
-//   by devel at 7/20/2012 3:14:29 PM
+//   by devel at 3/26/2013 6:51:01 AM
 //
 using System;
 using System.Data;
@@ -309,7 +309,7 @@ namespace Sys.ViewManager.DpoPackage
 			dpo = new UserMenuDpo();
 			dpo.ID = 71;
 			dpo.ParentID = 99;
-			dpo.OrderBy = 30;
+			dpo.OrderBy = 10;
 			dpo.Ty = 1;
 			dpo.Module = "Sys.Platform";
 			dpo.Label = "Menu Maintenance";
@@ -420,7 +420,7 @@ namespace Sys.ViewManager.DpoPackage
 
 			dpo = new UserMenuDpo();
 			dpo.ID = 78;
-			dpo.ParentID = 99;
+			dpo.ParentID = 105;
 			dpo.OrderBy = 0;
 			dpo.Ty = 0;
 			dpo.Module = "Sys.Platform";
@@ -475,7 +475,7 @@ namespace Sys.ViewManager.DpoPackage
 
 			dpo = new UserMenuDpo();
 			dpo.ID = 84;
-			dpo.ParentID = 99;
+			dpo.ParentID = 105;
 			dpo.OrderBy = 10;
 			dpo.Ty = 0;
 			dpo.Module = "Sys.Platform";
@@ -495,7 +495,7 @@ namespace Sys.ViewManager.DpoPackage
 			dpo = new UserMenuDpo();
 			dpo.ID = 85;
 			dpo.ParentID = 99;
-			dpo.OrderBy = 40;
+			dpo.OrderBy = 20;
 			dpo.Ty = 0;
 			dpo.Module = "Sys.Platform";
 			dpo.Label = "Tie Script Module Maintenance";
@@ -769,7 +769,7 @@ namespace Sys.ViewManager.DpoPackage
 			dpo = new UserMenuDpo();
 			dpo.ID = 102;
 			dpo.ParentID = 99;
-			dpo.OrderBy = 20;
+			dpo.OrderBy = 0;
 			dpo.Ty = 0;
 			dpo.Module = "Sys.Platform";
 			dpo.Label = "Generate Enum Type";
@@ -819,6 +819,24 @@ namespace Sys.ViewManager.DpoPackage
 			dpo.Released = true;
 			dpo.Form_Class = "PTA.Forms.RegisterForm";
 			dpo.Form_Place = 5;
+			list.Add(dpo);
+
+			dpo = new UserMenuDpo();
+			dpo.ID = 105;
+			dpo.ParentID = 99;
+			dpo.OrderBy = 30;
+			dpo.Ty = 0;
+			dpo.Module = "";
+			dpo.Label = "DPO";
+			dpo.Description = "";
+			dpo.Key_Name = "ba55a12a-2122-4080-a78b-b20c13c8b056";
+			dpo.Command = "";
+			dpo.Controlled = false;
+			dpo.Enabled = true;
+			dpo.Visible = true;
+			dpo.Released = false;
+			dpo.Form_Class = "";
+			dpo.Form_Place = 0;
 			list.Add(dpo);
 
 		}
