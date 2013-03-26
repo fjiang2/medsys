@@ -1,6 +1,6 @@
 //
 // Machine Packed Data
-//   by devel at 7/19/2012 12:14:10 AM
+//   by devel at 3/26/2013 6:51:01 AM
 //
 using System;
 using System.Data;
@@ -31,6 +31,7 @@ namespace Sys.SmartList.DpoPackage
 			dpo.Label = "Menus(sys00801)";
 			dpo.Description = "";
 			dpo.Header_Footer = "{{\"Header\",{\"\",\"\",\"\"}},{\"Footer\",{\"\",\"\",\"\"}}}";
+			dpo.Data_Provider = 0;
 			dpo.Sql_Command = "USE $DB_SYSTEM\nSELECT * FROM sys00801";
 			dpo.User_Layout = "";
 			dpo.Setting_Script = @"class(gridViewer, container) 
@@ -75,6 +76,7 @@ namespace Sys.SmartList.DpoPackage
 			dpo.Label = "Commands(sys01101)";
 			dpo.Description = "Source of SmartList";
 			dpo.Header_Footer = "{{\"Header\",{\"\",\"\",\"\"}},{\"Footer\",{\"\",\"\",\"\"}}}";
+			dpo.Data_Provider = 0;
 			dpo.Sql_Command = "USE $DB_SYSTEM\nSELECT * FROM sys01101";
 			dpo.User_Layout = "";
 			dpo.Setting_Script = "";
@@ -110,6 +112,7 @@ namespace Sys.SmartList.DpoPackage
 			dpo.Label = "Security Permission:  Window Form";
 			dpo.Description = "Security";
 			dpo.Header_Footer = "{{\"Header\",{\"\",\"\",\"\"}},{\"Footer\",{\"\",\"\",\"\"}}}";
+			dpo.Data_Provider = 0;
 			dpo.Sql_Command = @"USE $DB_SYSTEM
 SELECT 
 	U.User_Name AS [Badge],  
@@ -193,6 +196,7 @@ Controls:
 			dpo.Label = "Security Permission:  SmartList";
 			dpo.Description = "Security";
 			dpo.Header_Footer = "{{\"Header\",{\"\",\"\",\"\"}},{\"Footer\",{\"\",\"\",\"\"}}}";
+			dpo.Data_Provider = 0;
 			dpo.Sql_Command = @"USE $DB_SYSTEM
 SELECT  U.User_Name AS [Badge] ,
         U.First_Name AS [First Name] ,
@@ -279,6 +283,7 @@ Controls:
 			dpo.Label = "Security Permission:  Menu";
 			dpo.Description = "Security";
 			dpo.Header_Footer = "{{\"Header\",{\"\",\"\",\"\"}},{\"Footer\",{\"\",\"\",\"\"}}}";
+			dpo.Data_Provider = 0;
 			dpo.Sql_Command = @"USE $DB_SYSTEM
 SELECT  U.User_Name AS [Badge] ,
         U.First_Name AS [First Name] ,
@@ -368,6 +373,7 @@ Controls:
 			dpo.Label = "Chart Control Demo(Northwind)";
 			dpo.Description = "DEMO";
 			dpo.Header_Footer = "{{\"Header\",{\"\",\"\",\"\"}},{\"Footer\",{\"\",\"\",\"\"}}}";
+			dpo.Data_Provider = 0;
 			dpo.Sql_Command = @"SELECT  TOP 10
   P.ProductName, 
   OD.UnitPrice, 
@@ -472,6 +478,7 @@ FROM Northwind..products";
 			dpo.Label = "Chart Control Pane Demo((Northwind)";
 			dpo.Description = "DEMO";
 			dpo.Header_Footer = "{{\"Header\",{\"\",\"\",\"\"}},{\"Footer\",{\"\",\"\",\"\"}}}";
+			dpo.Data_Provider = 0;
 			dpo.Sql_Command = @"SELECT TOP 10
   ProductName, 
   UnitPrice
@@ -580,6 +587,7 @@ FROM Northwind..products";
 			dpo.Label = "Generic Chart+Grid Demo(Northwind)";
 			dpo.Description = "DEMO";
 			dpo.Header_Footer = "{{\"Header\",{\"\",\"\",\"\"}},{\"Footer\",{\"\",\"\",\"\"}}}";
+			dpo.Data_Provider = 0;
 			dpo.Sql_Command = @"SELECT TOP 10
   ProductName, 
   UnitPrice
@@ -745,6 +753,7 @@ series1.PointOptions.ValueNumericOptions.Precision = 0;
 			dpo.Label = "PivotGrid+Chart Demo(Northwind)";
 			dpo.Description = "DEMO";
 			dpo.Header_Footer = "{{\"Header\",{\"\",\"\",\"\"}},{\"Footer\",{\"\",\"\",\"\"}}}";
+			dpo.Data_Provider = 0;
 			dpo.Sql_Command = @"SELECT 
 	C.CustomerID, 
 	C.ContactName, 
@@ -844,6 +853,7 @@ class(viewer, container)
 			dpo.Label = "Workflow Demo";
 			dpo.Description = "DEMO";
 			dpo.Header_Footer = "{{\"Header\",{\"\",\"\",\"\"}},{\"Footer\",{\"\",\"\",\"\"}}}";
+			dpo.Data_Provider = 0;
 			dpo.Sql_Command = @"USE $DB_SYSTEM
 
 --Workflow requres 2 tables
@@ -1004,6 +1014,7 @@ WHERE Workflow_Name =@WorkflowName
 			dpo.Label = "Global Scripts";
 			dpo.Description = "Global variable, data type, common functions for sharing.";
 			dpo.Header_Footer = "{{\"Header\",{\"\",\"\",\"\"}},{\"Footer\",{\"\",\"\",\"\"}}}";
+			dpo.Data_Provider = 0;
 			dpo.Sql_Command = "USE $DB_SYSTEM\nSELECT * FROM sys01102";
 			dpo.User_Layout = "";
 			dpo.Setting_Script = @"class(gridViewer, container) 
@@ -1105,6 +1116,7 @@ this.ContextMenu=function()
 			dpo.Label = "Grid Color Legend Demo(Northwind)";
 			dpo.Description = "";
 			dpo.Header_Footer = "{{\"Header\",{\"\",\"\",\"\"}},{\"Footer\",{\"\",\"\",\"\"}}}";
+			dpo.Data_Provider = 0;
 			dpo.Sql_Command = @"SELECT P.*, S.CompanyName, C.CategoryName
 FROM Northwind..Products P
 INNER JOIN Northwind..Suppliers S  ON S.SupplierID = P.SupplierID
@@ -1288,6 +1300,7 @@ this.ContextMenu=function()
 			dpo.Label = "Stored Procedures";
 			dpo.Description = "";
 			dpo.Header_Footer = "{{\"Header\",{\"\",\"Command List\",\"\"}},{\"Footer\",{\"\",\"\",\"\"}}}";
+			dpo.Data_Provider = 0;
 			dpo.Sql_Command = @"SELECT OBJECT_DEFINITION(OBJECT_ID) AS sp,
 	*
 FROM sys.procedures
@@ -1327,6 +1340,7 @@ ORDER BY name";
 			dpo.Label = "Developer Used Only";
 			dpo.Description = "Developer";
 			dpo.Header_Footer = "";
+			dpo.Data_Provider = 0;
 			dpo.Sql_Command = "";
 			dpo.User_Layout = "";
 			dpo.Setting_Script = "";
@@ -1362,6 +1376,7 @@ ORDER BY name";
 			dpo.Label = "Security";
 			dpo.Description = "Security";
 			dpo.Header_Footer = "";
+			dpo.Data_Provider = 0;
 			dpo.Sql_Command = "";
 			dpo.User_Layout = "";
 			dpo.Setting_Script = "";
@@ -1397,6 +1412,7 @@ ORDER BY name";
 			dpo.Label = "Users & Roles";
 			dpo.Description = "Security";
 			dpo.Header_Footer = "{{\"Header\",{\"\",\"\",\"\"}},{\"Footer\",{\"\",\"\",\"\"}}}";
+			dpo.Data_Provider = 0;
 			dpo.Sql_Command = @"USE $DB_SYSTEM
 SELECT  U.User_Name AS [Badge] ,
         U.First_Name AS [First Name] ,
@@ -1443,6 +1459,7 @@ ORDER BY U.User_Name";
 			dpo.Label = "Users & Roles Unassigned";
 			dpo.Description = "Security";
 			dpo.Header_Footer = "{{\"Header\",{\"\",\"\",\"\"}},{\"Footer\",{\"\",\"\",\"\"}}}";
+			dpo.Data_Provider = 0;
 			dpo.Sql_Command = @"USE $DB_SYSTEM
 SELECT  U.User_Name AS [Badge] ,
         U.First_Name AS [First Name] ,
@@ -1487,6 +1504,7 @@ ORDER BY U.User_Name";
 			dpo.Label = "User Activity";
 			dpo.Description = "Security";
 			dpo.Header_Footer = "{{\"Header\",{\"\",\"\",\"\"}},{\"Footer\",{\"\",\"\",\"\"}}}";
+			dpo.Data_Provider = 0;
 			dpo.Sql_Command = @"USE $DB_SYSTEM
 SELECT DISTINCT
         A.[User_Name] AS [User Name],
@@ -1559,6 +1577,7 @@ class(gridViewer, container)
 			dpo.Label = "Dictionary Tables(sys00202)";
 			dpo.Description = "Dictionary Tables";
 			dpo.Header_Footer = "{{\"Header\",{\"\",\"\",\"\"}},{\"Footer\",{\"\",\"\",\"\"}}}";
+			dpo.Data_Provider = 0;
 			dpo.Sql_Command = "USE $DB_SYSTEM\nSELECT * FROM sys00202";
 			dpo.User_Layout = "";
 			dpo.Setting_Script = "";
@@ -1594,6 +1613,7 @@ class(gridViewer, container)
 			dpo.Label = "Configuration (sys00501)";
 			dpo.Description = "Configuration";
 			dpo.Header_Footer = "{{\"Header\",{\"\",\"\",\"\"}},{\"Footer\",{\"\",\"\",\"\"}}}";
+			dpo.Data_Provider = 0;
 			dpo.Sql_Command = "USE $DB_SYSTEM\nSELECT * FROM sys00501";
 			dpo.User_Layout = "";
 			dpo.Setting_Script = "";
@@ -1629,6 +1649,7 @@ class(gridViewer, container)
 			dpo.Label = "System Tables";
 			dpo.Description = "";
 			dpo.Header_Footer = "";
+			dpo.Data_Provider = 0;
 			dpo.Sql_Command = "";
 			dpo.User_Layout = "";
 			dpo.Setting_Script = "";
@@ -1664,6 +1685,7 @@ class(gridViewer, container)
 			dpo.Label = "Assemblies(sys00701)";
 			dpo.Description = "Module List";
 			dpo.Header_Footer = "{{\"Header\",{\"\",\"\",\"\"}},{\"Footer\",{\"\",\"\",\"\"}}}";
+			dpo.Data_Provider = 0;
 			dpo.Sql_Command = "USE $DB_SYSTEM\nSELECT * FROM sys00701";
 			dpo.User_Layout = "";
 			dpo.Setting_Script = "";
@@ -1699,6 +1721,7 @@ class(gridViewer, container)
 			dpo.Label = "Demo";
 			dpo.Description = "Demo";
 			dpo.Header_Footer = "";
+			dpo.Data_Provider = 0;
 			dpo.Sql_Command = "";
 			dpo.User_Layout = "";
 			dpo.Setting_Script = "";
@@ -1734,6 +1757,7 @@ class(gridViewer, container)
 			dpo.Label = "Undefined";
 			dpo.Description = "";
 			dpo.Header_Footer = "";
+			dpo.Data_Provider = 0;
 			dpo.Sql_Command = "";
 			dpo.User_Layout = "";
 			dpo.Setting_Script = "";
@@ -1769,6 +1793,7 @@ class(gridViewer, container)
 			dpo.Label = "Undefined3";
 			dpo.Description = "";
 			dpo.Header_Footer = "{{\"Header\",{\"\",\"\",\"\"}},{\"Footer\",{\"\",\"\",\"\"}}}";
+			dpo.Data_Provider = 0;
 			dpo.Sql_Command = "";
 			dpo.User_Layout = "";
 			dpo.Setting_Script = "";
@@ -1804,6 +1829,7 @@ class(gridViewer, container)
 			dpo.Label = "Report Demo";
 			dpo.Description = "";
 			dpo.Header_Footer = "{{\"Header\",{\"\",\"\",\"\"}},{\"Footer\",{\"\",\"\",\"\"}}}";
+			dpo.Data_Provider = 0;
 			dpo.Sql_Command = "SELECT *\nFROM Northwind..Categories\n\nSELECT *\nFROM Northwind..Products";
 			dpo.User_Layout = "";
 			dpo.Setting_Script = @"class(viewer, container) 

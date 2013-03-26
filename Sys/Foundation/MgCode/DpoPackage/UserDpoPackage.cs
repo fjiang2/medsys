@@ -1,6 +1,6 @@
 //
 // Machine Packed Data
-//   by devel at 7/19/2012 2:59:10 PM
+//   by devel at 3/26/2013 6:51:01 AM
 //
 using System;
 using System.Data;
@@ -27,6 +27,7 @@ namespace Sys.Foundation.DpoPackage
 			dpo.User_Name = "admin";
 			dpo.Plain_Password = "password";
 			dpo.Password = new System.Byte[]{91,170,97,228,201,185,63,63,6,130,37,11,108,248,51,27,126,230,143,216};
+			dpo.Windows_Authentication = false;
 			dpo.Inactive = false;
 			dpo.Last_Name = "Admin";
 			dpo.First_Name = "System";
@@ -50,6 +51,7 @@ namespace Sys.Foundation.DpoPackage
 			dpo.User_Name = "devel";
 			dpo.Plain_Password = "Dev1024";
 			dpo.Password = new System.Byte[]{157,78,30,35,189,91,114,112,70,169,227,180,183,219,87,189,141,110,230,132};
+			dpo.Windows_Authentication = false;
 			dpo.Inactive = false;
 			dpo.Last_Name = "Developer";
 			dpo.First_Name = "System";
@@ -73,6 +75,7 @@ namespace Sys.Foundation.DpoPackage
 			dpo.User_ID = 4;
 			dpo.User_Name = "fjiang";
 			dpo.Password = new System.Byte[]{157,78,30,35,189,91,114,112,70,169,227,180,183,219,87,189,141,110,230,132};
+			dpo.Windows_Authentication = false;
 			dpo.Inactive = false;
 			dpo.Last_Name = "Jiang";
 			dpo.First_Name = "Fuhua";
@@ -92,6 +95,7 @@ namespace Sys.Foundation.DpoPackage
 			dpo.User_Name = "singleuser";
 			dpo.Plain_Password = "password";
 			dpo.Password = new System.Byte[]{91,170,97,228,201,185,63,63,6,130,37,11,108,248,51,27,126,230,143,216};
+			dpo.Windows_Authentication = false;
 			dpo.Inactive = false;
 			dpo.Last_Name = "Single";
 			dpo.First_Name = "User";
@@ -111,6 +115,7 @@ namespace Sys.Foundation.DpoPackage
 			dpo.User_ID = 6;
 			dpo.User_Name = "tester";
 			dpo.Plain_Password = "password";
+			dpo.Windows_Authentication = false;
 			dpo.Inactive = false;
 			dpo.Last_Name = "Tester";
 			dpo.First_Name = "System";
@@ -130,6 +135,7 @@ namespace Sys.Foundation.DpoPackage
 			dpo.User_Name = "user";
 			dpo.Plain_Password = "Pass1234";
 			dpo.Password = new System.Byte[]{146,200,177,1,87,224,88,86,175,24,42,100,61,231,220,234,20,71,47,116};
+			dpo.Windows_Authentication = false;
 			dpo.Inactive = false;
 			dpo.Last_Name = "User";
 			dpo.First_Name = "Regular";
