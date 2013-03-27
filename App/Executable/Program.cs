@@ -48,7 +48,9 @@ namespace App.Executable
 
 
             //Connect to SQLServer
-            if (!Sys.Constant.Load(ini))
+            // case 1: if .ini file does not exist
+            // case 2: uninstall software and then install again, in this case: .ini exists and database may not exist
+            if (!Sys.Constant.Load(ini) || !SysInformation.ValidDatabase())
             {
                 Form server = new Sys.Platform.Forms.Connect2ServerForm();
                 System.Windows.Forms.Application.Run(server);
@@ -56,7 +58,6 @@ namespace App.Executable
                 if (server.DialogResult != DialogResult.OK)
                     return;
             }
-
 
             //exit silently if wrong databse is selected
             // or application database version is less than application executable version
@@ -66,7 +67,9 @@ namespace App.Executable
                 applicationIcon,
                 applicationName,
                 executable))
+            {
                 return;
+            }
 
             //DataManager.Helper.Start();
             if (!LoginForm.Run(applicationIcon, true))
