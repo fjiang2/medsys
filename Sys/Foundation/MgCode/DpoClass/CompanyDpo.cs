@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 7/19/2012 12:12:42 AM
+//   by devel at 5/16/2013
 //
 
 using System;
@@ -14,18 +14,18 @@ using Sys.Data.Manager;
 
 namespace Sys.Foundation.DpoClass
 {
-    [Revision(12)]
+    [Revision(14)]
     [Table("sys00504", Level.System, Pack = false)]    //Primary Keys = Comany_ID;  Identity = Comany_ID;
     public class CompanyDpo : DPObject
     {
 
 #pragma warning disable
 
-        [Column(_Comany_ID, SqlDbType.Int, Identity = true, Primary = true)]                      public int Comany_ID;         //int(4) not null
-        [Column(_Name, SqlDbType.NVarChar, Length = 100)]                                         public string Name;           //nvarchar(100) not null
-        [Column(_Address_ID, SqlDbType.NChar, Nullable = true, Length = 10)]                      public string Address_ID;     //nchar(10) null
-        [Column(_Inactive, SqlDbType.Bit)]                                                        public bool Inactive;         //bit(1) not null
-        [Column(_Default_DB, SqlDbType.VarChar, Nullable = true, Length = 50)]                    public string Default_DB;     //varchar(50) null
+        [Column(_Comany_ID, SqlDbType.Int, Identity = true, Primary = true)]                      public int Comany_ID {get; set;} //int(4) not null
+        [Column(_Name, SqlDbType.NVarChar, Length = 100)]                                         public string Name {get; set;} //nvarchar(100) not null
+        [Column(_Address_ID, SqlDbType.NChar, Nullable = true, Length = 10)]                      public string Address_ID {get; set;} //nchar(10) null
+        [Column(_Inactive, SqlDbType.Bit)]                                                        public bool Inactive {get; set;} //bit(1) not null
+        [Column(_Default_DB, SqlDbType.VarChar, Nullable = true, Length = 50)]                    public string Default_DB {get; set;} //varchar(50) null
 
 #pragma warning restore
 

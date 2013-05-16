@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 7/19/2012 12:12:36 AM
+//   by devel at 5/16/2013
 //
 
 using System;
@@ -14,34 +14,34 @@ using Sys.Data.Manager;
 
 namespace App.Data.DpoClass
 {
-    [Revision(11)]
+    [Revision(13)]
     [Table("app00201", Level.Application)]    //Primary Keys = Badge;  Identity = Emp_ID;
     public class appEmployeeDpo : DPObject
     {
 
 #pragma warning disable
 
-        [Column(_Emp_ID, SqlDbType.Int, Identity = true)]                                         public int Emp_ID;            //int(4) not null
-        [Column(_Badge, SqlDbType.NVarChar, Primary = true, Length = 50)]                         public string Badge;          //nvarchar(50) not null
-        [Column(_Person_ID, SqlDbType.Int)]                                                       public int Person_ID;         //int(4) not null
-        [Column(_Email, SqlDbType.NVarChar, Nullable = true, Length = 50)]                        public string Email;          //nvarchar(50) null
-        [Column(_Job_Title_ID, SqlDbType.Int)]                                                    public int Job_Title_ID;      //int(4) not null
-        [Column(_Manager_ID, SqlDbType.Int)]                                                      public int Manager_ID;        //int(4) not null
-        [Column(_Department_ID, SqlDbType.Int)]                                                   public int Department_ID;     //int(4) not null
-        [Column(_Address_ID, SqlDbType.Int)]                                                      public int Address_ID;        //int(4) not null
-        [Column(_Work_Phone_ID, SqlDbType.Int)]                                                   public int Work_Phone_ID;     //int(4) not null
-        [Column(_Home_Phone_ID, SqlDbType.Int, Nullable = true)]                                  public int? Home_Phone_ID;    //int(4) null
-        [Column(_First_Day_Worked, SqlDbType.DateTime)]                                           public DateTime First_Day_Worked;//datetime(8) not null
-        [Column(_Last_Day_Worked, SqlDbType.DateTime, Nullable = true)]                           public DateTime? Last_Day_Worked;//datetime(8) null
-        [Column(_Benefit_Expired_Date, SqlDbType.DateTime, Nullable = true)]                      public DateTime? Benefit_Expired_Date;//datetime(8) null
-        [Column(_Veteran, SqlDbType.Bit)]                                                         public bool Veteran;          //bit(1) not null
-        [Column(_Vietnam_Veteran, SqlDbType.Bit)]                                                 public bool Vietnam_Veteran;  //bit(1) not null
-        [Column(_Disable_Veteran, SqlDbType.Bit)]                                                 public bool Disable_Veteran;  //bit(1) not null
-        [Column(_Handicapped, SqlDbType.Bit)]                                                     public bool Handicapped;      //bit(1) not null
-        [Column(_Union_Employee, SqlDbType.Bit, Nullable = true)]                                 public bool? Union_Employee;  //bit(1) null
-        [Column(_Smoker, SqlDbType.Bit)]                                                          public bool Smoker;           //bit(1) not null
-        [Column(_Verified, SqlDbType.Bit, Nullable = true)]                                       public bool? Verified;        //bit(1) null
-        [Column(_Inactive, SqlDbType.Bit)]                                                        public bool Inactive;         //bit(1) not null
+        [Column(_Emp_ID, SqlDbType.Int, Identity = true)]                                         public int Emp_ID {get; set;} //int(4) not null
+        [Column(_Badge, SqlDbType.NVarChar, Primary = true, Length = 50)]                         public string Badge {get; set;} //nvarchar(50) not null
+        [Column(_Person_ID, SqlDbType.Int)]                                                       public int Person_ID {get; set;} //int(4) not null
+        [Column(_Email, SqlDbType.NVarChar, Nullable = true, Length = 50)]                        public string Email {get; set;} //nvarchar(50) null
+        [Column(_Job_Title_ID, SqlDbType.Int)]                                                    public int Job_Title_ID {get; set;} //int(4) not null
+        [Column(_Manager_ID, SqlDbType.Int)]                                                      public int Manager_ID {get; set;} //int(4) not null
+        [Column(_Department_ID, SqlDbType.Int)]                                                   public int Department_ID {get; set;} //int(4) not null
+        [Column(_Address_ID, SqlDbType.Int)]                                                      public int Address_ID {get; set;} //int(4) not null
+        [Column(_Work_Phone_ID, SqlDbType.Int)]                                                   public int Work_Phone_ID {get; set;} //int(4) not null
+        [Column(_Home_Phone_ID, SqlDbType.Int, Nullable = true)]                                  public int? Home_Phone_ID {get; set;} //int(4) null
+        [Column(_First_Day_Worked, SqlDbType.DateTime)]                                           public DateTime First_Day_Worked {get; set;} //datetime(8) not null
+        [Column(_Last_Day_Worked, SqlDbType.DateTime, Nullable = true)]                           public DateTime? Last_Day_Worked {get; set;} //datetime(8) null
+        [Column(_Benefit_Expired_Date, SqlDbType.DateTime, Nullable = true)]                      public DateTime? Benefit_Expired_Date {get; set;} //datetime(8) null
+        [Column(_Veteran, SqlDbType.Bit)]                                                         public bool Veteran {get; set;} //bit(1) not null
+        [Column(_Vietnam_Veteran, SqlDbType.Bit)]                                                 public bool Vietnam_Veteran {get; set;} //bit(1) not null
+        [Column(_Disable_Veteran, SqlDbType.Bit)]                                                 public bool Disable_Veteran {get; set;} //bit(1) not null
+        [Column(_Handicapped, SqlDbType.Bit)]                                                     public bool Handicapped {get; set;} //bit(1) not null
+        [Column(_Union_Employee, SqlDbType.Bit, Nullable = true)]                                 public bool? Union_Employee {get; set;} //bit(1) null
+        [Column(_Smoker, SqlDbType.Bit)]                                                          public bool Smoker {get; set;} //bit(1) not null
+        [Column(_Verified, SqlDbType.Bit, Nullable = true)]                                       public bool? Verified {get; set;} //bit(1) null
+        [Column(_Inactive, SqlDbType.Bit)]                                                        public bool Inactive {get; set;} //bit(1) not null
 
 #pragma warning restore
 

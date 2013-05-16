@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 7/19/2012 12:12:38 AM
+//   by devel at 5/16/2013
 //
 
 using System;
@@ -14,28 +14,28 @@ using Sys.Data.Manager;
 
 namespace Sys.Platform.DpoClass
 {
-    [Revision(6)]
+    [Revision(8)]
     [Table("Appointments", Level.System, Pack = false)]    //Primary Keys = UniqueID;  Identity = UniqueID;
     public class AppointmentDpo : DPObject
     {
 
 #pragma warning disable
 
-        [Column(_UniqueID, SqlDbType.Int, Identity = true, Primary = true)]                       public int UniqueID;          //int(4) not null
-        [Column(_User_ID, SqlDbType.Int)]                                                         public int User_ID;           //int(4) not null
-        [Column(_Type, SqlDbType.Int)]                                                            public int Type;              //int(4) not null
-        [Column(_StartDate, SqlDbType.SmallDateTime)]                                             public DateTime StartDate;    //smalldatetime(4) not null
-        [Column(_EndDate, SqlDbType.SmallDateTime)]                                               public DateTime EndDate;      //smalldatetime(4) not null
-        [Column(_AllDay, SqlDbType.Bit)]                                                          public bool AllDay;           //bit(1) not null
-        [Column(_Subject, SqlDbType.NVarChar, Nullable = true, Length = 50)]                      public string Subject;        //nvarchar(50) null
-        [Column(_Location, SqlDbType.NVarChar, Nullable = true, Length = 50)]                     public string Location;       //nvarchar(50) null
-        [Column(_Description, SqlDbType.NVarChar, Nullable = true, Length = -1)]                  public string Description;    //nvarchar(-1) null
-        [Column(_Status, SqlDbType.Int)]                                                          public int Status;            //int(4) not null
-        [Column(_Label, SqlDbType.Int, Nullable = true)]                                          public int? Label;            //int(4) null
-        [Column(_ResourceID, SqlDbType.Int)]                                                      public int ResourceID;        //int(4) not null
-        [Column(_ReminderInfo, SqlDbType.NVarChar, Nullable = true, Length = -1)]                 public string ReminderInfo;   //nvarchar(-1) null
-        [Column(_RecurrenceInfo, SqlDbType.NVarChar, Nullable = true, Length = -1)]               public string RecurrenceInfo; //nvarchar(-1) null
-        [Column(_CustomField1, SqlDbType.NVarChar, Nullable = true, Length = -1)]                 public string CustomField1;   //nvarchar(-1) null
+        [Column(_UniqueID, SqlDbType.Int, Identity = true, Primary = true)]                       public int UniqueID {get; set;} //int(4) not null
+        [Column(_User_ID, SqlDbType.Int)]                                                         public int User_ID {get; set;} //int(4) not null
+        [Column(_Type, SqlDbType.Int)]                                                            public int Type {get; set;}   //int(4) not null
+        [Column(_StartDate, SqlDbType.SmallDateTime)]                                             public DateTime StartDate {get; set;} //smalldatetime(4) not null
+        [Column(_EndDate, SqlDbType.SmallDateTime)]                                               public DateTime EndDate {get; set;} //smalldatetime(4) not null
+        [Column(_AllDay, SqlDbType.Bit)]                                                          public bool AllDay {get; set;} //bit(1) not null
+        [Column(_Subject, SqlDbType.NVarChar, Nullable = true, Length = 50)]                      public string Subject {get; set;} //nvarchar(50) null
+        [Column(_Location, SqlDbType.NVarChar, Nullable = true, Length = 50)]                     public string Location {get; set;} //nvarchar(50) null
+        [Column(_Description, SqlDbType.NVarChar, Nullable = true, Length = -1)]                  public string Description {get; set;} //nvarchar(-1) null
+        [Column(_Status, SqlDbType.Int)]                                                          public int Status {get; set;} //int(4) not null
+        [Column(_Label, SqlDbType.Int, Nullable = true)]                                          public int? Label {get; set;} //int(4) null
+        [Column(_ResourceID, SqlDbType.Int)]                                                      public int ResourceID {get; set;} //int(4) not null
+        [Column(_ReminderInfo, SqlDbType.NVarChar, Nullable = true, Length = -1)]                 public string ReminderInfo {get; set;} //nvarchar(-1) null
+        [Column(_RecurrenceInfo, SqlDbType.NVarChar, Nullable = true, Length = -1)]               public string RecurrenceInfo {get; set;} //nvarchar(-1) null
+        [Column(_CustomField1, SqlDbType.NVarChar, Nullable = true, Length = -1)]                 public string CustomField1 {get; set;} //nvarchar(-1) null
 
 #pragma warning restore
 

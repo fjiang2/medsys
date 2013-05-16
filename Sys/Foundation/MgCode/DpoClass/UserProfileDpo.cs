@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 7/19/2012 12:12:42 AM
+//   by devel at 5/16/2013
 //
 
 using System;
@@ -14,16 +14,16 @@ using Sys.Data.Manager;
 
 namespace Sys.Foundation.DpoClass
 {
-    [Revision(11)]
+    [Revision(13)]
     [Table("sys00505", Level.System, Pack = false)]    //Primary Keys = User_ID;  Identity = ;
     public class UserProfileDpo : DPObject
     {
 
 #pragma warning disable
 
-        [Column(_User_ID, SqlDbType.Int, Primary = true)]                                         public int User_ID;           //int(4) not null
-        [Column(_Setting, SqlDbType.Text, Nullable = true)]                                       public string Setting;        //text(16) null
-        [Column(_Configuration, SqlDbType.Text, Nullable = true)]                                 public string Configuration;  //text(16) null
+        [Column(_User_ID, SqlDbType.Int, Primary = true)]                                         public int User_ID {get; set;} //int(4) not null
+        [Column(_Setting, SqlDbType.Text, Nullable = true)]                                       public string Setting {get; set;} //text(16) null
+        [Column(_Configuration, SqlDbType.Text, Nullable = true)]                                 public string Configuration {get; set;} //text(16) null
 
 #pragma warning restore
 

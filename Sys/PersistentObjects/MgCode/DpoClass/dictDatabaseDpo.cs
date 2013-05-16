@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 11/12/2012
+//   by devel at 5/16/2013
 //
 
 using System;
@@ -14,20 +14,20 @@ using Sys.Data.Manager;
 
 namespace Sys.PersistentObjects.DpoClass
 {
-    [Revision(15)]
+    [Revision(17)]
     [Table("sys00201", Level.System, Pack = false)]    //Primary Keys = name + provider_id;  Identity = database_id;
     internal class dictDatabaseDpo : DPObject
     {
 
 #pragma warning disable
 
-        [Column(_database_id, SqlDbType.Int, Identity = true)]                                    public int database_id;       //int(4) not null
-        [Column(_name, SqlDbType.VarChar, Primary = true, Length = 50)]                           public string name;           //varchar(50) not null
-        [Column(_provider_id, SqlDbType.Int, Primary = true)]                                     public int provider_id;       //int(4) not null
-        [Column(_label, SqlDbType.NVarChar, Nullable = true, Length = 50)]                        public string label;          //nvarchar(50) null
-        [Column(_description, SqlDbType.NVarChar, Nullable = true, Length = 128)]                 public string description;    //nvarchar(128) null
-        [Column(_enabled, SqlDbType.Bit)]                                                         public bool enabled;          //bit(1) not null
-        [Column(_version, SqlDbType.Int)]                                                         public int version;           //int(4) not null
+        [Column(_database_id, SqlDbType.Int, Identity = true)]                                    public int database_id {get; set;} //int(4) not null
+        [Column(_name, SqlDbType.VarChar, Primary = true, Length = 50)]                           public string name {get; set;} //varchar(50) not null
+        [Column(_provider_id, SqlDbType.Int, Primary = true)]                                     public int provider_id {get; set;} //int(4) not null
+        [Column(_label, SqlDbType.NVarChar, Nullable = true, Length = 50)]                        public string label {get; set;} //nvarchar(50) null
+        [Column(_description, SqlDbType.NVarChar, Nullable = true, Length = 128)]                 public string description {get; set;} //nvarchar(128) null
+        [Column(_enabled, SqlDbType.Bit)]                                                         public bool enabled {get; set;} //bit(1) not null
+        [Column(_version, SqlDbType.Int)]                                                         public int version {get; set;} //int(4) not null
 
 #pragma warning restore
 

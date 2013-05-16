@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 7/19/2012 12:12:43 AM
+//   by devel at 5/16/2013
 //
 
 using System;
@@ -14,14 +14,14 @@ using Sys.Data.Manager;
 
 namespace Sys.PersistentObjects.DpoClass
 {
-    [Revision(11)]
+    [Revision(13)]
     [Table("sys00703", Level.System, Pack = false)]    //Primary Keys = Version;  Identity = ;
     internal class MigrationVersionDpo : DPObject
     {
 
 #pragma warning disable
 
-        [Column(_Version, SqlDbType.BigInt, Primary = true)]                                      public long Version;          //bigint(8) not null
+        [Column(_Version, SqlDbType.BigInt, Primary = true)]                                      public long Version {get; set;} //bigint(8) not null
 
 #pragma warning restore
 

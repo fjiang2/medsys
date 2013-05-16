@@ -46,9 +46,9 @@ namespace Sys.Data
         private RowObjectAdapter Bind(Selector columnNames)
         {
 
-            foreach (FieldInfo fieldInfo in Reflex.GetPublicFields(obj))
+            foreach (PropertyInfo propertyInfo in Reflex.GetColumnProperties(obj))
             {
-                ColumnAttribute attribute = Reflex.GetColumnAttribute(fieldInfo);
+                ColumnAttribute attribute = Reflex.GetColumnAttribute(propertyInfo);
 
                 if (attribute != null && this.Row.Table.Columns.Contains(attribute.ColumnNameSaved))
                 {
@@ -76,15 +76,15 @@ namespace Sys.Data
 
         public void Apply()
         {
-            foreach (FieldInfo fieldInfo in Reflex.GetPublicFields(obj))
+            foreach (PropertyInfo propertyInfo in Reflex.GetColumnProperties(obj))
             {
-                ColumnAttribute a = Reflex.GetColumnAttribute(fieldInfo);
+                ColumnAttribute a = Reflex.GetColumnAttribute(propertyInfo);
                 if (a != null && this.Row.Table.Columns.Contains(a.ColumnNameSaved))
                 {
-                    if (fieldInfo.GetValue(obj) == null)
+                    if (propertyInfo.GetValue(obj) == null)
                         this.Row[a.ColumnNameSaved] = System.DBNull.Value;
                     else
-                        this.Row[a.ColumnNameSaved] = fieldInfo.GetValue(obj);
+                        this.Row[a.ColumnNameSaved] = propertyInfo.GetValue(obj);
                 }
 
             }

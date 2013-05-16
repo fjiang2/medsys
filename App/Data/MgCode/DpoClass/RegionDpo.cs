@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 4/18/2012 3:50:04 PM
+//   by devel at 5/16/2013
 //
 
 using System;
@@ -14,15 +14,15 @@ using Sys.Data.Manager;
 
 namespace App.Data.DpoClass
 {
-    [Revision(8)]
-    [Table("Northwind..Region", Level.Fixed)]    //Primary Keys = RegionID;  Identity = ;
+    [Revision(10)]
+    [Table("Northwind..[Region]", Level.Fixed)]    //Primary Keys = RegionID;  Identity = ;
     public class RegionDpo : DPObject
     {
 
 #pragma warning disable
 
-        [Column(_RegionID, SqlDbType.Int, Primary = true)]                                        public int RegionID;          //int(4) not null
-        [Column(_RegionDescription, SqlDbType.NChar, Length = 50)]                                public string RegionDescription;//nchar(50) not null
+        [Column(_RegionID, SqlDbType.Int, Primary = true)]                                        public int RegionID {get; set;} //int(4) not null
+        [Column(_RegionDescription, SqlDbType.NChar, Length = 50)]                                public string RegionDescription {get; set;} //nchar(50) not null
 
 #pragma warning restore
 

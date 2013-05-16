@@ -34,8 +34,8 @@ namespace Sys.IO
                 string[] paths = path.Split(new char[] { '\\' });
 
                 this.simplePath = partial(paths, 0);        //C:\devel\medsys\App\Executable\Release
-                this.solution = partial(paths, 3);          //C:\devel\medsys
-                this.application = partial(paths, 2);       //C:\devel\medsys\App
+                this.solution = partial(paths, 2);          //C:\devel\medsys
+                this.application = partial(paths, 1);       //C:\devel\medsys\App
             }
             else
             {

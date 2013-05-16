@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 7/19/2012 12:12:45 AM
+//   by devel at 5/16/2013
 //
 
 using System;
@@ -14,19 +14,19 @@ using Sys.Data.Manager;
 
 namespace Sys.ViewManager.DpoClass
 {
-    [Revision(13)]
+    [Revision(15)]
     [Table("sys00806", Level.System)]    //Primary Keys = Image_Index + Ty;  Identity = ID;
     public class ImageDpo : DPObject
     {
 
 #pragma warning disable
 
-        [Column(_ID, SqlDbType.Int, Identity = true)]                                             public int ID;                //int(4) not null
-        [Column(_Ty, SqlDbType.Int, Primary = true)]                                              public int Ty;                //int(4) not null
-        [Column(_Image_Index, SqlDbType.Int, Primary = true)]                                     public int Image_Index;       //int(4) not null
-        [Column(_Label, SqlDbType.NVarChar, Length = 50)]                                         public string Label;          //nvarchar(50) not null
-        [Column(_Description, SqlDbType.NVarChar, Nullable = true, Length = 128)]                 public string Description;    //nvarchar(128) null
-        [Column(_Picture, SqlDbType.Image)]                                                       public byte[] Picture;        //image(16) not null
+        [Column(_ID, SqlDbType.Int, Identity = true)]                                             public int ID {get; set;}     //int(4) not null
+        [Column(_Ty, SqlDbType.Int, Primary = true)]                                              public int Ty {get; set;}     //int(4) not null
+        [Column(_Image_Index, SqlDbType.Int, Primary = true)]                                     public int Image_Index {get; set;} //int(4) not null
+        [Column(_Label, SqlDbType.NVarChar, Length = 50)]                                         public string Label {get; set;} //nvarchar(50) not null
+        [Column(_Description, SqlDbType.NVarChar, Nullable = true, Length = 128)]                 public string Description {get; set;} //nvarchar(128) null
+        [Column(_Picture, SqlDbType.Image)]                                                       public byte[] Picture {get; set;} //image(16) not null
 
         #region IMAGE PROPERTIES
         public Image PictureImage

@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 7/19/2012 12:12:36 AM
+//   by devel at 5/16/2013
 //
 
 using System;
@@ -14,18 +14,18 @@ using Sys.Data.Manager;
 
 namespace App.Data.DpoClass
 {
-    [Revision(11)]
+    [Revision(13)]
     [Table("app00202", Level.Application)]    //Primary Keys = Name;  Identity = Dept_ID;
     public class appDepartmentDpo : DPObject
     {
 
 #pragma warning disable
 
-        [Column(_Dept_ID, SqlDbType.Int, Identity = true)]                                        public int Dept_ID;           //int(4) not null
-        [Column(_Name, SqlDbType.NVarChar, Primary = true, Length = 50)]                          public string Name;           //nvarchar(50) not null
-        [Column(_Label, SqlDbType.NVarChar, Nullable = true, Length = 50)]                        public string Label;          //nvarchar(50) null
-        [Column(_Description, SqlDbType.NVarChar, Nullable = true, Length = 128)]                 public string Description;    //nvarchar(128) null
-        [Column(_Manager_ID, SqlDbType.Int, Nullable = true)]                                     public int? Manager_ID;       //int(4) null
+        [Column(_Dept_ID, SqlDbType.Int, Identity = true)]                                        public int Dept_ID {get; set;} //int(4) not null
+        [Column(_Name, SqlDbType.NVarChar, Primary = true, Length = 50)]                          public string Name {get; set;} //nvarchar(50) not null
+        [Column(_Label, SqlDbType.NVarChar, Nullable = true, Length = 50)]                        public string Label {get; set;} //nvarchar(50) null
+        [Column(_Description, SqlDbType.NVarChar, Nullable = true, Length = 128)]                 public string Description {get; set;} //nvarchar(128) null
+        [Column(_Manager_ID, SqlDbType.Int, Nullable = true)]                                     public int? Manager_ID {get; set;} //int(4) null
 
 #pragma warning restore
 

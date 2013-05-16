@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 7/19/2012 12:12:49 AM
+//   by devel at 5/16/2013
 //
 
 using System;
@@ -14,21 +14,21 @@ using Sys.Data.Manager;
 
 namespace Sys.DataManager.DpoClass
 {
-    [Revision(10)]
+    [Revision(12)]
     [Table("sys01403", Level.System)]    //Primary Keys = ID;  Identity = ID;
     public class sysPictureDpo : DPObject
     {
 
 #pragma warning disable
 
-        [Column(_ID, SqlDbType.Int, Identity = true, Primary = true)]                             public int ID;                //int(4) not null
-        [Column(_Table_Id, SqlDbType.Int)]                                                        public int Table_Id;          //int(4) not null
-        [Column(_Table_Name, SqlDbType.VarChar, Nullable = true, Length = 50)]                    public string Table_Name;     //varchar(50) null
-        [Column(_Row_Id, SqlDbType.Int)]                                                          public int Row_Id;            //int(4) not null
-        [Column(_Label, SqlDbType.NVarChar, Nullable = true, Length = 128)]                       public string Label;          //nvarchar(128) null
-        [Column(_File_Name, SqlDbType.VarChar, Length = 50)]                                      public string File_Name;      //varchar(50) not null
-        [Column(_Date_Created, SqlDbType.DateTime)]                                               public DateTime Date_Created; //datetime(8) not null
-        [Column(_Owner, SqlDbType.Int, Nullable = true)]                                          public int? Owner;            //int(4) null
+        [Column(_ID, SqlDbType.Int, Identity = true, Primary = true)]                             public int ID {get; set;}     //int(4) not null
+        [Column(_Table_Id, SqlDbType.Int)]                                                        public int Table_Id {get; set;} //int(4) not null
+        [Column(_Table_Name, SqlDbType.VarChar, Nullable = true, Length = 50)]                    public string Table_Name {get; set;} //varchar(50) null
+        [Column(_Row_Id, SqlDbType.Int)]                                                          public int Row_Id {get; set;} //int(4) not null
+        [Column(_Label, SqlDbType.NVarChar, Nullable = true, Length = 128)]                       public string Label {get; set;} //nvarchar(128) null
+        [Column(_File_Name, SqlDbType.VarChar, Length = 50)]                                      public string File_Name {get; set;} //varchar(50) not null
+        [Column(_Date_Created, SqlDbType.DateTime)]                                               public DateTime Date_Created {get; set;} //datetime(8) not null
+        [Column(_Owner, SqlDbType.Int, Nullable = true)]                                          public int? Owner {get; set;} //int(4) null
 
 #pragma warning restore
 

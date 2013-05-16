@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 7/19/2012 12:12:39 AM
+//   by devel at 5/16/2013
 //
 
 using System;
@@ -14,17 +14,17 @@ using Sys.Data.Manager;
 
 namespace Sys.Foundation.DpoClass
 {
-    [Revision(12)]
+    [Revision(14)]
     [Table("sys00102", Level.System)]    //Primary Keys = Role_ID;  Identity = ;
     public class RoleDpo : DPObject
     {
 
 #pragma warning disable
 
-        [Column(_Role_ID, SqlDbType.Int, Primary = true)]                                         public int Role_ID;           //int(4) not null
-        [Column(_Role_Name, SqlDbType.NVarChar, Length = 256)]                                    public string Role_Name;      //nvarchar(256) not null
-        [Column(_Parent_Role_ID, SqlDbType.Int, Nullable = true)]                                 public int? Parent_Role_ID;   //int(4) null
-        [Column(_Description, SqlDbType.NVarChar, Nullable = true, Length = 1024)]                public string Description;    //nvarchar(1024) null
+        [Column(_Role_ID, SqlDbType.Int, Primary = true)]                                         public int Role_ID {get; set;} //int(4) not null
+        [Column(_Role_Name, SqlDbType.NVarChar, Length = 256)]                                    public string Role_Name {get; set;} //nvarchar(256) not null
+        [Column(_Parent_Role_ID, SqlDbType.Int, Nullable = true)]                                 public int? Parent_Role_ID {get; set;} //int(4) null
+        [Column(_Description, SqlDbType.NVarChar, Nullable = true, Length = 1024)]                public string Description {get; set;} //nvarchar(1024) null
 
 #pragma warning restore
 

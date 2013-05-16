@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 7/19/2012 12:12:48 AM
+//   by devel at 5/16/2013
 //
 
 using System;
@@ -14,19 +14,19 @@ using Sys.Data.Manager;
 
 namespace Sys.Workflow.DpoClass
 {
-    [Revision(12)]
+    [Revision(14)]
     [Table("sys01307", Level.System, Pack = false)]    //Primary Keys = ID;  Identity = ID;
     public class wfTrackDpo : DPObject
     {
 
 #pragma warning disable
 
-        [Column(_ID, SqlDbType.Int, Identity = true, Primary = true)]                             public int ID;                //int(4) not null
-        [Column(_WorkflowInstance_ID, SqlDbType.Int)]                                             public int WorkflowInstance_ID;//int(4) not null
-        [Column(_S1_Name, SqlDbType.NVarChar, Length = 50)]                                       public string S1_Name;        //nvarchar(50) not null
-        [Column(_S2_Name, SqlDbType.NVarChar, Length = 50)]                                       public string S2_Name;        //nvarchar(50) not null
-        [Column(_User_ID, SqlDbType.Int)]                                                         public int User_ID;           //int(4) not null
-        [Column(_Date_Created, SqlDbType.DateTime)]                                               public DateTime Date_Created; //datetime(8) not null
+        [Column(_ID, SqlDbType.Int, Identity = true, Primary = true)]                             public int ID {get; set;}     //int(4) not null
+        [Column(_WorkflowInstance_ID, SqlDbType.Int)]                                             public int WorkflowInstance_ID {get; set;} //int(4) not null
+        [Column(_S1_Name, SqlDbType.NVarChar, Length = 50)]                                       public string S1_Name {get; set;} //nvarchar(50) not null
+        [Column(_S2_Name, SqlDbType.NVarChar, Length = 50)]                                       public string S2_Name {get; set;} //nvarchar(50) not null
+        [Column(_User_ID, SqlDbType.Int)]                                                         public int User_ID {get; set;} //int(4) not null
+        [Column(_Date_Created, SqlDbType.DateTime)]                                               public DateTime Date_Created {get; set;} //datetime(8) not null
 
 #pragma warning restore
 

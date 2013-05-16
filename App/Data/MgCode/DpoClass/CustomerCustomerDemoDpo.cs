@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 4/18/2012 3:50:03 PM
+//   by devel at 5/16/2013
 //
 
 using System;
@@ -14,15 +14,17 @@ using Sys.Data.Manager;
 
 namespace App.Data.DpoClass
 {
-    [Revision(9)]
-    [Table("Northwind..CustomerCustomerDemo", Level.Fixed)]    //Primary Keys = CustomerID + CustomerTypeID;  Identity = ;
+    [Revision(11)]
+    [Table("Northwind..[CustomerCustomerDemo]", Level.Fixed)]    //Primary Keys = CustomerID + CustomerTypeID;  Identity = ;
     public class CustomerCustomerDemoDpo : DPObject
     {
 
 #pragma warning disable
 
-        [Column(_CustomerID, SqlDbType.NChar, Primary = true, Length = 5)]                        public string CustomerID;     //nchar(5) not null
-        [Column(_CustomerTypeID, SqlDbType.NChar, Primary = true, Length = 10)]                   public string CustomerTypeID; //nchar(10) not null
+        [ForeignKey(typeof(App.Data.DpoClass.CustomerDpo), App.Data.DpoClass.CustomerDpo._CustomerID)]
+        [Column(_CustomerID, SqlDbType.NChar, Primary = true, Length = 5)]                        public string CustomerID {get; set;} //nchar(5) not null
+        [ForeignKey(typeof(App.Data.DpoClass.CustomerDemographicDpo), App.Data.DpoClass.CustomerDemographicDpo._CustomerTypeID)]
+        [Column(_CustomerTypeID, SqlDbType.NChar, Primary = true, Length = 10)]                   public string CustomerTypeID {get; set;} //nchar(10) not null
 
 #pragma warning restore
 

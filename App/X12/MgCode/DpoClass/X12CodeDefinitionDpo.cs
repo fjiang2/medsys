@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 7/19/2012 12:12:49 AM
+//   by devel at 5/16/2013
 //
 
 using System;
@@ -14,17 +14,17 @@ using Sys.Data.Manager;
 
 namespace X12.DpoClass
 {
-    [Revision(5)]
+    [Revision(7)]
     [Table("X12CodeDefinition", Level.System)]    //Primary Keys = Code + ElementInstance_ID;  Identity = ID;
     public class X12CodeDefinitionDpo : DPObject
     {
 
 #pragma warning disable
 
-        [Column(_ID, SqlDbType.Int, Identity = true)]                                             public int ID;                //int(4) not null
-        [Column(_ElementInstance_ID, SqlDbType.Int, Primary = true)]                              public int ElementInstance_ID;//int(4) not null
-        [Column(_Code, SqlDbType.VarChar, Primary = true, Length = 50)]                           public string Code;           //varchar(50) not null
-        [Column(_Definition, SqlDbType.VarChar, Length = 500)]                                    public string Definition;     //varchar(500) not null
+        [Column(_ID, SqlDbType.Int, Identity = true)]                                             public int ID {get; set;}     //int(4) not null
+        [Column(_ElementInstance_ID, SqlDbType.Int, Primary = true)]                              public int ElementInstance_ID {get; set;} //int(4) not null
+        [Column(_Code, SqlDbType.VarChar, Primary = true, Length = 50)]                           public string Code {get; set;} //varchar(50) not null
+        [Column(_Definition, SqlDbType.VarChar, Length = 500)]                                    public string Definition {get; set;} //varchar(500) not null
 
 #pragma warning restore
 

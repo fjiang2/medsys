@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 4/18/2012 3:50:03 PM
+//   by devel at 5/16/2013
 //
 
 using System;
@@ -14,27 +14,30 @@ using Sys.Data.Manager;
 
 namespace App.Data.DpoClass
 {
-    [Revision(8)]
-    [Table("Northwind..Orders", Level.Fixed)]    //Primary Keys = OrderID;  Identity = OrderID;
+    [Revision(10)]
+    [Table("Northwind..[Orders]", Level.Fixed)]    //Primary Keys = OrderID;  Identity = OrderID;
     public class OrderDpo : DPObject
     {
 
 #pragma warning disable
 
-        [Column(_OrderID, SqlDbType.Int, Identity = true, Primary = true)]                        public int OrderID;           //int(4) not null
-        [Column(_CustomerID, SqlDbType.NChar, Nullable = true, Length = 5)]                       public string CustomerID;     //nchar(5) null
-        [Column(_EmployeeID, SqlDbType.Int, Nullable = true)]                                     public int? EmployeeID;       //int(4) null
-        [Column(_OrderDate, SqlDbType.DateTime, Nullable = true)]                                 public DateTime? OrderDate;   //datetime(8) null
-        [Column(_RequiredDate, SqlDbType.DateTime, Nullable = true)]                              public DateTime? RequiredDate;//datetime(8) null
-        [Column(_ShippedDate, SqlDbType.DateTime, Nullable = true)]                               public DateTime? ShippedDate; //datetime(8) null
-        [Column(_ShipVia, SqlDbType.Int, Nullable = true)]                                        public int? ShipVia;          //int(4) null
-        [Column(_Freight, SqlDbType.Money, Nullable = true)]                                      public decimal? Freight;      //money(8) null
-        [Column(_ShipName, SqlDbType.NVarChar, Nullable = true, Length = 40)]                     public string ShipName;       //nvarchar(40) null
-        [Column(_ShipAddress, SqlDbType.NVarChar, Nullable = true, Length = 60)]                  public string ShipAddress;    //nvarchar(60) null
-        [Column(_ShipCity, SqlDbType.NVarChar, Nullable = true, Length = 15)]                     public string ShipCity;       //nvarchar(15) null
-        [Column(_ShipRegion, SqlDbType.NVarChar, Nullable = true, Length = 15)]                   public string ShipRegion;     //nvarchar(15) null
-        [Column(_ShipPostalCode, SqlDbType.NVarChar, Nullable = true, Length = 10)]               public string ShipPostalCode; //nvarchar(10) null
-        [Column(_ShipCountry, SqlDbType.NVarChar, Nullable = true, Length = 15)]                  public string ShipCountry;    //nvarchar(15) null
+        [Column(_OrderID, SqlDbType.Int, Identity = true, Primary = true)]                        public int OrderID {get; set;} //int(4) not null
+        [ForeignKey(typeof(App.Data.DpoClass.CustomerDpo), App.Data.DpoClass.CustomerDpo._CustomerID)]
+        [Column(_CustomerID, SqlDbType.NChar, Nullable = true, Length = 5)]                       public string CustomerID {get; set;} //nchar(5) null
+        [ForeignKey(typeof(App.Data.DpoClass.EmployeeDpo), App.Data.DpoClass.EmployeeDpo._EmployeeID)]
+        [Column(_EmployeeID, SqlDbType.Int, Nullable = true)]                                     public int? EmployeeID {get; set;} //int(4) null
+        [Column(_OrderDate, SqlDbType.DateTime, Nullable = true)]                                 public DateTime? OrderDate {get; set;} //datetime(8) null
+        [Column(_RequiredDate, SqlDbType.DateTime, Nullable = true)]                              public DateTime? RequiredDate {get; set;} //datetime(8) null
+        [Column(_ShippedDate, SqlDbType.DateTime, Nullable = true)]                               public DateTime? ShippedDate {get; set;} //datetime(8) null
+        [ForeignKey(typeof(App.Data.DpoClass.ShipperDpo), App.Data.DpoClass.ShipperDpo._ShipperID)]
+        [Column(_ShipVia, SqlDbType.Int, Nullable = true)]                                        public int? ShipVia {get; set;} //int(4) null
+        [Column(_Freight, SqlDbType.Money, Nullable = true)]                                      public decimal? Freight {get; set;} //money(8) null
+        [Column(_ShipName, SqlDbType.NVarChar, Nullable = true, Length = 40)]                     public string ShipName {get; set;} //nvarchar(40) null
+        [Column(_ShipAddress, SqlDbType.NVarChar, Nullable = true, Length = 60)]                  public string ShipAddress {get; set;} //nvarchar(60) null
+        [Column(_ShipCity, SqlDbType.NVarChar, Nullable = true, Length = 15)]                     public string ShipCity {get; set;} //nvarchar(15) null
+        [Column(_ShipRegion, SqlDbType.NVarChar, Nullable = true, Length = 15)]                   public string ShipRegion {get; set;} //nvarchar(15) null
+        [Column(_ShipPostalCode, SqlDbType.NVarChar, Nullable = true, Length = 10)]               public string ShipPostalCode {get; set;} //nvarchar(10) null
+        [Column(_ShipCountry, SqlDbType.NVarChar, Nullable = true, Length = 15)]                  public string ShipCountry {get; set;} //nvarchar(15) null
 
 #pragma warning restore
 

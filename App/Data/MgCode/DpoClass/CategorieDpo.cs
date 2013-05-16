@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 4/18/2012 3:50:03 PM
+//   by devel at 5/16/2013
 //
 
 using System;
@@ -14,17 +14,17 @@ using Sys.Data.Manager;
 
 namespace App.Data.DpoClass
 {
-    [Revision(17)]
-    [Table("Northwind..Categories", Level.Fixed)]    //Primary Keys = CategoryID;  Identity = CategoryID;
+    [Revision(23)]
+    [Table("Northwind..[Categories]", Level.Fixed)]    //Primary Keys = CategoryID;  Identity = CategoryID;
     public class CategorieDpo : DPObject
     {
 
 #pragma warning disable
 
-        [Column(_CategoryID, SqlDbType.Int, Identity = true, Primary = true)]                     public int CategoryID;        //int(4) not null
-        [Column(_CategoryName, SqlDbType.NVarChar, Length = 15)]                                  public string CategoryName;   //nvarchar(15) not null
-        [Column(_Description, SqlDbType.NText, Nullable = true)]                                  public string Description;    //ntext(16) null
-        [Column(_Picture, SqlDbType.Image, Nullable = true)]                                      public byte[] Picture;        //image(16) null
+        [Column(_CategoryID, SqlDbType.Int, Identity = true, Primary = true)]                     public int CategoryID {get; set;} //int(4) not null
+        [Column(_CategoryName, SqlDbType.NVarChar, Length = 15)]                                  public string CategoryName {get; set;} //nvarchar(15) not null
+        [Column(_Description, SqlDbType.NText, Nullable = true)]                                  public string Description {get; set;} //ntext(16) null
+        [Column(_Picture, SqlDbType.Image, Nullable = true)]                                      public byte[] Picture {get; set;} //image(16) null
 
         #region IMAGE PROPERTIES
         public Image PictureImage
@@ -34,7 +34,7 @@ namespace App.Data.DpoClass
                 if (Picture != null)
                 {
                     System.IO.MemoryStream stream = new System.IO.MemoryStream(Picture);
-                    return Image.FromStream(stream);
+                    return System.Drawing.Image.FromStream(stream);
                 }
                 
                 return null;

@@ -62,7 +62,9 @@ namespace Sys.Data.Manager
 
 
             string ty = MetaColumn.GetFieldType(column.DataType, column.Nullable);
-            string declare = string.Format("public {0} {1};", ty, column.FieldName, column.DataType);
+            //string declare = string.Format("public {0} {1};", ty, column.FieldName);
+            string declare = string.Format("public {0} {1} {{get; set;}} ", ty, column.FieldName);
+
             line += declare;
             if(declare.Length < 30)
                 line += new string(' ', 30 - declare.Length);

@@ -42,7 +42,7 @@ namespace Sys.Data
 
 
         private TableAttribute dataTableAttribute;
-        private FieldInfo[] publicFields;
+        private PropertyInfo[] columnProperties;
 
         private bool insertIdentityOn = false;      //used for re-create table data during SQL Server updating
 
@@ -57,7 +57,7 @@ namespace Sys.Data
             else
                 dataTableAttribute = new TableAttribute(type.Name, Level.Application);
 
-            this.publicFields = type.GetFields(BindingFlags.Public | BindingFlags.Instance);    //ignore public const fields
+            this.columnProperties = Reflex.GetColumnProperties(type);   
 
         }
 
@@ -111,10 +111,10 @@ namespace Sys.Data
             if (t1 != t2 && !t2.IsSubclassOf(t1))
                 throw new JException("class type {0} is not matched to {1}.", t2.FullName, t1.FullName);
 
-            foreach (FieldInfo fieldInfo in this.publicFields)
+            foreach (PropertyInfo propertyInfo in this.columnProperties)
             {
-                object value = fieldInfo.GetValue(source);
-                fieldInfo.SetValue(this, value);
+                object value = propertyInfo.GetValue(source);
+                propertyInfo.SetValue(this, value);
             }
         }
 
@@ -350,9 +350,9 @@ namespace Sys.Data
             get
             {
                 string f = "";
-                foreach (FieldInfo fieldInfo in this.publicFields)
+                foreach (PropertyInfo propertyInfo in this.columnProperties)
                 {
-                    ColumnAttribute attr = Reflex.GetColumnAttribute(fieldInfo);
+                    ColumnAttribute attr = Reflex.GetColumnAttribute(propertyInfo);
                     if (attr != null)
                     {
                         if (f != "")
@@ -375,11 +375,11 @@ namespace Sys.Data
         public virtual void Fill(DataRow dataRow)
         {
 
-            foreach (FieldInfo fieldInfo in this.publicFields)
+            foreach (PropertyInfo propertyInfo in this.columnProperties)
             {
-                if (Reflex.FillField(this, fieldInfo, dataRow, dataTableAttribute.DefaultValueUsed) == null)
+                if (Reflex.FillField(this, propertyInfo, dataRow, dataTableAttribute.DefaultValueUsed) == null)
                 { 
-                    Mapping mapping = new Mapping(this, fieldInfo);
+                    Mapping mapping = new Mapping(this, propertyInfo);
                     mapping.SetValue();
                 }
             }
@@ -406,32 +406,32 @@ namespace Sys.Data
             Type type = this.GetType();
             foreach (string key in Identity.ColumnNames)
             {
-                FieldInfo fieldInfo = type.GetField(key, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-                if(fieldInfo != null)
+                PropertyInfo propertyInfo = type.GetProperty(key, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+                if(propertyInfo != null)
                 {
                    object value = dataRow[key];
                    if(value != System.DBNull.Value)
-                       fieldInfo.SetValue(this, value);
+                       propertyInfo.SetValue(this, value);
                 }
             }
 
             foreach (string key in ComputedColumns.ColumnNames)
             {
-                FieldInfo fieldInfo = type.GetField(key, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-                if (fieldInfo != null)
+                PropertyInfo propertyInfo = type.GetProperty(key, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+                if (propertyInfo != null)
                 {
                     object value = dataRow[key];
                     if (value != System.DBNull.Value)
-                        fieldInfo.SetValue(this, value);
+                        propertyInfo.SetValue(this, value);
                     else
-                        fieldInfo.SetValue(this, null);
+                        propertyInfo.SetValue(this, null);
                 }
             }
 
 
-            foreach (FieldInfo fieldInfo in this.publicFields)
+            foreach (PropertyInfo propertyInfo in this.columnProperties)
             {
-              Mapping mapping = new Mapping(this, fieldInfo);
+              Mapping mapping = new Mapping(this, propertyInfo);
               mapping.FillIdentity();
             }
         }
@@ -562,12 +562,12 @@ namespace Sys.Data
 
         public virtual void SaveAssociations()
         {
-            foreach (FieldInfo fieldInfo in this.publicFields)
+            foreach (PropertyInfo propertyInfo in this.columnProperties)
             {
-                Attribute[] association = (Attribute[])fieldInfo.GetCustomAttributes(typeof(AssociationAttribute), true);
+                Attribute[] association = (Attribute[])propertyInfo.GetCustomAttributes(typeof(AssociationAttribute), true);
                 if (association.Length != 0)
                 {
-                    SaveAssociationCollection(fieldInfo);
+                    SaveAssociationCollection(propertyInfo);
                 }
             }
         }
@@ -599,20 +599,20 @@ namespace Sys.Data
             d.Apply();
 
             //check 1..many table dependency
-            foreach (FieldInfo fieldInfo in this.publicFields)
+            foreach (PropertyInfo propertyInfo in this.columnProperties)
             {
-                AssociationAttribute association = Reflex.GetAssociationAttribute(fieldInfo);
+                AssociationAttribute association = Reflex.GetAssociationAttribute(propertyInfo);
                 if (association == null)
                     continue;
 
-                if (!fieldInfo.FieldType.IsGenericType)
+                if (!propertyInfo.PropertyType.IsGenericType)
                     continue;
 
-                IDPCollection collection = (IDPCollection)fieldInfo.GetValue(this);
+                IDPCollection collection = (IDPCollection)propertyInfo.GetValue(this);
                 if (collection.Count == 0)
                     continue ;
-            
-                Type[] typeParameters = fieldInfo.FieldType.GetGenericArguments();
+
+                Type[] typeParameters = propertyInfo.PropertyType.GetGenericArguments();
                 if (typeParameters.Length == 1 && typeParameters[0].IsSubclassOf(typeof(PersistentObject)))
                 {
                     throw new ApplicationException(string.Format(
@@ -649,14 +649,14 @@ namespace Sys.Data
 
         public virtual void Clear()
         {
-            foreach (FieldInfo fieldInfo in this.publicFields)
+            foreach (PropertyInfo propertyInfo in this.columnProperties)
             {
                 object value = null;
 
-                if (fieldInfo.FieldType.IsValueType)
-                    value = DefaultRowValue.SystemDefaultValue(fieldInfo.FieldType);
+                if (propertyInfo.PropertyType.IsValueType)
+                    value = DefaultRowValue.SystemDefaultValue(propertyInfo.PropertyType);
 
-                fieldInfo.SetValue(this, value);
+                propertyInfo.SetValue(this, value);
             }
 
         }
@@ -678,15 +678,15 @@ namespace Sys.Data
 
         private void Apply(RowAdapter d)
         {
-            foreach (FieldInfo fieldInfo in this.publicFields)
+            foreach (PropertyInfo propertyInfo in this.columnProperties)
             {
-                ColumnAttribute a = Reflex.GetColumnAttribute(fieldInfo);
+                ColumnAttribute a = Reflex.GetColumnAttribute(propertyInfo);
                 if (a != null && d.Row.Table.Columns.Contains(a.ColumnNameSaved))
                 {
-                    if (fieldInfo.GetValue(this) == null)
+                    if (propertyInfo.GetValue(this) == null)
                         d.Row[a.ColumnNameSaved] = System.DBNull.Value;
                     else
-                        d.Row[a.ColumnNameSaved] = fieldInfo.GetValue(this);
+                        d.Row[a.ColumnNameSaved] = propertyInfo.GetValue(this);
                 }
 
             }
@@ -699,10 +699,10 @@ namespace Sys.Data
         
         
         #region Assoication Field
-      
-        internal static Type GetCollectionGenericType(FieldInfo fieldInfo)
+
+        internal static Type GetCollectionGenericType(PropertyInfo propertyInfo)
         {
-            Type fieldType = fieldInfo.FieldType;
+            Type fieldType = propertyInfo.PropertyType;
             if (!fieldType.IsGenericType)
                 throw new JException("DPCollection is not generic type");
 
@@ -721,14 +721,14 @@ namespace Sys.Data
 
 
         //Invoked by methodname(string), don't change method name
-        private void SaveAssociationCollection(FieldInfo fieldInfo)
+        private void SaveAssociationCollection(PropertyInfo propertyInfo)
         {
-            Type fieldType = fieldInfo.FieldType;
+            Type fieldType = propertyInfo.PropertyType;
 
             if (!fieldType.IsGenericType)
                 return;
 
-            IDPCollection collection = (IDPCollection)fieldInfo.GetValue(this);
+            IDPCollection collection = (IDPCollection)propertyInfo.GetValue(this);
             collection.Save();
 
         }
@@ -812,7 +812,7 @@ namespace Sys.Data
         /// <returns></returns>
         public T GetColumnValue<T>(string columnName)
         {
-            foreach (FieldInfo field in this.publicFields)
+            foreach (PropertyInfo field in this.columnProperties)
             {
                 if (field.Name == columnName)
                     return (T)field.GetValue(this);
@@ -823,7 +823,7 @@ namespace Sys.Data
 
         public object GetColumnValue(string columnName)
         {
-            foreach (FieldInfo field in this.publicFields)
+            foreach (PropertyInfo field in this.columnProperties)
             {
                 if (field.Name == columnName)
                     return field.GetValue(this);

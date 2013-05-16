@@ -26,30 +26,39 @@ namespace Sys.Data
     class Reflex
     {
 
-        public static FieldInfo[] GetPublicFields(object instance)
+        public static PropertyInfo[] GetColumnProperties(object instance)
         {
-            return GetPublicFields(instance.GetType());
+            return GetColumnProperties(instance.GetType());
         }
 
-        public static FieldInfo[] GetPublicFields(Type type)
+        public static PropertyInfo[] GetColumnProperties(Type type)
         {
-            return type.GetFields(BindingFlags.Public | BindingFlags.Instance);    //ignore public const fields
+             PropertyInfo[] properties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance);    //ignore public const fields
+
+            List<PropertyInfo> list = new List<PropertyInfo>();
+             foreach (PropertyInfo propertyInfo in properties)
+             {
+                 if (GetColumnAttribute(propertyInfo) != null)
+                     list.Add(propertyInfo);
+             }
+
+             return list.ToArray();
         }
 
 
-        public static ColumnAttribute GetColumnAttribute(DataRow dataRow, FieldInfo fieldInfo)
+        public static ColumnAttribute GetColumnAttribute(DataRow dataRow, PropertyInfo propertyInfo)
         {
 
-            ColumnAttribute attribute = GetColumnAttribute(fieldInfo);
+            ColumnAttribute attribute = GetColumnAttribute(propertyInfo);
 
             if (attribute != null && dataRow.Table.Columns.Contains(attribute.ColumnName))
             {
-                if (dataRow.Table.Columns[attribute.ColumnName].DataType == fieldInfo.FieldType)
+                if (dataRow.Table.Columns[attribute.ColumnName].DataType == propertyInfo.PropertyType)
                     return attribute;
 
-                if (fieldInfo.FieldType.IsGenericType
-                  && fieldInfo.FieldType.GetGenericTypeDefinition() == typeof(Nullable<>)
-                  && fieldInfo.FieldType.GetGenericArguments()[0] == dataRow.Table.Columns[attribute.ColumnName].DataType)
+                if (propertyInfo.PropertyType.IsGenericType
+                  && propertyInfo.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>)
+                  && propertyInfo.PropertyType.GetGenericArguments()[0] == dataRow.Table.Columns[attribute.ColumnName].DataType)
                     return attribute;
             }
 
@@ -57,44 +66,44 @@ namespace Sys.Data
             return null;
         }
 
-        public static ColumnAttribute GetColumnAttribute(FieldInfo fieldInfo)
+        public static ColumnAttribute GetColumnAttribute(PropertyInfo propertyInfo)
         {
-            ColumnAttribute[] attributes = (ColumnAttribute[])fieldInfo.GetCustomAttributes(typeof(ColumnAttribute), true);
+            ColumnAttribute[] attributes = (ColumnAttribute[])propertyInfo.GetCustomAttributes(typeof(ColumnAttribute), true);
 
             foreach (ColumnAttribute attribute in attributes)
                 return attribute;
 
             if (attributes.Length == 0)
             {
-                Attribute[] non = (Attribute[])fieldInfo.GetCustomAttributes(typeof(NonPersistentAttribute), true);
+                Attribute[] non = (Attribute[])propertyInfo.GetCustomAttributes(typeof(NonPersistentAttribute), true);
                 if (non.Length > 0)
                     return null;
 
-                non = (Attribute[])fieldInfo.GetCustomAttributes(typeof(AssociationAttribute), true);
+                non = (Attribute[])propertyInfo.GetCustomAttributes(typeof(AssociationAttribute), true);
                 if (non.Length > 0)
                     return null;
 
                 //if (fieldInfo.GetCustomAttributes(true).Length == 0)        //no other attribute defined.
-                {
-                    if (fieldInfo.IsPublic)
-                        try
-                        {
-                            return new ColumnAttribute(fieldInfo.Name, fieldInfo.FieldType);
-                        }
-                        catch (Exception)
-                        {
-                            return null;    //some type is not supported
-                        }
+                //{
+                //    if (propertyInfo.IsPublic)
+                //        try
+                //        {
+                //            return new ColumnAttribute(propertyInfo.Name, propertyInfo.PropertyType);
+                //        }
+                //        catch (Exception)
+                //        {
+                //            return null;    //some type is not supported
+                //        }
 
-                }
+                //}
             }
 
             return null;
         }
 
-        public static AssociationAttribute GetAssociationAttribute(FieldInfo fieldInfo)
+        public static AssociationAttribute GetAssociationAttribute(PropertyInfo propertyInfo)
         {
-            AssociationAttribute[] attributes = (AssociationAttribute[])fieldInfo.GetCustomAttributes(typeof(AssociationAttribute), true);
+            AssociationAttribute[] attributes = (AssociationAttribute[])propertyInfo.GetCustomAttributes(typeof(AssociationAttribute), true);
 
             foreach (AssociationAttribute attribute in attributes)
                 return attribute;
@@ -105,16 +114,16 @@ namespace Sys.Data
         public static void FillInstance(object instance, DataRow dataRow, bool defaultValueUsed)
         {
 
-            foreach (FieldInfo fieldInfo in Reflex.GetPublicFields(instance))
+            foreach (PropertyInfo propertyInfo in Reflex.GetColumnProperties(instance))
             {
-                FillField(instance, fieldInfo, dataRow, defaultValueUsed);
+                FillField(instance, propertyInfo, dataRow, defaultValueUsed);
             }
         }
 
 
-        public static object FillField(object instance, FieldInfo fieldInfo, DataRow dataRow, bool defaultValueUsed)
+        public static object FillField(object instance, PropertyInfo propertyInfo, DataRow dataRow, bool defaultValueUsed)
         {
-            ColumnAttribute a = Reflex.GetColumnAttribute(dataRow, fieldInfo);
+            ColumnAttribute a = Reflex.GetColumnAttribute(dataRow, propertyInfo);
             if (a != null)
             {
                 object value = dataRow[a.ColumnName];
@@ -134,7 +143,7 @@ namespace Sys.Data
                         value = null;
                 }
 
-                fieldInfo.SetValue(instance, value);
+                propertyInfo.SetValue(instance, value);
             }
 
             return a;
@@ -148,16 +157,16 @@ namespace Sys.Data
         /// <param name="dataRow">data to</param>
         public static void CollectInstance(object instance, DataRow dataRow)
         {
-            foreach (FieldInfo fieldInfo in Reflex.GetPublicFields(instance))
+            foreach (PropertyInfo propertyInfo in Reflex.GetColumnProperties(instance))
             {
-                ColumnAttribute attribute = Reflex.GetColumnAttribute(dataRow, fieldInfo);
+                ColumnAttribute attribute = Reflex.GetColumnAttribute(dataRow, propertyInfo);
 
                 if (attribute != null && dataRow.Table.Columns.Contains(attribute.ColumnNameSaved))
                 {
-                    if (fieldInfo.GetValue(instance) == null)
+                    if (propertyInfo.GetValue(instance) == null)
                         dataRow[attribute.ColumnNameSaved] = System.DBNull.Value;
                     else
-                        dataRow[attribute.ColumnNameSaved] = fieldInfo.GetValue(instance);
+                        dataRow[attribute.ColumnNameSaved] = propertyInfo.GetValue(instance);
                 }
             }
         }
@@ -178,13 +187,13 @@ namespace Sys.Data
         private static DataTable GetEmptyDataTable(Type type)
         {
             DataTable dt = new DataTable();
-            foreach (FieldInfo fieldInfo in Reflex.GetPublicFields(type))
+            foreach (PropertyInfo propertyInfo in Reflex.GetColumnProperties(type))
             {
-                ColumnAttribute a = Reflex.GetColumnAttribute(fieldInfo);
+                ColumnAttribute a = Reflex.GetColumnAttribute(propertyInfo);
                 if (a == null)
                     continue;
 
-                Type ty = fieldInfo.FieldType.InnullableType();
+                Type ty = propertyInfo.PropertyType.InnullableType();
                 DataColumn column = new DataColumn(a.ColumnName, ty);
                 column.AllowDBNull = a.Nullable;
                 column.AutoIncrement = a.Identity;

@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 7/19/2012 12:12:50 AM
+//   by devel at 5/16/2013
 //
 
 using System;
@@ -14,22 +14,22 @@ using Sys.Data.Manager;
 
 namespace X12.DpoClass
 {
-    [Revision(5)]
+    [Revision(7)]
     [Table("X12LoopTemplate", Level.System)]    //Primary Keys = Name;  Identity = ID;
     public class X12LoopTemplateDpo : DPObject
     {
 
 #pragma warning disable
 
-        [Column(_ID, SqlDbType.Int, Identity = true)]                                             public int ID;                //int(4) not null
-        [Column(_ParentID, SqlDbType.Int)]                                                        public int ParentID;          //int(4) not null
-        [Column(_Name, SqlDbType.VarChar, Primary = true, Length = 10)]                           public string Name;           //varchar(10) not null
-        [Column(_Sequence, SqlDbType.Int)]                                                        public int Sequence;          //int(4) not null
-        [Column(_Description, SqlDbType.NVarChar, Length = 100)]                                  public string Description;    //nvarchar(100) not null
-        [Column(_MinRepeat, SqlDbType.Int)]                                                       public int MinRepeat;         //int(4) not null
-        [Column(_MaxRepeat, SqlDbType.Int)]                                                       public int MaxRepeat;         //int(4) not null
-        [Column(_Required, SqlDbType.Bit)]                                                        public bool Required;         //bit(1) not null
-        [Column(_Script, SqlDbType.NText, Nullable = true)]                                       public string Script;         //ntext(16) null
+        [Column(_ID, SqlDbType.Int, Identity = true)]                                             public int ID {get; set;}     //int(4) not null
+        [Column(_ParentID, SqlDbType.Int)]                                                        public int ParentID {get; set;} //int(4) not null
+        [Column(_Name, SqlDbType.VarChar, Primary = true, Length = 10)]                           public string Name {get; set;} //varchar(10) not null
+        [Column(_Sequence, SqlDbType.Int)]                                                        public int Sequence {get; set;} //int(4) not null
+        [Column(_Description, SqlDbType.NVarChar, Length = 100)]                                  public string Description {get; set;} //nvarchar(100) not null
+        [Column(_MinRepeat, SqlDbType.Int)]                                                       public int MinRepeat {get; set;} //int(4) not null
+        [Column(_MaxRepeat, SqlDbType.Int)]                                                       public int MaxRepeat {get; set;} //int(4) not null
+        [Column(_Required, SqlDbType.Bit)]                                                        public bool Required {get; set;} //bit(1) not null
+        [Column(_Script, SqlDbType.NText, Nullable = true)]                                       public string Script {get; set;} //ntext(16) null
 
 #pragma warning restore
 

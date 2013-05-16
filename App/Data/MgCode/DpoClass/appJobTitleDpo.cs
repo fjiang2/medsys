@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 7/19/2012 12:12:37 AM
+//   by devel at 5/16/2013
 //
 
 using System;
@@ -14,16 +14,16 @@ using Sys.Data.Manager;
 
 namespace App.Data.DpoClass
 {
-    [Revision(10)]
+    [Revision(12)]
     [Table("app00203", Level.Application)]    //Primary Keys = Job_ID;  Identity = Job_ID;
     public class appJobTitleDpo : DPObject
     {
 
 #pragma warning disable
 
-        [Column(_Job_ID, SqlDbType.Int, Identity = true, Primary = true)]                         public int Job_ID;            //int(4) not null
-        [Column(_Title, SqlDbType.NVarChar, Length = 50)]                                         public string Title;          //nvarchar(50) not null
-        [Column(_Dept_ID, SqlDbType.Int, Nullable = true)]                                        public int? Dept_ID;          //int(4) null
+        [Column(_Job_ID, SqlDbType.Int, Identity = true, Primary = true)]                         public int Job_ID {get; set;} //int(4) not null
+        [Column(_Title, SqlDbType.NVarChar, Length = 50)]                                         public string Title {get; set;} //nvarchar(50) not null
+        [Column(_Dept_ID, SqlDbType.Int, Nullable = true)]                                        public int? Dept_ID {get; set;} //int(4) null
 
 #pragma warning restore
 

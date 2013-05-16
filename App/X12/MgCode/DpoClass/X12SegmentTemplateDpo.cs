@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 7/19/2012 12:12:51 AM
+//   by devel at 5/16/2013
 //
 
 using System;
@@ -14,20 +14,20 @@ using Sys.Data.Manager;
 
 namespace X12.DpoClass
 {
-    [Revision(5)]
+    [Revision(7)]
     [Table("X12SegmentTemplate", Level.System)]    //Primary Keys = Name;  Identity = ID;
     public class X12SegmentTemplateDpo : DPObject
     {
 
 #pragma warning disable
 
-        [Column(_ID, SqlDbType.Int, Identity = true)]                                             public int ID;                //int(4) not null
-        [Column(_Name, SqlDbType.VarChar, Primary = true, Length = 10)]                           public string Name;           //varchar(10) not null
-        [Column(_Description, SqlDbType.VarChar, Nullable = true, Length = 250)]                  public string Description;    //varchar(250) null
-        [Column(_Purpose, SqlDbType.VarChar, Length = 1000)]                                      public string Purpose;        //varchar(1000) not null
-        [Column(_Notes, SqlDbType.VarChar, Length = 4000)]                                        public string Notes;          //varchar(4000) not null
-        [Column(_Syntax, SqlDbType.VarChar, Nullable = true, Length = 4000)]                      public string Syntax;         //varchar(4000) null
-        [Column(_Script, SqlDbType.NText, Nullable = true)]                                       public string Script;         //ntext(16) null
+        [Column(_ID, SqlDbType.Int, Identity = true)]                                             public int ID {get; set;}     //int(4) not null
+        [Column(_Name, SqlDbType.VarChar, Primary = true, Length = 10)]                           public string Name {get; set;} //varchar(10) not null
+        [Column(_Description, SqlDbType.VarChar, Nullable = true, Length = 250)]                  public string Description {get; set;} //varchar(250) null
+        [Column(_Purpose, SqlDbType.VarChar, Length = 1000)]                                      public string Purpose {get; set;} //varchar(1000) not null
+        [Column(_Notes, SqlDbType.VarChar, Length = 4000)]                                        public string Notes {get; set;} //varchar(4000) not null
+        [Column(_Syntax, SqlDbType.VarChar, Nullable = true, Length = 4000)]                      public string Syntax {get; set;} //varchar(4000) null
+        [Column(_Script, SqlDbType.NText, Nullable = true)]                                       public string Script {get; set;} //ntext(16) null
 
 #pragma warning restore
 

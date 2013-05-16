@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 12/20/2012
+//   by devel at 5/16/2013
 //
 
 using System;
@@ -14,21 +14,21 @@ using Sys.Data.Manager;
 
 namespace Sys.ViewManager.DpoClass
 {
-    [Revision(15)]
+    [Revision(17)]
     [Table("sys00803", Level.System)]    //Primary Keys = Shortcut;  Identity = ID;
     public class ShortcutDpo : DPObject
     {
 
 #pragma warning disable
 
-        [Column(_ID, SqlDbType.Int, Identity = true)]                                             public int ID;                //int(4) not null
-        [Column(_Ty, SqlDbType.Int)]                                                              public int Ty;                //int(4) not null
-        [Column(_Shortcut, SqlDbType.NVarChar, Primary = true, Length = 150)]                     public string Shortcut;       //nvarchar(150) not null
-        [Column(_Label, SqlDbType.NVarChar, Length = 50)]                                         public string Label;          //nvarchar(50) not null
-        [Column(_Description, SqlDbType.NVarChar, Nullable = true, Length = 128)]                 public string Description;    //nvarchar(128) null
-        [Column(_Code, SqlDbType.NVarChar, Length = 256)]                                         public string Code;           //nvarchar(256) not null
-        [Column(_Icon, SqlDbType.Image, Nullable = true)]                                         public byte[] Icon;           //image(16) null
-        [Column(_Help, SqlDbType.NText, Nullable = true)]                                         public string Help;           //ntext(16) null
+        [Column(_ID, SqlDbType.Int, Identity = true)]                                             public int ID {get; set;}     //int(4) not null
+        [Column(_Ty, SqlDbType.Int)]                                                              public int Ty {get; set;}     //int(4) not null
+        [Column(_Shortcut, SqlDbType.NVarChar, Primary = true, Length = 150)]                     public string Shortcut {get; set;} //nvarchar(150) not null
+        [Column(_Label, SqlDbType.NVarChar, Length = 50)]                                         public string Label {get; set;} //nvarchar(50) not null
+        [Column(_Description, SqlDbType.NVarChar, Nullable = true, Length = 128)]                 public string Description {get; set;} //nvarchar(128) null
+        [Column(_Code, SqlDbType.NVarChar, Length = 256)]                                         public string Code {get; set;} //nvarchar(256) not null
+        [Column(_Icon, SqlDbType.Image, Nullable = true)]                                         public byte[] Icon {get; set;} //image(16) null
+        [Column(_Help, SqlDbType.NText, Nullable = true)]                                         public string Help {get; set;} //ntext(16) null
 
         #region IMAGE PROPERTIES
         public Image IconImage

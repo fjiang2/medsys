@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 7/19/2012 12:12:46 AM
+//   by devel at 5/16/2013
 //
 
 using System;
@@ -14,28 +14,28 @@ using Sys.Data.Manager;
 
 namespace Sys.Workflow.DpoClass
 {
-    [Revision(12)]
+    [Revision(14)]
     [Table("sys01301", Level.System)]    //Primary Keys = Name;  Identity = ID;
     public class wfWorkflowDpo : DPObject
     {
 
 #pragma warning disable
 
-        [Column(_ID, SqlDbType.Int, Identity = true)]                                             public int ID;                //int(4) not null
-        [Column(_ParentID, SqlDbType.Int, Nullable = true)]                                       public int? ParentID;         //int(4) null
-        [Column(_Name, SqlDbType.NVarChar, Primary = true, Length = 50)]                          public string Name;           //nvarchar(50) not null
-        [Column(_Company, SqlDbType.NVarChar, Nullable = true, Length = 50)]                      public string Company;        //nvarchar(50) null
-        [Column(_Label, SqlDbType.NVarChar, Length = 128)]                                        public string Label;          //nvarchar(128) not null
-        [Column(_Description, SqlDbType.NVarChar, Nullable = true, Length = 1024)]                public string Description;    //nvarchar(1024) null
-        [Column(_Metadata, SqlDbType.NText, Nullable = true)]                                     public string Metadata;       //ntext(16) null
-        [Column(_Released, SqlDbType.Bit)]                                                        public bool Released;         //bit(1) not null
-        [Column(_Visible, SqlDbType.Bit)]                                                         public bool Visible;          //bit(1) not null
-        [Column(_Enabled, SqlDbType.Bit)]                                                         public bool Enabled;          //bit(1) not null
-        [Column(_Deleted, SqlDbType.Bit)]                                                         public bool Deleted;          //bit(1) not null
-        [Column(_Date_Created, SqlDbType.DateTime, Nullable = true)]                              public DateTime? Date_Created;//datetime(8) null
-        [Column(_Creator, SqlDbType.Int, Nullable = true)]                                        public int? Creator;          //int(4) null
-        [Column(_Date_Modified, SqlDbType.DateTime, Nullable = true)]                             public DateTime? Date_Modified;//datetime(8) null
-        [Column(_Modifier, SqlDbType.Int, Nullable = true)]                                       public int? Modifier;         //int(4) null
+        [Column(_ID, SqlDbType.Int, Identity = true)]                                             public int ID {get; set;}     //int(4) not null
+        [Column(_ParentID, SqlDbType.Int, Nullable = true)]                                       public int? ParentID {get; set;} //int(4) null
+        [Column(_Name, SqlDbType.NVarChar, Primary = true, Length = 50)]                          public string Name {get; set;} //nvarchar(50) not null
+        [Column(_Company, SqlDbType.NVarChar, Nullable = true, Length = 50)]                      public string Company {get; set;} //nvarchar(50) null
+        [Column(_Label, SqlDbType.NVarChar, Length = 128)]                                        public string Label {get; set;} //nvarchar(128) not null
+        [Column(_Description, SqlDbType.NVarChar, Nullable = true, Length = 1024)]                public string Description {get; set;} //nvarchar(1024) null
+        [Column(_Metadata, SqlDbType.NText, Nullable = true)]                                     public string Metadata {get; set;} //ntext(16) null
+        [Column(_Released, SqlDbType.Bit)]                                                        public bool Released {get; set;} //bit(1) not null
+        [Column(_Visible, SqlDbType.Bit)]                                                         public bool Visible {get; set;} //bit(1) not null
+        [Column(_Enabled, SqlDbType.Bit)]                                                         public bool Enabled {get; set;} //bit(1) not null
+        [Column(_Deleted, SqlDbType.Bit)]                                                         public bool Deleted {get; set;} //bit(1) not null
+        [Column(_Date_Created, SqlDbType.DateTime, Nullable = true)]                              public DateTime? Date_Created {get; set;} //datetime(8) null
+        [Column(_Creator, SqlDbType.Int, Nullable = true)]                                        public int? Creator {get; set;} //int(4) null
+        [Column(_Date_Modified, SqlDbType.DateTime, Nullable = true)]                             public DateTime? Date_Modified {get; set;} //datetime(8) null
+        [Column(_Modifier, SqlDbType.Int, Nullable = true)]                                       public int? Modifier {get; set;} //int(4) null
 
 #pragma warning restore
 

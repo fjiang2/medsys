@@ -24,17 +24,36 @@ namespace Sys.Data
 {
     public class MetaColumn : PersistentObject
     {
-        public string ColumnName;
-        public string DataType;
-        public short Length;    //length return from SQL Server
-        public bool Nullable;
-        public byte precision;
-        public byte scale;
-        public bool IsIdentity;
-        public bool IsComputed;
+
+        [Column("ColumnName", SqlDbType.NVarChar, Primary = true)]
+        public string ColumnName { get; set; }
+
+        [Column("DataType", SqlDbType.NVarChar)]
+        public string DataType { get; set; }
+
+        [Column("Length", SqlDbType.Int)]
+        public short Length { get; set; }    //length return from SQL Server
+
+        [Column("Nullable", SqlDbType.Bit)]
+        public bool Nullable { get; set; }
+
+        [Column("precision", SqlDbType.TinyInt)]
+        public byte precision { get; set; }
+
+        [Column("scale", SqlDbType.TinyInt)]
+        public byte scale { get; set; }
+
+        [Column("IsIdentity", SqlDbType.Bit)]
+        public bool IsIdentity { get; set; }
+
+        [Column("IsComputed", SqlDbType.Bit)]
+        public bool IsComputed { get; set; }
+
+        [Column("ColumnID", SqlDbType.Int)]
+        public int ColumnID { get; set; }    //column_id is from column dictionary
         
-        public int ColumnID;    //column_id is from column dictionary
-        public string label;    //label used as caption to support internationalization
+        [Column("label", SqlDbType.NVarChar)]
+        public string label { get; set; }    //label used as caption to support internationalization
 
         private SqlDbType sqlDbType;
         private string fieldName;

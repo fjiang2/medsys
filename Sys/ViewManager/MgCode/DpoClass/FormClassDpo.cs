@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 7/19/2012 12:12:43 AM
+//   by devel at 5/16/2013
 //
 
 using System;
@@ -14,19 +14,19 @@ using Sys.Data.Manager;
 
 namespace Sys.ViewManager.DpoClass
 {
-    [Revision(11)]
+    [Revision(13)]
     [Table("sys00702", Level.System)]    //Primary Keys = Form_Class;  Identity = ID;
     public class FormClassDpo : DPObject
     {
 
 #pragma warning disable
 
-        [Column(_ID, SqlDbType.Int, Identity = true)]                                             public int ID;                //int(4) not null
-        [Column(_Form_Class, SqlDbType.NVarChar, Primary = true, Length = 128)]                   public string Form_Class;     //nvarchar(128) not null
-        [Column(_Label, SqlDbType.NVarChar, Nullable = true, Length = 100)]                       public string Label;          //nvarchar(100) null
-        [Column(_Description, SqlDbType.NVarChar, Nullable = true, Length = 256)]                 public string Description;    //nvarchar(256) null
-        [Column(_Icon, SqlDbType.Image, Nullable = true)]                                         public byte[] Icon;           //image(16) null
-        [Column(_Help, SqlDbType.NText, Nullable = true)]                                         public string Help;           //ntext(16) null
+        [Column(_ID, SqlDbType.Int, Identity = true)]                                             public int ID {get; set;}     //int(4) not null
+        [Column(_Form_Class, SqlDbType.NVarChar, Primary = true, Length = 128)]                   public string Form_Class {get; set;} //nvarchar(128) not null
+        [Column(_Label, SqlDbType.NVarChar, Nullable = true, Length = 100)]                       public string Label {get; set;} //nvarchar(100) null
+        [Column(_Description, SqlDbType.NVarChar, Nullable = true, Length = 256)]                 public string Description {get; set;} //nvarchar(256) null
+        [Column(_Icon, SqlDbType.Image, Nullable = true)]                                         public byte[] Icon {get; set;} //image(16) null
+        [Column(_Help, SqlDbType.NText, Nullable = true)]                                         public string Help {get; set;} //ntext(16) null
 
         #region IMAGE PROPERTIES
         public Image IconImage

@@ -21,7 +21,7 @@ using System.Data;
 
 namespace Sys.Data
 {
-    [System.AttributeUsage(System.AttributeTargets.Field)]
+    [System.AttributeUsage(System.AttributeTargets.Property)]
     public class ColumnAttribute : Attribute
     {
         private string columnName;

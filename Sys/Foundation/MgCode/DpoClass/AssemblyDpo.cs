@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 7/19/2012 12:12:42 AM
+//   by devel at 5/16/2013
 //
 
 using System;
@@ -14,21 +14,21 @@ using Sys.Data.Manager;
 
 namespace Sys.Foundation.DpoClass
 {
-    [Revision(11)]
+    [Revision(13)]
     [Table("sys00701", Level.System)]    //Primary Keys = AssemblyName;  Identity = ID;
     public class AssemblyDpo : DPObject
     {
 
 #pragma warning disable
 
-        [Column(_ID, SqlDbType.Int, Identity = true)]                                             public int ID;                //int(4) not null
-        [Column(_AssemblyName, SqlDbType.VarChar, Primary = true, Length = 50)]                   public string AssemblyName;   //varchar(50) not null
-        [Column(_FullName, SqlDbType.VarChar, Nullable = true, Length = 2560)]                    public string FullName;       //varchar(2560) null
-        [Column(_Version, SqlDbType.VarChar, Nullable = true, Length = 50)]                       public string Version;        //varchar(50) null
-        [Column(_Label, SqlDbType.NVarChar, Nullable = true, Length = 128)]                       public string Label;          //nvarchar(128) null
-        [Column(_DateInstalled, SqlDbType.DateTime, Nullable = true)]                             public DateTime? DateInstalled;//datetime(8) null
-        [Column(_Inactive, SqlDbType.Bit)]                                                        public bool Inactive;         //bit(1) not null
-        [Column(_Location, SqlDbType.VarChar, Nullable = true, Length = 50)]                      public string Location;       //varchar(50) null
+        [Column(_ID, SqlDbType.Int, Identity = true)]                                             public int ID {get; set;}     //int(4) not null
+        [Column(_AssemblyName, SqlDbType.VarChar, Primary = true, Length = 50)]                   public string AssemblyName {get; set;} //varchar(50) not null
+        [Column(_FullName, SqlDbType.VarChar, Nullable = true, Length = 2560)]                    public string FullName {get; set;} //varchar(2560) null
+        [Column(_Version, SqlDbType.VarChar, Nullable = true, Length = 50)]                       public string Version {get; set;} //varchar(50) null
+        [Column(_Label, SqlDbType.NVarChar, Nullable = true, Length = 128)]                       public string Label {get; set;} //nvarchar(128) null
+        [Column(_DateInstalled, SqlDbType.DateTime, Nullable = true)]                             public DateTime? DateInstalled {get; set;} //datetime(8) null
+        [Column(_Inactive, SqlDbType.Bit)]                                                        public bool Inactive {get; set;} //bit(1) not null
+        [Column(_Location, SqlDbType.VarChar, Nullable = true, Length = 50)]                      public string Location {get; set;} //varchar(50) null
 
 #pragma warning restore
 
