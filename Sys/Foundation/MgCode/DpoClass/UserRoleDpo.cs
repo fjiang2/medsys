@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 7/19/2012 2:51:10 PM
+//   by devel at 5/16/2013
 //
 
 using System;
@@ -14,19 +14,19 @@ using Sys.Data.Manager;
 
 namespace Sys.Foundation.DpoClass
 {
-    [Revision(13)]
+    [Revision(15)]
     [Table("sys00103", Level.System)]    //Primary Keys = Role_ID + User_ID;  Identity = UR_ID;
     public class UserRoleDpo : DPObject
     {
 
 #pragma warning disable
 
-        [Column(_UR_ID, SqlDbType.Int, Identity = true)]                                          public int UR_ID;             //int(4) not null
-        [Column(_User_ID, SqlDbType.Int, Primary = true)]                                         public int User_ID;           //int(4) not null
-        [Column(_Role_ID, SqlDbType.Int, Primary = true)]                                         public int Role_ID;           //int(4) not null
-        [Column(_Description, SqlDbType.NVarChar, Nullable = true, Length = 128)]                 public string Description;    //nvarchar(128) null
-        [Column(_Date_Activated, SqlDbType.DateTime, Nullable = true)]                            public DateTime? Date_Activated;//datetime(8) null
-        [Column(_Date_Expired, SqlDbType.DateTime, Nullable = true)]                              public DateTime? Date_Expired;//datetime(8) null
+        [Column(_UR_ID, SqlDbType.Int, Identity = true)]                                          public int UR_ID {get; set;}  //int(4) not null
+        [Column(_User_ID, SqlDbType.Int, Primary = true)]                                         public int User_ID {get; set;} //int(4) not null
+        [Column(_Role_ID, SqlDbType.Int, Primary = true)]                                         public int Role_ID {get; set;} //int(4) not null
+        [Column(_Description, SqlDbType.NVarChar, Nullable = true, Length = 128)]                 public string Description {get; set;} //nvarchar(128) null
+        [Column(_Date_Activated, SqlDbType.DateTime, Nullable = true)]                            public DateTime? Date_Activated {get; set;} //datetime(8) null
+        [Column(_Date_Expired, SqlDbType.DateTime, Nullable = true)]                              public DateTime? Date_Expired {get; set;} //datetime(8) null
 
 #pragma warning restore
 

@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 7/19/2012 12:12:41 AM
+//   by devel at 5/16/2013
 //
 
 using System;
@@ -14,18 +14,18 @@ using Sys.Data.Manager;
 
 namespace Sys.ViewManager.DpoClass
 {
-    [Revision(11)]
+    [Revision(13)]
     [Table("sys00502", Level.System)]    //Primary Keys = ID + Role_ID + Ty;  Identity = ;
     public class ItemPermissionDpo : DPObject
     {
 
 #pragma warning disable
 
-        [Column(_Role_ID, SqlDbType.Int, Primary = true)]                                         public int Role_ID;           //int(4) not null
-        [Column(_Ty, SqlDbType.Int, Primary = true)]                                              public int Ty;                //int(4) not null
-        [Column(_ID, SqlDbType.Int, Primary = true)]                                              public int ID;                //int(4) not null
-        [Column(_Enabled, SqlDbType.Bit, Nullable = true)]                                        public bool? Enabled;         //bit(1) null
-        [Column(_Visible, SqlDbType.Bit, Nullable = true)]                                        public bool? Visible;         //bit(1) null
+        [Column(_Role_ID, SqlDbType.Int, Primary = true)]                                         public int Role_ID {get; set;} //int(4) not null
+        [Column(_Ty, SqlDbType.Int, Primary = true)]                                              public int Ty {get; set;}     //int(4) not null
+        [Column(_ID, SqlDbType.Int, Primary = true)]                                              public int ID {get; set;}     //int(4) not null
+        [Column(_Enabled, SqlDbType.Bit, Nullable = true)]                                        public bool? Enabled {get; set;} //bit(1) null
+        [Column(_Visible, SqlDbType.Bit, Nullable = true)]                                        public bool? Visible {get; set;} //bit(1) null
 
 #pragma warning restore
 

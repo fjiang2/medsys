@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 4/18/2012 3:50:03 PM
+//   by devel at 5/16/2013
 //
 
 using System;
@@ -14,15 +14,15 @@ using Sys.Data.Manager;
 
 namespace App.Data.DpoClass
 {
-    [Revision(9)]
-    [Table("Northwind..CustomerDemographics", Level.Fixed)]    //Primary Keys = CustomerTypeID;  Identity = ;
+    [Revision(11)]
+    [Table("Northwind..[CustomerDemographics]", Level.Fixed)]    //Primary Keys = CustomerTypeID;  Identity = ;
     public class CustomerDemographicDpo : DPObject
     {
 
 #pragma warning disable
 
-        [Column(_CustomerTypeID, SqlDbType.NChar, Primary = true, Length = 10)]                   public string CustomerTypeID; //nchar(10) not null
-        [Column(_CustomerDesc, SqlDbType.NText, Nullable = true)]                                 public string CustomerDesc;   //ntext(16) null
+        [Column(_CustomerTypeID, SqlDbType.NChar, Primary = true, Length = 10)]                   public string CustomerTypeID {get; set;} //nchar(10) not null
+        [Column(_CustomerDesc, SqlDbType.NText, Nullable = true)]                                 public string CustomerDesc {get; set;} //ntext(16) null
 
 #pragma warning restore
 

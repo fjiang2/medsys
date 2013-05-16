@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 1/16/2013
+//   by devel at 5/16/2013
 //
 
 using System;
@@ -14,38 +14,38 @@ using Sys.Data.Manager;
 
 namespace Sys.Foundation.DpoClass
 {
-    [Revision(16)]
+    [Revision(18)]
     [Table("sys00101", Level.System)]    //Primary Keys = User_Name;  Identity = User_ID;
     public class UserDpo : DPObject
     {
 
 #pragma warning disable
 
-        [Column(_User_ID, SqlDbType.Int, Identity = true)]                                        public int User_ID;           //int(4) not null
-        [Column(_User_Name, SqlDbType.NVarChar, Primary = true, Length = 256)]                    public string User_Name;      //nvarchar(256) not null
-        [Column(_Plain_Password, SqlDbType.NVarChar, Nullable = true, Length = 32)]               public string Plain_Password; //nvarchar(32) null
-        [Column(_Password, SqlDbType.VarBinary, Nullable = true, Length = 64)]                    public byte[] Password;       //varbinary(64) null
-        [Column(_Windows_Authentication, SqlDbType.Bit)]                                          public bool Windows_Authentication;//bit(1) not null
-        [Column(_Inactive, SqlDbType.Bit)]                                                        public bool Inactive;         //bit(1) not null
-        [Column(_Last_Name, SqlDbType.NVarChar, Length = 50)]                                     public string Last_Name;      //nvarchar(50) not null
-        [Column(_First_Name, SqlDbType.NVarChar, Length = 50)]                                    public string First_Name;     //nvarchar(50) not null
-        [Column(_Middle_Name, SqlDbType.NVarChar, Nullable = true, Length = 50)]                  public string Middle_Name;    //nvarchar(50) null
-        [Column(_Nickname, SqlDbType.NVarChar, Nullable = true, Length = 50)]                     public string Nickname;       //nvarchar(50) null
-        [Column(_Group_Name, SqlDbType.NVarChar, Length = 64)]                                    public string Group_Name;     //nvarchar(64) not null
-        [Column(_Department, SqlDbType.NVarChar, Length = 50)]                                    public string Department;     //nvarchar(50) not null
-        [Column(_Job_Title, SqlDbType.NVarChar, Length = 50)]                                     public string Job_Title;      //nvarchar(50) not null
-        [Column(_Supervisor, SqlDbType.NVarChar, Length = 50)]                                    public string Supervisor;     //nvarchar(50) not null
-        [Column(_Email, SqlDbType.NVarChar, Length = 64)]                                         public string Email;          //nvarchar(64) not null
-        [Column(_WorkPhone, SqlDbType.VarChar, Length = 16)]                                      public string WorkPhone;      //varchar(16) not null
-        [Column(_WorkFax, SqlDbType.VarChar, Nullable = true, Length = 16)]                       public string WorkFax;        //varchar(16) null
-        [Column(_WorkPager, SqlDbType.VarChar, Nullable = true, Length = 16)]                     public string WorkPager;      //varchar(16) null
-        [Column(_WorkMobile, SqlDbType.VarChar, Nullable = true, Length = 16)]                    public string WorkMobile;     //varchar(16) null
-        [Column(_Signature, SqlDbType.Image, Nullable = true)]                                    public byte[] Signature;      //image(16) null
-        [Column(_Avatar, SqlDbType.Image, Nullable = true)]                                       public byte[] Avatar;         //image(16) null
-        [Column(_Password_Changed_DT, SqlDbType.DateTime, Nullable = true)]                       public DateTime? Password_Changed_DT;//datetime(8) null
-        [Column(_Logon_Locked_DT, SqlDbType.DateTime, Nullable = true)]                           public DateTime? Logon_Locked_DT;//datetime(8) null
-        [Column(_Start_Date, SqlDbType.DateTime)]                                                 public DateTime Start_Date;   //datetime(8) not null
-        [Column(_End_Date, SqlDbType.DateTime, Nullable = true)]                                  public DateTime? End_Date;    //datetime(8) null
+        [Column(_User_ID, SqlDbType.Int, Identity = true)]                                        public int User_ID {get; set;} //int(4) not null
+        [Column(_User_Name, SqlDbType.NVarChar, Primary = true, Length = 256)]                    public string User_Name {get; set;} //nvarchar(256) not null
+        [Column(_Plain_Password, SqlDbType.NVarChar, Nullable = true, Length = 32)]               public string Plain_Password {get; set;} //nvarchar(32) null
+        [Column(_Password, SqlDbType.VarBinary, Nullable = true, Length = 64)]                    public byte[] Password {get; set;} //varbinary(64) null
+        [Column(_Windows_Authentication, SqlDbType.Bit)]                                          public bool Windows_Authentication {get; set;} //bit(1) not null
+        [Column(_Inactive, SqlDbType.Bit)]                                                        public bool Inactive {get; set;} //bit(1) not null
+        [Column(_Last_Name, SqlDbType.NVarChar, Length = 50)]                                     public string Last_Name {get; set;} //nvarchar(50) not null
+        [Column(_First_Name, SqlDbType.NVarChar, Length = 50)]                                    public string First_Name {get; set;} //nvarchar(50) not null
+        [Column(_Middle_Name, SqlDbType.NVarChar, Nullable = true, Length = 50)]                  public string Middle_Name {get; set;} //nvarchar(50) null
+        [Column(_Nickname, SqlDbType.NVarChar, Nullable = true, Length = 50)]                     public string Nickname {get; set;} //nvarchar(50) null
+        [Column(_Group_Name, SqlDbType.NVarChar, Length = 64)]                                    public string Group_Name {get; set;} //nvarchar(64) not null
+        [Column(_Department, SqlDbType.NVarChar, Length = 50)]                                    public string Department {get; set;} //nvarchar(50) not null
+        [Column(_Job_Title, SqlDbType.NVarChar, Length = 50)]                                     public string Job_Title {get; set;} //nvarchar(50) not null
+        [Column(_Supervisor, SqlDbType.NVarChar, Length = 50)]                                    public string Supervisor {get; set;} //nvarchar(50) not null
+        [Column(_Email, SqlDbType.NVarChar, Length = 64)]                                         public string Email {get; set;} //nvarchar(64) not null
+        [Column(_WorkPhone, SqlDbType.VarChar, Length = 16)]                                      public string WorkPhone {get; set;} //varchar(16) not null
+        [Column(_WorkFax, SqlDbType.VarChar, Nullable = true, Length = 16)]                       public string WorkFax {get; set;} //varchar(16) null
+        [Column(_WorkPager, SqlDbType.VarChar, Nullable = true, Length = 16)]                     public string WorkPager {get; set;} //varchar(16) null
+        [Column(_WorkMobile, SqlDbType.VarChar, Nullable = true, Length = 16)]                    public string WorkMobile {get; set;} //varchar(16) null
+        [Column(_Signature, SqlDbType.Image, Nullable = true)]                                    public byte[] Signature {get; set;} //image(16) null
+        [Column(_Avatar, SqlDbType.Image, Nullable = true)]                                       public byte[] Avatar {get; set;} //image(16) null
+        [Column(_Password_Changed_DT, SqlDbType.DateTime, Nullable = true)]                       public DateTime? Password_Changed_DT {get; set;} //datetime(8) null
+        [Column(_Logon_Locked_DT, SqlDbType.DateTime, Nullable = true)]                           public DateTime? Logon_Locked_DT {get; set;} //datetime(8) null
+        [Column(_Start_Date, SqlDbType.DateTime)]                                                 public DateTime Start_Date {get; set;} //datetime(8) not null
+        [Column(_End_Date, SqlDbType.DateTime, Nullable = true)]                                  public DateTime? End_Date {get; set;} //datetime(8) null
 
         #region IMAGE PROPERTIES
         public Image SignatureImage

@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 7/19/2012 12:12:40 AM
+//   by devel at 5/16/2013
 //
 
 using System;
@@ -14,35 +14,35 @@ using Sys.Data.Manager;
 
 namespace Sys.BusinessRules.DpoClass
 {
-    [Revision(11)]
+    [Revision(13)]
     [Table("sys00401", Level.System)]    //Primary Keys = ID;  Identity = ID;
     internal class SysRuleDpo : DPObject
     {
 
 #pragma warning disable
 
-        [Column(_ID, SqlDbType.Int, Identity = true, Primary = true)]                             public int ID;                //int(4) not null
-        [Column(_Error_Code, SqlDbType.Int)]                                                      public int Error_Code;        //int(4) not null
-        [Column(_OrderBy, SqlDbType.Int, Nullable = true)]                                        public int? OrderBy;          //int(4) null
-        [Column(_Workflow_Name, SqlDbType.NVarChar, Length = 128)]                                public string Workflow_Name;  //nvarchar(128) not null
-        [Column(_State_Name, SqlDbType.NVarChar, Nullable = true, Length = 128)]                  public string State_Name;     //nvarchar(128) null
-        [Column(_Label, SqlDbType.NVarChar, Length = 256)]                                        public string Label;          //nvarchar(256) not null
-        [Column(_Description, SqlDbType.NVarChar, Nullable = true, Length = 512)]                 public string Description;    //nvarchar(512) null
-        [Column(_Turned_Off_Ind, SqlDbType.Bit)]                                                  public bool Turned_Off_Ind;   //bit(1) not null
-        [Column(_Rule_Direct_Ind, SqlDbType.Bit, Nullable = true)]                                public bool? Rule_Direct_Ind; //bit(1) null
-        [Column(_Antecedent, SqlDbType.NVarChar, Nullable = true, Length = 2024)]                 public string Antecedent;     //nvarchar(2024) null
-        [Column(_Consequent, SqlDbType.NVarChar, Nullable = true, Length = 2024)]                 public string Consequent;     //nvarchar(2024) null
-        [Column(_Severity_Level, SqlDbType.Int, Nullable = true)]                                 public int? Severity_Level;   //int(4) null
-        [Column(_Trace_Key, SqlDbType.NVarChar, Nullable = true, Length = 128)]                   public string Trace_Key;      //nvarchar(128) null
-        [Column(_Message, SqlDbType.NVarChar, Nullable = true, Length = 2024)]                    public string Message;        //nvarchar(2024) null
-        [Column(_Business_Rule, SqlDbType.NVarChar, Length = 4000)]                               public string Business_Rule;  //nvarchar(4000) not null
-        [Column(_Specification, SqlDbType.NVarChar, Nullable = true, Length = 4000)]              public string Specification;  //nvarchar(4000) null
-        [Column(_Comment, SqlDbType.NVarChar, Nullable = true, Length = 4000)]                    public string Comment;        //nvarchar(4000) null
-        [Column(_Released, SqlDbType.Bit)]                                                        public bool Released;         //bit(1) not null
-        [Column(_Date_Created, SqlDbType.DateTime, Nullable = true)]                              public DateTime? Date_Created;//datetime(8) null
-        [Column(_Creator, SqlDbType.Int, Nullable = true)]                                        public int? Creator;          //int(4) null
-        [Column(_Date_Modified, SqlDbType.DateTime, Nullable = true)]                             public DateTime? Date_Modified;//datetime(8) null
-        [Column(_Modifier, SqlDbType.Int, Nullable = true)]                                       public int? Modifier;         //int(4) null
+        [Column(_ID, SqlDbType.Int, Identity = true, Primary = true)]                             public int ID {get; set;}     //int(4) not null
+        [Column(_Error_Code, SqlDbType.Int)]                                                      public int Error_Code {get; set;} //int(4) not null
+        [Column(_OrderBy, SqlDbType.Int, Nullable = true)]                                        public int? OrderBy {get; set;} //int(4) null
+        [Column(_Workflow_Name, SqlDbType.NVarChar, Length = 128)]                                public string Workflow_Name {get; set;} //nvarchar(128) not null
+        [Column(_State_Name, SqlDbType.NVarChar, Nullable = true, Length = 128)]                  public string State_Name {get; set;} //nvarchar(128) null
+        [Column(_Label, SqlDbType.NVarChar, Length = 256)]                                        public string Label {get; set;} //nvarchar(256) not null
+        [Column(_Description, SqlDbType.NVarChar, Nullable = true, Length = 512)]                 public string Description {get; set;} //nvarchar(512) null
+        [Column(_Turned_Off_Ind, SqlDbType.Bit)]                                                  public bool Turned_Off_Ind {get; set;} //bit(1) not null
+        [Column(_Rule_Direct_Ind, SqlDbType.Bit, Nullable = true)]                                public bool? Rule_Direct_Ind {get; set;} //bit(1) null
+        [Column(_Antecedent, SqlDbType.NVarChar, Nullable = true, Length = 2024)]                 public string Antecedent {get; set;} //nvarchar(2024) null
+        [Column(_Consequent, SqlDbType.NVarChar, Nullable = true, Length = 2024)]                 public string Consequent {get; set;} //nvarchar(2024) null
+        [Column(_Severity_Level, SqlDbType.Int, Nullable = true)]                                 public int? Severity_Level {get; set;} //int(4) null
+        [Column(_Trace_Key, SqlDbType.NVarChar, Nullable = true, Length = 128)]                   public string Trace_Key {get; set;} //nvarchar(128) null
+        [Column(_Message, SqlDbType.NVarChar, Nullable = true, Length = 2024)]                    public string Message {get; set;} //nvarchar(2024) null
+        [Column(_Business_Rule, SqlDbType.NVarChar, Length = 4000)]                               public string Business_Rule {get; set;} //nvarchar(4000) not null
+        [Column(_Specification, SqlDbType.NVarChar, Nullable = true, Length = 4000)]              public string Specification {get; set;} //nvarchar(4000) null
+        [Column(_Comment, SqlDbType.NVarChar, Nullable = true, Length = 4000)]                    public string Comment {get; set;} //nvarchar(4000) null
+        [Column(_Released, SqlDbType.Bit)]                                                        public bool Released {get; set;} //bit(1) not null
+        [Column(_Date_Created, SqlDbType.DateTime, Nullable = true)]                              public DateTime? Date_Created {get; set;} //datetime(8) null
+        [Column(_Creator, SqlDbType.Int, Nullable = true)]                                        public int? Creator {get; set;} //int(4) null
+        [Column(_Date_Modified, SqlDbType.DateTime, Nullable = true)]                             public DateTime? Date_Modified {get; set;} //datetime(8) null
+        [Column(_Modifier, SqlDbType.Int, Nullable = true)]                                       public int? Modifier {get; set;} //int(4) null
 
 #pragma warning restore
 

@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 7/25/2012 1:58:02 PM
+//   by devel at 5/16/2013
 //
 
 using System;
@@ -14,47 +14,46 @@ using Sys.Data.Manager;
 
 namespace PTA.DpoClass
 {
-    [Revision(16)]
+    [Revision(18)]
     [Table("ptaAdults", Level.Application, Pack = false)]    //Primary Keys = Adult_ID;  Identity = ;
     public class ptaAdultDpo : DPObject
     {
 
 #pragma warning disable
 
-        [ForeignKey(typeof(App.Data.DpoClass.appPersonDpo), App.Data.DpoClass.appPersonDpo._Person_ID)]
-        [Column(_Adult_ID, SqlDbType.Int, Primary = true)]                                        public int Adult_ID;          //int(4) not null
-        [Column(_Address_ID, SqlDbType.Int)]                                                      public int Address_ID;        //int(4) not null
-        [Column(_Home_Phone_ID, SqlDbType.Int)]                                                   public int Home_Phone_ID;     //int(4) not null
-        [Column(_Work_Phone_ID, SqlDbType.Int, Nullable = true)]                                  public int? Work_Phone_ID;    //int(4) null
-        [Column(_Email, SqlDbType.VarChar, Nullable = true, Length = 60)]                         public string Email;          //varchar(60) null
-        [Column(_Profession, SqlDbType.NVarChar, Nullable = true, Length = 150)]                  public string Profession;     //nvarchar(150) null
-        [Column(_Day, SqlDbType.Bit)]                                                             public bool Day;              //bit(1) not null
-        [Column(_Night, SqlDbType.Bit)]                                                           public bool Night;            //bit(1) not null
-        [Column(_Weekend, SqlDbType.Bit)]                                                         public bool Weekend;          //bit(1) not null
-        [Column(_Arts, SqlDbType.Bit)]                                                            public bool Arts;             //bit(1) not null
-        [Column(_Chess, SqlDbType.Bit)]                                                           public bool Chess;            //bit(1) not null
-        [Column(_Classroom, SqlDbType.Bit)]                                                       public bool Classroom;        //bit(1) not null
-        [Column(_Construction, SqlDbType.Bit)]                                                    public bool Construction;     //bit(1) not null
-        [Column(_Crawfish, SqlDbType.Bit)]                                                        public bool Crawfish;         //bit(1) not null
-        [Column(_Writing, SqlDbType.Bit)]                                                         public bool Writing;          //bit(1) not null
-        [Column(_Fundraising, SqlDbType.Bit)]                                                     public bool Fundraising;      //bit(1) not null
-        [Column(_Events, SqlDbType.Bit)]                                                          public bool Events;           //bit(1) not null
-        [Column(_Landscaping, SqlDbType.Bit)]                                                     public bool Landscaping;      //bit(1) not null
-        [Column(_Gardening, SqlDbType.Bit)]                                                       public bool Gardening;        //bit(1) not null
-        [Column(_Library, SqlDbType.Bit)]                                                         public bool Library;          //bit(1) not null
-        [Column(_Lice, SqlDbType.Bit)]                                                            public bool Lice;             //bit(1) not null
-        [Column(_Lunch, SqlDbType.Bit)]                                                           public bool Lunch;            //bit(1) not null
-        [Column(_Letter, SqlDbType.Bit)]                                                          public bool Letter;           //bit(1) not null
-        [Column(_Office, SqlDbType.Bit)]                                                          public bool Office;           //bit(1) not null
-        [Column(_Traffic, SqlDbType.Bit)]                                                         public bool Traffic;          //bit(1) not null
-        [Column(_Registration, SqlDbType.Bit)]                                                    public bool Registration;     //bit(1) not null
-        [Column(_Nurse, SqlDbType.Bit)]                                                           public bool Nurse;            //bit(1) not null
-        [Column(_Soiree, SqlDbType.Bit)]                                                          public bool Soiree;           //bit(1) not null
-        [Column(_Auction, SqlDbType.Bit)]                                                         public bool Auction;          //bit(1) not null
-        [Column(_Technology, SqlDbType.Bit)]                                                      public bool Technology;       //bit(1) not null
-        [Column(_Tutoring, SqlDbType.Bit)]                                                        public bool Tutoring;         //bit(1) not null
-        [Column(_Committee, SqlDbType.Bit)]                                                       public bool Committee;        //bit(1) not null
-        [Column(_Other, SqlDbType.NVarChar, Nullable = true, Length = 120)]                       public string Other;          //nvarchar(120) null
+        [Column(_Adult_ID, SqlDbType.Int, Primary = true)]                                        public int Adult_ID {get; set;} //int(4) not null
+        [Column(_Address_ID, SqlDbType.Int)]                                                      public int Address_ID {get; set;} //int(4) not null
+        [Column(_Home_Phone_ID, SqlDbType.Int)]                                                   public int Home_Phone_ID {get; set;} //int(4) not null
+        [Column(_Work_Phone_ID, SqlDbType.Int, Nullable = true)]                                  public int? Work_Phone_ID {get; set;} //int(4) null
+        [Column(_Email, SqlDbType.VarChar, Nullable = true, Length = 60)]                         public string Email {get; set;} //varchar(60) null
+        [Column(_Profession, SqlDbType.NVarChar, Nullable = true, Length = 150)]                  public string Profession {get; set;} //nvarchar(150) null
+        [Column(_Day, SqlDbType.Bit)]                                                             public bool Day {get; set;}   //bit(1) not null
+        [Column(_Night, SqlDbType.Bit)]                                                           public bool Night {get; set;} //bit(1) not null
+        [Column(_Weekend, SqlDbType.Bit)]                                                         public bool Weekend {get; set;} //bit(1) not null
+        [Column(_Arts, SqlDbType.Bit)]                                                            public bool Arts {get; set;}  //bit(1) not null
+        [Column(_Chess, SqlDbType.Bit)]                                                           public bool Chess {get; set;} //bit(1) not null
+        [Column(_Classroom, SqlDbType.Bit)]                                                       public bool Classroom {get; set;} //bit(1) not null
+        [Column(_Construction, SqlDbType.Bit)]                                                    public bool Construction {get; set;} //bit(1) not null
+        [Column(_Crawfish, SqlDbType.Bit)]                                                        public bool Crawfish {get; set;} //bit(1) not null
+        [Column(_Writing, SqlDbType.Bit)]                                                         public bool Writing {get; set;} //bit(1) not null
+        [Column(_Fundraising, SqlDbType.Bit)]                                                     public bool Fundraising {get; set;} //bit(1) not null
+        [Column(_Events, SqlDbType.Bit)]                                                          public bool Events {get; set;} //bit(1) not null
+        [Column(_Landscaping, SqlDbType.Bit)]                                                     public bool Landscaping {get; set;} //bit(1) not null
+        [Column(_Gardening, SqlDbType.Bit)]                                                       public bool Gardening {get; set;} //bit(1) not null
+        [Column(_Library, SqlDbType.Bit)]                                                         public bool Library {get; set;} //bit(1) not null
+        [Column(_Lice, SqlDbType.Bit)]                                                            public bool Lice {get; set;}  //bit(1) not null
+        [Column(_Lunch, SqlDbType.Bit)]                                                           public bool Lunch {get; set;} //bit(1) not null
+        [Column(_Letter, SqlDbType.Bit)]                                                          public bool Letter {get; set;} //bit(1) not null
+        [Column(_Office, SqlDbType.Bit)]                                                          public bool Office {get; set;} //bit(1) not null
+        [Column(_Traffic, SqlDbType.Bit)]                                                         public bool Traffic {get; set;} //bit(1) not null
+        [Column(_Registration, SqlDbType.Bit)]                                                    public bool Registration {get; set;} //bit(1) not null
+        [Column(_Nurse, SqlDbType.Bit)]                                                           public bool Nurse {get; set;} //bit(1) not null
+        [Column(_Soiree, SqlDbType.Bit)]                                                          public bool Soiree {get; set;} //bit(1) not null
+        [Column(_Auction, SqlDbType.Bit)]                                                         public bool Auction {get; set;} //bit(1) not null
+        [Column(_Technology, SqlDbType.Bit)]                                                      public bool Technology {get; set;} //bit(1) not null
+        [Column(_Tutoring, SqlDbType.Bit)]                                                        public bool Tutoring {get; set;} //bit(1) not null
+        [Column(_Committee, SqlDbType.Bit)]                                                       public bool Committee {get; set;} //bit(1) not null
+        [Column(_Other, SqlDbType.NVarChar, Nullable = true, Length = 120)]                       public string Other {get; set;} //nvarchar(120) null
 
 #pragma warning restore
 

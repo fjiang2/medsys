@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 4/18/2012 3:50:04 PM
+//   by devel at 5/16/2013
 //
 
 using System;
@@ -14,25 +14,25 @@ using Sys.Data.Manager;
 
 namespace App.Data.DpoClass
 {
-    [Revision(8)]
-    [Table("Northwind..Suppliers", Level.Fixed)]    //Primary Keys = SupplierID;  Identity = SupplierID;
+    [Revision(10)]
+    [Table("Northwind..[Suppliers]", Level.Fixed)]    //Primary Keys = SupplierID;  Identity = SupplierID;
     public class SupplierDpo : DPObject
     {
 
 #pragma warning disable
 
-        [Column(_SupplierID, SqlDbType.Int, Identity = true, Primary = true)]                     public int SupplierID;        //int(4) not null
-        [Column(_CompanyName, SqlDbType.NVarChar, Length = 40)]                                   public string CompanyName;    //nvarchar(40) not null
-        [Column(_ContactName, SqlDbType.NVarChar, Nullable = true, Length = 30)]                  public string ContactName;    //nvarchar(30) null
-        [Column(_ContactTitle, SqlDbType.NVarChar, Nullable = true, Length = 30)]                 public string ContactTitle;   //nvarchar(30) null
-        [Column(_Address, SqlDbType.NVarChar, Nullable = true, Length = 60)]                      public string Address;        //nvarchar(60) null
-        [Column(_City, SqlDbType.NVarChar, Nullable = true, Length = 15)]                         public string City;           //nvarchar(15) null
-        [Column(_Region, SqlDbType.NVarChar, Nullable = true, Length = 15)]                       public string Region;         //nvarchar(15) null
-        [Column(_PostalCode, SqlDbType.NVarChar, Nullable = true, Length = 10)]                   public string PostalCode;     //nvarchar(10) null
-        [Column(_Country, SqlDbType.NVarChar, Nullable = true, Length = 15)]                      public string Country;        //nvarchar(15) null
-        [Column(_Phone, SqlDbType.NVarChar, Nullable = true, Length = 24)]                        public string Phone;          //nvarchar(24) null
-        [Column(_Fax, SqlDbType.NVarChar, Nullable = true, Length = 24)]                          public string Fax;            //nvarchar(24) null
-        [Column(_HomePage, SqlDbType.NText, Nullable = true)]                                     public string HomePage;       //ntext(16) null
+        [Column(_SupplierID, SqlDbType.Int, Identity = true, Primary = true)]                     public int SupplierID {get; set;} //int(4) not null
+        [Column(_CompanyName, SqlDbType.NVarChar, Length = 40)]                                   public string CompanyName {get; set;} //nvarchar(40) not null
+        [Column(_ContactName, SqlDbType.NVarChar, Nullable = true, Length = 30)]                  public string ContactName {get; set;} //nvarchar(30) null
+        [Column(_ContactTitle, SqlDbType.NVarChar, Nullable = true, Length = 30)]                 public string ContactTitle {get; set;} //nvarchar(30) null
+        [Column(_Address, SqlDbType.NVarChar, Nullable = true, Length = 60)]                      public string Address {get; set;} //nvarchar(60) null
+        [Column(_City, SqlDbType.NVarChar, Nullable = true, Length = 15)]                         public string City {get; set;} //nvarchar(15) null
+        [Column(_Region, SqlDbType.NVarChar, Nullable = true, Length = 15)]                       public string Region {get; set;} //nvarchar(15) null
+        [Column(_PostalCode, SqlDbType.NVarChar, Nullable = true, Length = 10)]                   public string PostalCode {get; set;} //nvarchar(10) null
+        [Column(_Country, SqlDbType.NVarChar, Nullable = true, Length = 15)]                      public string Country {get; set;} //nvarchar(15) null
+        [Column(_Phone, SqlDbType.NVarChar, Nullable = true, Length = 24)]                        public string Phone {get; set;} //nvarchar(24) null
+        [Column(_Fax, SqlDbType.NVarChar, Nullable = true, Length = 24)]                          public string Fax {get; set;} //nvarchar(24) null
+        [Column(_HomePage, SqlDbType.NText, Nullable = true)]                                     public string HomePage {get; set;} //ntext(16) null
 
 #pragma warning restore
 

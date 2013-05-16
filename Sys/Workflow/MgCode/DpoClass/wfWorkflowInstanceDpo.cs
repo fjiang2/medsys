@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 7/19/2012 12:12:47 AM
+//   by devel at 5/16/2013
 //
 
 using System;
@@ -10,25 +10,25 @@ using System.Data;
 using System.Drawing;
 using Sys.Data;
 using Sys.Data.Manager;
-using Tie;
+
 
 namespace Sys.Workflow.DpoClass
 {
-    [Revision(12)]
+    [Revision(14)]
     [Table("sys01304", Level.System, Pack = false)]    //Primary Keys = ID;  Identity = ID;
     public class wfWorkflowInstanceDpo : DPObject
     {
 
 #pragma warning disable
 
-        [Column(_ID, SqlDbType.Int, Identity = true, Primary = true)]                             public int ID;                //int(4) not null
-        [Column(_Workflow_Name, SqlDbType.NVarChar, Length = 50)]                                 public string Workflow_Name;  //nvarchar(50) not null
-        [Column(_Label, SqlDbType.NVarChar, Length = 128)]                                        public string Label;          //nvarchar(128) not null
-        [Column(_Description, SqlDbType.NVarChar, Nullable = true, Length = 1024)]                public string Description;    //nvarchar(1024) null
-        [Column(_Work_Date, SqlDbType.DateTime, Nullable = true)]                                 public DateTime? Work_Date;   //datetime(8) null
-        [Column(_Complete_Date, SqlDbType.DateTime, Nullable = true)]                             public DateTime? Complete_Date;//datetime(8) null
-        [Column(_Heap, SqlDbType.NText, Nullable = true)]                                         [NonValized] public string Heap;           //ntext(16) null
-        [Column(_Deleted, SqlDbType.Bit)]                                                         public bool Deleted;          //bit(1) not null
+        [Column(_ID, SqlDbType.Int, Identity = true, Primary = true)]                             public int ID {get; set;}     //int(4) not null
+        [Column(_Workflow_Name, SqlDbType.NVarChar, Length = 50)]                                 public string Workflow_Name {get; set;} //nvarchar(50) not null
+        [Column(_Label, SqlDbType.NVarChar, Length = 128)]                                        public string Label {get; set;} //nvarchar(128) not null
+        [Column(_Description, SqlDbType.NVarChar, Nullable = true, Length = 1024)]                public string Description {get; set;} //nvarchar(1024) null
+        [Column(_Work_Date, SqlDbType.DateTime, Nullable = true)]                                 public DateTime? Work_Date {get; set;} //datetime(8) null
+        [Column(_Complete_Date, SqlDbType.DateTime, Nullable = true)]                             public DateTime? Complete_Date {get; set;} //datetime(8) null
+        [Column(_Heap, SqlDbType.NText, Nullable = true)]                                         public string Heap {get; set;} //ntext(16) null
+        [Column(_Deleted, SqlDbType.Bit)]                                                         public bool Deleted {get; set;} //bit(1) not null
 
 #pragma warning restore
 

@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 7/19/2012 12:12:45 AM
+//   by devel at 5/16/2013
 //
 
 using System;
@@ -14,20 +14,20 @@ using Sys.Data.Manager;
 
 namespace Sys.ViewManager.DpoClass
 {
-    [Revision(13)]
+    [Revision(15)]
     [Table("sys00901", Level.System)]    //Primary Keys = ID;  Identity = ID;
     public class DataImportDpo : DPObject
     {
 
 #pragma warning disable
 
-        [Column(_ID, SqlDbType.Int, Identity = true, Primary = true)]                             public int ID;                //int(4) not null
-        [Column(_Label, SqlDbType.NVarChar, Nullable = true, Length = 50)]                        public string Label;          //nvarchar(50) null
-        [Column(_Description, SqlDbType.NVarChar, Nullable = true, Length = 512)]                 public string Description;    //nvarchar(512) null
-        [Column(_DataSource, SqlDbType.NVarChar, Nullable = true, Length = -1)]                   public string DataSource;     //nvarchar(-1) null
-        [Column(_ClassName, SqlDbType.NVarChar, Nullable = true, Length = 256)]                   public string ClassName;      //nvarchar(256) null
-        [Column(_Mapping, SqlDbType.NText, Nullable = true)]                                      public string Mapping;        //ntext(16) null
-        [Column(_ActionButtonName, SqlDbType.NVarChar, Nullable = true, Length = 256)]            public string ActionButtonName;//nvarchar(256) null
+        [Column(_ID, SqlDbType.Int, Identity = true, Primary = true)]                             public int ID {get; set;}     //int(4) not null
+        [Column(_Label, SqlDbType.NVarChar, Nullable = true, Length = 50)]                        public string Label {get; set;} //nvarchar(50) null
+        [Column(_Description, SqlDbType.NVarChar, Nullable = true, Length = 512)]                 public string Description {get; set;} //nvarchar(512) null
+        [Column(_DataSource, SqlDbType.NVarChar, Nullable = true, Length = -1)]                   public string DataSource {get; set;} //nvarchar(-1) null
+        [Column(_ClassName, SqlDbType.NVarChar, Nullable = true, Length = 256)]                   public string ClassName {get; set;} //nvarchar(256) null
+        [Column(_Mapping, SqlDbType.NText, Nullable = true)]                                      public string Mapping {get; set;} //ntext(16) null
+        [Column(_ActionButtonName, SqlDbType.NVarChar, Nullable = true, Length = 256)]            public string ActionButtonName {get; set;} //nvarchar(256) null
 
 #pragma warning restore
 

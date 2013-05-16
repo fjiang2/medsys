@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 7/19/2012 12:12:49 AM
+//   by devel at 5/16/2013
 //
 
 using System;
@@ -14,21 +14,21 @@ using Sys.Data.Manager;
 
 namespace Sys.DataManager.DpoClass
 {
-    [Revision(10)]
+    [Revision(12)]
     [Table("sys01402", Level.System)]    //Primary Keys = Doc_Id + Version;  Identity = ID;
     public class sysDOC02Dpo : DPObject
     {
 
 #pragma warning disable
 
-        [Column(_ID, SqlDbType.Int, Identity = true)]                                             public int ID;                //int(4) not null
-        [Column(_Doc_Id, SqlDbType.Int, Primary = true)]                                          public int Doc_Id;            //int(4) not null
-        [Column(_Label, SqlDbType.NVarChar, Nullable = true, Length = 120)]                       public string Label;          //nvarchar(120) null
-        [Column(_Version, SqlDbType.Int, Primary = true)]                                         public int Version;           //int(4) not null
-        [Column(_Doc_Name, SqlDbType.VarChar, Length = 50)]                                       public string Doc_Name;       //varchar(50) not null
-        [Column(_User_Id, SqlDbType.Int)]                                                         public int User_Id;           //int(4) not null
-        [Column(_Date_Modified, SqlDbType.DateTime)]                                              public DateTime Date_Modified;//datetime(8) not null
-        [Column(_Comment, SqlDbType.NVarChar, Nullable = true, Length = 256)]                     public string Comment;        //nvarchar(256) null
+        [Column(_ID, SqlDbType.Int, Identity = true)]                                             public int ID {get; set;}     //int(4) not null
+        [Column(_Doc_Id, SqlDbType.Int, Primary = true)]                                          public int Doc_Id {get; set;} //int(4) not null
+        [Column(_Label, SqlDbType.NVarChar, Nullable = true, Length = 120)]                       public string Label {get; set;} //nvarchar(120) null
+        [Column(_Version, SqlDbType.Int, Primary = true)]                                         public int Version {get; set;} //int(4) not null
+        [Column(_Doc_Name, SqlDbType.VarChar, Length = 50)]                                       public string Doc_Name {get; set;} //varchar(50) not null
+        [Column(_User_Id, SqlDbType.Int)]                                                         public int User_Id {get; set;} //int(4) not null
+        [Column(_Date_Modified, SqlDbType.DateTime)]                                              public DateTime Date_Modified {get; set;} //datetime(8) not null
+        [Column(_Comment, SqlDbType.NVarChar, Nullable = true, Length = 256)]                     public string Comment {get; set;} //nvarchar(256) null
 
 #pragma warning restore
 

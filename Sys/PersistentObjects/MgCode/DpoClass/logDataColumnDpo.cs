@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 7/19/2012 12:12:40 AM
+//   by devel at 5/16/2013
 //
 
 using System;
@@ -14,21 +14,21 @@ using Sys.Data.Manager;
 
 namespace Sys.PersistentObjects.DpoClass
 {
-    [Revision(12)]
+    [Revision(14)]
     [Table("sys00303", Level.System, Pack = false)]    //Primary Keys = log_column_id;  Identity = log_column_id;
     internal class logDataColumnDpo : DPObject
     {
 
 #pragma warning disable
 
-        [Column(_log_column_id, SqlDbType.Int, Identity = true, Primary = true)]                  public int log_column_id;     //int(4) not null
-        [Column(_log_table_id, SqlDbType.Int)]                                                    public int log_table_id;      //int(4) not null
-        [Column(_table_name, SqlDbType.VarChar, Nullable = true, Length = 80)]                    public string table_name;     //varchar(80) null
-        [Column(_column_name, SqlDbType.VarChar, Nullable = true, Length = 50)]                   public string column_name;    //varchar(50) null
-        [Column(_column_id, SqlDbType.Int)]                                                       public int column_id;         //int(4) not null
-        [Column(_data_type, SqlDbType.VarChar, Length = 50)]                                      public string data_type;      //varchar(50) not null
-        [Column(_value_from, SqlDbType.NText)]                                                    public string value_from;     //ntext(16) not null
-        [Column(_value_to, SqlDbType.NText)]                                                      public string value_to;       //ntext(16) not null
+        [Column(_log_column_id, SqlDbType.Int, Identity = true, Primary = true)]                  public int log_column_id {get; set;} //int(4) not null
+        [Column(_log_table_id, SqlDbType.Int)]                                                    public int log_table_id {get; set;} //int(4) not null
+        [Column(_table_name, SqlDbType.VarChar, Nullable = true, Length = 80)]                    public string table_name {get; set;} //varchar(80) null
+        [Column(_column_name, SqlDbType.VarChar, Nullable = true, Length = 50)]                   public string column_name {get; set;} //varchar(50) null
+        [Column(_column_id, SqlDbType.Int)]                                                       public int column_id {get; set;} //int(4) not null
+        [Column(_data_type, SqlDbType.VarChar, Length = 50)]                                      public string data_type {get; set;} //varchar(50) not null
+        [Column(_value_from, SqlDbType.NText)]                                                    public string value_from {get; set;} //ntext(16) not null
+        [Column(_value_to, SqlDbType.NText)]                                                      public string value_to {get; set;} //ntext(16) not null
 
 #pragma warning restore
 

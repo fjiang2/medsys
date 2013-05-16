@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 7/19/2012 12:12:44 AM
+//   by devel at 5/16/2013
 //
 
 using System;
@@ -14,19 +14,19 @@ using Sys.Data.Manager;
 
 namespace Sys.PersistentObjects.DpoClass
 {
-    [Revision(12)]
+    [Revision(14)]
     [Table("sys00805", Level.System)]    //Primary Keys = ID;  Identity = ID;
     public class SqlParamDpo : DPObject
     {
 
 #pragma warning disable
 
-        [Column(_ID, SqlDbType.Int, Identity = true, Primary = true)]                             public int ID;                //int(4) not null
-        [Column(_Label, SqlDbType.NVarChar, Length = 50)]                                         public string Label;          //nvarchar(50) not null
-        [Column(_Description, SqlDbType.NVarChar, Nullable = true, Length = 128)]                 public string Description;    //nvarchar(128) null
-        [Column(_Command, SqlDbType.NVarChar, Length = 128)]                                      public string Command;        //nvarchar(128) not null
-        [Column(_Icon, SqlDbType.Image, Nullable = true)]                                         public byte[] Icon;           //image(16) null
-        [Column(_OrderBy, SqlDbType.Int, Nullable = true)]                                        public int? OrderBy;          //int(4) null
+        [Column(_ID, SqlDbType.Int, Identity = true, Primary = true)]                             public int ID {get; set;}     //int(4) not null
+        [Column(_Label, SqlDbType.NVarChar, Length = 50)]                                         public string Label {get; set;} //nvarchar(50) not null
+        [Column(_Description, SqlDbType.NVarChar, Nullable = true, Length = 128)]                 public string Description {get; set;} //nvarchar(128) null
+        [Column(_Command, SqlDbType.NVarChar, Length = 128)]                                      public string Command {get; set;} //nvarchar(128) not null
+        [Column(_Icon, SqlDbType.Image, Nullable = true)]                                         public byte[] Icon {get; set;} //image(16) null
+        [Column(_OrderBy, SqlDbType.Int, Nullable = true)]                                        public int? OrderBy {get; set;} //int(4) null
 
         #region IMAGE PROPERTIES
         public Image IconImage

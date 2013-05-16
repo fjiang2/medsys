@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 7/19/2012 12:12:46 AM
+//   by devel at 5/16/2013
 //
 
 using System;
@@ -14,19 +14,19 @@ using Sys.Data.Manager;
 
 namespace Sys.Messaging.DpoClass
 {
-    [Revision(11)]
+    [Revision(13)]
     [Table("sys01201", Level.System, Pack = false)]    //Primary Keys = ID;  Identity = ID;
     public class LogChatDpo : DPObject
     {
 
 #pragma warning disable
 
-        [Column(_ID, SqlDbType.Int, Identity = true, Primary = true)]                             public int ID;                //int(4) not null
-        [Column(_User_Name, SqlDbType.NVarChar, Nullable = true, Length = 50)]                    public string User_Name;      //nvarchar(50) null
-        [Column(_Friend_Name, SqlDbType.NVarChar, Nullable = true, Length = 50)]                  public string Friend_Name;    //nvarchar(50) null
-        [Column(_Start_Time, SqlDbType.DateTime, Nullable = true)]                                public DateTime? Start_Time;  //datetime(8) null
-        [Column(_End_Time, SqlDbType.DateTime, Nullable = true)]                                  public DateTime? End_Time;    //datetime(8) null
-        [Column(_History, SqlDbType.NText, Nullable = true)]                                      public string History;        //ntext(16) null
+        [Column(_ID, SqlDbType.Int, Identity = true, Primary = true)]                             public int ID {get; set;}     //int(4) not null
+        [Column(_User_Name, SqlDbType.NVarChar, Nullable = true, Length = 50)]                    public string User_Name {get; set;} //nvarchar(50) null
+        [Column(_Friend_Name, SqlDbType.NVarChar, Nullable = true, Length = 50)]                  public string Friend_Name {get; set;} //nvarchar(50) null
+        [Column(_Start_Time, SqlDbType.DateTime, Nullable = true)]                                public DateTime? Start_Time {get; set;} //datetime(8) null
+        [Column(_End_Time, SqlDbType.DateTime, Nullable = true)]                                  public DateTime? End_Time {get; set;} //datetime(8) null
+        [Column(_History, SqlDbType.NText, Nullable = true)]                                      public string History {get; set;} //ntext(16) null
 
 #pragma warning restore
 

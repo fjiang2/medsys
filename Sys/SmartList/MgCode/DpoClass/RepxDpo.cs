@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 7/19/2012 12:12:46 AM
+//   by devel at 5/16/2013
 //
 
 using System;
@@ -14,17 +14,17 @@ using Sys.Data.Manager;
 
 namespace Sys.SmartList.DpoClass
 {
-    [Revision(7)]
+    [Revision(9)]
     [Table("sys01103", Level.System)]    //Primary Keys = Command_ID + url;  Identity = ID;
     public class RepxDpo : DPObject
     {
 
 #pragma warning disable
 
-        [Column(_ID, SqlDbType.Int, Identity = true)]                                             public int ID;                //int(4) not null
-        [Column(_Command_ID, SqlDbType.Int, Primary = true)]                                      public int Command_ID;        //int(4) not null
-        [Column(_url, SqlDbType.NVarChar, Primary = true, Length = 50)]                           public string url;            //nvarchar(50) not null
-        [Column(_repx, SqlDbType.NText)]                                                          public string repx;           //ntext(16) not null
+        [Column(_ID, SqlDbType.Int, Identity = true)]                                             public int ID {get; set;}     //int(4) not null
+        [Column(_Command_ID, SqlDbType.Int, Primary = true)]                                      public int Command_ID {get; set;} //int(4) not null
+        [Column(_url, SqlDbType.NVarChar, Primary = true, Length = 50)]                           public string url {get; set;} //nvarchar(50) not null
+        [Column(_repx, SqlDbType.NText)]                                                          public string repx {get; set;} //ntext(16) not null
 
 #pragma warning restore
 

@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 7/19/2012 12:12:48 AM
+//   by devel at 5/16/2013
 //
 
 using System;
@@ -14,17 +14,17 @@ using Sys.Data.Manager;
 
 namespace Sys.Workflow.DpoClass
 {
-    [Revision(12)]
+    [Revision(14)]
     [Table("sys01306", Level.System, Pack = false)]    //Primary Keys = ChildID + ParentID + Ty;  Identity = ID;
     public class wfNodeDpo : DPObject
     {
 
 #pragma warning disable
 
-        [Column(_ID, SqlDbType.Int, Identity = true)]                                             public int ID;                //int(4) not null
-        [Column(_Ty, SqlDbType.Int, Primary = true)]                                              public int Ty;                //int(4) not null
-        [Column(_ParentID, SqlDbType.Int, Primary = true)]                                        public int ParentID;          //int(4) not null
-        [Column(_ChildID, SqlDbType.Int, Primary = true)]                                         public int ChildID;           //int(4) not null
+        [Column(_ID, SqlDbType.Int, Identity = true)]                                             public int ID {get; set;}     //int(4) not null
+        [Column(_Ty, SqlDbType.Int, Primary = true)]                                              public int Ty {get; set;}     //int(4) not null
+        [Column(_ParentID, SqlDbType.Int, Primary = true)]                                        public int ParentID {get; set;} //int(4) not null
+        [Column(_ChildID, SqlDbType.Int, Primary = true)]                                         public int ChildID {get; set;} //int(4) not null
 
 #pragma warning restore
 

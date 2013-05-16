@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 7/19/2012 12:12:36 AM
+//   by devel at 5/16/2013
 //
 
 using System;
@@ -14,18 +14,18 @@ using Sys.Data.Manager;
 
 namespace App.Data.DpoClass
 {
-    [Revision(4)]
+    [Revision(6)]
     [Table("app00104", Level.Application, Pack = false)]    //Primary Keys = Phone_ID;  Identity = ;
     public class appPhoneDpo : DPObject
     {
 
 #pragma warning disable
 
-        [Column(_Phone_ID, SqlDbType.Int, Primary = true)]                                        public int Phone_ID;          //int(4) not null
-        [Column(_Phone, SqlDbType.VarChar, Length = 16)]                                          public string Phone;          //varchar(16) not null
-        [Column(_Mobile, SqlDbType.VarChar, Nullable = true, Length = 16)]                        public string Mobile;         //varchar(16) null
-        [Column(_Fax, SqlDbType.VarChar, Nullable = true, Length = 16)]                           public string Fax;            //varchar(16) null
-        [Column(_Pager, SqlDbType.VarChar, Nullable = true, Length = 16)]                         public string Pager;          //varchar(16) null
+        [Column(_Phone_ID, SqlDbType.Int, Primary = true)]                                        public int Phone_ID {get; set;} //int(4) not null
+        [Column(_Phone, SqlDbType.VarChar, Length = 16)]                                          public string Phone {get; set;} //varchar(16) not null
+        [Column(_Mobile, SqlDbType.VarChar, Nullable = true, Length = 16)]                        public string Mobile {get; set;} //varchar(16) null
+        [Column(_Fax, SqlDbType.VarChar, Nullable = true, Length = 16)]                           public string Fax {get; set;} //varchar(16) null
+        [Column(_Pager, SqlDbType.VarChar, Nullable = true, Length = 16)]                         public string Pager {get; set;} //varchar(16) null
 
 #pragma warning restore
 

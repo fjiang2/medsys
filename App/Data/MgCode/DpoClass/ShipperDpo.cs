@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 4/18/2012 3:50:04 PM
+//   by devel at 5/16/2013
 //
 
 using System;
@@ -14,16 +14,16 @@ using Sys.Data.Manager;
 
 namespace App.Data.DpoClass
 {
-    [Revision(8)]
-    [Table("Northwind..Shippers", Level.Fixed)]    //Primary Keys = ShipperID;  Identity = ShipperID;
+    [Revision(10)]
+    [Table("Northwind..[Shippers]", Level.Fixed)]    //Primary Keys = ShipperID;  Identity = ShipperID;
     public class ShipperDpo : DPObject
     {
 
 #pragma warning disable
 
-        [Column(_ShipperID, SqlDbType.Int, Identity = true, Primary = true)]                      public int ShipperID;         //int(4) not null
-        [Column(_CompanyName, SqlDbType.NVarChar, Length = 40)]                                   public string CompanyName;    //nvarchar(40) not null
-        [Column(_Phone, SqlDbType.NVarChar, Nullable = true, Length = 24)]                        public string Phone;          //nvarchar(24) null
+        [Column(_ShipperID, SqlDbType.Int, Identity = true, Primary = true)]                      public int ShipperID {get; set;} //int(4) not null
+        [Column(_CompanyName, SqlDbType.NVarChar, Length = 40)]                                   public string CompanyName {get; set;} //nvarchar(40) not null
+        [Column(_Phone, SqlDbType.NVarChar, Nullable = true, Length = 24)]                        public string Phone {get; set;} //nvarchar(24) null
 
 #pragma warning restore
 

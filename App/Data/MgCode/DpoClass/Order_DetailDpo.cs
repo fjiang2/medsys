@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 4/18/2012 3:50:03 PM
+//   by devel at 5/16/2013
 //
 
 using System;
@@ -14,18 +14,20 @@ using Sys.Data.Manager;
 
 namespace App.Data.DpoClass
 {
-    [Revision(7)]
+    [Revision(9)]
     [Table("Northwind..[Order Details]", Level.Fixed)]    //Primary Keys = OrderID + ProductID;  Identity = ;
     public class Order_DetailDpo : DPObject
     {
 
 #pragma warning disable
 
-        [Column(_OrderID, SqlDbType.Int, Primary = true)]                                         public int OrderID;           //int(4) not null
-        [Column(_ProductID, SqlDbType.Int, Primary = true)]                                       public int ProductID;         //int(4) not null
-        [Column(_UnitPrice, SqlDbType.Money)]                                                     public decimal UnitPrice;     //money(8) not null
-        [Column(_Quantity, SqlDbType.SmallInt)]                                                   public short Quantity;        //smallint(2) not null
-        [Column(_Discount, SqlDbType.Real)]                                                       public Single Discount;       //real(4) not null
+        [ForeignKey(typeof(App.Data.DpoClass.OrderDpo), App.Data.DpoClass.OrderDpo._OrderID)]
+        [Column(_OrderID, SqlDbType.Int, Primary = true)]                                         public int OrderID {get; set;} //int(4) not null
+        [ForeignKey(typeof(App.Data.DpoClass.ProductDpo), App.Data.DpoClass.ProductDpo._ProductID)]
+        [Column(_ProductID, SqlDbType.Int, Primary = true)]                                       public int ProductID {get; set;} //int(4) not null
+        [Column(_UnitPrice, SqlDbType.Money)]                                                     public decimal UnitPrice {get; set;} //money(8) not null
+        [Column(_Quantity, SqlDbType.SmallInt)]                                                   public short Quantity {get; set;} //smallint(2) not null
+        [Column(_Discount, SqlDbType.Real)]                                                       public Single Discount {get; set;} //real(4) not null
 
 #pragma warning restore
 

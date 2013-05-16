@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 4/18/2012 3:50:03 PM
+//   by devel at 5/16/2013
 //
 
 using System;
@@ -14,15 +14,17 @@ using Sys.Data.Manager;
 
 namespace App.Data.DpoClass
 {
-    [Revision(7)]
-    [Table("Northwind..EmployeeTerritories", Level.Fixed)]    //Primary Keys = EmployeeID + TerritoryID;  Identity = ;
+    [Revision(9)]
+    [Table("Northwind..[EmployeeTerritories]", Level.Fixed)]    //Primary Keys = EmployeeID + TerritoryID;  Identity = ;
     public class EmployeeTerritorieDpo : DPObject
     {
 
 #pragma warning disable
 
-        [Column(_EmployeeID, SqlDbType.Int, Primary = true)]                                      public int EmployeeID;        //int(4) not null
-        [Column(_TerritoryID, SqlDbType.NVarChar, Primary = true, Length = 20)]                   public string TerritoryID;    //nvarchar(20) not null
+        [ForeignKey(typeof(App.Data.DpoClass.EmployeeDpo), App.Data.DpoClass.EmployeeDpo._EmployeeID)]
+        [Column(_EmployeeID, SqlDbType.Int, Primary = true)]                                      public int EmployeeID {get; set;} //int(4) not null
+        [ForeignKey(typeof(App.Data.DpoClass.TerritorieDpo), App.Data.DpoClass.TerritorieDpo._TerritoryID)]
+        [Column(_TerritoryID, SqlDbType.NVarChar, Primary = true, Length = 20)]                   public string TerritoryID {get; set;} //nvarchar(20) not null
 
 #pragma warning restore
 

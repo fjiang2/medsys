@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 7/19/2012 12:12:45 AM
+//   by devel at 5/16/2013
 //
 
 using System;
@@ -14,18 +14,18 @@ using Sys.Data.Manager;
 
 namespace Sys.Foundation.DpoClass
 {
-    [Revision(11)]
+    [Revision(13)]
     [Table("sys01102", Level.System)]    //Primary Keys = Module;  Identity = ;
     public class ScriptDpo : DPObject
     {
 
 #pragma warning disable
 
-        [Column(_Module, SqlDbType.VarChar, Primary = true, Length = 128)]                        public string Module;         //varchar(128) not null
-        [Column(_Library, SqlDbType.NVarChar, Length = 50)]                                       public string Library;        //nvarchar(50) not null
-        [Column(_Script, SqlDbType.NText)]                                                        public string Script;         //ntext(16) not null
-        [Column(_Notes, SqlDbType.NVarChar, Nullable = true, Length = 256)]                       public string Notes;          //nvarchar(256) null
-        [Column(_Released, SqlDbType.Bit)]                                                        public bool Released;         //bit(1) not null
+        [Column(_Module, SqlDbType.VarChar, Primary = true, Length = 128)]                        public string Module {get; set;} //varchar(128) not null
+        [Column(_Library, SqlDbType.NVarChar, Length = 50)]                                       public string Library {get; set;} //nvarchar(50) not null
+        [Column(_Script, SqlDbType.NText)]                                                        public string Script {get; set;} //ntext(16) not null
+        [Column(_Notes, SqlDbType.NVarChar, Nullable = true, Length = 256)]                       public string Notes {get; set;} //nvarchar(256) null
+        [Column(_Released, SqlDbType.Bit)]                                                        public bool Released {get; set;} //bit(1) not null
 
 #pragma warning restore
 

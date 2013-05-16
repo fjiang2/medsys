@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 4/18/2012 3:50:04 PM
+//   by devel at 5/16/2013
 //
 
 using System;
@@ -14,23 +14,30 @@ using Sys.Data.Manager;
 
 namespace App.Data.DpoClass
 {
-    [Revision(8)]
-    [Table("Northwind..Products", Level.Fixed)]    //Primary Keys = ProductID;  Identity = ProductID;
+    [Revision(10)]
+    [Table("Northwind..[Products]", Level.Fixed)]    //Primary Keys = ProductID;  Identity = ProductID;
     public class ProductDpo : DPObject
     {
 
 #pragma warning disable
 
-        [Column(_ProductID, SqlDbType.Int, Identity = true, Primary = true)]                      public int ProductID;         //int(4) not null
-        [Column(_ProductName, SqlDbType.NVarChar, Length = 40)]                                   public string ProductName;    //nvarchar(40) not null
-        [Column(_SupplierID, SqlDbType.Int, Nullable = true)]                                     public int? SupplierID;       //int(4) null
-        [Column(_CategoryID, SqlDbType.Int, Nullable = true)]                                     public int? CategoryID;       //int(4) null
-        [Column(_QuantityPerUnit, SqlDbType.NVarChar, Nullable = true, Length = 20)]              public string QuantityPerUnit;//nvarchar(20) null
-        [Column(_UnitPrice, SqlDbType.Money, Nullable = true)]                                    public decimal? UnitPrice;    //money(8) null
-        [Column(_UnitsInStock, SqlDbType.SmallInt, Nullable = true)]                              public short? UnitsInStock;   //smallint(2) null
-        [Column(_UnitsOnOrder, SqlDbType.SmallInt, Nullable = true)]                              public short? UnitsOnOrder;   //smallint(2) null
-        [Column(_ReorderLevel, SqlDbType.SmallInt, Nullable = true)]                              public short? ReorderLevel;   //smallint(2) null
-        [Column(_Discontinued, SqlDbType.Bit)]                                                    public bool Discontinued;     //bit(1) not null
+        [Column(_ProductID, SqlDbType.Int, Identity = true, Primary = true)]                      public int ProductID {get; set;} //int(4) not null
+        [Column(_mer_id, SqlDbType.Char, Nullable = true, Length = 3)]                            public string mer_id {get; set;} //char(3) null
+        [Column(_product_id, SqlDbType.Char, Nullable = true, Length = 5)]                        public string product_id {get; set;} //char(5) null
+        [Column(_ProductName, SqlDbType.NVarChar, Length = 40)]                                   public string ProductName {get; set;} //nvarchar(40) not null
+        [ForeignKey(typeof(App.Data.DpoClass.SupplierDpo), App.Data.DpoClass.SupplierDpo._SupplierID)]
+        [Column(_SupplierID, SqlDbType.Int, Nullable = true)]                                     public int? SupplierID {get; set;} //int(4) null
+        [Column(_description, SqlDbType.VarChar, Nullable = true, Length = 20)]                   public string description {get; set;} //varchar(20) null
+        [Column(_price, SqlDbType.Money, Nullable = true)]                                        public decimal? price {get; set;} //money(8) null
+        [ForeignKey(typeof(App.Data.DpoClass.CategorieDpo), App.Data.DpoClass.CategorieDpo._CategoryID)]
+        [Column(_CategoryID, SqlDbType.Int, Nullable = true)]                                     public int? CategoryID {get; set;} //int(4) null
+        [Column(_QuantityPerUnit, SqlDbType.NVarChar, Nullable = true, Length = 20)]              public string QuantityPerUnit {get; set;} //nvarchar(20) null
+        [Column(_qty_on_hand, SqlDbType.Int, Nullable = true)]                                    public int? qty_on_hand {get; set;} //int(4) null
+        [Column(_UnitPrice, SqlDbType.Money, Nullable = true)]                                    public decimal? UnitPrice {get; set;} //money(8) null
+        [Column(_UnitsInStock, SqlDbType.SmallInt, Nullable = true)]                              public short? UnitsInStock {get; set;} //smallint(2) null
+        [Column(_UnitsOnOrder, SqlDbType.SmallInt, Nullable = true)]                              public short? UnitsOnOrder {get; set;} //smallint(2) null
+        [Column(_ReorderLevel, SqlDbType.SmallInt, Nullable = true)]                              public short? ReorderLevel {get; set;} //smallint(2) null
+        [Column(_Discontinued, SqlDbType.Bit)]                                                    public bool Discontinued {get; set;} //bit(1) not null
 
 #pragma warning restore
 
@@ -99,10 +106,15 @@ namespace App.Data.DpoClass
         #region CONSTANT
 
         public const string _ProductID = "ProductID";
+        public const string _mer_id = "mer_id";
+        public const string _product_id = "product_id";
         public const string _ProductName = "ProductName";
         public const string _SupplierID = "SupplierID";
+        public const string _description = "description";
+        public const string _price = "price";
         public const string _CategoryID = "CategoryID";
         public const string _QuantityPerUnit = "QuantityPerUnit";
+        public const string _qty_on_hand = "qty_on_hand";
         public const string _UnitPrice = "UnitPrice";
         public const string _UnitsInStock = "UnitsInStock";
         public const string _UnitsOnOrder = "UnitsOnOrder";

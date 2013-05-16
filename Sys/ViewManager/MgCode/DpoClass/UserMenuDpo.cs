@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 7/19/2012 12:12:43 AM
+//   by devel at 5/16/2013
 //
 
 using System;
@@ -14,29 +14,29 @@ using Sys.Data.Manager;
 
 namespace Sys.ViewManager.DpoClass
 {
-    [Revision(12)]
+    [Revision(14)]
     [Table("sys00801", Level.System)]    //Primary Keys = ID;  Identity = ID;
     public class UserMenuDpo : DPObject
     {
 
 #pragma warning disable
 
-        [Column(_ID, SqlDbType.Int, Identity = true, Primary = true)]                             public int ID;                //int(4) not null
-        [Column(_ParentID, SqlDbType.Int, Nullable = true)]                                       public int? ParentID;         //int(4) null
-        [Column(_OrderBy, SqlDbType.Int, Nullable = true)]                                        public int? OrderBy;          //int(4) null
-        [Column(_Ty, SqlDbType.Int)]                                                              public int Ty;                //int(4) not null
-        [Column(_Module, SqlDbType.VarChar, Nullable = true, Length = 128)]                       public string Module;         //varchar(128) null
-        [Column(_Label, SqlDbType.NVarChar, Nullable = true, Length = 128)]                       public string Label;          //nvarchar(128) null
-        [Column(_Description, SqlDbType.NVarChar, Nullable = true, Length = 512)]                 public string Description;    //nvarchar(512) null
-        [Column(_Key_Name, SqlDbType.NVarChar, Nullable = true, Length = 128)]                    public string Key_Name;       //nvarchar(128) null
-        [Column(_Command, SqlDbType.NVarChar, Nullable = true, Length = 4000)]                    public string Command;        //nvarchar(4000) null
-        [Column(_Icon, SqlDbType.Image, Nullable = true)]                                         public byte[] Icon;           //image(16) null
-        [Column(_Controlled, SqlDbType.Bit)]                                                      public bool Controlled;       //bit(1) not null
-        [Column(_Enabled, SqlDbType.Bit)]                                                         public bool Enabled;          //bit(1) not null
-        [Column(_Visible, SqlDbType.Bit)]                                                         public bool Visible;          //bit(1) not null
-        [Column(_Released, SqlDbType.Bit)]                                                        public bool Released;         //bit(1) not null
-        [Column(_Form_Class, SqlDbType.VarChar, Nullable = true, Length = 128)]                   public string Form_Class;     //varchar(128) null
-        [Column(_Form_Place, SqlDbType.Int, Nullable = true)]                                     public int? Form_Place;       //int(4) null
+        [Column(_ID, SqlDbType.Int, Identity = true, Primary = true)]                             public int ID {get; set;}     //int(4) not null
+        [Column(_ParentID, SqlDbType.Int, Nullable = true)]                                       public int? ParentID {get; set;} //int(4) null
+        [Column(_OrderBy, SqlDbType.Int, Nullable = true)]                                        public int? OrderBy {get; set;} //int(4) null
+        [Column(_Ty, SqlDbType.Int)]                                                              public int Ty {get; set;}     //int(4) not null
+        [Column(_Module, SqlDbType.VarChar, Nullable = true, Length = 128)]                       public string Module {get; set;} //varchar(128) null
+        [Column(_Label, SqlDbType.NVarChar, Nullable = true, Length = 128)]                       public string Label {get; set;} //nvarchar(128) null
+        [Column(_Description, SqlDbType.NVarChar, Nullable = true, Length = 512)]                 public string Description {get; set;} //nvarchar(512) null
+        [Column(_Key_Name, SqlDbType.NVarChar, Nullable = true, Length = 128)]                    public string Key_Name {get; set;} //nvarchar(128) null
+        [Column(_Command, SqlDbType.NVarChar, Nullable = true, Length = 4000)]                    public string Command {get; set;} //nvarchar(4000) null
+        [Column(_Icon, SqlDbType.Image, Nullable = true)]                                         public byte[] Icon {get; set;} //image(16) null
+        [Column(_Controlled, SqlDbType.Bit)]                                                      public bool Controlled {get; set;} //bit(1) not null
+        [Column(_Enabled, SqlDbType.Bit)]                                                         public bool Enabled {get; set;} //bit(1) not null
+        [Column(_Visible, SqlDbType.Bit)]                                                         public bool Visible {get; set;} //bit(1) not null
+        [Column(_Released, SqlDbType.Bit)]                                                        public bool Released {get; set;} //bit(1) not null
+        [Column(_Form_Class, SqlDbType.VarChar, Nullable = true, Length = 128)]                   public string Form_Class {get; set;} //varchar(128) null
+        [Column(_Form_Place, SqlDbType.Int, Nullable = true)]                                     public int? Form_Place {get; set;} //int(4) null
 
         #region IMAGE PROPERTIES
         public Image IconImage

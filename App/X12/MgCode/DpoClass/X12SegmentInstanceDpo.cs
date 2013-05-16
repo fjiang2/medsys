@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 7/19/2012 12:12:51 AM
+//   by devel at 5/16/2013
 //
 
 using System;
@@ -14,24 +14,24 @@ using Sys.Data.Manager;
 
 namespace X12.DpoClass
 {
-    [Revision(5)]
+    [Revision(7)]
     [Table("X12SegmentInstance", Level.System)]    //Primary Keys = LoopName + Name + Sequence;  Identity = ID;
     public class X12SegmentInstanceDpo : DPObject
     {
 
 #pragma warning disable
 
-        [Column(_ID, SqlDbType.Int, Identity = true)]                                             public int ID;                //int(4) not null
-        [Column(_LoopName, SqlDbType.VarChar, Primary = true, Length = 8)]                        public string LoopName;       //varchar(8) not null
-        [Column(_Name, SqlDbType.VarChar, Primary = true, Length = 10)]                           public string Name;           //varchar(10) not null
-        [Column(_Sequence, SqlDbType.Int, Primary = true)]                                        public int Sequence;          //int(4) not null
-        [Column(_Description, SqlDbType.VarChar, Length = 100)]                                   public string Description;    //varchar(100) not null
-        [Column(_RepeatValue, SqlDbType.Int)]                                                     public int RepeatValue;       //int(4) not null
-        [Column(_Required, SqlDbType.Bit)]                                                        public bool Required;         //bit(1) not null
-        [Column(_Situational_Rule, SqlDbType.VarChar, Nullable = true, Length = 4000)]            public string Situational_Rule;//varchar(4000) null
-        [Column(_TR3_Notes, SqlDbType.VarChar, Nullable = true, Length = 4000)]                   public string TR3_Notes;      //varchar(4000) null
-        [Column(_TR3_Example, SqlDbType.VarChar, Nullable = true, Length = 1000)]                 public string TR3_Example;    //varchar(1000) null
-        [Column(_Script, SqlDbType.NText, Nullable = true)]                                       public string Script;         //ntext(16) null
+        [Column(_ID, SqlDbType.Int, Identity = true)]                                             public int ID {get; set;}     //int(4) not null
+        [Column(_LoopName, SqlDbType.VarChar, Primary = true, Length = 8)]                        public string LoopName {get; set;} //varchar(8) not null
+        [Column(_Name, SqlDbType.VarChar, Primary = true, Length = 10)]                           public string Name {get; set;} //varchar(10) not null
+        [Column(_Sequence, SqlDbType.Int, Primary = true)]                                        public int Sequence {get; set;} //int(4) not null
+        [Column(_Description, SqlDbType.VarChar, Length = 100)]                                   public string Description {get; set;} //varchar(100) not null
+        [Column(_RepeatValue, SqlDbType.Int)]                                                     public int RepeatValue {get; set;} //int(4) not null
+        [Column(_Required, SqlDbType.Bit)]                                                        public bool Required {get; set;} //bit(1) not null
+        [Column(_Situational_Rule, SqlDbType.VarChar, Nullable = true, Length = 4000)]            public string Situational_Rule {get; set;} //varchar(4000) null
+        [Column(_TR3_Notes, SqlDbType.VarChar, Nullable = true, Length = 4000)]                   public string TR3_Notes {get; set;} //varchar(4000) null
+        [Column(_TR3_Example, SqlDbType.VarChar, Nullable = true, Length = 1000)]                 public string TR3_Example {get; set;} //varchar(1000) null
+        [Column(_Script, SqlDbType.NText, Nullable = true)]                                       public string Script {get; set;} //ntext(16) null
 
 #pragma warning restore
 

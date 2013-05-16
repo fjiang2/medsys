@@ -47,7 +47,7 @@ namespace Sys.Data
     }
 
 
-    [System.AttributeUsage(System.AttributeTargets.Field)]
+    [System.AttributeUsage(System.AttributeTargets.Property)]
     public class ForeignKeyAttribute : Attribute
     {
         /// <summary>

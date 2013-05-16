@@ -36,29 +36,29 @@ namespace Sys.Data
         private MappingType mappingType;
         private PersistentObject dpoInstance;
 
-        
-      
-        FieldInfo fieldInfo1;              //fieldof(UserDpo._ID)
-        FieldInfo fieldInfo2;              //fieldof(DPCollection<RoleDpo>)  or fieldof(xxxDpo)
+
+
+        PropertyInfo propertyInfo1;              //fieldof(UserDpo._ID)
+        PropertyInfo propertyInfo2;              //fieldof(DPCollection<RoleDpo>)  or fieldof(xxxDpo)
 
         
         private SqlClause clause1;     //A := SELECT UserRoles.Role_ID FROM UserRoles WHERE UserRoles.User_ID=@[User.ID]
         private SqlClause clause2;     //B := SELECT * FROM Roles WHERE Roles.Role_ID IN (A)
 
-        public Mapping(PersistentObject dpo, FieldInfo fieldInfo2)
+        public Mapping(PersistentObject dpo, PropertyInfo propertyInfo2)
         {
-            this.association = Reflex.GetAssociationAttribute(fieldInfo2);
+            this.association = Reflex.GetAssociationAttribute(propertyInfo2);
 
             if (association == null)
                 return;
 
             this.dpoInstance = dpo;
-            this.fieldInfo2 = fieldInfo2;
+            this.propertyInfo2 = propertyInfo2;
 
             Type dpoType2;            //typeof(RoleDpo)
-            if (fieldInfo2.FieldType.IsGenericType)
+            if (propertyInfo2.PropertyType.IsGenericType)
             {
-                dpoType2 = PersistentObject.GetCollectionGenericType(fieldInfo2);
+                dpoType2 = PersistentObject.GetCollectionGenericType(propertyInfo2);
 
                 if (this.association.TRelation == null)
                     mappingType = MappingType.One2Many;
@@ -67,13 +67,13 @@ namespace Sys.Data
             }
             else
             {
-                dpoType2 = fieldInfo2.FieldType;
+                dpoType2 = propertyInfo2.PropertyType;
                 mappingType = MappingType.One2One;
             }
 
             
 
-            this.fieldInfo1 = dpo.GetType().GetField(association.Column1);
+            this.propertyInfo1 = dpo.GetType().GetProperty(association.Column1);
            
            
             if (mappingType == MappingType.Many2Many)
@@ -117,7 +117,7 @@ namespace Sys.Data
         {
             get
             {
-                object value1 = fieldInfo1.GetValue(dpoInstance);
+                object value1 = propertyInfo1.GetValue(dpoInstance);
                 SqlCmd cmd = new SqlCmd(this.clause1);
                 cmd.AddParameter(association.Column1.SqlParameterName(), value1);
                 return cmd.FillDataTable().ToArray<object>(association.Relation1);
@@ -129,7 +129,7 @@ namespace Sys.Data
             if (association == null)
                 return ;
 
-            object value1 = fieldInfo1.GetValue(dpoInstance);
+            object value1 = propertyInfo1.GetValue(dpoInstance);
             SqlCmd cmd = new SqlCmd(this.clause2);
             cmd.AddParameter(association.Column1.SqlParameterName(), value1);
             DataTable dataTable =  cmd.FillDataTable();
@@ -137,26 +137,26 @@ namespace Sys.Data
             if (mappingType == MappingType.One2One)
             {
                 //if association object was not instatiated
-                if (fieldInfo2.GetValue(this) == null)
+                if (propertyInfo2.GetValue(this) == null)
                 {
-                    PersistentObject dpo = (PersistentObject)Activator.CreateInstance(fieldInfo2.FieldType, null);
+                    PersistentObject dpo = (PersistentObject)Activator.CreateInstance(propertyInfo2.PropertyType, null);
                     dpo.Fill(dataTable.Rows[0]);
-                    fieldInfo2.SetValue(this, dpo);
+                    propertyInfo2.SetValue(this, dpo);
                 }
                 else
                 {
-                    IDPObject dpo = (IDPObject)fieldInfo2.GetValue(this);
+                    IDPObject dpo = (IDPObject)propertyInfo2.GetValue(this);
                     dpo.Fill(dataTable.Rows[0]);
                 }
             }
             else
             {
                 //if association collection was not instatiated
-                if (fieldInfo2.GetValue(this) == null)
-                    fieldInfo2.SetValue(this, Activator.CreateInstance(fieldInfo2.FieldType, new object[] { dataTable }));
+                if (propertyInfo2.GetValue(this) == null)
+                    propertyInfo2.SetValue(this, Activator.CreateInstance(propertyInfo2.PropertyType, new object[] { dataTable }));
                 else
                 {
-                    IPersistentCollection collection = (IPersistentCollection)fieldInfo2.GetValue(this);
+                    IPersistentCollection collection = (IPersistentCollection)propertyInfo2.GetValue(this);
                     collection.Table = dataTable;
                 }
             }
@@ -166,7 +166,7 @@ namespace Sys.Data
 
         private bool IsColumn1Identity()
         {
-            ColumnAttribute[] attributes = (ColumnAttribute[])fieldInfo1.GetCustomAttributes(typeof(ColumnAttribute), true);
+            ColumnAttribute[] attributes = (ColumnAttribute[])propertyInfo1.GetCustomAttributes(typeof(ColumnAttribute), true);
             if (attributes.Length == 0)
                 return false;
 
@@ -184,8 +184,8 @@ namespace Sys.Data
 
             if (mappingType == MappingType.One2Many)
             {
-                object value1 = fieldInfo1.GetValue(dpoInstance);
-                IDPCollection collection = (IDPCollection)fieldInfo2.GetValue(this);
+                object value1 = propertyInfo1.GetValue(dpoInstance);
+                IDPCollection collection = (IDPCollection)propertyInfo2.GetValue(this);
                 foreach (DataRow row in collection.Table.Rows)
                 {
                     row[association.Column2] = value1;

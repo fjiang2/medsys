@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 7/19/2012 12:12:42 AM
+//   by devel at 5/16/2013
 //
 
 using System;
@@ -14,21 +14,21 @@ using Sys.Data.Manager;
 
 namespace Sys.PersistentObjects.DpoClass
 {
-    [Revision(11)]
+    [Revision(13)]
     [Table("sys00601", Level.System, Pack = false)]    //Primary Keys = ID;  Identity = ID;
     public class RecordLockDpo : DPObject
     {
 
 #pragma warning disable
 
-        [Column(_ID, SqlDbType.Int, Identity = true, Primary = true)]                             public int ID;                //int(4) not null
-        [Column(_Ty, SqlDbType.Int)]                                                              public int Ty;                //int(4) not null
-        [Column(_LockID, SqlDbType.Int)]                                                          public int LockID;            //int(4) not null
-        [Column(_CO_User_ID, SqlDbType.Int)]                                                      public int CO_User_ID;        //int(4) not null
-        [Column(_CO_Time, SqlDbType.DateTime)]                                                    public DateTime CO_Time;      //datetime(8) not null
-        [Column(_CI_User_ID, SqlDbType.Int, Nullable = true)]                                     public int? CI_User_ID;       //int(4) null
-        [Column(_CI_Time, SqlDbType.DateTime, Nullable = true)]                                   public DateTime? CI_Time;     //datetime(8) null
-        [Column(_Last_Access_Time, SqlDbType.DateTime)]                                           public DateTime Last_Access_Time;//datetime(8) not null
+        [Column(_ID, SqlDbType.Int, Identity = true, Primary = true)]                             public int ID {get; set;}     //int(4) not null
+        [Column(_Ty, SqlDbType.Int)]                                                              public int Ty {get; set;}     //int(4) not null
+        [Column(_LockID, SqlDbType.Int)]                                                          public int LockID {get; set;} //int(4) not null
+        [Column(_CO_User_ID, SqlDbType.Int)]                                                      public int CO_User_ID {get; set;} //int(4) not null
+        [Column(_CO_Time, SqlDbType.DateTime)]                                                    public DateTime CO_Time {get; set;} //datetime(8) not null
+        [Column(_CI_User_ID, SqlDbType.Int, Nullable = true)]                                     public int? CI_User_ID {get; set;} //int(4) null
+        [Column(_CI_Time, SqlDbType.DateTime, Nullable = true)]                                   public DateTime? CI_Time {get; set;} //datetime(8) null
+        [Column(_Last_Access_Time, SqlDbType.DateTime)]                                           public DateTime Last_Access_Time {get; set;} //datetime(8) not null
 
 #pragma warning restore
 

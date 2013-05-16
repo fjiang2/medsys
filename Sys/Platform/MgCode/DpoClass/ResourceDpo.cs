@@ -1,6 +1,6 @@
 //
 // Machine Generated Code
-//   by devel at 7/19/2012 12:12:38 AM
+//   by devel at 5/16/2013
 //
 
 using System;
@@ -14,19 +14,19 @@ using Sys.Data.Manager;
 
 namespace Sys.Platform.DpoClass
 {
-    [Revision(2)]
+    [Revision(4)]
     [Table("Resources", Level.System, Pack = false)]    //Primary Keys = UniqueID;  Identity = UniqueID;
     public class ResourceDpo : DPObject
     {
 
 #pragma warning disable
 
-        [Column(_UniqueID, SqlDbType.Int, Identity = true, Primary = true)]                       public int UniqueID;          //int(4) not null
-        [Column(_ResourceID, SqlDbType.Int)]                                                      public int ResourceID;        //int(4) not null
-        [Column(_ResourceName, SqlDbType.NVarChar, Nullable = true, Length = 50)]                 public string ResourceName;   //nvarchar(50) null
-        [Column(_Color, SqlDbType.Int, Nullable = true)]                                          public int? Color;            //int(4) null
-        [Column(_Image, SqlDbType.Image, Nullable = true)]                                        public byte[] Image;          //image(16) null
-        [Column(_CustomField1, SqlDbType.NVarChar, Nullable = true, Length = -1)]                 public string CustomField1;   //nvarchar(-1) null
+        [Column(_UniqueID, SqlDbType.Int, Identity = true, Primary = true)]                       public int UniqueID {get; set;} //int(4) not null
+        [Column(_ResourceID, SqlDbType.Int)]                                                      public int ResourceID {get; set;} //int(4) not null
+        [Column(_ResourceName, SqlDbType.NVarChar, Nullable = true, Length = 50)]                 public string ResourceName {get; set;} //nvarchar(50) null
+        [Column(_Color, SqlDbType.Int, Nullable = true)]                                          public int? Color {get; set;} //int(4) null
+        [Column(_Image, SqlDbType.Image, Nullable = true)]                                        public byte[] Image {get; set;} //image(16) null
+        [Column(_CustomField1, SqlDbType.NVarChar, Nullable = true, Length = -1)]                 public string CustomField1 {get; set;} //nvarchar(-1) null
 
         #region IMAGE PROPERTIES
         public Image ImageImage
