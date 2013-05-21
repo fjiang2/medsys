@@ -328,14 +328,14 @@ namespace Sys.Data.Manager
 
             string comment = @"//
 // Machine Generated Code
-//   by {0} at {1}
+//   by {0}
 //
 ";
             string who = "devel";
             if (Active.Account != null)
                 who = Active.Account.UserName;
 
-            comment = string.Format(comment, who, DateTime.Now.ToShortDateString());
+            comment = string.Format(comment, who);
             string usingString = @"{0}
 using System;
 using System.Collections.Generic;
