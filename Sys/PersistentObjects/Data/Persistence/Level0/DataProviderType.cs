@@ -25,6 +25,7 @@ namespace Sys.Data
     {
         SqlServer,
         OleDbServer,
+        SqlServerCe,
         MySQL,
         Oracle,
         Access,
