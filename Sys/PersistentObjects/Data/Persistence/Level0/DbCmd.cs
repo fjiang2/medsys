@@ -20,7 +20,9 @@ using System.Text;
 using System.Data.Common;
 using System.Data.OleDb;
 using System.Data.SqlClient;
+using System.Data.SqlServerCe;
 using System.Data;
+
 using DataProviderHandle = System.Int32;
 
 namespace Sys.Data
@@ -45,10 +47,19 @@ namespace Sys.Data
 
             this.connection= providerConnection.DbConnection;
 
-            if (providerConnection.DbType == DbType.SqlDb)
-                this.command = new SqlCommand(this.script, (SqlConnection)connection);
-            else
-                this.command = new OleDbCommand(this.script, (OleDbConnection)connection);
+            switch (providerConnection.DbType)
+            {
+                case DbType.SqlDb:
+                    this.command = new SqlCommand(this.script, (SqlConnection)connection);
+                    break;
+
+                case DbType.OleDb:
+                    this.command = new OleDbCommand(this.script, (OleDbConnection)connection);
+                    break;
+
+                case DbType.SqlCe:
+                    break;
+            }
 
             if (this.script.Contains(" "))  //Stored Procedure Name does not contain a space letter
                 this.command.CommandType = CommandType.Text;
@@ -70,10 +81,19 @@ namespace Sys.Data
             this.providerConnection = provider;
             this.connection = provider.DbConnection;
 
-            if (provider.DbType == DbType.SqlDb)
-                this.command.Connection = (SqlConnection)connection;
-            else
-                this.command.Connection = (OleDbConnection)connection;
+            switch (provider.DbType)
+            {
+                case DbType.SqlDb:
+                    this.command.Connection = (SqlConnection)connection;
+                    break;
+
+                case DbType.OleDb:
+                    this.command.Connection = (OleDbConnection)connection;
+                    break;
+
+                case DbType.SqlCe:
+                    break;
+            }
         }
 
 
@@ -100,10 +120,19 @@ namespace Sys.Data
         {
             get
             {
-                if (providerConnection.DbType == DbType.SqlDb)
-                    return new SqlDataAdapter();
-                else
-                    return new OleDbDataAdapter();
+                switch (providerConnection.DbType)
+                {
+                    case DbType.SqlDb:
+                        return new SqlDataAdapter();
+
+                    case DbType.OleDb:
+                        return new OleDbDataAdapter();
+
+                    case DbType.SqlCe:
+                        return null;
+                }
+
+                throw new NotImplementedException();
             }
         }
 

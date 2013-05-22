@@ -30,7 +30,8 @@ namespace Sys.Data
     internal enum DbType
     {
         OleDb,
-        SqlDb
+        SqlDb,
+        SqlCe
     }
 
     public class DataProviderConnection : IValizable
@@ -56,6 +57,9 @@ namespace Sys.Data
                     case DataProviderType.SqlServer:
                         return DbType.SqlDb;
 
+                    case DataProviderType.SqlServerCe:
+                        return DbType.SqlCe;
+
                     default:
                         return DbType.OleDb;
                 }
@@ -66,10 +70,18 @@ namespace Sys.Data
         {
             get
             {
-                if (DbType == DbType.SqlDb)
-                    return new SqlConnection(connectionString);
-                else
-                    return new OleDbConnection(connectionString);
+                switch (DbType)
+                {
+                    case DbType.SqlDb:
+                        return new SqlConnection(connectionString);
+                    case DbType.OleDb:
+                        return new OleDbConnection(connectionString);
+
+                    case DbType.SqlCe:
+                        return null;
+                }
+
+                throw new NotImplementedException();
             }
         }
 
