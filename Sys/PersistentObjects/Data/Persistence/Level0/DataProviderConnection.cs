@@ -22,18 +22,13 @@ using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
 using System.Data.OleDb;
+using System.Data.SqlServerCe;
 using Tie;
 
 namespace Sys.Data
 {
   
-    internal enum DbType
-    {
-        OleDb,
-        SqlDb,
-        SqlCe
-    }
-
+  
     public class DataProviderConnection : IValizable
     {
         private DataProviderType providerType;
@@ -66,7 +61,7 @@ namespace Sys.Data
             }
         }
 
-        public DbConnection DbConnection
+        public DbConnection NewDbConnection
         {
             get
             {
@@ -74,11 +69,12 @@ namespace Sys.Data
                 {
                     case DbType.SqlDb:
                         return new SqlConnection(connectionString);
+
                     case DbType.OleDb:
                         return new OleDbConnection(connectionString);
 
                     case DbType.SqlCe:
-                        return null;
+                        return new SqlCeConnection(connectionString);
                 }
 
                 throw new NotImplementedException();

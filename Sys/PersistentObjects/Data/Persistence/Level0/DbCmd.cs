@@ -31,35 +31,22 @@ namespace Sys.Data
     {
         protected string script;
         protected DbCommand command;
-        protected DbConnection connection;
-
-        private DataProviderConnection providerConnection;
+       
+        
+        protected DbProvider dbProvider;
 
         public DbCmd(DataProvider provider, string script)
         {
-            this.providerConnection = DataProviderManager.Instance.GetConnection(provider);
-            if (this.providerConnection == null)
+            DataProviderConnection providerConnection = DataProviderManager.Instance.GetConnection(provider);
+            if (providerConnection == null)
                 throw new JException("provider connection not registered.");
 
             this.script = script
                           .Replace("$DB_SYSTEM", Const.DB_SYSTEM)
                           .Replace("$DB_APPLICATION", Const.DB_APPLICATION);
 
-            this.connection= providerConnection.DbConnection;
-
-            switch (providerConnection.DbType)
-            {
-                case DbType.SqlDb:
-                    this.command = new SqlCommand(this.script, (SqlConnection)connection);
-                    break;
-
-                case DbType.OleDb:
-                    this.command = new OleDbCommand(this.script, (OleDbConnection)connection);
-                    break;
-
-                case DbType.SqlCe:
-                    break;
-            }
+            this.dbProvider = DbProvider.Factory(script, providerConnection);
+            this.command = dbProvider.DbCommand;
 
             if (this.script.Contains(" "))  //Stored Procedure Name does not contain a space letter
                 this.command.CommandType = CommandType.Text;
@@ -68,34 +55,31 @@ namespace Sys.Data
 
         }
 
-        protected bool SQLDB
+        protected DbConnection connection
         {
-            get { return this.providerConnection.DbType == DbType.SqlDb; }
+            get
+            {
+                return dbProvider.DbConnection;
+            }
         }
 
-        public virtual void ChangeConnection(DataProviderConnection provider)
+      
+        public virtual void ChangeConnection(DataProviderConnection connection)
         {
             if (this.connection.State != ConnectionState.Closed)
                 this.connection.Close();
 
-            this.providerConnection = provider;
-            this.connection = provider.DbConnection;
-
-            switch (provider.DbType)
-            {
-                case DbType.SqlDb:
-                    this.command.Connection = (SqlConnection)connection;
-                    break;
-
-                case DbType.OleDb:
-                    this.command.Connection = (OleDbConnection)connection;
-                    break;
-
-                case DbType.SqlCe:
-                    break;
-            }
+            this.dbProvider = DbProvider.Factory(this.script, connection);
+            this.command.Connection = connection.NewDbConnection; 
         }
 
+        protected DbType DbType
+        {
+            get
+            {
+                return this.dbProvider.DbType;
+            }
+        }
 
       
 
@@ -116,26 +100,7 @@ namespace Sys.Data
         }
 
 
-        public DbDataAdapter DbDataAdapter
-        {
-            get
-            {
-                switch (providerConnection.DbType)
-                {
-                    case DbType.SqlDb:
-                        return new SqlDataAdapter();
-
-                    case DbType.OleDb:
-                        return new OleDbDataAdapter();
-
-                    case DbType.SqlCe:
-                        return null;
-                }
-
-                throw new NotImplementedException();
-            }
-        }
-
+       
         public object ExecuteScalar()
         {
 
