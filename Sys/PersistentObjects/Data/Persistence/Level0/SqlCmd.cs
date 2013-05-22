@@ -71,22 +71,7 @@ namespace Sys.Data
 
   
 
-        public SqlParameter AddParameter(string parameterName, SqlDbType dbType)
-        {
-            SqlParameter param = new SqlParameter(parameterName, dbType);
-            param.Direction = ParameterDirection.Output;
-            command.Parameters.Add(param);
-            return param;
-        }
-
-        public OleDbParameter AddParameter(string parameterName, OleDbType dbType)
-        {
-            OleDbParameter param = new OleDbParameter(parameterName, dbType);
-            param.Direction = ParameterDirection.Output;
-            command.Parameters.Add(param);
-            return param;
-        }
-
+     
 
         public DbParameter AddParameter(string parameterName, object value)
         {
