@@ -28,7 +28,7 @@ namespace Sys.Platform.Forms
 
             if (this.account.IsDeveloper)
             {
-                this.txtServerName.Text = Sys.Data.DataProviderManager.DefaultConnection.DbConnection.DataSource;
+                this.txtServerName.Text = Sys.Data.DataProviderManager.DefaultConnection.NewDbConnection.DataSource;
             }
             else
             {

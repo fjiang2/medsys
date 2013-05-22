@@ -60,6 +60,11 @@
     <Compile Include="Data\Clause\SqlClauseInfo.cs" />
     <Compile Include="Data\Metadata\ComputedColumns.cs" />
     <Compile Include="Data\Metadata\ForeignKeys.cs" />
+    <Compile Include="Data\Persistence\Level0\Provider\DbProvider.cs" />
+    <Compile Include="Data\Persistence\Level0\Provider\IProvider.cs" />
+    <Compile Include="Data\Persistence\Level0\Provider\OleDbProvider.cs" />
+    <Compile Include="Data\Persistence\Level0\Provider\SqlCeProvider.cs" />
+    <Compile Include="Data\Persistence\Level0\Provider\SqlProvider.cs" />
     <Compile Include="Data\Persistence\TableWriter.cs" />
     <Compile Include="Data\Persistence\TableWriter`1.cs" />
     <Compile Include="Data\Persistence\DatabaseName.cs" />
