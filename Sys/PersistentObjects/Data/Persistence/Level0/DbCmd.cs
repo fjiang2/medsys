@@ -46,7 +46,7 @@ namespace Sys.Data
                           .Replace("$DB_APPLICATION", Const.DB_APPLICATION);
 
             this.dbProvider = DbProvider.Factory(script, providerConnection);
-            this.command = dbProvider.DbCommand;
+            this.command = dbProvider.NewDbCommand;
 
             if (this.script.Contains(" "))  //Stored Procedure Name does not contain a space letter
                 this.command.CommandType = CommandType.Text;
