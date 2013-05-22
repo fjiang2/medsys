@@ -35,43 +35,20 @@ namespace Sys.Data
 
       
 
-        public override DbDataAdapter DbDataAdapter
-        {
-            get
-            {
-                 return new SqlDataAdapter();
-            }
-        }
-
-        public override DbCommand NewDbCommand
-        {
-            get
-            {
-                return new SqlCommand(script, (SqlConnection)DbConnection);
-            }
-        }
-
-
-        public override void FillDataSet(DataSet dataSet)
+        protected override DbDataAdapter NewDbDataAdapter()
         {
             SqlDataAdapter adapter = new SqlDataAdapter();
-            adapter.SelectCommand = (SqlCommand)NewDbCommand;
-            adapter.Fill(dataSet);
+            adapter.SelectCommand = (SqlCommand)base.DbCommand;
+            return adapter;
         }
 
-        public override void FillDataTable(DataSet dataSet, string tableName)
+        protected override DbCommand NewDbCommand()
         {
-            SqlDataAdapter adapter = new SqlDataAdapter();
-            adapter.SelectCommand = (SqlCommand)NewDbCommand;
-            adapter.Fill(dataSet, tableName);
+            return new SqlCommand(script, (SqlConnection)DbConnection);
         }
 
-        public override void FillDataTable(DataTable table)
-        {
-            SqlDataAdapter adapter = new SqlDataAdapter();
-            adapter.SelectCommand = (SqlCommand)NewDbCommand;
-            adapter.Fill(table);
-        }
+
+      
 
         public override DbParameter AddParameter(string parameterName, object value)
         {

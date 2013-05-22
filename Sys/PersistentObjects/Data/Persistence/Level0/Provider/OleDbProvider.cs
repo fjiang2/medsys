@@ -34,44 +34,21 @@ namespace Sys.Data
         
         }
 
-     
 
-        public override DbDataAdapter DbDataAdapter
-        {
-            get
-            {
-                return new OleDbDataAdapter();
-            }
-        }
 
-        public override DbCommand NewDbCommand
-        {
-            get
-            {
-                return new OleDbCommand(script, (OleDbConnection)DbConnection);
-            }
-        }
-
-        public override void FillDataSet(DataSet dataSet)
+        protected override DbDataAdapter NewDbDataAdapter()
         {
             OleDbDataAdapter adapter = new OleDbDataAdapter();
-            adapter.SelectCommand = (OleDbCommand)NewDbCommand;
-            adapter.Fill(dataSet);
+            adapter.SelectCommand = (OleDbCommand)base.DbCommand;
+            return adapter;
         }
 
-        public override void FillDataTable(DataSet dataSet, string tableName)
+        protected override DbCommand NewDbCommand()
         {
-            OleDbDataAdapter adapter = new OleDbDataAdapter();
-            adapter.SelectCommand = (OleDbCommand)NewDbCommand;
-            adapter.Fill(dataSet, tableName);
+            return new OleDbCommand(script, (OleDbConnection)DbConnection);
         }
 
-        public override void FillDataTable(DataTable table)
-        {
-            OleDbDataAdapter adapter = new OleDbDataAdapter();
-            adapter.SelectCommand = (OleDbCommand)NewDbCommand;
-            adapter.Fill(table);
-        }
+        
 
         public override DbParameter AddParameter(string parameterName, object value)
         {
