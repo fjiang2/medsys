@@ -29,7 +29,8 @@ namespace Sys.Data
     {
         protected readonly DataProviderConnection connection;
         protected readonly string script;
-        public readonly DbConnection DbConnection;
+
+   
 
         public DbProvider(string script, DataProviderConnection connection)
         {
@@ -37,30 +38,44 @@ namespace Sys.Data
             this.connection = connection;
 
             this.DbConnection = this.connection.NewDbConnection;
+            this.DbCommand = NewDbCommand();
+
+            if (this.script.Contains(" "))  //Stored Procedure Name does not contain a space letter
+                this.DbCommand.CommandType = CommandType.Text;
+            else
+                this.DbCommand.CommandType = CommandType.StoredProcedure;
         }
 
-        
+        public DbConnection DbConnection { get; private set; }
+        public DbCommand DbCommand { get; private set; }
 
         public DbType DbType
         {
             get { return this.connection.DbType; }
         }
 
-        public abstract DbDataAdapter DbDataAdapter
+        protected abstract DbDataAdapter NewDbDataAdapter();
+        protected abstract DbCommand NewDbCommand();
+
+        public void FillDataSet(DataSet dataSet)
         {
-            get;
+            DbDataAdapter adapter = NewDbDataAdapter();
+            adapter.Fill(dataSet);
         }
 
-        public abstract DbCommand NewDbCommand
+        public void FillDataTable(DataSet dataSet, string tableName)
         {
-            get;
+            DbDataAdapter adapter = NewDbDataAdapter();
+            adapter.Fill(dataSet, tableName);
         }
 
-        public abstract void FillDataSet(DataSet dataSet);
+        public void FillDataTable(DataTable table)
+        {
+            DbDataAdapter adapter = NewDbDataAdapter();
+            adapter.Fill(table);
+        }
 
-        public abstract void FillDataTable(DataSet dataSet, string tableName);
 
-        public abstract void FillDataTable(DataTable table);
 
         public abstract DbParameter AddParameter(string parameterName, object value);
         

@@ -33,45 +33,22 @@ namespace Sys.Data
         { 
         }
 
+
+
+        protected override DbDataAdapter NewDbDataAdapter()
+        {
+            SqlCeDataAdapter adapter = new SqlCeDataAdapter();
+            adapter.SelectCommand = (SqlCeCommand)base.DbCommand;
+            return adapter;
+        }
+
+        protected override DbCommand NewDbCommand()
+        {
+           return new SqlCeCommand(script, (SqlCeConnection)DbConnection);
+        }
+
+
        
-
-        public override DbDataAdapter DbDataAdapter
-        {
-            get
-            {
-                return new SqlCeDataAdapter();
-            }
-        }
-
-        public override DbCommand NewDbCommand
-        {
-            get
-            {
-                return new SqlCeCommand(script, (SqlCeConnection)DbConnection);
-            }
-        }
-
-
-        public override void FillDataSet(DataSet dataSet)
-        {
-            SqlCeDataAdapter adapter = new SqlCeDataAdapter();
-            adapter.SelectCommand = (SqlCeCommand)NewDbCommand;
-            adapter.Fill(dataSet);
-        }
-
-        public override void FillDataTable(DataSet dataSet, string tableName)
-        {
-            SqlCeDataAdapter adapter = new SqlCeDataAdapter();
-            adapter.SelectCommand = (SqlCeCommand)NewDbCommand;
-            adapter.Fill(dataSet, tableName);
-        }
-
-        public override void FillDataTable(DataTable table)
-        {
-            SqlCeDataAdapter adapter = new SqlCeDataAdapter();
-            adapter.SelectCommand = (SqlCeCommand)NewDbCommand;
-            adapter.Fill(table);
-        }
 
         public override DbParameter AddParameter(string parameterName, object value)
         {
