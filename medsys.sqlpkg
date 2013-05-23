@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <Objects>
+    <Object Name="[dbo].[Appointments]" Type="Table" PackageSchema="True" PackageData="True" />
+    <Object Name="[dbo].[Resources]" Type="Table" PackageSchema="True" PackageData="True" />
+    <Object Name="[dbo].[sys00101]" Type="Table" PackageSchema="True" PackageData="True" />
+    <Object Name="[dbo].[sys00102]" Type="Table" PackageSchema="True" PackageData="True" />
+    <Object Name="[dbo].[sys00103]" Type="Table" PackageSchema="True" PackageData="True" />
+    <Object Name="[dbo].[sys00201]" Type="Table" PackageSchema="True" PackageData="True" />
+    <Object Name="[dbo].[sys00202]" Type="Table" PackageSchema="True" PackageData="True" />
+    <Object Name="[dbo].[sys00203]" Type="Table" PackageSchema="True" PackageData="True" />
+    <Object Name="[dbo].[sys00301]" Type="Table" PackageSchema="True" PackageData="True" />
+    <Object Name="[dbo].[sys00302]" Type="Table" PackageSchema="True" PackageData="True" />
+    <Object Name="[dbo].[sys00303]" Type="Table" PackageSchema="True" PackageData="True" />
+    <Object Name="[dbo].[sys00304]" Type="Table" PackageSchema="True" PackageData="True" />
+    <Object Name="[dbo].[sys00401]" Type="Table" PackageSchema="True" PackageData="True" />
+    <Object Name="[dbo].[sys00402]" Type="Table" PackageSchema="True" PackageData="True" />
+    <Object Name="[dbo].[sys00403]" Type="Table" PackageSchema="True" PackageData="True" />
+    <Object Name="[dbo].[sys00501]" Type="Table" PackageSchema="True" PackageData="True" />
+    <Object Name="[dbo].[sys00502]" Type="Table" PackageSchema="True" PackageData="True" />
+    <Object Name="[dbo].[sys00503]" Type="Table" PackageSchema="True" PackageData="True" />
+    <Object Name="[dbo].[sys00504]" Type="Table" PackageSchema="True" PackageData="True" />
+    <Object Name="[dbo].[sys00505]" Type="Table" PackageSchema="True" PackageData="True" />
+    <Object Name="[dbo].[sys00601]" Type="Table" PackageSchema="True" PackageData="True" />
+    <Object Name="[dbo].[sys00701]" Type="Table" PackageSchema="True" PackageData="True" />
+    <Object Name="[dbo].[sys00702]" Type="Table" PackageSchema="True" PackageData="True" />
+    <Object Name="[dbo].[sys00703]" Type="Table" PackageSchema="True" PackageData="True" />
+    <Object Name="[dbo].[sys00801]" Type="Table" PackageSchema="True" PackageData="True" />
+    <Object Name="[dbo].[sys00802]" Type="Table" PackageSchema="True" PackageData="True" />
+    <Object Name="[dbo].[sys00803]" Type="Table" PackageSchema="True" PackageData="True" />
+    <Object Name="[dbo].[sys00804]" Type="Table" PackageSchema="True" PackageData="True" />
+    <Object Name="[dbo].[sys00805]" Type="Table" PackageSchema="True" PackageData="True" />
+    <Object Name="[dbo].[sys00806]" Type="Table" PackageSchema="True" PackageData="True" />
+    <Object Name="[dbo].[sys00901]" Type="Table" PackageSchema="True" PackageData="True" />
+    <Object Name="[dbo].[sys01101]" Type="Table" PackageSchema="True" PackageData="True" />
+    <Object Name="[dbo].[sys01102]" Type="Table" PackageSchema="True" PackageData="True" />
+    <Object Name="[dbo].[sys01103]" Type="Table" PackageSchema="True" PackageData="True" />
+    <Object Name="[dbo].[sys01201]" Type="Table" PackageSchema="True" PackageData="True" />
+    <Object Name="[dbo].[sys01301]" Type="Table" PackageSchema="True" PackageData="True" />
+    <Object Name="[dbo].[sys01302]" Type="Table" PackageSchema="True" PackageData="True" />
+    <Object Name="[dbo].[sys01303]" Type="Table" PackageSchema="True" PackageData="True" />
+    <Object Name="[dbo].[sys01304]" Type="Table" PackageSchema="True" PackageData="True" />
+    <Object Name="[dbo].[sys01305]" Type="Table" PackageSchema="True" PackageData="True" />
+    <Object Name="[dbo].[sys01306]" Type="Table" PackageSchema="True" PackageData="True" />
+    <Object Name="[dbo].[sys01307]" Type="Table" PackageSchema="True" PackageData="True" />
+    <Object Name="[dbo].[sys01308]" Type="Table" PackageSchema="True" PackageData="True" />
+    <Object Name="[dbo].[sys01401]" Type="Table" PackageSchema="True" PackageData="True" />
+    <Object Name="[dbo].[sys01402]" Type="Table" PackageSchema="True" PackageData="True" />
+    <Object Name="[dbo].[sys01403]" Type="Table" PackageSchema="True" PackageData="True" />
+    <Object Name="[dbo].[theAddress]" Type="Table" PackageSchema="True" PackageData="True" />
+    <Object Name="[dbo].[theDepartment]" Type="Table" PackageSchema="True" PackageData="True" />
+    <Object Name="[dbo].[theEmployee]" Type="Table" PackageSchema="True" PackageData="True" />
+    <Object Name="[dbo].[theJobTitle]" Type="Table" PackageSchema="True" PackageData="True" />
+    <Object Name="public" Type="Role" PackageSchema="False" PackageData="True" />
+    <Object Name="db_owner" Type="Role" PackageSchema="False" PackageData="True" />
+    <Object Name="db_accessadmin" Type="Role" PackageSchema="False" PackageData="True" />
+    <Object Name="db_securityadmin" Type="Role" PackageSchema="False" PackageData="True" />
+    <Object Name="db_ddladmin" Type="Role" PackageSchema="False" PackageData="True" />
+    <Object Name="db_backupoperator" Type="Role" PackageSchema="False" PackageData="True" />
+    <Object Name="db_datareader" Type="Role" PackageSchema="False" PackageData="True" />
+    <Object Name="db_datawriter" Type="Role" PackageSchema="False" PackageData="True" />
+    <Object Name="db_denydatareader" Type="Role" PackageSchema="False" PackageData="True" />
+    <Object Name="db_denydatawriter" Type="Role" PackageSchema="False" PackageData="True" />
+    <Object Name="dbo" Type="Schema" PackageSchema="False" PackageData="True" />
+    <Object Name="guest" Type="Schema" PackageSchema="False" PackageData="True" />
+    <Object Name="INFORMATION_SCHEMA" Type="Schema" PackageSchema="False" PackageData="True" />
+    <Object Name="sys" Type="Schema" PackageSchema="False" PackageData="True" />
+    <Object Name="db_owner" Type="Schema" PackageSchema="False" PackageData="True" />
+    <Object Name="db_accessadmin" Type="Schema" PackageSchema="False" PackageData="True" />
+    <Object Name="db_securityadmin" Type="Schema" PackageSchema="False" PackageData="True" />
+    <Object Name="db_ddladmin" Type="Schema" PackageSchema="False" PackageData="True" />
+    <Object Name="db_backupoperator" Type="Schema" PackageSchema="False" PackageData="True" />
+    <Object Name="db_datareader" Type="Schema" PackageSchema="False" PackageData="True" />
+    <Object Name="db_datawriter" Type="Schema" PackageSchema="False" PackageData="True" />
+    <Object Name="db_denydatareader" Type="Schema" PackageSchema="False" PackageData="True" />
+    <Object Name="db_denydatawriter" Type="Schema" PackageSchema="False" PackageData="True" />
+  </Objects>
+  <Database1 Server="E050413\SQLSERVER2008" Database="medsys" IntegratedSecurity="True" User="" Password="O/0NAuHvdlI=" />
+  <Database2 Server="(local)" Database="" IntegratedSecurity="True" User="" Password="O/0NAuHvdlI=" />
+  <UseCompression value="True" />
+  <CSharpProjectLocation value="C:\Users\01227.EADSLLC\Documents" />
+  <CSharpProjectName value="SQLPackage1" />
+  <CSharpProjectOpen value="True" />
+  <DotNetExeLocation value="D:\development" />
+  <DotNetExeName value="medsys" />
+  <DotNetExeRun value="False" />
+  <FileName value="D:\development\medsys\medsys.sqlpkg" />
+  <PackageInfoDefaultDatabaseName value="medsys" />
+  <PackageInfoNotes value="" />
+  <PackageType value="SaveToFile" />
+  <UpgradeExistingDatabase value="False" />
+  <PackageInfoNewDatabaseSize value="10" />
+  <PackageInfoNewDatabaseLocation value="%SQLDATABASEPATH%" />
+  <PackageInfoNewLogLocation value="%SQLLOGPATH%" />
+  <PackageInfoNewCollation value="" />
+  <PackageInfoNewRecoveryMode value="DEFAULT" />
+  <PackageInfoNewCompatibilityLevel value="0" />
+  <PackagerPackageScriptFileName value="" />
+  <PackagedObject value="Database" />
+  <SelectedEditor value="" />
+  <DestinationSaveFileName value="D:\development\medsys\Sys\DataManager\dbase.sql" />
+</Project>

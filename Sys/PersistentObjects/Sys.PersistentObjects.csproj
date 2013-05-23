@@ -1,0 +1,231 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{FE52736A-BA94-41FC-9FD3-A481A790FC9C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Sys</RootNamespace>
+    <AssemblyName>Sys.PersistentObjects</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>
+    </DocumentationFile>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Program Files\Microsoft SQL Server Compact Edition\v4.0\Desktop\System.Data.SqlServerCe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Tie">
+      <HintPath>..\..\Lib\Tie.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Data.Manager\LogDpoClass.cs" />
+    <Compile Include="Data.Manager\Log\Log.cs" />
+    <Compile Include="Data\Attribute\AggregatedAttribute.cs" />
+    <Compile Include="Data\Attribute\Provider.cs" />
+    <Compile Include="Data\Clause\SqlExprExtension.cs" />
+    <Compile Include="Data\Clause\SqlClauseInfo.cs" />
+    <Compile Include="Data\Metadata\ComputedColumns.cs" />
+    <Compile Include="Data\Metadata\ForeignKeys.cs" />
+    <Compile Include="Data\Persistence\Level0\Provider\DbProvider.cs" />
+    <Compile Include="Data\Persistence\Level0\Provider\IProvider.cs" />
+    <Compile Include="Data\Persistence\Level0\Provider\OleDbProvider.cs" />
+    <Compile Include="Data\Persistence\Level0\Provider\SqlCeProvider.cs" />
+    <Compile Include="Data\Persistence\Level0\Provider\SqlProvider.cs" />
+    <Compile Include="Data\Persistence\TableWriter.cs" />
+    <Compile Include="Data\Persistence\TableWriter`1.cs" />
+    <Compile Include="Data\Persistence\DatabaseName.cs" />
+    <Compile Include="Data\Persistence\Level0\DataProvider.cs" />
+    <Compile Include="Data\Persistence\Level0\DataProviderManager.cs" />
+    <Compile Include="Data\Persistence\Level0\DataProviderConnection.cs" />
+    <Compile Include="Data\Persistence\Level0\DataProviderType.cs" />
+    <Compile Include="Data\Persistence\Level0\DbCmd.cs" />
+    <Compile Include="Data\Persistence\Level0\OleDbServer.cs" />
+    <Compile Include="Data\Persistence\Level2\Mapping.cs" />
+    <Compile Include="Data\Persistence\TableReader`1.cs" />
+    <Compile Include="Data\Persistence\Level4\MappedColumn.cs" />
+    <Compile Include="Data\Persistence\Level4\IMapping.cs" />
+    <Compile Include="Data\Persistence\Level4\Many2ManyDpo.cs" />
+    <Compile Include="Data\Persistence\Level4\One2OneDpo.cs" />
+    <Compile Include="Data\Persistence\Level4\One2ManyDpo.cs" />
+    <Compile Include="Data\Persistence\TableReader`2.cs" />
+    <Compile Include="MgCode\DpoClass\DataProviderDpo.cs" />
+    <Compile Include="MgCode\DpoClass\logDpoClassDpo.cs" />
+    <Compile Include="Sys\CodeBuilder\Argument.cs" />
+    <Compile Include="Sys\CodeBuilder\ClassBuilder.cs" />
+    <Compile Include="Sys\CodeBuilder\Constructor.cs" />
+    <Compile Include="Sys\CodeBuilder\Format.cs" />
+    <Compile Include="Sys\CodeBuilder\Property.cs" />
+    <Compile Include="Sys\CodeBuilder\Field.cs" />
+    <Compile Include="Sys\CodeBuilder\Method.cs" />
+    <Compile Include="Sys\CodeBuilder\Modifier.cs" />
+    <Compile Include="Sys\CodeBuilder\ModifierType.cs" />
+    <Compile Include="Sys\CodeBuilder\Statement.cs" />
+    <Compile Include="Sys\CodeBuilder\Statements.cs" />
+    <Compile Include="Sys\CodeBuilder\TypeInfo.cs" />
+    <Compile Include="Data.Manager\Dictionary\DictColumn.cs" />
+    <Compile Include="Data.Manager\Dictionary\DictDatabase.cs" />
+    <Compile Include="Data.Manager\Dictionary\DictTable.cs" />
+    <Compile Include="Data.Manager\DpoGenerate\AccessModifier.cs" />
+    <Compile Include="Data.Manager\DpoGenerate\ClassName.cs" />
+    <Compile Include="Data.Manager\DpoGenerate\ClassTableName.cs" />
+    <Compile Include="Data.Manager\DpoGenerate\DpoClass.cs" />
+    <Compile Include="Data.Manager\DpoGenerate\DpoField.cs" />
+    <Compile Include="Data.Manager\DpoGenerate\DpoGenerator.cs" />
+    <Compile Include="Data.Manager\EnumGenerate\EnumField.cs" />
+    <Compile Include="Data.Manager\EnumGenerate\EnumType.cs" />
+    <Compile Include="Data.Manager\EnumGenerate\EnumTypeManager.cs" />
+    <Compile Include="Data.Manager\Locking\DataLocking.cs" />
+    <Compile Include="Data.Manager\Locking\ILockable.cs" />
+    <Compile Include="Data.Manager\Locking\LockDpo.cs" />
+    <Compile Include="Data.Manager\Log\DefaultLogee.cs" />
+    <Compile Include="Data.Manager\Log\ILogable.cs" />
+    <Compile Include="Data.Manager\Log\ILogee.cs" />
+    <Compile Include="Data.Manager\Log\Logger.cs" />
+    <Compile Include="Data.Manager\Log\LogManager.cs" />
+    <Compile Include="Data.Manager\Log\LogTransaction.cs" />
+    <Compile Include="Data.Manager\Log\Transaction.cs" />
+    <Compile Include="Data.Manager\Log\TransactionLogeeType.cs" />
+    <Compile Include="Data.Manager\Log\TransactionType.cs" />
+    <Compile Include="Data.Manager\Manager.cs" />
+    <Compile Include="Data.Manager\ManagerExtension.cs" />
+    <Compile Include="Data.Manager\Migration\Migration.cs" />
+    <Compile Include="Data.Manager\Migration\MigrationAttribute.cs" />
+    <Compile Include="Data.Manager\Migration\MigrationProvider.cs" />
+    <Compile Include="Data.Manager\Package\BasePackage.cs" />
+    <Compile Include="Data.Manager\Package\IPacking.cs" />
+    <Compile Include="Data.Manager\Package\Packing.cs" />
+    <Compile Include="Data.Manager\Package\Unpacking.cs" />
+    <Compile Include="Data.Manager\Setting.cs" />
+    <Compile Include="Data.Manager\SpGenerate\SpDatabase.cs" />
+    <Compile Include="Data.Manager\SpGenerate\SpParam.cs" />
+    <Compile Include="Data.Manager\SpGenerate\SpParamDpo.cs" />
+    <Compile Include="Data.Manager\SpGenerate\SpProc.cs" />
+    <Compile Include="Data\Attribute\AssociationAttribute.cs" />
+    <Compile Include="Data\Attribute\ColumnAttribute.cs" />
+    <Compile Include="Data\Attribute\DataEnumAttribute.cs" />
+    <Compile Include="Data\Attribute\FieldAttribute.cs" />
+    <Compile Include="Data\Attribute\ForeignKeyAttribute.cs" />
+    <Compile Include="Data\Attribute\Level.cs" />
+    <Compile Include="Data\Attribute\LocatorAttribute.cs" />
+    <Compile Include="Data\Attribute\NonPersistentAttribute.cs" />
+    <Compile Include="Data\Attribute\PersistentAttribute.cs" />
+    <Compile Include="Data\Attribute\RevisionAttribute.cs" />
+    <Compile Include="Data\Attribute\TableAttribute.cs" />
+    <Compile Include="Data\Clause\SqlExpr.cs" />
+    <Compile Include="Data\Clause\SqlClause.cs" />
+    <Compile Include="Data\Clause\SqlValue.cs" />
+    <Compile Include="Data\Persistence\DataExtension.cs" />
+    <Compile Include="Data\Persistence\Level0\ISqlClause.cs" />
+    <Compile Include="Data\Persistence\Level0\SqlCmd.cs" />
+    <Compile Include="Data\Persistence\Level0\SqlServer.cs" />
+    <Compile Include="Data\Persistence\Level0\SqlTrans.cs" />
+    <Compile Include="Data\Conversion.cs" />
+    <Compile Include="Data\DefaultRowValue.cs" />
+    <Compile Include="Data\Persistence\Level1\DataFieldCollection.cs" />
+    <Compile Include="Data\Persistence\Level1\DataField.cs" />
+    <Compile Include="Data\Persistence\Level1\BaseRowAdapter.cs" />
+    <Compile Include="Data\Persistence\Level1\ValueChangedEventArgs.cs" />
+    <Compile Include="Data\Persistence\Level2\ObjectState.cs" />
+    <Compile Include="Data\Persistence\Level1\Locator.cs" />
+    <Compile Include="Data\Metadata\IdentityKeys.cs" />
+    <Compile Include="Data\Metadata\MetaColumn.cs" />
+    <Compile Include="Data\Metadata\MetaColumnCollection.cs" />
+    <Compile Include="Data\Metadata\MetaDatabase.cs" />
+    <Compile Include="Data\Metadata\MetaTable.cs" />
+    <Compile Include="Data\Metadata\PrimaryKeys.cs" />
+    <Compile Include="Data\Persistence\TableReader.cs" />
+    <Compile Include="Data\Persistence\Level2\PersistentList.cs" />
+    <Compile Include="Data\Persistence\Level3\DPCollection.cs" />
+    <Compile Include="Data\Persistence\Level3\DPList.cs" />
+    <Compile Include="Data\Persistence\Level3\DPObject.cs" />
+    <Compile Include="Data\Persistence\Level2\IPersistent.cs" />
+    <Compile Include="Data\Persistence\Level2\PersistentCollection.cs" />
+    <Compile Include="Data\Persistence\Level2\PersistentEventArgs.cs" />
+    <Compile Include="Data\Persistence\Level2\PersistentObject.cs" />
+    <Compile Include="Data\Persistence\Level2\PersistentValue.cs" />
+    <Compile Include="Data\Persistence\Level2\Reflex.cs" />
+    <Compile Include="Data\Persistence\Level1\ColumnAdapter.cs" />
+    <Compile Include="Data\Persistence\Level1\ColumnAdapterCollection.cs" />
+    <Compile Include="Data\Persistence\Level1\RowChangedEventArgs.cs" />
+    <Compile Include="Data\Persistence\Level2\RowObjectAdapter.cs" />
+    <Compile Include="Data\Persistence\Level1\RowAdapter.cs" />
+    <Compile Include="Data\Persistence\Level1\TableAdapter.cs" />
+    <Compile Include="Data\Persistence\Level1\Selector.cs" />
+    <Compile Include="Data\Persistence\TableName.cs" />
+    <Compile Include="MgCode\DpoClass\dictDatabaseDpo.cs" />
+    <Compile Include="MgCode\DpoClass\dictDataColumnDpo.cs" />
+    <Compile Include="MgCode\DpoClass\dictDataTableDpo.cs" />
+    <Compile Include="MgCode\DpoClass\logDataColumnDpo.cs" />
+    <Compile Include="MgCode\DpoClass\logDataSetDpo.cs" />
+    <Compile Include="MgCode\DpoClass\logDataTableDpo.cs" />
+    <Compile Include="MgCode\DpoClass\MigrationVersionDpo.cs" />
+    <Compile Include="MgCode\DpoClass\RecordLockDpo.cs" />
+    <Compile Include="MgCode\DpoClass\SqlParamDpo.cs" />
+    <Compile Include="MgCode\DpoClass\SqlProcDpo.cs" />
+    <Compile Include="MgCode\DpoClass\dictEnumTypeDpo.cs" />
+    <Compile Include="Sys\DataStructure\Tree\NTree.cs" />
+    <Compile Include="Sys\DataStructure\Tree\INTreeNode.cs" />
+    <Compile Include="Sys\DataStructure\Tree\Tree.cs" />
+    <Compile Include="Sys\DataStructure\Tree\TreeNode.cs" />
+    <Compile Include="Sys\DataStructure\Tree\TreeNodeCollection.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sys\Active.cs" />
+    <Compile Include="Sys\Const.cs" />
+    <Compile Include="Sys\DataPool.cs" />
+    <Compile Include="Sys\Message\MessageBuilder.cs" />
+    <Compile Include="Sys\Message\MessageLocation.cs" />
+    <Compile Include="Sys\Message\MessageCode.cs" />
+    <Compile Include="Sys\IAccount.cs" />
+    <Compile Include="Sys\DataStructure\ident.cs" />
+    <Compile Include="Sys\Message\MessageLevel.cs" />
+    <Compile Include="Sys\Message\Message.cs" />
+    <Compile Include="Sys\JException.cs" />
+    <Compile Include="Sys\SysExtensiton.cs" />
+    <Compile Include="Sys\JBackgroundWorker.cs">
+      <SubType>Component</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
