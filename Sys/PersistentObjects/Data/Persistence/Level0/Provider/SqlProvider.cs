@@ -47,7 +47,12 @@ namespace Sys.Data
             return new SqlCommand(script, (SqlConnection)DbConnection);
         }
 
-
+        public override DbParameter AddParameter(string parameterName, Type type)
+        {
+            SqlParameter param = new SqlParameter(parameterName, type.ToSqlDbType());
+            DbCommand.Parameters.Add(param);
+            return param;
+        }
       
 
         public override DbParameter AddParameter(string parameterName, object value)
@@ -69,6 +74,7 @@ namespace Sys.Data
             SqlParameter param = new SqlParameter(parameterName, dbType);
             param.Value = value;
             param.Direction = ParameterDirection.Input;
+            DbCommand.Parameters.Add(param);
             return param;
         }
 

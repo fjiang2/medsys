@@ -48,7 +48,15 @@ namespace Sys.Data
             return new OleDbCommand(script, (OleDbConnection)DbConnection);
         }
 
-        
+        public override DbParameter AddParameter(string parameterName, Type type)
+        {
+            OleDbParameter param =  new OleDbParameter(parameterName, type.ToOleDbType());
+
+            DbCommand.Parameters.Add(param);
+            return param;
+
+        }
+      
 
         public override DbParameter AddParameter(string parameterName, object value)
         {
@@ -69,6 +77,7 @@ namespace Sys.Data
             OleDbParameter param = new OleDbParameter(parameterName, dbType);
             param.Value = value;
             param.Direction = ParameterDirection.Input;
+            DbCommand.Parameters.Add(param);
             return param;
 
         }

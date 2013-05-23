@@ -155,7 +155,7 @@ namespace Sys.SmartList
                     
                     
                     string name = columnName.Str;
-                    ColumnAdapter adapter = new ColumnAdapter(tableAdapter.Fields.Add(name, Table0.Columns[name].DataType.ToSqlDbType()));
+                    ColumnAdapter adapter = new ColumnAdapter(tableAdapter.Fields.Add(name, Table0.Columns[name].DataType));
                     if(alias.Defined)
                         adapter.Alias = alias[1].Str;
 

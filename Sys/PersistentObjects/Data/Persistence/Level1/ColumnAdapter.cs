@@ -17,7 +17,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
+using System.Data.Common;
 using System.Text;
 using System.Reflection;
 
@@ -109,7 +109,7 @@ namespace Sys.Data
       
         public virtual void AddParameter(SqlCmd sqlCmd)
         {
-            SqlParameter param = field.SqlParameter;
+            DbParameter param = sqlCmd.DbProvider.AddParameter(field.ParameterName, field.DataType);
             if (value is DateTime)
             {
                 DateTime SqlMinValue = new DateTime(1900, 1, 1);
@@ -124,20 +124,18 @@ namespace Sys.Data
 
             param.Value = value;
             param.Direction = ParameterDirection.Input;
-            sqlCmd.SqlCommand.Parameters.Add(param);
         }
 
 
-        public virtual SqlParameter AddIdentityParameter(SqlCmd sqlCmd)
+        public virtual DbParameter AddIdentityParameter(SqlCmd sqlCmd)
         {
-            SqlParameter param = field.SqlParameter;
+            DbParameter param = sqlCmd.DbProvider.AddParameter(field.ParameterName, field.DataType);
             param.Value = value;
 
             if (value == System.DBNull.Value)
                 param.Value = 0;
 
             param.Direction = ParameterDirection.Output;
-            sqlCmd.SqlCommand.Parameters.Add(param);
             return param;
         }
 

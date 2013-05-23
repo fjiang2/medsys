@@ -52,7 +52,7 @@ namespace Sys.Data
 
                 if (attribute != null && this.Row.Table.Columns.Contains(attribute.ColumnNameSaved))
                 {
-                    DataField field = this.fields.Add(attribute.ColumnNameSaved, attribute.SqlDbType);
+                    DataField field = this.fields.Add(attribute.ColumnNameSaved, attribute.DbType);
                     ColumnAdapter column = new ColumnAdapter(field);
                     this.Bind(column);
 

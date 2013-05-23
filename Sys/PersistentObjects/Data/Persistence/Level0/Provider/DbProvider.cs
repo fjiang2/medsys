@@ -76,7 +76,7 @@ namespace Sys.Data
         }
 
 
-
+        public abstract DbParameter AddParameter(string parameterName, Type type);
         public abstract DbParameter AddParameter(string parameterName, object value);
         
 

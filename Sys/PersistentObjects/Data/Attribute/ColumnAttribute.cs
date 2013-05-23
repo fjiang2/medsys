@@ -18,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Data;
+using Sys.Data;
 
 namespace Sys.Data
 {
@@ -26,6 +27,7 @@ namespace Sys.Data
     {
         private string columnName;
         private SqlDbType sqlDbType;
+        private Type dbType;
 
         public string ColumnNameSaved;
         public object DefaultValue = null;
@@ -49,7 +51,7 @@ namespace Sys.Data
             this.Caption = columnName;
             this.ColumnNameSaved = columnName;
             this.sqlDbType = type;
-
+            this.dbType = type.ToType();
         }
 
         internal ColumnAttribute(string columnName, Type type)
@@ -57,6 +59,7 @@ namespace Sys.Data
             this.columnName = columnName;
             this.Caption = columnName;
             this.ColumnNameSaved = columnName;
+            this.dbType = type;
 
             if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
             {
@@ -132,6 +135,12 @@ namespace Sys.Data
         public SqlDbType SqlDbType
         {
             get { return this.sqlDbType; }
+        }
+
+
+        public Type DbType
+        {
+            get { return this.dbType; }
         }
 
         public override string ToString()

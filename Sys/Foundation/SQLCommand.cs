@@ -99,7 +99,7 @@ namespace Sys.Data
 
                 using (connection)
                 {
-                    reader = this.SqlCommand.ExecuteReader();
+                    reader = ((SqlCommand)this.command).ExecuteReader();
                     
                     do
                     {

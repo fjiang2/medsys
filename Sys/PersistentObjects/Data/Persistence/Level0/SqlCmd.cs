@@ -19,8 +19,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Data.Common;
 using System.Data.SqlClient;
-using System.Data.OleDb;
-using System.Data.SqlServerCe;
 using System.Data;
 
 namespace Sys.Data
@@ -76,14 +74,13 @@ namespace Sys.Data
         public DbParameter AddParameter(string parameterName, object value)
         {
             DbParameter param = dbProvider.AddParameter(parameterName, value);
-            command.Parameters.Add(param);
             return param;
         }
 
 
-        public SqlCommand SqlCommand
+        public DbProvider DbProvider
         {
-            get { return (SqlCommand)command; }
+            get { return this.dbProvider; }
         }
 
      

@@ -246,7 +246,7 @@ namespace Sys.ViewManager.Forms
         {
             ColumnAttribute[] attr = dpo.GetAttributes<ColumnAttribute>();
             if (attr.Length > 0)
-                return fields.Add(attr[0].ColumnName, attr[0].SqlDbType);
+                return fields.Add(attr[0].ColumnName, attr[0].DbType);
             else
                 return base.AddField(columnName);
         }

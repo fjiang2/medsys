@@ -17,7 +17,6 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
 using System.Text;
 using System.Reflection;
 
@@ -28,19 +27,19 @@ namespace Sys.Data
         private string fieldName;
         private string caption;
        
-        private SqlDbType sqlDbType;
+        private Type dbType;
 
         private bool saved = true;
         private bool identity = false;
         private bool primary = false;
 
 
-        public DataField(string columnName, SqlDbType sqlDbType)
+        public DataField(string columnName, Type dbType)
         {
             this.fieldName = columnName;
             this.Caption = columnName;
 
-            this.sqlDbType = sqlDbType;
+            this.dbType = dbType;
         }
 
       
@@ -100,14 +99,10 @@ namespace Sys.Data
 
         public Type DataType
         {
-            get { return this.sqlDbType.ToType(); }
+            get { return this.dbType; }
         }
 
-        public SqlDbType SqlDbType
-        {
-            get { return this.sqlDbType; }
-        }
-
+       
         public string ParameterName
         {
             get
@@ -116,13 +111,7 @@ namespace Sys.Data
             }
         }
 
-        public SqlParameter SqlParameter
-        {
-            get
-            {
-                return new SqlParameter(this.ParameterName, this.sqlDbType);
-            }
-        }
+      
 
         internal string[] InsertString()
         {

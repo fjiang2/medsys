@@ -124,7 +124,7 @@ namespace Sys.Data
 
         public DataField Add(DataColumn column)
         {
-            DataField field = Add(column.ColumnName, column.DataType.ToSqlDbType());
+            DataField field = Add(column.ColumnName, column.DataType);
             field.Caption = column.Caption;
 
             return field;
@@ -140,9 +140,9 @@ namespace Sys.Data
             return field;
         }
        
-        public DataField Add(string columnName, SqlDbType sqlDbType)
+        public DataField Add(string columnName, Type dbType)
         {
-            DataField field = new DataField(columnName, sqlDbType);
+            DataField field = new DataField(columnName, dbType);
             this.AddItem(field);
 
             return field;

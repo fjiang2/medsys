@@ -41,12 +41,12 @@ namespace Sys.Data
         
         public void Add(SqlCmd cmd)
         {
-            if (cmd.SqlCommand.Connection.State != ConnectionState.Closed)
-                cmd.SqlCommand.Connection.Close();
+            if (cmd.DbProvider.DbCommand.Connection.State != ConnectionState.Closed)
+                cmd.DbProvider.DbCommand.Connection.Close();
 
 
-            cmd.SqlCommand.Transaction = sqlTransaction;
-            cmd.SqlCommand.Connection = this.connection;
+            cmd.DbProvider.DbCommand.Transaction = sqlTransaction;
+            cmd.DbProvider.DbCommand.Connection = this.connection;
      
         }
 

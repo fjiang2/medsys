@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data;
+using System.Data.OleDb;
 using Sys;
 
 namespace Sys.Data
@@ -329,6 +330,39 @@ namespace Sys.Data
 
             else if (type == typeof(Guid))
                 return SqlDbType.UniqueIdentifier;
+
+            throw new JException("Type {0} cannot be converted into SqlDbType", type.FullName);
+        }
+
+        public static OleDbType ToOleDbType(this Type type)
+        {
+            if (type == typeof(Boolean))
+                return OleDbType.Boolean;
+
+            else if (type == typeof(Int16))
+                return OleDbType.SmallInt;
+
+            else if (type == typeof(Int32))
+                return OleDbType.Integer;
+
+            else if (type == typeof(Int64))
+                return OleDbType.BigInt;
+
+            else if (type == typeof(Double))
+                return OleDbType.Double;
+
+            else if (type == typeof(Decimal))
+                return OleDbType.Decimal;
+
+            else if (type == typeof(String))
+                return OleDbType.WChar;
+
+            else if (type == typeof(DateTime))
+                return OleDbType.Date;
+
+            else if (type == typeof(Byte[]))
+                return OleDbType.Binary;
+
 
             throw new JException("Type {0} cannot be converted into SqlDbType", type.FullName);
         }
