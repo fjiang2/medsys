@@ -54,78 +54,78 @@ namespace Sys.Data
             this.dbType = type.ToType();
         }
 
-        internal ColumnAttribute(string columnName, Type type)
-        {
-            this.columnName = columnName;
-            this.Caption = columnName;
-            this.ColumnNameSaved = columnName;
-            this.dbType = type;
+        //internal ColumnAttribute(string columnName, Type type)
+        //{
+        //    this.columnName = columnName;
+        //    this.Caption = columnName;
+        //    this.ColumnNameSaved = columnName;
+        //    this.dbType = type;
 
-            if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
-            {
-                this.Nullable = true;
-                type = type.GetGenericArguments()[0];
-            }
+        //    if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
+        //    {
+        //        this.Nullable = true;
+        //        type = type.GetGenericArguments()[0];
+        //    }
 
-            if (type == typeof(int))
-            {
-                this.sqlDbType = SqlDbType.Int;
-            }
-            else if (type == typeof(string))
-            {
-                this.sqlDbType = SqlDbType.NVarChar;
-                this.Nullable = true;
-                this.Length = 100;
-            }
-            else if (type == typeof(decimal))
-            {
-                this.sqlDbType = SqlDbType.Decimal;
-                this.Precision = 10;
-                this.Scale = 2;
-            }
-            else if (type == typeof(bool))
-            {
-                this.sqlDbType = SqlDbType.Bit;
-            }
-            else if (type == typeof(DateTime))
-            {
-                this.sqlDbType = SqlDbType.DateTime;
-            }
-            else if (type == typeof(TimeSpan))
-            {
-                this.sqlDbType = SqlDbType.Timestamp;
-            }
-            else if (type == typeof(Single))
-            {
-                this.sqlDbType = SqlDbType.Real;
-            }
-            else if (type == typeof(double))
-            {
-                this.sqlDbType = SqlDbType.Float;
-            }
-            else if (type == typeof(byte))
-            {
-                this.sqlDbType = SqlDbType.TinyInt;
-            }
-            else if (type == typeof(Int16))
-            {
-                this.sqlDbType = SqlDbType.SmallInt;
-            }
-            else if (type == typeof(Int64))
-            {
-                this.sqlDbType = SqlDbType.BigInt;
-            }
-            else if (type == typeof(byte[]))
-            {
-                this.sqlDbType = SqlDbType.Binary;
-            }
-            else if (type == typeof(Guid))
-            {
-                this.sqlDbType = SqlDbType.UniqueIdentifier;
-            }
-            else
-                throw new JException("{0} is not supported", type.FullName);
-        }
+        //    if (type == typeof(int))
+        //    {
+        //        this.sqlDbType = SqlDbType.Int;
+        //    }
+        //    else if (type == typeof(string))
+        //    {
+        //        this.sqlDbType = SqlDbType.NVarChar;
+        //        this.Nullable = true;
+        //        this.Length = 100;
+        //    }
+        //    else if (type == typeof(decimal))
+        //    {
+        //        this.sqlDbType = SqlDbType.Decimal;
+        //        this.Precision = 10;
+        //        this.Scale = 2;
+        //    }
+        //    else if (type == typeof(bool))
+        //    {
+        //        this.sqlDbType = SqlDbType.Bit;
+        //    }
+        //    else if (type == typeof(DateTime))
+        //    {
+        //        this.sqlDbType = SqlDbType.DateTime;
+        //    }
+        //    else if (type == typeof(TimeSpan))
+        //    {
+        //        this.sqlDbType = SqlDbType.Timestamp;
+        //    }
+        //    else if (type == typeof(Single))
+        //    {
+        //        this.sqlDbType = SqlDbType.Real;
+        //    }
+        //    else if (type == typeof(double))
+        //    {
+        //        this.sqlDbType = SqlDbType.Float;
+        //    }
+        //    else if (type == typeof(byte))
+        //    {
+        //        this.sqlDbType = SqlDbType.TinyInt;
+        //    }
+        //    else if (type == typeof(Int16))
+        //    {
+        //        this.sqlDbType = SqlDbType.SmallInt;
+        //    }
+        //    else if (type == typeof(Int64))
+        //    {
+        //        this.sqlDbType = SqlDbType.BigInt;
+        //    }
+        //    else if (type == typeof(byte[]))
+        //    {
+        //        this.sqlDbType = SqlDbType.Binary;
+        //    }
+        //    else if (type == typeof(Guid))
+        //    {
+        //        this.sqlDbType = SqlDbType.UniqueIdentifier;
+        //    }
+        //    else
+        //        throw new JException("{0} is not supported", type.FullName);
+        //}
 
         public string ColumnName
         {
