@@ -84,15 +84,13 @@ namespace Sys.Data
             DataTable dt1 = SqlCmd.FillDataTable(tableName.Provider, SQL, tableName.DatabaseName.Name, tableName.Name);
             
             List<dictDataColumnDpo> list; 
-            try
+            if (MetaDatabase.TableExists(typeof(dictDataColumnDpo).TableName()))
             {
                 int tableId = this.TableID;
                 list = new TableReader<dictDataColumnDpo>(dictDataColumnDpo._table_id.ColumnName() == tableId).ToList();
             }
-            catch (Exception)   //when dictDataColumnDpo doesn't exist
-            {
-                list = new List<dictDataColumnDpo>();
-            }
+            else
+                list = new List<dictDataColumnDpo>();  //when dictDataColumnDpo doesn't exist
 
             this._columns = new MetaColumnCollection(this);
             foreach (DataRow row in dt1.Rows)
