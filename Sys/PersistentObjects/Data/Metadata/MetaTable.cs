@@ -38,7 +38,6 @@ namespace Sys.Data
         IForeignKeys Foreign { get; }
         
         MetaColumnCollection Columns { get; }
-        IMetaColumn this[string columnName] { get; }
     }
 
     class MetaTable : IMetaTable
@@ -227,27 +226,7 @@ namespace Sys.Data
   
 
 
-        public IMetaColumn this[string columnName]
-        {
-            get
-            {
-                foreach (MetaColumn column in this.Columns)
-                {
-                    if (column.ColumnName == columnName)
-                        return column;
-                }
-
-                return null;
-            }
-
-        }
-
-
-        public bool ColumnExists(string columnName)
-        {
-            return this[columnName] != null;
-        }
-
+      
    
 
         public DataRow NewRow()
