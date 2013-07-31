@@ -426,6 +426,9 @@ namespace Sys.Data
             else if (type == typeof(Double))
                 return SqlDbType.Float;
 
+            else if (type == typeof(Single))
+                return SqlDbType.Float;
+
             else if (type == typeof(Decimal))
                 return SqlDbType.Decimal;
 

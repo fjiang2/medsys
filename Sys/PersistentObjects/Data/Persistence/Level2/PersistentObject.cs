@@ -113,8 +113,8 @@ namespace Sys.Data
 
             foreach (PropertyInfo propertyInfo in this.columnProperties)
             {
-                object value = propertyInfo.GetValue(source);
-                propertyInfo.SetValue(this, value);
+                object value = propertyInfo.GetValue(source, null);
+                propertyInfo.SetValue(this, value, null);
             }
         }
 
@@ -411,7 +411,7 @@ namespace Sys.Data
                 {
                    object value = dataRow[key];
                    if(value != System.DBNull.Value)
-                       propertyInfo.SetValue(this, value);
+                       propertyInfo.SetValue(this, value, null);
                 }
             }
 
@@ -422,9 +422,9 @@ namespace Sys.Data
                 {
                     object value = dataRow[key];
                     if (value != System.DBNull.Value)
-                        propertyInfo.SetValue(this, value);
+                        propertyInfo.SetValue(this, value, null);
                     else
-                        propertyInfo.SetValue(this, null);
+                        propertyInfo.SetValue(this, null, null);
                 }
             }
 
@@ -608,7 +608,7 @@ namespace Sys.Data
                 if (!propertyInfo.PropertyType.IsGenericType)
                     continue;
 
-                IDPCollection collection = (IDPCollection)propertyInfo.GetValue(this);
+                IDPCollection collection = (IDPCollection)propertyInfo.GetValue(this, null);
                 if (collection.Count == 0)
                     continue ;
 
@@ -656,7 +656,7 @@ namespace Sys.Data
                 if (propertyInfo.PropertyType.IsValueType)
                     value = DefaultRowValue.SystemDefaultValue(propertyInfo.PropertyType);
 
-                propertyInfo.SetValue(this, value);
+                propertyInfo.SetValue(this, value, null);
             }
 
         }
@@ -683,10 +683,10 @@ namespace Sys.Data
                 ColumnAttribute a = Reflex.GetColumnAttribute(propertyInfo);
                 if (a != null && d.Row.Table.Columns.Contains(a.ColumnNameSaved))
                 {
-                    if (propertyInfo.GetValue(this) == null)
+                    if (propertyInfo.GetValue(this, null) == null)
                         d.Row[a.ColumnNameSaved] = System.DBNull.Value;
                     else
-                        d.Row[a.ColumnNameSaved] = propertyInfo.GetValue(this);
+                        d.Row[a.ColumnNameSaved] = propertyInfo.GetValue(this, null);
                 }
 
             }
@@ -728,7 +728,7 @@ namespace Sys.Data
             if (!fieldType.IsGenericType)
                 return;
 
-            IDPCollection collection = (IDPCollection)propertyInfo.GetValue(this);
+            IDPCollection collection = (IDPCollection)propertyInfo.GetValue(this, null);
             collection.Save();
 
         }
@@ -815,7 +815,7 @@ namespace Sys.Data
             foreach (PropertyInfo field in this.columnProperties)
             {
                 if (field.Name == columnName)
-                    return (T)field.GetValue(this);
+                    return (T)field.GetValue(this, null);
             }
 
             throw new JException("Column name ({0}) not found.");
@@ -826,7 +826,7 @@ namespace Sys.Data
             foreach (PropertyInfo field in this.columnProperties)
             {
                 if (field.Name == columnName)
-                    return field.GetValue(this);
+                    return field.GetValue(this, null);
             }
 
             throw new JException("Column name ({0}) not found.");

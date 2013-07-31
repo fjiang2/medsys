@@ -143,7 +143,7 @@ namespace Sys.Data
                         value = null;
                 }
 
-                propertyInfo.SetValue(instance, value);
+                propertyInfo.SetValue(instance, value, null);
             }
 
             return a;
@@ -163,10 +163,10 @@ namespace Sys.Data
 
                 if (attribute != null && dataRow.Table.Columns.Contains(attribute.ColumnNameSaved))
                 {
-                    if (propertyInfo.GetValue(instance) == null)
+                    if (propertyInfo.GetValue(instance, null) == null)
                         dataRow[attribute.ColumnNameSaved] = System.DBNull.Value;
                     else
-                        dataRow[attribute.ColumnNameSaved] = propertyInfo.GetValue(instance);
+                        dataRow[attribute.ColumnNameSaved] = propertyInfo.GetValue(instance, null);
                 }
             }
         }

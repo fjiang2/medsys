@@ -81,10 +81,10 @@ namespace Sys.Data
                 ColumnAttribute a = Reflex.GetColumnAttribute(propertyInfo);
                 if (a != null && this.Row.Table.Columns.Contains(a.ColumnNameSaved))
                 {
-                    if (propertyInfo.GetValue(obj) == null)
+                    if (propertyInfo.GetValue(obj, null) == null)
                         this.Row[a.ColumnNameSaved] = System.DBNull.Value;
                     else
-                        this.Row[a.ColumnNameSaved] = propertyInfo.GetValue(obj);
+                        this.Row[a.ColumnNameSaved] = propertyInfo.GetValue(obj, null);
                 }
 
             }
