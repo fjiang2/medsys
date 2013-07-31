@@ -130,7 +130,7 @@ namespace Sys.Data.Manager
             else if (metaTable.Primary.Length == 1)
             {
                 string key = metaTable.Primary.Keys[0];
-                IMetaColumn column = metaTable[key];
+                IMetaColumn column = metaTable.Columns[key];
 
                 if (column.SqlDbType == SqlDbType.Int)
                 {

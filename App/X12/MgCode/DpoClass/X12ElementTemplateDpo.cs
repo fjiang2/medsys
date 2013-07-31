@@ -68,7 +68,7 @@ namespace X12.DpoClass
 
 
 
-        public override PrimaryKeys Primary
+        public override IPrimaryKeys Primary
         {
             get
             {
@@ -78,7 +78,7 @@ namespace X12.DpoClass
 
 
 
-        public override IdentityKeys Identity
+        public override IIdentityKeys Identity
         {
             get
             {

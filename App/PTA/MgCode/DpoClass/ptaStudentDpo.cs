@@ -61,7 +61,7 @@ namespace PTA.DpoClass
 
 
 
-        public override PrimaryKeys Primary
+        public override IPrimaryKeys Primary
         {
             get
             {
@@ -71,7 +71,7 @@ namespace PTA.DpoClass
 
 
 
-        public override IdentityKeys Identity
+        public override IIdentityKeys Identity
         {
             get
             {

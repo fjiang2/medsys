@@ -78,7 +78,7 @@ namespace App.Data.DpoClass
 
 
 
-        public override PrimaryKeys Primary
+        public override IPrimaryKeys Primary
         {
             get
             {
@@ -88,7 +88,7 @@ namespace App.Data.DpoClass
 
 
 
-        public override IdentityKeys Identity
+        public override IIdentityKeys Identity
         {
             get
             {

@@ -73,17 +73,21 @@ namespace Sys.Data.Manager
 
             dpoClass.dict_column_field.Add(column.ColumnName, new FieldDefinition(ty, column.FieldName));
 
+            
+
             if (column.ForeignKey != null && dpoClass.Dict != null)
             {
-                if (dpoClass.Dict.ContainsKey(column.ForeignKey.TableName))
+                TableName pkTableName = new TableName(column.ForeignKey.Provider, column.ForeignKey.DatabaseName, column.ForeignKey.PK_Table);  //column.ForeignKey.TableName;
+
+                if (dpoClass.Dict.ContainsKey(pkTableName))
                 {
-                    Type type = dpoClass.Dict[column.ForeignKey.TableName];
+                    Type type = dpoClass.Dict[pkTableName];
                     line = string.Format("{0}{1}\r\n", tab, ForeignKey.GetAttribute(column.ForeignKey, type)) + line;
                 }
                 else
                 {
                     //ForeignKey check for external Dpo classes, they don't be load into dict
-                    LogDpoClass log = new LogDpoClass(column.ForeignKey.TableName);
+                    LogDpoClass log = new LogDpoClass(pkTableName);
                     if (log.Exists)
                     {
                         string classFullName = string.Format("{0}.{1}", log.name_space, log.class_name);
@@ -92,7 +96,7 @@ namespace Sys.Data.Manager
                     else
                         throw new JException("cannot generate Dpo class of FK {0} before generate Dpo class of PK {1}",
                             dpoClass.MetaTable.TableName,
-                            column.ForeignKey.TableName);
+                            pkTableName);
                 }
             }
 

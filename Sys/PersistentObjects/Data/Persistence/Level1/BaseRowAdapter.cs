@@ -82,7 +82,7 @@ namespace Sys.Data
                 DataField field = column.Field;
                 if (field.Saved || field.Primary)
                 {
-                    IMetaColumn metaColumn = metaTable[field.Name];
+                    IMetaColumn metaColumn = metaTable.Columns[field.Name];
 
                     if (!metaColumn.Nullable && (column.Value == System.DBNull.Value || column.Value == null))
                         throw new Sys.JException("Column[{0}] value cannot be null", field.Name);

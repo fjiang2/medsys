@@ -30,6 +30,27 @@ namespace Sys.Data
             this.metaTable = metaTable;
         }
 
+        public IMetaColumn this[string columnName]
+        {
+            get
+            {
+                foreach (MetaColumn column in this)
+                {
+                    if (column.ColumnName == columnName)
+                        return column;
+                }
+
+                return null;
+            }
+
+        }
+
+        public bool ColumnExists(string columnName)
+        {
+            return this[columnName] != null;
+        }
+
+
         public void UpdatePrimary(IPrimaryKeys primary)
         {
 

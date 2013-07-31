@@ -34,14 +34,16 @@ namespace Sys.Data
         string FK_Column { get; }
         string PK_Table { get; }
         string PK_Column { get;}
-        TableName TableName { get; }
+        
+        string DatabaseName { get; set; }
+        DataProvider Provider { get; set; }
     }
 
     class ForeignKeys : IForeignKeys
     {
-        private ForeignKey[] keys;
+        private IForeignKey[] keys;
 
-        public ForeignKeys(ForeignKey[] columns)
+        public ForeignKeys(IForeignKey[] columns)
         {
             this.keys = columns;
         }
@@ -88,7 +90,7 @@ WHERE FK.TABLE_NAME='{1}'
 
         public override string ToString()
         {
-            return string.Join <ForeignKey>(" + ", keys);
+            return string.Join <IForeignKey>(" + ", keys);
         }
 
     }
@@ -118,7 +120,7 @@ WHERE FK.TABLE_NAME='{1}'
 
 #pragma warning restore
 
-        public DataProvider Provider;
+        public DataProvider Provider { get; set; }
 
         public ForeignKey()
         { 
@@ -129,14 +131,7 @@ WHERE FK.TABLE_NAME='{1}'
         { 
         }
 
-        public override TableName TableName
-        {
-            get
-            {
-                return new TableName(this.Provider, DatabaseName, PK_Table);
-            }
-        }
-
+    
         internal static string GetAttribute(IForeignKey key, Type pkTableType)
         {
             return GetAttribute(key, pkTableType.FullName);
