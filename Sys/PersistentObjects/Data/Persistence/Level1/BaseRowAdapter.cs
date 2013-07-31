@@ -76,18 +76,18 @@ namespace Sys.Data
 
         public void Validate()
         {
-            MetaTable metaTable = tableName.GetCachedMetaTable();
+            IMetaTable metaTable = tableName.GetCachedMetaTable();
             foreach (ColumnAdapter column in columns)
             {
                 DataField field = column.Field;
                 if (field.Saved || field.Primary)
                 {
-                    MetaColumn metaColumn = metaTable[field.Name];
+                    IMetaColumn metaColumn = metaTable[field.Name];
 
                     if (!metaColumn.Nullable && (column.Value == System.DBNull.Value || column.Value == null))
                         throw new Sys.JException("Column[{0}] value cannot be null", field.Name);
 
-                    if (metaColumn.Oversize(column.Value))
+                    if (MetaColumn.Oversize(metaColumn, column.Value))
                         throw new Sys.JException("Column[{0}] is oversize, limit={1}, actual={2}", field.Name, metaColumn.Length, ((string)(column.Value)).Length);
                 }
             }

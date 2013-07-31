@@ -359,7 +359,7 @@ namespace Sys.Data
                             f += ",\r\n";
 
                         MetaColumn column = new MetaColumn(attr);
-                        f += column.GetSQLField();
+                        f += MetaColumn.GetSQLField(column);
                     }
                 }
 

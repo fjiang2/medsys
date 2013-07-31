@@ -34,7 +34,7 @@ namespace Sys.Data.Manager
         ClassTableName tname;
         ClassName cname;
 
-        MetaTable metaTable;
+        IMetaTable metaTable;
         DpoClass dpoClass;
 
         public DpoGenerator(ClassTableName ctname, ClassName cname, bool hasColumnAttribute, Dictionary<TableName, Type> dict)
@@ -56,8 +56,7 @@ namespace Sys.Data.Manager
 
         }
 
-      
-
+     
 
         public bool WriteFile(string fileName, bool mustGenerate)
         {
