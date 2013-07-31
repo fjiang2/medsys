@@ -18,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Data;
 using Sys.Data;
 using System.Threading;
 using System.ComponentModel;
@@ -106,6 +107,23 @@ namespace Sys.Data.Manager
 
         public static bool GenTableDpo(this ClassTableName tname, string path, bool mustGenerate, ClassName cname, bool hasColumnAttribute, Dictionary<TableName, Type> dict)
         {
+            bool result = GenTableDpo(tname, tname.GetMetaTable(), path, mustGenerate, cname, hasColumnAttribute, dict);
+            LogDpoClass.Log(tname, path, cname);
+
+            return result;
+        }
+
+        public static bool GenTableDpo(this DataTable table,  string path, ClassName cname)
+        {
+
+            IMetaTable metatable = new DataTableDpoClass(table);
+            ClassTableName tname = new ClassTableName(metatable.TableName);
+            return GenTableDpo(tname, metatable, path, true, cname, true, new Dictionary<TableName, Type>());
+        }
+
+        
+        private static bool GenTableDpo(this ClassTableName tname, IMetaTable metatable, string path, bool mustGenerate, ClassName cname, bool hasColumnAttribute, Dictionary<TableName, Type> dict)
+        {
             //make description to sys tables
             if (tname.Level == Level.System)
             {
@@ -121,7 +139,8 @@ namespace Sys.Data.Manager
                 dt.Save();
             }
 
-            DpoGenerator gen = new DpoGenerator(tname, cname, hasColumnAttribute, dict);
+
+            DpoGenerator gen = new DpoGenerator(tname, metatable, cname, hasColumnAttribute, dict);
 
             if (!Directory.Exists(path))
             {
@@ -130,8 +149,7 @@ namespace Sys.Data.Manager
 
             bool result =  gen.WriteFile(string.Format("{0}\\{1}.cs", path, cname.Class), mustGenerate);
 
-            //log class dpo 
-            LogDpoClass.Log(tname, path, cname);
+           
             return result;
         }
 
@@ -146,6 +164,8 @@ namespace Sys.Data.Manager
             IMetaTable meta = MetaTable.GetCachedInstance(tableName);
             return meta.Columns;
         }
+
+     
 
     }
 }

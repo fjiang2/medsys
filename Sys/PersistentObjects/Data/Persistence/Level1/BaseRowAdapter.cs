@@ -87,7 +87,7 @@ namespace Sys.Data
                     if (!metaColumn.Nullable && (column.Value == System.DBNull.Value || column.Value == null))
                         throw new Sys.JException("Column[{0}] value cannot be null", field.Name);
 
-                    if (MetaColumn.Oversize(metaColumn, column.Value))
+                    if (metaColumn.Oversize(column.Value))
                         throw new Sys.JException("Column[{0}] is oversize, limit={1}, actual={2}", field.Name, metaColumn.Length, ((string)(column.Value)).Length);
                 }
             }

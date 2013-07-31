@@ -127,9 +127,9 @@ namespace Sys.Data.Manager
             {
                 return string.Format(DPObjectIdProperty, metaTable.Identity.ColumnNames[0]);
             }
-            else if (metaTable.Primary.Length == 1)
+            else if (metaTable.PrimaryKeys.Length == 1)
             {
-                string key = metaTable.Primary.Keys[0];
+                string key = metaTable.PrimaryKeys.Keys[0];
                 IMetaColumn column = metaTable.Columns[key];
 
                 if (column.SqlDbType == SqlDbType.Int)
@@ -168,11 +168,11 @@ namespace Sys.Data.Manager
 ";
 
 
-            if (metaTable.Primary.Length == 0)
+            if (metaTable.PrimaryKeys.Length == 0)
                 return prop1;
 
-            if (metaTable.Primary.Length > 0)
-                return string.Format(prop2, stringQL(metaTable.Primary.Keys));
+            if (metaTable.PrimaryKeys.Length > 0)
+                return string.Format(prop2, stringQL(metaTable.PrimaryKeys.Keys));
 
             return "";
         }
@@ -240,10 +240,10 @@ namespace Sys.Data.Manager
            }
         }
         ";
-            if (metaTable.Primary.Length == 0)
+            if (metaTable.PrimaryKeys.Length == 0)
                 return string.Empty;
 
-            string[] keys = metaTable.Primary.Keys;
+            string[] keys = metaTable.PrimaryKeys.Keys;
             string s1 = "";
             foreach (string p in keys)
             {
@@ -271,11 +271,11 @@ namespace Sys.Data.Manager
         {
             List<DpoField> imageFields = new List<DpoField>();
             string fields = "";
-            foreach (MetaColumn column in metaTable.Columns)
+            foreach (IMetaColumn column in metaTable.Columns)
             {
                 DpoField field = new DpoField(this, column);
                 fields += field.GenerateField() + "\r\n";
-                if (column.IsImageField)
+                if (column.SqlDbType == System.Data.SqlDbType.Image)
                     imageFields.Add(field);
             }
 
@@ -297,7 +297,7 @@ namespace Sys.Data.Manager
         private string ConstStringColumnNames()
         {
             string columns = "";
-            foreach (MetaColumn column in metaTable.Columns)
+            foreach (IMetaColumn column in metaTable.Columns)
             {
                 DpoField field = new DpoField(this, column);
                 columns += field.GetConstStringColumnName() + "\r\n";

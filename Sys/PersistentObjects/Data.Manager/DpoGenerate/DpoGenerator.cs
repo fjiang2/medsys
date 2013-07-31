@@ -37,12 +37,13 @@ namespace Sys.Data.Manager
         IMetaTable metaTable;
         DpoClass dpoClass;
 
-        public DpoGenerator(ClassTableName ctname, ClassName cname, bool hasColumnAttribute, Dictionary<TableName, Type> dict)
+        public DpoGenerator(ClassTableName ctname, IMetaTable metaTable, ClassName cname, bool hasColumnAttribute, Dictionary<TableName, Type> dict)
         {
             this.tname = ctname;
             this.cname = cname;
             
-            metaTable = ctname.GetMetaTable();
+            //metaTable = ctname.GetMetaTable();
+            this.metaTable = metaTable;
 
             if (metaTable.TableID == -1)
             {

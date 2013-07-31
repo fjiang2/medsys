@@ -33,7 +33,7 @@ namespace Sys.Data
         {
             MetaTable meta = tableName.GetCachedMetaTable();
 
-            UpdatePrimaryIdentity(meta.Primary, meta.Identity);
+            UpdatePrimaryIdentity(meta.PrimaryKeys, meta.Identity);
         }
 
         

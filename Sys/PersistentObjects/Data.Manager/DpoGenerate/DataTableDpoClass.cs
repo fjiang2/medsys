@@ -21,7 +21,7 @@ namespace Sys.Data.Manager
         public DataTableDpoClass(DataTable table)
         {
             this.table = table;
-            this.tableName = new ClassTableName(DataProvider.DefaultProvider, "memory", table.TableName);
+            this.tableName = new ClassTableName(DataProvider.DefaultProvider, "MEM", table.TableName);
 
 
 
@@ -34,8 +34,8 @@ namespace Sys.Data.Manager
             this._identity = new IdentityKeys(this._columns);
             this._computedColumns = new ComputedColumns(this._columns);
 
-            this._columns.UpdatePrimary(this.Primary);
-            this._columns.UpdateForeign(this.Foreign);
+            this._columns.UpdatePrimary(this.PrimaryKeys);
+            this._columns.UpdateForeign(this.ForeignKeys);
         }
 
         public TableName TableName 
@@ -51,7 +51,7 @@ namespace Sys.Data.Manager
         {
             get
             {
-                return -1;
+                return 0;
             }
         }
 
@@ -63,7 +63,7 @@ namespace Sys.Data.Manager
             }
         }
 
-        public IPrimaryKeys Primary
+        public IPrimaryKeys PrimaryKeys
         {
             get
             {
@@ -71,7 +71,7 @@ namespace Sys.Data.Manager
             }
         }
 
-        public IForeignKeys Foreign
+        public IForeignKeys ForeignKeys
         {
             get
             {
@@ -83,7 +83,7 @@ namespace Sys.Data.Manager
         {
             get
             {
-                return null;
+                return this._columns;
             }
         }
 
@@ -110,7 +110,7 @@ namespace Sys.Data.Manager
         { 
             get 
             { 
-                return column.ColumnName; 
+                return column.DataType.ToSqlDbType().ToString().ToLower(); 
             } 
         }
 
@@ -148,6 +148,15 @@ namespace Sys.Data.Manager
 
         public bool IsIdentity { get { return column.AutoIncrement; } }
 
+
+        public bool IsPrimary
+        {
+            get
+            {
+                return false;
+            }
+        }
+
         public bool IsComputed 
         { 
             get 
@@ -179,17 +188,10 @@ namespace Sys.Data.Manager
         { 
             get
             {
-                return SqlDbType.NVarChar;
+                return column.DataType.ToSqlDbType();
             } 
         }
 
-        public int AdjuestedLength 
-        {
-            get
-            {
-                return this.Length;
-            }
-        }
     }
 }
 
