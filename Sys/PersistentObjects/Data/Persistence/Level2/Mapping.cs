@@ -117,7 +117,7 @@ namespace Sys.Data
         {
             get
             {
-                object value1 = propertyInfo1.GetValue(dpoInstance);
+                object value1 = propertyInfo1.GetValue(dpoInstance, null);
                 SqlCmd cmd = new SqlCmd(this.clause1);
                 cmd.AddParameter(association.Column1.SqlParameterName(), value1);
                 return cmd.FillDataTable().ToArray<object>(association.Relation1);
@@ -129,7 +129,7 @@ namespace Sys.Data
             if (association == null)
                 return ;
 
-            object value1 = propertyInfo1.GetValue(dpoInstance);
+            object value1 = propertyInfo1.GetValue(dpoInstance, null);
             SqlCmd cmd = new SqlCmd(this.clause2);
             cmd.AddParameter(association.Column1.SqlParameterName(), value1);
             DataTable dataTable =  cmd.FillDataTable();
@@ -137,26 +137,26 @@ namespace Sys.Data
             if (mappingType == MappingType.One2One)
             {
                 //if association object was not instatiated
-                if (propertyInfo2.GetValue(this) == null)
+                if (propertyInfo2.GetValue(this, null) == null)
                 {
                     PersistentObject dpo = (PersistentObject)Activator.CreateInstance(propertyInfo2.PropertyType, null);
                     dpo.Fill(dataTable.Rows[0]);
-                    propertyInfo2.SetValue(this, dpo);
+                    propertyInfo2.SetValue(this, dpo, null);
                 }
                 else
                 {
-                    IDPObject dpo = (IDPObject)propertyInfo2.GetValue(this);
+                    IDPObject dpo = (IDPObject)propertyInfo2.GetValue(this, null);
                     dpo.Fill(dataTable.Rows[0]);
                 }
             }
             else
             {
                 //if association collection was not instatiated
-                if (propertyInfo2.GetValue(this) == null)
-                    propertyInfo2.SetValue(this, Activator.CreateInstance(propertyInfo2.PropertyType, new object[] { dataTable }));
+                if (propertyInfo2.GetValue(this, null) == null)
+                    propertyInfo2.SetValue(this, Activator.CreateInstance(propertyInfo2.PropertyType, new object[] { dataTable }), null);
                 else
                 {
-                    IPersistentCollection collection = (IPersistentCollection)propertyInfo2.GetValue(this);
+                    IPersistentCollection collection = (IPersistentCollection)propertyInfo2.GetValue(this, null);
                     collection.Table = dataTable;
                 }
             }
@@ -184,8 +184,8 @@ namespace Sys.Data
 
             if (mappingType == MappingType.One2Many)
             {
-                object value1 = propertyInfo1.GetValue(dpoInstance);
-                IDPCollection collection = (IDPCollection)propertyInfo2.GetValue(this);
+                object value1 = propertyInfo1.GetValue(dpoInstance, null);
+                IDPCollection collection = (IDPCollection)propertyInfo2.GetValue(this, null);
                 foreach (DataRow row in collection.Table.Rows)
                 {
                     row[association.Column2] = value1;
