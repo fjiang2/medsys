@@ -30,7 +30,7 @@ namespace Sys.Data
             this.metaTable = metaTable;
         }
 
-        public void UpdatePrimary(PrimaryKeys primary)
+        public void UpdatePrimary(IPrimaryKeys primary)
         {
 
             var columns = this.Where(column => Array.IndexOf<string>(primary.Keys, column.ColumnName) >= 0);
@@ -41,7 +41,7 @@ namespace Sys.Data
 
         }
 
-        internal void UpdateForeign(ForeignKeys foreign)
+        internal void UpdateForeign(IForeignKeys foreign)
         {
             foreach (ForeignKey key in foreign.Keys)
             {

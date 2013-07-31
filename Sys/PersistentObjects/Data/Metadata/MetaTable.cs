@@ -31,9 +31,9 @@ namespace Sys.Data
     interface IMetaTable
     {
         TableName TableName { get; }
-        IdentityKeys Identity { get; }
-        PrimaryKeys Primary { get; }
-        ForeignKeys Foreign { get; }
+        IIdentityKeys Identity { get; }
+        IPrimaryKeys Primary { get; }
+        IForeignKeys Foreign { get; }
         MetaColumnCollection Columns { get; }
         MetaColumn this[string columnName] { get; }
     }
@@ -143,7 +143,7 @@ namespace Sys.Data
         #region Primary/Foreign Key
 
         private PrimaryKeys _primary = null;
-        public PrimaryKeys Primary
+        public IPrimaryKeys Primary
         {
             get
             {
@@ -155,7 +155,7 @@ namespace Sys.Data
         }
 
         private ForeignKeys _foreign = null;
-        public ForeignKeys Foreign
+        public IForeignKeys Foreign
         {
             get
             {
@@ -174,7 +174,7 @@ namespace Sys.Data
         #region Identity/Computed column
         
         private IdentityKeys _identity = null;
-        public IdentityKeys Identity
+        public IIdentityKeys Identity
         {
             get
             {
@@ -356,7 +356,7 @@ namespace Sys.Data
 
 
 
-        public static string CREATE_TABLE(string fields, PrimaryKeys primary)
+        public static string CREATE_TABLE(string fields, IPrimaryKeys primary)
         {
 
             string primaryKey = "";

@@ -22,7 +22,13 @@ using System.Data;
 
 namespace Sys.Data
 {
-    public class IdentityKeys
+    public interface IIdentityKeys
+    {
+        string[] ColumnNames { get; }
+        int Length { get; }
+    }
+
+    public class IdentityKeys : IIdentityKeys
     {
         private string[] columnNames;
 

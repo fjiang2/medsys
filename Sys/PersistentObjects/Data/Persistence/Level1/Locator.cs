@@ -38,7 +38,7 @@ namespace Sys.Data
             this.where = string.Join(" AND ", columns.Select(key => string.Format("[{0}]=@{0}", key)));
         }
 
-        public Locator(PrimaryKeys primary)
+        public Locator(IPrimaryKeys primary)
             :this(primary.Keys)
         {
         }

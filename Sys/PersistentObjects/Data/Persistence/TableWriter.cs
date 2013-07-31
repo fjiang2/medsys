@@ -44,7 +44,7 @@ namespace Sys.Data
             this.tableName = tableName;
             this.dataTable = dataTable;
 
-            PrimaryKeys primary = this.tableName.GetCachedMetaTable().Primary;
+            IPrimaryKeys primary = this.tableName.GetCachedMetaTable().Primary;
             if (primary.Length != 0)
                 this.locator = new Locator(primary);
             else
