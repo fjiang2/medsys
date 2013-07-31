@@ -28,7 +28,17 @@ using Sys.PersistentObjects.DpoClass;
 
 namespace Sys.Data
 {
-    class MetaTable
+    interface IMetaTable
+    {
+        TableName TableName { get; }
+        IdentityKeys Identity { get; }
+        PrimaryKeys Primary { get; }
+        ForeignKeys Foreign { get; }
+        MetaColumnCollection Columns { get; }
+        MetaColumn this[string columnName] { get; }
+    }
+
+    class MetaTable : IMetaTable
     {
         private TableName tableName;
         
@@ -214,7 +224,7 @@ namespace Sys.Data
   
 
 
-        internal MetaColumn this[string columnName]
+        public MetaColumn this[string columnName]
         {
             get
             {
@@ -225,8 +235,8 @@ namespace Sys.Data
                 }
 
                 return null;
-
             }
+
         }
 
 
@@ -280,10 +290,11 @@ namespace Sys.Data
         /// </summary>
         /// <param name="level"></param>
         /// <returns></returns>
-        public string GetTableAttribute(ClassTableName ctname)
+        internal static string GetTableAttribute(IMetaTable metaTable, ClassTableName ctname)
         {
-            string comment = string.Format("//Primary Keys = {0};  Identity = {1};", Primary, Identity);
+            string comment = string.Format("//Primary Keys = {0};  Identity = {1};", metaTable.Primary, metaTable.Identity);
             StringBuilder attr = new StringBuilder("[Table(");
+            TableName tableName = metaTable.TableName;
             switch (ctname.Level)
             {
 
@@ -303,7 +314,7 @@ namespace Sys.Data
             
             if (ctname.HasProvider)
             {
-                if (!this.tableName.Provider.Equals(DataProvider.DefaultProvider))
+                if (!tableName.Provider.Equals(DataProvider.DefaultProvider))
                 {
                     attr.AppendFormat(", Provider = {0}", (int)tableName.Provider);
                 }
@@ -336,10 +347,10 @@ namespace Sys.Data
 
     
 
-        public string GenerateCREATE_TABLE()
+        internal static string GenerateCREATE_TABLE(IMetaTable metaTable)
         {
-            string fields = string.Join(",\r\n", Columns.Select(column => column.GetSQLField()));
-            return CREATE_TABLE(fields, this.Primary);
+            string fields = string.Join(",\r\n", metaTable.Columns.Select(column => column.GetSQLField()));
+            return CREATE_TABLE(fields, metaTable.Primary);
 
         }
 
