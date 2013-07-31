@@ -22,7 +22,21 @@ using System.Data;
 
 namespace Sys.Data
 {
-    class ForeignKeys
+    public interface IForeignKeys
+    {
+        IForeignKey[] Keys { get; }
+        int Length { get; }
+    }
+
+    public interface IForeignKey
+    {
+        string FK_Table { get;  }
+        string FK_Column { get; }
+        string PK_Table { get; }
+        string PK_Column { get;}
+    }
+
+    class ForeignKeys : IForeignKeys
     {
         private ForeignKey[] keys;
 
@@ -61,7 +75,7 @@ WHERE FK.TABLE_NAME='{1}'
             }
         }
 
-        public ForeignKey[] Keys
+        public IForeignKey[] Keys
         {
             get
             {
@@ -69,7 +83,7 @@ WHERE FK.TABLE_NAME='{1}'
             }
         }
 
-        public int Length { get { return this.Keys.Length; } }
+        public int Length { get { return this.keys.Length; } }
 
         public override string ToString()
         {
@@ -79,7 +93,7 @@ WHERE FK.TABLE_NAME='{1}'
     }
 
 
-    class ForeignKey : PersistentObject
+    class ForeignKey : PersistentObject, IForeignKey
     {
 #pragma warning disable
 

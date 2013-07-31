@@ -37,7 +37,7 @@ namespace Sys.Data
         }
 
         
-        public void UpdatePrimaryIdentity(PrimaryKeys primary, IdentityKeys identity)
+        public void UpdatePrimaryIdentity(IPrimaryKeys primary, IIdentityKeys identity)
         {
             
             foreach (string key in identity.ColumnNames)

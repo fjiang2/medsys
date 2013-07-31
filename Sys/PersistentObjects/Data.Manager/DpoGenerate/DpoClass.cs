@@ -148,7 +148,7 @@ namespace Sys.Data.Manager
         {
 
             string prop1 = @"
-        public override PrimaryKeys Primary
+        public override IPrimaryKeys Primary
         {
             get
             {
@@ -158,7 +158,7 @@ namespace Sys.Data.Manager
         ";
 
             string prop2 = @"
-        public override PrimaryKeys Primary
+        public override IPrimaryKeys Primary
         {{
             get
             {{
@@ -182,7 +182,7 @@ namespace Sys.Data.Manager
         {
 
             string prop1 = @"
-        public override IdentityKeys Identity
+        public override IIdentityKeys Identity
         {
             get
             {
@@ -192,7 +192,7 @@ namespace Sys.Data.Manager
         ";
 
             string prop2 = @"
-        public override IdentityKeys Identity
+        public override IIdentityKeys Identity
         {{
             get
             {{

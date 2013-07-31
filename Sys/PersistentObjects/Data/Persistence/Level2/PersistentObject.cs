@@ -320,7 +320,7 @@ namespace Sys.Data
         }
 
 
-        public virtual IdentityKeys Identity
+        public virtual IIdentityKeys Identity
         {
             get
             {
@@ -328,7 +328,7 @@ namespace Sys.Data
             }
         }
 
-        public virtual PrimaryKeys Primary
+        public virtual IPrimaryKeys Primary
         {
             get
             {

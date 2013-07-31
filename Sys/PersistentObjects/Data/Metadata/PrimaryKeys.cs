@@ -22,7 +22,13 @@ using System.Data;
 
 namespace Sys.Data
 {
-    public class PrimaryKeys
+    public interface IPrimaryKeys
+    {
+        string[] Keys { get; }
+        int Length { get; }
+    }
+
+    public class PrimaryKeys : IPrimaryKeys
     {
         private string[] keys;
 
@@ -56,7 +62,7 @@ namespace Sys.Data
             }
         }
 
-        public int Length { get { return this.Keys.Length; } }
+        public int Length { get { return this.keys.Length; } }
 
         public override string ToString()
         {
