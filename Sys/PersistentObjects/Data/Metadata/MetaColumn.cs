@@ -30,13 +30,13 @@ namespace Sys.Data
         bool Nullable { get; }
         byte precision { get;  }
         byte scale { get;  }
+        bool IsPrimary { get; }
         bool IsIdentity { get;  }
         bool IsComputed { get;  }
         int ColumnID { get; }
 
         IForeignKey ForeignKey { get; set; }
         SqlDbType SqlDbType { get; }
-        int AdjuestedLength { get; }
     }
 
 
@@ -74,24 +74,20 @@ namespace Sys.Data
         public string label { get; set; }    //label used as caption to support internationalization
 
         private SqlDbType sqlDbType;
-        private string fieldName;
         private bool isPrimary = false;
         private IForeignKey foreignKey;
 
         public MetaColumn(DataRow dataRow)
             : base(dataRow)
         {
-            this.fieldName = GetFieldName(this.ColumnName);
             this.sqlDbType = GetSqlDbType(this.DataType);
         }
 
         internal MetaColumn(ColumnAttribute attr)
         {
-            this.fieldName = GetFieldName(attr.ColumnName);
 
             this.ColumnName = attr.ColumnName;
             this.SqlDbType = attr.SqlDbType;
-            this.AdjuestedLength = attr.Length;
 
             this.Nullable = attr.Nullable;
             this.precision = attr.Precision;
@@ -125,36 +121,7 @@ namespace Sys.Data
             }
         }
 
-        /// <summary>
-        /// Adjuested Length
-        /// </summary>
-        public int AdjuestedLength
-        {
-            get
-            {
-                if (this.Length == -1)
-                    return -1;
-
-                switch (this.sqlDbType)
-                {
-                    case SqlDbType.NChar:
-                    case SqlDbType.NVarChar:
-                        return this.Length / 2;
-                }
-         
-                return this.Length;
-            }
-            set
-            {
-                this.Length = (short)value;
-                if (this.Length == -1)
-                    return;
-
-                if (this.SqlDbType == SqlDbType.NVarChar || this.SqlDbType == SqlDbType.NChar)
-                    this.Length *= 2;
-                
-           }
-        }
+       
 
         public bool IsPrimary
         {
@@ -174,129 +141,9 @@ namespace Sys.Data
             return string.Format("Column={0}(Type={1}, Null={2}, Length={3})", ColumnName, DataType, Nullable, Length);
         }
 
-        #region C# Dpo class Field
+     
 
-        internal bool IsImageField
-        {
-            get { return sqlDbType == System.Data.SqlDbType.Image; }
-        }
-
-        internal string FieldName
-        {
-            get { return this.fieldName; }
-        }
-
-
-        private static string GetFieldName(string columnName)
-        {
-            string fieldName = columnName;
-            if (   columnName.IndexOf("#") != -1 
-                || columnName.IndexOf(" ") != -1 
-                || columnName.IndexOf("/") != -1 
-                || !Char.IsLetter(columnName[0]))
-            {
-                fieldName = columnName.Replace("#", "_").Replace(" ", "_").Replace("/", "_");
-
-                if (!Char.IsLetter(columnName[0]))
-                    fieldName = "_" + fieldName;
-            }
-
-            return fieldName;
-
-        }
-
-        #endregion
-
-
-
-        internal static bool Oversize(IMetaColumn column, object value)
-        {
-            if (!(value is string))
-                return false;
-
-            if (column.SqlDbType == SqlDbType.NText || column.SqlDbType == SqlDbType.Text)
-                return false;
-
-            string s = (string)value;
-
-            if (column.Length == -1)
-            {
-                if (column.SqlDbType == SqlDbType.NVarChar || column.SqlDbType == SqlDbType.NChar)
-                    return s.Length > 4000;
-                else
-                    return s.Length > 8000;
-            }
-            else
-                return s.Length > column.AdjuestedLength;
-        }
-
-
-        public bool Oversize(object value)
-        {
-            return Oversize(this, value);
-        }
-        
-        #region Dpo field's Attribute
-         
-        internal string Attribute
-        {
-            get
-            {
-                return  GetAttribute(this.sqlDbType);
-            }
-        }
-
-
-        private string GetAttribute(SqlDbType type)
-        {
-            string attr = "";
-            switch (type)
-            {
-                case SqlDbType.Char:
-                case SqlDbType.VarChar:
-                case SqlDbType.VarBinary:
-                case SqlDbType.Binary:
-                    attr = string.Format(", Length = {0}", AdjuestedLength);
-                    break;
-
-                case SqlDbType.NChar:
-                case SqlDbType.NVarChar:
-                    attr = string.Format(", Length = {0}", AdjuestedLength);
-                    break;
-
-
-                //case SqlDbType.Numeric:
-                case SqlDbType.Decimal:
-                    attr = string.Format(", Precision = {0}, Scale = {1}", precision, scale);
-                    break;
-
-
-            }
-
-            string attribute = string.Format("[Column(_{0}, SqlDbType.{1}", fieldName, sqlDbType);
-
-            if (Nullable)
-                attribute += ", Nullable = true";   //see: bool Nullable = false; in class DataColumnAttribute
-
-            if (IsIdentity)
-                attribute += ", Identity = true";
-
-            if (IsPrimary)
-                attribute += ", Primary = true";
-
-            if (IsComputed)
-                attribute += ", Computed = true";
-
-            if (attr != "")
-                attribute += attr;
-
-            attribute += ")]";
-
-            return attribute;
-        }
-        
-        #endregion
-
+       
 
 
         #region SqlDataType -> System.SqlDbType / C# field type / SQL_Create_Table Type
@@ -545,8 +392,8 @@ namespace Sys.Data
                 case SqlDbType.NVarChar:
                 case SqlDbType.Char:
                 case SqlDbType.NChar:
-                    if (Oversize(val))
-                        throw new JException("Column Name={0}, length of value \"{1}\" {2} > {3}", ColumnName, val, val.Length, this.AdjuestedLength);
+                    if (this.Oversize(val))
+                        throw new JException("Column Name={0}, length of value \"{1}\" {2} > {3}", ColumnName, val, val.Length, this.AdjuestedLength());
                     else
                         return val;
            

@@ -195,8 +195,6 @@
     <Compile Include="MgCode\DpoClass\logDataTableDpo.cs" />
     <Compile Include="MgCode\DpoClass\MigrationVersionDpo.cs" />
     <Compile Include="MgCode\DpoClass\RecordLockDpo.cs" />
-    <Compile Include="MgCode\DpoClass\SqlParamDpo.cs" />
-    <Compile Include="MgCode\DpoClass\SqlProcDpo.cs" />
     <Compile Include="MgCode\DpoClass\dictEnumTypeDpo.cs" />
     <Compile Include="Sys\DataStructure\Tree\NTree.cs" />
     <Compile Include="Sys\DataStructure\Tree\INTreeNode.cs" />

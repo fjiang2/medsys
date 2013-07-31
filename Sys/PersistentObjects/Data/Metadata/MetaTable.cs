@@ -34,8 +34,8 @@ namespace Sys.Data
         int TableID { get; }
 
         IIdentityKeys Identity { get; }
-        IPrimaryKeys Primary { get; }
-        IForeignKeys Foreign { get; }
+        IPrimaryKeys PrimaryKeys { get; }
+        IForeignKeys ForeignKeys { get; }
         
         MetaColumnCollection Columns { get; }
     }
@@ -122,8 +122,8 @@ namespace Sys.Data
             this._identity = new IdentityKeys(this._columns);
             this._computedColumns = new ComputedColumns(this._columns);
 
-            this._columns.UpdatePrimary(this.Primary);
-            this._columns.UpdateForeign(this.Foreign);
+            this._columns.UpdatePrimary(this.PrimaryKeys);
+            this._columns.UpdateForeign(this.ForeignKeys);
 
         }
 
@@ -145,7 +145,7 @@ namespace Sys.Data
         #region Primary/Foreign Key
 
         private PrimaryKeys _primary = null;
-        public IPrimaryKeys Primary
+        public IPrimaryKeys PrimaryKeys
         {
             get
             {
@@ -157,7 +157,7 @@ namespace Sys.Data
         }
 
         private ForeignKeys _foreign = null;
-        public IForeignKeys Foreign
+        public IForeignKeys ForeignKeys
         {
             get
             {
@@ -274,7 +274,7 @@ namespace Sys.Data
         /// <returns></returns>
         internal static string GetTableAttribute(IMetaTable metaTable, ClassTableName ctname)
         {
-            string comment = string.Format("//Primary Keys = {0};  Identity = {1};", metaTable.Primary, metaTable.Identity);
+            string comment = string.Format("//Primary Keys = {0};  Identity = {1};", metaTable.PrimaryKeys, metaTable.Identity);
             StringBuilder attr = new StringBuilder("[Table(");
             TableName tableName = metaTable.TableName;
             switch (ctname.Level)
@@ -322,7 +322,7 @@ namespace Sys.Data
       
         public Locator DefaultLocator()
         {
-            return new Locator(this.Primary);
+            return new Locator(this.PrimaryKeys);
         }
 
 
@@ -332,7 +332,7 @@ namespace Sys.Data
         internal static string GenerateCREATE_TABLE(IMetaTable metaTable)
         {
             string fields = string.Join(",\r\n", metaTable.Columns.Select(column => Sys.Data.MetaColumn.GetSQLField(column)));
-            return CREATE_TABLE(fields, metaTable.Primary);
+            return CREATE_TABLE(fields, metaTable.PrimaryKeys);
 
         }
 

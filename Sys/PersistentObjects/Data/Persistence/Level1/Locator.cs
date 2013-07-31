@@ -49,7 +49,7 @@ namespace Sys.Data
         }
 
         public Locator(TableName tname)
-            :this(tname.GetCachedMetaTable().Primary)
+            :this(tname.GetCachedMetaTable().PrimaryKeys)
         {
         }
 

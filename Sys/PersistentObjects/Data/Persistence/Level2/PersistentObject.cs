@@ -332,7 +332,7 @@ namespace Sys.Data
         {
             get
             {
-                return Meta.Primary;
+                return Meta.PrimaryKeys;
             }
         }
 

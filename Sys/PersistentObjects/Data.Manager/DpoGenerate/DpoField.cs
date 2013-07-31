@@ -30,10 +30,10 @@ namespace Sys.Data.Manager
     {
         DpoClass dpoClass;
 
-        private MetaColumn column;
+        private IMetaColumn column;
         
         
-        public DpoField(DpoClass dpoClass, MetaColumn column)
+        public DpoField(DpoClass dpoClass, IMetaColumn column)
         {
             this.dpoClass = dpoClass;
             this.column = column;
@@ -45,15 +45,18 @@ namespace Sys.Data.Manager
         {
             string line = "";
             string tab = "        ";
-            if (dpoClass.HasColumnAttribute || column.ColumnName != column.FieldName)
+
+            string fieldName = column.ColumnName.FieldName();
+
+            if (dpoClass.HasColumnAttribute || column.ColumnName != fieldName)
             {
-                line = string.Format("{0}{1}", tab, column.Attribute);
+                line = string.Format("{0}{1}", tab, column.Attribute());
                 if(line.Length < 90)
                     line += new string(' ', 90 - line.Length);      //padding
             }
 
             line += "        ";
-            if (dpoClass.Nonvalized.IndexOf(column.FieldName) != -1)
+            if (dpoClass.Nonvalized.IndexOf(fieldName) != -1)
                 line += "[NonValized] ";
 
             //When programmer make field Nullable, it must be Nullable
@@ -63,15 +66,15 @@ namespace Sys.Data.Manager
 
             string ty = MetaColumn.GetFieldType(column.DataType, column.Nullable);
             //string declare = string.Format("public {0} {1};", ty, column.FieldName);
-            string declare = string.Format("public {0} {1} {{get; set;}} ", ty, column.FieldName);
+            string declare = string.Format("public {0} {1} {{get; set;}} ", ty, fieldName);
 
             line += declare;
             if(declare.Length < 30)
                 line += new string(' ', 30 - declare.Length);
 
-            line += string.Format("//{0}({1}) {2}", column.DataType, column.AdjuestedLength, column.Nullable ? "null" : "not null");
+            line += string.Format("//{0}({1}) {2}", column.DataType, column.AdjuestedLength(), column.Nullable ? "null" : "not null");
 
-            dpoClass.dict_column_field.Add(column.ColumnName, new FieldDefinition(ty, column.FieldName));
+            dpoClass.dict_column_field.Add(column.ColumnName, new FieldDefinition(ty, fieldName));
 
             
 
@@ -139,7 +142,7 @@ namespace Sys.Data.Manager
             }}
         }}
 ";
-            return string.Format(imageProperty, column.FieldName);
+            return string.Format(imageProperty,  column.ColumnName.FieldName());
 
         }
     

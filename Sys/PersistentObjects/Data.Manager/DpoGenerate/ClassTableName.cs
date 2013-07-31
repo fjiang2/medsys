@@ -35,6 +35,12 @@ namespace Sys.Data.Manager
 
         }
 
+        internal ClassTableName(TableName tname)
+            : base(tname.Provider, tname.DatabaseName.Name, tname.Name)
+        {
+
+        }
+
 
         public Level Level
         {

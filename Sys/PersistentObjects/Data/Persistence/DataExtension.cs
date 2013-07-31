@@ -209,6 +209,116 @@ namespace Sys.Data
             throw new JException("Table Level is not defined");
         }
 
+        internal static string FieldName(this string columnName)
+        {
+            string fieldName = columnName;
+            if (columnName.IndexOf("#") != -1
+                || columnName.IndexOf(" ") != -1
+                || columnName.IndexOf("/") != -1
+                || !Char.IsLetter(columnName[0]))
+            {
+                fieldName = columnName.Replace("#", "_").Replace(" ", "_").Replace("/", "_");
+
+                if (!Char.IsLetter(columnName[0]))
+                    fieldName = "_" + fieldName;
+            }
+
+            return fieldName;
+
+        }
+
+
+        internal static string Attribute(this IMetaColumn column)
+        {
+            string attr = "";
+            switch (column.SqlDbType)
+            {
+                case SqlDbType.Char:
+                case SqlDbType.VarChar:
+                case SqlDbType.VarBinary:
+                case SqlDbType.Binary:
+                    attr = string.Format(", Length = {0}", column.AdjuestedLength());
+                    break;
+
+                case SqlDbType.NChar:
+                case SqlDbType.NVarChar:
+                    attr = string.Format(", Length = {0}", column.AdjuestedLength());
+                    break;
+
+
+                //case SqlDbType.Numeric:
+                case SqlDbType.Decimal:
+                    attr = string.Format(", Precision = {0}, Scale = {1}", column.precision, column.scale);
+                    break;
+
+
+            }
+
+            string attribute = string.Format("[Column(_{0}, SqlDbType.{1}", column.ColumnName.FieldName(), column.SqlDbType);
+
+            if (column.Nullable)
+                attribute += ", Nullable = true";   //see: bool Nullable = false; in class DataColumnAttribute
+
+            if (column.IsIdentity)
+                attribute += ", Identity = true";
+
+            if (column.IsPrimary)
+                attribute += ", Primary = true";
+
+            if (column.IsComputed)
+                attribute += ", Computed = true";
+
+            if (attr != "")
+                attribute += attr;
+
+            attribute += ")]";
+
+            return attribute;
+        }
+
+
+        internal static bool Oversize(this IMetaColumn column, object value)
+        {
+            if (!(value is string))
+                return false;
+
+            if (column.SqlDbType == SqlDbType.NText || column.SqlDbType == SqlDbType.Text)
+                return false;
+
+            string s = (string)value;
+
+            if (column.Length == -1)
+            {
+                if (column.SqlDbType == SqlDbType.NVarChar || column.SqlDbType == SqlDbType.NChar)
+                    return s.Length > 4000;
+                else
+                    return s.Length > 8000;
+            }
+            else
+                return s.Length > column.AdjuestedLength();
+        }
+
+
+        /// <summary>
+        /// Adjuested Length
+        /// </summary>
+        internal static int AdjuestedLength(this IMetaColumn column)
+        {
+            if (column.Length == -1)
+                return -1;
+
+            switch (column.SqlDbType)
+            {
+                case SqlDbType.NChar:
+                case SqlDbType.NVarChar:
+                    return column.Length / 2;
+            }
+
+            return column.Length;
+        }
+
+
+
         internal static MetaTable GetCachedMetaTable(this TableName tname)
         {
             return MetaTable.GetCachedInstance(tname);

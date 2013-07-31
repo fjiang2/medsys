@@ -4,8 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Reflection;
 using System.Windows.Forms;
+using System.Data;
 using Sys;
 using Sys.Data;
+using Sys.Data.Manager;
 using Sys.Foundation.DpoClass;
 using Sys.ViewManager.DpoClass;
 using Sys.ViewManager.Security;
@@ -17,15 +19,15 @@ namespace App.Testing
     {
         static void Main(string[] args)
         {
-            if(SystemInformation.ComputerName != "T420")
-                DataProviderManager.RegisterDefaultProvider("data source=hmt-tmbsql;initial catalog=ENGR;integrated security=SSPI;packet size=4096");
-            else
-                DataProviderManager.RegisterDefaultProvider("data source=localhost\\sqlexpress;initial catalog=medsys;integrated security=SSPI;packet size=4096");
-            
-           // NTreeViewDemo();
-           SqlClauseDemo();
 
-            //SqlClauseJoinDemo();
+            DataProviderManager.RegisterDefaultProvider("data source=localhost\\sqlexpress;initial catalog=medsys;integrated security=SSPI;packet size=4096");
+
+
+          
+
+           // NTreeViewDemo();
+           //SqlClauseDemo();
+           //SqlClauseJoinDemo();
         }
 
         static void SqlClauseDemo()
