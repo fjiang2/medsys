@@ -49,7 +49,7 @@ namespace Sys.Data.Manager
         private string nameSpace;
         private string className;
 
-        private MetaTable metaTable;
+        private IMetaTable metaTable;
         private List<string> nonvalized;
         private List<string> nullableFields;
 
@@ -77,7 +77,7 @@ namespace Sys.Data.Manager
             get { return this.dict; }
         }
         
-        public MetaTable MetaTable
+        public IMetaTable MetaTable
         {
             get { return this.metaTable; }
         }
@@ -428,7 +428,7 @@ namespace @NAMESPACE
 ";
 
 
-            SQL_CREATE_TABLE_STRING = metaTable.GenerateCREATE_TABLE();
+            SQL_CREATE_TABLE_STRING = Sys.Data.MetaTable.GenerateCREATE_TABLE(metaTable);
             CREATE_TABLE = string.Format(CREATE_TABLE, SQL_CREATE_TABLE_STRING);
             if(this.HasColumnAttribute)
                 CREATE_TABLE = ""; 
@@ -445,7 +445,7 @@ namespace @NAMESPACE
                       .Replace("@COMMENT", comment)
                       .Replace("@NAMESPACE", nameSpace)
                       .Replace("@REVISION", rev)
-                      .Replace("@ATTRIBUTE", metaTable.GetTableAttribute(ctname))
+                      .Replace("@ATTRIBUTE", Sys.Data.MetaTable.GetTableAttribute(metaTable, ctname))
                       .Replace("@MODIFIER", m)
                       .Replace("@PRIMARYCONSTRUCTOR", PrimaryConstructor())
                       .Replace("@CLASSNAME", className)
