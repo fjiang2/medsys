@@ -21,11 +21,11 @@ using System.Text;
 
 namespace Sys.Data
 {
-    public class MetaColumnCollection : List<MetaColumn>
+    public class MetaColumnCollection : List<IMetaColumn>
     {
-        MetaTable metaTable;
+        IMetaTable metaTable;
 
-        internal MetaColumnCollection(MetaTable metaTable)
+        internal MetaColumnCollection(IMetaTable metaTable)
         {
             this.metaTable = metaTable;
         }
@@ -45,7 +45,7 @@ namespace Sys.Data
         {
             foreach (ForeignKey key in foreign.Keys)
             {
-                MetaColumn column = this.Find(col => col.ColumnName == key.FK_Column);
+                IMetaColumn column = this.Find(col => col.ColumnName == key.FK_Column);
                 column.ForeignKey = key;
             }
         }

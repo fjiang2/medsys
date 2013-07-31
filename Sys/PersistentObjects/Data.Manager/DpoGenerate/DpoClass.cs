@@ -58,7 +58,7 @@ namespace Sys.Data.Manager
         
         Dictionary<TableName, Type> dict;
 
-        public DpoClass(MetaTable metaTable, ClassName cname,  Dictionary<TableName, Type> dict)
+        public DpoClass(IMetaTable metaTable, ClassName cname,  Dictionary<TableName, Type> dict)
         {
             this.metaTable = metaTable;
             
@@ -130,7 +130,7 @@ namespace Sys.Data.Manager
             else if (metaTable.Primary.Length == 1)
             {
                 string key = metaTable.Primary.Keys[0];
-                MetaColumn column = metaTable[key];
+                IMetaColumn column = metaTable[key];
 
                 if (column.SqlDbType == SqlDbType.Int)
                 {

@@ -31,11 +31,14 @@ namespace Sys.Data
     interface IMetaTable
     {
         TableName TableName { get; }
+        int TableID { get; }
+
         IIdentityKeys Identity { get; }
         IPrimaryKeys Primary { get; }
         IForeignKeys Foreign { get; }
+        
         MetaColumnCollection Columns { get; }
-        MetaColumn this[string columnName] { get; }
+        IMetaColumn this[string columnName] { get; }
     }
 
     class MetaTable : IMetaTable
@@ -224,7 +227,7 @@ namespace Sys.Data
   
 
 
-        public MetaColumn this[string columnName]
+        public IMetaColumn this[string columnName]
         {
             get
             {
@@ -349,7 +352,7 @@ namespace Sys.Data
 
         internal static string GenerateCREATE_TABLE(IMetaTable metaTable)
         {
-            string fields = string.Join(",\r\n", metaTable.Columns.Select(column => column.GetSQLField()));
+            string fields = string.Join(",\r\n", metaTable.Columns.Select(column => Sys.Data.MetaColumn.GetSQLField(column)));
             return CREATE_TABLE(fields, metaTable.Primary);
 
         }

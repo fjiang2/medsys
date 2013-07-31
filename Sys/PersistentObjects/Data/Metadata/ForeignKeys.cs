@@ -34,6 +34,7 @@ namespace Sys.Data
         string FK_Column { get; }
         string PK_Table { get; }
         string PK_Column { get;}
+        TableName TableName { get; }
     }
 
     class ForeignKeys : IForeignKeys
@@ -136,17 +137,17 @@ WHERE FK.TABLE_NAME='{1}'
             }
         }
 
-        public string GetAttribute(Type pkTableType)
+        internal static string GetAttribute(IForeignKey key, Type pkTableType)
         {
-            return GetAttribute(pkTableType.FullName);
+            return GetAttribute(key, pkTableType.FullName);
         }
 
-        public string GetAttribute(string dpoClassFullName)
+        internal static string GetAttribute(IForeignKey key, string dpoClassFullName)
         {
             return string.Format("[{0}(typeof({1}), {1}._{2})]",
                 typeof(ForeignKeyAttribute).Name.Replace("Attribute", ""),
                 dpoClassFullName,
-                PK_Column);
+                key.PK_Column);
         }
 
 

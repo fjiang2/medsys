@@ -143,7 +143,7 @@ namespace Sys.Data.Manager
 
         public static MetaColumnCollection MetaColumns(this TableName tableName)
         {
-            MetaTable meta = MetaTable.GetCachedInstance(tableName);
+            IMetaTable meta = MetaTable.GetCachedInstance(tableName);
             return meta.Columns;
         }
 

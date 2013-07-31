@@ -22,7 +22,25 @@ using System.Data;
 
 namespace Sys.Data
 {
-    public class MetaColumn : PersistentObject
+    public interface IMetaColumn
+    {
+        string ColumnName { get;  }
+        string DataType { get;  }
+        short Length { get;  } 
+        bool Nullable { get; }
+        byte precision { get;  }
+        byte scale { get;  }
+        bool IsIdentity { get;  }
+        bool IsComputed { get;  }
+        int ColumnID { get; }
+
+        IForeignKey ForeignKey { get; set; }
+        SqlDbType SqlDbType { get; }
+        int AdjuestedLength { get; }
+    }
+
+
+    public class MetaColumn : PersistentObject, IMetaColumn
     {
 
         [Column("ColumnName", SqlDbType.NVarChar, Primary = true)]
@@ -58,7 +76,7 @@ namespace Sys.Data
         private SqlDbType sqlDbType;
         private string fieldName;
         private bool isPrimary = false;
-        private ForeignKey foreignKey;
+        private IForeignKey foreignKey;
 
         public MetaColumn(DataRow dataRow)
             : base(dataRow)
@@ -144,7 +162,7 @@ namespace Sys.Data
             set { this.isPrimary = value; }
         }
 
-        internal ForeignKey ForeignKey
+        public IForeignKey ForeignKey
         {
             get { return this.foreignKey; }
             set { this.foreignKey = value; }
@@ -191,27 +209,32 @@ namespace Sys.Data
 
 
 
-        public bool Oversize(object value)
+        internal static bool Oversize(IMetaColumn column, object value)
         {
             if (!(value is string))
                 return false;
 
-            if (sqlDbType == SqlDbType.NText || sqlDbType == SqlDbType.Text)
+            if (column.SqlDbType == SqlDbType.NText || column.SqlDbType == SqlDbType.Text)
                 return false;
 
             string s = (string)value;
 
-            if (this.Length == -1)
+            if (column.Length == -1)
             {
-                if (this.SqlDbType == SqlDbType.NVarChar || this.SqlDbType == SqlDbType.NChar)
+                if (column.SqlDbType == SqlDbType.NVarChar || column.SqlDbType == SqlDbType.NChar)
                     return s.Length > 4000;
                 else
                     return s.Length > 8000;
             }
             else
-                return s.Length > this.AdjuestedLength;
+                return s.Length > column.AdjuestedLength;
         }
 
+
+        public bool Oversize(object value)
+        {
+            return Oversize(this, value);
+        }
         
         #region Dpo field's Attribute
          
@@ -457,11 +480,13 @@ namespace Sys.Data
        
         
 
-        public string GetSQLField()
+        public static string GetSQLField(IMetaColumn column)
         {
             string ty = "";
+            string DataType = column.DataType;
+            int Length = column.Length;
 
-            switch (sqlDbType)
+            switch (column.SqlDbType)
             {
                 case SqlDbType.VarChar:
                 case SqlDbType.Char:
@@ -483,7 +508,7 @@ namespace Sys.Data
 
                 //case SqlDbType.Numeric:
                 case SqlDbType.Decimal:
-                    ty = string.Format("{0}({1},{2})", DataType, precision, scale);
+                    ty = string.Format("{0}({1},{2})", DataType, column.precision, column.scale);
                     break;
 
 
@@ -492,16 +517,16 @@ namespace Sys.Data
                     break;
             }
 
-            string line = string.Format("\t[{0}] {1} {2} ", ColumnName, ty, Nullable ? "NULL" : "NOT NULL");
+            string line = string.Format("\t[{0}] {1} {2} ", column.ColumnName, ty, column.Nullable ? "NULL" : "NOT NULL");
 
-            if (this.IsIdentity)
+            if (column.IsIdentity)
             {
                 line += "IDENTITY(1,1)";
                 return line;
             }
 
-            if (this.IsComputed)
-                throw new JException("not support computed column: {0} during creating table",  ColumnName);
+            if (column.IsComputed)
+                throw new JException("not support computed column: {0} during creating table", column.ColumnName);
 
             return line;
         }
