@@ -21,21 +21,21 @@ namespace Sys.Workflow.DpoClass
 
 #pragma warning disable
 
-        [Column(_ID, SqlDbType.Int, Identity = true)]                                             public int ID {get; set;}     //int(4) not null
-        [Column(_ParentID, SqlDbType.Int, Nullable = true)]                                       public int? ParentID {get; set;} //int(4) null
-        [Column(_Name, SqlDbType.NVarChar, Primary = true, Length = 50)]                          public string Name {get; set;} //nvarchar(50) not null
-        [Column(_Company, SqlDbType.NVarChar, Nullable = true, Length = 50)]                      public string Company {get; set;} //nvarchar(50) null
-        [Column(_Label, SqlDbType.NVarChar, Length = 128)]                                        public string Label {get; set;} //nvarchar(128) not null
-        [Column(_Description, SqlDbType.NVarChar, Nullable = true, Length = 1024)]                public string Description {get; set;} //nvarchar(1024) null
-        [Column(_Metadata, SqlDbType.NText, Nullable = true)]                                     public string Metadata {get; set;} //ntext(16) null
-        [Column(_Released, SqlDbType.Bit)]                                                        public bool Released {get; set;} //bit(1) not null
-        [Column(_Visible, SqlDbType.Bit)]                                                         public bool Visible {get; set;} //bit(1) not null
-        [Column(_Enabled, SqlDbType.Bit)]                                                         public bool Enabled {get; set;} //bit(1) not null
-        [Column(_Deleted, SqlDbType.Bit)]                                                         public bool Deleted {get; set;} //bit(1) not null
-        [Column(_Date_Created, SqlDbType.DateTime, Nullable = true)]                              public DateTime? Date_Created {get; set;} //datetime(8) null
-        [Column(_Creator, SqlDbType.Int, Nullable = true)]                                        public int? Creator {get; set;} //int(4) null
-        [Column(_Date_Modified, SqlDbType.DateTime, Nullable = true)]                             public DateTime? Date_Modified {get; set;} //datetime(8) null
-        [Column(_Modifier, SqlDbType.Int, Nullable = true)]                                       public int? Modifier {get; set;} //int(4) null
+        [Column(_ID, CType.Int, Identity = true)]                                             public int ID {get; set;}     //int(4) not null
+        [Column(_ParentID, CType.Int, Nullable = true)]                                       public int? ParentID {get; set;} //int(4) null
+        [Column(_Name, CType.NVarChar, Primary = true, Length = 50)]                          public string Name {get; set;} //nvarchar(50) not null
+        [Column(_Company, CType.NVarChar, Nullable = true, Length = 50)]                      public string Company {get; set;} //nvarchar(50) null
+        [Column(_Label, CType.NVarChar, Length = 128)]                                        public string Label {get; set;} //nvarchar(128) not null
+        [Column(_Description, CType.NVarChar, Nullable = true, Length = 1024)]                public string Description {get; set;} //nvarchar(1024) null
+        [Column(_Metadata, CType.NText, Nullable = true)]                                     public string Metadata {get; set;} //ntext(16) null
+        [Column(_Released, CType.Bit)]                                                        public bool Released {get; set;} //bit(1) not null
+        [Column(_Visible, CType.Bit)]                                                         public bool Visible {get; set;} //bit(1) not null
+        [Column(_Enabled, CType.Bit)]                                                         public bool Enabled {get; set;} //bit(1) not null
+        [Column(_Deleted, CType.Bit)]                                                         public bool Deleted {get; set;} //bit(1) not null
+        [Column(_Date_Created, CType.DateTime, Nullable = true)]                              public DateTime? Date_Created {get; set;} //datetime(8) null
+        [Column(_Creator, CType.Int, Nullable = true)]                                        public int? Creator {get; set;} //int(4) null
+        [Column(_Date_Modified, CType.DateTime, Nullable = true)]                             public DateTime? Date_Modified {get; set;} //datetime(8) null
+        [Column(_Modifier, CType.Int, Nullable = true)]                                       public int? Modifier {get; set;} //int(4) null
 
 #pragma warning restore
 

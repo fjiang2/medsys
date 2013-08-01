@@ -21,14 +21,14 @@ namespace X12.DpoClass
 
 #pragma warning disable
 
-        [Column(_ID, SqlDbType.Int, Identity = true)]                                             public int ID {get; set;}     //int(4) not null
-        [Column(_ElementTemplate_ID, SqlDbType.Int, Primary = true)]                              public int ElementTemplate_ID {get; set;} //int(4) not null
-        [Column(_SegmentInstance_ID, SqlDbType.Int, Primary = true)]                              public int SegmentInstance_ID {get; set;} //int(4) not null
-        [Column(_Usage, SqlDbType.Int)]                                                           public int Usage {get; set;}  //int(4) not null
-        [Column(_Description, SqlDbType.VarChar, Nullable = true, Length = 4000)]                 public string Description {get; set;} //varchar(4000) null
-        [Column(_Situational_Rule, SqlDbType.VarChar, Nullable = true, Length = 4000)]            public string Situational_Rule {get; set;} //varchar(4000) null
-        [Column(_Code_Definition, SqlDbType.Int)]                                                 public int Code_Definition {get; set;} //int(4) not null
-        [Column(_Script, SqlDbType.NText, Nullable = true)]                                       public string Script {get; set;} //ntext(16) null
+        [Column(_ID, CType.Int, Identity = true)]                                             public int ID {get; set;}     //int(4) not null
+        [Column(_ElementTemplate_ID, CType.Int, Primary = true)]                              public int ElementTemplate_ID {get; set;} //int(4) not null
+        [Column(_SegmentInstance_ID, CType.Int, Primary = true)]                              public int SegmentInstance_ID {get; set;} //int(4) not null
+        [Column(_Usage, CType.Int)]                                                           public int Usage {get; set;}  //int(4) not null
+        [Column(_Description, CType.VarChar, Nullable = true, Length = 4000)]                 public string Description {get; set;} //varchar(4000) null
+        [Column(_Situational_Rule, CType.VarChar, Nullable = true, Length = 4000)]            public string Situational_Rule {get; set;} //varchar(4000) null
+        [Column(_Code_Definition, CType.Int)]                                                 public int Code_Definition {get; set;} //int(4) not null
+        [Column(_Script, CType.NText, Nullable = true)]                                       public string Script {get; set;} //ntext(16) null
 
 #pragma warning restore
 

@@ -22,9 +22,9 @@ namespace App.Data.DpoClass
 #pragma warning disable
 
         [ForeignKey(typeof(App.Data.DpoClass.EmployeeDpo), App.Data.DpoClass.EmployeeDpo._EmployeeID)]
-        [Column(_EmployeeID, SqlDbType.Int, Primary = true)]                                      public int EmployeeID {get; set;} //int(4) not null
+        [Column(_EmployeeID, CType.Int, Primary = true)]                                      public int EmployeeID {get; set;} //int(4) not null
         [ForeignKey(typeof(App.Data.DpoClass.TerritorieDpo), App.Data.DpoClass.TerritorieDpo._TerritoryID)]
-        [Column(_TerritoryID, SqlDbType.NVarChar, Primary = true, Length = 20)]                   public string TerritoryID {get; set;} //nvarchar(20) not null
+        [Column(_TerritoryID, CType.NVarChar, Primary = true, Length = 20)]                   public string TerritoryID {get; set;} //nvarchar(20) not null
 
 #pragma warning restore
 

@@ -21,15 +21,15 @@ namespace X12.DpoClass
 
 #pragma warning disable
 
-        [Column(_ID, SqlDbType.Int, Identity = true)]                                             public int ID {get; set;}     //int(4) not null
-        [Column(_ParentID, SqlDbType.Int)]                                                        public int ParentID {get; set;} //int(4) not null
-        [Column(_Name, SqlDbType.VarChar, Primary = true, Length = 10)]                           public string Name {get; set;} //varchar(10) not null
-        [Column(_Sequence, SqlDbType.Int)]                                                        public int Sequence {get; set;} //int(4) not null
-        [Column(_Description, SqlDbType.NVarChar, Length = 100)]                                  public string Description {get; set;} //nvarchar(100) not null
-        [Column(_MinRepeat, SqlDbType.Int)]                                                       public int MinRepeat {get; set;} //int(4) not null
-        [Column(_MaxRepeat, SqlDbType.Int)]                                                       public int MaxRepeat {get; set;} //int(4) not null
-        [Column(_Required, SqlDbType.Bit)]                                                        public bool Required {get; set;} //bit(1) not null
-        [Column(_Script, SqlDbType.NText, Nullable = true)]                                       public string Script {get; set;} //ntext(16) null
+        [Column(_ID, CType.Int, Identity = true)]                                             public int ID {get; set;}     //int(4) not null
+        [Column(_ParentID, CType.Int)]                                                        public int ParentID {get; set;} //int(4) not null
+        [Column(_Name, CType.VarChar, Primary = true, Length = 10)]                           public string Name {get; set;} //varchar(10) not null
+        [Column(_Sequence, CType.Int)]                                                        public int Sequence {get; set;} //int(4) not null
+        [Column(_Description, CType.NVarChar, Length = 100)]                                  public string Description {get; set;} //nvarchar(100) not null
+        [Column(_MinRepeat, CType.Int)]                                                       public int MinRepeat {get; set;} //int(4) not null
+        [Column(_MaxRepeat, CType.Int)]                                                       public int MaxRepeat {get; set;} //int(4) not null
+        [Column(_Required, CType.Bit)]                                                        public bool Required {get; set;} //bit(1) not null
+        [Column(_Script, CType.NText, Nullable = true)]                                       public string Script {get; set;} //ntext(16) null
 
 #pragma warning restore
 

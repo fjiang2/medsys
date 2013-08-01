@@ -21,19 +21,19 @@ namespace App.Data.DpoClass
 
 #pragma warning disable
 
-        [Column(_Person_ID, SqlDbType.Int, Identity = true, Primary = true)]                      public int Person_ID {get; set;} //int(4) not null
-        [Column(_SSN, SqlDbType.NVarChar, Nullable = true, Length = 10)]                          public string SSN {get; set;} //nvarchar(10) null
-        [Column(_First_Name, SqlDbType.NVarChar, Length = 50)]                                    public string First_Name {get; set;} //nvarchar(50) not null
-        [Column(_Last_Name, SqlDbType.NVarChar, Length = 50)]                                     public string Last_Name {get; set;} //nvarchar(50) not null
-        [Column(_Middle_Name, SqlDbType.NVarChar, Nullable = true, Length = 50)]                  public string Middle_Name {get; set;} //nvarchar(50) null
-        [Column(_Nick_Name, SqlDbType.NVarChar, Nullable = true, Length = 50)]                    public string Nick_Name {get; set;} //nvarchar(50) null
-        [Column(_Prefix_Name, SqlDbType.NVarChar, Nullable = true, Length = 50)]                  public string Prefix_Name {get; set;} //nvarchar(50) null
-        [Column(_Suffix_Name, SqlDbType.NVarChar, Nullable = true, Length = 50)]                  public string Suffix_Name {get; set;} //nvarchar(50) null
-        [Column(_Gender_Enum, SqlDbType.Int, Nullable = true)]                                    public int? Gender_Enum {get; set;} //int(4) null
-        [Column(_Birthday, SqlDbType.DateTime, Nullable = true)]                                  public DateTime? Birthday {get; set;} //datetime(8) null
-        [Column(_MaritalStatus_Enum, SqlDbType.Int, Nullable = true)]                             public int? MaritalStatus_Enum {get; set;} //int(4) null
-        [Column(_Citizen, SqlDbType.Bit, Nullable = true)]                                        public bool? Citizen {get; set;} //bit(1) null
-        [Column(_Inactive, SqlDbType.Bit)]                                                        public bool Inactive {get; set;} //bit(1) not null
+        [Column(_Person_ID, CType.Int, Identity = true, Primary = true)]                      public int Person_ID {get; set;} //int(4) not null
+        [Column(_SSN, CType.NVarChar, Nullable = true, Length = 10)]                          public string SSN {get; set;} //nvarchar(10) null
+        [Column(_First_Name, CType.NVarChar, Length = 50)]                                    public string First_Name {get; set;} //nvarchar(50) not null
+        [Column(_Last_Name, CType.NVarChar, Length = 50)]                                     public string Last_Name {get; set;} //nvarchar(50) not null
+        [Column(_Middle_Name, CType.NVarChar, Nullable = true, Length = 50)]                  public string Middle_Name {get; set;} //nvarchar(50) null
+        [Column(_Nick_Name, CType.NVarChar, Nullable = true, Length = 50)]                    public string Nick_Name {get; set;} //nvarchar(50) null
+        [Column(_Prefix_Name, CType.NVarChar, Nullable = true, Length = 50)]                  public string Prefix_Name {get; set;} //nvarchar(50) null
+        [Column(_Suffix_Name, CType.NVarChar, Nullable = true, Length = 50)]                  public string Suffix_Name {get; set;} //nvarchar(50) null
+        [Column(_Gender_Enum, CType.Int, Nullable = true)]                                    public int? Gender_Enum {get; set;} //int(4) null
+        [Column(_Birthday, CType.DateTime, Nullable = true)]                                  public DateTime? Birthday {get; set;} //datetime(8) null
+        [Column(_MaritalStatus_Enum, CType.Int, Nullable = true)]                             public int? MaritalStatus_Enum {get; set;} //int(4) null
+        [Column(_Citizen, CType.Bit, Nullable = true)]                                        public bool? Citizen {get; set;} //bit(1) null
+        [Column(_Inactive, CType.Bit)]                                                        public bool Inactive {get; set;} //bit(1) not null
 
 #pragma warning restore
 

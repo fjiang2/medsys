@@ -21,17 +21,17 @@ namespace App.Data.DpoClass
 
 #pragma warning disable
 
-        [Column(_CustomerID, SqlDbType.NChar, Primary = true, Length = 5)]                        public string CustomerID {get; set;} //nchar(5) not null
-        [Column(_CompanyName, SqlDbType.NVarChar, Length = 40)]                                   public string CompanyName {get; set;} //nvarchar(40) not null
-        [Column(_ContactName, SqlDbType.NVarChar, Nullable = true, Length = 30)]                  public string ContactName {get; set;} //nvarchar(30) null
-        [Column(_ContactTitle, SqlDbType.NVarChar, Nullable = true, Length = 30)]                 public string ContactTitle {get; set;} //nvarchar(30) null
-        [Column(_Address, SqlDbType.NVarChar, Nullable = true, Length = 60)]                      public string Address {get; set;} //nvarchar(60) null
-        [Column(_City, SqlDbType.NVarChar, Nullable = true, Length = 15)]                         public string City {get; set;} //nvarchar(15) null
-        [Column(_Region, SqlDbType.NVarChar, Nullable = true, Length = 15)]                       public string Region {get; set;} //nvarchar(15) null
-        [Column(_PostalCode, SqlDbType.NVarChar, Nullable = true, Length = 10)]                   public string PostalCode {get; set;} //nvarchar(10) null
-        [Column(_Country, SqlDbType.NVarChar, Nullable = true, Length = 15)]                      public string Country {get; set;} //nvarchar(15) null
-        [Column(_Phone, SqlDbType.NVarChar, Nullable = true, Length = 24)]                        public string Phone {get; set;} //nvarchar(24) null
-        [Column(_Fax, SqlDbType.NVarChar, Nullable = true, Length = 24)]                          public string Fax {get; set;} //nvarchar(24) null
+        [Column(_CustomerID, CType.NChar, Primary = true, Length = 5)]                        public string CustomerID {get; set;} //nchar(5) not null
+        [Column(_CompanyName, CType.NVarChar, Length = 40)]                                   public string CompanyName {get; set;} //nvarchar(40) not null
+        [Column(_ContactName, CType.NVarChar, Nullable = true, Length = 30)]                  public string ContactName {get; set;} //nvarchar(30) null
+        [Column(_ContactTitle, CType.NVarChar, Nullable = true, Length = 30)]                 public string ContactTitle {get; set;} //nvarchar(30) null
+        [Column(_Address, CType.NVarChar, Nullable = true, Length = 60)]                      public string Address {get; set;} //nvarchar(60) null
+        [Column(_City, CType.NVarChar, Nullable = true, Length = 15)]                         public string City {get; set;} //nvarchar(15) null
+        [Column(_Region, CType.NVarChar, Nullable = true, Length = 15)]                       public string Region {get; set;} //nvarchar(15) null
+        [Column(_PostalCode, CType.NVarChar, Nullable = true, Length = 10)]                   public string PostalCode {get; set;} //nvarchar(10) null
+        [Column(_Country, CType.NVarChar, Nullable = true, Length = 15)]                      public string Country {get; set;} //nvarchar(15) null
+        [Column(_Phone, CType.NVarChar, Nullable = true, Length = 24)]                        public string Phone {get; set;} //nvarchar(24) null
+        [Column(_Fax, CType.NVarChar, Nullable = true, Length = 24)]                          public string Fax {get; set;} //nvarchar(24) null
 
 #pragma warning restore
 

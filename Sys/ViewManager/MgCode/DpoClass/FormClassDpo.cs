@@ -21,12 +21,12 @@ namespace Sys.ViewManager.DpoClass
 
 #pragma warning disable
 
-        [Column(_ID, SqlDbType.Int, Identity = true)]                                             public int ID {get; set;}     //int(4) not null
-        [Column(_Form_Class, SqlDbType.NVarChar, Primary = true, Length = 128)]                   public string Form_Class {get; set;} //nvarchar(128) not null
-        [Column(_Label, SqlDbType.NVarChar, Nullable = true, Length = 100)]                       public string Label {get; set;} //nvarchar(100) null
-        [Column(_Description, SqlDbType.NVarChar, Nullable = true, Length = 256)]                 public string Description {get; set;} //nvarchar(256) null
-        [Column(_Icon, SqlDbType.Image, Nullable = true)]                                         public byte[] Icon {get; set;} //image(16) null
-        [Column(_Help, SqlDbType.NText, Nullable = true)]                                         public string Help {get; set;} //ntext(16) null
+        [Column(_ID, CType.Int, Identity = true)]                                             public int ID {get; set;}     //int(4) not null
+        [Column(_Form_Class, CType.NVarChar, Primary = true, Length = 128)]                   public string Form_Class {get; set;} //nvarchar(128) not null
+        [Column(_Label, CType.NVarChar, Nullable = true, Length = 100)]                       public string Label {get; set;} //nvarchar(100) null
+        [Column(_Description, CType.NVarChar, Nullable = true, Length = 256)]                 public string Description {get; set;} //nvarchar(256) null
+        [Column(_Icon, CType.Image, Nullable = true)]                                         public byte[] Icon {get; set;} //image(16) null
+        [Column(_Help, CType.NText, Nullable = true)]                                         public string Help {get; set;} //ntext(16) null
 
         #region IMAGE PROPERTIES
         public Image IconImage

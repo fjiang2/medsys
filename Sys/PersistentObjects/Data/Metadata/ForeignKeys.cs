@@ -100,22 +100,22 @@ WHERE FK.TABLE_NAME='{1}'
     {
 #pragma warning disable
 
-        [Column("DatabaseName", SqlDbType.NVarChar, Primary = true)]
+        [Column("DatabaseName", CType.NVarChar, Primary = true)]
         public string DatabaseName { get; set; }
 
-        [Column("FK_Table", SqlDbType.NVarChar, Primary = true)]
+        [Column("FK_Table", CType.NVarChar, Primary = true)]
         public string FK_Table { get; set; }
 
-        [Column("FK_Column", SqlDbType.NVarChar, Primary = true)]
+        [Column("FK_Column", CType.NVarChar, Primary = true)]
         public string FK_Column { get; set; }
 
-        [Column("PK_Table", SqlDbType.NVarChar)]
+        [Column("PK_Table", CType.NVarChar)]
         public string PK_Table { get; set; }
 
-        [Column("PK_Column", SqlDbType.NVarChar)]
+        [Column("PK_Column", CType.NVarChar)]
         public string PK_Column { get; set; }
 
-        [Column("Constraint_Name", SqlDbType.NVarChar)]
+        [Column("Constraint_Name", CType.NVarChar)]
         public string Constraint_Name { get; set; }
 
 #pragma warning restore

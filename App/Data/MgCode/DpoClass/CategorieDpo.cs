@@ -21,10 +21,10 @@ namespace App.Data.DpoClass
 
 #pragma warning disable
 
-        [Column(_CategoryID, SqlDbType.Int, Identity = true, Primary = true)]                     public int CategoryID {get; set;} //int(4) not null
-        [Column(_CategoryName, SqlDbType.NVarChar, Length = 15)]                                  public string CategoryName {get; set;} //nvarchar(15) not null
-        [Column(_Description, SqlDbType.NText, Nullable = true)]                                  public string Description {get; set;} //ntext(16) null
-        [Column(_Picture, SqlDbType.Image, Nullable = true)]                                      public byte[] Picture {get; set;} //image(16) null
+        [Column(_CategoryID, CType.Int, Identity = true, Primary = true)]                     public int CategoryID {get; set;} //int(4) not null
+        [Column(_CategoryName, CType.NVarChar, Length = 15)]                                  public string CategoryName {get; set;} //nvarchar(15) not null
+        [Column(_Description, CType.NText, Nullable = true)]                                  public string Description {get; set;} //ntext(16) null
+        [Column(_Picture, CType.Image, Nullable = true)]                                      public byte[] Picture {get; set;} //image(16) null
 
         #region IMAGE PROPERTIES
         public Image PictureImage

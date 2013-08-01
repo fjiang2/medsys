@@ -21,13 +21,13 @@ namespace Sys.PersistentObjects.DpoClass
 
 #pragma warning disable
 
-        [Column(_database_id, SqlDbType.Int, Identity = true)]                                    public int database_id {get; set;} //int(4) not null
-        [Column(_name, SqlDbType.VarChar, Primary = true, Length = 50)]                           public string name {get; set;} //varchar(50) not null
-        [Column(_provider_id, SqlDbType.Int, Primary = true)]                                     public int provider_id {get; set;} //int(4) not null
-        [Column(_label, SqlDbType.NVarChar, Nullable = true, Length = 50)]                        public string label {get; set;} //nvarchar(50) null
-        [Column(_description, SqlDbType.NVarChar, Nullable = true, Length = 128)]                 public string description {get; set;} //nvarchar(128) null
-        [Column(_enabled, SqlDbType.Bit)]                                                         public bool enabled {get; set;} //bit(1) not null
-        [Column(_version, SqlDbType.Int)]                                                         public int version {get; set;} //int(4) not null
+        [Column(_database_id, CType.Int, Identity = true)]                                    public int database_id {get; set;} //int(4) not null
+        [Column(_name, CType.VarChar, Primary = true, Length = 50)]                           public string name {get; set;} //varchar(50) not null
+        [Column(_provider_id, CType.Int, Primary = true)]                                     public int provider_id {get; set;} //int(4) not null
+        [Column(_label, CType.NVarChar, Nullable = true, Length = 50)]                        public string label {get; set;} //nvarchar(50) null
+        [Column(_description, CType.NVarChar, Nullable = true, Length = 128)]                 public string description {get; set;} //nvarchar(128) null
+        [Column(_enabled, CType.Bit)]                                                         public bool enabled {get; set;} //bit(1) not null
+        [Column(_version, CType.Int)]                                                         public int version {get; set;} //int(4) not null
 
 #pragma warning restore
 

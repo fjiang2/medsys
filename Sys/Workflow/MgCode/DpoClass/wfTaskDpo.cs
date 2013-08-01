@@ -21,37 +21,37 @@ namespace Sys.Workflow.DpoClass
 
 #pragma warning disable
 
-        [Column(_ID, SqlDbType.Int, Identity = true, Primary = true)]                             public int ID {get; set;}     //int(4) not null
-        [Column(_Company, SqlDbType.NVarChar, Nullable = true, Length = 50)]                      public string Company {get; set;} //nvarchar(50) null
-        [Column(_Summary, SqlDbType.NVarChar, Length = 128)]                                      public string Summary {get; set;} //nvarchar(128) not null
-        [Column(_Category1, SqlDbType.NVarChar, Nullable = true, Length = 50)]                    public string Category1 {get; set;} //nvarchar(50) null
-        [Column(_Category2, SqlDbType.NVarChar, Nullable = true, Length = 50)]                    public string Category2 {get; set;} //nvarchar(50) null
-        [Column(_Category3, SqlDbType.NVarChar, Nullable = true, Length = 50)]                    public string Category3 {get; set;} //nvarchar(50) null
-        [Column(_Description, SqlDbType.NVarChar, Nullable = true, Length = 2048)]                public string Description {get; set;} //nvarchar(2048) null
-        [Column(_Priority, SqlDbType.Int)]                                                        public int Priority {get; set;} //int(4) not null
-        [Column(_Status, SqlDbType.Int)]                                                          public int Status {get; set;} //int(4) not null
-        [Column(_Submitted_Date, SqlDbType.DateTime)]                                             public DateTime Submitted_Date {get; set;} //datetime(8) not null
-        [Column(_Start_Date, SqlDbType.DateTime, Nullable = true)]                                public DateTime? Start_Date {get; set;} //datetime(8) null
-        [Column(_Due_Date, SqlDbType.DateTime, Nullable = true)]                                  public DateTime? Due_Date {get; set;} //datetime(8) null
-        [Column(_Reminder_Date, SqlDbType.DateTime, Nullable = true)]                             public DateTime? Reminder_Date {get; set;} //datetime(8) null
-        [Column(_Last_Action_Date, SqlDbType.DateTime, Nullable = true)]                          public DateTime? Last_Action_Date {get; set;} //datetime(8) null
-        [Column(_Work_Date, SqlDbType.DateTime, Nullable = true)]                                 public DateTime? Work_Date {get; set;} //datetime(8) null
-        [Column(_Complete_Date, SqlDbType.DateTime, Nullable = true)]                             public DateTime? Complete_Date {get; set;} //datetime(8) null
-        [Column(_Complete_Percentage, SqlDbType.Float, Nullable = true)]                          public double? Complete_Percentage {get; set;} //float(8) null
-        [Column(_Time_Spent, SqlDbType.Float, Nullable = true)]                                   public double? Time_Spent {get; set;} //float(8) null
-        [Column(_Resolution, SqlDbType.NVarChar, Nullable = true, Length = 2048)]                 public string Resolution {get; set;} //nvarchar(2048) null
-        [Column(_Owner_ID, SqlDbType.Int, Nullable = true)]                                       public int? Owner_ID {get; set;} //int(4) null
-        [Column(_Sender_ID, SqlDbType.Int)]                                                       public int Sender_ID {get; set;} //int(4) not null
-        [Column(_Unread, SqlDbType.Bit)]                                                          public bool Unread {get; set;} //bit(1) not null
-        [Column(_Deleted, SqlDbType.Bit)]                                                         public bool Deleted {get; set;} //bit(1) not null
-        [Column(_Visible, SqlDbType.Bit)]                                                         public bool Visible {get; set;} //bit(1) not null
-        [Column(_Enabled, SqlDbType.Bit)]                                                         public bool Enabled {get; set;} //bit(1) not null
-        [Column(_WorkflowInstance_ID, SqlDbType.Int, Nullable = true)]                            public int? WorkflowInstance_ID {get; set;} //int(4) null
-        [Column(_State_Name, SqlDbType.NVarChar, Nullable = true, Length = 128)]                  public string State_Name {get; set;} //nvarchar(128) null
-        [Column(_Activity_Status, SqlDbType.Int, Nullable = true)]                                public int? Activity_Status {get; set;} //int(4) null
-        [Column(_Prev_States, SqlDbType.NVarChar, Nullable = true, Length = 512)]                 public string Prev_States {get; set;} //nvarchar(512) null
-        [Column(_Next_States, SqlDbType.NVarChar, Nullable = true, Length = 512)]                 public string Next_States {get; set;} //nvarchar(512) null
-        [Column(_Heap, SqlDbType.NVarChar, Nullable = true, Length = 4000)]                       public string Heap {get; set;} //nvarchar(4000) null
+        [Column(_ID, CType.Int, Identity = true, Primary = true)]                             public int ID {get; set;}     //int(4) not null
+        [Column(_Company, CType.NVarChar, Nullable = true, Length = 50)]                      public string Company {get; set;} //nvarchar(50) null
+        [Column(_Summary, CType.NVarChar, Length = 128)]                                      public string Summary {get; set;} //nvarchar(128) not null
+        [Column(_Category1, CType.NVarChar, Nullable = true, Length = 50)]                    public string Category1 {get; set;} //nvarchar(50) null
+        [Column(_Category2, CType.NVarChar, Nullable = true, Length = 50)]                    public string Category2 {get; set;} //nvarchar(50) null
+        [Column(_Category3, CType.NVarChar, Nullable = true, Length = 50)]                    public string Category3 {get; set;} //nvarchar(50) null
+        [Column(_Description, CType.NVarChar, Nullable = true, Length = 2048)]                public string Description {get; set;} //nvarchar(2048) null
+        [Column(_Priority, CType.Int)]                                                        public int Priority {get; set;} //int(4) not null
+        [Column(_Status, CType.Int)]                                                          public int Status {get; set;} //int(4) not null
+        [Column(_Submitted_Date, CType.DateTime)]                                             public DateTime Submitted_Date {get; set;} //datetime(8) not null
+        [Column(_Start_Date, CType.DateTime, Nullable = true)]                                public DateTime? Start_Date {get; set;} //datetime(8) null
+        [Column(_Due_Date, CType.DateTime, Nullable = true)]                                  public DateTime? Due_Date {get; set;} //datetime(8) null
+        [Column(_Reminder_Date, CType.DateTime, Nullable = true)]                             public DateTime? Reminder_Date {get; set;} //datetime(8) null
+        [Column(_Last_Action_Date, CType.DateTime, Nullable = true)]                          public DateTime? Last_Action_Date {get; set;} //datetime(8) null
+        [Column(_Work_Date, CType.DateTime, Nullable = true)]                                 public DateTime? Work_Date {get; set;} //datetime(8) null
+        [Column(_Complete_Date, CType.DateTime, Nullable = true)]                             public DateTime? Complete_Date {get; set;} //datetime(8) null
+        [Column(_Complete_Percentage, CType.Float, Nullable = true)]                          public double? Complete_Percentage {get; set;} //float(8) null
+        [Column(_Time_Spent, CType.Float, Nullable = true)]                                   public double? Time_Spent {get; set;} //float(8) null
+        [Column(_Resolution, CType.NVarChar, Nullable = true, Length = 2048)]                 public string Resolution {get; set;} //nvarchar(2048) null
+        [Column(_Owner_ID, CType.Int, Nullable = true)]                                       public int? Owner_ID {get; set;} //int(4) null
+        [Column(_Sender_ID, CType.Int)]                                                       public int Sender_ID {get; set;} //int(4) not null
+        [Column(_Unread, CType.Bit)]                                                          public bool Unread {get; set;} //bit(1) not null
+        [Column(_Deleted, CType.Bit)]                                                         public bool Deleted {get; set;} //bit(1) not null
+        [Column(_Visible, CType.Bit)]                                                         public bool Visible {get; set;} //bit(1) not null
+        [Column(_Enabled, CType.Bit)]                                                         public bool Enabled {get; set;} //bit(1) not null
+        [Column(_WorkflowInstance_ID, CType.Int, Nullable = true)]                            public int? WorkflowInstance_ID {get; set;} //int(4) null
+        [Column(_State_Name, CType.NVarChar, Nullable = true, Length = 128)]                  public string State_Name {get; set;} //nvarchar(128) null
+        [Column(_Activity_Status, CType.Int, Nullable = true)]                                public int? Activity_Status {get; set;} //int(4) null
+        [Column(_Prev_States, CType.NVarChar, Nullable = true, Length = 512)]                 public string Prev_States {get; set;} //nvarchar(512) null
+        [Column(_Next_States, CType.NVarChar, Nullable = true, Length = 512)]                 public string Next_States {get; set;} //nvarchar(512) null
+        [Column(_Heap, CType.NVarChar, Nullable = true, Length = 4000)]                       public string Heap {get; set;} //nvarchar(4000) null
 
 #pragma warning restore
 

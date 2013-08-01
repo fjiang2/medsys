@@ -21,12 +21,12 @@ namespace Sys.ViewManager.DpoClass
 
 #pragma warning disable
 
-        [Column(_ID, SqlDbType.Int, Identity = true, Primary = true)]                             public int ID {get; set;}     //int(4) not null
-        [Column(_Label, SqlDbType.NVarChar, Length = 50)]                                         public string Label {get; set;} //nvarchar(50) not null
-        [Column(_Description, SqlDbType.NVarChar, Nullable = true, Length = 128)]                 public string Description {get; set;} //nvarchar(128) null
-        [Column(_Command, SqlDbType.NVarChar, Length = 128)]                                      public string Command {get; set;} //nvarchar(128) not null
-        [Column(_Icon, SqlDbType.Image, Nullable = true)]                                         public byte[] Icon {get; set;} //image(16) null
-        [Column(_OrderBy, SqlDbType.Int, Nullable = true)]                                        public int? OrderBy {get; set;} //int(4) null
+        [Column(_ID, CType.Int, Identity = true, Primary = true)]                             public int ID {get; set;}     //int(4) not null
+        [Column(_Label, CType.NVarChar, Length = 50)]                                         public string Label {get; set;} //nvarchar(50) not null
+        [Column(_Description, CType.NVarChar, Nullable = true, Length = 128)]                 public string Description {get; set;} //nvarchar(128) null
+        [Column(_Command, CType.NVarChar, Length = 128)]                                      public string Command {get; set;} //nvarchar(128) not null
+        [Column(_Icon, CType.Image, Nullable = true)]                                         public byte[] Icon {get; set;} //image(16) null
+        [Column(_OrderBy, CType.Int, Nullable = true)]                                        public int? OrderBy {get; set;} //int(4) null
 
         #region IMAGE PROPERTIES
         public Image IconImage

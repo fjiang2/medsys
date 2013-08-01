@@ -21,21 +21,21 @@ namespace Sys.Platform.DpoClass
 
 #pragma warning disable
 
-        [Column(_UniqueID, SqlDbType.Int, Identity = true, Primary = true)]                       public int UniqueID {get; set;} //int(4) not null
-        [Column(_User_ID, SqlDbType.Int)]                                                         public int User_ID {get; set;} //int(4) not null
-        [Column(_Type, SqlDbType.Int)]                                                            public int Type {get; set;}   //int(4) not null
-        [Column(_StartDate, SqlDbType.SmallDateTime)]                                             public DateTime StartDate {get; set;} //smalldatetime(4) not null
-        [Column(_EndDate, SqlDbType.SmallDateTime)]                                               public DateTime EndDate {get; set;} //smalldatetime(4) not null
-        [Column(_AllDay, SqlDbType.Bit)]                                                          public bool AllDay {get; set;} //bit(1) not null
-        [Column(_Subject, SqlDbType.NVarChar, Nullable = true, Length = 50)]                      public string Subject {get; set;} //nvarchar(50) null
-        [Column(_Location, SqlDbType.NVarChar, Nullable = true, Length = 50)]                     public string Location {get; set;} //nvarchar(50) null
-        [Column(_Description, SqlDbType.NVarChar, Nullable = true, Length = -1)]                  public string Description {get; set;} //nvarchar(-1) null
-        [Column(_Status, SqlDbType.Int)]                                                          public int Status {get; set;} //int(4) not null
-        [Column(_Label, SqlDbType.Int, Nullable = true)]                                          public int? Label {get; set;} //int(4) null
-        [Column(_ResourceID, SqlDbType.Int)]                                                      public int ResourceID {get; set;} //int(4) not null
-        [Column(_ReminderInfo, SqlDbType.NVarChar, Nullable = true, Length = -1)]                 public string ReminderInfo {get; set;} //nvarchar(-1) null
-        [Column(_RecurrenceInfo, SqlDbType.NVarChar, Nullable = true, Length = -1)]               public string RecurrenceInfo {get; set;} //nvarchar(-1) null
-        [Column(_CustomField1, SqlDbType.NVarChar, Nullable = true, Length = -1)]                 public string CustomField1 {get; set;} //nvarchar(-1) null
+        [Column(_UniqueID, CType.Int, Identity = true, Primary = true)]                       public int UniqueID {get; set;} //int(4) not null
+        [Column(_User_ID, CType.Int)]                                                         public int User_ID {get; set;} //int(4) not null
+        [Column(_Type, CType.Int)]                                                            public int Type {get; set;}   //int(4) not null
+        [Column(_StartDate, CType.SmallDateTime)]                                             public DateTime StartDate {get; set;} //smalldatetime(4) not null
+        [Column(_EndDate, CType.SmallDateTime)]                                               public DateTime EndDate {get; set;} //smalldatetime(4) not null
+        [Column(_AllDay, CType.Bit)]                                                          public bool AllDay {get; set;} //bit(1) not null
+        [Column(_Subject, CType.NVarChar, Nullable = true, Length = 50)]                      public string Subject {get; set;} //nvarchar(50) null
+        [Column(_Location, CType.NVarChar, Nullable = true, Length = 50)]                     public string Location {get; set;} //nvarchar(50) null
+        [Column(_Description, CType.NVarChar, Nullable = true, Length = -1)]                  public string Description {get; set;} //nvarchar(-1) null
+        [Column(_Status, CType.Int)]                                                          public int Status {get; set;} //int(4) not null
+        [Column(_Label, CType.Int, Nullable = true)]                                          public int? Label {get; set;} //int(4) null
+        [Column(_ResourceID, CType.Int)]                                                      public int ResourceID {get; set;} //int(4) not null
+        [Column(_ReminderInfo, CType.NVarChar, Nullable = true, Length = -1)]                 public string ReminderInfo {get; set;} //nvarchar(-1) null
+        [Column(_RecurrenceInfo, CType.NVarChar, Nullable = true, Length = -1)]               public string RecurrenceInfo {get; set;} //nvarchar(-1) null
+        [Column(_CustomField1, CType.NVarChar, Nullable = true, Length = -1)]                 public string CustomField1 {get; set;} //nvarchar(-1) null
 
 #pragma warning restore
 

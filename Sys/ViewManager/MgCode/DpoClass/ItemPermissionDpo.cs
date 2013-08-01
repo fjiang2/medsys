@@ -21,11 +21,11 @@ namespace Sys.ViewManager.DpoClass
 
 #pragma warning disable
 
-        [Column(_Role_ID, SqlDbType.Int, Primary = true)]                                         public int Role_ID {get; set;} //int(4) not null
-        [Column(_Ty, SqlDbType.Int, Primary = true)]                                              public int Ty {get; set;}     //int(4) not null
-        [Column(_ID, SqlDbType.Int, Primary = true)]                                              public int ID {get; set;}     //int(4) not null
-        [Column(_Enabled, SqlDbType.Bit, Nullable = true)]                                        public bool? Enabled {get; set;} //bit(1) null
-        [Column(_Visible, SqlDbType.Bit, Nullable = true)]                                        public bool? Visible {get; set;} //bit(1) null
+        [Column(_Role_ID, CType.Int, Primary = true)]                                         public int Role_ID {get; set;} //int(4) not null
+        [Column(_Ty, CType.Int, Primary = true)]                                              public int Ty {get; set;}     //int(4) not null
+        [Column(_ID, CType.Int, Primary = true)]                                              public int ID {get; set;}     //int(4) not null
+        [Column(_Enabled, CType.Bit, Nullable = true)]                                        public bool? Enabled {get; set;} //bit(1) null
+        [Column(_Visible, CType.Bit, Nullable = true)]                                        public bool? Visible {get; set;} //bit(1) null
 
 #pragma warning restore
 

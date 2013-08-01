@@ -21,26 +21,26 @@ namespace Sys.SmartList.DpoClass
 
 #pragma warning disable
 
-        [Column(_ID, SqlDbType.Int, Identity = true, Primary = true)]                             public int ID {get; set;}     //int(4) not null
-        [Column(_ParentID, SqlDbType.Int)]                                                        public int ParentID {get; set;} //int(4) not null
-        [Column(_OrderBy, SqlDbType.Int)]                                                         public int OrderBy {get; set;} //int(4) not null
-        [Column(_Image_Index, SqlDbType.Int)]                                                     public int Image_Index {get; set;} //int(4) not null
-        [Column(_Ty, SqlDbType.Int)]                                                              public int Ty {get; set;}     //int(4) not null
-        [Column(_Label, SqlDbType.NVarChar, Length = 50)]                                         public string Label {get; set;} //nvarchar(50) not null
-        [Column(_Description, SqlDbType.Text, Nullable = true)]                                   public string Description {get; set;} //text(16) null
-        [Column(_Header_Footer, SqlDbType.NVarChar, Length = 512)]                                public string Header_Footer {get; set;} //nvarchar(512) not null
-        [Column(_Data_Provider, SqlDbType.Int)]                                                   public int Data_Provider {get; set;} //int(4) not null
-        [Column(_Sql_Command, SqlDbType.VarChar, Length = -1)]                                    public string Sql_Command {get; set;} //varchar(-1) not null
-        [Column(_User_Layout, SqlDbType.NVarChar, Length = 4000)]                                 public string User_Layout {get; set;} //nvarchar(4000) not null
-        [Column(_Setting_Script, SqlDbType.NText)]                                                public string Setting_Script {get; set;} //ntext(16) not null
-        [Column(_Access_Level, SqlDbType.Int)]                                                    public int Access_Level {get; set;} //int(4) not null
-        [Column(_Released, SqlDbType.Bit)]                                                        public bool Released {get; set;} //bit(1) not null
-        [Column(_Controlled, SqlDbType.Bit)]                                                      public bool Controlled {get; set;} //bit(1) not null
-        [Column(_Enabled, SqlDbType.Bit)]                                                         public bool Enabled {get; set;} //bit(1) not null
-        [Column(_Visible, SqlDbType.Bit)]                                                         public bool Visible {get; set;} //bit(1) not null
-        [Column(_ViewMode, SqlDbType.Int)]                                                        public int ViewMode {get; set;} //int(4) not null
-        [Column(_Owner_ID, SqlDbType.Int)]                                                        public int Owner_ID {get; set;} //int(4) not null
-        [Column(_Help, SqlDbType.NText, Nullable = true)]                                         public string Help {get; set;} //ntext(16) null
+        [Column(_ID, CType.Int, Identity = true, Primary = true)]                             public int ID {get; set;}     //int(4) not null
+        [Column(_ParentID, CType.Int)]                                                        public int ParentID {get; set;} //int(4) not null
+        [Column(_OrderBy, CType.Int)]                                                         public int OrderBy {get; set;} //int(4) not null
+        [Column(_Image_Index, CType.Int)]                                                     public int Image_Index {get; set;} //int(4) not null
+        [Column(_Ty, CType.Int)]                                                              public int Ty {get; set;}     //int(4) not null
+        [Column(_Label, CType.NVarChar, Length = 50)]                                         public string Label {get; set;} //nvarchar(50) not null
+        [Column(_Description, CType.Text, Nullable = true)]                                   public string Description {get; set;} //text(16) null
+        [Column(_Header_Footer, CType.NVarChar, Length = 512)]                                public string Header_Footer {get; set;} //nvarchar(512) not null
+        [Column(_Data_Provider, CType.Int)]                                                   public int Data_Provider {get; set;} //int(4) not null
+        [Column(_Sql_Command, CType.VarChar, Length = -1)]                                    public string Sql_Command {get; set;} //varchar(-1) not null
+        [Column(_User_Layout, CType.NVarChar, Length = 4000)]                                 public string User_Layout {get; set;} //nvarchar(4000) not null
+        [Column(_Setting_Script, CType.NText)]                                                public string Setting_Script {get; set;} //ntext(16) not null
+        [Column(_Access_Level, CType.Int)]                                                    public int Access_Level {get; set;} //int(4) not null
+        [Column(_Released, CType.Bit)]                                                        public bool Released {get; set;} //bit(1) not null
+        [Column(_Controlled, CType.Bit)]                                                      public bool Controlled {get; set;} //bit(1) not null
+        [Column(_Enabled, CType.Bit)]                                                         public bool Enabled {get; set;} //bit(1) not null
+        [Column(_Visible, CType.Bit)]                                                         public bool Visible {get; set;} //bit(1) not null
+        [Column(_ViewMode, CType.Int)]                                                        public int ViewMode {get; set;} //int(4) not null
+        [Column(_Owner_ID, CType.Int)]                                                        public int Owner_ID {get; set;} //int(4) not null
+        [Column(_Help, CType.NText, Nullable = true)]                                         public string Help {get; set;} //ntext(16) null
 
 #pragma warning restore
 

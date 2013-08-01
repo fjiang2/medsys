@@ -24,7 +24,7 @@ using System.Data.Common;
 
 namespace Sys.Data
 {
-    public enum DbType
+    public enum DbProviderType
     {
         OleDb,
         SqlDb,

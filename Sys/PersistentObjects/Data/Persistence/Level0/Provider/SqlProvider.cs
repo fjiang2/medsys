@@ -49,7 +49,7 @@ namespace Sys.Data
 
         public override DbParameter AddParameter(string parameterName, Type type)
         {
-            SqlParameter param = new SqlParameter(parameterName, type.ToSqlDbType());
+            SqlParameter param = new SqlParameter(parameterName, type.ToCType().ToSqlDbType());
             DbCommand.Parameters.Add(param);
             return param;
         }

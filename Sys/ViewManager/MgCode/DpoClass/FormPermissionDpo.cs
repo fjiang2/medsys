@@ -21,10 +21,10 @@ namespace Sys.ViewManager.DpoClass
 
 #pragma warning disable
 
-        [Column(_Role_ID, SqlDbType.Int, Primary = true)]                                         public int Role_ID {get; set;} //int(4) not null
-        [Column(_Ty, SqlDbType.Int, Nullable = true)]                                             public int? Ty {get; set;}    //int(4) null
-        [Column(_Key_Name, SqlDbType.NVarChar, Primary = true, Length = 128)]                     public string Key_Name {get; set;} //nvarchar(128) not null
-        [Column(_Value, SqlDbType.NText, Nullable = true)]                                        public string Value {get; set;} //ntext(16) null
+        [Column(_Role_ID, CType.Int, Primary = true)]                                         public int Role_ID {get; set;} //int(4) not null
+        [Column(_Ty, CType.Int, Nullable = true)]                                             public int? Ty {get; set;}    //int(4) null
+        [Column(_Key_Name, CType.NVarChar, Primary = true, Length = 128)]                     public string Key_Name {get; set;} //nvarchar(128) not null
+        [Column(_Value, CType.NText, Nullable = true)]                                        public string Value {get; set;} //ntext(16) null
 
 #pragma warning restore
 

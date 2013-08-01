@@ -36,44 +36,44 @@ namespace Sys.Data
         int ColumnID { get; }
 
         IForeignKey ForeignKey { get; set; }
-        SqlDbType SqlDbType { get; }
+        CType CType { get; }
     }
 
 
     public class MetaColumn : PersistentObject, IMetaColumn
     {
 
-        [Column("ColumnName", SqlDbType.NVarChar, Primary = true)]
+        [Column("ColumnName", CType.NVarChar, Primary = true)]
         public string ColumnName { get; set; }
 
-        [Column("DataType", SqlDbType.NVarChar)]
+        [Column("DataType", CType.NVarChar)]
         public string DataType { get; set; }
 
-        [Column("Length", SqlDbType.Int)]
+        [Column("Length", CType.Int)]
         public short Length { get; set; }    //length return from SQL Server
 
-        [Column("Nullable", SqlDbType.Bit)]
+        [Column("Nullable", CType.Bit)]
         public bool Nullable { get; set; }
 
-        [Column("precision", SqlDbType.TinyInt)]
+        [Column("precision", CType.TinyInt)]
         public byte precision { get; set; }
 
-        [Column("scale", SqlDbType.TinyInt)]
+        [Column("scale", CType.TinyInt)]
         public byte scale { get; set; }
 
-        [Column("IsIdentity", SqlDbType.Bit)]
+        [Column("IsIdentity", CType.Bit)]
         public bool IsIdentity { get; set; }
 
-        [Column("IsComputed", SqlDbType.Bit)]
+        [Column("IsComputed", CType.Bit)]
         public bool IsComputed { get; set; }
 
-        [Column("ColumnID", SqlDbType.Int)]
+        [Column("ColumnID", CType.Int)]
         public int ColumnID { get; set; }    //column_id is from column dictionary
         
-        [Column("label", SqlDbType.NVarChar)]
+        [Column("label", CType.NVarChar)]
         public string label { get; set; }    //label used as caption to support internationalization
 
-        private SqlDbType sqlDbType;
+        private CType sqlDbType;
         private bool isPrimary = false;
         private IForeignKey foreignKey;
 
@@ -87,7 +87,7 @@ namespace Sys.Data
         {
 
             this.ColumnName = attr.ColumnName;
-            this.SqlDbType = attr.SqlDbType;
+            this.CType = attr.CType;
 
             this.Nullable = attr.Nullable;
             this.precision = attr.Precision;
@@ -111,7 +111,7 @@ namespace Sys.Data
             }
         }
 
-        public SqlDbType SqlDbType
+        public CType CType
         {
             get { return this.sqlDbType; }
             set
@@ -148,82 +148,82 @@ namespace Sys.Data
 
         #region SqlDataType -> System.SqlDbType / C# field type / SQL_Create_Table Type
 
-        public static SqlDbType GetSqlDbType(string sqlType)
+        public static CType GetSqlDbType(string sqlType)
         {
             switch (sqlType.ToLower())
             {
                 case "varchar":
-                    return SqlDbType.VarChar;
+                    return CType.VarChar;
 
                 case "char":
-                    return SqlDbType.Char;
+                    return CType.Char;
          
                 case "nvarchar":
-                    return SqlDbType.NVarChar;
+                    return CType.NVarChar;
 
                 case "nchar":
-                    return SqlDbType.NChar;
+                    return CType.NChar;
 
                 case "decimal":
-                    return SqlDbType.Decimal;
+                    return CType.Decimal;
 
                 case "numeric":
-                    return SqlDbType.Decimal;
+                    return CType.Decimal;
 
                 case "text":
-                    return SqlDbType.Text;
+                    return CType.Text;
 
                 case "ntext":
-                    return SqlDbType.NText;
+                    return CType.NText;
 
                 case "datetime":
-                    return SqlDbType.DateTime;
+                    return CType.DateTime;
 
                 case "smalldatetime":
-                    return SqlDbType.SmallDateTime;
+                    return CType.SmallDateTime;
 
                 case "timestamp":
-                    return SqlDbType.Timestamp;
+                    return CType.Timestamp;
 
                 case "bit":
-                    return SqlDbType.Bit;
+                    return CType.Bit;
 
                 case "money":
-                    return SqlDbType.Money;
+                    return CType.Money;
 
                 case "smallmoney":
-                    return SqlDbType.SmallMoney;
+                    return CType.SmallMoney;
 
                 case "real":
-                    return SqlDbType.Real;
+                    return CType.Real;
 
                 case "float":
-                    return SqlDbType.Float;
+                    return CType.Float;
 
                 case "tinyint":
-                    return SqlDbType.TinyInt;
+                    return CType.TinyInt;
 
                 case "smallint":
-                    return SqlDbType.SmallInt;
+                    return CType.SmallInt;
 
                 case "int":
-                    return SqlDbType.Int;
+                    return CType.Int;
 
                 case "bigint":
-                    return SqlDbType.BigInt;
+                    return CType.BigInt;
 
                 case "varbinary":
-                    return SqlDbType.VarBinary;
+                    return CType.VarBinary;
 
                 case "binary":
-                    return SqlDbType.Binary;
+                    return CType.Binary;
 
 
                 case "image":
-                    return SqlDbType.Image;
+                    return CType.Image;
 
                 case "uniqueidentifier":
-                    return SqlDbType.UniqueIdentifier;
+                    return CType.UniqueIdentifier;
 
 
             }
@@ -333,20 +333,20 @@ namespace Sys.Data
             string DataType = column.DataType;
             int Length = column.Length;
 
-            switch (column.SqlDbType)
+            switch (column.CType)
             {
-                case SqlDbType.VarChar:
-                case SqlDbType.Char:
-                case SqlDbType.VarBinary:
-                case SqlDbType.Binary:
+                case CType.VarChar:
+                case CType.Char:
+                case CType.VarBinary:
+                case CType.Binary:
                     if (Length >= 0)
                         ty = string.Format("{0}({1})", DataType, Length);
                     else
                         ty = string.Format("{0}(max)", DataType);
                     break;
 
-                case SqlDbType.NVarChar:
-                case SqlDbType.NChar:
+                case CType.NVarChar:
+                case CType.NChar:
                     if (Length >= 0)
                         ty = string.Format("{0}({1})", DataType, Length / 2);
                     else
@@ -354,7 +354,7 @@ namespace Sys.Data
                     break;
 
                 //case SqlDbType.Numeric:
-                case SqlDbType.Decimal:
+                case CType.Decimal:
                     ty = string.Format("{0}({1},{2})", DataType, column.precision, column.scale);
                     break;
 
@@ -388,21 +388,21 @@ namespace Sys.Data
 
             switch (sqlDbType)
             {
-                case SqlDbType.VarChar:
-                case SqlDbType.NVarChar:
-                case SqlDbType.Char:
-                case SqlDbType.NChar:
+                case CType.VarChar:
+                case CType.NVarChar:
+                case CType.Char:
+                case CType.NChar:
                     if (this.Oversize(val))
                         throw new JException("Column Name={0}, length of value \"{1}\" {2} > {3}", ColumnName, val, val.Length, this.AdjuestedLength());
                     else
                         return val;
            
-                case SqlDbType.VarBinary:
-                case SqlDbType.Binary:
-                    throw new NotImplementedException(string.Format("cannot convert {0} into type of {1}", val, sqlDbType));
+                case CType.VarBinary:
+                case CType.Binary:
+                    throw new NotImplementedException(string.Format("cannot convert {0} into type of {1}", val, CType.Binary));
                     
 
-                case SqlDbType.DateTime:
+                case CType.DateTime:
                     if(val.IndexOf("-") > 0)    //2011-10-30
                     {
                         string[] date = val.Split('-');
@@ -425,14 +425,14 @@ namespace Sys.Data
                         return Convert.ToDateTime(val);
                     }
 
-                case SqlDbType.Float:
+                case CType.Float:
                     return Convert.ToDouble(val);
 
-                case SqlDbType.Real:
+                case CType.Real:
                     return Convert.ToSingle(val);
 
 
-                case SqlDbType.Bit:
+                case CType.Bit:
                     if (val == "0")
                         return false;
                     else if (val == "1")
@@ -440,19 +440,19 @@ namespace Sys.Data
                     else 
                         return Convert.ToBoolean(val);
 
-                case SqlDbType.Decimal:
+                case CType.Decimal:
                     return Convert.ToDecimal(val);
 
-                case SqlDbType.TinyInt:
+                case CType.TinyInt:
                     return Convert.ToByte(val);
 
-                case SqlDbType.SmallInt:
+                case CType.SmallInt:
                     return Convert.ToInt16(val);
 
-                case SqlDbType.Int:
+                case CType.Int:
                     return Convert.ToInt32(val);
                 
-                case SqlDbType.BigInt:
+                case CType.BigInt:
                     return Convert.ToInt64(val);
 
                 default:

@@ -21,10 +21,10 @@ namespace Sys.Workflow.DpoClass
 
 #pragma warning disable
 
-        [Column(_ID, SqlDbType.Int, Identity = true)]                                             public int ID {get; set;}     //int(4) not null
-        [Column(_Ty, SqlDbType.Int, Primary = true)]                                              public int Ty {get; set;}     //int(4) not null
-        [Column(_ParentID, SqlDbType.Int, Primary = true)]                                        public int ParentID {get; set;} //int(4) not null
-        [Column(_ChildID, SqlDbType.Int, Primary = true)]                                         public int ChildID {get; set;} //int(4) not null
+        [Column(_ID, CType.Int, Identity = true)]                                             public int ID {get; set;}     //int(4) not null
+        [Column(_Ty, CType.Int, Primary = true)]                                              public int Ty {get; set;}     //int(4) not null
+        [Column(_ParentID, CType.Int, Primary = true)]                                        public int ParentID {get; set;} //int(4) not null
+        [Column(_ChildID, CType.Int, Primary = true)]                                         public int ChildID {get; set;} //int(4) not null
 
 #pragma warning restore
 

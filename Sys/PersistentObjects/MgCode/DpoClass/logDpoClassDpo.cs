@@ -21,16 +21,16 @@ namespace Sys.PersistentObjects.DpoClass
 
 #pragma warning disable
 
-        [Column(_class_id, SqlDbType.Int, Identity = true)]                                       public int class_id {get; set;} //int(4) not null
-        [Column(_table_id, SqlDbType.Int, Primary = true)]                                        public int table_id {get; set;} //int(4) not null
-        [Column(_user_id, SqlDbType.Int, Primary = true)]                                         public int user_id {get; set;} //int(4) not null
-        [Column(_path, SqlDbType.NVarChar, Length = 250)]                                         public string path {get; set;} //nvarchar(250) not null
-        [Column(_name_space, SqlDbType.VarChar, Length = 150)]                                    public string name_space {get; set;} //varchar(150) not null
-        [Column(_modifier, SqlDbType.Int)]                                                        public int modifier {get; set;} //int(4) not null
-        [Column(_class_name, SqlDbType.VarChar, Length = 50)]                                     public string class_name {get; set;} //varchar(50) not null
-        [Column(_table_level, SqlDbType.Int)]                                                     public int table_level {get; set;} //int(4) not null
-        [Column(_packed, SqlDbType.Bit)]                                                          public bool packed {get; set;} //bit(1) not null
-        [Column(_has_provider, SqlDbType.Bit)]                                                    public bool has_provider {get; set;} //bit(1) not null
+        [Column(_class_id, CType.Int, Identity = true)]                                       public int class_id {get; set;} //int(4) not null
+        [Column(_table_id, CType.Int, Primary = true)]                                        public int table_id {get; set;} //int(4) not null
+        [Column(_user_id, CType.Int, Primary = true)]                                         public int user_id {get; set;} //int(4) not null
+        [Column(_path, CType.NVarChar, Length = 250)]                                         public string path {get; set;} //nvarchar(250) not null
+        [Column(_name_space, CType.VarChar, Length = 150)]                                    public string name_space {get; set;} //varchar(150) not null
+        [Column(_modifier, CType.Int)]                                                        public int modifier {get; set;} //int(4) not null
+        [Column(_class_name, CType.VarChar, Length = 50)]                                     public string class_name {get; set;} //varchar(50) not null
+        [Column(_table_level, CType.Int)]                                                     public int table_level {get; set;} //int(4) not null
+        [Column(_packed, CType.Bit)]                                                          public bool packed {get; set;} //bit(1) not null
+        [Column(_has_provider, CType.Bit)]                                                    public bool has_provider {get; set;} //bit(1) not null
 
 #pragma warning restore
 

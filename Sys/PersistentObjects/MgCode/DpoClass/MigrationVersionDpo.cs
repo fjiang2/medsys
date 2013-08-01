@@ -21,7 +21,7 @@ namespace Sys.PersistentObjects.DpoClass
 
 #pragma warning disable
 
-        [Column(_Version, SqlDbType.BigInt, Primary = true)]                                      public long Version {get; set;} //bigint(8) not null
+        [Column(_Version, CType.BigInt, Primary = true)]                                      public long Version {get; set;} //bigint(8) not null
 
 #pragma warning restore
 

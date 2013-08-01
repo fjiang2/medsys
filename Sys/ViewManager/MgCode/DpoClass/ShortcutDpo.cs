@@ -21,14 +21,14 @@ namespace Sys.ViewManager.DpoClass
 
 #pragma warning disable
 
-        [Column(_ID, SqlDbType.Int, Identity = true)]                                             public int ID {get; set;}     //int(4) not null
-        [Column(_Ty, SqlDbType.Int)]                                                              public int Ty {get; set;}     //int(4) not null
-        [Column(_Shortcut, SqlDbType.NVarChar, Primary = true, Length = 150)]                     public string Shortcut {get; set;} //nvarchar(150) not null
-        [Column(_Label, SqlDbType.NVarChar, Length = 50)]                                         public string Label {get; set;} //nvarchar(50) not null
-        [Column(_Description, SqlDbType.NVarChar, Nullable = true, Length = 128)]                 public string Description {get; set;} //nvarchar(128) null
-        [Column(_Code, SqlDbType.NVarChar, Length = 256)]                                         public string Code {get; set;} //nvarchar(256) not null
-        [Column(_Icon, SqlDbType.Image, Nullable = true)]                                         public byte[] Icon {get; set;} //image(16) null
-        [Column(_Help, SqlDbType.NText, Nullable = true)]                                         public string Help {get; set;} //ntext(16) null
+        [Column(_ID, CType.Int, Identity = true)]                                             public int ID {get; set;}     //int(4) not null
+        [Column(_Ty, CType.Int)]                                                              public int Ty {get; set;}     //int(4) not null
+        [Column(_Shortcut, CType.NVarChar, Primary = true, Length = 150)]                     public string Shortcut {get; set;} //nvarchar(150) not null
+        [Column(_Label, CType.NVarChar, Length = 50)]                                         public string Label {get; set;} //nvarchar(50) not null
+        [Column(_Description, CType.NVarChar, Nullable = true, Length = 128)]                 public string Description {get; set;} //nvarchar(128) null
+        [Column(_Code, CType.NVarChar, Length = 256)]                                         public string Code {get; set;} //nvarchar(256) not null
+        [Column(_Icon, CType.Image, Nullable = true)]                                         public byte[] Icon {get; set;} //image(16) null
+        [Column(_Help, CType.NText, Nullable = true)]                                         public string Help {get; set;} //ntext(16) null
 
         #region IMAGE PROPERTIES
         public Image IconImage

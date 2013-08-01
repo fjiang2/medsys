@@ -231,30 +231,30 @@ namespace Sys.Data
         internal static string Attribute(this IMetaColumn column)
         {
             string attr = "";
-            switch (column.SqlDbType)
+            switch (column.CType)
             {
-                case SqlDbType.Char:
-                case SqlDbType.VarChar:
-                case SqlDbType.VarBinary:
-                case SqlDbType.Binary:
+                case CType.Char:
+                case CType.VarChar:
+                case CType.VarBinary:
+                case CType.Binary:
                     attr = string.Format(", Length = {0}", column.AdjuestedLength());
                     break;
 
-                case SqlDbType.NChar:
-                case SqlDbType.NVarChar:
+                case CType.NChar:
+                case CType.NVarChar:
                     attr = string.Format(", Length = {0}", column.AdjuestedLength());
                     break;
 
 
-                //case SqlDbType.Numeric:
-                case SqlDbType.Decimal:
+                //case CType.Numeric:
+                case CType.Decimal:
                     attr = string.Format(", Precision = {0}, Scale = {1}", column.precision, column.scale);
                     break;
 
 
             }
 
-            string attribute = string.Format("[Column(_{0}, SqlDbType.{1}", column.ColumnName.FieldName(), column.SqlDbType);
+            string attribute = string.Format("[Column(_{0}, CType.{1}", column.ColumnName.FieldName(), column.CType);
 
             if (column.Nullable)
                 attribute += ", Nullable = true";   //see: bool Nullable = false; in class DataColumnAttribute
@@ -282,14 +282,14 @@ namespace Sys.Data
             if (!(value is string))
                 return false;
 
-            if (column.SqlDbType == SqlDbType.NText || column.SqlDbType == SqlDbType.Text)
+            if (column.CType == CType.NText || column.CType == CType.Text)
                 return false;
 
             string s = (string)value;
 
             if (column.Length == -1)
             {
-                if (column.SqlDbType == SqlDbType.NVarChar || column.SqlDbType == SqlDbType.NChar)
+                if (column.CType == CType.NVarChar || column.CType == CType.NChar)
                     return s.Length > 4000;
                 else
                     return s.Length > 8000;
@@ -307,10 +307,10 @@ namespace Sys.Data
             if (column.Length == -1)
                 return -1;
 
-            switch (column.SqlDbType)
+            switch (column.CType)
             {
-                case SqlDbType.NChar:
-                case SqlDbType.NVarChar:
+                case CType.NChar:
+                case CType.NVarChar:
                     return column.Length / 2;
             }
 
@@ -407,144 +407,7 @@ namespace Sys.Data
 
 
 
-        #region ToSqlDbType / ToType
-
-        public static SqlDbType ToSqlDbType(this Type type)
-        {
-            if (type == typeof(Boolean))
-                return SqlDbType.Bit;
-
-            else if (type == typeof(Int16))
-                return SqlDbType.SmallInt;
-
-            else if (type == typeof(Int32))
-                return SqlDbType.Int;
-
-            else if (type == typeof(Int64))
-                return SqlDbType.BigInt;
-
-            else if (type == typeof(Double))
-                return SqlDbType.Float;
-
-            else if (type == typeof(Single))
-                return SqlDbType.Float;
-
-            else if (type == typeof(Decimal))
-                return SqlDbType.Decimal;
-
-            else if (type == typeof(String))
-                return SqlDbType.NVarChar;
-
-            else if (type == typeof(DateTime))
-                return SqlDbType.DateTime;
-
-            else if (type == typeof(Byte[]))
-                return SqlDbType.Binary;
-
-            else if (type == typeof(Guid))
-                return SqlDbType.UniqueIdentifier;
-
-            throw new JException("Type {0} cannot be converted into SqlDbType", type.FullName);
-        }
-
-        public static OleDbType ToOleDbType(this Type type)
-        {
-            if (type == typeof(Boolean))
-                return OleDbType.Boolean;
-
-            else if (type == typeof(Int16))
-                return OleDbType.SmallInt;
-
-            else if (type == typeof(Int32))
-                return OleDbType.Integer;
-
-            else if (type == typeof(Int64))
-                return OleDbType.BigInt;
-
-            else if (type == typeof(Double))
-                return OleDbType.Double;
-
-            else if (type == typeof(Decimal))
-                return OleDbType.Decimal;
-
-            else if (type == typeof(String))
-                return OleDbType.WChar;
-
-            else if (type == typeof(DateTime))
-                return OleDbType.Date;
-
-            else if (type == typeof(Byte[]))
-                return OleDbType.Binary;
-
-
-            throw new JException("Type {0} cannot be converted into SqlDbType", type.FullName);
-        }
-
-
-        public static Type ToType(this SqlDbType type)
-        {
-            switch (type)
-            {
-                case SqlDbType.Bit:
-                    return typeof(System.Boolean);
-
-                case SqlDbType.TinyInt:
-                    return typeof(byte);
-
-                case SqlDbType.SmallInt:
-                    return typeof(Int16);
-
-                case SqlDbType.Int:
-                    return typeof(Int32);
-
-                case SqlDbType.BigInt:
-                    return typeof(Int64);
-
-                case SqlDbType.Float:
-                case SqlDbType.Real:
-                    return typeof(Double);
-
-                case SqlDbType.Decimal:
-                case SqlDbType.SmallMoney:
-                case SqlDbType.Money:
-                    return typeof(Decimal);
-
-                case SqlDbType.Char:
-                case SqlDbType.NChar:
-                case SqlDbType.VarChar:
-                case SqlDbType.NVarChar:
-                case SqlDbType.Text:
-                case SqlDbType.NText:
-                    return typeof(String);
-
-                case SqlDbType.SmallDateTime:
-                case SqlDbType.DateTime:
-                    return typeof(DateTime);
-
-                case SqlDbType.Timestamp:
-                case SqlDbType.VarBinary:
-                case SqlDbType.Binary:
-                case SqlDbType.Image:
-                    return typeof(Byte[]);
-
-                case SqlDbType.UniqueIdentifier:
-                    return typeof(Guid);
-
-                case SqlDbType.Variant:
-                case SqlDbType.Xml:
-                case SqlDbType.Udt:
-                case SqlDbType.Date:
-                case SqlDbType.Time:
-                case SqlDbType.DateTime2:
-                case SqlDbType.DateTimeOffset:
-                    break;
-
-            }
-
-            throw new JException("SqlDbType {0} cannot be converted into Type", type);
-        }
-        
-        #endregion
+    
 
         #region ToINumerable<T>
 

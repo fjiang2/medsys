@@ -21,25 +21,25 @@ namespace App.Data.DpoClass
 
 #pragma warning disable
 
-        [Column(_EmployeeID, SqlDbType.Int, Identity = true, Primary = true)]                     public int EmployeeID {get; set;} //int(4) not null
-        [Column(_LastName, SqlDbType.NVarChar, Length = 20)]                                      public string LastName {get; set;} //nvarchar(20) not null
-        [Column(_FirstName, SqlDbType.NVarChar, Length = 10)]                                     public string FirstName {get; set;} //nvarchar(10) not null
-        [Column(_Title, SqlDbType.NVarChar, Nullable = true, Length = 30)]                        public string Title {get; set;} //nvarchar(30) null
-        [Column(_TitleOfCourtesy, SqlDbType.NVarChar, Nullable = true, Length = 25)]              public string TitleOfCourtesy {get; set;} //nvarchar(25) null
-        [Column(_BirthDate, SqlDbType.DateTime, Nullable = true)]                                 public DateTime? BirthDate {get; set;} //datetime(8) null
-        [Column(_HireDate, SqlDbType.DateTime, Nullable = true)]                                  public DateTime? HireDate {get; set;} //datetime(8) null
-        [Column(_Address, SqlDbType.NVarChar, Nullable = true, Length = 60)]                      public string Address {get; set;} //nvarchar(60) null
-        [Column(_City, SqlDbType.NVarChar, Nullable = true, Length = 15)]                         public string City {get; set;} //nvarchar(15) null
-        [Column(_Region, SqlDbType.NVarChar, Nullable = true, Length = 15)]                       public string Region {get; set;} //nvarchar(15) null
-        [Column(_PostalCode, SqlDbType.NVarChar, Nullable = true, Length = 10)]                   public string PostalCode {get; set;} //nvarchar(10) null
-        [Column(_Country, SqlDbType.NVarChar, Nullable = true, Length = 15)]                      public string Country {get; set;} //nvarchar(15) null
-        [Column(_HomePhone, SqlDbType.NVarChar, Nullable = true, Length = 24)]                    public string HomePhone {get; set;} //nvarchar(24) null
-        [Column(_Extension, SqlDbType.NVarChar, Nullable = true, Length = 4)]                     public string Extension {get; set;} //nvarchar(4) null
-        [Column(_Photo, SqlDbType.Image, Nullable = true)]                                        public byte[] Photo {get; set;} //image(16) null
-        [Column(_Notes, SqlDbType.NText, Nullable = true)]                                        public string Notes {get; set;} //ntext(16) null
+        [Column(_EmployeeID, CType.Int, Identity = true, Primary = true)]                     public int EmployeeID {get; set;} //int(4) not null
+        [Column(_LastName, CType.NVarChar, Length = 20)]                                      public string LastName {get; set;} //nvarchar(20) not null
+        [Column(_FirstName, CType.NVarChar, Length = 10)]                                     public string FirstName {get; set;} //nvarchar(10) not null
+        [Column(_Title, CType.NVarChar, Nullable = true, Length = 30)]                        public string Title {get; set;} //nvarchar(30) null
+        [Column(_TitleOfCourtesy, CType.NVarChar, Nullable = true, Length = 25)]              public string TitleOfCourtesy {get; set;} //nvarchar(25) null
+        [Column(_BirthDate, CType.DateTime, Nullable = true)]                                 public DateTime? BirthDate {get; set;} //datetime(8) null
+        [Column(_HireDate, CType.DateTime, Nullable = true)]                                  public DateTime? HireDate {get; set;} //datetime(8) null
+        [Column(_Address, CType.NVarChar, Nullable = true, Length = 60)]                      public string Address {get; set;} //nvarchar(60) null
+        [Column(_City, CType.NVarChar, Nullable = true, Length = 15)]                         public string City {get; set;} //nvarchar(15) null
+        [Column(_Region, CType.NVarChar, Nullable = true, Length = 15)]                       public string Region {get; set;} //nvarchar(15) null
+        [Column(_PostalCode, CType.NVarChar, Nullable = true, Length = 10)]                   public string PostalCode {get; set;} //nvarchar(10) null
+        [Column(_Country, CType.NVarChar, Nullable = true, Length = 15)]                      public string Country {get; set;} //nvarchar(15) null
+        [Column(_HomePhone, CType.NVarChar, Nullable = true, Length = 24)]                    public string HomePhone {get; set;} //nvarchar(24) null
+        [Column(_Extension, CType.NVarChar, Nullable = true, Length = 4)]                     public string Extension {get; set;} //nvarchar(4) null
+        [Column(_Photo, CType.Image, Nullable = true)]                                        public byte[] Photo {get; set;} //image(16) null
+        [Column(_Notes, CType.NText, Nullable = true)]                                        public string Notes {get; set;} //ntext(16) null
         [ForeignKey(typeof(App.Data.DpoClass.EmployeeDpo), App.Data.DpoClass.EmployeeDpo._EmployeeID)]
-        [Column(_ReportsTo, SqlDbType.Int, Nullable = true)]                                      public int? ReportsTo {get; set;} //int(4) null
-        [Column(_PhotoPath, SqlDbType.NVarChar, Nullable = true, Length = 255)]                   public string PhotoPath {get; set;} //nvarchar(255) null
+        [Column(_ReportsTo, CType.Int, Nullable = true)]                                      public int? ReportsTo {get; set;} //int(4) null
+        [Column(_PhotoPath, CType.NVarChar, Nullable = true, Length = 255)]                   public string PhotoPath {get; set;} //nvarchar(255) null
 
         #region IMAGE PROPERTIES
         public Image PhotoImage

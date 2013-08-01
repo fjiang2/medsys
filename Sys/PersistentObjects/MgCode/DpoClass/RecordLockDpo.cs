@@ -21,14 +21,14 @@ namespace Sys.PersistentObjects.DpoClass
 
 #pragma warning disable
 
-        [Column(_ID, SqlDbType.Int, Identity = true, Primary = true)]                             public int ID {get; set;}     //int(4) not null
-        [Column(_Ty, SqlDbType.Int)]                                                              public int Ty {get; set;}     //int(4) not null
-        [Column(_LockID, SqlDbType.Int)]                                                          public int LockID {get; set;} //int(4) not null
-        [Column(_CO_User_ID, SqlDbType.Int)]                                                      public int CO_User_ID {get; set;} //int(4) not null
-        [Column(_CO_Time, SqlDbType.DateTime)]                                                    public DateTime CO_Time {get; set;} //datetime(8) not null
-        [Column(_CI_User_ID, SqlDbType.Int, Nullable = true)]                                     public int? CI_User_ID {get; set;} //int(4) null
-        [Column(_CI_Time, SqlDbType.DateTime, Nullable = true)]                                   public DateTime? CI_Time {get; set;} //datetime(8) null
-        [Column(_Last_Access_Time, SqlDbType.DateTime)]                                           public DateTime Last_Access_Time {get; set;} //datetime(8) not null
+        [Column(_ID, CType.Int, Identity = true, Primary = true)]                             public int ID {get; set;}     //int(4) not null
+        [Column(_Ty, CType.Int)]                                                              public int Ty {get; set;}     //int(4) not null
+        [Column(_LockID, CType.Int)]                                                          public int LockID {get; set;} //int(4) not null
+        [Column(_CO_User_ID, CType.Int)]                                                      public int CO_User_ID {get; set;} //int(4) not null
+        [Column(_CO_Time, CType.DateTime)]                                                    public DateTime CO_Time {get; set;} //datetime(8) not null
+        [Column(_CI_User_ID, CType.Int, Nullable = true)]                                     public int? CI_User_ID {get; set;} //int(4) null
+        [Column(_CI_Time, CType.DateTime, Nullable = true)]                                   public DateTime? CI_Time {get; set;} //datetime(8) null
+        [Column(_Last_Access_Time, CType.DateTime)]                                           public DateTime Last_Access_Time {get; set;} //datetime(8) not null
 
 #pragma warning restore
 

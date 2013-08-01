@@ -21,12 +21,12 @@ namespace Sys.Workflow.DpoClass
 
 #pragma warning disable
 
-        [Column(_ID, SqlDbType.Int, Identity = true, Primary = true)]                             public int ID {get; set;}     //int(4) not null
-        [Column(_WorkflowInstance_ID, SqlDbType.Int)]                                             public int WorkflowInstance_ID {get; set;} //int(4) not null
-        [Column(_S1_Name, SqlDbType.NVarChar, Length = 50)]                                       public string S1_Name {get; set;} //nvarchar(50) not null
-        [Column(_S2_Name, SqlDbType.NVarChar, Length = 50)]                                       public string S2_Name {get; set;} //nvarchar(50) not null
-        [Column(_User_ID, SqlDbType.Int)]                                                         public int User_ID {get; set;} //int(4) not null
-        [Column(_Date_Created, SqlDbType.DateTime)]                                               public DateTime Date_Created {get; set;} //datetime(8) not null
+        [Column(_ID, CType.Int, Identity = true, Primary = true)]                             public int ID {get; set;}     //int(4) not null
+        [Column(_WorkflowInstance_ID, CType.Int)]                                             public int WorkflowInstance_ID {get; set;} //int(4) not null
+        [Column(_S1_Name, CType.NVarChar, Length = 50)]                                       public string S1_Name {get; set;} //nvarchar(50) not null
+        [Column(_S2_Name, CType.NVarChar, Length = 50)]                                       public string S2_Name {get; set;} //nvarchar(50) not null
+        [Column(_User_ID, CType.Int)]                                                         public int User_ID {get; set;} //int(4) not null
+        [Column(_Date_Created, CType.DateTime)]                                               public DateTime Date_Created {get; set;} //datetime(8) not null
 
 #pragma warning restore
 

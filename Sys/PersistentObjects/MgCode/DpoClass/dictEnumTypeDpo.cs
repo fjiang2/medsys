@@ -21,11 +21,11 @@ namespace Sys.PersistentObjects.DpoClass
 
 #pragma warning disable
 
-        [Column(_ID, SqlDbType.Int, Identity = true)]                                             public int ID {get; set;}     //int(4) not null
-        [Column(_Category, SqlDbType.VarChar, Primary = true, Length = 50)]                       public string Category {get; set;} //varchar(50) not null
-        [Column(_Feature, SqlDbType.VarChar, Primary = true, Length = 50)]                        public string Feature {get; set;} //varchar(50) not null
-        [Column(_Value, SqlDbType.Int)]                                                           public int Value {get; set;}  //int(4) not null
-        [Column(_Label, SqlDbType.NVarChar, Nullable = true, Length = 100)]                       public string Label {get; set;} //nvarchar(100) null
+        [Column(_ID, CType.Int, Identity = true)]                                             public int ID {get; set;}     //int(4) not null
+        [Column(_Category, CType.VarChar, Primary = true, Length = 50)]                       public string Category {get; set;} //varchar(50) not null
+        [Column(_Feature, CType.VarChar, Primary = true, Length = 50)]                        public string Feature {get; set;} //varchar(50) not null
+        [Column(_Value, CType.Int)]                                                           public int Value {get; set;}  //int(4) not null
+        [Column(_Label, CType.NVarChar, Nullable = true, Length = 100)]                       public string Label {get; set;} //nvarchar(100) null
 
 #pragma warning restore
 

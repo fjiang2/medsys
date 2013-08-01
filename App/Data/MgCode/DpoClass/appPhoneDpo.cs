@@ -21,11 +21,11 @@ namespace App.Data.DpoClass
 
 #pragma warning disable
 
-        [Column(_Phone_ID, SqlDbType.Int, Primary = true)]                                        public int Phone_ID {get; set;} //int(4) not null
-        [Column(_Phone, SqlDbType.VarChar, Length = 16)]                                          public string Phone {get; set;} //varchar(16) not null
-        [Column(_Mobile, SqlDbType.VarChar, Nullable = true, Length = 16)]                        public string Mobile {get; set;} //varchar(16) null
-        [Column(_Fax, SqlDbType.VarChar, Nullable = true, Length = 16)]                           public string Fax {get; set;} //varchar(16) null
-        [Column(_Pager, SqlDbType.VarChar, Nullable = true, Length = 16)]                         public string Pager {get; set;} //varchar(16) null
+        [Column(_Phone_ID, CType.Int, Primary = true)]                                        public int Phone_ID {get; set;} //int(4) not null
+        [Column(_Phone, CType.VarChar, Length = 16)]                                          public string Phone {get; set;} //varchar(16) not null
+        [Column(_Mobile, CType.VarChar, Nullable = true, Length = 16)]                        public string Mobile {get; set;} //varchar(16) null
+        [Column(_Fax, CType.VarChar, Nullable = true, Length = 16)]                           public string Fax {get; set;} //varchar(16) null
+        [Column(_Pager, CType.VarChar, Nullable = true, Length = 16)]                         public string Pager {get; set;} //varchar(16) null
 
 #pragma warning restore
 

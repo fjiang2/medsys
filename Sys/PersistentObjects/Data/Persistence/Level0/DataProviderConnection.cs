@@ -43,20 +43,20 @@ namespace Sys.Data
         }
 
 
-        internal DbType DbType
+        internal DbProviderType DbType
         {
             get
             {
                 switch (providerType)
                 {
                     case DataProviderType.SqlServer:
-                        return DbType.SqlDb;
+                        return DbProviderType.SqlDb;
 
                     case DataProviderType.SqlServerCe:
-                        return DbType.SqlCe;
+                        return DbProviderType.SqlCe;
 
                     default:
-                        return DbType.OleDb;
+                        return DbProviderType.OleDb;
                 }
             }
         }
@@ -67,13 +67,13 @@ namespace Sys.Data
             {
                 switch (DbType)
                 {
-                    case DbType.SqlDb:
+                    case DbProviderType.SqlDb:
                         return new SqlConnection(connectionString);
 
-                    case DbType.OleDb:
+                    case DbProviderType.OleDb:
                         return new OleDbConnection(connectionString);
 
-                    case DbType.SqlCe:
+                    case DbProviderType.SqlCe:
                         return new SqlCeConnection(connectionString);
                 }
 

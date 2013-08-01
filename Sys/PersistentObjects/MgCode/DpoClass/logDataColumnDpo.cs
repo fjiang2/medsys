@@ -21,14 +21,14 @@ namespace Sys.PersistentObjects.DpoClass
 
 #pragma warning disable
 
-        [Column(_log_column_id, SqlDbType.Int, Identity = true, Primary = true)]                  public int log_column_id {get; set;} //int(4) not null
-        [Column(_log_table_id, SqlDbType.Int)]                                                    public int log_table_id {get; set;} //int(4) not null
-        [Column(_table_name, SqlDbType.VarChar, Nullable = true, Length = 80)]                    public string table_name {get; set;} //varchar(80) null
-        [Column(_column_name, SqlDbType.VarChar, Nullable = true, Length = 50)]                   public string column_name {get; set;} //varchar(50) null
-        [Column(_column_id, SqlDbType.Int)]                                                       public int column_id {get; set;} //int(4) not null
-        [Column(_data_type, SqlDbType.VarChar, Length = 50)]                                      public string data_type {get; set;} //varchar(50) not null
-        [Column(_value_from, SqlDbType.NText)]                                                    public string value_from {get; set;} //ntext(16) not null
-        [Column(_value_to, SqlDbType.NText)]                                                      public string value_to {get; set;} //ntext(16) not null
+        [Column(_log_column_id, CType.Int, Identity = true, Primary = true)]                  public int log_column_id {get; set;} //int(4) not null
+        [Column(_log_table_id, CType.Int)]                                                    public int log_table_id {get; set;} //int(4) not null
+        [Column(_table_name, CType.VarChar, Nullable = true, Length = 80)]                    public string table_name {get; set;} //varchar(80) null
+        [Column(_column_name, CType.VarChar, Nullable = true, Length = 50)]                   public string column_name {get; set;} //varchar(50) null
+        [Column(_column_id, CType.Int)]                                                       public int column_id {get; set;} //int(4) not null
+        [Column(_data_type, CType.VarChar, Length = 50)]                                      public string data_type {get; set;} //varchar(50) not null
+        [Column(_value_from, CType.NText)]                                                    public string value_from {get; set;} //ntext(16) not null
+        [Column(_value_to, CType.NText)]                                                      public string value_to {get; set;} //ntext(16) not null
 
 #pragma warning restore
 

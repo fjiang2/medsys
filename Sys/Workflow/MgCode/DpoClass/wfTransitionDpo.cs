@@ -21,12 +21,12 @@ namespace Sys.Workflow.DpoClass
 
 #pragma warning disable
 
-        [Column(_ID, SqlDbType.Int, Identity = true)]                                             public int ID {get; set;}     //int(4) not null
-        [Column(_Workflow_Name, SqlDbType.NVarChar, Primary = true, Length = 50)]                 public string Workflow_Name {get; set;} //nvarchar(50) not null
-        [Column(_S1_Name, SqlDbType.NVarChar, Primary = true, Length = 50)]                       public string S1_Name {get; set;} //nvarchar(50) not null
-        [Column(_S2_Name, SqlDbType.NVarChar, Primary = true, Length = 50)]                       public string S2_Name {get; set;} //nvarchar(50) not null
-        [Column(_Directional, SqlDbType.Bit)]                                                     public bool Directional {get; set;} //bit(1) not null
-        [Column(_Expression, SqlDbType.NVarChar, Nullable = true, Length = 512)]                  public string Expression {get; set;} //nvarchar(512) null
+        [Column(_ID, CType.Int, Identity = true)]                                             public int ID {get; set;}     //int(4) not null
+        [Column(_Workflow_Name, CType.NVarChar, Primary = true, Length = 50)]                 public string Workflow_Name {get; set;} //nvarchar(50) not null
+        [Column(_S1_Name, CType.NVarChar, Primary = true, Length = 50)]                       public string S1_Name {get; set;} //nvarchar(50) not null
+        [Column(_S2_Name, CType.NVarChar, Primary = true, Length = 50)]                       public string S2_Name {get; set;} //nvarchar(50) not null
+        [Column(_Directional, CType.Bit)]                                                     public bool Directional {get; set;} //bit(1) not null
+        [Column(_Expression, CType.NVarChar, Nullable = true, Length = 512)]                  public string Expression {get; set;} //nvarchar(512) null
 
 #pragma warning restore
 

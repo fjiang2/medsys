@@ -21,11 +21,11 @@ namespace Sys.Foundation.DpoClass
 
 #pragma warning disable
 
-        [Column(_Comany_ID, SqlDbType.Int, Identity = true, Primary = true)]                      public int Comany_ID {get; set;} //int(4) not null
-        [Column(_Name, SqlDbType.NVarChar, Length = 100)]                                         public string Name {get; set;} //nvarchar(100) not null
-        [Column(_Address_ID, SqlDbType.NChar, Nullable = true, Length = 10)]                      public string Address_ID {get; set;} //nchar(10) null
-        [Column(_Inactive, SqlDbType.Bit)]                                                        public bool Inactive {get; set;} //bit(1) not null
-        [Column(_Default_DB, SqlDbType.VarChar, Nullable = true, Length = 50)]                    public string Default_DB {get; set;} //varchar(50) null
+        [Column(_Comany_ID, CType.Int, Identity = true, Primary = true)]                      public int Comany_ID {get; set;} //int(4) not null
+        [Column(_Name, CType.NVarChar, Length = 100)]                                         public string Name {get; set;} //nvarchar(100) not null
+        [Column(_Address_ID, CType.NChar, Nullable = true, Length = 10)]                      public string Address_ID {get; set;} //nchar(10) null
+        [Column(_Inactive, CType.Bit)]                                                        public bool Inactive {get; set;} //bit(1) not null
+        [Column(_Default_DB, CType.VarChar, Nullable = true, Length = 50)]                    public string Default_DB {get; set;} //varchar(50) null
 
 #pragma warning restore
 

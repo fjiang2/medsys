@@ -21,12 +21,12 @@ namespace Sys.Foundation.DpoClass
 
 #pragma warning disable
 
-        [Column(_ID, SqlDbType.Int, Identity = true)]                                             public int ID {get; set;}     //int(4) not null
-        [Column(_User_Name, SqlDbType.VarChar, Primary = true, Length = 20)]                      public string User_Name {get; set;} //varchar(20) not null
-        [Column(_Application_Name, SqlDbType.VarChar, Primary = true, Length = 50)]               public string Application_Name {get; set;} //varchar(50) not null
-        [Column(_Computer_Name, SqlDbType.VarChar, Primary = true, Length = 15)]                  public string Computer_Name {get; set;} //varchar(15) not null
-        [Column(_DateEntered, SqlDbType.DateTime)]                                                public DateTime DateEntered {get; set;} //datetime(8) not null
-        [Column(_Version, SqlDbType.VarChar, Nullable = true, Length = 10)]                       public string Version {get; set;} //varchar(10) null
+        [Column(_ID, CType.Int, Identity = true)]                                             public int ID {get; set;}     //int(4) not null
+        [Column(_User_Name, CType.VarChar, Primary = true, Length = 20)]                      public string User_Name {get; set;} //varchar(20) not null
+        [Column(_Application_Name, CType.VarChar, Primary = true, Length = 50)]               public string Application_Name {get; set;} //varchar(50) not null
+        [Column(_Computer_Name, CType.VarChar, Primary = true, Length = 15)]                  public string Computer_Name {get; set;} //varchar(15) not null
+        [Column(_DateEntered, CType.DateTime)]                                                public DateTime DateEntered {get; set;} //datetime(8) not null
+        [Column(_Version, CType.VarChar, Nullable = true, Length = 10)]                       public string Version {get; set;} //varchar(10) null
 
 #pragma warning restore
 

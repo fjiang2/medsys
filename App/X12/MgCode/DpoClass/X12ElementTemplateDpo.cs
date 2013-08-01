@@ -21,17 +21,17 @@ namespace X12.DpoClass
 
 #pragma warning disable
 
-        [Column(_ID, SqlDbType.Int, Identity = true)]                                             public int ID {get; set;}     //int(4) not null
-        [Column(_SegmentName, SqlDbType.VarChar, Length = 8)]                                     public string SegmentName {get; set;} //varchar(8) not null
-        [Column(_RefDes, SqlDbType.VarChar, Primary = true, Length = 8)]                          public string RefDes {get; set;} //varchar(8) not null
-        [Column(_DeNum, SqlDbType.VarChar, Length = 10)]                                          public string DeNum {get; set;} //varchar(10) not null
-        [Column(_Description, SqlDbType.NVarChar, Length = 100)]                                  public string Description {get; set;} //nvarchar(100) not null
-        [Column(_Condition, SqlDbType.Char, Length = 1)]                                          public string Condition {get; set;} //char(1) not null
-        [Column(_RepeatValue, SqlDbType.Int)]                                                     public int RepeatValue {get; set;} //int(4) not null
-        [Column(_DataType, SqlDbType.VarChar, Length = 10)]                                       public string DataType {get; set;} //varchar(10) not null
-        [Column(_MinLength, SqlDbType.Int)]                                                       public int MinLength {get; set;} //int(4) not null
-        [Column(_MaxLength, SqlDbType.Int)]                                                       public int MaxLength {get; set;} //int(4) not null
-        [Column(_Script, SqlDbType.NText, Nullable = true)]                                       public string Script {get; set;} //ntext(16) null
+        [Column(_ID, CType.Int, Identity = true)]                                             public int ID {get; set;}     //int(4) not null
+        [Column(_SegmentName, CType.VarChar, Length = 8)]                                     public string SegmentName {get; set;} //varchar(8) not null
+        [Column(_RefDes, CType.VarChar, Primary = true, Length = 8)]                          public string RefDes {get; set;} //varchar(8) not null
+        [Column(_DeNum, CType.VarChar, Length = 10)]                                          public string DeNum {get; set;} //varchar(10) not null
+        [Column(_Description, CType.NVarChar, Length = 100)]                                  public string Description {get; set;} //nvarchar(100) not null
+        [Column(_Condition, CType.Char, Length = 1)]                                          public string Condition {get; set;} //char(1) not null
+        [Column(_RepeatValue, CType.Int)]                                                     public int RepeatValue {get; set;} //int(4) not null
+        [Column(_DataType, CType.VarChar, Length = 10)]                                       public string DataType {get; set;} //varchar(10) not null
+        [Column(_MinLength, CType.Int)]                                                       public int MinLength {get; set;} //int(4) not null
+        [Column(_MaxLength, CType.Int)]                                                       public int MaxLength {get; set;} //int(4) not null
+        [Column(_Script, CType.NText, Nullable = true)]                                       public string Script {get; set;} //ntext(16) null
 
 #pragma warning restore
 

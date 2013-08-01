@@ -21,10 +21,10 @@ namespace App.Data.DpoClass
 
 #pragma warning disable
 
-        [Column(_TerritoryID, SqlDbType.NVarChar, Primary = true, Length = 20)]                   public string TerritoryID {get; set;} //nvarchar(20) not null
-        [Column(_TerritoryDescription, SqlDbType.NChar, Length = 50)]                             public string TerritoryDescription {get; set;} //nchar(50) not null
+        [Column(_TerritoryID, CType.NVarChar, Primary = true, Length = 20)]                   public string TerritoryID {get; set;} //nvarchar(20) not null
+        [Column(_TerritoryDescription, CType.NChar, Length = 50)]                             public string TerritoryDescription {get; set;} //nchar(50) not null
         [ForeignKey(typeof(App.Data.DpoClass.RegionDpo), App.Data.DpoClass.RegionDpo._RegionID)]
-        [Column(_RegionID, SqlDbType.Int)]                                                        public int RegionID {get; set;} //int(4) not null
+        [Column(_RegionID, CType.Int)]                                                        public int RegionID {get; set;} //int(4) not null
 
 #pragma warning restore
 

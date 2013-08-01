@@ -21,13 +21,13 @@ namespace Sys.Foundation.DpoClass
 
 #pragma warning disable
 
-        [Column(_ID, SqlDbType.Int, Identity = true)]                                             public int ID {get; set;}     //int(4) not null
-        [Column(_ParentID, SqlDbType.Int, Nullable = true)]                                       public int? ParentID {get; set;} //int(4) null
-        [Column(_Label, SqlDbType.NVarChar, Nullable = true, Length = 50)]                        public string Label {get; set;} //nvarchar(50) null
-        [Column(_OrderBy, SqlDbType.Int, Nullable = true)]                                        public int? OrderBy {get; set;} //int(4) null
-        [Column(_key_name, SqlDbType.NVarChar, Primary = true, Length = 50)]                      public string key_name {get; set;} //nvarchar(50) not null
-        [Column(_value, SqlDbType.NVarChar, Nullable = true, Length = 512)]                       public string value {get; set;} //nvarchar(512) null
-        [Column(_Inactive, SqlDbType.Bit)]                                                        public bool Inactive {get; set;} //bit(1) not null
+        [Column(_ID, CType.Int, Identity = true)]                                             public int ID {get; set;}     //int(4) not null
+        [Column(_ParentID, CType.Int, Nullable = true)]                                       public int? ParentID {get; set;} //int(4) null
+        [Column(_Label, CType.NVarChar, Nullable = true, Length = 50)]                        public string Label {get; set;} //nvarchar(50) null
+        [Column(_OrderBy, CType.Int, Nullable = true)]                                        public int? OrderBy {get; set;} //int(4) null
+        [Column(_key_name, CType.NVarChar, Primary = true, Length = 50)]                      public string key_name {get; set;} //nvarchar(50) not null
+        [Column(_value, CType.NVarChar, Nullable = true, Length = 512)]                       public string value {get; set;} //nvarchar(512) null
+        [Column(_Inactive, CType.Bit)]                                                        public bool Inactive {get; set;} //bit(1) not null
 
 #pragma warning restore
 

@@ -21,12 +21,12 @@ namespace Sys.Platform.DpoClass
 
 #pragma warning disable
 
-        [Column(_UniqueID, SqlDbType.Int, Identity = true, Primary = true)]                       public int UniqueID {get; set;} //int(4) not null
-        [Column(_ResourceID, SqlDbType.Int)]                                                      public int ResourceID {get; set;} //int(4) not null
-        [Column(_ResourceName, SqlDbType.NVarChar, Nullable = true, Length = 50)]                 public string ResourceName {get; set;} //nvarchar(50) null
-        [Column(_Color, SqlDbType.Int, Nullable = true)]                                          public int? Color {get; set;} //int(4) null
-        [Column(_Image, SqlDbType.Image, Nullable = true)]                                        public byte[] Image {get; set;} //image(16) null
-        [Column(_CustomField1, SqlDbType.NVarChar, Nullable = true, Length = -1)]                 public string CustomField1 {get; set;} //nvarchar(-1) null
+        [Column(_UniqueID, CType.Int, Identity = true, Primary = true)]                       public int UniqueID {get; set;} //int(4) not null
+        [Column(_ResourceID, CType.Int)]                                                      public int ResourceID {get; set;} //int(4) not null
+        [Column(_ResourceName, CType.NVarChar, Nullable = true, Length = 50)]                 public string ResourceName {get; set;} //nvarchar(50) null
+        [Column(_Color, CType.Int, Nullable = true)]                                          public int? Color {get; set;} //int(4) null
+        [Column(_Image, CType.Image, Nullable = true)]                                        public byte[] Image {get; set;} //image(16) null
+        [Column(_CustomField1, CType.NVarChar, Nullable = true, Length = -1)]                 public string CustomField1 {get; set;} //nvarchar(-1) null
 
         #region IMAGE PROPERTIES
         public Image ImageImage

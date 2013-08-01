@@ -21,14 +21,14 @@ namespace Sys.DataManager.DpoClass
 
 #pragma warning disable
 
-        [Column(_ID, SqlDbType.Int, Identity = true, Primary = true)]                             public int ID {get; set;}     //int(4) not null
-        [Column(_Table_Id, SqlDbType.Int)]                                                        public int Table_Id {get; set;} //int(4) not null
-        [Column(_Table_Name, SqlDbType.VarChar, Nullable = true, Length = 50)]                    public string Table_Name {get; set;} //varchar(50) null
-        [Column(_Row_Id, SqlDbType.Int)]                                                          public int Row_Id {get; set;} //int(4) not null
-        [Column(_Label, SqlDbType.NVarChar, Nullable = true, Length = 128)]                       public string Label {get; set;} //nvarchar(128) null
-        [Column(_File_Name, SqlDbType.VarChar, Length = 50)]                                      public string File_Name {get; set;} //varchar(50) not null
-        [Column(_Date_Created, SqlDbType.DateTime)]                                               public DateTime Date_Created {get; set;} //datetime(8) not null
-        [Column(_Owner, SqlDbType.Int, Nullable = true)]                                          public int? Owner {get; set;} //int(4) null
+        [Column(_ID, CType.Int, Identity = true, Primary = true)]                             public int ID {get; set;}     //int(4) not null
+        [Column(_Table_Id, CType.Int)]                                                        public int Table_Id {get; set;} //int(4) not null
+        [Column(_Table_Name, CType.VarChar, Nullable = true, Length = 50)]                    public string Table_Name {get; set;} //varchar(50) null
+        [Column(_Row_Id, CType.Int)]                                                          public int Row_Id {get; set;} //int(4) not null
+        [Column(_Label, CType.NVarChar, Nullable = true, Length = 128)]                       public string Label {get; set;} //nvarchar(128) null
+        [Column(_File_Name, CType.VarChar, Length = 50)]                                      public string File_Name {get; set;} //varchar(50) not null
+        [Column(_Date_Created, CType.DateTime)]                                               public DateTime Date_Created {get; set;} //datetime(8) not null
+        [Column(_Owner, CType.Int, Nullable = true)]                                          public int? Owner {get; set;} //int(4) null
 
 #pragma warning restore
 

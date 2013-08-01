@@ -21,11 +21,11 @@ namespace Sys.PersistentObjects.DpoClass
 
 #pragma warning disable
 
-        [Column(_log_dataset_id, SqlDbType.Int, Identity = true)]                                 public int log_dataset_id {get; set;} //int(4) not null
-        [Column(_form_name, SqlDbType.VarChar, Primary = true, Length = 128)]                     public string form_name {get; set;} //varchar(128) not null
-        [Column(_date, SqlDbType.DateTime, Primary = true)]                                       public DateTime date {get; set;} //datetime(8) not null
-        [Column(_user_id, SqlDbType.Int)]                                                         public int user_id {get; set;} //int(4) not null
-        [Column(_machine_name, SqlDbType.VarChar, Nullable = true, Length = 128)]                 public string machine_name {get; set;} //varchar(128) null
+        [Column(_log_dataset_id, CType.Int, Identity = true)]                                 public int log_dataset_id {get; set;} //int(4) not null
+        [Column(_form_name, CType.VarChar, Primary = true, Length = 128)]                     public string form_name {get; set;} //varchar(128) not null
+        [Column(_date, CType.DateTime, Primary = true)]                                       public DateTime date {get; set;} //datetime(8) not null
+        [Column(_user_id, CType.Int)]                                                         public int user_id {get; set;} //int(4) not null
+        [Column(_machine_name, CType.VarChar, Nullable = true, Length = 128)]                 public string machine_name {get; set;} //varchar(128) null
 
 #pragma warning restore
 

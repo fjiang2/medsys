@@ -21,11 +21,11 @@ namespace Sys.Foundation.DpoClass
 
 #pragma warning disable
 
-        [Column(_Module, SqlDbType.VarChar, Primary = true, Length = 128)]                        public string Module {get; set;} //varchar(128) not null
-        [Column(_Library, SqlDbType.NVarChar, Length = 50)]                                       public string Library {get; set;} //nvarchar(50) not null
-        [Column(_Script, SqlDbType.NText)]                                                        public string Script {get; set;} //ntext(16) not null
-        [Column(_Notes, SqlDbType.NVarChar, Nullable = true, Length = 256)]                       public string Notes {get; set;} //nvarchar(256) null
-        [Column(_Released, SqlDbType.Bit)]                                                        public bool Released {get; set;} //bit(1) not null
+        [Column(_Module, CType.VarChar, Primary = true, Length = 128)]                        public string Module {get; set;} //varchar(128) not null
+        [Column(_Library, CType.NVarChar, Length = 50)]                                       public string Library {get; set;} //nvarchar(50) not null
+        [Column(_Script, CType.NText)]                                                        public string Script {get; set;} //ntext(16) not null
+        [Column(_Notes, CType.NVarChar, Nullable = true, Length = 256)]                       public string Notes {get; set;} //nvarchar(256) null
+        [Column(_Released, CType.Bit)]                                                        public bool Released {get; set;} //bit(1) not null
 
 #pragma warning restore
 

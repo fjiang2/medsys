@@ -21,10 +21,10 @@ namespace X12.DpoClass
 
 #pragma warning disable
 
-        [Column(_ID, SqlDbType.Int, Identity = true)]                                             public int ID {get; set;}     //int(4) not null
-        [Column(_ElementInstance_ID, SqlDbType.Int, Primary = true)]                              public int ElementInstance_ID {get; set;} //int(4) not null
-        [Column(_Code, SqlDbType.VarChar, Primary = true, Length = 50)]                           public string Code {get; set;} //varchar(50) not null
-        [Column(_Definition, SqlDbType.VarChar, Length = 500)]                                    public string Definition {get; set;} //varchar(500) not null
+        [Column(_ID, CType.Int, Identity = true)]                                             public int ID {get; set;}     //int(4) not null
+        [Column(_ElementInstance_ID, CType.Int, Primary = true)]                              public int ElementInstance_ID {get; set;} //int(4) not null
+        [Column(_Code, CType.VarChar, Primary = true, Length = 50)]                           public string Code {get; set;} //varchar(50) not null
+        [Column(_Definition, CType.VarChar, Length = 500)]                                    public string Definition {get; set;} //varchar(500) not null
 
 #pragma warning restore
 
