@@ -21,9 +21,9 @@ namespace Sys.ViewManager.DpoClass
 
 #pragma warning disable
 
-        [Column(_FormClass, SqlDbType.NVarChar, Primary = true, Length = 256)]                    public string FormClass {get; set;} //nvarchar(256) not null
-        [Column(_Script, SqlDbType.NText, Nullable = true)]                                       public string Script {get; set;} //ntext(16) null
-        [Column(_Released, SqlDbType.Bit)]                                                        public bool Released {get; set;} //bit(1) not null
+        [Column(_FormClass, CType.NVarChar, Primary = true, Length = 256)]                    public string FormClass {get; set;} //nvarchar(256) not null
+        [Column(_Script, CType.NText, Nullable = true)]                                       public string Script {get; set;} //ntext(16) null
+        [Column(_Released, CType.Bit)]                                                        public bool Released {get; set;} //bit(1) not null
 
 #pragma warning restore
 

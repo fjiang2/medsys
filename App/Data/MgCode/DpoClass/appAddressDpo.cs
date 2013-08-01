@@ -21,16 +21,16 @@ namespace App.Data.DpoClass
 
 #pragma warning disable
 
-        [Column(_Address_ID, SqlDbType.Int, Identity = true, Primary = true)]                     public int Address_ID {get; set;} //int(4) not null
-        [Column(_Address_Enum, SqlDbType.Int)]                                                    public int Address_Enum {get; set;} //int(4) not null
-        [Column(_Street_Number, SqlDbType.Int, Nullable = true)]                                  public int? Street_Number {get; set;} //int(4) null
-        [Column(_Street_Name, SqlDbType.NVarChar, Nullable = true, Length = 150)]                 public string Street_Name {get; set;} //nvarchar(150) null
-        [Column(_Apartment, SqlDbType.NVarChar, Nullable = true, Length = 50)]                    public string Apartment {get; set;} //nvarchar(50) null
-        [Column(_City, SqlDbType.NVarChar, Nullable = true, Length = 50)]                         public string City {get; set;} //nvarchar(50) null
-        [Column(_State, SqlDbType.NVarChar, Nullable = true, Length = 50)]                        public string State {get; set;} //nvarchar(50) null
-        [Column(_Postal_Code, SqlDbType.VarChar, Nullable = true, Length = 12)]                   public string Postal_Code {get; set;} //varchar(12) null
-        [Column(_Country_Code, SqlDbType.NVarChar, Nullable = true, Length = 50)]                 public string Country_Code {get; set;} //nvarchar(50) null
-        [Column(_Country_Sub_Code, SqlDbType.NVarChar, Nullable = true, Length = 20)]             public string Country_Sub_Code {get; set;} //nvarchar(20) null
+        [Column(_Address_ID, CType.Int, Identity = true, Primary = true)]                     public int Address_ID {get; set;} //int(4) not null
+        [Column(_Address_Enum, CType.Int)]                                                    public int Address_Enum {get; set;} //int(4) not null
+        [Column(_Street_Number, CType.Int, Nullable = true)]                                  public int? Street_Number {get; set;} //int(4) null
+        [Column(_Street_Name, CType.NVarChar, Nullable = true, Length = 150)]                 public string Street_Name {get; set;} //nvarchar(150) null
+        [Column(_Apartment, CType.NVarChar, Nullable = true, Length = 50)]                    public string Apartment {get; set;} //nvarchar(50) null
+        [Column(_City, CType.NVarChar, Nullable = true, Length = 50)]                         public string City {get; set;} //nvarchar(50) null
+        [Column(_State, CType.NVarChar, Nullable = true, Length = 50)]                        public string State {get; set;} //nvarchar(50) null
+        [Column(_Postal_Code, CType.VarChar, Nullable = true, Length = 12)]                   public string Postal_Code {get; set;} //varchar(12) null
+        [Column(_Country_Code, CType.NVarChar, Nullable = true, Length = 50)]                 public string Country_Code {get; set;} //nvarchar(50) null
+        [Column(_Country_Sub_Code, CType.NVarChar, Nullable = true, Length = 20)]             public string Country_Sub_Code {get; set;} //nvarchar(20) null
 
 #pragma warning restore
 

@@ -21,8 +21,8 @@ namespace App.Data.DpoClass
 
 #pragma warning disable
 
-        [Column(_CustomerTypeID, SqlDbType.NChar, Primary = true, Length = 10)]                   public string CustomerTypeID {get; set;} //nchar(10) not null
-        [Column(_CustomerDesc, SqlDbType.NText, Nullable = true)]                                 public string CustomerDesc {get; set;} //ntext(16) null
+        [Column(_CustomerTypeID, CType.NChar, Primary = true, Length = 10)]                   public string CustomerTypeID {get; set;} //nchar(10) not null
+        [Column(_CustomerDesc, CType.NText, Nullable = true)]                                 public string CustomerDesc {get; set;} //ntext(16) null
 
 #pragma warning restore
 

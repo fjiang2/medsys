@@ -21,12 +21,12 @@ namespace Sys.PersistentObjects.DpoClass
 
 #pragma warning disable
 
-        [Column(_column_id, SqlDbType.Int, Identity = true)]                                      public int column_id {get; set;} //int(4) not null
-        [Column(_table_id, SqlDbType.Int, Primary = true)]                                        public int table_id {get; set;} //int(4) not null
-        [Column(_name, SqlDbType.VarChar, Primary = true, Length = 50)]                           public string name {get; set;} //varchar(50) not null
-        [Column(_label, SqlDbType.NVarChar, Nullable = true, Length = 50)]                        public string label {get; set;} //nvarchar(50) null
-        [Column(_description, SqlDbType.NVarChar, Nullable = true, Length = 128)]                 public string description {get; set;} //nvarchar(128) null
-        [Column(_version, SqlDbType.Int)]                                                         public int version {get; set;} //int(4) not null
+        [Column(_column_id, CType.Int, Identity = true)]                                      public int column_id {get; set;} //int(4) not null
+        [Column(_table_id, CType.Int, Primary = true)]                                        public int table_id {get; set;} //int(4) not null
+        [Column(_name, CType.VarChar, Primary = true, Length = 50)]                           public string name {get; set;} //varchar(50) not null
+        [Column(_label, CType.NVarChar, Nullable = true, Length = 50)]                        public string label {get; set;} //nvarchar(50) null
+        [Column(_description, CType.NVarChar, Nullable = true, Length = 128)]                 public string description {get; set;} //nvarchar(128) null
+        [Column(_version, CType.Int)]                                                         public int version {get; set;} //int(4) not null
 
 #pragma warning restore
 

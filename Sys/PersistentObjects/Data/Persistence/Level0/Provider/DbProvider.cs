@@ -49,7 +49,7 @@ namespace Sys.Data
         public DbConnection DbConnection { get; private set; }
         public DbCommand DbCommand { get; private set; }
 
-        public DbType DbType
+        public DbProviderType DbType
         {
             get { return this.connection.DbType; }
         }
@@ -84,13 +84,13 @@ namespace Sys.Data
         {
             switch (connection.DbType)
             {
-                case DbType.SqlDb:
+                case DbProviderType.SqlDb:
                     return new SqlProvider(script, connection);
 
-                case DbType.OleDb:
+                case DbProviderType.OleDb:
                     return new OleDbProvider(script, connection);
 
-                case DbType.SqlCe:
+                case DbProviderType.SqlCe:
                     return new SqlCeProvider(script, connection);
             }
 

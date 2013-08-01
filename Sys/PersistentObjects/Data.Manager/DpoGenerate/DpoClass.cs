@@ -132,7 +132,7 @@ namespace Sys.Data.Manager
                 string key = metaTable.PrimaryKeys.Keys[0];
                 IMetaColumn column = metaTable.Columns[key];
 
-                if (column.SqlDbType == SqlDbType.Int)
+                if (column.CType == CType.Int)
                 {
                     return string.Format(DPObjectIdProperty, dict_column_field[key].Name);
                 }
@@ -275,7 +275,7 @@ namespace Sys.Data.Manager
             {
                 DpoField field = new DpoField(this, column);
                 fields += field.GenerateField() + "\r\n";
-                if (column.SqlDbType == System.Data.SqlDbType.Image)
+                if (column.CType == CType.Image)
                     imageFields.Add(field);
             }
 

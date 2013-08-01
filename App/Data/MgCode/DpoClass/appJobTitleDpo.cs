@@ -21,9 +21,9 @@ namespace App.Data.DpoClass
 
 #pragma warning disable
 
-        [Column(_Job_ID, SqlDbType.Int, Identity = true, Primary = true)]                         public int Job_ID {get; set;} //int(4) not null
-        [Column(_Title, SqlDbType.NVarChar, Length = 50)]                                         public string Title {get; set;} //nvarchar(50) not null
-        [Column(_Dept_ID, SqlDbType.Int, Nullable = true)]                                        public int? Dept_ID {get; set;} //int(4) null
+        [Column(_Job_ID, CType.Int, Identity = true, Primary = true)]                         public int Job_ID {get; set;} //int(4) not null
+        [Column(_Title, CType.NVarChar, Length = 50)]                                         public string Title {get; set;} //nvarchar(50) not null
+        [Column(_Dept_ID, CType.Int, Nullable = true)]                                        public int? Dept_ID {get; set;} //int(4) null
 
 #pragma warning restore
 

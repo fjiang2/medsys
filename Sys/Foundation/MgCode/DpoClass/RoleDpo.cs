@@ -21,10 +21,10 @@ namespace Sys.Foundation.DpoClass
 
 #pragma warning disable
 
-        [Column(_Role_ID, SqlDbType.Int, Primary = true)]                                         public int Role_ID {get; set;} //int(4) not null
-        [Column(_Role_Name, SqlDbType.NVarChar, Length = 256)]                                    public string Role_Name {get; set;} //nvarchar(256) not null
-        [Column(_Parent_Role_ID, SqlDbType.Int, Nullable = true)]                                 public int? Parent_Role_ID {get; set;} //int(4) null
-        [Column(_Description, SqlDbType.NVarChar, Nullable = true, Length = 1024)]                public string Description {get; set;} //nvarchar(1024) null
+        [Column(_Role_ID, CType.Int, Primary = true)]                                         public int Role_ID {get; set;} //int(4) not null
+        [Column(_Role_Name, CType.NVarChar, Length = 256)]                                    public string Role_Name {get; set;} //nvarchar(256) not null
+        [Column(_Parent_Role_ID, CType.Int, Nullable = true)]                                 public int? Parent_Role_ID {get; set;} //int(4) null
+        [Column(_Description, CType.NVarChar, Nullable = true, Length = 1024)]                public string Description {get; set;} //nvarchar(1024) null
 
 #pragma warning restore
 

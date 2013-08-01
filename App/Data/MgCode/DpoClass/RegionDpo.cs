@@ -21,8 +21,8 @@ namespace App.Data.DpoClass
 
 #pragma warning disable
 
-        [Column(_RegionID, SqlDbType.Int, Primary = true)]                                        public int RegionID {get; set;} //int(4) not null
-        [Column(_RegionDescription, SqlDbType.NChar, Length = 50)]                                public string RegionDescription {get; set;} //nchar(50) not null
+        [Column(_RegionID, CType.Int, Primary = true)]                                        public int RegionID {get; set;} //int(4) not null
+        [Column(_RegionDescription, CType.NChar, Length = 50)]                                public string RegionDescription {get; set;} //nchar(50) not null
 
 #pragma warning restore
 

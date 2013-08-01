@@ -21,13 +21,13 @@ namespace Sys.PersistentObjects.DpoClass
 
 #pragma warning disable
 
-        [Column(_handle, SqlDbType.Int, Primary = true)]                                          public int handle {get; set;} //int(4) not null
-        [Column(_name, SqlDbType.NVarChar, Length = 50)]                                          public string name {get; set;} //nvarchar(50) not null
-        [Column(_type, SqlDbType.Int)]                                                            public int type {get; set;}   //int(4) not null
-        [Column(_connection, SqlDbType.NVarChar, Length = 250)]                                   public string connection {get; set;} //nvarchar(250) not null
-        [Column(_user_id, SqlDbType.NVarChar, Nullable = true, Length = 50)]                      public string user_id {get; set;} //nvarchar(50) null
-        [Column(_password, SqlDbType.NVarChar, Nullable = true, Length = 50)]                     public string password {get; set;} //nvarchar(50) null
-        [Column(_inactive, SqlDbType.Bit)]                                                        public bool inactive {get; set;} //bit(1) not null
+        [Column(_handle, CType.Int, Primary = true)]                                          public int handle {get; set;} //int(4) not null
+        [Column(_name, CType.NVarChar, Length = 50)]                                          public string name {get; set;} //nvarchar(50) not null
+        [Column(_type, CType.Int)]                                                            public int type {get; set;}   //int(4) not null
+        [Column(_connection, CType.NVarChar, Length = 250)]                                   public string connection {get; set;} //nvarchar(250) not null
+        [Column(_user_id, CType.NVarChar, Nullable = true, Length = 50)]                      public string user_id {get; set;} //nvarchar(50) null
+        [Column(_password, CType.NVarChar, Nullable = true, Length = 50)]                     public string password {get; set;} //nvarchar(50) null
+        [Column(_inactive, CType.Bit)]                                                        public bool inactive {get; set;} //bit(1) not null
 
 #pragma warning restore
 

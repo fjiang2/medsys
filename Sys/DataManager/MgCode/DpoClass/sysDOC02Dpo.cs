@@ -21,14 +21,14 @@ namespace Sys.DataManager.DpoClass
 
 #pragma warning disable
 
-        [Column(_ID, SqlDbType.Int, Identity = true)]                                             public int ID {get; set;}     //int(4) not null
-        [Column(_Doc_Id, SqlDbType.Int, Primary = true)]                                          public int Doc_Id {get; set;} //int(4) not null
-        [Column(_Label, SqlDbType.NVarChar, Nullable = true, Length = 120)]                       public string Label {get; set;} //nvarchar(120) null
-        [Column(_Version, SqlDbType.Int, Primary = true)]                                         public int Version {get; set;} //int(4) not null
-        [Column(_Doc_Name, SqlDbType.VarChar, Length = 50)]                                       public string Doc_Name {get; set;} //varchar(50) not null
-        [Column(_User_Id, SqlDbType.Int)]                                                         public int User_Id {get; set;} //int(4) not null
-        [Column(_Date_Modified, SqlDbType.DateTime)]                                              public DateTime Date_Modified {get; set;} //datetime(8) not null
-        [Column(_Comment, SqlDbType.NVarChar, Nullable = true, Length = 256)]                     public string Comment {get; set;} //nvarchar(256) null
+        [Column(_ID, CType.Int, Identity = true)]                                             public int ID {get; set;}     //int(4) not null
+        [Column(_Doc_Id, CType.Int, Primary = true)]                                          public int Doc_Id {get; set;} //int(4) not null
+        [Column(_Label, CType.NVarChar, Nullable = true, Length = 120)]                       public string Label {get; set;} //nvarchar(120) null
+        [Column(_Version, CType.Int, Primary = true)]                                         public int Version {get; set;} //int(4) not null
+        [Column(_Doc_Name, CType.VarChar, Length = 50)]                                       public string Doc_Name {get; set;} //varchar(50) not null
+        [Column(_User_Id, CType.Int)]                                                         public int User_Id {get; set;} //int(4) not null
+        [Column(_Date_Modified, CType.DateTime)]                                              public DateTime Date_Modified {get; set;} //datetime(8) not null
+        [Column(_Comment, CType.NVarChar, Nullable = true, Length = 256)]                     public string Comment {get; set;} //nvarchar(256) null
 
 #pragma warning restore
 

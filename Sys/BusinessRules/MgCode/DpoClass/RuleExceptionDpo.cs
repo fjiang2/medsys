@@ -21,14 +21,14 @@ namespace Sys.BusinessRules.DpoClass
 
 #pragma warning disable
 
-        [Column(_ID, SqlDbType.Int, Identity = true)]                                             public int ID {get; set;}     //int(4) not null
-        [Column(_Error_Code, SqlDbType.Int)]                                                      public int Error_Code {get; set;} //int(4) not null
-        [Column(_WorkflowInstance_ID, SqlDbType.Int, Nullable = true)]                            public int? WorkflowInstance_ID {get; set;} //int(4) null
-        [Column(_Reason, SqlDbType.NVarChar, Nullable = true, Length = 512)]                      public string Reason {get; set;} //nvarchar(512) null
-        [Column(_Date_Created, SqlDbType.DateTime, Nullable = true)]                              public DateTime? Date_Created {get; set;} //datetime(8) null
-        [Column(_Creator, SqlDbType.Int, Nullable = true)]                                        public int? Creator {get; set;} //int(4) null
-        [Column(_Date_Modified, SqlDbType.DateTime, Nullable = true)]                             public DateTime? Date_Modified {get; set;} //datetime(8) null
-        [Column(_Modifier, SqlDbType.Int, Nullable = true)]                                       public int? Modifier {get; set;} //int(4) null
+        [Column(_ID, CType.Int, Identity = true)]                                             public int ID {get; set;}     //int(4) not null
+        [Column(_Error_Code, CType.Int)]                                                      public int Error_Code {get; set;} //int(4) not null
+        [Column(_WorkflowInstance_ID, CType.Int, Nullable = true)]                            public int? WorkflowInstance_ID {get; set;} //int(4) null
+        [Column(_Reason, CType.NVarChar, Nullable = true, Length = 512)]                      public string Reason {get; set;} //nvarchar(512) null
+        [Column(_Date_Created, CType.DateTime, Nullable = true)]                              public DateTime? Date_Created {get; set;} //datetime(8) null
+        [Column(_Creator, CType.Int, Nullable = true)]                                        public int? Creator {get; set;} //int(4) null
+        [Column(_Date_Modified, CType.DateTime, Nullable = true)]                             public DateTime? Date_Modified {get; set;} //datetime(8) null
+        [Column(_Modifier, CType.Int, Nullable = true)]                                       public int? Modifier {get; set;} //int(4) null
 
 #pragma warning restore
 

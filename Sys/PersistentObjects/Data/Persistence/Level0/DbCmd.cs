@@ -68,7 +68,7 @@ namespace Sys.Data
             this.command.Connection = connection.NewDbConnection; 
         }
 
-        protected DbType DbType
+        protected DbProviderType DbType
         {
             get
             {

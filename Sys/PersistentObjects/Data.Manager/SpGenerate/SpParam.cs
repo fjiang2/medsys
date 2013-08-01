@@ -26,7 +26,7 @@ namespace Sys.Data.Manager
     class SpParam
     {
         SpParamDpo param;
-        SqlDbType dbType;
+        CType dbType;
 
         string name;
         string type;
@@ -61,9 +61,9 @@ namespace Sys.Data.Manager
         public string param1()
         {
             if (param.is_output)
-                return string.Format("cmd.AddParameter(\"{0}\", SqlDbType.{1}, {2});\r\n", param.name, dbType, param.max_length);
+                return string.Format("cmd.AddParameter(\"{0}\", CType.{1}, {2});\r\n", param.name, dbType, param.max_length);
             else
-                return string.Format("cmd.AddParameter(\"{0}\", SqlDbType.{1}, {2}, {3});\r\n", param.name, dbType, param.max_length, name);
+                return string.Format("cmd.AddParameter(\"{0}\", CType.{1}, {2}, {3});\r\n", param.name, dbType, param.max_length, name);
         }
 
         public string param2()

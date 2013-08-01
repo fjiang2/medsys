@@ -110,7 +110,7 @@ namespace Sys.Data.Manager
         { 
             get 
             { 
-                return column.DataType.ToSqlDbType().ToString().ToLower(); 
+                return column.DataType.ToCType().ToString().ToLower(); 
             } 
         }
 
@@ -184,11 +184,11 @@ namespace Sys.Data.Manager
             } 
         }
         
-        public SqlDbType SqlDbType 
+        public CType CType 
         { 
             get
             {
-                return column.DataType.ToSqlDbType();
+                return column.DataType.ToCType();
             } 
         }
 

@@ -21,12 +21,12 @@ namespace Sys.Messaging.DpoClass
 
 #pragma warning disable
 
-        [Column(_ID, SqlDbType.Int, Identity = true, Primary = true)]                             public int ID {get; set;}     //int(4) not null
-        [Column(_User_Name, SqlDbType.NVarChar, Nullable = true, Length = 50)]                    public string User_Name {get; set;} //nvarchar(50) null
-        [Column(_Friend_Name, SqlDbType.NVarChar, Nullable = true, Length = 50)]                  public string Friend_Name {get; set;} //nvarchar(50) null
-        [Column(_Start_Time, SqlDbType.DateTime, Nullable = true)]                                public DateTime? Start_Time {get; set;} //datetime(8) null
-        [Column(_End_Time, SqlDbType.DateTime, Nullable = true)]                                  public DateTime? End_Time {get; set;} //datetime(8) null
-        [Column(_History, SqlDbType.NText, Nullable = true)]                                      public string History {get; set;} //ntext(16) null
+        [Column(_ID, CType.Int, Identity = true, Primary = true)]                             public int ID {get; set;}     //int(4) not null
+        [Column(_User_Name, CType.NVarChar, Nullable = true, Length = 50)]                    public string User_Name {get; set;} //nvarchar(50) null
+        [Column(_Friend_Name, CType.NVarChar, Nullable = true, Length = 50)]                  public string Friend_Name {get; set;} //nvarchar(50) null
+        [Column(_Start_Time, CType.DateTime, Nullable = true)]                                public DateTime? Start_Time {get; set;} //datetime(8) null
+        [Column(_End_Time, CType.DateTime, Nullable = true)]                                  public DateTime? End_Time {get; set;} //datetime(8) null
+        [Column(_History, CType.NText, Nullable = true)]                                      public string History {get; set;} //ntext(16) null
 
 #pragma warning restore
 

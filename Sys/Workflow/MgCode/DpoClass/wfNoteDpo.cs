@@ -21,13 +21,13 @@ namespace Sys.Workflow.DpoClass
 
 #pragma warning disable
 
-        [Column(_ID, SqlDbType.Int, Identity = true, Primary = true)]                             public int ID {get; set;}     //int(4) not null
-        [Column(_WorkflowInstance_ID, SqlDbType.Int, Nullable = true)]                            public int? WorkflowInstance_ID {get; set;} //int(4) null
-        [Column(_S1_Name, SqlDbType.NVarChar, Nullable = true, Length = 50)]                      public string S1_Name {get; set;} //nvarchar(50) null
-        [Column(_S2_Name, SqlDbType.NVarChar, Nullable = true, Length = 50)]                      public string S2_Name {get; set;} //nvarchar(50) null
-        [Column(_User_ID, SqlDbType.Int, Nullable = true)]                                        public int? User_ID {get; set;} //int(4) null
-        [Column(_Date_Created, SqlDbType.DateTime, Nullable = true)]                              public DateTime? Date_Created {get; set;} //datetime(8) null
-        [Column(_Comment, SqlDbType.NVarChar, Nullable = true, Length = -1)]                      public string Comment {get; set;} //nvarchar(-1) null
+        [Column(_ID, CType.Int, Identity = true, Primary = true)]                             public int ID {get; set;}     //int(4) not null
+        [Column(_WorkflowInstance_ID, CType.Int, Nullable = true)]                            public int? WorkflowInstance_ID {get; set;} //int(4) null
+        [Column(_S1_Name, CType.NVarChar, Nullable = true, Length = 50)]                      public string S1_Name {get; set;} //nvarchar(50) null
+        [Column(_S2_Name, CType.NVarChar, Nullable = true, Length = 50)]                      public string S2_Name {get; set;} //nvarchar(50) null
+        [Column(_User_ID, CType.Int, Nullable = true)]                                        public int? User_ID {get; set;} //int(4) null
+        [Column(_Date_Created, CType.DateTime, Nullable = true)]                              public DateTime? Date_Created {get; set;} //datetime(8) null
+        [Column(_Comment, CType.NVarChar, Nullable = true, Length = -1)]                      public string Comment {get; set;} //nvarchar(-1) null
 
 #pragma warning restore
 

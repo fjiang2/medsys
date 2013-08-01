@@ -21,15 +21,15 @@ namespace Sys.DataManager.DpoClass
 
 #pragma warning disable
 
-        [Column(_ID, SqlDbType.Int, Identity = true)]                                             public int ID {get; set;}     //int(4) not null
-        [Column(_ParentID, SqlDbType.Int, Nullable = true)]                                       public int? ParentID {get; set;} //int(4) null
-        [Column(_Table_Id, SqlDbType.Int, Primary = true)]                                        public int Table_Id {get; set;} //int(4) not null
-        [Column(_Table_Name, SqlDbType.VarChar, Nullable = true, Length = 50)]                    public string Table_Name {get; set;} //varchar(50) null
-        [Column(_Row_Id, SqlDbType.Int, Primary = true)]                                          public int Row_Id {get; set;} //int(4) not null
-        [Column(_Label, SqlDbType.NVarChar, Nullable = true, Length = 128)]                       public string Label {get; set;} //nvarchar(128) null
-        [Column(_File_Name, SqlDbType.VarChar, Primary = true, Length = 100)]                     public string File_Name {get; set;} //varchar(100) not null
-        [Column(_File_Type, SqlDbType.VarChar, Nullable = true, Length = 50)]                     public string File_Type {get; set;} //varchar(50) null
-        [Column(_Owner, SqlDbType.Int, Nullable = true)]                                          public int? Owner {get; set;} //int(4) null
+        [Column(_ID, CType.Int, Identity = true)]                                             public int ID {get; set;}     //int(4) not null
+        [Column(_ParentID, CType.Int, Nullable = true)]                                       public int? ParentID {get; set;} //int(4) null
+        [Column(_Table_Id, CType.Int, Primary = true)]                                        public int Table_Id {get; set;} //int(4) not null
+        [Column(_Table_Name, CType.VarChar, Nullable = true, Length = 50)]                    public string Table_Name {get; set;} //varchar(50) null
+        [Column(_Row_Id, CType.Int, Primary = true)]                                          public int Row_Id {get; set;} //int(4) not null
+        [Column(_Label, CType.NVarChar, Nullable = true, Length = 128)]                       public string Label {get; set;} //nvarchar(128) null
+        [Column(_File_Name, CType.VarChar, Primary = true, Length = 100)]                     public string File_Name {get; set;} //varchar(100) not null
+        [Column(_File_Type, CType.VarChar, Nullable = true, Length = 50)]                     public string File_Type {get; set;} //varchar(50) null
+        [Column(_Owner, CType.Int, Nullable = true)]                                          public int? Owner {get; set;} //int(4) null
 
 #pragma warning restore
 

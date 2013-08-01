@@ -21,23 +21,23 @@ namespace Sys.Workflow.DpoClass
 
 #pragma warning disable
 
-        [Column(_ID, SqlDbType.Int, Identity = true)]                                             public int ID {get; set;}     //int(4) not null
-        [Column(_Workflow_Name, SqlDbType.NVarChar, Primary = true, Length = 50)]                 public string Workflow_Name {get; set;} //nvarchar(50) not null
-        [Column(_Name, SqlDbType.NVarChar, Primary = true, Length = 50)]                          public string Name {get; set;} //nvarchar(50) not null
-        [Column(_Index, SqlDbType.Int, Nullable = true)]                                          public int? Index {get; set;} //int(4) null
-        [Column(_Label, SqlDbType.NVarChar, Nullable = true, Length = 50)]                        public string Label {get; set;} //nvarchar(50) null
-        [Column(_Description, SqlDbType.NVarChar, Nullable = true, Length = 500)]                 public string Description {get; set;} //nvarchar(500) null
-        [Column(_Ty, SqlDbType.Int)]                                                              public int Ty {get; set;}     //int(4) not null
-        [Column(_Offset, SqlDbType.Float)]                                                        public double Offset {get; set;} //float(8) not null
-        [Column(_Duration, SqlDbType.Float)]                                                      public double Duration {get; set;} //float(8) not null
-        [Column(_Metadata, SqlDbType.NVarChar, Nullable = true, Length = 1024)]                   public string Metadata {get; set;} //nvarchar(1024) null
-        [Column(_Dependency, SqlDbType.NVarChar, Length = 1024)]                                  public string Dependency {get; set;} //nvarchar(1024) not null
-        [Column(_Preaction, SqlDbType.NVarChar, Nullable = true, Length = 1024)]                  public string Preaction {get; set;} //nvarchar(1024) null
-        [Column(_Action, SqlDbType.NVarChar, Length = 1024)]                                      public string Action {get; set;} //nvarchar(1024) not null
-        [Column(_AfterAction, SqlDbType.NVarChar, Nullable = true, Length = 1024)]                public string AfterAction {get; set;} //nvarchar(1024) null
-        [Column(_Postaction, SqlDbType.NVarChar, Nullable = true, Length = 1024)]                 public string Postaction {get; set;} //nvarchar(1024) null
-        [Column(_Channel, SqlDbType.Int)]                                                         public int Channel {get; set;} //int(4) not null
-        [Column(_Agent, SqlDbType.NVarChar, Nullable = true, Length = 1024)]                      public string Agent {get; set;} //nvarchar(1024) null
+        [Column(_ID, CType.Int, Identity = true)]                                             public int ID {get; set;}     //int(4) not null
+        [Column(_Workflow_Name, CType.NVarChar, Primary = true, Length = 50)]                 public string Workflow_Name {get; set;} //nvarchar(50) not null
+        [Column(_Name, CType.NVarChar, Primary = true, Length = 50)]                          public string Name {get; set;} //nvarchar(50) not null
+        [Column(_Index, CType.Int, Nullable = true)]                                          public int? Index {get; set;} //int(4) null
+        [Column(_Label, CType.NVarChar, Nullable = true, Length = 50)]                        public string Label {get; set;} //nvarchar(50) null
+        [Column(_Description, CType.NVarChar, Nullable = true, Length = 500)]                 public string Description {get; set;} //nvarchar(500) null
+        [Column(_Ty, CType.Int)]                                                              public int Ty {get; set;}     //int(4) not null
+        [Column(_Offset, CType.Float)]                                                        public double Offset {get; set;} //float(8) not null
+        [Column(_Duration, CType.Float)]                                                      public double Duration {get; set;} //float(8) not null
+        [Column(_Metadata, CType.NVarChar, Nullable = true, Length = 1024)]                   public string Metadata {get; set;} //nvarchar(1024) null
+        [Column(_Dependency, CType.NVarChar, Length = 1024)]                                  public string Dependency {get; set;} //nvarchar(1024) not null
+        [Column(_Preaction, CType.NVarChar, Nullable = true, Length = 1024)]                  public string Preaction {get; set;} //nvarchar(1024) null
+        [Column(_Action, CType.NVarChar, Length = 1024)]                                      public string Action {get; set;} //nvarchar(1024) not null
+        [Column(_AfterAction, CType.NVarChar, Nullable = true, Length = 1024)]                public string AfterAction {get; set;} //nvarchar(1024) null
+        [Column(_Postaction, CType.NVarChar, Nullable = true, Length = 1024)]                 public string Postaction {get; set;} //nvarchar(1024) null
+        [Column(_Channel, CType.Int)]                                                         public int Channel {get; set;} //int(4) not null
+        [Column(_Agent, CType.NVarChar, Nullable = true, Length = 1024)]                      public string Agent {get; set;} //nvarchar(1024) null
 
 #pragma warning restore
 

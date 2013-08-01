@@ -21,15 +21,15 @@ namespace Sys.PersistentObjects.DpoClass
 
 #pragma warning disable
 
-        [Column(_log_table_id, SqlDbType.Int, Identity = true, Primary = true)]                   public int log_table_id {get; set;} //int(4) not null
-        [Column(_log_dataset_id, SqlDbType.Int)]                                                  public int log_dataset_id {get; set;} //int(4) not null
-        [Column(_table_id, SqlDbType.Int)]                                                        public int table_id {get; set;} //int(4) not null
-        [Column(_table_name, SqlDbType.VarChar, Nullable = true, Length = 50)]                    public string table_name {get; set;} //varchar(50) null
-        [Column(_row_id, SqlDbType.Int)]                                                          public int row_id {get; set;} //int(4) not null
-        [Column(_operation, SqlDbType.Int)]                                                       public int operation {get; set;} //int(4) not null
-        [Column(_action, SqlDbType.VarChar, Nullable = true, Length = 10)]                        public string action {get; set;} //varchar(10) null
-        [Column(_value_from, SqlDbType.NText, Nullable = true)]                                   public string value_from {get; set;} //ntext(16) null
-        [Column(_value_to, SqlDbType.NText, Nullable = true)]                                     public string value_to {get; set;} //ntext(16) null
+        [Column(_log_table_id, CType.Int, Identity = true, Primary = true)]                   public int log_table_id {get; set;} //int(4) not null
+        [Column(_log_dataset_id, CType.Int)]                                                  public int log_dataset_id {get; set;} //int(4) not null
+        [Column(_table_id, CType.Int)]                                                        public int table_id {get; set;} //int(4) not null
+        [Column(_table_name, CType.VarChar, Nullable = true, Length = 50)]                    public string table_name {get; set;} //varchar(50) null
+        [Column(_row_id, CType.Int)]                                                          public int row_id {get; set;} //int(4) not null
+        [Column(_operation, CType.Int)]                                                       public int operation {get; set;} //int(4) not null
+        [Column(_action, CType.VarChar, Nullable = true, Length = 10)]                        public string action {get; set;} //varchar(10) null
+        [Column(_value_from, CType.NText, Nullable = true)]                                   public string value_from {get; set;} //ntext(16) null
+        [Column(_value_to, CType.NText, Nullable = true)]                                     public string value_to {get; set;} //ntext(16) null
 
 #pragma warning restore
 

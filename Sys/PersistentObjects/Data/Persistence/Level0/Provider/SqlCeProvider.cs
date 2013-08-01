@@ -50,7 +50,7 @@ namespace Sys.Data
 
         public override DbParameter AddParameter(string parameterName, Type type)
         {
-            SqlCeParameter param = new SqlCeParameter(parameterName, type.ToSqlDbType());
+            SqlCeParameter param = new SqlCeParameter(parameterName, type.ToCType().ToSqlDbType());
 
             DbCommand.Parameters.Add(param);
             return param;

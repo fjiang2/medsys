@@ -22,9 +22,9 @@ namespace App.Data.DpoClass
 #pragma warning disable
 
         [ForeignKey(typeof(App.Data.DpoClass.CustomerDpo), App.Data.DpoClass.CustomerDpo._CustomerID)]
-        [Column(_CustomerID, SqlDbType.NChar, Primary = true, Length = 5)]                        public string CustomerID {get; set;} //nchar(5) not null
+        [Column(_CustomerID, CType.NChar, Primary = true, Length = 5)]                        public string CustomerID {get; set;} //nchar(5) not null
         [ForeignKey(typeof(App.Data.DpoClass.CustomerDemographicDpo), App.Data.DpoClass.CustomerDemographicDpo._CustomerTypeID)]
-        [Column(_CustomerTypeID, SqlDbType.NChar, Primary = true, Length = 10)]                   public string CustomerTypeID {get; set;} //nchar(10) not null
+        [Column(_CustomerTypeID, CType.NChar, Primary = true, Length = 10)]                   public string CustomerTypeID {get; set;} //nchar(10) not null
 
 #pragma warning restore
 

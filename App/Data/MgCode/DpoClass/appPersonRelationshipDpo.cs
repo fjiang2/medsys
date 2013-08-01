@@ -21,9 +21,9 @@ namespace App.Data.DpoClass
 
 #pragma warning disable
 
-        [Column(_Person_ID1, SqlDbType.Int, Primary = true)]                                      public int Person_ID1 {get; set;} //int(4) not null
-        [Column(_Person_ID2, SqlDbType.Int, Primary = true)]                                      public int Person_ID2 {get; set;} //int(4) not null
-        [Column(_Relationship_Enum, SqlDbType.Int)]                                               public int Relationship_Enum {get; set;} //int(4) not null
+        [Column(_Person_ID1, CType.Int, Primary = true)]                                      public int Person_ID1 {get; set;} //int(4) not null
+        [Column(_Person_ID2, CType.Int, Primary = true)]                                      public int Person_ID2 {get; set;} //int(4) not null
+        [Column(_Relationship_Enum, CType.Int)]                                               public int Relationship_Enum {get; set;} //int(4) not null
 
 #pragma warning restore
 

@@ -21,11 +21,11 @@ namespace App.Data.DpoClass
 
 #pragma warning disable
 
-        [Column(_Dept_ID, SqlDbType.Int, Identity = true)]                                        public int Dept_ID {get; set;} //int(4) not null
-        [Column(_Name, SqlDbType.NVarChar, Primary = true, Length = 50)]                          public string Name {get; set;} //nvarchar(50) not null
-        [Column(_Label, SqlDbType.NVarChar, Nullable = true, Length = 50)]                        public string Label {get; set;} //nvarchar(50) null
-        [Column(_Description, SqlDbType.NVarChar, Nullable = true, Length = 128)]                 public string Description {get; set;} //nvarchar(128) null
-        [Column(_Manager_ID, SqlDbType.Int, Nullable = true)]                                     public int? Manager_ID {get; set;} //int(4) null
+        [Column(_Dept_ID, CType.Int, Identity = true)]                                        public int Dept_ID {get; set;} //int(4) not null
+        [Column(_Name, CType.NVarChar, Primary = true, Length = 50)]                          public string Name {get; set;} //nvarchar(50) not null
+        [Column(_Label, CType.NVarChar, Nullable = true, Length = 50)]                        public string Label {get; set;} //nvarchar(50) null
+        [Column(_Description, CType.NVarChar, Nullable = true, Length = 128)]                 public string Description {get; set;} //nvarchar(128) null
+        [Column(_Manager_ID, CType.Int, Nullable = true)]                                     public int? Manager_ID {get; set;} //int(4) null
 
 #pragma warning restore
 

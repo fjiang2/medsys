@@ -21,9 +21,9 @@ namespace Sys.Foundation.DpoClass
 
 #pragma warning disable
 
-        [Column(_User_ID, SqlDbType.Int, Primary = true)]                                         public int User_ID {get; set;} //int(4) not null
-        [Column(_Setting, SqlDbType.Text, Nullable = true)]                                       public string Setting {get; set;} //text(16) null
-        [Column(_Configuration, SqlDbType.Text, Nullable = true)]                                 public string Configuration {get; set;} //text(16) null
+        [Column(_User_ID, CType.Int, Primary = true)]                                         public int User_ID {get; set;} //int(4) not null
+        [Column(_Setting, CType.Text, Nullable = true)]                                       public string Setting {get; set;} //text(16) null
+        [Column(_Configuration, CType.Text, Nullable = true)]                                 public string Configuration {get; set;} //text(16) null
 
 #pragma warning restore
 

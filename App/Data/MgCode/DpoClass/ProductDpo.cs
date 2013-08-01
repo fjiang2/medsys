@@ -21,23 +21,23 @@ namespace App.Data.DpoClass
 
 #pragma warning disable
 
-        [Column(_ProductID, SqlDbType.Int, Identity = true, Primary = true)]                      public int ProductID {get; set;} //int(4) not null
-        [Column(_mer_id, SqlDbType.Char, Nullable = true, Length = 3)]                            public string mer_id {get; set;} //char(3) null
-        [Column(_product_id, SqlDbType.Char, Nullable = true, Length = 5)]                        public string product_id {get; set;} //char(5) null
-        [Column(_ProductName, SqlDbType.NVarChar, Length = 40)]                                   public string ProductName {get; set;} //nvarchar(40) not null
+        [Column(_ProductID, CType.Int, Identity = true, Primary = true)]                      public int ProductID {get; set;} //int(4) not null
+        [Column(_mer_id, CType.Char, Nullable = true, Length = 3)]                            public string mer_id {get; set;} //char(3) null
+        [Column(_product_id, CType.Char, Nullable = true, Length = 5)]                        public string product_id {get; set;} //char(5) null
+        [Column(_ProductName, CType.NVarChar, Length = 40)]                                   public string ProductName {get; set;} //nvarchar(40) not null
         [ForeignKey(typeof(App.Data.DpoClass.SupplierDpo), App.Data.DpoClass.SupplierDpo._SupplierID)]
-        [Column(_SupplierID, SqlDbType.Int, Nullable = true)]                                     public int? SupplierID {get; set;} //int(4) null
-        [Column(_description, SqlDbType.VarChar, Nullable = true, Length = 20)]                   public string description {get; set;} //varchar(20) null
-        [Column(_price, SqlDbType.Money, Nullable = true)]                                        public decimal? price {get; set;} //money(8) null
+        [Column(_SupplierID, CType.Int, Nullable = true)]                                     public int? SupplierID {get; set;} //int(4) null
+        [Column(_description, CType.VarChar, Nullable = true, Length = 20)]                   public string description {get; set;} //varchar(20) null
+        [Column(_price, CType.Money, Nullable = true)]                                        public decimal? price {get; set;} //money(8) null
         [ForeignKey(typeof(App.Data.DpoClass.CategorieDpo), App.Data.DpoClass.CategorieDpo._CategoryID)]
-        [Column(_CategoryID, SqlDbType.Int, Nullable = true)]                                     public int? CategoryID {get; set;} //int(4) null
-        [Column(_QuantityPerUnit, SqlDbType.NVarChar, Nullable = true, Length = 20)]              public string QuantityPerUnit {get; set;} //nvarchar(20) null
-        [Column(_qty_on_hand, SqlDbType.Int, Nullable = true)]                                    public int? qty_on_hand {get; set;} //int(4) null
-        [Column(_UnitPrice, SqlDbType.Money, Nullable = true)]                                    public decimal? UnitPrice {get; set;} //money(8) null
-        [Column(_UnitsInStock, SqlDbType.SmallInt, Nullable = true)]                              public short? UnitsInStock {get; set;} //smallint(2) null
-        [Column(_UnitsOnOrder, SqlDbType.SmallInt, Nullable = true)]                              public short? UnitsOnOrder {get; set;} //smallint(2) null
-        [Column(_ReorderLevel, SqlDbType.SmallInt, Nullable = true)]                              public short? ReorderLevel {get; set;} //smallint(2) null
-        [Column(_Discontinued, SqlDbType.Bit)]                                                    public bool Discontinued {get; set;} //bit(1) not null
+        [Column(_CategoryID, CType.Int, Nullable = true)]                                     public int? CategoryID {get; set;} //int(4) null
+        [Column(_QuantityPerUnit, CType.NVarChar, Nullable = true, Length = 20)]              public string QuantityPerUnit {get; set;} //nvarchar(20) null
+        [Column(_qty_on_hand, CType.Int, Nullable = true)]                                    public int? qty_on_hand {get; set;} //int(4) null
+        [Column(_UnitPrice, CType.Money, Nullable = true)]                                    public decimal? UnitPrice {get; set;} //money(8) null
+        [Column(_UnitsInStock, CType.SmallInt, Nullable = true)]                              public short? UnitsInStock {get; set;} //smallint(2) null
+        [Column(_UnitsOnOrder, CType.SmallInt, Nullable = true)]                              public short? UnitsOnOrder {get; set;} //smallint(2) null
+        [Column(_ReorderLevel, CType.SmallInt, Nullable = true)]                              public short? ReorderLevel {get; set;} //smallint(2) null
+        [Column(_Discontinued, CType.Bit)]                                                    public bool Discontinued {get; set;} //bit(1) not null
 
 #pragma warning restore
 

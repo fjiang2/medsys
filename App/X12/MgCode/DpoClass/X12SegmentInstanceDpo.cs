@@ -21,17 +21,17 @@ namespace X12.DpoClass
 
 #pragma warning disable
 
-        [Column(_ID, SqlDbType.Int, Identity = true)]                                             public int ID {get; set;}     //int(4) not null
-        [Column(_LoopName, SqlDbType.VarChar, Primary = true, Length = 8)]                        public string LoopName {get; set;} //varchar(8) not null
-        [Column(_Name, SqlDbType.VarChar, Primary = true, Length = 10)]                           public string Name {get; set;} //varchar(10) not null
-        [Column(_Sequence, SqlDbType.Int, Primary = true)]                                        public int Sequence {get; set;} //int(4) not null
-        [Column(_Description, SqlDbType.VarChar, Length = 100)]                                   public string Description {get; set;} //varchar(100) not null
-        [Column(_RepeatValue, SqlDbType.Int)]                                                     public int RepeatValue {get; set;} //int(4) not null
-        [Column(_Required, SqlDbType.Bit)]                                                        public bool Required {get; set;} //bit(1) not null
-        [Column(_Situational_Rule, SqlDbType.VarChar, Nullable = true, Length = 4000)]            public string Situational_Rule {get; set;} //varchar(4000) null
-        [Column(_TR3_Notes, SqlDbType.VarChar, Nullable = true, Length = 4000)]                   public string TR3_Notes {get; set;} //varchar(4000) null
-        [Column(_TR3_Example, SqlDbType.VarChar, Nullable = true, Length = 1000)]                 public string TR3_Example {get; set;} //varchar(1000) null
-        [Column(_Script, SqlDbType.NText, Nullable = true)]                                       public string Script {get; set;} //ntext(16) null
+        [Column(_ID, CType.Int, Identity = true)]                                             public int ID {get; set;}     //int(4) not null
+        [Column(_LoopName, CType.VarChar, Primary = true, Length = 8)]                        public string LoopName {get; set;} //varchar(8) not null
+        [Column(_Name, CType.VarChar, Primary = true, Length = 10)]                           public string Name {get; set;} //varchar(10) not null
+        [Column(_Sequence, CType.Int, Primary = true)]                                        public int Sequence {get; set;} //int(4) not null
+        [Column(_Description, CType.VarChar, Length = 100)]                                   public string Description {get; set;} //varchar(100) not null
+        [Column(_RepeatValue, CType.Int)]                                                     public int RepeatValue {get; set;} //int(4) not null
+        [Column(_Required, CType.Bit)]                                                        public bool Required {get; set;} //bit(1) not null
+        [Column(_Situational_Rule, CType.VarChar, Nullable = true, Length = 4000)]            public string Situational_Rule {get; set;} //varchar(4000) null
+        [Column(_TR3_Notes, CType.VarChar, Nullable = true, Length = 4000)]                   public string TR3_Notes {get; set;} //varchar(4000) null
+        [Column(_TR3_Example, CType.VarChar, Nullable = true, Length = 1000)]                 public string TR3_Example {get; set;} //varchar(1000) null
+        [Column(_Script, CType.NText, Nullable = true)]                                       public string Script {get; set;} //ntext(16) null
 
 #pragma warning restore
 

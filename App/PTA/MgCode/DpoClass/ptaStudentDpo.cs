@@ -21,10 +21,10 @@ namespace PTA.DpoClass
 
 #pragma warning disable
 
-        [Column(_Student_ID, SqlDbType.Int, Primary = true)]                                      public int Student_ID {get; set;} //int(4) not null
-        [Column(_Address_ID, SqlDbType.Int, Nullable = true)]                                     public int? Address_ID {get; set;} //int(4) null
-        [Column(_Phone_ID, SqlDbType.Int, Nullable = true)]                                       public int? Phone_ID {get; set;} //int(4) null
-        [Column(_Grade, SqlDbType.VarChar, Length = 20)]                                          public string Grade {get; set;} //varchar(20) not null
+        [Column(_Student_ID, CType.Int, Primary = true)]                                      public int Student_ID {get; set;} //int(4) not null
+        [Column(_Address_ID, CType.Int, Nullable = true)]                                     public int? Address_ID {get; set;} //int(4) null
+        [Column(_Phone_ID, CType.Int, Nullable = true)]                                       public int? Phone_ID {get; set;} //int(4) null
+        [Column(_Grade, CType.VarChar, Length = 20)]                                          public string Grade {get; set;} //varchar(20) not null
 
 #pragma warning restore
 

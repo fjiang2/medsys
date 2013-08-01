@@ -26,8 +26,8 @@ namespace Sys.Data
     public class ColumnAttribute : Attribute
     {
         private string columnName;
-        private SqlDbType sqlDbType;
-        private Type dbType;
+        private CType ctype;
+        private Type type;
 
         public string ColumnNameSaved;
         public object DefaultValue = null;
@@ -45,13 +45,13 @@ namespace Sys.Data
 
         public string Caption;
 
-        public ColumnAttribute(string columnName, SqlDbType type)
+        public ColumnAttribute(string columnName, CType ctype)
         {
             this.columnName = columnName;
             this.Caption = columnName;
             this.ColumnNameSaved = columnName;
-            this.sqlDbType = type;
-            this.dbType = type.ToType();
+            this.ctype = ctype;
+            this.type = ctype.ToType();
         }
 
         //internal ColumnAttribute(string columnName, Type type)
@@ -132,20 +132,20 @@ namespace Sys.Data
             get { return columnName; }
         }
 
-        public SqlDbType SqlDbType
+        public CType CType
         {
-            get { return this.sqlDbType; }
+            get { return this.ctype; }
         }
 
 
-        public Type DbType
+        public Type Type
         {
-            get { return this.dbType; }
+            get { return this.type; }
         }
 
         public override string ToString()
         {
-            return string.Format("{0}(Type={1}, Null={2}, Length={3})",columnName, sqlDbType, Nullable, Length);
+            return string.Format("{0}(Type={1}, Null={2}, Length={3})",columnName, ctype, Nullable, Length);
         }
     }
 }
