@@ -72,7 +72,8 @@ namespace Sys.Data.Manager
             if(declare.Length < 30)
                 line += new string(' ', 30 - declare.Length);
 
-            line += string.Format("//{0}({1}) {2}", column.DataType, column.AdjuestedLength(), column.Nullable ? "null" : "not null");
+            if(dpoClass.HasColumnAttribute)
+                line += string.Format("//{0}({1}) {2}", column.DataType, column.AdjuestedLength(), column.Nullable ? "null" : "not null");
 
             dpoClass.dict_column_field.Add(column.ColumnName, new FieldDefinition(ty, fieldName));
 

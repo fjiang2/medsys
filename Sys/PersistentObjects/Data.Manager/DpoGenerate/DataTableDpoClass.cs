@@ -130,7 +130,7 @@ namespace Sys.Data.Manager
             } 
         }
 
-        public byte precision 
+        public byte Precision 
         { 
             get 
             { 
@@ -138,7 +138,7 @@ namespace Sys.Data.Manager
             } 
         }
 
-        public byte scale 
+        public byte Scale 
         { 
             get 
             { 
@@ -180,8 +180,8 @@ namespace Sys.Data.Manager
                 return null;
             }
             set
-            {
-            } 
+            { }
+
         }
         
         public CType CType 

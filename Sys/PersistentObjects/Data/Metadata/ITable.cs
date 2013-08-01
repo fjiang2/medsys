@@ -24,8 +24,8 @@ namespace Sys.Data
         string DataType { get; }
         short Length { get; }
         bool Nullable { get; }
-        byte precision { get; }
-        byte scale { get; }
+        byte Precision { get; }
+        byte Scale { get; }
         bool IsPrimary { get; }
         bool IsIdentity { get; }
         bool IsComputed { get; }
@@ -56,8 +56,8 @@ namespace Sys.Data
         string PK_Table { get; }
         string PK_Column { get; }
 
-        string DatabaseName { get; set; }
-        DataProvider Provider { get; set; }
+        string DatabaseName { get;  }
+        DataProvider Provider { get; }
     }
 
     public interface IIdentityKeys

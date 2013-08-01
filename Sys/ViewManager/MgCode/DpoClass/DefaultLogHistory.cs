@@ -52,9 +52,9 @@ namespace Sys.ViewManager.DpoClass
                 ORDER BY date DESC
                 ",
                  (count <= 0) ? "" : "TOP " + count,
-                logDataTableDpo.TABLE_NAME, 
-                logDataSetDpo.TABLE_NAME,
-                UserDpo.TABLE_NAME,
+                typeof(logDataTableDpo).TableName().FullName, 
+                typeof(logDataSetDpo).TableName().FullName,
+                typeof(UserDpo).TableName().FullName,
                 dpo.TableName, 
                 dpo.RowId
                 );

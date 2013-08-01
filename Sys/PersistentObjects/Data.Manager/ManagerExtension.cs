@@ -107,7 +107,7 @@ namespace Sys.Data.Manager
 
         public static bool GenTableDpo(this ClassTableName tname, string path, bool mustGenerate, ClassName cname, bool hasColumnAttribute, Dictionary<TableName, Type> dict)
         {
-            bool result = GenTableDpo(tname, tname.GetMetaTable(), path, mustGenerate, cname, hasColumnAttribute, dict);
+            bool result = GenTableDpo(tname, tname.GetMetaTable(), path, mustGenerate, cname, true, hasColumnAttribute, dict);
             LogDpoClass.Log(tname, path, cname);
 
             return result;
@@ -118,11 +118,11 @@ namespace Sys.Data.Manager
 
             ITable metatable = new DataTableDpoClass(table);
             ClassTableName tname = new ClassTableName(metatable.TableName);
-            return GenTableDpo(tname, metatable, path, true, cname, true, new Dictionary<TableName, Type>());
+            return GenTableDpo(tname, metatable, path, true, cname, false, false, new Dictionary<TableName, Type>());
         }
 
-        
-        private static bool GenTableDpo(this ClassTableName tname, ITable metatable, string path, bool mustGenerate, ClassName cname, bool hasColumnAttribute, Dictionary<TableName, Type> dict)
+
+        private static bool GenTableDpo(this ClassTableName tname, ITable metatable, string path, bool mustGenerate, ClassName cname, bool hasTableAttribute, bool hasColumnAttribute, Dictionary<TableName, Type> dict)
         {
             //make description to sys tables
             if (tname.Level == Level.System)
@@ -140,7 +140,7 @@ namespace Sys.Data.Manager
             }
 
 
-            DpoGenerator gen = new DpoGenerator(tname, metatable, cname, hasColumnAttribute, dict);
+            DpoGenerator gen = new DpoGenerator(tname, metatable, cname, hasTableAttribute, hasColumnAttribute, dict);
 
             if (!Directory.Exists(path))
             {

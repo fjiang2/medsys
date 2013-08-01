@@ -40,6 +40,8 @@ namespace Sys.Data
         Time = 32,
         DateTime2 = 33,
         DateTimeOffset = 34,
+
+        Auto = 100
     }
 
     public static class DbTypex

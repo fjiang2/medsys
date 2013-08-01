@@ -179,7 +179,7 @@ namespace Sys.Workflow.Collaborative.Forms
                        .Replace("@Tasks", wfTaskDpo.TABLE_NAME)
                        .Replace("@Nodes", wfNodeDpo.TABLE_NAME)
                        .Replace("@Users", UserDpo.TABLE_NAME)
-                       .Replace("@RecordLocks", RecordLockDpo.TABLE_NAME);
+                       .Replace("@RecordLocks", typeof(RecordLockDpo).TableName().FullName);
 
 
             this.taskTable = SqlCmd.FillDataTable<TaskDpo>(

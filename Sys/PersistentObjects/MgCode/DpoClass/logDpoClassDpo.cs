@@ -86,16 +86,7 @@ namespace Sys.PersistentObjects.DpoClass
         }
 
 
-        public static string TABLE_NAME
-        { 
-            get
-            {
-              return new logDpoClassDpo().TableName.FullName;
-            }
-        }
-
-
-
+   
         #region CONSTANT
 
         public const string _class_id = "class_id";

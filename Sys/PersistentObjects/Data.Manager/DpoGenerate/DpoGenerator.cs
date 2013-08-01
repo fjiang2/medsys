@@ -37,7 +37,7 @@ namespace Sys.Data.Manager
         ITable metaTable;
         DpoClass dpoClass;
 
-        public DpoGenerator(ClassTableName ctname, ITable metaTable, ClassName cname, bool hasColumnAttribute, Dictionary<TableName, Type> dict)
+        public DpoGenerator(ClassTableName ctname, ITable metaTable, ClassName cname, bool hasTableAttribute, bool hasColumnAttribute, Dictionary<TableName, Type> dict)
         {
             this.tname = ctname;
             this.cname = cname;
@@ -51,6 +51,7 @@ namespace Sys.Data.Manager
             }
 
             dpoClass = new DpoClass(metaTable, cname, dict);
+            dpoClass.HasTableAttribute = hasTableAttribute;
             dpoClass.HasColumnAttribute = hasColumnAttribute;
 
             this.sourceCode = dpoClass.Generate(cname.Modifier, ctname);

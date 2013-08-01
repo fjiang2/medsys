@@ -51,7 +51,7 @@ namespace Sys.Data
         {
             Type type = this.GetType();
 
-            TableAttribute[] attributes = GetAttributes<TableAttribute>();  //(DataTableAttribute[])GetType().GetCustomAttributes(typeof(DataTableAttribute), true);
+            TableAttribute[] attributes = GetAttributes<TableAttribute>();  
             if (attributes.Length > 0)
                 dataTableAttribute = attributes[0];
             else
