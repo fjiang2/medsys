@@ -21,16 +21,16 @@ using System.Text;
 
 namespace Sys.Data
 {
-    public class MetaColumnCollection : List<IMetaColumn>
+    public class ColumnCollection : List<IColumn>
     {
-        IMetaTable metaTable;
+        ITable metaTable;
 
-        internal MetaColumnCollection(IMetaTable metaTable)
+        internal ColumnCollection(ITable metaTable)
         {
             this.metaTable = metaTable;
         }
 
-        public IMetaColumn this[string columnName]
+        public IColumn this[string columnName]
         {
             get
             {
@@ -45,7 +45,7 @@ namespace Sys.Data
 
         }
 
-        public bool ColumnExists(string columnName)
+        public bool Exists(string columnName)
         {
             return this[columnName] != null;
         }
@@ -66,7 +66,7 @@ namespace Sys.Data
         {
             foreach (ForeignKey key in foreign.Keys)
             {
-                IMetaColumn column = this.Find(col => col.ColumnName == key.FK_Column);
+                IColumn column = this.Find(col => col.ColumnName == key.FK_Column);
                 column.ForeignKey = key;
             }
         }

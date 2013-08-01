@@ -22,25 +22,10 @@ using System.Data;
 
 namespace Sys.Data
 {
-    public interface IMetaColumn
-    {
-        string ColumnName { get;  }
-        string DataType { get;  }
-        short Length { get;  } 
-        bool Nullable { get; }
-        byte precision { get;  }
-        byte scale { get;  }
-        bool IsPrimary { get; }
-        bool IsIdentity { get;  }
-        bool IsComputed { get;  }
-        int ColumnID { get; }
-
-        IForeignKey ForeignKey { get; set; }
-        CType CType { get; }
-    }
+    
 
 
-    public class MetaColumn : PersistentObject, IMetaColumn
+    public class MetaColumn : PersistentObject, IColumn
     {
 
         [Column("ColumnName", CType.NVarChar, Primary = true)]
@@ -73,14 +58,14 @@ namespace Sys.Data
         [Column("label", CType.NVarChar)]
         public string label { get; set; }    //label used as caption to support internationalization
 
-        private CType sqlDbType;
+        private CType ctype;
         private bool isPrimary = false;
         private IForeignKey foreignKey;
 
         public MetaColumn(DataRow dataRow)
             : base(dataRow)
         {
-            this.sqlDbType = GetSqlDbType(this.DataType);
+            this.ctype = GetCType(this.DataType);
         }
 
         internal MetaColumn(ColumnAttribute attr)
@@ -113,10 +98,10 @@ namespace Sys.Data
 
         public CType CType
         {
-            get { return this.sqlDbType; }
+            get { return this.ctype; }
             set
             {
-                this.sqlDbType = value;
+                this.ctype = value;
                 this.DataType = value.ToString();
             }
         }
@@ -148,7 +133,7 @@ namespace Sys.Data
 
         #region SqlDataType -> System.SqlDbType / C# field type / SQL_Create_Table Type
 
-        public static CType GetSqlDbType(string sqlType)
+        internal static CType GetCType(string sqlType)
         {
             switch (sqlType.ToLower())
             {
@@ -233,7 +218,7 @@ namespace Sys.Data
 
 
 
-        public static string GetFieldType(string sqlType, bool nullable)
+        internal static string GetFieldType(string sqlType, bool nullable)
         {
             string ty = "";
             switch (sqlType.ToLower())
@@ -327,7 +312,7 @@ namespace Sys.Data
        
         
 
-        public static string GetSQLField(IMetaColumn column)
+        public static string GetSQLField(IColumn column)
         {
             string ty = "";
             string DataType = column.DataType;
@@ -386,7 +371,7 @@ namespace Sys.Data
             if (this.Nullable && val == "")
                 return null;
 
-            switch (sqlDbType)
+            switch (ctype)
             {
                 case CType.VarChar:
                 case CType.NVarChar:
@@ -456,7 +441,7 @@ namespace Sys.Data
                     return Convert.ToInt64(val);
 
                 default:
-                    throw new NotImplementedException(string.Format("cannot convert {0} into type of {1}", val, sqlDbType));
+                    throw new NotImplementedException(string.Format("cannot convert {0} into type of {1}", val, ctype));
             }
 
         }

@@ -228,7 +228,7 @@ namespace Sys.Data
         }
 
 
-        internal static string Attribute(this IMetaColumn column)
+        internal static string Attribute(this IColumn column)
         {
             string attr = "";
             switch (column.CType)
@@ -277,7 +277,7 @@ namespace Sys.Data
         }
 
 
-        internal static bool Oversize(this IMetaColumn column, object value)
+        internal static bool Oversize(this IColumn column, object value)
         {
             if (!(value is string))
                 return false;
@@ -302,7 +302,7 @@ namespace Sys.Data
         /// <summary>
         /// Adjuested Length
         /// </summary>
-        internal static int AdjuestedLength(this IMetaColumn column)
+        internal static int AdjuestedLength(this IColumn column)
         {
             if (column.Length == -1)
                 return -1;

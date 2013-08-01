@@ -22,11 +22,7 @@ using System.Data;
 
 namespace Sys.Data
 {
-    public interface IIdentityKeys
-    {
-        string[] ColumnNames { get; }
-        int Length { get; }
-    }
+ 
 
     public class IdentityKeys : IIdentityKeys
     {
@@ -42,7 +38,7 @@ namespace Sys.Data
             this.columnNames = columns;
         }
 
-        internal IdentityKeys(MetaColumnCollection columns)
+        internal IdentityKeys(ColumnCollection columns)
         {
             this.columnNames = columns.Where(column => column.IsIdentity).Select(column => column.ColumnName).ToArray();
         }

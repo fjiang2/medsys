@@ -34,10 +34,10 @@ namespace Sys.Data.Manager
         ClassTableName tname;
         ClassName cname;
 
-        IMetaTable metaTable;
+        ITable metaTable;
         DpoClass dpoClass;
 
-        public DpoGenerator(ClassTableName ctname, IMetaTable metaTable, ClassName cname, bool hasColumnAttribute, Dictionary<TableName, Type> dict)
+        public DpoGenerator(ClassTableName ctname, ITable metaTable, ClassName cname, bool hasColumnAttribute, Dictionary<TableName, Type> dict)
         {
             this.tname = ctname;
             this.cname = cname;

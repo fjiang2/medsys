@@ -28,19 +28,9 @@ using Sys.PersistentObjects.DpoClass;
 
 namespace Sys.Data
 {
-    interface IMetaTable
-    {
-        TableName TableName { get; }
-        int TableID { get; }
+   
 
-        IIdentityKeys Identity { get; }
-        IPrimaryKeys PrimaryKeys { get; }
-        IForeignKeys ForeignKeys { get; }
-        
-        MetaColumnCollection Columns { get; }
-    }
-
-    class MetaTable : IMetaTable
+    class MetaTable : ITable
     {
         private TableName tableName;
         
@@ -104,7 +94,7 @@ namespace Sys.Data
             else
                 list = new List<dictDataColumnDpo>();  //when dictDataColumnDpo doesn't exist
 
-            this._columns = new MetaColumnCollection(this);
+            this._columns = new ColumnCollection(this);
             foreach (DataRow row in dt1.Rows)
             {
                 var result = list.Where(column=>column.name == (string)row["ColumnName"]).FirstOrDefault();
@@ -129,8 +119,8 @@ namespace Sys.Data
 
 
 
-        private MetaColumnCollection _columns = null;
-        public MetaColumnCollection Columns
+        private ColumnCollection _columns = null;
+        public ColumnCollection Columns
         {
             get
             {
@@ -272,7 +262,7 @@ namespace Sys.Data
         /// </summary>
         /// <param name="level"></param>
         /// <returns></returns>
-        internal static string GetTableAttribute(IMetaTable metaTable, ClassTableName ctname)
+        internal static string GetTableAttribute(ITable metaTable, ClassTableName ctname)
         {
             string comment = string.Format("//Primary Keys = {0};  Identity = {1};", metaTable.PrimaryKeys, metaTable.Identity);
             StringBuilder attr = new StringBuilder("[Table(");
@@ -329,7 +319,7 @@ namespace Sys.Data
 
     
 
-        internal static string GenerateCREATE_TABLE(IMetaTable metaTable)
+        internal static string GenerateCREATE_TABLE(ITable metaTable)
         {
             string fields = string.Join(",\r\n", metaTable.Columns.Select(column => Sys.Data.MetaColumn.GetSQLField(column)));
             return CREATE_TABLE(fields, metaTable.PrimaryKeys);

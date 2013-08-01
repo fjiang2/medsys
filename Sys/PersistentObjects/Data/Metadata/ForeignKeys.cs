@@ -22,22 +22,8 @@ using System.Data;
 
 namespace Sys.Data
 {
-    public interface IForeignKeys
-    {
-        IForeignKey[] Keys { get; }
-        int Length { get; }
-    }
+    
 
-    public interface IForeignKey
-    {
-        string FK_Table { get;  }
-        string FK_Column { get; }
-        string PK_Table { get; }
-        string PK_Column { get;}
-        
-        string DatabaseName { get; set; }
-        DataProvider Provider { get; set; }
-    }
 
     class ForeignKeys : IForeignKeys
     {

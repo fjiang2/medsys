@@ -62,6 +62,7 @@
     <Compile Include="Data\DbType.cs" />
     <Compile Include="Data\Metadata\ComputedColumns.cs" />
     <Compile Include="Data\Metadata\ForeignKeys.cs" />
+    <Compile Include="Data\Metadata\ITable.cs" />
     <Compile Include="Data\Persistence\Level0\Provider\DbProvider.cs" />
     <Compile Include="Data\Persistence\Level0\Provider\IProvider.cs" />
     <Compile Include="Data\Persistence\Level0\Provider\OleDbProvider.cs" />
@@ -165,7 +166,7 @@
     <Compile Include="Data\Persistence\Level1\Locator.cs" />
     <Compile Include="Data\Metadata\IdentityKeys.cs" />
     <Compile Include="Data\Metadata\MetaColumn.cs" />
-    <Compile Include="Data\Metadata\MetaColumnCollection.cs" />
+    <Compile Include="Data\Metadata\ColumnCollection.cs" />
     <Compile Include="Data\Metadata\MetaDatabase.cs" />
     <Compile Include="Data\Metadata\MetaTable.cs" />
     <Compile Include="Data\Metadata\PrimaryKeys.cs" />

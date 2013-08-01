@@ -49,7 +49,7 @@ namespace Sys.Data.Manager
         private string nameSpace;
         private string className;
 
-        private IMetaTable metaTable;
+        private ITable metaTable;
         private List<string> nonvalized;
         private List<string> nullableFields;
 
@@ -58,7 +58,7 @@ namespace Sys.Data.Manager
         
         Dictionary<TableName, Type> dict;
 
-        public DpoClass(IMetaTable metaTable, ClassName cname,  Dictionary<TableName, Type> dict)
+        public DpoClass(ITable metaTable, ClassName cname,  Dictionary<TableName, Type> dict)
         {
             this.metaTable = metaTable;
             
@@ -77,7 +77,7 @@ namespace Sys.Data.Manager
             get { return this.dict; }
         }
         
-        public IMetaTable MetaTable
+        public ITable MetaTable
         {
             get { return this.metaTable; }
         }
@@ -130,7 +130,7 @@ namespace Sys.Data.Manager
             else if (metaTable.PrimaryKeys.Length == 1)
             {
                 string key = metaTable.PrimaryKeys.Keys[0];
-                IMetaColumn column = metaTable.Columns[key];
+                IColumn column = metaTable.Columns[key];
 
                 if (column.CType == CType.Int)
                 {
@@ -271,7 +271,7 @@ namespace Sys.Data.Manager
         {
             List<DpoField> imageFields = new List<DpoField>();
             string fields = "";
-            foreach (IMetaColumn column in metaTable.Columns)
+            foreach (IColumn column in metaTable.Columns)
             {
                 DpoField field = new DpoField(this, column);
                 fields += field.GenerateField() + "\r\n";
@@ -297,7 +297,7 @@ namespace Sys.Data.Manager
         private string ConstStringColumnNames()
         {
             string columns = "";
-            foreach (IMetaColumn column in metaTable.Columns)
+            foreach (IColumn column in metaTable.Columns)
             {
                 DpoField field = new DpoField(this, column);
                 columns += field.GetConstStringColumnName() + "\r\n";

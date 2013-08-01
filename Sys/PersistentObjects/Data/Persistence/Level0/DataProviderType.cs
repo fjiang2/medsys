@@ -23,15 +23,15 @@ namespace Sys.Data
 {
     public enum DataProviderType
     {
-        SqlServer,
-        OleDbServer,
-        SqlServerCe,
-        MySQL,
-        Oracle,
-        Access,
-        Excel,
-        Excel2007,
-        Excel2010
+        SqlServer = 1,
+        OleDbServer = 2,
+        SqlServerCe = 3,
+        MySQL = 4,
+        Oracle = 5,
+        Access = 6,
+        Excel = 7,
+        Excel2007 = 8,
+        Excel2010 = 9
     }
 
 }
