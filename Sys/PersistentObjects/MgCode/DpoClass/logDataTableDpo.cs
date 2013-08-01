@@ -85,16 +85,7 @@ namespace Sys.PersistentObjects.DpoClass
         }
 
 
-        public static string TABLE_NAME
-        { 
-            get
-            {
-              return new logDataTableDpo().TableName.FullName;
-            }
-        }
-
-
-
+    
         #region CONSTANT
 
         public const string _log_table_id = "log_table_id";

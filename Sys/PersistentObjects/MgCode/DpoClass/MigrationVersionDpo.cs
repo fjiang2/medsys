@@ -78,16 +78,6 @@ namespace Sys.PersistentObjects.DpoClass
         }
         
 
-        public static string TABLE_NAME
-        { 
-            get
-            {
-              return new MigrationVersionDpo().TableName.FullName;
-            }
-        }
-
-
-
         #region CONSTANT
 
         public const string _Version = "Version";

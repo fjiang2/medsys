@@ -71,7 +71,15 @@ namespace Sys.Data
             ColumnAttribute[] attributes = (ColumnAttribute[])propertyInfo.GetCustomAttributes(typeof(ColumnAttribute), true);
 
             foreach (ColumnAttribute attribute in attributes)
+            {
+                if (attribute.ColumnName == String.Empty)
+                    attribute.ColumnName = propertyInfo.Name;
+
+                if (attribute.CType == CType.Auto)
+                    attribute.CType = propertyInfo.PropertyType.ToCType();
+
                 return attribute;
+            }
 
             if (attributes.Length == 0)
             {
@@ -83,19 +91,19 @@ namespace Sys.Data
                 if (non.Length > 0)
                     return null;
 
-                //if (fieldInfo.GetCustomAttributes(true).Length == 0)        //no other attribute defined.
-                //{
-                //    if (propertyInfo.IsPublic)
-                //        try
-                //        {
-                //            return new ColumnAttribute(propertyInfo.Name, propertyInfo.PropertyType);
-                //        }
-                //        catch (Exception)
-                //        {
-                //            return null;    //some type is not supported
-                //        }
-
-                //}
+                //no other attribute defined.
+                if (propertyInfo.CanRead && propertyInfo.CanWrite)
+                {
+                    try
+                    {
+                        return new ColumnAttribute(propertyInfo.Name, propertyInfo.PropertyType.ToCType());
+                    }
+                    catch (Exception)
+                    {
+                        return null;    //some type is not supported
+                    }
+                }
+                
             }
 
             return null;

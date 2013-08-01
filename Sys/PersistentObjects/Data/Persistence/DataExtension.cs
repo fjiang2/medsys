@@ -233,22 +233,24 @@ namespace Sys.Data
             string attr = "";
             switch (column.CType)
             {
-                case CType.Char:
-                case CType.VarChar:
                 case CType.VarBinary:
                 case CType.Binary:
                     attr = string.Format(", Length = {0}", column.AdjuestedLength());
                     break;
 
+                case CType.Char:
+                case CType.VarChar:
                 case CType.NChar:
                 case CType.NVarChar:
-                    attr = string.Format(", Length = {0}", column.AdjuestedLength());
+                    int len = column.AdjuestedLength();
+                    if(len != -1)
+                        attr = string.Format(", Length = {0}", len);
                     break;
 
 
                 //case CType.Numeric:
                 case CType.Decimal:
-                    attr = string.Format(", Precision = {0}, Scale = {1}", column.precision, column.scale);
+                    attr = string.Format(", Precision = {0}, Scale = {1}", column.Precision, column.Scale);
                     break;
 
 

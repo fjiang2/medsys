@@ -55,6 +55,7 @@ namespace Sys.Data.Manager
 
         public Dictionary<string, FieldDefinition> dict_column_field = new Dictionary<string, FieldDefinition>();
         public bool HasColumnAttribute = true;
+        public bool HasTableAttribute = true;
         
         Dictionary<TableName, Type> dict;
 
@@ -325,6 +326,8 @@ namespace Sys.Data.Manager
             }
 
             string rev = string.Format("[Revision({0})]", revision);
+            if (!HasTableAttribute)
+                rev = "";
 
             string comment = @"//
 // Machine Generated Code
@@ -357,12 +360,7 @@ namespace @NAMESPACE
     @ATTRIBUTE
     @MODIFIER class @CLASSNAME : DPObject
     {
-
-#pragma warning disable
-
 @FIELDS
-#pragma warning restore
-
         public @CLASSNAME()
         {
         }
@@ -379,16 +377,7 @@ namespace @NAMESPACE
 @PRIMARYKEYS
 
 @IDENTITYKEYS
-
-        public static string TABLE_NAME
-        { 
-            get
-            {
-              return new @CLASSNAME().TableName.FullName;
-            }
-        }
-
-
+ 
 @CONSTANT
 
 @CREATE_TABLE
@@ -430,7 +419,7 @@ namespace @NAMESPACE
 
             SQL_CREATE_TABLE_STRING = Sys.Data.MetaTable.GenerateCREATE_TABLE(metaTable);
             CREATE_TABLE = string.Format(CREATE_TABLE, SQL_CREATE_TABLE_STRING);
-            if(this.HasColumnAttribute)
+            if(this.HasColumnAttribute || !this.HasTableAttribute)
                 CREATE_TABLE = ""; 
 
             string m = "public";
@@ -441,11 +430,15 @@ namespace @NAMESPACE
             else if (modifier == AccessModifier.Private)
                 m = "private";
 
+            string attribute = Sys.Data.MetaTable.GetTableAttribute(metaTable, ctname);
+            if (!HasTableAttribute)
+                attribute = "";
+
             clss = clss
                       .Replace("@COMMENT", comment)
                       .Replace("@NAMESPACE", nameSpace)
                       .Replace("@REVISION", rev)
-                      .Replace("@ATTRIBUTE", Sys.Data.MetaTable.GetTableAttribute(metaTable, ctname))
+                      .Replace("@ATTRIBUTE", attribute)
                       .Replace("@MODIFIER", m)
                       .Replace("@PRIMARYCONSTRUCTOR", PrimaryConstructor())
                       .Replace("@CLASSNAME", className)

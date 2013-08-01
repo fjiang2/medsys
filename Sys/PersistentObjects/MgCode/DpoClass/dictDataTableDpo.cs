@@ -83,16 +83,6 @@ namespace Sys.PersistentObjects.DpoClass
         }
 
 
-        public static string TABLE_NAME
-        { 
-            get
-            {
-              return new dictDataTableDpo().TableName.FullName;
-            }
-        }
-
-
-
         #region CONSTANT
 
         public const string _table_id = "table_id";

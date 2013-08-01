@@ -41,10 +41,10 @@ namespace Sys.Data
         public bool Nullable { get; set; }
 
         [Column("precision", CType.TinyInt)]
-        public byte precision { get; set; }
+        public byte Precision { get; set; }
 
         [Column("scale", CType.TinyInt)]
-        public byte scale { get; set; }
+        public byte Scale { get; set; }
 
         [Column("IsIdentity", CType.Bit)]
         public bool IsIdentity { get; set; }
@@ -75,8 +75,8 @@ namespace Sys.Data
             this.CType = attr.CType;
 
             this.Nullable = attr.Nullable;
-            this.precision = attr.Precision;
-            this.scale = attr.Scale;
+            this.Precision = attr.Precision;
+            this.Scale = attr.Scale;
             this.IsIdentity = attr.Identity;
             this.IsComputed = attr.Computed;
             this.isPrimary = attr.Primary;
@@ -340,7 +340,7 @@ namespace Sys.Data
 
                 //case SqlDbType.Numeric:
                 case CType.Decimal:
-                    ty = string.Format("{0}({1},{2})", DataType, column.precision, column.scale);
+                    ty = string.Format("{0}({1},{2})", DataType, column.Precision, column.Scale);
                     break;
 
 

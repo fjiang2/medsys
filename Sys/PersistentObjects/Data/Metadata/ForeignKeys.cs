@@ -55,13 +55,20 @@ FROM    INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS C
                    ) PT ON PT.TABLE_NAME = PK.TABLE_NAME
 WHERE FK.TABLE_NAME='{1}'       
             ";
-
-            this.keys = new DPList<ForeignKey>(SqlCmd.FillDataTable(tname.Provider, SQL, tname.DatabaseName.Name, tname.Name)).ToArray();
-            foreach (var key in this.keys)
+            
+            DataTable table = SqlCmd.FillDataTable(tname.Provider, SQL, tname.DatabaseName.Name, tname.Name);
+            
+            table.Columns.Add("DatabaseName", typeof(string));
+            table.Columns.Add("Provider", typeof(DataProvider));
+            foreach (DataRow row in table.Rows)
             {
-                key.DatabaseName = tname.DatabaseName.Name;
-                key.Provider = tname.Provider;
+                row["DatabaseName"] = tname.DatabaseName.Name;
+                row["Provider"] = tname.Provider;
             }
+
+            table.AcceptChanges();
+
+            this.keys = new DPList<ForeignKey>(table).ToArray();
         }
 
         public IForeignKey[] Keys
@@ -117,6 +124,7 @@ WHERE FK.TABLE_NAME='{1}'
         { 
         }
 
+      
     
         internal static string GetAttribute(IForeignKey key, Type pkTableType)
         {

@@ -84,15 +84,6 @@ namespace Sys.PersistentObjects.DpoClass
         }
 
 
-        public static string TABLE_NAME
-        { 
-            get
-            {
-              return new RecordLockDpo().TableName.FullName;
-            }
-        }
-
-
 
         #region CONSTANT
 
