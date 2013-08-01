@@ -116,13 +116,13 @@ namespace Sys.Data.Manager
         public static bool GenTableDpo(this DataTable table,  string path, ClassName cname)
         {
 
-            IMetaTable metatable = new DataTableDpoClass(table);
+            ITable metatable = new DataTableDpoClass(table);
             ClassTableName tname = new ClassTableName(metatable.TableName);
             return GenTableDpo(tname, metatable, path, true, cname, true, new Dictionary<TableName, Type>());
         }
 
         
-        private static bool GenTableDpo(this ClassTableName tname, IMetaTable metatable, string path, bool mustGenerate, ClassName cname, bool hasColumnAttribute, Dictionary<TableName, Type> dict)
+        private static bool GenTableDpo(this ClassTableName tname, ITable metatable, string path, bool mustGenerate, ClassName cname, bool hasColumnAttribute, Dictionary<TableName, Type> dict)
         {
             //make description to sys tables
             if (tname.Level == Level.System)
@@ -159,9 +159,9 @@ namespace Sys.Data.Manager
 
         #endregion
 
-        public static MetaColumnCollection MetaColumns(this TableName tableName)
+        public static ColumnCollection MetaColumns(this TableName tableName)
         {
-            IMetaTable meta = MetaTable.GetCachedInstance(tableName);
+            ITable meta = MetaTable.GetCachedInstance(tableName);
             return meta.Columns;
         }
 

@@ -22,12 +22,7 @@ using System.Data;
 
 namespace Sys.Data
 {
-    public interface IPrimaryKeys
-    {
-        string[] Keys { get; }
-        int Length { get; }
-    }
-
+   
     public class PrimaryKeys : IPrimaryKeys
     {
         private string[] keys;

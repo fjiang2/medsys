@@ -30,10 +30,10 @@ namespace Sys.Data.Manager
     {
         DpoClass dpoClass;
 
-        private IMetaColumn column;
+        private IColumn column;
         
         
-        public DpoField(DpoClass dpoClass, IMetaColumn column)
+        public DpoField(DpoClass dpoClass, IColumn column)
         {
             this.dpoClass = dpoClass;
             this.column = column;

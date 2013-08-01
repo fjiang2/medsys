@@ -76,13 +76,13 @@ namespace Sys.Data
 
         public void Validate()
         {
-            IMetaTable metaTable = tableName.GetCachedMetaTable();
+            ITable metaTable = tableName.GetCachedMetaTable();
             foreach (ColumnAdapter column in columns)
             {
                 DataField field = column.Field;
                 if (field.Saved || field.Primary)
                 {
-                    IMetaColumn metaColumn = metaTable.Columns[field.Name];
+                    IColumn metaColumn = metaTable.Columns[field.Name];
 
                     if (!metaColumn.Nullable && (column.Value == System.DBNull.Value || column.Value == null))
                         throw new Sys.JException("Column[{0}] value cannot be null", field.Name);

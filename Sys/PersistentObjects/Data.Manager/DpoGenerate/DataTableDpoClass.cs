@@ -8,13 +8,13 @@ using Sys.Data;
 
 namespace Sys.Data.Manager
 {
-    class DataTableDpoClass : IMetaTable
+    class DataTableDpoClass : ITable
     {
 
         DataTable table;
         ClassTableName tableName;
 
-        MetaColumnCollection _columns;
+        ColumnCollection _columns;
         IdentityKeys _identity;
         ComputedColumns _computedColumns;
 
@@ -25,7 +25,7 @@ namespace Sys.Data.Manager
 
 
 
-            this._columns = new MetaColumnCollection(this);
+            this._columns = new ColumnCollection(this);
             foreach (DataColumn c in table.Columns)
             {
                 this._columns.Add(new DtColumn(c));
@@ -79,7 +79,7 @@ namespace Sys.Data.Manager
             }
         }
 
-        public MetaColumnCollection Columns 
+        public ColumnCollection Columns 
         {
             get
             {
@@ -90,7 +90,7 @@ namespace Sys.Data.Manager
     }
 
 
-    class DtColumn : IMetaColumn
+    class DtColumn : IColumn
     {
         DataColumn column;
         public DtColumn(DataColumn column)
