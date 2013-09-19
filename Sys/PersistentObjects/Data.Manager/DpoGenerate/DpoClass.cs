@@ -358,7 +358,7 @@ namespace @NAMESPACE
 {
     @REVISION
     @ATTRIBUTE
-    @MODIFIER class @CLASSNAME : DPObject
+    @MODIFIER partial class @CLASSNAME : DPObject
     {
 @FIELDS
         public @CLASSNAME()
