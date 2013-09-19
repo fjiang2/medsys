@@ -129,8 +129,6 @@
     <Compile Include="Modules\TieModule.cs" />
     <Compile Include="Sys\Configuration.cs" />
     <Compile Include="Sys\Constant.cs" />
-    <Compile Include="Sys\DateTimeExtension.cs" />
-    <Compile Include="Sys\EnumExtension.cs" />
     <Compile Include="Sys\LogException\EmailLogger.cs" />
     <Compile Include="Sys\LogException\EventLogLogger.cs" />
     <Compile Include="Sys\LogException\ExceptionLogger.cs" />
@@ -140,6 +138,10 @@
     <Compile Include="Sys\SysInformation.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Core\Sys.Core.csproj">
+      <Project>{58332852-369d-4045-93c2-5cfe9cfb2313}</Project>
+      <Name>Sys.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PersistentObjects\Sys.PersistentObjects.csproj">
       <Project>{FE52736A-BA94-41FC-9FD3-A481A790FC9C}</Project>
       <Name>Sys.PersistentObjects</Name>

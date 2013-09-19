@@ -216,6 +216,10 @@
       <Project>{1840C050-6A3F-48E0-9D8A-AB855797EE75}</Project>
       <Name>agsXMPP.ui.2008</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Core\Sys.Core.csproj">
+      <Project>{58332852-369d-4045-93c2-5cfe9cfb2313}</Project>
+      <Name>Sys.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Foundation\Sys.Foundation.csproj">
       <Project>{30FC8D52-477A-415A-9680-B29F0C5A1606}</Project>
       <Name>Sys.Foundation</Name>

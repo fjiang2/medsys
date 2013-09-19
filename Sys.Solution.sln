@@ -33,6 +33,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App.Testing", "App\Testing\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App.DpoCmd", "App\DpoCmd\App.DpoCmd.csproj", "{CF257ADF-70C4-4AB0-9570-DCE3403814A6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sys.Core", "Sys\Core\Sys.Core.csproj", "{58332852-369D-4045-93C2-5CFE9CFB2313}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -210,6 +212,16 @@ Global
 		{CF257ADF-70C4-4AB0-9570-DCE3403814A6}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{CF257ADF-70C4-4AB0-9570-DCE3403814A6}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{CF257ADF-70C4-4AB0-9570-DCE3403814A6}.Release|x86.ActiveCfg = Release|Any CPU
+		{58332852-369D-4045-93C2-5CFE9CFB2313}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58332852-369D-4045-93C2-5CFE9CFB2313}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58332852-369D-4045-93C2-5CFE9CFB2313}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{58332852-369D-4045-93C2-5CFE9CFB2313}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{58332852-369D-4045-93C2-5CFE9CFB2313}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{58332852-369D-4045-93C2-5CFE9CFB2313}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58332852-369D-4045-93C2-5CFE9CFB2313}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58332852-369D-4045-93C2-5CFE9CFB2313}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{58332852-369D-4045-93C2-5CFE9CFB2313}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{58332852-369D-4045-93C2-5CFE9CFB2313}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

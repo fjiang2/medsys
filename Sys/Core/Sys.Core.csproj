@@ -4,16 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{CF257ADF-70C4-4AB0-9570-DCE3403814A6}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{58332852-369D-4045-93C2-5CFE9CFB2313}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>App.DpoCmd</RootNamespace>
-    <AssemblyName>App.DpoCmd</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <RootNamespace>Sys.Core</RootNamespace>
+    <AssemblyName>Sys.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,7 +23,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -39,26 +38,27 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Tie">
-      <HintPath>..\..\Lib\Tie.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="Const.cs" />
+    <Compile Include="DataPool.cs" />
+    <Compile Include="DataStructure\ident.cs" />
+    <Compile Include="DataStructure\Tree\INTreeNode.cs" />
+    <Compile Include="DataStructure\Tree\NTree.cs" />
+    <Compile Include="DataStructure\Tree\Tree.cs" />
+    <Compile Include="DataStructure\Tree\TreeNode.cs" />
+    <Compile Include="DataStructure\Tree\TreeNodeCollection.cs" />
+    <Compile Include="DateTimeExtension.cs" />
+    <Compile Include="EnumExtension.cs" />
+    <Compile Include="IAccount.cs" />
+    <Compile Include="JException.cs" />
+    <Compile Include="Message\Message.cs" />
+    <Compile Include="Message\MessageBuilder.cs" />
+    <Compile Include="Message\MessageCode.cs" />
+    <Compile Include="Message\MessageLevel.cs" />
+    <Compile Include="Message\MessageLocation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Sys\Core\Sys.Core.csproj">
-      <Project>{58332852-369d-4045-93c2-5cfe9cfb2313}</Project>
-      <Name>Sys.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Sys\PersistentObjects\Sys.PersistentObjects.csproj">
-      <Project>{fe52736a-ba94-41fc-9fd3-a481a790fc9c}</Project>
-      <Name>Sys.PersistentObjects</Name>
-    </ProjectReference>
+    <Compile Include="SysExtensiton.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
