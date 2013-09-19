@@ -82,6 +82,10 @@
       <Project>{21D52785-DCA0-46BB-B0FD-428FEFBD7B1D}</Project>
       <Name>Sys.BusinessRules</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Sys\Core\Sys.Core.csproj">
+      <Project>{58332852-369d-4045-93c2-5cfe9cfb2313}</Project>
+      <Name>Sys.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Sys\DataManager\Sys.DataManager.csproj">
       <Project>{E5EC721B-1F83-41D2-ADFD-2E8E0B1E516D}</Project>
       <Name>Sys.DataManager</Name>

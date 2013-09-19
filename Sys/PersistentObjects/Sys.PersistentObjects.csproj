@@ -198,29 +198,18 @@
     <Compile Include="MgCode\DpoClass\MigrationVersionDpo.cs" />
     <Compile Include="MgCode\DpoClass\RecordLockDpo.cs" />
     <Compile Include="MgCode\DpoClass\dictEnumTypeDpo.cs" />
-    <Compile Include="Sys\DataStructure\Tree\NTree.cs" />
-    <Compile Include="Sys\DataStructure\Tree\INTreeNode.cs" />
-    <Compile Include="Sys\DataStructure\Tree\Tree.cs" />
-    <Compile Include="Sys\DataStructure\Tree\TreeNode.cs" />
-    <Compile Include="Sys\DataStructure\Tree\TreeNodeCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sys\Active.cs" />
-    <Compile Include="Sys\Const.cs" />
-    <Compile Include="Sys\DataPool.cs" />
-    <Compile Include="Sys\Message\MessageBuilder.cs" />
-    <Compile Include="Sys\Message\MessageLocation.cs" />
-    <Compile Include="Sys\Message\MessageCode.cs" />
-    <Compile Include="Sys\IAccount.cs" />
-    <Compile Include="Sys\DataStructure\ident.cs" />
-    <Compile Include="Sys\Message\MessageLevel.cs" />
-    <Compile Include="Sys\Message\Message.cs" />
-    <Compile Include="Sys\JException.cs" />
-    <Compile Include="Sys\SysExtensiton.cs" />
     <Compile Include="Sys\JBackgroundWorker.cs">
       <SubType>Component</SubType>
     </Compile>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Core\Sys.Core.csproj">
+      <Project>{58332852-369d-4045-93c2-5cfe9cfb2313}</Project>
+      <Name>Sys.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

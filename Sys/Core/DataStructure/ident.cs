@@ -109,7 +109,7 @@ namespace Sys
             return this.id.CompareTo(other);
         }
 
-        internal static string Identifier(string s)
+        public static string Identifier(string s)
         {
             s = s.Trim();
             StringBuilder sb = new StringBuilder();

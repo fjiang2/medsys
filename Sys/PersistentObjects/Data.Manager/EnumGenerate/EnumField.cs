@@ -20,6 +20,7 @@ using System.Linq;
 using System.Text;
 using System.Data;
 using Sys.PersistentObjects.DpoClass;
+using Sys;
 using Sys.Data;
 
 namespace Sys.Data.Manager

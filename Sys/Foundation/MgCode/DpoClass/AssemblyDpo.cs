@@ -16,7 +16,7 @@ namespace Sys.Foundation.DpoClass
 {
     [Revision(13)]
     [Table("sys00701", Level.System)]    //Primary Keys = AssemblyName;  Identity = ID;
-    public class AssemblyDpo : DPObject
+    public partial class AssemblyDpo : DPObject
     {
 
 #pragma warning disable

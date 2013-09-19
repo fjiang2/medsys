@@ -20,7 +20,6 @@ using System.Linq;
 using System.Text;
 using System.Reflection;
 using System.IO;
-using Tie;
 using System.Data;
 
 namespace Sys
