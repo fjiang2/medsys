@@ -15,7 +15,7 @@ namespace Sys.Platform.Scheduler
         public Task()
         {
             this.UniqueID = -1;
-            this.User_ID = Active.Account.UserID;
+            this.User_ID = ActiveAccount.Account.UserID;
         }
 
      

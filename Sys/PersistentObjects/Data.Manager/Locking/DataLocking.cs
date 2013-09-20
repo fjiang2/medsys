@@ -96,7 +96,7 @@ namespace Sys.Data.Manager
         {
             get
             {
-                return this.Locked && this.locker.CO_User_ID == Active.Account.UserID;
+                return this.Locked && this.locker.CO_User_ID == ActiveAccount.Account.UserID;
             }
         }
         
@@ -107,13 +107,13 @@ namespace Sys.Data.Manager
         {
             get
             {
-                return this.Locked && this.locker.CO_User_ID != Active.Account.UserID;
+                return this.Locked && this.locker.CO_User_ID != ActiveAccount.Account.UserID;
             }
         }
 
         public void CheckOutByMe()
         {
-            locker.CheckOut(Active.Account.UserID);
+            locker.CheckOut(ActiveAccount.Account.UserID);
         }
 
         public void CheckOut(int userID)
@@ -123,7 +123,7 @@ namespace Sys.Data.Manager
 
         public int CheckInByMe()
         {
-            return locker.CheckIn(Active.Account.UserID);
+            return locker.CheckIn(ActiveAccount.Account.UserID);
         }
 
         public int CheckIn(int userID)
@@ -133,7 +133,7 @@ namespace Sys.Data.Manager
 
         public int MustCheckIn()
         {
-            return locker.MustCheckIn(Active.Account.UserID);
+            return locker.MustCheckIn(ActiveAccount.Account.UserID);
         }
 
         public override string ToString()

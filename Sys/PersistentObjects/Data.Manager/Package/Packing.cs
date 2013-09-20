@@ -181,7 +181,7 @@ namespace Sys.Data.Manager
 //   by {0}
 //
 ";
-            comment = string.Format(comment, Active.Account.UserName);
+            comment = string.Format(comment, ActiveAccount.Account.UserName);
             string classFormat = @"{0}{1}";
 
             return string.Format(classFormat, comment, this.clss);

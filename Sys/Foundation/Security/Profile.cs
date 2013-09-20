@@ -41,7 +41,7 @@ namespace Sys.Security
 
             UserProfileDpo dpo = new UserProfileDpo();
             
-            dpo.User_ID = Active.Account.UserID;
+            dpo.User_ID = ActiveAccount.Account.UserID;
             dpo.Setting = v.ToJson();
             dpo.Configuration = configuration;
             dpo.Save();
@@ -50,7 +50,7 @@ namespace Sys.Security
         public override void Load()
         {
             UserProfileDpo dpo = new UserProfileDpo();
-            dpo.User_ID = Active.Account.UserID; ;
+            dpo.User_ID = ActiveAccount.Account.UserID; ;
             dpo.Load();
 
             if (dpo.Exists)

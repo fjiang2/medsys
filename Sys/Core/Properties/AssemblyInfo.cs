@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Sys.Core")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Sys Core library")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("HP")]
-[assembly: AssemblyProduct("Sys.Core")]
-[assembly: AssemblyCopyright("Copyright © HP 2013")]
+[assembly: AssemblyCompany("Datum Connect Inc.")]
+[assembly: AssemblyProduct("Database Persistent Object")]
+[assembly: AssemblyCopyright("Copyright ©  DATCONN 2012")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

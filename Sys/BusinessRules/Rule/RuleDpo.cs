@@ -14,7 +14,7 @@ namespace Sys.BusinessRules
         public RuleDpo()
         {
             this.Released = false;
-            this.Creator = Active.Account.UserID;
+            this.Creator = ActiveAccount.Account.UserID;
             this.Date_Created = DateTime.Now;
          
         }
@@ -26,7 +26,7 @@ namespace Sys.BusinessRules
 
         public override DataRow Save()
         {
-            this.Modifier = Active.Account.UserID;
+            this.Modifier = ActiveAccount.Account.UserID;
             this.Date_Modified = DateTime.Now;
 
             return base.Save();

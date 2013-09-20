@@ -177,7 +177,7 @@ namespace Sys
 
         public static void Stop()
         {
-            Stop(Active.Account);
+            Stop(ActiveAccount.Account);
             
             Sys.Security.Profile.Instance.Add("TimeLogout", DateTime.Now);
             Sys.Security.Profile.Instance.Save();
@@ -190,7 +190,7 @@ namespace Sys
 
             Sys.Security.Profile.Instance.Add("Computer", System.Windows.Forms.SystemInformation.ComputerName);
             Sys.Security.Profile.Instance.Add("Version", App.ApplicationVersion());
-            Sys.Security.Profile.Instance.Add("UserName", Active.Account.UserName);
+            Sys.Security.Profile.Instance.Add("UserName", ActiveAccount.Account.UserName);
             Sys.Security.Profile.Instance.Add("TimeLogin", DateTime.Now);
 
         }

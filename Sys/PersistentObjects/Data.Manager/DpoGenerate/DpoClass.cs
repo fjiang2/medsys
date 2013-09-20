@@ -335,8 +335,8 @@ namespace Sys.Data.Manager
 //
 ";
             string who = "devel";
-            if (Active.Account != null)
-                who = Active.Account.UserName;
+            if (ActiveAccount.Account != null)
+                who = ActiveAccount.Account.UserName;
 
             comment = string.Format(comment, who);
             string usingString = @"{0}
