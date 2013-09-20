@@ -63,7 +63,7 @@ namespace Sys.Security
             Account account = new Account(userName);
             if (account.IsLogined())
             {
-                Active.SetCurrentUser(account);
+                ActiveAccount.SetActiveAccount(account);
                 return true;
             }
 
@@ -73,7 +73,7 @@ namespace Sys.Security
         public override void Logout()
         {
             base.Logout();
-            Active.SetCurrentUser(null);
+            ActiveAccount.SetActiveAccount(null);
         }
 
 
@@ -87,7 +87,7 @@ namespace Sys.Security
             designMode = false;
             #endif
 
-            Active.SetCurrentUser(account);
+            ActiveAccount.SetActiveAccount(account);
         }
 
         #if DEBUG
@@ -109,7 +109,7 @@ namespace Sys.Security
                     return temp;
                 }
 #endif
-                return (Account)Active.Account;
+                return (Account)ActiveAccount.Account;
             }
         }
 

@@ -88,7 +88,7 @@ namespace Sys.Data.Manager
         {
             ITransactionLogee logee = LogManager.Instance.TransactionLogee();
 
-            Transaction transaction = logee.LogTransaction(formName, Active.Account.UserID);
+            Transaction transaction = logee.LogTransaction(formName, ActiveAccount.Account.UserID);
             return new LogTransaction(transaction, logee);
         }
 
@@ -97,7 +97,7 @@ namespace Sys.Data.Manager
         {
             ITransactionLogee logee = LogManager.Instance.TransactionLogee(typeName);
 
-            Transaction transaction = logee.LogTransaction(formName, Active.Account.UserID);
+            Transaction transaction = logee.LogTransaction(formName, ActiveAccount.Account.UserID);
             return new LogTransaction(transaction, logee);
         }
 

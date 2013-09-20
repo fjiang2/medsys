@@ -74,7 +74,7 @@ namespace Sys.Data.Manager
             DataTable dt = cmd.FillDataTable();
             DPCollection<SpParamDpo> parameters = new DPCollection<SpParamDpo>(dt);
 
-            string comment = string.Format("//Machine Generated Code by {0} at {1}", Active.Account.UserName, DateTime.Today);
+            string comment = string.Format("//Machine Generated Code by {0} at {1}", ActiveAccount.Account.UserName, DateTime.Today);
             string usingString = @"{0}
 using System;
 using System.Data;

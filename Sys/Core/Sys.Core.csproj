@@ -7,7 +7,7 @@
     <ProjectGuid>{58332852-369D-4045-93C2-5CFE9CFB2313}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Sys.Core</RootNamespace>
+    <RootNamespace>Sys</RootNamespace>
     <AssemblyName>Sys.Core</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -40,17 +40,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Account\ActiveAccount.cs" />
     <Compile Include="Const.cs" />
-    <Compile Include="DataPool.cs" />
+    <Compile Include="DataStructure\DataPool.cs" />
     <Compile Include="DataStructure\ident.cs" />
     <Compile Include="DataStructure\Tree\INTreeNode.cs" />
     <Compile Include="DataStructure\Tree\NTree.cs" />
     <Compile Include="DataStructure\Tree\Tree.cs" />
     <Compile Include="DataStructure\Tree\TreeNode.cs" />
     <Compile Include="DataStructure\Tree\TreeNodeCollection.cs" />
-    <Compile Include="DateTimeExtension.cs" />
-    <Compile Include="EnumExtension.cs" />
-    <Compile Include="IAccount.cs" />
+    <Compile Include="Extension\DateTimeExtension.cs" />
+    <Compile Include="Extension\EnumExtension.cs" />
+    <Compile Include="Account\IAccount.cs" />
     <Compile Include="JException.cs" />
     <Compile Include="Message\Message.cs" />
     <Compile Include="Message\MessageBuilder.cs" />
@@ -58,7 +59,7 @@
     <Compile Include="Message\MessageLevel.cs" />
     <Compile Include="Message\MessageLocation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SysExtensiton.cs" />
+    <Compile Include="Extension\SysExtensiton.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

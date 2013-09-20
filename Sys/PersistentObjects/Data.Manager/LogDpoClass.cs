@@ -37,7 +37,7 @@ namespace Sys.Data.Manager
         public LogDpoClass(TableName tname)
         {
             this.table_id = tname.Id;
-            this.user_id = Active.Account.UserID;
+            this.user_id = ActiveAccount.Account.UserID;
             this.Load();
         }
 
@@ -45,7 +45,7 @@ namespace Sys.Data.Manager
         {
             logDpoClassDpo log = new logDpoClassDpo();
             log.table_id = tname.Id;
-            log.user_id = Active.Account.UserID;
+            log.user_id = ActiveAccount.Account.UserID;
             log.path = path;
             log.name_space = cname.Namespace;
             log.modifier = (int)cname.Modifier;
