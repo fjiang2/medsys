@@ -121,5 +121,61 @@ namespace Sys
             }
         }
 
+
+
+        public Func<T, T, double> GetDistance;
+
+        /// <summary>
+        /// Insert item based on the distance between items
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
+        public int InsertNear(T item)
+        {
+
+            if (GetDistance == null)
+                throw new InvalidOperationException("GetDistance is not defined");
+
+            int n = this.Count();
+
+            if (n <= 1)
+            {
+                this.Add(item);
+                return n;
+            }
+
+            double d1;
+            double d2;
+
+            for (int i1 = 0; i1 < n - 1; i1++)
+            {
+                int i2 = i1 + 1;
+
+                double d = GetDistance(this[i1], this[i2]);
+                d1 = GetDistance(this[i1], item);
+                d2 = GetDistance(this[i2], item);
+
+                // x is between Items[i1] and Items[i2]
+                if (d1 < d && d2 < d)
+                {
+                    this.Insert(i2, item);
+                    return i2;
+                }
+            }
+
+            d1 = GetDistance(this[0], item);
+            d2 = GetDistance(this[n - 1], item);
+
+            if (d1 < d2)
+            {
+                this.Insert(0, item);   // x is located before the 1st item
+                return 0;
+            }
+            else
+            {
+                this.Add(item);        // x is located after the last item
+                return n;
+            }
+        }
     }
 }
