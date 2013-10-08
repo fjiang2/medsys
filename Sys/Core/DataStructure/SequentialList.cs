@@ -64,6 +64,23 @@ namespace Sys
             return true;
         }
 
+        public void MoveToFirst(T item)
+        {
+            this.Remove(item);
+            this.Insert(0, item);
+        }
+
+        public void MoveToLast(T item)
+        {
+            this.Remove(item);
+            this.Insert(this.Count-1, item);
+        }
+
+        public void MoveTo(int index, T item)
+        {
+            this.Remove(item);
+            this.Insert(index, item);
+        }
 
         /// <summary>
         /// Order By Id, e.g. Selecor = row => row.Id;
@@ -132,9 +149,20 @@ namespace Sys
         /// <returns></returns>
         public int InsertNear(T item)
         {
-
             if (GetDistance == null)
                 throw new InvalidOperationException("GetDistance is not defined");
+
+            return InsertNear(item, GetDistance);
+        }
+
+       /// <summary>
+       /// Insert item into list based on distance
+       /// </summary>
+       /// <param name="item"></param>
+       /// <param name="distance"></param>
+       /// <returns>index inserted</returns>
+        public int InsertNear(T item, Func<T, T, double> distance)
+        {
 
             int n = this.Count();
 
@@ -151,9 +179,9 @@ namespace Sys
             {
                 int i2 = i1 + 1;
 
-                double d = GetDistance(this[i1], this[i2]);
-                d1 = GetDistance(this[i1], item);
-                d2 = GetDistance(this[i2], item);
+                double d = distance(this[i1], this[i2]);
+                d1 = distance(this[i1], item);
+                d2 = distance(this[i2], item);
 
                 // x is between Items[i1] and Items[i2]
                 if (d1 < d && d2 < d)
@@ -163,8 +191,8 @@ namespace Sys
                 }
             }
 
-            d1 = GetDistance(this[0], item);
-            d2 = GetDistance(this[n - 1], item);
+            d1 = distance(this[0], item);
+            d2 = distance(this[n - 1], item);
 
             if (d1 < d2)
             {
