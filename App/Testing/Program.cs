@@ -20,15 +20,83 @@ namespace App.Testing
         static void Main(string[] args)
         {
 
-            DataProviderManager.RegisterDefaultProvider("data source=localhost\\sqlexpress;initial catalog=medsys;integrated security=SSPI;packet size=4096");
 
 
-          
-
+            //DataProviderManager.RegisterDefaultProvider("data source=localhost\\sqlexpress;initial catalog=medsys;integrated security=SSPI;packet size=4096");
            // NTreeViewDemo();
            //SqlClauseDemo();
            //SqlClauseJoinDemo();
+
+
+            CompareTableData("AppFcn", new string[] {"FCN_ID"});
         }
+
+
+
+        private static void CompareTableData(string tableName, string[] primaryKeys)
+        {
+
+            var pvd1 = DataProviderManager.Register("localhost", DataProviderType.SqlServer, "data source=localhost\\sqlexpress;initial catalog=ATMS_4_5;integrated security=SSPI;packet size=4096");
+            var pvd2 = DataProviderManager.Register("buildmachine", DataProviderType.SqlServer, "data source=192.168.104.114,1433\\sqlexpress;initial catalog=ATMS;User Id=sa;Password=naztec");
+
+            TableName name = new TableName(pvd1, tableName);
+            Locator locator = new Locator(primaryKeys);
+
+            string pk = primaryKeys[0];
+            string SQL = string.Format("SELECT * FROM {0}", tableName);
+
+            var dt1 = new SqlCmd(pvd1, SQL).FillDataTable();
+            var dt2 = new SqlCmd(pvd2, SQL).FillDataTable();
+
+            int count = 0;
+            StringBuilder builder = new StringBuilder();
+            TableCompare compare = new TableCompare(tableName, primaryKeys, dt1, dt2);
+
+            string script = compare.Compare();
+
+
+        }
+
+        private static void CompareTableData1(string tableName, string[] primaryKeys)
+        {
+
+            var pvd1 = DataProviderManager.Register("localhost", DataProviderType.SqlServer, "data source=localhost\\sqlexpress;initial catalog=ATMS_4_5;integrated security=SSPI;packet size=4096");
+            var pvd2 = DataProviderManager.Register("buildmachine", DataProviderType.SqlServer, "data source=192.168.104.114,1433\\sqlexpress;initial catalog=ATMS;User Id=sa;Password=naztec");
+
+            TableName name = new TableName(pvd1, tableName);
+            Locator locator = new Locator(primaryKeys);
+
+            string pk = primaryKeys[0];
+            string SQL = string.Format("SELECT * FROM {0}", tableName);
+
+            var dt1 = new SqlCmd(pvd1, SQL).FillDataTable();
+            var dt2 = new SqlCmd(pvd2, SQL).FillDataTable();
+
+            int count = 0;
+            StringBuilder builder = new StringBuilder();
+            foreach (DataRow row1 in dt1.Rows)
+            {
+                var row2 = dt2.AsEnumerable().Where(row => RowCompare.Compare(primaryKeys, row, row1)).FirstOrDefault();
+
+                if (!row1["ORD"].Equals(row2["ORD"]))
+                {
+                    count++;
+                    builder.AppendFormat("UPDATE {0} SET {1} = {2} WHERE {3}={4}\n", tableName, "ORD", row1["ORD"], pk, row1[pk]);
+                    RowAdapter a = new RowAdapter(name, locator, row1);
+
+                }
+                else
+                {
+                    builder.AppendFormat("INSERT {0} ({1}) VALUES({2})\n", tableName, row1["ORD"], row1[pk]);
+                }
+            }
+
+            string script = builder.ToString();
+
+
+        }
+
+
 
         static void SqlClauseDemo()
         {
