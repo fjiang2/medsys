@@ -176,7 +176,7 @@ namespace Sys.ViewManager.Manager
             VAL shortCuts = VAL.Array();
             foreach (TaskData task in navBarLinks.Values)
             {
-                shortCuts.Add(task.GetValData());
+                shortCuts.Add(task.GetVAL());
             }
 
             Profile.Instance.Memory["ShortCuts"] = shortCuts;

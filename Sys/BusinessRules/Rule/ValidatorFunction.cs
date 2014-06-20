@@ -16,7 +16,7 @@ namespace Sys.BusinessRules
         {
             int size = parameters.Size;
             if (size > 2)
-                throw new Exception(string.Format("Too many parameters {0}({1} in validator function)", func, parameters.ToString2()));
+                throw new Exception(string.Format("Too many parameters {0}({1} in validator function)", func, parameters.ToSimpleString()));
 
             VAL L0 = size > 0 ? parameters[0] : null;
             VAL L1 = size > 1 ? parameters[1] : null;
@@ -48,9 +48,9 @@ namespace Sys.BusinessRules
 
 
                 if (size == 2)
-                    message = L1.ToString2();
+                    message = L1.ToSimpleString();
                 else if (size == 1)
-                    message = L0.ToString2();
+                    message = L0.ToSimpleString();
                 else
                     message = validator.ToString();
 

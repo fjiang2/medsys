@@ -101,7 +101,7 @@ namespace Sys.Workflow
             get
             {
                 UserCollectionProtocol users = this.ReceivedCollection.UserCollectionProtocol;
-                return users.GetValData();
+                return users.GetVAL();
             }
             set
             {
@@ -116,7 +116,7 @@ namespace Sys.Workflow
             get
             {
                 UserCollectionProtocol users = this.AssignedCollection.UserCollectionProtocol;
-                return users.GetValData(); 
+                return users.GetVAL(); 
             }
             set
             {
@@ -292,11 +292,16 @@ namespace Sys.Workflow
         #endregion
 
 
-        public VAL GetValData()
+        public VAL GetVAL()
         {
             VAL val = Conversion.Class2VAL(this.taskData);
             VAL THIS = Conversion.Class2VAL(this);
             return val+THIS;
+        }
+
+        public void SetVAL(VAL val)
+        {
+            throw new NotImplementedException();
         }
 
         //reschedule work to another user

@@ -98,7 +98,7 @@ namespace Sys.ViewManager.Manager
             return y.time.CompareTo(x.time);
         }
       
-        public VAL GetValData()
+        public VAL GetVAL()
         {
             VAL val = new VAL();
             val["Key"] = VAL.Boxing(key);
@@ -109,6 +109,11 @@ namespace Sys.ViewManager.Manager
             val["Pinned"] = VAL.Boxing(pinned);
             val["Time"] = VAL.Boxing(time);
             return val;
+        }
+
+        public void SetVAL(VAL val)
+        {
+            throw new NotImplementedException();
         }
 
         public string Key

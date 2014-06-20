@@ -339,7 +339,7 @@ namespace Sys.Workflow
         {
             get
             {
-                return this.listeners.GetValData();
+                return this.listeners.GetVAL();
             }
             set
             {
@@ -461,11 +461,11 @@ namespace Sys.Workflow
             //merge properties
             VAL states = workflowInstance.Evaluate(this.workflowInstance.Activities.Path);
             if (states[this.Data.StateName].Undefined)
-                states[this.Data.StateName] = this.GetValData();
+                states[this.Data.StateName] = this.GetVAL();
             else
             {
                 VAL scope = states[this.Data.StateName];
-                VAL val = this.GetValData();
+                VAL val = this.GetVAL();
                 for (int i = 0; i < val.Size; i++)
                 {
                        VAL v = val[i];

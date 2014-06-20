@@ -117,9 +117,14 @@ namespace Sys.Workflow
 
         }
         
-        public VAL GetValData()
+        public VAL GetVAL()
         {
-            return stateData.GetValData();
+            return stateData.GetVAL();
+        }
+
+        public void SetVAL(VAL val)
+        {
+            throw new NotImplementedException();
         }
 
         public string Path

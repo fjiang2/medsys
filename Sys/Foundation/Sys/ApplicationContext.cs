@@ -7,7 +7,7 @@ using Tie;
 
 namespace Sys
 {
-    public class ApplicationContext : IEnumerable
+    public class ApplicationContext //: IEnumerable
     {
         protected static ApplicationContext self = null;
         protected Memory memory;
@@ -21,7 +21,7 @@ namespace Sys
 
         public IEnumerator GetEnumerator()
         {
-            return memory.DS.GetEnumerator();
+            return memory.Keys.GetEnumerator();
         }
 
         public bool ContainsKey(string keyName)
@@ -34,7 +34,7 @@ namespace Sys
         {
             if (v is byte[])
             {
-                memory.Add(keyName, new VAL(HostType.ByteArrayToHexString((byte[])v)));
+                memory.Add(keyName, new VAL(StringExtension.ByteArrayToHexString((byte[])v)));
                 return;
             }
             else
@@ -96,7 +96,7 @@ namespace Sys
             if (memory[key].value is string)
             {
                 string hexString = memory[key].value as string;
-                return HostType.HexStringToByteArray(hexString);
+                return StringExtension.HexStringToByteArray(hexString);
             }
             return null;
         }
@@ -115,11 +115,12 @@ namespace Sys
         public virtual void Save()
         {
             VAL v = new VAL();
-            foreach (KeyValuePair<string, VAL> pair in memory.DS)
+            foreach (var key in memory.Keys)
             {
-                if (pair.Value.IsHostType)
+                VAL val = memory[key];
+                if (val.IsHostType)
                     continue;
-                v[pair.Key] = pair.Value;
+                v[(string)key] = val;
             }
         
 
