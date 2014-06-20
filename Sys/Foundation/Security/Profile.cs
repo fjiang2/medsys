@@ -32,11 +32,12 @@ namespace Sys.Security
         public override void Save()
         {
             VAL v = new VAL();
-            foreach (KeyValuePair<string, VAL> pair in memory.DS)
+            foreach (var key in memory.Keys)
             {
-                if (pair.Value.IsHostType)
+                VAL val = memory[key];
+                if (val.IsHostType)
                     continue;
-                v[pair.Key] = pair.Value;
+                v[(string)key] = val;
             }
 
             UserProfileDpo dpo = new UserProfileDpo();
@@ -80,13 +81,13 @@ namespace Sys.Security
             {
                 if(configuration ==null || configuration =="")
                     return null;
-                
-                return HostType.HexStringToByteArray(configuration); 
+
+                return StringExtension.HexStringToByteArray(configuration); 
             }
             set
             {
                 if (value != null)
-                    configuration = HostType.ByteArrayToHexString(value);
+                    configuration = StringExtension.ByteArrayToHexString(value);
                 else
                     configuration = null;
             }

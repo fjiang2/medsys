@@ -34,11 +34,11 @@ namespace Sys.BusinessRules
 
 
                 if (parameters.Size > 1)
-                    message = parameters[1].ToString2();
+                    message = parameters[1].ToSimpleString();
                 else
                     message = rule.ToString();
 
-                RuleEvent ruleEvent = new RuleEvent(rule.ErrorCode, L0.ToString2(), severityLevel, message);
+                RuleEvent ruleEvent = new RuleEvent(rule.ErrorCode, L0.ToSimpleString(), severityLevel, message);
 
                 rule.Add(ruleEvent);
                 

@@ -243,7 +243,7 @@ namespace Sys
         /// <returns></returns>
         public override string ToString()
         {
-            return string.Format("TreeNode<{0}>(Item={1}, Count={2})", typeof(T).Name, this.item, this.nodes.Count);
+            return this.item.ToString();
         }
     }
 }

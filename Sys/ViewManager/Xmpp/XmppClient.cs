@@ -65,7 +65,7 @@ namespace Sys.Xmpp
         public void SendMessage(UserCollectionProtocol receivers, string subject, VAL val)
         {
             UserProtocol sender = new UserProtocol(Account.CurrentUser);
-            val[XMPP_SENDER] = sender.GetValData();
+            val[XMPP_SENDER] = sender.GetVAL();
             val[XMPP_SENT_TIME] = VAL.Boxing(DateTime.Now);
             //val[XMPP_RECEIVERS] = receivers.GetValData();
             val[XMPP_COMPUTER_NAME] = new VAL(System.Windows.Forms.SystemInformation.ComputerName);

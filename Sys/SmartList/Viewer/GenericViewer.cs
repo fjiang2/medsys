@@ -28,8 +28,8 @@ namespace Sys.SmartList
             InitializeComponent();
             this.viewControl = panel;
 
-            HostType.Register(typeof(DevExpress.XtraCharts.ChartTitle).Assembly);
-            HostType.Register(typeof(DevExpress.XtraCharts.ChartControl).Assembly);
+            HostType.AddReference(typeof(DevExpress.XtraCharts.ChartTitle).Assembly);
+            HostType.AddReference(typeof(DevExpress.XtraCharts.ChartControl).Assembly);
             HostType.Register(typeof(MarkerKind), true);
             HostType.Register(typeof(System.Drawing.Color));
             HostType.Register(typeof(System.Convert));

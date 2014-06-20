@@ -84,11 +84,15 @@ namespace Sys.Workflow
             get { return this.S1Name + "_" + this.S2Name; }
         }
 
-        public VAL GetValData()
+        public VAL GetVAL()
         {
-            return transitionData.GetValData();
+            return transitionData.GetVAL();
         }
 
+        public void SetVAL(VAL val)
+        {
+            throw new NotImplementedException();
+        }
 
         public override string ToString()
         {
