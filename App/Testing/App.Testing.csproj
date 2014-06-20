@@ -55,12 +55,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ColumnPair.cs" />
     <Compile Include="LogeeDemo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RowCompare.cs" />
-    <Compile Include="TableCompare.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Sys\agsxmpp.ui\agsXMPP.ui.2008.csproj">

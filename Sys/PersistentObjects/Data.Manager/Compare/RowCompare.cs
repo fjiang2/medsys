@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data;
 
-namespace App.Testing
+namespace Sys.Data.Manager
 {
     class RowCompare
     {
