@@ -43,7 +43,11 @@ namespace App.Testing
             var pvd1 = DataProviderManager.Register("Source", DataProviderType.SqlServer, conn1);
             var pvd2 = DataProviderManager.Register("Sink", DataProviderType.SqlServer, conn2);
 
-            string script = TableCompare.CompareTableData(tableName, primaryKeys, pvd1, pvd2);
+            //
+            string script = TableCompare.Difference(tableName, primaryKeys, pvd1, pvd2);
+
+            //Create all INSERT Clauses
+            string script2 = TableCompare.Rows(tableName, pvd1);
         }
 
     
