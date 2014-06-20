@@ -24,14 +24,19 @@ namespace Sys.Workflow
         }
 
 
-        public VAL GetValData()
+        public VAL GetVAL()
         {
             return workflowInstance.Evaluate(this.Path);
         }
 
+        public void SetVAL(VAL val)
+        {
+            throw new NotImplementedException();
+        }
+
         public VAL GetValData(string stateName)
         {
-            VAL val = this.GetValData();
+            VAL val = this.GetVAL();
              return val[stateName];
         }
 

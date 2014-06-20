@@ -34,16 +34,20 @@ namespace Sys.Xmpp
             }
         }
 
-        public VAL GetValData()
+        public VAL GetVAL()
         {
             VAL users = VAL.Array();
             foreach (UserProtocol user in this)
             {
-                users.Add(user.GetValData());
+                users.Add(user.GetVAL());
             }
             return users;
         }
 
+        public void SetVAL(VAL val)
+        {
+            throw new NotImplementedException();
+        }
 
         public void Add(UserCollectionProtocol users)
         {

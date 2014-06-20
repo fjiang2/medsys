@@ -51,6 +51,10 @@ namespace Sys.Data
             Conversion.VAL2Class(val, this);
         }
 
+        public void SetVAL(VAL val)
+        {
+            Conversion.VAL2Class(val, this);
+        }
      
         public Memory Memory { get { return this.memory; }}
         public string ValScope { get { return this.scope; } set { this.scope = value; } }
@@ -76,11 +80,11 @@ namespace Sys.Data
         {
             VAL BASE = Script.Evaluate(scope, memory);
             if (BASE[name].Undefined)
-                BASE[name] = this.GetValData();
+                BASE[name] = this.GetVAL();
             else
             {
                 VAL THIS = BASE[name];
-                VAL val = this.GetValData();
+                VAL val = this.GetVAL();
                 for (int i = 0; i < val.Size; i++)
                 {
                     VAL v = val[i];
@@ -96,13 +100,13 @@ namespace Sys.Data
         public virtual VAL OverwriteObject()
         {
             VAL BASE = Script.Evaluate(scope, memory);
-            BASE[name] = this.GetValData();
+            BASE[name] = this.GetVAL();
 
             return BASE[name];
         }
 
-        
-        public virtual VAL GetValData()
+
+        public virtual VAL GetVAL()
         {
             return Conversion.Class2VAL(this);
         }

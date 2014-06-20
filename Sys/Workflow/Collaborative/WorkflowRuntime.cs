@@ -34,7 +34,7 @@ namespace Sys.Workflow.Collaborative
         {
 
             task.Data.SenderID = account.UserID;
-            task.AddReceivers( channel.Subscribers.GetValData() );
+            task.AddReceivers( channel.Subscribers.GetVAL() );
             VAL val = task.SaveTask(typeof(TaskListForm).FullName);
 
             //Don't Sync Logical State

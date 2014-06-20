@@ -98,7 +98,7 @@ namespace Sys.Data.Manager
                 if (obj != null)
                 {
                     VAL val = VAL.Boxing(obj);
-                    string s = val.ToHostString();
+                    string s = val.ToString();
 
                     if (obj is float)
                         s = obj.ToString() + "F";

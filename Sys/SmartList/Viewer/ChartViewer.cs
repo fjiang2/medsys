@@ -45,7 +45,7 @@ namespace Sys.SmartList
             InitializeComponent();
             this.viewControl = chartControl1;
 
-            HostType.Register(typeof(DevExpress.XtraCharts.ChartTitle).Assembly);
+            HostType.AddReference(typeof(DevExpress.XtraCharts.ChartTitle).Assembly);
             HostType.Register(typeof(MarkerKind), true);
 
             HostType.Register(typeof(System.Drawing.Color));

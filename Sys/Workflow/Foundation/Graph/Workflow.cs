@@ -173,23 +173,23 @@ namespace Sys.Workflow
             return string.Format("workflow(Name={0},#States={1},#Transition={2})", this.WorkflowName, this.states.Count, this.transitions.Count);
         }
 
-        public VAL GetValData()
+        public VAL GetVAL()
         {
-            VAL V1 = workflowData.GetValData();
+            VAL V1 = workflowData.GetVAL();
 
 
             VAL V2 = new VAL();
             V1[NS_STATES] = V2;
             foreach (KeyValuePair<string, State> kvp in states)
             {
-                V2[kvp.Key] = kvp.Value.GetValData();
+                V2[kvp.Key] = kvp.Value.GetVAL();
             }
    
             VAL V3 = VAL.Array();
             V1[NS_TRANSITIONS] = V3;
             foreach (Transition transition in this.transitions.Values)
             {
-                V3.Add(transition.GetValData());
+                V3.Add(transition.GetVAL());
             }
 
             /***
@@ -210,6 +210,10 @@ namespace Sys.Workflow
         
         }
 
+        public void SetVAL(VAL val)
+        {
+            throw new NotImplementedException();
+        }
 
         public string Path
         {

@@ -41,7 +41,7 @@ namespace Sys.Xmpp
         }
 
    
-        public VAL GetValData()
+        public VAL GetVAL()
         {
             VAL user = new VAL();
             user[USER_ID] = new VAL(this.ID);
@@ -49,6 +49,11 @@ namespace Sys.Xmpp
             user[FULL_NAME] = new VAL(this.FullName);
             
             return user;
+        }
+
+        public void SetVAL(VAL val)
+        {
+            throw new NotImplementedException();
         }
 
         public override string ToString()

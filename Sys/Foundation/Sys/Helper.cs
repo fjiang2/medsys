@@ -152,18 +152,18 @@ namespace Sys
 
                 case "lowercase":
                     if (size == 1)
-                        return new VAL(L0.ToString2().ToLower());
+                        return new VAL(L0.ToSimpleString().ToLower());
                     break;
                 case "uppercase":
                     if (size == 1)
-                        return new VAL(L0.ToString2().ToUpper());
+                        return new VAL(L0.ToSimpleString().ToUpper());
                     break;
 
                 case "substring":
                     if (size == 2 && L0.ty == VALTYPE.stringcon && L1.ty == VALTYPE.intcon)
-                        return new VAL(L0.ToString2().Substring(L1.Intcon));
+                        return new VAL(L0.ToSimpleString().Substring(L1.Intcon));
                     if (size == 3 && L0.ty == VALTYPE.stringcon && L1.ty == VALTYPE.intcon && L2.ty == VALTYPE.intcon)
-                        return new VAL(L0.ToString2().Substring(L1.Intcon, L2.Intcon));
+                        return new VAL(L0.ToSimpleString().Substring(L1.Intcon, L2.Intcon));
                     break;
 
                 case "Date":
@@ -183,25 +183,24 @@ namespace Sys
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-            HostType.Register(typeof(System.Drawing.Size), delegate(object host)
+            Valizer.Register<Size>(delegate(Size size)
             {
-                Size size = (Size)host;
                 return new VAL(string.Format("new System.Drawing.Size({0},{1})", size.Width, size.Height));
             });
 
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-            HostType.Register(typeof(System.Drawing.Point), delegate(object host)
+            Valizer.Register<Point>(delegate(Point point)
             {
-                Point point = (Point)host;
-                return new VAL(string.Format("new System.Drawing.Point({0},{1})", point.X, point.Y));
-            });
+                return new VAL(string.Format("new {0}({1},{2})", typeof(Point).FullName, point.X, point.Y));
+            }
+              );
 
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-            HostType.Register(typeof(Color), delegate(object host)
+            Valizer.Register<Color>(delegate(Color host)
             {
                 Color color = (Color)host;
 
@@ -217,7 +216,7 @@ namespace Sys
             //new System.Drawing.Font("MS Gothic", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)))
             HostType.Register(typeof(System.Drawing.FontStyle));
             HostType.Register(typeof(System.Drawing.GraphicsUnit));
-            HostType.Register(typeof(Font), @"
+            Valizer.Register<Font>(@"
                 format('new {0}(""{1}"",(float){2},{3},{4},(byte)0)', 
                     this.GetType().FullName, this.Name, this.Size, this.Style.valize(), this.Unit.valize())
             ");
@@ -244,7 +243,7 @@ namespace Sys
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-            HostType.Register(typeof(Rectangle), delegate(object host)
+            Valizer.Register<Rectangle>(delegate(Rectangle host)
             {
                 Rectangle rect = (Rectangle)host;
                 VAL val = VAL.Boxing(new int[] { rect.X, rect.Y, rect.Width, rect.Height });
@@ -260,15 +259,15 @@ namespace Sys
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-            HostType.Register(typeof(Guid), delegate(object host)
+            Valizer.Register<Guid>(delegate(Guid host)
             {
                 Guid guid = (Guid)host;
                 byte[] bytes = guid.ToByteArray();
-                return new VAL("\"" + HostType.ByteArrayToHexString(bytes) + "\"");     //because this is a string, need quotation marks ""
+                return new VAL("\"" + StringExtension.ByteArrayToHexString(bytes) + "\"");     //because this is a string, need quotation marks ""
             },
             delegate(VAL val)
             {
-                byte[] bytes = HostType.HexStringToByteArray(val.Str);
+                byte[] bytes = StringExtension.HexStringToByteArray(val.Str);
                 return new Guid(bytes);
             }
             );

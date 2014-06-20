@@ -78,7 +78,12 @@ namespace Sys.Data
             this.handle = val.Intcon;
         }
 
-        public VAL GetValData()
+        public void SetVAL(VAL val)
+        {
+            this.handle = val.Intcon;
+        }
+
+        public VAL GetVAL()
         {
             return new VAL(this.handle);
         }

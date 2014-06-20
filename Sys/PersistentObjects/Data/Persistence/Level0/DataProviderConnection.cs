@@ -94,12 +94,16 @@ namespace Sys.Data
 
         internal DataProviderConnection(VAL val)
         {
+            SetVAL(val);
+        }
+
+        public void SetVAL(VAL val)
+        {
             this.name = val["name"].Str;
             this.providerType = (DataProviderType)val["type"].Intcon;
             this.connectionString = val["connection"].Str;
         }
-
-        public VAL GetValData()
+        public VAL GetVAL()
         {
             VAL val = new VAL();
             val["name"] = new VAL(this.name);
