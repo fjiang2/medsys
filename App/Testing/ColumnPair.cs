@@ -11,13 +11,13 @@ namespace App.Testing
         public string ColumnName { get; set; }
         public object Value { get; set; }
 
-        static string DELIMETER = "'";
+        private const string DELIMETER = "'";
 
         public ColumnPair()
         { 
         }
 
-        private string ToScript()
+        public string ToScript()
         {
             if (Value == null || Value == DBNull.Value)
                 return "NULL";
@@ -25,13 +25,15 @@ namespace App.Testing
                 return DELIMETER + ((DateTime)Value).ToShortDateString() + DELIMETER;
             else if (Value is string)
                 return "N" + DELIMETER + (Value as string).Replace("'", "''") + DELIMETER;
+            else if (Value is bool)
+                return (bool)Value ? "1" : "0";
             else
                 return Value.ToString();
         }
 
         public override string ToString()
         {
-            return string.Format("[{0}]={1}", ColumnName, ToScript());
+            return string.Format("[{0}] = {1}", ColumnName, ToScript());
         }
 
     }

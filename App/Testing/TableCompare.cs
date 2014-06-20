@@ -17,7 +17,7 @@ namespace App.Testing
         DataTable table1;
         DataTable table2;
 
-        public TableCompare(string tableName, string[] pk, DataTable table1, DataTable table2)
+        private TableCompare(string tableName, string[] pk, DataTable table1, DataTable table2)
         {
             this.tableName = tableName;
             this.PkColumns = pk;
@@ -28,9 +28,8 @@ namespace App.Testing
             this.NonPkColumns = table1.Columns.OfType<DataColumn>().Select(row => row.ColumnName).Except(pk).ToArray();
         }
 
-        public string Compare()
+        private string Compare()
         {
-            int count = 0;
             StringBuilder builder = new StringBuilder();
             foreach (DataRow row1 in table1.Rows)
             {
@@ -40,25 +39,31 @@ namespace App.Testing
                 {
                     if (!RowCompare.Compare(NonPkColumns, row1, row2))
                     {
-                        count++;
                         var compare = new RowCompare(this, row1, row2);
-                        
+
                         builder.AppendFormat(updateCommandTemplate, compare.Set, compare.Where);
                         builder.AppendLine();
                     }
                 }
                 else
                 {
-                    //builder.AppendFormat(insertCommandTemplate, row1["ORD"], row1[pk]);
+                    var direct = RowCompare.Direct(row1);
+                    var x1 = direct.Select(p => "[" + p.ColumnName + "]");
+                    var x2 = direct.Select(p => p.ToScript());
+                    
+                    builder.AppendFormat(insertCommandTemplate,
+                        string.Join(",", x1),
+                        string.Join(",", x2)
+                        );
+                    
                     builder.AppendLine();
                 }
             }
 
-            string script = builder.ToString();
-            return script;
+            return builder.ToString();
         }
 
-
+     
 
         private string updateCommandTemplate
         {
@@ -67,9 +72,21 @@ namespace App.Testing
 
         private string insertCommandTemplate
         {
-            get { return string.Format("INSERT {0}({1}) VALUES({2}) {3}", tableName, "{0}", "{1}", "{2}"); }
+            get { return string.Format("INSERT {0}({1}) VALUES({2})", tableName, "{0}", "{1}"); }
         }
 
 
+        public static string CompareTableData(string tableName, string[] primaryKeys, DataProvider pvd1, DataProvider pvd2)
+        {
+            string SQL = string.Format("SELECT * FROM {0}", tableName);
+
+            var dt1 = new SqlCmd(pvd1, SQL).FillDataTable();
+            var dt2 = new SqlCmd(pvd2, SQL).FillDataTable();
+
+            TableCompare compare = new TableCompare(tableName, primaryKeys, dt1, dt2);
+            string script = compare.Compare();
+
+            return script;
+        }
     }
 }
