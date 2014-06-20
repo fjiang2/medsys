@@ -32,7 +32,7 @@ namespace Sys.SmartList
             this.viewControl = ganttChart;
 
             //HostType.Register(typeof(DevExpress.XtraCharts.ChartControl).Assembly);
-            HostType.Register(typeof(DevExpress.XtraCharts.ChartTitle).Assembly);
+            HostType.AddReference(typeof(DevExpress.XtraCharts.ChartTitle).Assembly);
             //HostType.Register(new Type[] {
             //    typeof(DevExpress.XtraCharts.DateTimeFormat),
             //    typeof(DevExpress.XtraCharts.LegendAlignmentHorizontal),

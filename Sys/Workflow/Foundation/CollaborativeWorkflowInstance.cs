@@ -228,8 +228,8 @@ namespace Sys.Workflow
             if (this.workflowInstanceData.MemoryStorage == null)    //SQL INSERT
             {
                 this.workflowInstanceData.Save(); //save to generate WorkflowInstance identity ID# 
-                
-                Add2DS(this.workflow.Path, this.workflow.GetValData());
+
+                Add2DS(this.workflow.Path, this.workflow.GetVAL());
                 val = Conversion.Class2VAL(this.workflowInstanceData);
                 val[NS_STATES] = new VAL();
                 Add2DS(this.Path, val);
@@ -262,7 +262,7 @@ namespace Sys.Workflow
         /// </summary>
         public void SaveHeap()
         {
-            Add2DS(this.workflow.Path, this.workflow.GetValData());
+            Add2DS(this.workflow.Path, this.workflow.GetVAL());
             VAL val = Conversion.Class2VAL(this.workflowInstanceData);
             val[NS_STATES] = new VAL();
             Add2DS(this.Path, val);
@@ -295,7 +295,7 @@ namespace Sys.Workflow
         {
             get
             {
-                VAL wfi = GetValData();
+                VAL wfi = GetVAL();
                 VAL context = wfi[NS_CONTEXT];
                 if (context.Undefined)
                     wfi[NS_CONTEXT] =VAL.Array();
@@ -313,7 +313,7 @@ namespace Sys.Workflow
         }
 
               
-        public VAL GetValData()
+        public VAL GetVAL()
         {
             VAL wfi = this.DS[NS_WORKFLOWINSTANCE];
 
@@ -321,6 +321,11 @@ namespace Sys.Workflow
                 return wfi[Name];
 
             return new VAL();
+        }
+
+        public void SetVAL(VAL val)
+        {
+            throw new NotImplementedException();
         }
 
         public string Name

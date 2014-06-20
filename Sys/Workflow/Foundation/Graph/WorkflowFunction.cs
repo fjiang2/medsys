@@ -115,7 +115,7 @@ namespace Sys.Workflow
                             V2["Listeners"] = VAL.Array();
 
                         V3 = new VAL();
-                        V3["User"] = user.GetValData();
+                        V3["User"] = user.GetVAL();
                         V3["State"] = V1;
                         V3["Event"] = parameters[2];
 

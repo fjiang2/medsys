@@ -127,8 +127,8 @@ namespace Sys.Data
                 int i = 0;
                 foreach (var pair in this.providers)
                 {
-                    val[i]["handle"] = pair.Key.GetValData();
-                    val[i]["provider"] = pair.Value.GetValData();
+                    val[i]["handle"] = pair.Key.GetVAL();
+                    val[i]["provider"] = pair.Value.GetVAL();
                     i++;
                 }
 

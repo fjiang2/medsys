@@ -28,7 +28,7 @@ namespace Sys.ViewManager.Forms
 
         public override void Collect()
         {
-            VAL val = HostType.GetObjectProperties(obj);
+            VAL val = Valizer.Valize(obj);
             value = val.ToJson();
             //base.Collect();
             return;
