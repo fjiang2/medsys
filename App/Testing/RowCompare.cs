@@ -9,7 +9,9 @@ namespace App.Testing
 {
     class RowCompare
     {
-        TableCompare table;
+        private TableCompare table;
+        private List<ColumnPair> L1;
+        private List<ColumnPair> L2;
 
         public RowCompare(TableCompare table, DataRow row1, DataRow row2)
         {
@@ -18,13 +20,12 @@ namespace App.Testing
         }
 
 
-        private List<ColumnPair> L1 = new List<ColumnPair>();
-        private List<ColumnPair> L2 = new List<ColumnPair>();
 
         private void Difference(DataRow row1, DataRow row2)
         {
-            L1.Clear();
-            L2.Clear();
+
+            L1 = new List<ColumnPair>();
+            L2 = new List<ColumnPair>();
 
             foreach (var column in table.NonPkColumns)
             {
@@ -50,7 +51,7 @@ namespace App.Testing
         {
             get
             {
-                return string.Join<ColumnPair>(",", L2);
+                return string.Join<ColumnPair>(", ", L2);
             }
         }
 
@@ -64,6 +65,18 @@ namespace App.Testing
             }
 
             return true;
+        }
+
+        public static IEnumerable<ColumnPair> Direct(DataRow row)
+        {
+            List<ColumnPair> list = new List<ColumnPair>();
+            foreach (DataColumn column in row.Table.Columns)
+            {
+                if(row[column] != DBNull.Value)
+                    list.Add(new ColumnPair { ColumnName = column.ColumnName, Value = row[column] });
+            }
+
+            return list;
         }
     }
 }
