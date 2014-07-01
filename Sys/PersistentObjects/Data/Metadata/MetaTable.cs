@@ -60,61 +60,14 @@ namespace Sys.Data
             return string.Format("{0}..[{1}], Id={2}", tableName.DatabaseName.Name, tableName.Name, TableID);
         }
 
+      
+
         private void LoadSchema()
         {
-            DataTable dt1;
-            string SQL;
+            DataTable dt1 = InformationSchema.TableSchema(tableName);
+            dt1.Columns.Add(new DataColumn("ColumnID", typeof(int)));
+            dt1.Columns.Add(new DataColumn("label", typeof(string)));
 
-            switch (tableName.Provider.DpType)
-            {
-
-                //Column Name must match class MetadataColumn
-                case DbProviderType.SqlDb:
-                    SQL = @"
-            USE [{0}]
-            SELECT 
-                c.name AS ColumnName,
-                ty.name AS DataType,
-                c.max_length AS Length,
-                c.is_nullable AS Nullable,
-                c.precision,
-                c.scale,
-                c.is_identity AS IsIdentity,
-                c.is_computed AS IsComputed,
-                NULL AS ColumnID,
-                NULL AS label
-             FROM sys.tables t 
-                  INNER JOIN sys.columns c ON t.object_id = c.object_id 
-                  INNER JOIN sys.types ty ON ty.system_type_id =c.system_type_id AND ty.name<>'sysname'
-            WHERE t.name = '{1}' 
-            ORDER BY c.column_id";
-                    dt1 = SqlCmd.FillDataTable(tableName.Provider, SQL, tableName.DatabaseName.Name, tableName.Name);
-                    break;
-
-                case DbProviderType.SqlCe:
-                    SQL = @"
-            SELECT 
-                c.COLUMN_NAME AS ColumnName,
-                c.DATA_TYPE AS DataType,
-                c.CHARACTER_MAXIMUM_LENGTH AS Length,
-                CASE WHEN c.IS_NULLABLE='YES' THEN 1 ELSE 0 END AS Nullable,
-                c.NUMERIC_PRECISION AS precision,
-                c.NUMERIC_SCALE AS scale,
-                0 AS IsIdentity,
-                0 AS IsComputed,
-                NULL AS ColumnID,
-                NULL AS label
-             FROM INFORMATION_SCHEMA.COLUMNS c 
-            WHERE c.TABLE_NAME = '{0}' 
-            ORDER BY c.ORDINAL_POSITION";
-                    dt1 = SqlCmd.FillDataTable(tableName.Provider, SQL, tableName.Name);
-                    break;
-
-                default:
-                    throw new NotSupportedException();
-            }
-            
-            
             List<dictDataColumnDpo> list; 
             if (MetaDatabase.TableExists(typeof(dictDataColumnDpo).TableName()))
             {

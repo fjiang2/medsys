@@ -75,7 +75,17 @@ namespace Sys.Data
 
         public static string CurrentDatabaseName(DataProvider provider)
         {
-            return (string)SqlCmd.ExecuteScalar(provider, "SELECT DB_NAME()");
+            switch (provider.DpType)
+            {
+                case DbProviderType.SqlDb:
+                    return (string)SqlCmd.ExecuteScalar(provider, "SELECT DB_NAME()");
+
+                case DbProviderType.SqlCe:
+                    return "Database" ;
+
+                default:
+                    throw new NotSupportedException();
+            }
         }
 
 
@@ -86,7 +96,17 @@ namespace Sys.Data
 
         public static string[] GetDatabaseNames(DataProvider provider)
         {
-            return SqlCmd.FillDataTable(provider, "SELECT name FROM sys.databases ORDER BY Name").ToArray<string>("name");
+            switch (provider.DpType)
+            {
+                case DbProviderType.SqlDb:
+                    return SqlCmd.FillDataTable(provider, "SELECT Name FROM sys.databases ORDER BY Name").ToArray<string>("name");
+
+                case DbProviderType.SqlCe:
+                    return new string[] {"Database"};
+
+                default:
+                    throw new NotSupportedException();
+            }
         }
 
         public static string[] GetTableNames(DatabaseName databaseName)

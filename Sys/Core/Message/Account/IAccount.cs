@@ -18,39 +18,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Data;
 
-namespace Sys.Data
+namespace Sys
 {
-   
-    public class PrimaryKeys : IPrimaryKeys
+    public interface IAccount
     {
-        private string[] keys;
-
-        public PrimaryKeys(string[] columns)
-        {
-            this.keys = columns;
-        }
-
-        public PrimaryKeys(TableName tname)
-        { 
-            this.keys = InformationSchema.PrimaryKeySchema(tname).ToArray<string>(0);
-        }
-
-        public string[] Keys
-        {
-            get
-            {
-                return this.keys;
-            }
-        }
-
-        public int Length { get { return this.keys.Length; } }
-
-        public override string ToString()
-        {
-            return string.Join(" + ", keys);
-        }
-
+        int UserID { get; }
+        string UserName { get; }
     }
 }

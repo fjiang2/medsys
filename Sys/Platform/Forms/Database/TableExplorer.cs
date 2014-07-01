@@ -55,42 +55,26 @@ namespace Sys.Platform.Forms
 
             foreach (var pair in DataProviderManager.Instance.Providers)
             {
-                DataTable dataTable;
+                string[] databaseNames;
+                var provider = pair.Key;
+
                 try
                 {
-                    var provider = pair.Key;
-                    switch (provider.DpType)
-                    {
-                        case DbProviderType.SqlDb:
-                            dataTable = SqlCmd.FillDataTable(pair.Key, "SELECT name FROM sys.databases ORDER BY Name");
-                            break;
-
-                        case DbProviderType.SqlCe:
-                            dataTable = new DataTable();
-                            dataTable.Columns.Add(new DataColumn("Name", typeof(string)));
-                            DataRow newRow = dataTable.NewRow();
-                            newRow["Name"] = provider.Connection.Name;
-                            dataTable.Rows.Add(newRow);
-                            break;
-
-                        default:
-                            throw new NotSupportedException();
-                    }
+                    databaseNames = MetaDatabase.GetDatabaseNames(provider);
                 }
                 catch (Exception) // no permisson to access this server
                 {
-                    MessageBox.Show(string.Format("not allowed to access server: {0}", DataProviderManager.Instance.GetConnection((int)pair.Key).Name), 
+                    MessageBox.Show(string.Format("not allowed to access server: {0}", DataProviderManager.Instance.GetConnection((int)provider).Name), 
                         "Warning", 
                         System.Windows.Forms.MessageBoxButtons.OK);
                     
                     continue;
                 }
 
-                dataTable.TableName = "databases";
                 root = treeView1.Nodes.Add(pair.Value.Name);
-                foreach (DataRow dataRow in dataTable.Rows)
+                foreach (string name in databaseNames)
                 {
-                    TreeNode treeNode = new DatabaseNode(pair.Key, dataRow["Name"] as string);
+                    TreeNode treeNode = new DatabaseNode(provider, name);
                     treeNode.ImageKey = "database";
                     treeNode.SelectedImageKey = treeNode.ImageKey;
                     root.Nodes.Add(treeNode);
@@ -179,27 +163,7 @@ namespace Sys.Platform.Forms
                 {
                     TableNode tableNode = (TableNode)node;
                     TableName tname = tableNode.TableName;
-
-                    string SQL = @"
-            USE [{0}]
-            SELECT 
-                c.name AS ColumnName,
-                ty.name AS DataType,
-                c.max_length AS Length,
-                c.is_nullable AS Nullable,
-                c.precision,
-                c.scale,
-                c.is_identity AS IsIdentity
-             FROM sys.tables t 
-                  INNER JOIN sys.columns c ON t.object_id = c.object_id 
-                  INNER JOIN sys.types ty ON ty.system_type_id =c.system_type_id AND ty.name<>'sysname'
-            WHERE t.name = '{1}' 
-            ORDER BY c.column_id 
-            ";
-                    DataTable table = SqlCmd.FillDataTable(tname.Provider, 
-                        SQL,
-                        tname.DatabaseName.Name,
-                        tname.Name);
+                    DataTable table = InformationSchema.TableSchema(tname);
                     AddTabPage(tname, table, true);
                     return;
                 }
