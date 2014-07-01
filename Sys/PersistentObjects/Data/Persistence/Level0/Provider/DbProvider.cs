@@ -51,7 +51,7 @@ namespace Sys.Data
 
         public DbProviderType DbType
         {
-            get { return this.connection.DbType; }
+            get { return this.connection.DpType; }
         }
 
         protected abstract DbDataAdapter NewDbDataAdapter();
@@ -82,7 +82,7 @@ namespace Sys.Data
 
         public static DbProvider Factory(string script, DataProviderConnection connection)
         {
-            switch (connection.DbType)
+            switch (connection.DpType)
             {
                 case DbProviderType.SqlDb:
                     return new SqlProvider(script, connection);

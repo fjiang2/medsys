@@ -87,5 +87,21 @@ namespace Sys.Data
         {
             return new VAL(this.handle);
         }
+
+        public DataProviderConnection Connection
+        {
+            get
+            {
+                return DataProviderManager.Instance.GetConnection(this);
+            }
+        }
+
+        public DbProviderType DpType
+        {
+            get
+            {
+                return Connection.DpType;
+            }
+        }
     }
 }

@@ -31,23 +31,23 @@ namespace Sys.Data
   
     public class DataProviderConnection : IValizable
     {
-        private DataProviderType providerType;
+        private DataProviderType dpType;
         private string connectionString;
         private string name;
 
         internal DataProviderConnection(string name, DataProviderType type, string connectionString)
         {
             this.name = name;
-            this.providerType = type;
+            this.dpType = type;
             this.connectionString = connectionString;
         }
 
 
-        internal DbProviderType DbType
+        internal DbProviderType DpType
         {
             get
             {
-                switch (providerType)
+                switch (dpType)
                 {
                     case DataProviderType.SqlServer:
                         return DbProviderType.SqlDb;
@@ -65,7 +65,7 @@ namespace Sys.Data
         {
             get
             {
-                switch (DbType)
+                switch (DpType)
                 {
                     case DbProviderType.SqlDb:
                         return new SqlConnection(connectionString);
@@ -100,14 +100,14 @@ namespace Sys.Data
         public void SetVAL(VAL val)
         {
             this.name = val["name"].Str;
-            this.providerType = (DataProviderType)val["type"].Intcon;
+            this.dpType = (DataProviderType)val["type"].Intcon;
             this.connectionString = val["connection"].Str;
         }
         public VAL GetVAL()
         {
             VAL val = new VAL();
             val["name"] = new VAL(this.name);
-            val["type"] = new VAL((int)this.providerType);
+            val["type"] = new VAL((int)this.dpType);
             val["connection"] = new VAL(this.connectionString);
 
             return val;

@@ -58,8 +58,24 @@ namespace Sys.Platform.Forms
                 DataTable dataTable;
                 try
                 {
-                    dataTable = SqlCmd.FillDataTable(pair.Key, "SELECT name FROM sys.databases ORDER BY Name");
-                    dataTable.TableName = "databases";
+                    var provider = pair.Key;
+                    switch (provider.DpType)
+                    {
+                        case DbProviderType.SqlDb:
+                            dataTable = SqlCmd.FillDataTable(pair.Key, "SELECT name FROM sys.databases ORDER BY Name");
+                            break;
+
+                        case DbProviderType.SqlCe:
+                            dataTable = new DataTable();
+                            dataTable.Columns.Add(new DataColumn("Name", typeof(string)));
+                            DataRow newRow = dataTable.NewRow();
+                            newRow["Name"] = provider.Connection.Name;
+                            dataTable.Rows.Add(newRow);
+                            break;
+
+                        default:
+                            throw new NotSupportedException();
+                    }
                 }
                 catch (Exception) // no permisson to access this server
                 {
@@ -70,6 +86,7 @@ namespace Sys.Platform.Forms
                     continue;
                 }
 
+                dataTable.TableName = "databases";
                 root = treeView1.Nodes.Add(pair.Value.Name);
                 foreach (DataRow dataRow in dataTable.Rows)
                 {
@@ -103,19 +120,18 @@ namespace Sys.Platform.Forms
                 {
                     DatabaseNode databaseNode = (DatabaseNode)treeNode;
                     Cursor.Current = Cursors.WaitCursor;
-                    DataTable dt = SqlCmd.FillDataTable(databaseNode.Provider,
-                        "USE [{0}] ; SELECT Name FROM sys.Tables ORDER BY Name",
-                        databaseNode.DatabaseName);
+
+                    string[] names = MetaDatabase.GetTableNames(databaseNode.DatabaseName);
 
                     //you are not allowed to open this database
-                    if (dt == null)
+                    if (names.Length == 0)
                         return;
 
-                    foreach (DataRow dataRow in dt.Rows)
+                    foreach (string name in names)
                     {
-                        TableName name = new TableName(databaseNode.Provider, databaseNode.DatabaseName, (string)dataRow["name"]);
+                        TableName tname = new TableName(databaseNode.DatabaseName, name);
 
-                        TreeNode node = new TableNode(name);
+                        TreeNode node = new TableNode(tname);
                         node.ImageKey = "datatable";
                         node.SelectedImageKey = node.ImageKey;
                         treeNode.Nodes.Add(node);
@@ -370,22 +386,29 @@ namespace Sys.Platform.Forms
     class DatabaseNode : TreeNode
     {
         DataProvider provider;
+        DatabaseName databaseName;
 
         public DatabaseNode(DataProvider handle, string databaseName)
             : base(databaseName)
         {
             this.provider = handle;
+            this.databaseName = new DatabaseName(this.provider, this.Text); 
         }
 
-        public string DatabaseName
+        public DatabaseName DatabaseName
         {
-            get { return this.Text; }
+            get 
+            {
+                return databaseName;
+            }
         }
 
-        public DataProvider Provider
-        {
-            get { return this.provider; }
-        }
+        //public DataProvider Provider
+        //{
+        //    get { return this.provider; }
+        //}
+
+        
     }
 
     class TableNode : TreeNode
