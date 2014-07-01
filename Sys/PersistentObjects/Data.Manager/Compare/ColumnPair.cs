@@ -25,6 +25,8 @@ namespace Sys.Data.Manager
                 return DELIMETER + ((DateTime)Value).ToShortDateString() + DELIMETER;
             else if (Value is string)
                 return "N" + DELIMETER + (Value as string).Replace("'", "''") + DELIMETER;
+            else if (Value is Guid)
+                return "N" + DELIMETER + Value.ToString() + DELIMETER;
             else if (Value is bool)
                 return (bool)Value ? "1" : "0";
             else

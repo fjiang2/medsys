@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data.Manager\Compare\ColumnPair.cs" />
+    <Compile Include="Data.Manager\Compare\DatabaseCompare.cs" />
     <Compile Include="Data.Manager\Compare\RowCompare.cs" />
     <Compile Include="Data.Manager\Compare\TableCompare.cs" />
     <Compile Include="Data.Manager\DpoGenerate\DataTableDpoClass.cs" />
