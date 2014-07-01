@@ -30,12 +30,18 @@ namespace Sys.Data
         {
             try
             {
-                return SqlCmd.FillDataRow(databaseName.Provider, "SELECT * FROM sys.databases WHERE name = '{0}'", databaseName.Name) != null;
+                switch (databaseName.Provider.DpType)
+                {
+                    case DbProviderType.SqlDb:
+                        return SqlCmd.FillDataRow(databaseName.Provider, "SELECT * FROM sys.databases WHERE name = '{0}'", databaseName.Name) != null;
+                    case DbProviderType.SqlCe:
+                        return true;
+                }
             }
             catch (Exception)
             {
-                return false;
             }
+            return false;
         }
 
         public static void CreateDatabase(this DatabaseName databaseName)
@@ -50,12 +56,20 @@ namespace Sys.Data
                 if (!DatabaseExists(tname.DatabaseName))
                     return false;
 
-                return SqlCmd.FillDataRow(tname.Provider, "USE [{0}] ; SELECT * FROM sys.Tables WHERE Name='{1}'", tname.DatabaseName.Name, tname.Name) != null;
+                switch (tname.Provider.DpType)
+                {
+                    case DbProviderType.SqlDb:
+                        return SqlCmd.FillDataRow(tname.Provider, "USE [{0}] ; SELECT * FROM sys.Tables WHERE Name='{1}'", tname.DatabaseName.Name, tname.Name) != null;
+
+                    case DbProviderType.SqlCe:
+                        return SqlCmd.FillDataRow(tname.Provider, "SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE='TABLE' AND TABLE_NAME='{0}'", tname.Name) != null;
+                }
             }
             catch (Exception)
             {
-                return false;
             }
+
+            return false;
         }
 
 
@@ -64,29 +78,35 @@ namespace Sys.Data
             return (string)SqlCmd.ExecuteScalar(provider, "SELECT DB_NAME()");
         }
 
-        public static DateTime ServerTime
-        {
-            get
-            {
-                return (DateTime)SqlCmd.ExecuteScalar(DataProviderManager.DefaultProvider,  "SELECT GETDATE()");
-            }
-        }
-
 
         public static string[] GetDatabaseNames()
         {
              return GetDatabaseNames(DataProvider.DefaultProvider);
         }
 
-        public static string[] GetDatabaseNames(DataProvider handle)
+        public static string[] GetDatabaseNames(DataProvider provider)
         {
-            return SqlCmd.FillDataTable(handle, "SELECT name FROM sys.databases ORDER BY Name").ToArray<string>("name");
+            return SqlCmd.FillDataTable(provider, "SELECT name FROM sys.databases ORDER BY Name").ToArray<string>("name");
         }
 
         public static string[] GetTableNames(DatabaseName databaseName)
         {
-            DataTable dt = SqlCmd.FillDataTable(databaseName.Provider, "USE [{0}] ; SELECT Name FROM sys.Tables ORDER BY Name", databaseName.Name);
-            return dt.ToArray<string>("name");
+            switch (databaseName.Provider.DpType)
+            {
+                case DbProviderType.OleDb:
+                case DbProviderType.SqlDb:
+                    return SqlCmd
+                        .FillDataTable(databaseName.Provider, "USE [{0}] ; SELECT Name FROM sys.Tables ORDER BY Name", databaseName.Name)
+                        .ToArray<string>("Name");
+
+                case DbProviderType.SqlCe:
+                    return SqlCmd
+                            .FillDataTable(databaseName.Provider, "SELECT TABLE_NAME AS Name FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE='TABLE'")
+                            .ToArray<string>(0);
+                default:
+                    return new string[0];
+            }
+
         }
     }
 }

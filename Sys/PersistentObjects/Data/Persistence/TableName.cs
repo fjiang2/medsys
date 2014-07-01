@@ -107,7 +107,10 @@ namespace Sys.Data
                 if (this.baseName.Name != "")
                 {
                     //Visual Studio 2010 Windows Form Design Mode, does not support format [database]..[table]
-                    return string.Format("{0}..[{1}]", this.baseName.Name, this.tableName);
+                    if(baseName.Provider.DpType != DbProviderType.SqlCe)
+                        return string.Format("{0}..[{1}]", this.baseName.Name, this.tableName);
+                    else
+                        return this.tableName;
                 }
                 else
                     return this.tableName;

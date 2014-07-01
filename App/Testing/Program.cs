@@ -28,9 +28,19 @@ namespace App.Testing
            //SqlClauseJoinDemo();
 
 
-            CompareTableData("AppFcn", new string[] {"FCN_ID"});
+            //CompareTableData("AppFcn", new string[] {"FCN_ID"});
+
+
+            SqlServerCompactDemo();
         }
 
+        private static void SqlServerCompactDemo()
+        {
+            string conn1 = "data source=C:\\devel\\medsys\\database1.sdf";
+            var pvd1 = DataProviderManager.Register("Compact", DataProviderType.SqlServerCe, conn1);
+
+            var table = new SqlCmd(pvd1, "SELECT * FROM CtrlType").FillDataTable();
+        }
 
 
         private static void CompareTableData(string tableName, string[] primaryKeys)
