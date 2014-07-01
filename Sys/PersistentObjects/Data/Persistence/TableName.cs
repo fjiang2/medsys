@@ -110,7 +110,7 @@ namespace Sys.Data
                     if(baseName.Provider.DpType != DbProviderType.SqlCe)
                         return string.Format("{0}..[{1}]", this.baseName.Name, this.tableName);
                     else
-                        return this.tableName;
+                        return string.Format("[{0}]", this.tableName);
                 }
                 else
                     return this.tableName;

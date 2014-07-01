@@ -65,6 +65,7 @@
     <Compile Include="Data\DbType.cs" />
     <Compile Include="Data\Metadata\ComputedColumns.cs" />
     <Compile Include="Data\Metadata\ForeignKeys.cs" />
+    <Compile Include="Data\Metadata\InformationSchema.cs" />
     <Compile Include="Data\Metadata\ITable.cs" />
     <Compile Include="Data\Persistence\Level0\Provider\DbProvider.cs" />
     <Compile Include="Data\Persistence\Level0\Provider\IProvider.cs" />

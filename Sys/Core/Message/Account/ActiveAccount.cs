@@ -18,39 +18,21 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Data;
 
-namespace Sys.Data
+namespace Sys
 {
-   
-    public class PrimaryKeys : IPrimaryKeys
+    public class ActiveAccount
     {
-        private string[] keys;
+        private static IAccount account = null;
 
-        public PrimaryKeys(string[] columns)
+        public static IAccount Account
         {
-            this.keys = columns;
+            get { return ActiveAccount.account; }
         }
 
-        public PrimaryKeys(TableName tname)
-        { 
-            this.keys = InformationSchema.PrimaryKeySchema(tname).ToArray<string>(0);
-        }
-
-        public string[] Keys
+        public static void SetActiveAccount(IAccount account)
         {
-            get
-            {
-                return this.keys;
-            }
+            ActiveAccount.account = account;
         }
-
-        public int Length { get { return this.keys.Length; } }
-
-        public override string ToString()
-        {
-            return string.Join(" + ", keys);
-        }
-
     }
 }

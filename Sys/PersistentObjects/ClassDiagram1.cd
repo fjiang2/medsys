@@ -1,0 +1,1210 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Sys.Data.AggregatedAttribute" Collapsed="true">
+    <Position X="33.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Attribute\AggregatedAttribute.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.AssociationAttribute" Collapsed="true">
+    <Position X="37" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAQAAAAMAAAAAAAAAABgwAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Attribute\AssociationAttribute.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.ColumnAttribute" Collapsed="true">
+    <Position X="47.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQAAAAEQIJIAABAAABAAAAACUBAAACAEEA=</HashCode>
+      <FileName>Data\Attribute\ColumnAttribute.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.DataEnumAttribute" Collapsed="true">
+    <Position X="44" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAACAAAAAAAAAA=</HashCode>
+      <FileName>Data\Attribute\DataEnumAttribute.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.FieldAttribute" Collapsed="true">
+    <Position X="44" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAACAAAAAAAAAA=</HashCode>
+      <FileName>Data\Attribute\FieldAttribute.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.ConstraintForeignKeyAttribute" Collapsed="true">
+    <Position X="37" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAEAAAAAAAAAAAAAAIAAgAAAAAAAAA=</HashCode>
+      <FileName>Data\Attribute\ForeignKeyAttribute.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.ForeignKeyAttribute" Collapsed="true">
+    <Position X="47.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAEAAAAAAAAAAAAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Data\Attribute\ForeignKeyAttribute.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.LocatorAttribute" Collapsed="true">
+    <Position X="38.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAAEEAAAAAAAAgAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Attribute\LocatorAttribute.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.NonPersistentAttribute" Collapsed="true">
+    <Position X="47.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Attribute\NonPersistentAttribute.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.PersistentAttribute" Collapsed="true">
+    <Position X="35.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Attribute\PersistentAttribute.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.RevisionAttribute" Collapsed="true">
+    <Position X="42.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAEAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Attribute\RevisionAttribute.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.TableAttribute" Collapsed="true">
+    <Position X="49.25" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAEAAQAAAAAAAAAAAEAAAABAAAAAQAAAAA=</HashCode>
+      <FileName>Data\Attribute\TableAttribute.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.SqlClause" Collapsed="true">
+    <Position X="0.5" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QCCACCSEAAAMI0AkQA0ggEAAAEAGoABhAAAIBIAIIEI=</HashCode>
+      <FileName>Data\Clause\SqlClause.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Sys.Data.SqlClauseInfo" Collapsed="true">
+    <Position X="1.75" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAEAAAAAAAAAAAAAAAQAAAIAAAACAAAA=</HashCode>
+      <FileName>Data\Clause\SqlClauseInfo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.SqlExpr" Collapsed="true">
+    <Position X="2.75" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AiIAIAAAACAAAAAE6AXDAgACCAAIAJBCAIQBAEAAByQ=</HashCode>
+      <FileName>Data\Clause\SqlExpr.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.SqlExprExtension" Collapsed="true">
+    <Position X="38.75" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAADAAACAAAgAABABAAAACAEhIABAAAAAAAAABABA=</HashCode>
+      <FileName>Data\Clause\SqlExprExtension.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.SqlValue" Collapsed="true">
+    <Position X="44" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAACAAAAABCAAAAAA=</HashCode>
+      <FileName>Data\Clause\SqlValue.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.Conversion" Collapsed="true">
+    <Position X="40.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAAAAAAAAAAAAAAAAQAEAAAAAAAAJAAAA=</HashCode>
+      <FileName>Data\Conversion.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.DbTypex" Collapsed="true">
+    <Position X="40.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAg=</HashCode>
+      <FileName>Data\DbType.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.DefaultRowValue" Collapsed="true">
+    <Position X="44" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAIICAAAAAAAAAAAAAAIAAAAAAAAgAA=</HashCode>
+      <FileName>Data\DefaultRowValue.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.ColumnCollection" Collapsed="true">
+    <Position X="49.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAIAAAAAACIAAAAAAAAAAAAAAAAAAAAEAACA=</HashCode>
+      <FileName>Data\Metadata\ColumnCollection.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.ComputedColumns" Collapsed="true">
+    <Position X="35.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACAAAEAAAAAABAAAACAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Metadata\ComputedColumns.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.ForeignKeys" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="49.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIAAAECAAAAABAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Metadata\ForeignKeys.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Sys.Data.ForeignKey" Collapsed="true">
+    <Position X="1.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAEAAAEAAAAAEAAAAAAAAoAAgAAAAABAAA=</HashCode>
+      <FileName>Data\Metadata\ForeignKeys.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Sys.Data.IdentityKeys" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="33.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACAAAEAAAAAABAAAACAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Metadata\IdentityKeys.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Sys.Data.MetaColumn" Collapsed="true">
+    <Position X="4" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>hQAAAAEAACIAAJAEQJJAAEBAAAJAAAACCAAAAAAAEAA=</HashCode>
+      <FileName>Data\Metadata\MetaColumn.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Sys.Data.MetaDatabase" Collapsed="true">
+    <Position X="37" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAEAAAAAAAAAABAAAAAAAEAAAAAAAhAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Metadata\MetaDatabase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.MetaTable" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="38.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>UAEADQAAAAAABgAEAAAAAAAABQAEABCBAEoAEQkAADA=</HashCode>
+      <FileName>Data\Metadata\MetaTable.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Sys.Data.PrimaryKeys" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="38.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIAAAECAAAAABAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Metadata\PrimaryKeys.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Sys.Data.DatabaseName" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="42.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAQAAAAEAAQEgAAAAAQAAAAEAIAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Persistence\DatabaseName.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Sys.Data.DataExtension" Collapsed="true">
+    <Position X="45.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAABBAQACAiAEAAAIBAABCAABCAAAAJAAAAAQhAMRA=</HashCode>
+      <FileName>Data\Persistence\DataExtension.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.DataProviderConnection" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="35.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAgGAAACAAQQAgAEAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>Data\Persistence\Level0\DataProviderConnection.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Sys.Data.DataProviderManager" Collapsed="true">
+    <Position X="37" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAQAAAAEAAAEAAAABAEAAABBQAAgwAAMQBAAEAA=</HashCode>
+      <FileName>Data\Persistence\Level0\DataProviderManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.DbCmd" Collapsed="true">
+    <Position X="3.5" Y="12.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACBAIAAAAAAAAEAEAAABEECAEAQAACABAAAABGAAAAA=</HashCode>
+      <FileName>Data\Persistence\Level0\DbCmd.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.OleDbServer" Collapsed="true">
+    <Position X="49.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAQAAAAAAAEAAAAAARAAAAAABAAFAAAAAAAAIAAA=</HashCode>
+      <FileName>Data\Persistence\Level0\OleDbServer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.DbProvider" Collapsed="true">
+    <Position X="10" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAACAAAAAAAEAAIAABAACCIAAAACAECAAAAAAAAAA=</HashCode>
+      <FileName>Data\Persistence\Level0\Provider\DbProvider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.OleDbProvider" Collapsed="true">
+    <Position X="7.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAACIAAAAAAEAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Persistence\Level0\Provider\OleDbProvider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.SqlCeProvider" Collapsed="true">
+    <Position X="10" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAACIAAAAAAEAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Persistence\Level0\Provider\SqlCeProvider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.SqlProvider" Collapsed="true">
+    <Position X="12.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAACIAAAAAAEAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Persistence\Level0\Provider\SqlProvider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.SqlCmd" Collapsed="true">
+    <Position X="3.5" Y="13.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAEAAAAAAAECCEBEAAAABAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Persistence\Level0\SqlCmd.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.SqlServer" Collapsed="true">
+    <Position X="40.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAABEgABAAAAAAAFAAQAIAAAABACAAABAAAAAABAA=</HashCode>
+      <FileName>Data\Persistence\Level0\SqlServer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.SqlTrans" Collapsed="true">
+    <Position X="42.25" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIgAEAAAAAAAAAAAAAJAAAAAAAAAAAAAAAAIAAAAAA=</HashCode>
+      <FileName>Data\Persistence\Level0\SqlTrans.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.BaseRowAdapter" Collapsed="true">
+    <Position X="8.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CgCIAABACACAABEEQgAQAIAABREgAAABGSAAAQMAgAA=</HashCode>
+      <FileName>Data\Persistence\Level1\BaseRowAdapter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Sys.Data.ColumnAdapter" Collapsed="true">
+    <Position X="44" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACBAgAAASIACgAEAIAAAAICAEAACCAAAAAgAAgEgAA=</HashCode>
+      <FileName>Data\Persistence\Level1\ColumnAdapter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.ColumnAdapterCollection" Collapsed="true">
+    <Position X="45.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAggAAAA=</HashCode>
+      <FileName>Data\Persistence\Level1\ColumnAdapterCollection.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.DataField" Collapsed="true">
+    <Position X="47.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAAAEAAAIAIRAKAAAABAADMAAAAjAAAA=</HashCode>
+      <FileName>Data\Persistence\Level1\DataField.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.DataFieldCollection" Collapsed="true">
+    <Position X="49.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEIAAAAAAAAAAAAABQAAQAAAgAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Persistence\Level1\DataFieldCollection.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.Locator" Collapsed="true">
+    <Position X="37" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEABAAAQAAgAAAAIAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Persistence\Level1\Locator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.RowAdapter" Collapsed="true">
+    <Position X="8.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQBgMAAAAAAAiAIBAIAAAAAAAEACgAAAAAAAgBAIAA=</HashCode>
+      <FileName>Data\Persistence\Level1\RowAdapter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.RowChangedEventArgs" Collapsed="true">
+    <Position X="44" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAACAAAACAAAAAAEAAAAAAAAIAA=</HashCode>
+      <FileName>Data\Persistence\Level1\RowChangedEventArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.Selector" Collapsed="true">
+    <Position X="47.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAACAAAAAEAAAA=</HashCode>
+      <FileName>Data\Persistence\Level1\Selector.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.TableAdapter" Collapsed="true">
+    <Position X="47.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACFgIAEBQAAAAEAAgAAAIAAAAEAAAABDACAIQgAgAA=</HashCode>
+      <FileName>Data\Persistence\Level1\TableAdapter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.ValueChangedEventArgs" Collapsed="true">
+    <Position X="37" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAAAAAAAAAAAAAAAAACAAAABAAAAAAAA=</HashCode>
+      <FileName>Data\Persistence\Level1\ValueChangedEventArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.Mapping" Collapsed="true">
+    <Position X="35.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABBAAAAAAAAgAAAAAAAADABAgAAAAABAAAMAAAAAA=</HashCode>
+      <FileName>Data\Persistence\Level2\Mapping.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.PersistentCollection&lt;T&gt;" Collapsed="true">
+    <Position X="11.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAoAAIAABCABIBAEKUKAVAQABEABUAAkAAAAAQooACI=</HashCode>
+      <FileName>Data\Persistence\Level2\PersistentCollection.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Sys.Data.PersistentEventArgs" Collapsed="true">
+    <Position X="37" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAGAAAAgAEAAAAAAAAAAACIAAA=</HashCode>
+      <FileName>Data\Persistence\Level2\PersistentEventArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.PersistentList&lt;T&gt;" Collapsed="true">
+    <Position X="8.5" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAIAABAAAAAAEAAAARAAAAAAAAAAAAAAAAAhAAAQ=</HashCode>
+      <FileName>Data\Persistence\Level2\PersistentList.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Sys.Data.PersistentObject" Collapsed="true">
+    <Position X="16.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gASAgMgAITCEBjGEJEIAEIYAAFEAC4ABFeAGEQnAgAA=</HashCode>
+      <FileName>Data\Persistence\Level2\PersistentObject.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Sys.Data.PersistentValue" Collapsed="true">
+    <Position X="16.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAgAgAAAAAEGAAAiAAAAAAAUAAAAIgAAAAIAAIA=</HashCode>
+      <FileName>Data\Persistence\Level2\PersistentValue.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Sys.Data.Reflex" Collapsed="true">
+    <Position X="40.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BACAAAAQAAAAAAAAAAEAgAAAAAAAAAABAAAAAAABAAA=</HashCode>
+      <FileName>Data\Persistence\Level2\Reflex.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.RowObjectAdapter" Collapsed="true">
+    <Position X="8.5" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAABAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Persistence\Level2\RowObjectAdapter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.DPCollection&lt;T&gt;" Collapsed="true">
+    <Position X="11.5" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACIAAAACAAIAAAAAAEAAAAAAAAgGAAAAgCA=</HashCode>
+      <FileName>Data\Persistence\Level3\DPCollection.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Sys.Data.DPList&lt;T&gt;" Collapsed="true">
+    <Position X="8.5" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>Data\Persistence\Level3\DPList.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Sys.Data.DPObject" Collapsed="true">
+    <Position X="17.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACCoIAAAGAAIAAAAAAEAQAAAAAAQGAAAgABA=</HashCode>
+      <FileName>Data\Persistence\Level3\DPObject.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Sys.Data.MappedColumn" Collapsed="true">
+    <Position X="33.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAgAAAAAAAA=</HashCode>
+      <FileName>Data\Persistence\Level4\MappedColumn.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.TableName" Collapsed="true">
+    <Position X="5.5" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAEAoQEgAAAAAQAAAAAAIABQAAAAAABAAQ=</HashCode>
+      <FileName>Data\Persistence\TableName.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Sys.Data.TableReader" Collapsed="true">
+    <Position X="37" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABEAAAAQEAAAAAAAAAAAAgAAAAAAAA=</HashCode>
+      <FileName>Data\Persistence\TableReader.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.TableReader&lt;T&gt;" Collapsed="true">
+    <Position X="35.25" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAQAAAAAAAAAAAAAgAAQAQAAA=</HashCode>
+      <FileName>Data\Persistence\TableReader`1.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.TableWriter" Collapsed="true">
+    <Position X="42.25" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAABAAAAAEEAAAAQAAAAAAAAAABAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Persistence\TableWriter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.TableWriter&lt;T&gt;" Collapsed="true">
+    <Position X="40.5" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAABAAAAAAEAAAAQAAAAAAAAAAAAAAAAQAAAAA=</HashCode>
+      <FileName>Data\Persistence\TableWriter`1.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.Persistence.Level4.TableReader&lt;T1, T2&gt;" Collapsed="true">
+    <Position X="38.75" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACAAACAAAAAAAAAQAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Persistence\TableReader`2.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.Manager.ColumnPair" Collapsed="true">
+    <Position X="33.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAABAAAQAAAAAAAAQAAAgAAAAAAA=</HashCode>
+      <FileName>Data.Manager\Compare\ColumnPair.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.Manager.RowCompare" Collapsed="true">
+    <Position X="45.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAABABAAAAAABAAQAEAAAgAAABAAAAAAAA=</HashCode>
+      <FileName>Data.Manager\Compare\RowCompare.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.Manager.TableCompare" Collapsed="true">
+    <Position X="33.5" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAAAAEAAABAAAAABRAAAIAABAABAAAAAAAA=</HashCode>
+      <FileName>Data.Manager\Compare\TableCompare.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.Manager.DictColumn" Collapsed="true">
+    <Position X="10.75" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAIAAAA=</HashCode>
+      <FileName>Data.Manager\Dictionary\DictColumn.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.Manager.DictDatabase" Collapsed="true">
+    <Position X="45.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAAAAAAAQAAAAIAABBAAAAQAAAAAIAAAA=</HashCode>
+      <FileName>Data.Manager\Dictionary\DictDatabase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.Manager.DictTable" Collapsed="true">
+    <Position X="47.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAQAAAAAAAABAAAAAAAAAAIIAAA=</HashCode>
+      <FileName>Data.Manager\Dictionary\DictTable.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.Manager.ClassName" Collapsed="true">
+    <Position X="42.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABIAAAAAAAAAEAAIAAAAAAAAAIAAAAAAIAAAAAAQ=</HashCode>
+      <FileName>Data.Manager\DpoGenerate\ClassName.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.Manager.ClassTableName" Collapsed="true">
+    <Position X="5.5" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAACCAAQgAAAGAAAAAAEAAAABAAASAAAAAAA=</HashCode>
+      <FileName>Data.Manager\DpoGenerate\ClassTableName.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.Manager.DataTableDpoClass" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="38.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEACQAAAAAAAABAAAAAAAAAAAAEAAABAEAAAQgAABA=</HashCode>
+      <FileName>Data.Manager\DpoGenerate\DataTableDpoClass.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Sys.Data.Manager.DtColumn" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="37" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAACIAAIAAQIJAAABAQAIAAAAAAAAAAAAAEAA=</HashCode>
+      <FileName>Data.Manager\DpoGenerate\DataTableDpoClass.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Sys.Data.Manager.FieldDefinition" Collapsed="true">
+    <Position X="45.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAQAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>Data.Manager\DpoGenerate\DpoClass.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.Manager.DpoClass" Collapsed="true">
+    <Position X="49.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACDAIAAAAgAAAgAACAAACgAAAE0AAEIAAApKEAAoiA=</HashCode>
+      <FileName>Data.Manager\DpoGenerate\DpoClass.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.Manager.DpoField" Collapsed="true">
+    <Position X="33.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAEAAAEAAAAAQAAABAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data.Manager\DpoGenerate\DpoField.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.Manager.DpoGenerator" Collapsed="true">
+    <Position X="35.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAACAAAAAABAAAAAAAAAAAAAIAAAAACAAAACA=</HashCode>
+      <FileName>Data.Manager\DpoGenerate\DpoGenerator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.Manager.EnumField" Collapsed="true">
+    <Position X="15.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAACAAAAEAAAAAAAAAAAAAAAACAAAAAAAAAA=</HashCode>
+      <FileName>Data.Manager\EnumGenerate\EnumField.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.Manager.EnumType" Collapsed="true">
+    <Position X="38.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAEIAAAACAAAAMAAAAAAQAAAAEAAAAAAAAAAAAgAA=</HashCode>
+      <FileName>Data.Manager\EnumGenerate\EnumType.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.Manager.EnumTypeManager" Collapsed="true">
+    <Position X="40.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgIAAAAAAAAAAAAIAAAIAAAAAAAAAAAAAAAAAAIAAAA=</HashCode>
+      <FileName>Data.Manager\EnumGenerate\EnumTypeManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.Manager.DataLocking" Collapsed="true">
+    <Position X="33.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAgAgAAAAJAAEAAqAAAAAiAAAAAAAEAAAAAAAEAA=</HashCode>
+      <FileName>Data.Manager\Locking\DataLocking.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.Manager.LockDpo" Collapsed="true">
+    <Position X="28.75" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAgAQAAJAAEAAIAAAAAgAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data.Manager\Locking\LockDpo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.Manager.DefaultLogee" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="42.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABACAAAAAQI=</HashCode>
+      <FileName>Data.Manager\Log\DefaultLogee.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Sys.Data.Manager.Log" Collapsed="true">
+    <Position X="40.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAQAAAAAAAEAAAAAAFAAAABAAAAAAAGAAAAAAA=</HashCode>
+      <FileName>Data.Manager\Log\Log.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.Manager.Logger" Collapsed="true">
+    <Position X="42.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQQAAAAAIAEIACAAIAAAAAAEAECQABEAAAAAAAAAA=</HashCode>
+      <FileName>Data.Manager\Log\Logger.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.Manager.LogManager" Collapsed="true">
+    <Position X="44" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAABAAAQEAAABAAAAQAAgAAQAAAA=</HashCode>
+      <FileName>Data.Manager\Log\LogManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.Manager.LogTransaction" Collapsed="true">
+    <Position X="45.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAABAABAAIAAAAAABAAAAAAAAAAAIQAAAAAAgAA=</HashCode>
+      <FileName>Data.Manager\Log\LogTransaction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.Manager.Transaction" Collapsed="true">
+    <Position X="44" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAIAAEABAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data.Manager\Log\Transaction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.Manager.TransactionLogeeType" Collapsed="true">
+    <Position X="45.75" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAABAIAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data.Manager\Log\TransactionLogeeType.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.Manager.TransactionType" Collapsed="true">
+    <Position X="47.5" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>Data.Manager\Log\TransactionType.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.Manager.LogDpoClass" Collapsed="true">
+    <Position X="24.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data.Manager\LogDpoClass.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.Manager.Manager" Collapsed="true">
+    <Position X="47.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAoAAQAAAAADAAAAAAAgAAAAAAAAAAAQAAAAAA=</HashCode>
+      <FileName>Data.Manager\Manager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.Manager.ManagerExtension" Collapsed="true">
+    <Position X="49.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAAAQAAAAgAgAAAABAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data.Manager\ManagerExtension.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.Manager.Migration" Collapsed="true">
+    <Position X="40.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAYAAEBAAAAAAAAAAAQAgAAAEAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Data.Manager\Migration\Migration.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.Manager.MigrationAttribute" Collapsed="true">
+    <Position X="42.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAACAACAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data.Manager\Migration\MigrationAttribute.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.Manager.MigrationProvider" Collapsed="true">
+    <Position X="44" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAABACgISAASJAAQgEAAAAAQABAAAACAAAEAABIA=</HashCode>
+      <FileName>Data.Manager\Migration\MigrationProvider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.Manager.BasePackage&lt;T&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="38.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAAAQAAAAAAAQAAAAAAAABAAgAAQAAAAI=</HashCode>
+      <FileName>Data.Manager\Package\BasePackage.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Sys.Data.Manager.Packing" Collapsed="true">
+    <Position X="33.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABQAAACAACAAAQEBBAEAAAAAABAAABAAAAAAQAAAAA=</HashCode>
+      <FileName>Data.Manager\Package\Packing.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.Manager.Unpacking" Collapsed="true">
+    <Position X="33.5" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Data.Manager\Package\Unpacking.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.Manager.Setting" Collapsed="true">
+    <Position X="49.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAEAEAACAAAgAIAAAAAAAAAAAAAAAQCABQAAA=</HashCode>
+      <FileName>Data.Manager\Setting.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.Manager.SpDatabase" Collapsed="true">
+    <Position X="33.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAEAAAAAAAAAACAAAAAIAAAAAAAAEACEAAAAA=</HashCode>
+      <FileName>Data.Manager\SpGenerate\SpDatabase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.Manager.SpParam" Collapsed="true">
+    <Position X="35.25" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACAAAAAAAAAAAAIAAFAAAAAAAAAAAkAAA=</HashCode>
+      <FileName>Data.Manager\SpGenerate\SpParam.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.Manager.SpParamDpo" Collapsed="true">
+    <Position X="31" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACAAAAAAAAABACAAAFAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>Data.Manager\SpGenerate\SpParamDpo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.Data.Manager.SpProc" Collapsed="true">
+    <Position X="37" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAAAAAAAAAAECAAAAgIAAAIAAAMAAAAAAAA=</HashCode>
+      <FileName>Data.Manager\SpGenerate\SpProc.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.PersistentObjects.DpoClass.DataProviderDpo" Collapsed="true">
+    <Position X="6.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAIAAgAEgAAAQAAAABAACAAAAFAAAAAFACAgCABAg=</HashCode>
+      <FileName>MgCode\DpoClass\DataProviderDpo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.PersistentObjects.DpoClass.dictDatabaseDpo" Collapsed="true">
+    <Position X="8.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAICACAAgAIBAEIBCAAAgAAAAEAAAQAEAAAACABAA=</HashCode>
+      <FileName>MgCode\DpoClass\dictDatabaseDpo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.PersistentObjects.DpoClass.dictDataColumnDpo" Collapsed="true">
+    <Position X="10.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIICAABAgAIBAEIBAAAAAAAAAEAAAAAEAgAQCAAAA=</HashCode>
+      <FileName>MgCode\DpoClass\dictDataColumnDpo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.PersistentObjects.DpoClass.dictDataTableDpo" Collapsed="true">
+    <Position X="13" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIICAAAAgAIBAEIBCAAAgAAAAEAAAQAEAgAACABAA=</HashCode>
+      <FileName>MgCode\DpoClass\dictDataTableDpo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.PersistentObjects.DpoClass.dictEnumTypeDpo" Collapsed="true">
+    <Position X="15.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAEAgAgBAAAAAAAAAAAAAABAAACEAgCACECAA=</HashCode>
+      <FileName>MgCode\DpoClass\dictEnumTypeDpo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.PersistentObjects.DpoClass.logDataColumnDpo" Collapsed="true">
+    <Position X="17.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEQEIRQBCgIAAAAAgFAAAAAAAAAAAEAAEAAAQCAAAQ=</HashCode>
+      <FileName>MgCode\DpoClass\logDataColumnDpo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.PersistentObjects.DpoClass.logDataSetDpo" Collapsed="true">
+    <Position X="19.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAAgAQACAhAABAAAEgAAAAAAAAFAAAQCAAAA=</HashCode>
+      <FileName>MgCode\DpoClass\logDataSetDpo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.PersistentObjects.DpoClass.logDataTableDpo" Collapsed="true">
+    <Position X="22" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAMYBIBQAAgIAAAAAAFABAAEgAAAAAAAAEAggACBAAA=</HashCode>
+      <FileName>MgCode\DpoClass\logDataTableDpo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.PersistentObjects.DpoClass.logDpoClassDpo" Collapsed="true">
+    <Position X="24.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IEAIAAAgAAgCAAEACAAikABAAAAAAAAgAFAgIACACBQ=</HashCode>
+      <FileName>MgCode\DpoClass\logDpoClassDpo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.PersistentObjects.DpoClass.MigrationVersionDpo" Collapsed="true">
+    <Position X="26.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAEAAAACgAAA=</HashCode>
+      <FileName>MgCode\DpoClass\MigrationVersionDpo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.PersistentObjects.DpoClass.RecordLockDpo" Collapsed="true">
+    <Position X="28.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAIAwogAEAAAAAAAAAAABAAAAAAEACCICEAiA=</HashCode>
+      <FileName>MgCode\DpoClass\RecordLockDpo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.CodeBuilder.Argument" Collapsed="true">
+    <Position X="35.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAFAAAAAAAACAAAAAA=</HashCode>
+      <FileName>Sys\CodeBuilder\Argument.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.CodeBuilder.ClassBuilder" Collapsed="true">
+    <Position X="40.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAKAAIAEAIAAAAAFIAAAAAAAAAAAAAAIAAAKQAAAAAA=</HashCode>
+      <FileName>Sys\CodeBuilder\ClassBuilder.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.CodeBuilder.Constructor" Collapsed="true">
+    <Position X="38.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAEAAAAAAAEAAAAAAAMAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Sys\CodeBuilder\Constructor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.CodeBuilder.Field" Collapsed="true">
+    <Position X="42.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAEAAAAAAAAAAAAAAAAAAAACAAAAAA=</HashCode>
+      <FileName>Sys\CodeBuilder\Field.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.CodeBuilder.Format" Collapsed="true">
+    <Position X="3" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIACCAAAAAgAAAEQAAAAAAAIAAAAAAAAAQAAAAAAAA=</HashCode>
+      <FileName>Sys\CodeBuilder\Format.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.CodeBuilder.Method" Collapsed="true">
+    <Position X="0.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAEAAAAAAAEAAAAAAAMAAAAAAAAAAAACAAAAAA=</HashCode>
+      <FileName>Sys\CodeBuilder\Method.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.CodeBuilder.Modifier" Collapsed="true">
+    <Position X="45.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAECAAAAAAAAAAAIAAAAAAACAAAAAQ=</HashCode>
+      <FileName>Sys\CodeBuilder\Modifier.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.CodeBuilder.Property" Collapsed="true">
+    <Position X="3" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAgAAACAAMAABAAAAEAAAAAAAAAIAAAAAAAAA=</HashCode>
+      <FileName>Sys\CodeBuilder\Property.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.CodeBuilder.Statement" Collapsed="true">
+    <Position X="5.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAQAAACAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Sys\CodeBuilder\Statement.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.CodeBuilder.Statements" Collapsed="true">
+    <Position X="45.75" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAAAAAAEAAAgAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Sys\CodeBuilder\Statements.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.CodeBuilder.TypeInfo" Collapsed="true">
+    <Position X="49.25" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAABAAAAAAAACAAAAAI=</HashCode>
+      <FileName>Sys\CodeBuilder\TypeInfo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.UserState" Collapsed="true">
+    <Position X="35.25" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIACAAAA=</HashCode>
+      <FileName>Sys\JBackgroundWorker.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sys.JBackgroundWorker" Collapsed="true">
+    <Position X="35.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAQAAAAAAAAAACAAAAAAAAAAAEAAAAAAAAAAA=</HashCode>
+      <FileName>Sys\JBackgroundWorker.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="Sys.Data.DataProvider" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="33.5" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAQGgAAAAAAAAAAEAIAAIACKAAAAAAA=</HashCode>
+      <FileName>Data\Persistence\Level0\DataProvider.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Struct>
+  <Interface Name="Sys.Data.ITable" Collapsed="true">
+    <Position X="37" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAEAAAQgAAAA=</HashCode>
+      <FileName>Data\Metadata\ITable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Sys.Data.IColumn" Collapsed="true">
+    <Position X="33.5" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAACIAAIAAQIJAAABAAAIAAAAAAAAAAAAAEAA=</HashCode>
+      <FileName>Data\Metadata\ITable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Sys.Data.IPrimaryKeys" Collapsed="true">
+    <Position X="49.25" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAACAAAAABAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Metadata\ITable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Sys.Data.IForeignKeys" Collapsed="true">
+    <Position X="38.75" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAACAAAAABAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Metadata\ITable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Sys.Data.IForeignKey" Collapsed="true">
+    <Position X="37" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAEAAAAAAAAAAAAAAAAAAoAAgAAAAABAAA=</HashCode>
+      <FileName>Data\Metadata\ITable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Sys.Data.IIdentityKeys" Collapsed="true">
+    <Position X="40.5" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACAAAAAAAAAABAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Metadata\ITable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Sys.Data.ISqlClause" Collapsed="true">
+    <Position X="35.25" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAEAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Persistence\Level0\ISqlClause.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Sys.Data.IPersistentObject" Collapsed="true">
+    <Position X="0.5" Y="12.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgIAAAQAAAAAAAAAAAAAAAAEAAAAAAAAAAQBAAAA=</HashCode>
+      <FileName>Data\Persistence\Level2\IPersistent.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Sys.Data.IDPObject" Collapsed="true">
+    <Position X="0.5" Y="13.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAIAAAAAAAAAAACAAABAAEAAgAAAA=</HashCode>
+      <FileName>Data\Persistence\Level2\IPersistent.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Sys.Data.IPersistentCollection" Collapsed="true">
+    <Position X="11.5" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAAAAARAAAAAAAAAAAAAAAAAgAAAA=</HashCode>
+      <FileName>Data\Persistence\Level2\IPersistent.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Sys.Data.IDPCollection" Collapsed="true">
+    <Position X="11.5" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAAIAAAAAAAEAQAAAABQAAgAAAAAQAIAAI=</HashCode>
+      <FileName>Data\Persistence\Level2\IPersistent.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Sys.Data.IColumnMapping" Collapsed="true">
+    <Position X="35.25" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Persistence\Level4\IMapping.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Sys.Data.IMany2ManyMapping" Collapsed="true">
+    <Position X="45.75" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAACACAAAAABAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Persistence\Level4\IMapping.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Sys.Data.Manager.ILockable" Collapsed="true">
+    <Position X="42.25" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAACAAAAAAA=</HashCode>
+      <FileName>Data.Manager\Locking\ILockable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Sys.Data.Manager.ILogable" Collapsed="true">
+    <Position X="44" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAGAAAAAAA=</HashCode>
+      <FileName>Data.Manager\Log\ILogable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Sys.Data.Manager.IRowLogee" Collapsed="true">
+    <Position X="33.5" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAI=</HashCode>
+      <FileName>Data.Manager\Log\ILogee.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Sys.Data.Manager.ITransactionLogee" Collapsed="true">
+    <Position X="38.75" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABACAAAAAAA=</HashCode>
+      <FileName>Data.Manager\Log\ILogee.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Sys.Data.Manager.IPacking" Collapsed="true">
+    <Position X="47.5" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAABAAAAAQAAAAI=</HashCode>
+      <FileName>Data.Manager\Package\IPacking.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="Sys.Data.Level" Collapsed="true">
+    <Position X="40.5" Y="13.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAJAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>Data\Attribute\Level.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Sys.Data.Provider" Collapsed="true">
+    <Position X="33.5" Y="14.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAEAAAAAEAAAAAAAQCAAAAAAAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>Data\Attribute\Provider.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Sys.Data.CType" Collapsed="true">
+    <Position X="35.25" Y="13.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EBAwWAAAAAAkAAgACAAiAKAAAECACDQBAEAACCAoASE=</HashCode>
+      <FileName>Data\DbType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Sys.Data.DataProviderType" Collapsed="true">
+    <Position X="37" Y="13.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAEAAAAAADAACAAAAAAEAQAAAACAIAAA=</HashCode>
+      <FileName>Data\Persistence\Level0\DataProviderType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Sys.Data.DbProviderType" Collapsed="true">
+    <Position X="38.75" Y="13.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgBAAAAAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>Data\Persistence\Level0\Provider\IProvider.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Sys.Data.MappingType" Collapsed="true">
+    <Position X="42.25" Y="13.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>Data\Persistence\Level2\Mapping.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Sys.Data.ObjectState" Collapsed="true">
+    <Position X="47.5" Y="13.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAAAABAAEEAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Persistence\Level2\ObjectState.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Sys.Data.ObjectPermission" Collapsed="true">
+    <Position X="45.75" Y="13.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACCA=</HashCode>
+      <FileName>Data\Persistence\Level2\PersistentCollection.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Sys.Data.PersistentObjectState" Collapsed="true">
+    <Position X="49.25" Y="13.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAAAABAQEEAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Persistence\Level2\PersistentEventArgs.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Sys.Data.Manager.AccessModifier" Collapsed="true">
+    <Position X="33.5" Y="13.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQABAQAAAAAAAIEgAAAAEAAAAAAEAAAAAAAAQAA=</HashCode>
+      <FileName>Data.Manager\DpoGenerate\AccessModifier.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Sys.CodeBuilder.ModifierType" Collapsed="true">
+    <Position X="44" Y="13.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAQABAQAAAAAAAIEpAAAAEgAAAAAEAAAAAAAASAg=</HashCode>
+      <FileName>Sys\CodeBuilder\ModifierType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Delegate Name="Sys.Data.RowChangedHandler" Collapsed="true">
+    <Position X="35.25" Y="15.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAEAAAAAAAAAA=</HashCode>
+      <FileName>Data\Persistence\Level1\RowChangedEventArgs.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Delegate Name="Sys.Data.ValueChangedHandler" Collapsed="true">
+    <Position X="37" Y="15.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAIAAAAAAQAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Persistence\Level1\ValueChangedEventArgs.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Delegate Name="Sys.Data.PersistentHandler" Collapsed="true">
+    <Position X="33.5" Y="15.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAACAAAA=</HashCode>
+      <FileName>Data\Persistence\Level2\PersistentEventArgs.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
