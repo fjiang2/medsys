@@ -17,21 +17,27 @@ namespace App.Testing
 {
     class Program
     {
+        const string conn_localhost_medsys = "data source=localhost\\sqlexpress;initial catalog=medsys;integrated security=SSPI;packet size=4096";
+        
+        const string conn_buildmachine = "data source=192.168.104.114,1433\\sqlexpress;initial catalog=ATMS;User Id=sa;Password=naztec";
+        const string conn_localhost = "data source=localhost\\sqlexpress;initial catalog=ATMS_4_5;integrated security=SSPI;packet size=4096";
+        const string conn_palmdemo = "data source=192.168.104.2;initial catalog=palmdemo;User Id=sa;Password=";
+        const string conn_ab = "data source=192.168.104.190,1433\\SQLEXPRESS;initial catalog=ATMS_4_5;User Id=sa;Password=naztec";
+
         static void Main(string[] args)
         {
 
-
-
-            //DataProviderManager.RegisterDefaultProvider("data source=localhost\\sqlexpress;initial catalog=medsys;integrated security=SSPI;packet size=4096");
-           // NTreeViewDemo();
+            DataProviderManager.RegisterDefaultProvider(conn_localhost_medsys);
+           //NTreeViewDemo();
            //SqlClauseDemo();
            //SqlClauseJoinDemo();
 
+            //SqlServerCompactDemo();
 
-            //CompareTableData("AppFcn", new string[] {"FCN_ID"});
-
-
-            SqlServerCompactDemo();
+            string script;
+            script= TableCompare.Difference(conn_localhost, conn_buildmachine, "AppFcn", new string[] { "FCN_ID" });
+            script = TableCompare.Difference(conn_palmdemo, conn_localhost, "Report", new string[] { "ID" });
+            script = TableCompare.Difference(conn_palmdemo, conn_localhost, "Rep_Parm", new string[] { "REP_ID", "ORD" });
         }
 
         private static void SqlServerCompactDemo()
@@ -43,21 +49,12 @@ namespace App.Testing
         }
 
 
-        private static void CompareTableData(string tableName, string[] primaryKeys)
+        //Create all INSERT Clauses
+        private static string InsertIntoTableData(string conn, string tableName )
         {
-            string conn1 = "data source=localhost\\sqlexpress;initial catalog=ATMS_4_5;integrated security=SSPI;packet size=4096";
-            string conn2 = "data source=192.168.104.114,1433\\sqlexpress;initial catalog=ATMS;User Id=sa;Password=naztec";
-            
-            string conn3 = "data source=192.168.104.190,1433\\SQLEXPRESS;initial catalog=ATMS_4_5;User Id=sa;Password=naztec";
-            
-            var pvd1 = DataProviderManager.Register("Source", DataProviderType.SqlServer, conn1);
-            var pvd2 = DataProviderManager.Register("Sink", DataProviderType.SqlServer, conn2);
-
-            //
-            string script = TableCompare.Difference(tableName, primaryKeys, pvd1, pvd2);
-
-            //Create all INSERT Clauses
-            string script2 = TableCompare.Rows(tableName, pvd1);
+            var pvd1 = DataProviderManager.Register("Source", DataProviderType.SqlServer, conn);
+            string script = TableCompare.Rows(tableName, pvd1);
+            return script;
         }
 
     

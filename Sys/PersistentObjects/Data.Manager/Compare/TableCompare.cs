@@ -10,6 +10,8 @@ namespace Sys.Data.Manager
 {
     public class TableCompare
     {
+        #region Implemetation
+
         private string tableName;
         internal string[] PkColumns;
         internal string[] NonPkColumns;
@@ -71,8 +73,21 @@ namespace Sys.Data.Manager
             get { return string.Format("INSERT {0}({1}) VALUES({2})", tableName, "{0}", "{1}"); }
         }
 
+        #endregion
 
-        public static string Difference(string tableName, string[] primaryKeys, DataProvider from, DataProvider to)
+
+
+        public static string Difference(string connFrom, string connTo, string tableName, string[] primaryKeys)
+        {
+            var pvd1 = DataProviderManager.Register("Source", DataProviderType.SqlServer, connFrom);
+            var pvd2 = DataProviderManager.Register("Sink", DataProviderType.SqlServer, connTo);
+
+            string script = TableCompare.Difference(pvd1, pvd2, tableName, primaryKeys);
+            return script;
+        }
+
+
+        public static string Difference(DataProvider from, DataProvider to, string tableName, string[] primaryKeys)
         {
             string SQL = string.Format("SELECT * FROM {0}", tableName);
 
@@ -82,6 +97,7 @@ namespace Sys.Data.Manager
             TableCompare compare = new TableCompare(tableName);
             return compare.Compare(primaryKeys, dt1, dt2);
         }
+
 
         public static string Rows(string tableName, DataProvider provider)
         {
