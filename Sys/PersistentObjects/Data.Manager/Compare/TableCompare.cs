@@ -21,6 +21,14 @@ namespace Sys.Data.Manager
             this.tableName = tableName;
         }
 
+        private string Compare(string[] pk, TableName from, TableName to)
+        {
+            var dt1 = new TableReader(from).Table;
+            var dt2 = new TableReader(to).Table;
+
+            return Compare(pk, dt1, dt2);
+        }
+
         private string Compare(string[] pk, DataTable table1, DataTable table2)
         {
             this.PkColumns = pk;
@@ -76,32 +84,28 @@ namespace Sys.Data.Manager
         #endregion
 
 
-
         public static string Difference(string connFrom, string connTo, string tableName, string[] primaryKeys)
         {
             var pvd1 = DataProviderManager.Register("Source", DataProviderType.SqlServer, connFrom);
             var pvd2 = DataProviderManager.Register("Sink", DataProviderType.SqlServer, connTo);
 
-            string script = TableCompare.Difference(pvd1, pvd2, tableName, primaryKeys);
+            TableName tname1 = new TableName(pvd1, tableName);
+            TableName tname2 = new TableName(pvd2, tableName);
+
+            string script = TableCompare.Difference(tname1, tname2, tableName, primaryKeys);
             return script;
         }
 
 
-        public static string Difference(DataProvider from, DataProvider to, string tableName, string[] primaryKeys)
+        public static string Difference(TableName from, TableName to, string tableName, string[] primaryKeys)
         {
-            string SQL = string.Format("SELECT * FROM {0}", tableName);
-
-            var dt1 = new SqlCmd(from, SQL).FillDataTable();
-            var dt2 = new SqlCmd(to, SQL).FillDataTable();
-
             TableCompare compare = new TableCompare(tableName);
-            return compare.Compare(primaryKeys, dt1, dt2);
+            return compare.Compare(primaryKeys, from, to);
         }
-
 
         public static string Rows(string tableName, DataProvider provider)
         {
-            string SQL = string.Format("SELECT * FROM {0}", tableName);
+            string SQL = string.Format("SELECT * FROM [{0}]", tableName);
 
             var dt1 = new SqlCmd(provider, SQL).FillDataTable();
 

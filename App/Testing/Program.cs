@@ -35,9 +35,11 @@ namespace App.Testing
             //SqlServerCompactDemo();
 
             string script;
-            script= TableCompare.Difference(conn_localhost, conn_buildmachine, "AppFcn", new string[] { "FCN_ID" });
+            script = TableCompare.Difference(conn_localhost, conn_buildmachine, "AppFcn", new string[] { "FCN_ID" });
             script = TableCompare.Difference(conn_palmdemo, conn_localhost, "Report", new string[] { "ID" });
             script = TableCompare.Difference(conn_palmdemo, conn_localhost, "Rep_Parm", new string[] { "REP_ID", "ORD" });
+
+            script = DatabaseCompare.Difference(conn_localhost, conn_buildmachine, "ATMS_4_5", "ATMS");
         }
 
         private static void SqlServerCompactDemo()
