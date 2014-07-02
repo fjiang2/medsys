@@ -22,6 +22,7 @@ using Sys.Data;
 using Tie;
 using Sys.PersistentObjects.DpoClass;
 using Sys.Data.Manager;
+using Sys.Data.Log;
 
 namespace Sys.Data.Manager
 {

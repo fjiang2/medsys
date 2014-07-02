@@ -18,6 +18,7 @@ using Sys.ViewManager.Forms;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Docking;
 using DevExpress.XtraEditors.Repository;
+using Sys.Data.Log;
 
 namespace Sys.ViewManager.Forms
 {

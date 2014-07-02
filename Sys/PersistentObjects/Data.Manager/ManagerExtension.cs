@@ -25,6 +25,7 @@ using System.ComponentModel;
 using Sys.PersistentObjects.DpoClass;
 using System.IO;
 using System.Reflection;
+using Sys.Data.Log;
 
 namespace Sys.Data.Manager
 {
@@ -161,7 +162,7 @@ namespace Sys.Data.Manager
 
         public static ColumnCollection MetaColumns(this TableName tableName)
         {
-            ITable meta = MetaTable.GetCachedInstance(tableName);
+            ITable meta = tableName.GetCachedMetaTable();
             return meta.Columns;
         }
 

@@ -397,6 +397,10 @@
       <Project>{E5EC721B-1F83-41D2-ADFD-2E8E0B1E516D}</Project>
       <Name>Sys.DataManager</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Data\Sys.Data.csproj">
+      <Project>{91f93c1b-f6b4-4ef6-8149-a6b2a9e47137}</Project>
+      <Name>Sys.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Messaging\Sys.Messaging.csproj">
       <Project>{09DF51D9-CBDE-4FBC-AEF5-03E09E8501DC}</Project>
       <Name>Sys.Messaging</Name>
