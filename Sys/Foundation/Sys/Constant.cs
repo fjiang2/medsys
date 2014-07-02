@@ -6,6 +6,7 @@ using System.IO;
 using Tie;
 using System.Reflection;
 using Sys.Data;
+using Sys.PersistentObjects.DpoClass;
 
 namespace Sys
 {
@@ -78,7 +79,7 @@ namespace Sys
             //DataProviderManager.Instance.Configuration = json["dataprovider"];
 
             DataProviderManager.RegisterDefaultProvider(Const.CONNECTION_STRING);
-            DataProviderManager.Instance.LoadDataProviders();
+            LoadDataProviders();
 
             Const.Revision = Configuration.Instance.GetValue<int>("Revision");
             Const.COMPUTER_NAME = System.Windows.Forms.SystemInformation.ComputerName;
@@ -91,6 +92,16 @@ namespace Sys
 
             return SqlServer.IsGoodConnectionString();
         }
+
+        public static void LoadDataProviders()
+        {
+            var list = new TableReader<DataProviderDpo>(DataProviderDpo._inactive.ColumnName() == 0).ToList();
+            foreach (DataProviderDpo dpo in list)
+            {
+                DataProviderManager.Register(dpo.name, (DataProviderType)dpo.type, dpo.connection);
+            }
+        }
+
     }
 
 }

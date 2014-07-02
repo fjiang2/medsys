@@ -11,6 +11,7 @@ using Sys.BusinessRules;
 using Sys.ViewManager.Manager;
 using Sys.Security;
 using Sys.Data.Manager;
+using Sys.Data.Log;
 
 namespace Sys.ViewManager.Forms
 {

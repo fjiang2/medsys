@@ -430,7 +430,7 @@ namespace @NAMESPACE
             else if (modifier == AccessModifier.Private)
                 m = "private";
 
-            string attribute = Sys.Data.MetaTable.GetTableAttribute(metaTable, ctname);
+            string attribute = metaTable.GetTableAttribute(ctname);
             if (!HasTableAttribute)
                 attribute = "";
 

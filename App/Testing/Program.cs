@@ -12,6 +12,7 @@ using Sys.Foundation.DpoClass;
 using Sys.ViewManager.DpoClass;
 using Sys.ViewManager.Security;
 using Sys.ViewManager.Forms;
+using Sys.Data.Comparison;
 
 namespace App.Testing
 {

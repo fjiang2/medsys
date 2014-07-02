@@ -417,6 +417,10 @@
       <Project>{58332852-369d-4045-93c2-5cfe9cfb2313}</Project>
       <Name>Sys.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Data\Sys.Data.csproj">
+      <Project>{91f93c1b-f6b4-4ef6-8149-a6b2a9e47137}</Project>
+      <Name>Sys.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Foundation\Sys.Foundation.csproj">
       <Project>{30FC8D52-477A-415A-9680-B29F0C5A1606}</Project>
       <Name>Sys.Foundation</Name>

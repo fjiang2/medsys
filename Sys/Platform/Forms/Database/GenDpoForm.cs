@@ -163,7 +163,7 @@ namespace Sys.Platform.Forms
 
             TableName tname = new TableName(this.provider, DatabaseName, "any");
             
-            this.txtDatabaseId.Text = tname.DatabaseId.ToString();
+            this.txtDatabaseId.Text = tname.DatabaseId().ToString();
             string[] tableNames = MetaDatabase.GetTableNames(new DatabaseName(provider, DatabaseName));
             if (showNewTables)
             {
