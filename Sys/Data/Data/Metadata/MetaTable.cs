@@ -32,7 +32,7 @@ namespace Sys.Data
     {
         protected TableName tableName;
         
-        protected MetaTable(TableName tname)
+        public MetaTable(TableName tname)
         {
             this.tableName = tname;
         }
@@ -106,7 +106,7 @@ namespace Sys.Data
         
         #region Identity/Computed column
 
-        protected IdentityKeys _identity = null;
+        private IdentityKeys _identity = null;
         public IIdentityKeys Identity
         {
             get
@@ -119,7 +119,7 @@ namespace Sys.Data
         }
 
 
-        protected ComputedColumns _computedColumns = null;
+        private ComputedColumns _computedColumns = null;
         public ComputedColumns ComputedColumns
         {
             get
@@ -132,11 +132,16 @@ namespace Sys.Data
         }
 
         #endregion
-
-        public virtual int TableID 
+        
+        internal int _tableID = -1;
+        public int TableID
         {
-            get { return -1; } 
+            get
+            {
+                return this._tableID;
+            }
         }
+
 
         public int ColumnId(string columnName)
         {

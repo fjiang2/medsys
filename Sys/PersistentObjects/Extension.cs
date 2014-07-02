@@ -82,25 +82,50 @@ namespace Sys.Data.Manager
 
 
 
-        internal static MetaTable GetInstance(TableName tname)
-        {
-            return new MetadataTable(tname);
-        }
-
         internal static MetaTable GetMetaTable(this TableName tname)
         {
-            return new MetadataTable(tname);
+            var meta = new MetaTable(tname);
+            UpdateTableAndColumnID(meta);
+            return meta;
+        }
+
+        internal static void UpdateTableAndColumnID(this MetaTable meta)
+        {
+            TableName tname = meta.TableName; 
+            int tableId = DictTable.GetId(tname);
+            meta._tableID = tableId;
+
+            List<dictDataColumnDpo> list;
+            if (MetaDatabase.TableExists(typeof(dictDataColumnDpo).TableName()))
+            {
+                list = new TableReader<dictDataColumnDpo>(dictDataColumnDpo._table_id.ColumnName() == tableId).ToList();
+            }
+            else
+                list = new List<dictDataColumnDpo>();  //when dictDataColumnDpo doesn't exist
+
+            foreach (MetaColumn col in meta.Columns)
+            {
+                var result = list.Where(column => column.name == col.ColumnName).FirstOrDefault();
+                if (result != null)
+                {
+                    col.ColumnID = result.column_id;
+
+                    if (result.label != null)
+                        col.label = result.label;
+                }
+
+            }
         }
 
 
-        public static int GetId(this DatabaseName databaseName)
+        public static int DatabaseId(this DatabaseName databaseName)
         {
             return DictDatabase.GetId(databaseName);
         }
 
         public static int DatabaseId(this TableName tableName)
         {
-            return tableName.DatabaseName.GetId();
+            return tableName.DatabaseName.DatabaseId();
         }
     }
 }
