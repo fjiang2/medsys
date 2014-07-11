@@ -5,6 +5,7 @@ using System.Text;
 using System.Reflection;
 using System.Windows.Forms;
 using System.Data;
+using System.IO;
 using Sys;
 using Sys.Data;
 using Sys.Data.Manager;
@@ -13,6 +14,7 @@ using Sys.ViewManager.DpoClass;
 using Sys.ViewManager.Security;
 using Sys.ViewManager.Forms;
 using Sys.Data.Comparison;
+using App.Stock;
 
 namespace App.Testing
 {
@@ -29,12 +31,34 @@ namespace App.Testing
         {
 
             DataProviderManager.RegisterDefaultProvider(conn_localhost_medsys);
-           //NTreeViewDemo();
+           
+            //NTreeViewDemo();
            //SqlClauseDemo();
            //SqlClauseJoinDemo();
 
             //SqlServerCompactDemo();
+            //TableCompareDemo();
 
+            Uri uri = new Uri(@"http://www.sec.gov/cgi-bin/own-disp?action=getowner&CIK=0001213732");
+            Uri uri2 = new Uri("http://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001590197");
+
+            //var parser = new App.Stock.HtmlParser(uri);
+            //var parser = new App.Stock.HtmlParser("c:\\devel\\html\\Ownership Information ALCOA INC.htm");
+            //var table = parser.ToTable();
+
+            //string path = "c:\\devel\\html\\Ownership Information ALCOA INC.htm";
+            string path = "c:\\devel\\html\\Ownership Information INTERNATIONAL BUSINESS MACHINES CORP.htm";
+            StreamReader reader = new StreamReader(path);
+            string html = reader.ReadToEnd();
+
+            var parser = new InsiderTransactionHtml(html);
+            parser.ParseHtml();
+
+
+        }
+
+        private static void TableCompareDemo()
+        {
             string script;
             script = TableCompare.Difference(conn_localhost, conn_buildmachine, "AppFcn", new string[] { "FCN_ID" });
             script = TableCompare.Difference(conn_palmdemo, conn_localhost, "Report", new string[] { "ID" });
