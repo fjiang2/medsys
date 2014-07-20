@@ -39,27 +39,8 @@ namespace App.Testing
             //SqlServerCompactDemo();
             //TableCompareDemo();
 
-            Uri uri = new Uri(@"http://www.sec.gov/cgi-bin/own-disp?action=getowner&CIK=0001213732");
-            Uri uri2 = new Uri("http://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001590197");
-
-            //var parser = new App.Stock.HtmlParser(uri);
-            //var parser = new App.Stock.HtmlParser("c:\\devel\\html\\Ownership Information ALCOA INC.htm");
-            //var table = parser.ToTable();
-
-            //string path = "c:\\devel\\html\\Ownership Information ALCOA INC.htm";
-            string path = "c:\\devel\\html\\Ownership Information INTERNATIONAL BUSINESS MACHINES CORP.htm";
-            StreamReader reader = new StreamReader(path);
-            string html = reader.ReadToEnd();
-
-            var parser = new InsiderTransactionHtml(html);
-            parser.ParseHtml();
-
-            path = "c:\\devel\\html\\EDGAR Search Results-Has insider transactions.htm";
-            reader = new StreamReader(path);
-            html = reader.ReadToEnd();
-
-            var par = new CompanyHtml(html);
-            par.ParseHtml();
+            DailyFetch fetching = new DailyFetch();
+            //DailyFetch.Test();
 
 
         }
