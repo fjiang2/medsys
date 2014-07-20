@@ -11,7 +11,7 @@ using HtmlAgilityPack;
 
 namespace App.Stock
 {
-    public class InsiderTransactionHtml
+    public class InsiderTransactionHtml : ParseHtml
     {
         HtmlDocument doc = new HtmlDocument();
 
@@ -23,6 +23,7 @@ namespace App.Stock
         DataTable transaction = new DataTable();
 
         public InsiderTransactionHtml(string html)
+            : base(html)
         {
             ownership.Columns.Add("Owner", typeof(string));
             ownership.Columns.Add("Filings", typeof(string));
@@ -177,24 +178,7 @@ namespace App.Stock
             }
         }
 
-        private object ParseDouble(string value)
-        {
-            if (value == "")
-                return DBNull.Value;
-
-            if (value.StartsWith("$"))
-                value = value.Substring(1);
-                
-            return double.Parse(value);
-        }
-
-        private object ParseDate(string value)
-        {
-            if (value == "" || value=="-")
-                return DBNull.Value;
-            else
-                return DateTime.Parse(value);
-        }
+      
 
         void xx()
         {

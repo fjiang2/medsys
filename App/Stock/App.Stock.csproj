@@ -42,8 +42,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CompanyHtml.cs" />
     <Compile Include="HtmlParser.cs" />
     <Compile Include="InsiderTransactionHtml.cs" />
+    <Compile Include="ParseHtml.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

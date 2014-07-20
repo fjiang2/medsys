@@ -54,6 +54,13 @@ namespace App.Testing
             var parser = new InsiderTransactionHtml(html);
             parser.ParseHtml();
 
+            path = "c:\\devel\\html\\EDGAR Search Results-Has insider transactions.htm";
+            reader = new StreamReader(path);
+            html = reader.ReadToEnd();
+
+            var par = new CompanyHtml(html);
+            par.ParseHtml();
+
 
         }
 
