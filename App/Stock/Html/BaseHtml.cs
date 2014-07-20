@@ -11,14 +11,27 @@ using HtmlAgilityPack;
 
 namespace App.Stock
 {
-    public class ParseHtml
+    public enum HtmlSource
     {
+        File,
+        Web
+    }
+
+    public class BaseHtml
+    {
+
+        //const string getInsiderTransactionFormat = "http://www.sec.gov/cgi-bin/own-disp?action=getissuer&CIK={0}";
+        //const string getInsiderTrasctionIssuer = "http://www.sec.gov/cgi-bin/own-disp?action=getissuer&CIK=0001144215";
+        //const string getInsiderTrasctionReportingOwner = "http://www.sec.gov/cgi-bin/own-disp?action=getissuer&CIK=0001144215";
+
+
         protected HtmlDocument doc = new HtmlDocument();
+        protected HtmlSource htmlSource;
 
-
-        protected ParseHtml(string html)
+        protected BaseHtml(string html, HtmlSource source)
         {
             doc.LoadHtml(html);
+            this.htmlSource = source;
         }
 
 

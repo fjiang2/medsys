@@ -11,7 +11,7 @@ using HtmlAgilityPack;
 
 namespace App.Stock
 {
-    public class CompanyHtml : ParseHtml
+    public class CompanyHtml : BaseHtml
     {
 
         HtmlDocument doc = new HtmlDocument();
@@ -21,11 +21,11 @@ namespace App.Stock
         public bool HasInsiderTransactions { get; set; }
 
 
-        DataTable filling = new DataTable();
-   
+        internal DataTable filling = new DataTable();
 
-        public CompanyHtml(string html)
-            :base(html)
+
+        public CompanyHtml(string html, HtmlSource source)
+            : base(html, source)
         {
             filling.Columns.Add("Fillings", typeof(string));
             filling.Columns.Add("Format", typeof(string));
@@ -53,13 +53,20 @@ namespace App.Stock
             var companyInfo = companyInfoNode.SelectNodes("span[@class='companyName']");
             this.CompanyName = companyInfo[0].FirstChild.InnerText;
             var cik = companyInfo[0].SelectNodes("a")[0].InnerText;
-            this.CIK = cik.Replace(" \r\n(see all company filings)", "");
+            cik = cik.Replace("\r\n", "");
+            this.CIK = cik.Replace("(see all company filings)", "").Trim();
+
+            this.HasInsiderTransactions = companyInfoNode.InnerText.Replace("\r\n", "").IndexOf("insider transactions") >= 0;
         }
 
         private void ParseFilling(HtmlNode node)
         {
+            string tag = "tbody/tr";
+            if (htmlSource == HtmlSource.Web)
+                tag = "tr";
+
             var rows = node
-             .SelectNodes("tbody/tr")
+             .SelectNodes(tag)
              .Select(tr => tr
                  .Elements("td")
                  .Select(td => td.InnerText.Trim())

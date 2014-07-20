@@ -11,7 +11,7 @@ using HtmlAgilityPack;
 
 namespace App.Stock
 {
-    public class InsiderTransactionHtml : ParseHtml
+    public class InsiderTransactionHtml : BaseHtml
     {
         HtmlDocument doc = new HtmlDocument();
 
@@ -19,11 +19,11 @@ namespace App.Stock
         public string CIK { get; set; }
 
 
-        DataTable ownership = new DataTable();
-        DataTable transaction = new DataTable();
+        internal DataTable ownership = new DataTable();
+        internal DataTable transaction = new DataTable();
 
-        public InsiderTransactionHtml(string html)
-            : base(html)
+        public InsiderTransactionHtml(string html, HtmlSource source)
+            : base(html, source)
         {
             ownership.Columns.Add("Owner", typeof(string));
             ownership.Columns.Add("Filings", typeof(string));
@@ -69,8 +69,12 @@ namespace App.Stock
 
         private void ParseCompany(HtmlNode node)
         {
+            string tag = "tbody/tr";
+            if (htmlSource == HtmlSource.Web)
+                tag = "tr";
+            
             var rows = node
-               .SelectNodes("tbody/tr")
+               .SelectNodes(tag)
                .Select(tr => tr
                    .Elements("td")
                    .Select(td => td.InnerText.Trim())
@@ -87,12 +91,12 @@ namespace App.Stock
 
         private void ParseOwnerShip(HtmlNode node)
         {
-            //var headers = tableNode
-            //    .Elements("th")
-            //    .Select(th => th.InnerText.Trim());
+            string tag = "tbody/tr";
+            if (htmlSource == HtmlSource.Web)
+                tag = "tr";
             
             var rows = node
-                .SelectNodes("tbody/tr")
+                .SelectNodes(tag)
                 .Select(tr => tr
                     .Elements("td")
                     .Select(td => td.InnerText.Trim())
@@ -114,8 +118,12 @@ namespace App.Stock
 
         private void ParseTransaction(HtmlNode node)
         {
+            string tag = "tbody/tr";
+            if (htmlSource == HtmlSource.Web)
+                tag = "tr";
+
             var heads = node
-             .SelectNodes("tbody/tr")
+             .SelectNodes(tag)
              .Select(tr => tr
                  .Elements("th")
                  .Select(td => td.InnerText.Trim())
@@ -125,7 +133,7 @@ namespace App.Stock
 
 
             var rows = node
-                 .SelectNodes("tbody/tr")
+                 .SelectNodes(tag)
                  .Select(tr => tr
                      .Elements("td")
                      .Select(td => td.InnerText.Trim())
@@ -175,41 +183,6 @@ namespace App.Stock
                 }
 
                 transaction.Rows.Add(dr);
-            }
-        }
-
-      
-
-        void xx()
-        {
-            
-            DataTable dt = new DataTable();
-            dt.Columns.Add("Name", typeof(string));
-            dt.Columns.Add("Value", typeof(decimal));
-
-            int count = 0;
-            decimal rowValue = 0;
-            bool isDecimal = false;
-            foreach (var row in doc.DocumentNode.SelectNodes("//table[@summary='Table Name']/tbody/tr"))
-            {
-                DataRow dr = dt.NewRow();
-                foreach (var cell in row.SelectNodes("td"))
-                {
-                    if ((count % 2 == 0))
-                    {
-                        dr["Name"] = cell.InnerText.Replace("&nbsp;", " ");
-                    }
-                    else
-                    {
-                        isDecimal = decimal.TryParse((cell.InnerText.Replace(".", "")).Replace(",", "."), out rowValue);
-                        if (isDecimal)
-                        {
-                            dr["Value"] = rowValue;
-                        }
-                        dt.Rows.Add(dr);
-                    }
-                    count++;
-                }
             }
         }
 
