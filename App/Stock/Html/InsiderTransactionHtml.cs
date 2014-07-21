@@ -9,12 +9,10 @@ using System.Text.RegularExpressions;
 
 using HtmlAgilityPack;
 
-namespace App.Stock
+namespace Stock
 {
     public class InsiderTransactionHtml : BaseHtml
     {
-        HtmlDocument doc = new HtmlDocument();
-
         public string CompanyName { get; set; }
         public string CIK { get; set; }
 
@@ -26,7 +24,7 @@ namespace App.Stock
             : base(html, source)
         {
             ownership.Columns.Add("Owner", typeof(string));
-            ownership.Columns.Add("Filings", typeof(string));
+            ownership.Columns.Add("OwnerCIK", typeof(string));
             ownership.Columns.Add("TransactionDate", typeof(DateTime));
             ownership.Columns.Add("TypeofOwner", typeof(string));
 

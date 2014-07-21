@@ -9,7 +9,7 @@ using System.Text.RegularExpressions;
 
 using HtmlAgilityPack;
 
-namespace App.Stock
+namespace Stock
 {
     public enum HtmlSource
     {

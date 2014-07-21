@@ -7,8 +7,8 @@
     <ProjectGuid>{6DD913A0-E252-4CF3-BD93-F3D252FC0900}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>App.Stock</RootNamespace>
-    <AssemblyName>App.Stock</AssemblyName>
+    <RootNamespace>Stock</RootNamespace>
+    <AssemblyName>Stock</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -40,6 +40,10 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="Tie, Version=2.0.0.10, Culture=neutral, PublicKeyToken=783687458c7c579a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Lib\Tie.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Company.cs" />
@@ -47,15 +51,34 @@
     <Compile Include="DailyFetch.cs" />
     <Compile Include="Html\InsiderTransactionHtml.cs" />
     <Compile Include="Html\BaseHtml.cs" />
+    <Compile Include="MgCode\DpoClass\CompanyDpo.cs" />
+    <Compile Include="MgCode\DpoClass\OwnershipDpo.cs" />
+    <Compile Include="MgCode\DpoClass\TransactionDpo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Sys\Core\Sys.Core.csproj">
+      <Project>{58332852-369d-4045-93c2-5cfe9cfb2313}</Project>
+      <Name>Sys.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Sys\DataManager\Sys.DataManager.csproj">
+      <Project>{e5ec721b-1f83-41d2-adfd-2e8e0b1e516d}</Project>
+      <Name>Sys.DataManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Sys\Data\Sys.Data.csproj">
+      <Project>{91f93c1b-f6b4-4ef6-8149-a6b2a9e47137}</Project>
+      <Name>Sys.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Sys\Network\Sys.Network.csproj">
       <Project>{fc5c22c3-7df3-4e3f-9c61-dda511174ff5}</Project>
       <Name>Sys.Network</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Sys\PersistentObjects\Sys.PersistentObjects.csproj">
+      <Project>{fe52736a-ba94-41fc-9fd3-a481a790fc9c}</Project>
+      <Name>Sys.PersistentObjects</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

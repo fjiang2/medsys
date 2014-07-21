@@ -8,7 +8,7 @@ using System.Data;
 using System.IO;
 using System.Net;
 
-namespace App.Stock
+namespace Stock
 {
     public class Company
     {
@@ -25,7 +25,7 @@ namespace App.Stock
         public DataTable Ownerships { get; private set; }
         public DataTable Transactions { get; private set; }
 
-        public Company(string symbol)
+        public Company(string symbol, bool hasInsiderTransaction)
         {
             this.symbol = symbol;
         }

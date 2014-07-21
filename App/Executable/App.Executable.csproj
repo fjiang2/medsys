@@ -1093,6 +1093,10 @@
       <Project>{AC4B0A33-0804-409D-B5D4-AADA29206710}</Project>
       <Name>App.PTA</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Stock\App.Stock.csproj">
+      <Project>{6dd913a0-e252-4cf3-bd93-f3d252fc0900}</Project>
+      <Name>App.Stock</Name>
+    </ProjectReference>
     <ProjectReference Include="..\X12\App.X12.csproj">
       <Project>{BF2440C5-6467-4ADF-8BEF-52251189AC3D}</Project>
       <Name>App.X12</Name>
