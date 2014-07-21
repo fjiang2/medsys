@@ -14,7 +14,7 @@ using Sys.ViewManager.DpoClass;
 using Sys.ViewManager.Security;
 using Sys.ViewManager.Forms;
 using Sys.Data.Comparison;
-using App.Stock;
+using Stock;
 
 namespace App.Testing
 {

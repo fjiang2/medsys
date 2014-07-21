@@ -9,12 +9,10 @@ using System.Text.RegularExpressions;
 
 using HtmlAgilityPack;
 
-namespace App.Stock
+namespace Stock
 {
     public class CompanyHtml : BaseHtml
     {
-
-        HtmlDocument doc = new HtmlDocument();
 
         public string CompanyName { get; set; }
         public string CIK { get; set; }
