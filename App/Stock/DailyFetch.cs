@@ -24,7 +24,10 @@ namespace Stock
 
         private void FetchTransactions()
         {
-            TableReader<CompanyDpo> reader = new TableReader<CompanyDpo>(CompanyDpo._Has_Insider_Transaction.ColumnName() == 1);
+            TableReader<CompanyDpo> reader = new TableReader<CompanyDpo>(
+                (CompanyDpo._Has_Insider_Transaction.ColumnName() == 1 )
+                .AND(CompanyDpo._Last_Updated_Time.ColumnName() < DateTime.Today)
+                );
 
             foreach (DataRow row in reader.Table.Rows)
             {
@@ -34,8 +37,6 @@ namespace Stock
                 company.Download(dpo.Symbol, dpo.CIK, dpo.Has_Insider_Transaction);
                 dpo.Has_Insider_Transaction = company.HasInsiderTransactions;
 
-                dpo.Last_Updated_Time = DateTime.Now;
-                dpo.Save();
 
                 foreach (DataRow row1 in company.Ownerships.Rows)
                 {
@@ -49,6 +50,8 @@ namespace Stock
                     dpo2.Save();
                 }
 
+                dpo.Last_Updated_Time = DateTime.Now;
+                dpo.Save();
             }
 
         }

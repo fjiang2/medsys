@@ -77,17 +77,32 @@ namespace Stock
 
         private void GetInsiderTransactions(string cik)
         {
-            Uri uri = new Uri(string.Format(getInsiderTransactionFormat, cik));
-            string html = client.DownloadString(uri);
+            string path = string.Format("{0}\\InsiderTransactions\\{1}\\{2}.html", LOG_FOLDER, DateTime.Today.ToString("yyyy-mm-dd"), symbol);
+            string html;
 
-            SaveHtml(string.Format("{0}\\InsiderTransactions\\{1}\\{2}.html", LOG_FOLDER, DateTime.Today.ToString("yyyy-mm-dd"), symbol), html);
+            if (!File.Exists(path))
+            {
+                Uri uri = new Uri(string.Format(getInsiderTransactionFormat, cik));
+                html = client.DownloadString(uri);
+                SaveHtml(path, html);
+            }
+            else
+            {
+                html = ReadHtml(path);
+            }
 
-
-            var parser = new InsiderTransactionHtml(html, HtmlSource.Web);
+            var parser = new InsiderTransactionHtml(this.symbol, html, HtmlSource.Web);
             parser.ParseHtml();
 
             this.Ownerships = parser.ownership;
             this.Transactions = parser.transaction;
+        }
+
+        public static string ReadHtml(string path)
+        {
+            var reader = new StreamReader(path);
+            var html = reader.ReadToEnd();
+            return html;
         }
 
         public static void SaveHtml(string path, string html)
