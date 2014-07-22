@@ -14,15 +14,15 @@ using Sys.Data.Manager;
 
 namespace Stock.DpoClass
 {
-    [Revision(0)]
-    [Table("Edgar..[Ownership]", Level.Fixed, Pack = false)]    //Primary Keys = CIK + OwnerCIK + TransactionDate;  Identity = ;
+    [Revision(2)]
+    [Table("Edgar..[Ownership]", Level.Fixed, Pack = false)]    //Primary Keys = OwnerCIK + Symbol + TransactionDate;  Identity = ;
     public partial class OwnershipDpo : DPObject
     {
-        [Column(_CIK, CType.NVarChar, Primary = true, Length = 12)]                               public string CIK {get; set;} //nvarchar(12) not null
+        [Column(_Symbol, CType.NVarChar, Primary = true, Length = 12)]                            public string Symbol {get; set;} //nvarchar(12) not null
         [Column(_Owner, CType.NVarChar, Nullable = true, Length = 50)]                            public string Owner {get; set;} //nvarchar(50) null
         [Column(_OwnerCIK, CType.NVarChar, Primary = true, Length = 12)]                          public string OwnerCIK {get; set;} //nvarchar(12) not null
         [Column(_TransactionDate, CType.DateTime, Primary = true)]                                public DateTime TransactionDate {get; set;} //datetime(8) not null
-        [Column(_TypeofOwner, CType.NVarChar, Nullable = true, Length = 50)]                      public string TypeofOwner {get; set;} //nvarchar(50) null
+        [Column(_TypeofOwner, CType.NVarChar, Nullable = true, Length = 100)]                     public string TypeofOwner {get; set;} //nvarchar(100) null
 
         public OwnershipDpo()
         {
@@ -34,14 +34,14 @@ namespace Stock.DpoClass
         }
 
 
-        public OwnershipDpo(string cik, string ownercik, DateTime transactiondate)
+        public OwnershipDpo(string ownercik, string symbol, DateTime transactiondate)
         {
-           this.CIK = cik; this.OwnerCIK = ownercik; this.TransactionDate = transactiondate; 
+           this.OwnerCIK = ownercik; this.Symbol = symbol; this.TransactionDate = transactiondate; 
 
            this.Load();
            if(!this.Exists)
            {
-              this.CIK = cik; this.OwnerCIK = ownercik; this.TransactionDate = transactiondate;     
+              this.OwnerCIK = ownercik; this.Symbol = symbol; this.TransactionDate = transactiondate;     
            }
         }
         
@@ -62,7 +62,7 @@ namespace Stock.DpoClass
         {
             get
             {
-                return new PrimaryKeys(new string[]{ _CIK, _OwnerCIK, _TransactionDate });
+                return new PrimaryKeys(new string[]{ _OwnerCIK, _Symbol, _TransactionDate });
             }
         }
 
@@ -80,7 +80,7 @@ namespace Stock.DpoClass
 
         #region CONSTANT
 
-        public const string _CIK = "CIK";
+        public const string _Symbol = "Symbol";
         public const string _Owner = "Owner";
         public const string _OwnerCIK = "OwnerCIK";
         public const string _TransactionDate = "TransactionDate";

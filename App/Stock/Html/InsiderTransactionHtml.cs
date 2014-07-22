@@ -13,6 +13,8 @@ namespace Stock
 {
     public class InsiderTransactionHtml : BaseHtml
     {
+        public readonly string Symbol;
+
         public string CompanyName { get; set; }
         public string CIK { get; set; }
 
@@ -20,18 +22,19 @@ namespace Stock
         internal DataTable ownership = new DataTable();
         internal DataTable transaction = new DataTable();
 
-        public InsiderTransactionHtml(string html, HtmlSource source)
+        public InsiderTransactionHtml(string symbol, string html, HtmlSource source)
             : base(html, source)
         {
+            this.Symbol = symbol;
 
-            ownership.Columns.Add("CIK", typeof(string));
+            ownership.Columns.Add("Symbol", typeof(string));
             ownership.Columns.Add("Owner", typeof(string));
             ownership.Columns.Add("OwnerCIK", typeof(string));
             ownership.Columns.Add("TransactionDate", typeof(DateTime));
             ownership.Columns.Add("TypeofOwner", typeof(string));
 
 
-            transaction.Columns.Add("CIK", typeof(string));
+            transaction.Columns.Add("Symbol", typeof(string));
             transaction.Columns.Add("Type", typeof(string));
             transaction.Columns.Add("Date", typeof(DateTime));
             transaction.Columns.Add("ReportingOwner", typeof(string));
@@ -108,7 +111,7 @@ namespace Stock
             foreach (var row in rows.Skip(1))
             {
                 DataRow dr = ownership.NewRow();
-                dr[0] = this.CIK;
+                dr[0] = this.Symbol;
                 dr[1] = row[0].Replace("\r\n", "#").Replace("  ", "").Replace("#", " ");
                 dr[2] = row[1];
                 dr[3] = DateTime.Parse(row[2]);
@@ -182,9 +185,15 @@ namespace Stock
 
                         i++;
                     }
+                    else if (row.Length == 1)
+                    {
+                        dr["ReportingOwner"] = (string)dr["ReportingOwner"] + " " + row[0];
+                        i++;
+                    }
+
                 }
 
-                dr["CIK"] = this.CIK;
+                dr["Symbol"] = this.Symbol;
 
                 transaction.Rows.Add(dr);
             }

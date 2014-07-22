@@ -32,7 +32,7 @@ namespace App.Testing
             //string path = "c:\\devel\\html\\Ownership Information ALCOA INC.htm";
             string html = ReadHtml("c:\\devel\\html\\Ownership Information INTERNATIONAL BUSINESS MACHINES CORP.htm");
 
-            var parser = new InsiderTransactionHtml(html, HtmlSource.File);
+            var parser = new InsiderTransactionHtml("IBM", html, HtmlSource.File);
             parser.ParseHtml();
 
             html = ReadHtml("c:\\devel\\html\\EDGAR Search Results AIR.htm");
