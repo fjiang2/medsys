@@ -23,12 +23,15 @@ namespace Stock
         public InsiderTransactionHtml(string html, HtmlSource source)
             : base(html, source)
         {
+
+            ownership.Columns.Add("CIK", typeof(string));
             ownership.Columns.Add("Owner", typeof(string));
             ownership.Columns.Add("OwnerCIK", typeof(string));
             ownership.Columns.Add("TransactionDate", typeof(DateTime));
             ownership.Columns.Add("TypeofOwner", typeof(string));
 
 
+            transaction.Columns.Add("CIK", typeof(string));
             transaction.Columns.Add("Type", typeof(string));
             transaction.Columns.Add("Date", typeof(DateTime));
             transaction.Columns.Add("ReportingOwner", typeof(string));
@@ -105,10 +108,11 @@ namespace Stock
             foreach (var row in rows.Skip(1))
             {
                 DataRow dr = ownership.NewRow();
-                dr[0] = row[0].Replace("\r\n", "#").Replace("  ", "").Replace("#", " ");
-                dr[1] = row[1];
-                dr[2] = DateTime.Parse(row[2]);
-                dr[3] = row[3].Replace("&amp", "&");
+                dr[0] = this.CIK;
+                dr[1] = row[0].Replace("\r\n", "#").Replace("  ", "").Replace("#", " ");
+                dr[2] = row[1];
+                dr[3] = DateTime.Parse(row[2]);
+                dr[4] = row[3].Replace("&amp", "&");
                 ownership.Rows.Add(dr);
             }
 
@@ -179,6 +183,8 @@ namespace Stock
                         i++;
                     }
                 }
+
+                dr["CIK"] = this.CIK;
 
                 transaction.Rows.Add(dr);
             }

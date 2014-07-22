@@ -25,13 +25,16 @@ namespace Stock
         //const string getInsiderTrasctionReportingOwner = "http://www.sec.gov/cgi-bin/own-disp?action=getissuer&CIK=0001144215";
 
 
+        protected string html;
         protected HtmlDocument doc = new HtmlDocument();
         protected HtmlSource htmlSource;
 
         protected BaseHtml(string html, HtmlSource source)
         {
+            this.html = html;
             doc.LoadHtml(html);
             this.htmlSource = source;
+
         }
 
 
@@ -53,5 +56,8 @@ namespace Stock
             else
                 return DateTime.Parse(value);
         }
+
+        
+     
     }
 }
