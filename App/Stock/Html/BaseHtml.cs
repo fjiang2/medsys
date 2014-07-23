@@ -37,6 +37,14 @@ namespace Stock
 
         }
 
+        protected object ParseString(string value, int length)
+        {
+            if (value.Length < length)
+                return value;
+
+            return value.Substring(0, length-3) + "...";
+        }
+
 
         protected object ParseDouble(string value)
         {
@@ -51,7 +59,7 @@ namespace Stock
 
         protected object ParseDate(string value)
         {
-            if (value == "" || value == "-")
+            if (value == "" || value == "-" || value =="0000-00-00" )
                 return DBNull.Value;
             else
                 return DateTime.Parse(value);

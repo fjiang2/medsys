@@ -14,7 +14,7 @@ using Sys.Data.Manager;
 
 namespace Stock.DpoClass
 {
-    [Revision(2)]
+    [Revision(3)]
     [Table("Edgar..[Transactions]", Level.Fixed, Pack = false)]    //Primary Keys = Date + OwnerCIK + Symbol;  Identity = ;
     public partial class TransactionDpo : DPObject
     {
@@ -29,10 +29,10 @@ namespace Stock.DpoClass
         [Column(_Owned, CType.Float, Nullable = true)]                                            public double? Owned {get; set;} //float(8) null
         [Column(_No, CType.NVarChar, Nullable = true, Length = 50)]                               public string No {get; set;}  //nvarchar(50) null
         [Column(_OwnerCIK, CType.NVarChar, Primary = true, Length = 12)]                          public string OwnerCIK {get; set;} //nvarchar(12) not null
-        [Column(_SecurityName, CType.NVarChar, Nullable = true, Length = 50)]                     public string SecurityName {get; set;} //nvarchar(50) null
+        [Column(_SecurityName, CType.NVarChar, Nullable = true, Length = 100)]                    public string SecurityName {get; set;} //nvarchar(100) null
         [Column(_Deemed, CType.NVarChar, Nullable = true, Length = 50)]                           public string Deemed {get; set;} //nvarchar(50) null
         [Column(_Exercise, CType.NVarChar, Nullable = true, Length = 50)]                         public string Exercise {get; set;} //nvarchar(50) null
-        [Column(_Nature, CType.NVarChar, Nullable = true, Length = 50)]                           public string Nature {get; set;} //nvarchar(50) null
+        [Column(_Nature, CType.NVarChar, Nullable = true, Length = 80)]                           public string Nature {get; set;} //nvarchar(80) null
         [Column(_Derivative, CType.NVarChar, Nullable = true, Length = 50)]                       public string Derivative {get; set;} //nvarchar(50) null
         [Column(_SharesUnderlying, CType.Float, Nullable = true)]                                 public double? SharesUnderlying {get; set;} //float(8) null
         [Column(_Price, CType.Float, Nullable = true)]                                            public double? Price {get; set;} //float(8) null

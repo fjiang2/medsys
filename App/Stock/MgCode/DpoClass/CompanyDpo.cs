@@ -14,7 +14,7 @@ using Sys.Data.Manager;
 
 namespace Stock.DpoClass
 {
-    [Revision(1)]
+    [Revision(2)]
     [Table("Edgar..[Companies]", Level.Fixed, Pack = false)]    //Primary Keys = Symbol;  Identity = ;
     public partial class CompanyDpo : DPObject
     {

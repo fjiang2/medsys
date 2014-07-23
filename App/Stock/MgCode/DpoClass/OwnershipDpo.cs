@@ -14,12 +14,12 @@ using Sys.Data.Manager;
 
 namespace Stock.DpoClass
 {
-    [Revision(2)]
+    [Revision(4)]
     [Table("Edgar..[Ownership]", Level.Fixed, Pack = false)]    //Primary Keys = OwnerCIK + Symbol + TransactionDate;  Identity = ;
     public partial class OwnershipDpo : DPObject
     {
         [Column(_Symbol, CType.NVarChar, Primary = true, Length = 12)]                            public string Symbol {get; set;} //nvarchar(12) not null
-        [Column(_Owner, CType.NVarChar, Nullable = true, Length = 50)]                            public string Owner {get; set;} //nvarchar(50) null
+        [Column(_Owner, CType.NVarChar, Nullable = true, Length = 150)]                           public string Owner {get; set;} //nvarchar(150) null
         [Column(_OwnerCIK, CType.NVarChar, Primary = true, Length = 12)]                          public string OwnerCIK {get; set;} //nvarchar(12) not null
         [Column(_TransactionDate, CType.DateTime, Primary = true)]                                public DateTime TransactionDate {get; set;} //datetime(8) not null
         [Column(_TypeofOwner, CType.NVarChar, Nullable = true, Length = 100)]                     public string TypeofOwner {get; set;} //nvarchar(100) null

@@ -67,8 +67,13 @@ namespace Stock
             var tableNodes = doc.DocumentNode.SelectNodes("//table");
 
             ParseCompany(tableNodes[3]);
-            ParseOwnerShip(tableNodes[6]);
-            ParseTransaction(tableNodes[7]);
+            
+            if (tableNodes.Count == 9) //has insider transactions
+            {
+                ParseOwnerShip(tableNodes[6]);
+                ParseTransaction(tableNodes[7]);
+            }
+
         }
 
         private void ParseCompany(HtmlNode node)
@@ -111,11 +116,11 @@ namespace Stock
             foreach (var row in rows.Skip(1))
             {
                 DataRow dr = ownership.NewRow();
-                dr[0] = this.Symbol;
-                dr[1] = row[0].Replace("\r\n", "#").Replace("  ", "").Replace("#", " ");
-                dr[2] = row[1];
-                dr[3] = DateTime.Parse(row[2]);
-                dr[4] = row[3].Replace("&amp", "&");
+                dr["Symbol"] = this.Symbol;
+                dr["Owner"] = row[0].Replace("\r\n", "#").Replace("  ", "").Replace("#", " ");
+                dr["OwnerCIK"] = row[1];
+                dr["TransactionDate"] = ParseDate(row[2]);
+                dr["TypeofOwner"] = ParseString(row[3].Replace("&amp", "&"), 100);
                 ownership.Rows.Add(dr);
             }
 
@@ -153,14 +158,14 @@ namespace Stock
                 var row = rows[i];
                 DataRow dr = transaction.NewRow();
                 dr["Type"] = row[k++];
-                dr["Date"] = DateTime.Parse(row[k++]);
-                dr["ReportingOwner"] = row[k++];
+                dr["Date"] = ParseDate(row[k++]);
+                dr["ReportingOwner"] = ParseString(row[k++], 100);
                 dr["Form"] = row[k++];
                 dr["Trans"] = row[k++];
                 dr["Modes"] = row[k++];
-                dr["Shares"] = double.Parse(row[k++]);
+                dr["Shares"] = ParseDouble(row[k++]);
                 k++;
-                dr["Owned"] = double.Parse(row[k++]);
+                dr["Owned"] = ParseDouble(row[k++]);
                 dr["No"] = row[k++];
                 dr["OwnerCIK"] = row[k++];
                 dr["SecurityName"] = row[k++];
@@ -174,20 +179,20 @@ namespace Stock
                     {
                         k = 1;
                         dr["Exercise"] = row[k++];
-                        dr["Nature"] = row[k++];
+                        dr["Nature"] = ParseString(row[k++], 80);
                         dr["Derivative"] = row[k++];
                         dr["SharesUnderlying"] = ParseDouble(row[k++]);
                         dr["Price"] = ParseDouble(row[k++]);
                         k++;
                         k++;
                         dr["Expires"] = ParseDate(row[k++]);
-                        dr["SecurityUnderlying"] = row[k++];
+                        dr["SecurityUnderlying"] = ParseString(row[k++], 50);
 
                         i++;
                     }
                     else if (row.Length == 1)
                     {
-                        dr["ReportingOwner"] = (string)dr["ReportingOwner"] + " " + row[0];
+                        dr["ReportingOwner"] = ParseString((string)dr["ReportingOwner"] + " " + row[0], 100);
                         i++;
                     }
 
