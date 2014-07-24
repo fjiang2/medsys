@@ -35,6 +35,8 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -47,6 +49,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Company.cs" />
+    <Compile Include="Forms\ParseHtmlForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ParseHtmlForm.Designer.cs">
+      <DependentUpon>ParseHtmlForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\LoadHtmlForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\LoadHtmlForm.Designer.cs">
+      <DependentUpon>LoadHtmlForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Html\CompanyHtml.cs" />
     <Compile Include="DailyFetch.cs" />
     <Compile Include="Html\InsiderTransactionHtml.cs" />
@@ -60,6 +74,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Sys\BusinessRules\Sys.BusinessRules.csproj">
+      <Project>{21d52785-dca0-46bb-b0fd-428fefbd7b1d}</Project>
+      <Name>Sys.BusinessRules</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Sys\Core\Sys.Core.csproj">
       <Project>{58332852-369d-4045-93c2-5cfe9cfb2313}</Project>
       <Name>Sys.Core</Name>
@@ -80,6 +98,18 @@
       <Project>{fe52736a-ba94-41fc-9fd3-a481a790fc9c}</Project>
       <Name>Sys.PersistentObjects</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Sys\ViewManager\Sys.ViewManager.csproj">
+      <Project>{a5d0e475-f068-4db0-bd4b-b5647b588e08}</Project>
+      <Name>Sys.ViewManager</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Forms\ParseHtmlForm.resx">
+      <DependentUpon>ParseHtmlForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\LoadHtmlForm.resx">
+      <DependentUpon>LoadHtmlForm.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

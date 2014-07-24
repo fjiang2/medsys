@@ -13,23 +13,30 @@ namespace Stock
 {
     public class DailyFetch
     {
-  
+
+        public DataTable CompanyTable { get; set; }
         public DailyFetch()
         {
             //InitilizeCompanies();
-            FetchTransactions();
+            //FetchTransactions();
 
         }
 
-
-        private void FetchTransactions()
+        public void ReadCompanies()
         {
-            TableReader<CompanyDpo> reader = new TableReader<CompanyDpo>(
-                (CompanyDpo._Has_Insider_Transaction.ColumnName() == 1 )
-                .AND(CompanyDpo._Last_Updated_Time.ColumnName() < DateTime.Today)
-                );
 
-            foreach (DataRow row in reader.Table.Rows)
+            TableReader<CompanyDpo> reader = new TableReader<CompanyDpo>(
+                  (CompanyDpo._Has_Insider_Transaction.ColumnName() == 1)
+                  .AND(CompanyDpo._Last_Updated_Time.ColumnName() < DateTime.Today)
+                  );
+
+            this.CompanyTable = reader.Table;
+        }
+
+        public void FetchTransactions()
+        {
+
+            foreach (DataRow row in CompanyTable.Rows)
             {
                 CompanyDpo dpo = new CompanyDpo(row);
                 
@@ -61,7 +68,7 @@ namespace Stock
         /// Initialize Table [Companies] in SQL Server, Run once.
         /// </summary>
         /// <param name="table"></param>
-        private void InitilizeCompanies()
+        public void InitilizeCompanies()
         {
             TableReader<CompanyDpo> reader = new TableReader<CompanyDpo>();
 

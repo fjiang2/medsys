@@ -12,7 +12,7 @@ namespace Stock
 {
     public class Company
     {
-        protected const string LOG_FOLDER = "C:\\log";
+        protected const string LOG_FOLDER = "C:\\db\\edgar";
         const string searchCompanyFormat = "http://www.sec.gov/cgi-bin/browse-edgar?CIK={0}&Find=Search&owner=exclude&action=getcompany";
         const string getInsiderTransactionFormat = "http://www.sec.gov/cgi-bin/own-disp?action=getissuer&CIK={0}";
 
@@ -77,6 +77,17 @@ namespace Stock
 
         private void GetInsiderTransactions(string cik)
         {
+            string html = DownloadHtml(this.symbol, cik);
+
+            var parser = new InsiderTransactionHtml(this.symbol, html, HtmlSource.Web);
+            parser.ParseHtml();
+
+            this.Ownerships = parser.ownership;
+            this.Transactions = parser.transaction;
+        }
+
+        public string DownloadHtml(string symbol, string cik)
+        {
             string path = string.Format("{0}\\InsiderTransactions\\{1}\\{2}.html", LOG_FOLDER, DateTime.Today.ToString("yyyy-mm-dd"), symbol);
             string html;
 
@@ -91,11 +102,7 @@ namespace Stock
                 html = ReadHtml(path);
             }
 
-            var parser = new InsiderTransactionHtml(this.symbol, html, HtmlSource.Web);
-            parser.ParseHtml();
-
-            this.Ownerships = parser.ownership;
-            this.Transactions = parser.transaction;
+            return html;
         }
 
         public static string ReadHtml(string path)
