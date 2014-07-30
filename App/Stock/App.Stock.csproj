@@ -48,6 +48,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BusinessDay.cs" />
     <Compile Include="Company.cs" />
     <Compile Include="Forms\ParseHtmlForm.cs">
       <SubType>Form</SubType>

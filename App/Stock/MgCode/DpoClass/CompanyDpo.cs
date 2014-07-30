@@ -14,7 +14,7 @@ using Sys.Data.Manager;
 
 namespace Stock.DpoClass
 {
-    [Revision(2)]
+    [Revision(3)]
     [Table("Edgar..[Companies]", Level.Fixed, Pack = false)]    //Primary Keys = Symbol;  Identity = ;
     public partial class CompanyDpo : DPObject
     {
@@ -30,7 +30,8 @@ namespace Stock.DpoClass
         [Column(_Summary_Quote, CType.NVarChar, Length = 40)]                                     public string Summary_Quote {get; set;} //nvarchar(40) not null
         [Column(_Exchange, CType.NVarChar, Length = 10)]                                          public string Exchange {get; set;} //nvarchar(10) not null
         [Column(_Has_Insider_Transaction, CType.Bit)]                                             public bool Has_Insider_Transaction {get; set;} //bit(1) not null
-        [Column(_Last_Updated_Time, CType.DateTime)]                                              public DateTime Last_Updated_Time {get; set;} //datetime(8) not null
+        [Column(_Last_Downloaded_Time, CType.DateTime)]                                           public DateTime Last_Downloaded_Time {get; set;} //datetime(8) not null
+        [Column(_Last_Processed_Time, CType.DateTime)]                                            public DateTime Last_Processed_Time {get; set;} //datetime(8) not null
         [Column(_Inactive, CType.Bit)]                                                            public bool Inactive {get; set;} //bit(1) not null
 
         public CompanyDpo()
@@ -101,7 +102,8 @@ namespace Stock.DpoClass
         public const string _Summary_Quote = "Summary_Quote";
         public const string _Exchange = "Exchange";
         public const string _Has_Insider_Transaction = "Has_Insider_Transaction";
-        public const string _Last_Updated_Time = "Last_Updated_Time";
+        public const string _Last_Downloaded_Time = "Last_Downloaded_Time";
+        public const string _Last_Processed_Time = "Last_Processed_Time";
         public const string _Inactive = "Inactive";
 
        

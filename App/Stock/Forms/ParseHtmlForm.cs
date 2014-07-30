@@ -22,6 +22,7 @@ namespace Stock.Forms
         public ParseHtmlForm()
         {
             InitializeComponent();
+            progressBar1.Minimum = 1;
 
             this.Load += LoadHtmlForm_Load;
             
@@ -38,9 +39,6 @@ namespace Stock.Forms
 
         void LoadHtmlForm_Load(object sender, EventArgs e)
         {
-            dailyFetch.ReadCompanies();
-            progressBar1.Minimum = 1;
-            progressBar1.Maximum = Count;
 
         }
 
@@ -61,6 +59,7 @@ namespace Stock.Forms
         {
             BackgroundWorker worker = sender as BackgroundWorker;
 
+
             int i = 1;
             foreach (DataRow row in dailyFetch.CompanyTable.Rows)
             {
@@ -74,25 +73,29 @@ namespace Stock.Forms
                     CompanyDpo dpo = new CompanyDpo(row);
                     worker.ReportProgress((int)(100.0 * i / Count), new UserState { ith = i, Symbol = dpo.Symbol });
 
-                    Company company = new Company();
-                    company.Download(dpo.Symbol, dpo.CIK, dpo.Has_Insider_Transaction);
-                    dpo.Has_Insider_Transaction = company.HasInsiderTransactions;
-
-
-                    foreach (DataRow row1 in company.Ownerships.Rows)
+                    //如果有新下载的html文件
+                    if (dpo.Last_Processed_Time < dpo.Last_Downloaded_Time)
                     {
-                        OwnershipDpo dpo1 = new OwnershipDpo(row1);
-                        dpo1.Save();
-                    }
+                        Company company = new Company(dpo.Last_Downloaded_Time);
+                        company.Download(dpo.Symbol, dpo.CIK, dpo.Has_Insider_Transaction);
+                        dpo.Has_Insider_Transaction = company.HasInsiderTransactions;
 
-                    foreach (DataRow row2 in company.Transactions.Rows)
-                    {
-                        TransactionDpo dpo2 = new TransactionDpo(row2);
-                        dpo2.Save();
-                    }
 
-                    dpo.Last_Updated_Time = DateTime.Now;
-                    dpo.Save();
+                        foreach (DataRow row1 in company.Ownerships.Rows)
+                        {
+                            OwnershipDpo dpo1 = new OwnershipDpo(row1);
+                            dpo1.Save();
+                        }
+
+                        foreach (DataRow row2 in company.Transactions.Rows)
+                        {
+                            TransactionDpo dpo2 = new TransactionDpo(row2);
+                            dpo2.Save();
+                        }
+
+                        dpo.Last_Processed_Time = DateTime.Now;
+                        dpo.Save();
+                    }
 
                     i++;
 
@@ -113,6 +116,11 @@ namespace Stock.Forms
 
         void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            this.btnStart.Enabled = true;
+            this.btnStop.Enabled = false;
+            this.btnClose.Enabled = true;
+
+
             if ((e.Cancelled == true))
             {
                 this.lblStatus.Text = "Converting Canceled!";
@@ -134,6 +142,9 @@ namespace Stock.Forms
 
         private void btnStart_Click(object sender, EventArgs e)
         {
+            dailyFetch.ReadCompanies();
+            progressBar1.Maximum = Count;
+
             backgroundWorker1.RunWorkerAsync();
 
             this.btnStart.Enabled = false;
@@ -150,9 +161,9 @@ namespace Stock.Forms
             {
                 backgroundWorker1.CancelAsync();
 
-                this.btnStart.Enabled = true;
-                this.btnStop.Enabled = false;
-                this.btnClose.Enabled = true;
+                //this.btnStart.Enabled = true;
+                //this.btnStop.Enabled = false;
+                //this.btnClose.Enabled = true;
 
                 this.lblStatus.Text = "Converting is stopped";
             }

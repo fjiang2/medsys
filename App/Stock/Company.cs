@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data;
-using System.Data;
 using System.IO;
 using System.Net;
 
@@ -27,9 +26,23 @@ namespace Stock
         public DataTable Ownerships { get; private set; }
         public DataTable Transactions { get; private set; }
 
+
+        private DateTime downloadedDate;
+
         public Company()
+            : this(DateTime.Today)
         {
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="downloadedDate">used for html file name</param>
+        public Company(DateTime downloadedDate)
+        {
+            this.downloadedDate = downloadedDate;
+        }
+
         
         public void Download(string symbol)
         {
@@ -88,7 +101,7 @@ namespace Stock
 
         public string DownloadHtml(string symbol, string cik)
         {
-            string path = string.Format("{0}\\InsiderTransactions\\{1}\\{2}.html", LOG_FOLDER, DateTime.Today.ToString("yyyy-mm-dd"), symbol);
+            string path = string.Format("{0}\\InsiderTransactions\\{1}\\{2}.html", LOG_FOLDER, downloadedDate.ToString("yyyy-MM-dd"), symbol);
             string html;
 
             if (!File.Exists(path))
