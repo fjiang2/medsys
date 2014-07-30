@@ -23,6 +23,8 @@ namespace Stock.Forms
         {
             InitializeComponent();
 
+            progressBar1.Minimum = 1;
+
             this.Load += LoadHtmlForm_Load;
             
             backgroundWorker1.DoWork += backgroundWorker1_DoWork;
@@ -38,9 +40,6 @@ namespace Stock.Forms
 
         void LoadHtmlForm_Load(object sender, EventArgs e)
         {
-            dailyFetch.ReadCompanies();
-            progressBar1.Minimum = 1;
-            progressBar1.Maximum = Count;
 
         }
 
@@ -72,14 +71,20 @@ namespace Stock.Forms
                 else
                 {
                     CompanyDpo dpo = new CompanyDpo(row);
+
                     worker.ReportProgress((int)(100.0 * i / Count), new UserState { ith = i, Symbol = dpo.Symbol });
 
-                    Company company = new Company();
-                    if(dpo.Has_Insider_Transaction)
-                        company.DownloadHtml(dpo.Symbol, dpo.CIK);
+                    //超过24小时就下载
+                    if ((DateTime.Now - dpo.Last_Downloaded_Time).TotalHours >= 24)
+                    {
 
-                    dpo.Last_Updated_Time = DateTime.Now;
-                    dpo.Save();
+                        Company company = new Company(DateTime.Today);
+                        if (dpo.Has_Insider_Transaction)
+                            company.DownloadHtml(dpo.Symbol, dpo.CIK);
+
+                        dpo.Last_Downloaded_Time = DateTime.Now;
+                        dpo.Save();
+                    }
 
                     i++;
 
@@ -100,6 +105,10 @@ namespace Stock.Forms
 
         void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            this.btnStart.Enabled = true;
+            this.btnStop.Enabled = false;
+            this.btnClose.Enabled = true;
+
             if ((e.Cancelled == true))
             {
                 this.lblStatus.Text = "Download Canceled!";
@@ -112,7 +121,9 @@ namespace Stock.Forms
 
             else
             {
-                this.lblStatus.Text = "Download Completed."; 
+                this.lblStatus.Text = "Download Completed.";
+
+
             }
 
           
@@ -121,6 +132,10 @@ namespace Stock.Forms
 
         private void btnStart_Click(object sender, EventArgs e)
         {
+            dailyFetch.ReadCompanies();
+            progressBar1.Maximum = Count;
+
+
             backgroundWorker1.RunWorkerAsync();
 
             this.btnStart.Enabled = false;
@@ -137,9 +152,9 @@ namespace Stock.Forms
             {
                 backgroundWorker1.CancelAsync();
 
-                this.btnStart.Enabled = true;
-                this.btnStop.Enabled = false;
-                this.btnClose.Enabled = true;
+                //this.btnStart.Enabled = true;
+                //this.btnStop.Enabled = false;
+                //this.btnClose.Enabled = true;
 
                 this.lblStatus.Text = "Download is stopped";
             }

@@ -229,7 +229,7 @@ namespace Sys.Messaging.Forms
                         Path.GetFileName(m_FileName), m_lFileLength);
             if (m_DescriptionChanged)
                 file.Description = txtDescription.Text;
-            file.Range = new Range();
+            file.Range = new agsXMPP.protocol.extensions.filetransfer.Range();
             
             
             FeatureNeg fNeg = new FeatureNeg();

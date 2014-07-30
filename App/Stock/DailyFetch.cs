@@ -26,9 +26,11 @@ namespace Stock
         {
 
             TableReader<CompanyDpo> reader = new TableReader<CompanyDpo>(
-                  (CompanyDpo._Has_Insider_Transaction.ColumnName() == 1)
-                  .AND(CompanyDpo._Last_Updated_Time.ColumnName() < DateTime.Today)
-                  );
+                (CompanyDpo._Has_Insider_Transaction.ColumnName() == 1)
+#if DEBUG
+                .AND(CompanyDpo._LastSale.ColumnName() > 160)
+#endif
+                );
 
             this.CompanyTable = reader.Table;
         }
@@ -39,26 +41,29 @@ namespace Stock
             foreach (DataRow row in CompanyTable.Rows)
             {
                 CompanyDpo dpo = new CompanyDpo(row);
-                
-                Company company = new Company();
-                company.Download(dpo.Symbol, dpo.CIK, dpo.Has_Insider_Transaction);
-                dpo.Has_Insider_Transaction = company.HasInsiderTransactions;
 
-
-                foreach (DataRow row1 in company.Ownerships.Rows)
+                if ((DateTime.Now - dpo.Last_Downloaded_Time).TotalHours >= 24)
                 {
-                    OwnershipDpo dpo1 = new OwnershipDpo(row1);
-                    dpo1.Save();
-                }
+                    Company company = new Company();
+                    company.Download(dpo.Symbol, dpo.CIK, dpo.Has_Insider_Transaction);
+                    dpo.Has_Insider_Transaction = company.HasInsiderTransactions;
 
-                foreach (DataRow row2 in company.Transactions.Rows)
-                {
-                    TransactionDpo dpo2 = new TransactionDpo(row2);
-                    dpo2.Save();
-                }
 
-                dpo.Last_Updated_Time = DateTime.Now;
-                dpo.Save();
+                    foreach (DataRow row1 in company.Ownerships.Rows)
+                    {
+                        OwnershipDpo dpo1 = new OwnershipDpo(row1);
+                        dpo1.Save();
+                    }
+
+                    foreach (DataRow row2 in company.Transactions.Rows)
+                    {
+                        TransactionDpo dpo2 = new TransactionDpo(row2);
+                        dpo2.Save();
+                    }
+
+                    dpo.Last_Downloaded_Time = DateTime.Now;
+                    dpo.Save();
+                }
             }
 
         }
@@ -100,7 +105,7 @@ namespace Stock
                     //dpo.Has_Insider_Transaction = company.HasInsiderTransactions;
                 }
 
-                dpo.Last_Updated_Time = DateTime.Now;
+                dpo.Last_Downloaded_Time = DateTime.Now;
                 dpo.Save();
 
             }

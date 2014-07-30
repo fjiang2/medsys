@@ -55,6 +55,8 @@
     <Compile Include="CodeBuilder\Statements.cs" />
     <Compile Include="CodeBuilder\TypeInfo.cs" />
     <Compile Include="Const.cs" />
+    <Compile Include="DataStructure\Range.cs" />
+    <Compile Include="DataStructure\RangeSet.cs" />
     <Compile Include="DataStructure\SequentialList.cs" />
     <Compile Include="DataStructure\DataPool.cs" />
     <Compile Include="DataStructure\ident.cs" />
