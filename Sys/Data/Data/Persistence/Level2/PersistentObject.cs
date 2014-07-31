@@ -564,7 +564,8 @@ namespace Sys.Data
         {
             foreach (PropertyInfo propertyInfo in this.columnProperties)
             {
-                Attribute[] association = (Attribute[])propertyInfo.GetCustomAttributes(typeof(AssociationAttribute), true);
+                Attribute[] association = CustomAttributeProvider.GetAttributes<AssociationAttribute>(propertyInfo);
+
                 if (association.Length != 0)
                 {
                     SaveAssociationCollection(propertyInfo);
