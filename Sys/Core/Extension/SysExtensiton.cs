@@ -72,6 +72,7 @@ namespace Sys
         public static T[] GetAttributes<T>(this Type type) where T : Attribute
         {
             return (T[])type.GetCustomAttributes(typeof(T), true);
+            
         }
 
         /// <summary>

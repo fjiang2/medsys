@@ -89,15 +89,18 @@ namespace Stock
 
      
 
-        public void DownloadTransaction()
+        public bool DownloadTransaction()
         {
             if (!File.Exists(this.transactionFileName))
             {
                 Uri uri = new Uri(string.Format(getInsiderTransactionFormat, this.CIK));
                 string html = client.DownloadString(uri);
                 SaveHtml(this.transactionFileName, html);
+
+                return true;
             }
 
+            return false;
         }
 
         

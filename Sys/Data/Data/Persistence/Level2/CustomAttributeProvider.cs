@@ -8,30 +8,30 @@ namespace Sys.Data
 {
     class CustomAttributeProvider
     {
-        static Dictionary<Type, Dictionary<PropertyInfo, Attribute[]>> cache = new Dictionary<Type, Dictionary<PropertyInfo, Attribute[]>>();
+        static Dictionary<Type, Dictionary<MemberInfo, Attribute[]>> cache = new Dictionary<Type, Dictionary<MemberInfo, Attribute[]>>();
 
-        public static T[] GetAttributes<T>(PropertyInfo propertyInfo) where T : Attribute
+        public static T[] GetAttributes<T>(MemberInfo memberInfo) where T : Attribute
         {
-            Dictionary<PropertyInfo, Attribute[]> dict;
+            Dictionary<MemberInfo, Attribute[]> dict;
             if (cache.ContainsKey(typeof(T)))
             {
                 dict = cache[typeof(T)];
             }
             else
             {
-                dict = new Dictionary<PropertyInfo, Attribute[]>();
+                dict = new Dictionary<MemberInfo, Attribute[]>();
                 cache.Add(typeof(T), dict);
             }
 
             T[] attributes;
-            if (dict.ContainsKey(propertyInfo))
+            if (dict.ContainsKey(memberInfo))
             {
-                attributes = (T[])dict[propertyInfo];
+                attributes = (T[])dict[memberInfo];
             }
             else
             {
-                attributes = (T[])propertyInfo.GetCustomAttributes(typeof(T), true);
-                dict.Add(propertyInfo, attributes);
+                attributes = (T[])memberInfo.GetCustomAttributes(typeof(T), true);
+                dict.Add(memberInfo, attributes);
             }
 
             return attributes;

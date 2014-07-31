@@ -164,12 +164,12 @@ namespace Sys.Data
 
         public bool HasAttribute<T>() where T : Attribute
         {
-            return this.GetType().HasAttribute<T>();
+            return GetAttributes<T>().Length != 0;
         }
 
         public T[] GetAttributes<T>() where T : Attribute
         {
-            return this.GetType().GetAttributes<T>();
+            return CustomAttributeProvider.GetAttributes<T>(this.GetType());
         }
 
         public bool BeforeSavingHooked
