@@ -28,7 +28,7 @@ namespace Stock
             TableReader<CompanyDpo> reader = new TableReader<CompanyDpo>(
                 (CompanyDpo._Has_Insider_Transaction.ColumnName() == 1)
 #if DEBUG
-                .AND(CompanyDpo._LastSale.ColumnName() > 160)
+                .AND(CompanyDpo._LastSale.ColumnName() > 150)
 #endif
                 );
 
@@ -44,8 +44,8 @@ namespace Stock
 
                 if ((DateTime.Now - dpo.Last_Downloaded_Time).TotalHours >= 24)
                 {
-                    Company company = new Company();
-                    company.Download(dpo.Symbol, dpo.CIK, dpo.Has_Insider_Transaction);
+                    Company company = new Company(dpo.Symbol, dpo.CIK);
+                    company.DownloadTransactionAndParse(dpo.Has_Insider_Transaction);
                     dpo.Has_Insider_Transaction = company.HasInsiderTransactions;
 
 
@@ -84,13 +84,13 @@ namespace Stock
                 if (dpo.Inactive)
                     continue;
 
-                Company company = new Company();
+                Company company = new Company(dpo.Symbol, null);
 
                 if (dpo.CIK == null)
                 {
                     try
                     {
-                        company.Download(dpo.Symbol);
+                        company.DownloadCompanyInfo();
                         dpo.CIK = company.CIK;
                         dpo.Has_Insider_Transaction = company.HasInsiderTransactions;
                     }

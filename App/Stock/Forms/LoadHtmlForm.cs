@@ -78,9 +78,9 @@ namespace Stock.Forms
                     if ((DateTime.Now - dpo.Last_Downloaded_Time).TotalHours >= 24)
                     {
 
-                        Company company = new Company(DateTime.Today);
-                        if (dpo.Has_Insider_Transaction)
-                            company.DownloadHtml(dpo.Symbol, dpo.CIK);
+                        Company company = new Company(dpo.Symbol, dpo.CIK, DateTime.Today);
+                        if(dpo.Has_Insider_Transaction)
+                            company.DownloadTransaction();
 
                         dpo.Last_Downloaded_Time = DateTime.Now;
                         dpo.Save();
