@@ -61,6 +61,7 @@ namespace Stock.Forms
             BackgroundWorker worker = sender as BackgroundWorker;
 
             int i = 1;
+            int count = 0;
             foreach (DataRow row in dailyFetch.CompanyTable.Rows)
             {
                 if ((worker.CancellationPending == true))
@@ -72,7 +73,7 @@ namespace Stock.Forms
                 {
                     CompanyDpo dpo = new CompanyDpo(row);
 
-                    worker.ReportProgress((int)(100.0 * i / Count), new UserState { ith = i, Symbol = dpo.Symbol });
+                    worker.ReportProgress((int)(100.0 * i / Count), new UserState { ith = i, Symbol = dpo.Symbol, Count = count });
 
                     if (dpo.CIK == null)
                     {
@@ -80,9 +81,12 @@ namespace Stock.Forms
                         company.DownloadCompanyInfo();
                         dpo.CIK = company.CIK;
                         dpo.Has_Insider_Transaction = company.HasInsiderTransactions;
-                        
+
                         if (dpo.Has_Insider_Transaction)
-                            company.DownloadTransaction();
+                        {
+                            if (company.DownloadTransaction())
+                                count++;
+                        }
 
                         dpo.Last_Downloaded_Time = DateTime.Now;
                         dpo.Save();
@@ -91,8 +95,11 @@ namespace Stock.Forms
                     {
 
                         CompanyHistory company = new CompanyHistory(dpo.Symbol, dpo.CIK);
-                        if(dpo.Has_Insider_Transaction)
-                            company.DownloadTransaction();
+                        if (dpo.Has_Insider_Transaction)
+                        {
+                            if (company.DownloadTransaction())
+                                count++;
+                        }
 
                         dpo.Last_Downloaded_Time = DateTime.Now;
                         dpo.Save();
@@ -113,6 +120,8 @@ namespace Stock.Forms
 
             progressBar1.Value = ith;
             txtPercentage.Text = string.Format("{0}/{1}", ith, Count);
+
+            lblStatus.Text = string.Format("Downloading ... #{0} of file saved", state.Count);
         }
 
         void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -184,5 +193,6 @@ namespace Stock.Forms
     {
         public int ith { get; set; }
         public string Symbol { get; set; }
+        public int Count { get; set; }
     }
 }

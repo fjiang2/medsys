@@ -61,6 +61,7 @@ namespace Stock.Forms
 
 
             int i = 1;
+            int count = 0;
             foreach (DataRow row in dailyFetch.CompanyTable.Rows)
             {
                 if ((worker.CancellationPending == true))
@@ -71,7 +72,7 @@ namespace Stock.Forms
                 else
                 {
                     CompanyDpo dpo = new CompanyDpo(row);
-                    worker.ReportProgress((int)(100.0 * i / Count), new UserState { ith = i, Symbol = dpo.Symbol });
+                    worker.ReportProgress((int)(100.0 * i / Count), new UserState { ith = i, Symbol = dpo.Symbol, Count = count });
 
                     //如果有新下载的html文件
                     if (dpo.Has_Insider_Transaction && dpo.Last_Processed_Time < dpo.Last_Downloaded_Time)
@@ -95,6 +96,8 @@ namespace Stock.Forms
 
                             dpo.Last_Processed_Time = DateTime.Now;
                             dpo.Save();
+                            
+                            count++;
                         }
                     }
 
@@ -113,6 +116,7 @@ namespace Stock.Forms
 
             progressBar1.Value = ith;
             txtPercentage.Text = string.Format("{0}/{1}", ith, Count);
+            lblStatus.Text = string.Format("Converting ... #{0} of file saved", state.Count);
         }
 
         void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)

@@ -173,11 +173,11 @@ namespace Sys.Data
                 if (fieldInfo.IsStatic)
                     continue;
 
-                Attribute[] attributes = (Attribute[])fieldInfo.GetCustomAttributes(typeof(NonValizedAttribute), true);
+                Attribute[] attributes = CustomAttributeProvider.GetAttributes<NonValizedAttribute>(fieldInfo);
                 if (attributes.Length != 0)
                     continue;
 
-                attributes = (Attribute[])fieldInfo.GetCustomAttributes(typeof(AssociationAttribute), true);
+                attributes = CustomAttributeProvider.GetAttributes<AssociationAttribute>(fieldInfo);
                 if (attributes.Length != 0)
                     continue;
 
@@ -187,7 +187,7 @@ namespace Sys.Data
             PropertyInfo[] properties = instance.GetType().GetProperties();
             foreach (PropertyInfo propertyInfo in properties)
             {
-                ValizableAttribute[] attributes = (ValizableAttribute[])propertyInfo.GetCustomAttributes(typeof(ValizableAttribute), true);
+                ValizableAttribute[] attributes = CustomAttributeProvider.GetAttributes<ValizableAttribute>(propertyInfo);
                 if (attributes.Length !=0 && propertyInfo.CanRead)
                     val[propertyInfo.Name] = VAL.Boxing(propertyInfo.GetValue(instance, null));
                 else
