@@ -111,6 +111,7 @@
     <Compile Include="Data\Persistence\Level1\Selector.cs" />
     <Compile Include="Data\Persistence\Level1\TableAdapter.cs" />
     <Compile Include="Data\Persistence\Level1\ValueChangedEventArgs.cs" />
+    <Compile Include="Data\Persistence\Level2\CustomAttributeProvider.cs" />
     <Compile Include="Data\Persistence\Level2\IPersistent.cs" />
     <Compile Include="Data\Persistence\Level2\Mapping.cs" />
     <Compile Include="Data\Persistence\Level2\ObjectState.cs" />

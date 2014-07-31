@@ -27,9 +27,7 @@ namespace Stock
 
             TableReader<CompanyDpo> reader = new TableReader<CompanyDpo>(
                 (CompanyDpo._Inactive.ColumnName() == 0)
-#if DEBUG
-                .AND(CompanyDpo._LastSale.ColumnName() > 150)
-#endif
+//                .AND(CompanyDpo._LastSale.ColumnName() > 150)
                 );
 
             this.CompanyTable = reader.Table;
