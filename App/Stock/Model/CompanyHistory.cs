@@ -9,7 +9,7 @@ using System.Net;
 
 namespace Stock
 {
-    public class Company
+    public class CompanyHistory
     {
         protected const string LOG_FOLDER = "C:\\db\\edgar";
 
@@ -31,7 +31,7 @@ namespace Stock
         private string transactionFileName;
         private string companyFileName;
 
-        public Company(string symbol, string CIK)
+        public CompanyHistory(string symbol, string CIK)
             : this(symbol, CIK, DateTime.Today)
         {
         }
@@ -40,7 +40,7 @@ namespace Stock
         /// 
         /// </summary>
         /// <param name="downloadedDate">used for html file name</param>
-        public Company(string symbol, string CIK, DateTime downloadedDate)
+        public CompanyHistory(string symbol, string CIK, DateTime downloadedDate)
         {
             this.symbol = symbol;
             this.CIK = CIK;

@@ -53,7 +53,7 @@ namespace Stock
                 if (dpo.Inactive)
                     continue;
 
-                Company company = new Company(dpo.Symbol, null);
+                CompanyHistory company = new CompanyHistory(dpo.Symbol, null);
 
                 if (dpo.CIK == null)
                 {

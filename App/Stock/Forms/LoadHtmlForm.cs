@@ -76,7 +76,7 @@ namespace Stock.Forms
 
                     if (dpo.CIK == null)
                     {
-                        Company company = new Company(dpo.Symbol, dpo.CIK);
+                        CompanyHistory company = new CompanyHistory(dpo.Symbol, dpo.CIK);
                         company.DownloadCompanyInfo();
                         dpo.CIK = company.CIK;
                         dpo.Has_Insider_Transaction = company.HasInsiderTransactions;
@@ -90,7 +90,7 @@ namespace Stock.Forms
                     else if ((DateTime.Now - dpo.Last_Downloaded_Time).TotalHours >= 24)                     //超过24小时就下载
                     {
 
-                        Company company = new Company(dpo.Symbol, dpo.CIK);
+                        CompanyHistory company = new CompanyHistory(dpo.Symbol, dpo.CIK);
                         if(dpo.Has_Insider_Transaction)
                             company.DownloadTransaction();
 

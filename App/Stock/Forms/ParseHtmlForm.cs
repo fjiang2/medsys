@@ -76,7 +76,7 @@ namespace Stock.Forms
                     //如果有新下载的html文件
                     if (dpo.Has_Insider_Transaction && dpo.Last_Processed_Time < dpo.Last_Downloaded_Time)
                     {
-                        Company company = new Company(dpo.Symbol, dpo.CIK, dpo.Last_Downloaded_Time);
+                        CompanyHistory company = new CompanyHistory(dpo.Symbol, dpo.CIK, dpo.Last_Downloaded_Time);
 
                         if (company.ParseTransaction())
                         {
