@@ -166,7 +166,7 @@ namespace Sys.Data
 
         private bool IsColumn1Identity()
         {
-            ColumnAttribute[] attributes = (ColumnAttribute[])propertyInfo1.GetCustomAttributes(typeof(ColumnAttribute), true);
+            ColumnAttribute[] attributes = CustomAttributeProvider.GetAttributes<ColumnAttribute>(propertyInfo1);
             if (attributes.Length == 0)
                 return false;
 
