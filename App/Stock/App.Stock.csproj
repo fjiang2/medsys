@@ -48,8 +48,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BusinessDay.cs" />
-    <Compile Include="Company.cs" />
+    <Compile Include="Model\BusinessDay.cs" />
+    <Compile Include="Model\CompanyHistory.cs" />
     <Compile Include="Forms\ParseHtmlForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -63,7 +63,7 @@
       <DependentUpon>LoadHtmlForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Html\CompanyHtml.cs" />
-    <Compile Include="DailyFetch.cs" />
+    <Compile Include="Model\DailyFetch.cs" />
     <Compile Include="Html\InsiderTransactionHtml.cs" />
     <Compile Include="Html\BaseHtml.cs" />
     <Compile Include="MgCode\DpoClass\CompanyDpo.cs" />
