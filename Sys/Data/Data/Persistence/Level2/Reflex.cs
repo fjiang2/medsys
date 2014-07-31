@@ -66,9 +66,26 @@ namespace Sys.Data
             return null;
         }
 
+
+        private static Dictionary<PropertyInfo, ColumnAttribute[]> cacheColumnAttr = new Dictionary<PropertyInfo, ColumnAttribute[]>();
+        private static Dictionary<PropertyInfo, Attribute[]> cacheNonPersistentAttr = new Dictionary<PropertyInfo, Attribute[]>();
+        private static Dictionary<PropertyInfo, Attribute[]> cacheAssociationAttr = new Dictionary<PropertyInfo, Attribute[]>();
+
+
         public static ColumnAttribute GetColumnAttribute(PropertyInfo propertyInfo)
         {
-            ColumnAttribute[] attributes = (ColumnAttribute[])propertyInfo.GetCustomAttributes(typeof(ColumnAttribute), true);
+            ColumnAttribute[] attributes;
+
+            if (cacheColumnAttr.ContainsKey(propertyInfo))
+            {
+                attributes = cacheColumnAttr[propertyInfo];
+            }
+            else
+            {
+                attributes = (ColumnAttribute[])propertyInfo.GetCustomAttributes(typeof(ColumnAttribute), true);
+                cacheColumnAttr.Add(propertyInfo, attributes);
+            }
+            
 
             foreach (ColumnAttribute attribute in attributes)
             {
@@ -83,11 +100,31 @@ namespace Sys.Data
 
             if (attributes.Length == 0)
             {
-                Attribute[] non = (Attribute[])propertyInfo.GetCustomAttributes(typeof(NonPersistentAttribute), true);
+                Attribute[] non;
+                
+                if(cacheNonPersistentAttr.ContainsKey(propertyInfo))
+                {
+                    non = cacheNonPersistentAttr[propertyInfo];
+                }
+                else
+                {
+                    non = (Attribute[])propertyInfo.GetCustomAttributes(typeof(NonPersistentAttribute), true);
+                    cacheNonPersistentAttr.Add(propertyInfo, non);
+                }
+
                 if (non.Length > 0)
                     return null;
 
-                non = (Attribute[])propertyInfo.GetCustomAttributes(typeof(AssociationAttribute), true);
+                if (cacheAssociationAttr.ContainsKey(propertyInfo))
+                {
+                    non = cacheAssociationAttr[propertyInfo];
+                }
+                else
+                {
+                    non = (Attribute[])propertyInfo.GetCustomAttributes(typeof(AssociationAttribute), true);
+                    cacheAssociationAttr.Add(propertyInfo, non);
+                }
+
                 if (non.Length > 0)
                     return null;
 
