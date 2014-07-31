@@ -74,28 +74,28 @@ namespace Stock.Forms
                     worker.ReportProgress((int)(100.0 * i / Count), new UserState { ith = i, Symbol = dpo.Symbol });
 
                     //如果有新下载的html文件
-                    if (dpo.Last_Processed_Time < dpo.Last_Downloaded_Time)
+                    if (dpo.Has_Insider_Transaction && dpo.Last_Processed_Time < dpo.Last_Downloaded_Time)
                     {
                         Company company = new Company(dpo.Symbol, dpo.CIK, dpo.Last_Downloaded_Time);
-                        
-                        company.DownloadTransactionAndParse(dpo.Has_Insider_Transaction);
-                        dpo.Has_Insider_Transaction = company.HasInsiderTransactions;
 
-
-                        foreach (DataRow row1 in company.Ownerships.Rows)
+                        if (company.ParseTransaction())
                         {
-                            OwnershipDpo dpo1 = new OwnershipDpo(row1);
-                            dpo1.Save();
-                        }
 
-                        foreach (DataRow row2 in company.Transactions.Rows)
-                        {
-                            TransactionDpo dpo2 = new TransactionDpo(row2);
-                            dpo2.Save();
-                        }
+                            foreach (DataRow row1 in company.Ownerships.Rows)
+                            {
+                                OwnershipDpo dpo1 = new OwnershipDpo(row1);
+                                dpo1.Save();
+                            }
 
-                        dpo.Last_Processed_Time = DateTime.Now;
-                        dpo.Save();
+                            foreach (DataRow row2 in company.Transactions.Rows)
+                            {
+                                TransactionDpo dpo2 = new TransactionDpo(row2);
+                                dpo2.Save();
+                            }
+
+                            dpo.Last_Processed_Time = DateTime.Now;
+                            dpo.Save();
+                        }
                     }
 
                     i++;

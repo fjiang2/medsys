@@ -12,8 +12,6 @@ namespace Stock
     public class Company
     {
         protected const string LOG_FOLDER = "C:\\db\\edgar";
-        const string FILE_NAME_FORMAT = "{0}\\{1}\\{2}\\{3}.html";
-
 
         const string searchCompanyFormat = "http://www.sec.gov/cgi-bin/browse-edgar?CIK={0}&Find=Search&owner=exclude&action=getcompany";
         const string getInsiderTransactionFormat = "http://www.sec.gov/cgi-bin/own-disp?action=getissuer&CIK={0}";
@@ -51,13 +49,12 @@ namespace Stock
             this.companyFileName = MakeFileName("Company", downloadedDate);
         }
 
-        private string MakeFileName(string category, DateTime downloadedDate)
+        private string MakeFileName(string category, DateTime date)
         {
-            return string.Format(FILE_NAME_FORMAT, LOG_FOLDER, category, downloadedDate.ToString("yyyy-MM-dd"), symbol);
+            return string.Format("{0}\\{1}\\{2}\\{3}.html", LOG_FOLDER, category, date.ToString("yyyy-MM-dd"), symbol);
         }
         
-        #region Download CompanyInfo
-
+        
         public void DownloadCompanyInfo()
         {
             Uri uri = new Uri(string.Format(searchCompanyFormat, symbol));
@@ -72,56 +69,38 @@ namespace Stock
             this.HasInsiderTransactions = parser.HasInsiderTransactions;
         }
         
-        #endregion 
 
-
-        #region Download Insider Transaction
-        public void DownloadTransactionAndParse(bool hasInsiderTransaction)
+        
+        public bool ParseTransaction()
         {
             if (!File.Exists(transactionFileName))
-                this.transactionFileName = MakeFileName("InsiderTransactions", DateTime.Today);
+                return false;
 
-            if (hasInsiderTransaction)
-                this.HasInsiderTransactions = true;
-            else
-                DownloadCompanyInfo();
+            string html = ReadHtml(transactionFileName);
 
+            var parser = new InsiderTransactionHtml(this.symbol, html, HtmlSource.Web);
+            parser.ParseHtml();
 
-            if (this.HasInsiderTransactions)
-            {
-                string html = DownloadTransaction();
+            this.Ownerships = parser.ownership;
+            this.Transactions = parser.transaction;
 
-                var parser = new InsiderTransactionHtml(this.symbol, html, HtmlSource.Web);
-                parser.ParseHtml();
-
-                this.Ownerships = parser.ownership;
-                this.Transactions = parser.transaction;
-            }
+            return true;
         }
 
      
 
-        public string DownloadTransaction()
+        public void DownloadTransaction()
         {
-            string path = this.transactionFileName;
-            string html;
-
-            if (!File.Exists(path))
+            if (!File.Exists(this.transactionFileName))
             {
                 Uri uri = new Uri(string.Format(getInsiderTransactionFormat, this.CIK));
-                html = client.DownloadString(uri);
-                SaveHtml(path, html);
-            }
-            else
-            {
-                html = ReadHtml(path);
+                string html = client.DownloadString(uri);
+                SaveHtml(this.transactionFileName, html);
             }
 
-            return html;
         }
 
-        #endregion
-
+        
         public static string ReadHtml(string path)
         {
             var reader = new StreamReader(path);

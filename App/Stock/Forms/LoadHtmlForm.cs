@@ -74,11 +74,23 @@ namespace Stock.Forms
 
                     worker.ReportProgress((int)(100.0 * i / Count), new UserState { ith = i, Symbol = dpo.Symbol });
 
-                    //超过24小时就下载
-                    if ((DateTime.Now - dpo.Last_Downloaded_Time).TotalHours >= 24)
+                    if (dpo.CIK == null)
+                    {
+                        Company company = new Company(dpo.Symbol, dpo.CIK);
+                        company.DownloadCompanyInfo();
+                        dpo.CIK = company.CIK;
+                        dpo.Has_Insider_Transaction = company.HasInsiderTransactions;
+                        
+                        if (dpo.Has_Insider_Transaction)
+                            company.DownloadTransaction();
+
+                        dpo.Last_Downloaded_Time = DateTime.Now;
+                        dpo.Save();
+                    }
+                    else if ((DateTime.Now - dpo.Last_Downloaded_Time).TotalHours >= 24)                     //超过24小时就下载
                     {
 
-                        Company company = new Company(dpo.Symbol, dpo.CIK, DateTime.Today);
+                        Company company = new Company(dpo.Symbol, dpo.CIK);
                         if(dpo.Has_Insider_Transaction)
                             company.DownloadTransaction();
 

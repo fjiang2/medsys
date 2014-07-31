@@ -26,7 +26,7 @@ namespace Stock
         {
 
             TableReader<CompanyDpo> reader = new TableReader<CompanyDpo>(
-                (CompanyDpo._Has_Insider_Transaction.ColumnName() == 1)
+                (CompanyDpo._Inactive.ColumnName() == 0)
 #if DEBUG
                 .AND(CompanyDpo._LastSale.ColumnName() > 150)
 #endif
@@ -35,38 +35,7 @@ namespace Stock
             this.CompanyTable = reader.Table;
         }
 
-        public void FetchTransactions()
-        {
-
-            foreach (DataRow row in CompanyTable.Rows)
-            {
-                CompanyDpo dpo = new CompanyDpo(row);
-
-                if ((DateTime.Now - dpo.Last_Downloaded_Time).TotalHours >= 24)
-                {
-                    Company company = new Company(dpo.Symbol, dpo.CIK);
-                    company.DownloadTransactionAndParse(dpo.Has_Insider_Transaction);
-                    dpo.Has_Insider_Transaction = company.HasInsiderTransactions;
-
-
-                    foreach (DataRow row1 in company.Ownerships.Rows)
-                    {
-                        OwnershipDpo dpo1 = new OwnershipDpo(row1);
-                        dpo1.Save();
-                    }
-
-                    foreach (DataRow row2 in company.Transactions.Rows)
-                    {
-                        TransactionDpo dpo2 = new TransactionDpo(row2);
-                        dpo2.Save();
-                    }
-
-                    dpo.Last_Downloaded_Time = DateTime.Now;
-                    dpo.Save();
-                }
-            }
-
-        }
+      
 
 
         /// <summary>
