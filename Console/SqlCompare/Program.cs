@@ -18,21 +18,24 @@ namespace SqlCompare
         {
 
             var output = ConfigurationManager.AppSettings["output"];
+
             var server1 = ConfigurationManager.AppSettings["server1"];
             var server2 = ConfigurationManager.AppSettings["server2"];
-            var connectionString1 = ConfigurationManager.AppSettings[server1];
-            var connectionString2 = ConfigurationManager.AppSettings[server2];
+            
+            SqlConnectionStringBuilder cs1 = new SqlConnectionStringBuilder(ConfigurationManager.AppSettings[server1]);
+            SqlConnectionStringBuilder cs2 = new SqlConnectionStringBuilder(ConfigurationManager.AppSettings[server2]);
 
-            string databaseName1 = ConfigurationManager.AppSettings["db1"];
-            string databaseName2 = ConfigurationManager.AppSettings["db2"];
+
             string tableName1 = null;
             string tableName2 = null;
 
             bool compareSchema = Convert.ToBoolean(ConfigurationManager.AppSettings["compareschema"] ?? "true");
+
             bool allRows = false;
-            string where = "";
+            string where=null;
 
             int i = 0;
+            string t1, t2;
 
             while (i < args.Length)
             {
@@ -40,40 +43,15 @@ namespace SqlCompare
                 switch (args[i++])
                 {
                     case "/s":
-                        if (i < args.Length)
+                        if (i < args.Length && parse(args[i++], out t1, out t2))
                         {
-                            string x = args[i++];
-                            connectionString1 = ConfigurationManager.AppSettings[x];
-                            connectionString2 = connectionString1;
-
-                            if (i < args.Length && !args[i].StartsWith("/"))
-                            {
-                                x = args[i++];
-                                connectionString2 = ConfigurationManager.AppSettings[x];
-                            }
-
+                            cs1 = new SqlConnectionStringBuilder(ConfigurationManager.AppSettings[t1]);
+                            cs2 = new SqlConnectionStringBuilder(ConfigurationManager.AppSettings[t2]);
                             break;
                         }
                         else
                         {
                             Console.WriteLine("undefined database server alias");
-                            return;
-                        }
-
-                    case "/cs":
-                        if (i < args.Length)
-                        {
-                            connectionString1 = args[i++];
-                            connectionString2 = connectionString1;
-
-                            if (i < args.Length && !args[i].StartsWith("/"))
-                                connectionString2 = args[i++];
-
-                            break;
-                        }
-                        else
-                        {
-                            Console.WriteLine("undefined sql server connection string");
                             return;
                         }
 
@@ -85,15 +63,54 @@ namespace SqlCompare
                         compareSchema = false;
                         break;
 
-                    case "/db":
-                        if (i < args.Length)
+                    case "/S":
+                        if (i < args.Length && parse(args[i++], out t1, out t2))
                         {
-                            databaseName1 = args[i++];
-                            databaseName2 = databaseName1;
+                            cs1.DataSource = t1;
+                            cs1.DataSource = t2;
+                            cs1.UserID = "sa";
+                            cs2.UserID = "sa";
+                            cs1.Password = "";
+                            cs1.Password = "";
+                            break;
+                        }
+                        else
+                        {
+                            Console.WriteLine("undefined server name");
+                            return;
+                        }
 
-                            if (i < args.Length && !args[i].StartsWith("/"))
-                                databaseName2 = args[i++];
+                    case "/U":
+                        if (i < args.Length && parse(args[i++], out t1, out t2))
+                        {
+                            cs1.UserID = t1;
+                            cs1.UserID = t2;
+                            break;
+                        }
+                        else
+                        {
+                            Console.WriteLine("undefined user name");
+                            return;
+                        }
 
+                    case "/P":
+                        if (i < args.Length && parse(args[i++], out t1, out t2))
+                        {
+                            cs1.Password = t1;
+                            cs1.Password = t2;
+                            break;
+                        }
+                        else
+                        {
+                            Console.WriteLine("undefined server password");
+                            return;
+                        }
+
+                    case "/db":
+                        if (i < args.Length && parse(args[i++], out t1, out t2))
+                        {
+                            cs1.InitialCatalog = t1;
+                            cs2.InitialCatalog = t2;
                             break;
                         }
                         else
@@ -103,14 +120,10 @@ namespace SqlCompare
                         }
 
                     case "/dt":
-                        if (i < args.Length)
+                        if (i < args.Length && parse(args[i++], out t1, out t2))
                         {
-                            tableName1 = args[i++];
-                            tableName2 = tableName1;
-
-                            if (i < args.Length && args[i].StartsWith("/"))
-                                tableName2 = args[i++];
-
+                            tableName1 = t1;
+                            tableName2 = t2;
                             break;
                         }
                         else
@@ -161,82 +174,64 @@ namespace SqlCompare
                 }
             }
 
-            SqlConnectionStringBuilder s1 = new SqlConnectionStringBuilder(connectionString1);
-            SqlConnectionStringBuilder s2 = new SqlConnectionStringBuilder(connectionString2);
-
-            Console.WriteLine(string.Format("server1: {0} default database:{1}", s1.DataSource, s1.InitialCatalog));
-            Console.WriteLine(string.Format("server2: {0} default database:{1}", s2.DataSource, s2.InitialCatalog));
-
-            
-            var compare = new Compare(connectionString1, connectionString2);
-
-            string sql = null;
+            Command cmd = new Command(cs1,cs2)
+            {
+                TableName1 = tableName1,
+                TableName2 = tableName2,
+                OutputFile = output,
+                CompareSchema = compareSchema
+            };
 
             if (allRows)
-            {
-                sql = compare.AllRows(tableName1, where);
-            }
-            else if (compareSchema)
-            {
-                if (tableName1 != null && tableName2 != null)
-                {
-                    Console.WriteLine(string.Format("compare table schema {0} => {1}", tableName1, tableName2));
+                cmd.ExtractDataRows(tableName1, where);
+            else
+                cmd.Run();
+        }
 
-                    sql = compare.TableSchemaDifference(tableName1, tableName2);
-                }
-                else if (databaseName1 != null && databaseName2 != null)
-                {
-                    Console.WriteLine(string.Format("compare database schema {0} => {1}", databaseName1, databaseName2));
-                    sql = compare.DatabaseSchemaDifference(databaseName1, databaseName2);
-                }
+        private static bool parse(string arg, out string t1, out string t2)
+        {
+            if (string.IsNullOrEmpty(arg))
+            {
+                t1 = null;
+                t2 = null;
+                return false;
+            }
+
+            string[] x = arg.Split(':');
+            if(x.Length == 1)
+            {
+                t1 = x[0];
+                t2 = x[0];
             }
             else
             {
-                if (tableName1 != null && tableName2 != null)
-                {
-                    Console.WriteLine(string.Format("compare table data {0} => {1}", tableName1, tableName2));
-                    sql = compare.TableDifference(tableName1, tableName2);
-                }
-                else if (databaseName1 != null && databaseName2 != null)
-                {
-                    Console.WriteLine(string.Format("compare database data {0} => {1}", databaseName1, databaseName2));
-                    sql = compare.DatabaseDifference(databaseName1, databaseName2);
-                }
+                t1 = x[0];
+                t2 = x[1];
             }
 
-
-            if (!string.IsNullOrEmpty(sql))
-            {
-                using (var writer = new StreamWriter(output))
-                {
-                    writer.Write(sql);
-                }
-
-            }
-
-            Console.WriteLine("completed.");
+            return true;
         }
 
         private static void Help()
         {
             Console.WriteLine("SqlCompare v1.0");
             Console.WriteLine("Usage: SqlCompare");
-            Console.WriteLine("     [/s server1 server2] | [/s server] | [/cs string1 string2] | [/cs string1]");
+            Console.WriteLine("     [/s alias1:alias2]|[/s alias]");
+            Console.WriteLine("     [/S server1:server2] [/U user1:user2] [/P password1:password2]");
             Console.WriteLine("     [/schema]|[/data]");
             Console.WriteLine("     [/a table [where]]");
-            Console.WriteLine("     [/db datbase1 datbase2] | [/db datbase]");
-            Console.WriteLine("     [/dt table1 table2] | [/dt table]");
+            Console.WriteLine("     [/db datbase1:datbase2]|[/db datbase]");
+            Console.WriteLine("     [/dt table1:table2]|[/dt table]");
             Console.WriteLine("     [/o output file]");
-            Console.WriteLine("/h,/?     : this help");
-            Console.WriteLine("/s        : server alias defined on SqlCompare.exe.config");
-            Console.WriteLine("/cs       : sql server connection string");
-            Console.WriteLine("/schema   : compare schmea (default)");
-            Console.WriteLine("/data     : compare data");
-            Console.WriteLine("/db       : database name");
-            Console.WriteLine("/dt       : table name");
-            Console.WriteLine("/a        : generate rows from table");
+            Console.WriteLine("/h,/?    : this help");
+            Console.WriteLine("/s       : server alias defined on SqlCompare.exe.config]");
+            Console.WriteLine("/schema  : compare schmea (default)");
+            Console.WriteLine("/data    : compare data");
+            Console.WriteLine("/db      : database name");
+            Console.WriteLine("/dt      : table name");
+            Console.WriteLine("/a       : generate rows from table");
             Console.WriteLine("examples:");
-            Console.WriteLine("SqlCompare /s localhost /db northwind southwind /schema");
+            Console.WriteLine("SqlCompare /s localhost /db northwind:southwind /schema");
             Console.WriteLine("SqlCompare /a table1 id=20");
         }
     }
