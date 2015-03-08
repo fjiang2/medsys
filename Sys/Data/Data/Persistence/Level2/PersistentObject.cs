@@ -358,12 +358,12 @@ namespace Sys.Data
                         if (f != "")
                             f += ",\r\n";
 
-                        MetaColumn column = new MetaColumn(attr);
-                        f += MetaColumn.GetSQLField(column);
+                        ColumnSchema column = new ColumnSchema(attr);
+                        f += "\t" + ColumnSchema.GetSQLField(column);
                     }
                 }
 
-                return MetaTable.CREATE_TABLE(f, this.Primary); 
+                return TableSchema.CREATE_TABLE(f, this.Primary); 
             }
         }
 
@@ -769,7 +769,7 @@ namespace Sys.Data
         /// <returns></returns>
         public bool CreateTable()
         {
-            if (MetaDatabase.TableExists(this.TableName))
+            if (DatabaseSchema.TableExists(this.TableName))
                 return false;
 
             string SQL = string.Format("USE [{0}];", TableName.DatabaseName.Name) + string.Format(this.CreateTableString, TableName.Name);
@@ -780,7 +780,7 @@ namespace Sys.Data
         
       
 
-        private MetaTable Meta
+        private TableSchema Meta
         {
             get
             {

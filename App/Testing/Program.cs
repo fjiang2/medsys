@@ -21,23 +21,25 @@ namespace App.Testing
     class Program
     {
         const string conn_localhost_medsys = "data source=localhost\\sqlexpress;initial catalog=medsys;integrated security=SSPI;packet size=4096";
-        
-        const string conn_buildmachine = "data source=192.168.104.114,1433\\sqlexpress;initial catalog=ATMS;User Id=sa;Password=naztec";
+
+        const string conn_buildmachine = "data source=192.168.104.114,1433\\MSSQLSERVER;initial catalog=ATMS_4_5;User Id=sa;Password=naztec";
+        const string conn_buildmachine2 = "data source=192.168.104.114,1433\\sqlexpress;initial catalog=Tes;User Id=sa;Password=naztec";
         const string conn_localhost = "data source=localhost\\sqlexpress;initial catalog=ATMS_4_5;integrated security=SSPI;packet size=4096";
         const string conn_palmdemo = "data source=192.168.104.2;initial catalog=palmdemo;User Id=sa;Password=";
         const string conn_ab = "data source=192.168.104.190,1433\\SQLEXPRESS;initial catalog=ATMS_4_5;User Id=sa;Password=naztec";
+        const string conn_IP128 = "data source=192.168.104.128,1433\\SQLEXPRESS;initial catalog=ATMS_4_5;User Id=sa;Password=naztec";
 
         static void Main(string[] args)
         {
 
             DataProviderManager.RegisterDefaultProvider(conn_localhost_medsys);
-           
+
             //NTreeViewDemo();
            //SqlClauseDemo();
            //SqlClauseJoinDemo();
 
             //SqlServerCompactDemo();
-            //TableCompareDemo();
+            TableCompareDemo(conn_localhost, conn_buildmachine);
 
             DailyFetch fetching = new DailyFetch();
             //DailyFetch.Test();
@@ -45,14 +47,24 @@ namespace App.Testing
 
         }
 
-        private static void TableCompareDemo()
+        private static void TableCompareDemo(string pvd1, string pvd2)
         {
             string script;
-            script = TableCompare.Difference(conn_localhost, conn_buildmachine, "AppFcn", new string[] { "FCN_ID" });
-            script = TableCompare.Difference(conn_palmdemo, conn_localhost, "Report", new string[] { "ID" });
-            script = TableCompare.Difference(conn_palmdemo, conn_localhost, "Rep_Parm", new string[] { "REP_ID", "ORD" });
 
-            script = DatabaseCompare.Difference(conn_localhost, conn_buildmachine, "ATMS_4_5", "ATMS");
+            var compare = new Compare(pvd1, pvd2);
+
+            script = compare.TableSchemaDifference("3M_IDS", "3M_IDS");
+
+            script = compare.DatabaseSchemaDifference("ATMS_4_5", "ATMS_4_5");
+
+            script = compare.TableDifference("Config", new string[] { "Key" });
+            script = compare.TableDifference("AppFcn", new string[] { "FCN_ID" });
+            script = compare.TableDifference("ScanShape", new string[] { "Shape" });
+
+            script = compare.TableDifference("Report", new string[] { "ID" });
+            script = compare.TableDifference("Rep_Parm", new string[] { "REP_ID", "NAME" });
+
+            script = compare.DatabaseDifference("ATMS_4_5", "ATMS");
         }
 
         private static void SqlServerCompactDemo()
@@ -62,18 +74,6 @@ namespace App.Testing
 
             var table = new SqlCmd(pvd1, "SELECT * FROM CtrlType").FillDataTable();
         }
-
-
-        //Create all INSERT Clauses
-        private static string InsertIntoTableData(string conn, string tableName )
-        {
-            var pvd1 = DataProviderManager.Register("Source", DataProviderType.SqlServer, conn);
-            string script = TableCompare.Rows(tableName, pvd1);
-            return script;
-        }
-
-    
-
 
 
         static void SqlClauseDemo()

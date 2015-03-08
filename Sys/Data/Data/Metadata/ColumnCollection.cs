@@ -34,7 +34,7 @@ namespace Sys.Data
         {
             get
             {
-                foreach (MetaColumn column in this)
+                foreach (ColumnSchema column in this)
                 {
                     if (column.ColumnName == columnName)
                         return column;
@@ -55,7 +55,7 @@ namespace Sys.Data
         {
 
             var columns = this.Where(column => Array.IndexOf<string>(primary.Keys, column.ColumnName) >= 0);
-            foreach (MetaColumn column in columns)
+            foreach (ColumnSchema column in columns)
             {
                 column.IsPrimary = true;
             }
@@ -87,7 +87,7 @@ namespace Sys.Data
 
             string[] values = new string[this.Count];
             int i = 0;
-            foreach (MetaColumn column in this)
+            foreach (ColumnSchema column in this)
             {
                 object obj = column.ToObject(items[i]);
                 if (obj == null)

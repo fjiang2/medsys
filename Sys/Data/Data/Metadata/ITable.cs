@@ -40,6 +40,7 @@ namespace Sys.Data
     {
         string[] Keys { get; }
         int Length { get; }
+        string ConstraintName { get; }
     }
 
     public interface IForeignKeys
@@ -55,7 +56,8 @@ namespace Sys.Data
         string FK_Column { get; }
         string PK_Table { get; }
         string PK_Column { get; }
-
+        string Constraint_Name { get; }
+        
         string DatabaseName { get;  }
         DataProvider Provider { get; }
     }

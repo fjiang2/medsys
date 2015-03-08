@@ -22,7 +22,6 @@ using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
 using System.Data.OleDb;
-using System.Data.SqlServerCe;
 using Tie;
 
 namespace Sys.Data
@@ -73,8 +72,6 @@ namespace Sys.Data
                     case DbProviderType.OleDb:
                         return new OleDbConnection(connectionString);
 
-                    case DbProviderType.SqlCe:
-                        return new SqlCeConnection(connectionString);
                 }
 
                 throw new NotImplementedException();

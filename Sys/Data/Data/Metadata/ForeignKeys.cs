@@ -120,7 +120,18 @@ namespace Sys.Data
                 key.PK_Column);
         }
 
+        public override bool Equals(object obj)
+        {
+            ForeignKey key = obj as ForeignKey;
+            if (key == null)
+                return false;
 
+            return this.PK_Table.Equals(key.PK_Table)
+                && this.PK_Column.Equals(key.PK_Column)
+                && this.FK_Table.Equals(key.FK_Table)
+                && this.FK_Column.Equals(key.FK_Column)
+                ;
+        }
         public override string ToString()
         {
             return string.Format("TABLE {0} CONSTRAINT {1} FOREIGN KEY({2}) REFERENCES {3}({4})", FK_Table, Constraint_Name, FK_Column, PK_Table, PK_Column);

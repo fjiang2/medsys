@@ -67,7 +67,7 @@ namespace Sys.Data
         public static DataTable PrimaryKeySchema(TableName tableName)
         { 
             string SQL = @"
-            SELECT c.COLUMN_NAME 
+            SELECT c.COLUMN_NAME, pk.CONSTRAINT_NAME
                 FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS pk, 
                      INFORMATION_SCHEMA.KEY_COLUMN_USAGE c 
                 WHERE pk.TABLE_NAME = '{0}' 

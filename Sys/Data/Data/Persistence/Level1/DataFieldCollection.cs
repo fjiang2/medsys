@@ -31,7 +31,7 @@ namespace Sys.Data
      
         public void UpdatePrimaryIdentity(TableName tableName)
         {
-            MetaTable meta = tableName.GetCachedMetaTable();
+            TableSchema meta = tableName.GetCachedMetaTable();
 
             UpdatePrimaryIdentity(meta.PrimaryKeys, meta.Identity);
         }

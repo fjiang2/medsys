@@ -33,7 +33,7 @@ namespace Sys.Data.Comparison
                     L2.Add(new ColumnPair { ColumnName = column, Value = row1[column] });
             }
 
-            foreach (var column in table.PkColumns)
+            foreach (var column in table.PkColumns.Keys)
             {
                 L1.Add(new ColumnPair { ColumnName = column, Value = row1[column] });
             }

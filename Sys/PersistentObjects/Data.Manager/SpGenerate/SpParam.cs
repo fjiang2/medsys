@@ -35,8 +35,8 @@ namespace Sys.Data.Manager
         {
             this.param = param;
             this.name = param.name.Substring(1);
-            this.type = MetaColumn.GetFieldType(param.type, false);
-            this.dbType = MetaColumn.GetCType(param.type);
+            this.type = ColumnSchema.GetFieldType(param.type, false);
+            this.dbType = ColumnSchema.GetCType(param.type);
 
         }
 

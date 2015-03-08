@@ -64,7 +64,7 @@ namespace Sys.Data.Manager
             //    nullable = true;
 
 
-            string ty = MetaColumn.GetFieldType(column.DataType, column.Nullable);
+            string ty = ColumnSchema.GetFieldType(column.DataType, column.Nullable);
             //string declare = string.Format("public {0} {1};", ty, column.FieldName);
             string declare = string.Format("public {0} {1} {{get; set;}} ", ty, fieldName);
 

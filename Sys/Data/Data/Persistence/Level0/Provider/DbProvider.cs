@@ -90,8 +90,6 @@ namespace Sys.Data
                 case DbProviderType.OleDb:
                     return new OleDbProvider(script, connection);
 
-                case DbProviderType.SqlCe:
-                    return new SqlCeProvider(script, connection);
             }
 
             throw new NotImplementedException();

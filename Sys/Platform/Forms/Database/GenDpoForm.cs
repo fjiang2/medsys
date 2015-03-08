@@ -164,7 +164,7 @@ namespace Sys.Platform.Forms
             TableName tname = new TableName(this.provider, DatabaseName, "any");
             
             this.txtDatabaseId.Text = tname.DatabaseId().ToString();
-            string[] tableNames = MetaDatabase.GetTableNames(new DatabaseName(provider, DatabaseName));
+            string[] tableNames = DatabaseSchema.GetTableNames(new DatabaseName(provider, DatabaseName));
             if (showNewTables)
             {
                 foreach (string tableName in tableNames)
@@ -530,7 +530,7 @@ namespace Sys.Platform.Forms
             this.provider = ((MyProvider)comboServer.SelectedItem).Provider;
             
             comboDatabase.Items.Clear();
-            foreach (string db in MetaDatabase.GetDatabaseNames(this.provider))
+            foreach (string db in DatabaseSchema.GetDatabaseNames(this.provider))
                 comboDatabase.Items.Add(db);
 
 

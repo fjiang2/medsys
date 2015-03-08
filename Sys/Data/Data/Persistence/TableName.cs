@@ -45,7 +45,7 @@ namespace Sys.Data
             this.tableName = this.tableName.Replace("[", "").Replace("]", "");
 
             if (databaseName == "")
-                databaseName = MetaDatabase.CurrentDatabaseName(provider);
+                databaseName = DatabaseSchema.CurrentDatabaseName(provider);
 
             this.baseName = new DatabaseName(provider, databaseName);
         }

@@ -82,28 +82,28 @@ namespace Sys.Data.Manager
 
 
 
-        internal static MetaTable GetMetaTable(this TableName tname)
+        internal static TableSchema GetMetaTable(this TableName tname)
         {
-            var meta = new MetaTable(tname);
+            var meta = new TableSchema(tname);
             UpdateTableAndColumnID(meta);
             return meta;
         }
 
-        internal static void UpdateTableAndColumnID(this MetaTable meta)
+        internal static void UpdateTableAndColumnID(this TableSchema meta)
         {
             TableName tname = meta.TableName; 
             int tableId = DictTable.GetId(tname);
             meta._tableID = tableId;
 
             List<dictDataColumnDpo> list;
-            if (MetaDatabase.TableExists(typeof(dictDataColumnDpo).TableName()))
+            if (DatabaseSchema.TableExists(typeof(dictDataColumnDpo).TableName()))
             {
                 list = new TableReader<dictDataColumnDpo>(dictDataColumnDpo._table_id.ColumnName() == tableId).ToList();
             }
             else
                 list = new List<dictDataColumnDpo>();  //when dictDataColumnDpo doesn't exist
 
-            foreach (MetaColumn col in meta.Columns)
+            foreach (ColumnSchema col in meta.Columns)
             {
                 var result = list.Where(column => column.name == col.ColumnName).FirstOrDefault();
                 if (result != null)

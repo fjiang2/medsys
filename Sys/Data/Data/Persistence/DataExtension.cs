@@ -442,10 +442,10 @@ namespace Sys.Data
 
 
         #region Metadata Table pool
-        private static DataPool<TableName, MetaTable> pool = new DataPool<TableName, MetaTable>(20);
+        private static DataPool<TableName, TableSchema> pool = new DataPool<TableName, TableSchema>(20);
         
         //return TableId ==-1 , ColumnId == -1
-        internal static MetaTable GetCachedMetaTable(this TableName tname)
+        internal static TableSchema GetCachedMetaTable(this TableName tname)
         {
             return pool.GetItem(tname);
         }

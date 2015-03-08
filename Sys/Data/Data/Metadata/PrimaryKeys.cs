@@ -26,15 +26,20 @@ namespace Sys.Data
     public class PrimaryKeys : IPrimaryKeys
     {
         private string[] keys;
+        private string constraintName;
 
         public PrimaryKeys(string[] columns)
         {
             this.keys = columns;
+            this.constraintName = "";
         }
 
         public PrimaryKeys(TableName tname)
-        { 
-            this.keys = InformationSchema.PrimaryKeySchema(tname).ToArray<string>(0);
+        {
+            DataTable table = InformationSchema.PrimaryKeySchema(tname);
+            this.keys = table.ToArray<string>(0);
+            if (this.keys.Length != 0)
+                this.constraintName = table.Cell<string>(0, 1);
         }
 
         public string[] Keys
@@ -43,6 +48,11 @@ namespace Sys.Data
             {
                 return this.keys;
             }
+        }
+
+        public string ConstraintName
+        {
+            get { return this.constraintName; }
         }
 
         public int Length { get { return this.keys.Length; } }

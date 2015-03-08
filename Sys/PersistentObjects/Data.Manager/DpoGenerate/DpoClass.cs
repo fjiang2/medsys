@@ -417,7 +417,7 @@ namespace @NAMESPACE
 ";
 
 
-            SQL_CREATE_TABLE_STRING = Sys.Data.MetaTable.GenerateCREATE_TABLE(metaTable);
+            SQL_CREATE_TABLE_STRING = Sys.Data.TableSchema.GenerateCREATE_TABLE(metaTable);
             CREATE_TABLE = string.Format(CREATE_TABLE, SQL_CREATE_TABLE_STRING);
             if(this.HasColumnAttribute || !this.HasTableAttribute)
                 CREATE_TABLE = ""; 

@@ -205,7 +205,7 @@ namespace Sys.Platform.Forms
 
                 //Remove old items
                 comboxDefaultDatabase.Items.Clear();
-                string[] databases = MetaDatabase.GetDatabaseNames();
+                string[] databases = DatabaseSchema.GetDatabaseNames();
                 foreach (string database in databases)
                 {
                     comboxDefaultDatabase.Items.Add(database);

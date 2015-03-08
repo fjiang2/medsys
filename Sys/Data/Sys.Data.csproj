@@ -33,10 +33,6 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Program Files\Microsoft SQL Server Compact Edition\v4.0\Desktop\System.Data.SqlServerCe.dll</HintPath>
-    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -48,9 +44,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Compare\ColumnPair.cs" />
-    <Compile Include="Compare\DatabaseCompare.cs" />
+    <Compile Include="Compare\Compare.cs" />
     <Compile Include="Compare\RowCompare.cs" />
     <Compile Include="Compare\TableCompare.cs" />
+    <Compile Include="Compare\TableSchemaCompare.cs" />
+    <Compile Include="Compare\TableScript.cs" />
     <Compile Include="Data\Attribute\AggregatedAttribute.cs" />
     <Compile Include="Data\Attribute\AssociationAttribute.cs" />
     <Compile Include="Data\Attribute\ColumnAttribute.cs" />
@@ -79,9 +77,9 @@
     <Compile Include="Data\Metadata\IdentityKeys.cs" />
     <Compile Include="Data\Metadata\InformationSchema.cs" />
     <Compile Include="Data\Metadata\ITable.cs" />
-    <Compile Include="Data\Metadata\MetaColumn.cs" />
-    <Compile Include="Data\Metadata\MetaDatabase.cs" />
-    <Compile Include="Data\Metadata\MetaTable.cs" />
+    <Compile Include="Data\Metadata\ColumnSchema.cs" />
+    <Compile Include="Data\Metadata\DatabaseSchema.cs" />
+    <Compile Include="Data\Metadata\TableSchema.cs" />
     <Compile Include="Data\Metadata\PrimaryKeys.cs" />
     <Compile Include="Data\Persistence\DatabaseName.cs" />
     <Compile Include="Data\Persistence\DataExtension.cs" />
@@ -95,7 +93,6 @@
     <Compile Include="Data\Persistence\Level0\Provider\DbProvider.cs" />
     <Compile Include="Data\Persistence\Level0\Provider\IProvider.cs" />
     <Compile Include="Data\Persistence\Level0\Provider\OleDbProvider.cs" />
-    <Compile Include="Data\Persistence\Level0\Provider\SqlCeProvider.cs" />
     <Compile Include="Data\Persistence\Level0\Provider\SqlProvider.cs" />
     <Compile Include="Data\Persistence\Level0\SqlCmd.cs" />
     <Compile Include="Data\Persistence\Level0\SqlServer.cs" />
