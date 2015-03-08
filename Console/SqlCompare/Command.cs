@@ -52,32 +52,26 @@ namespace SqlCompare
 
             string sql = null;
 
-            if (CompareSchema)
+            if (TableName1 != null && TableName2 != null)
             {
-                if (TableName1 != null && TableName2 != null)
-                {
-                    Console.WriteLine(string.Format("compare table schema {0} => {1}", TableName1, TableName2));
-
-                    sql = compare.TableSchemaDifference(TableName1, TableName2);
-                }
-                else
-                {
-                    Console.WriteLine(string.Format("compare database schema {0} => {1}", CS1.InitialCatalog, CS2.InitialCatalog));
-                    sql = compare.DatabaseSchemaDifference(CS1.InitialCatalog, CS2.InitialCatalog);
-                }
-            }
-            else
-            {
-                if (TableName1 != null && TableName2 != null)
+                Console.WriteLine(string.Format("compare table schema {0} => {1}", TableName1, TableName2));
+                sql = compare.TableSchemaDifference(TableName1, TableName2);
+                
+                if (sql == string.Empty)
                 {
                     Console.WriteLine(string.Format("compare table data {0} => {1}", TableName1, TableName2));
                     sql = compare.TableDifference(TableName1, TableName2);
                 }
-                else
-                {
-                    Console.WriteLine(string.Format("compare database data {0} => {1}", CS1.InitialCatalog, CS2.InitialCatalog));
-                    sql = compare.DatabaseDifference(CS1.InitialCatalog, CS2.InitialCatalog);
-                }
+            }
+            else if (CompareSchema)
+            {
+                Console.WriteLine(string.Format("compare database schema {0} => {1}", CS1.InitialCatalog, CS2.InitialCatalog));
+                sql = compare.DatabaseSchemaDifference(CS1.InitialCatalog, CS2.InitialCatalog);
+            }
+            else
+            {
+                Console.WriteLine(string.Format("compare database data {0} => {1}", CS1.InitialCatalog, CS2.InitialCatalog));
+                sql = compare.DatabaseDifference(CS1.InitialCatalog, CS2.InitialCatalog);
             }
 
 
@@ -88,7 +82,11 @@ namespace SqlCompare
         public void Output(string sql)
         {
             if (string.IsNullOrEmpty(sql))
+            {
+                if(File.Exists(OutputFile))
+                    File.Delete(OutputFile);
                 return;
+            }
 
             using (var writer = new StreamWriter(OutputFile))
             {

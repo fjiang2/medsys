@@ -60,7 +60,20 @@ namespace Sys.Data.Comparison
         { 
             foreach(var column in columns)
             {
-                if(!row1[column].Equals(row2[column]))
+                if (row1[column] is byte[] && row1[column] is byte[])
+                { 
+                    var B1 = (byte[]) row1[column];
+                    var B2 = (byte[]) row2[column];
+                    if(B1.Length != B2.Length)
+                        return false;
+
+                    for (int i = 0; i < B1.Length; i++)
+                    {
+                        if (B1[i] != B2[i])
+                            return false;
+                    }
+                }
+                else if(!row1[column].Equals(row2[column]))
                     return false;
             }
 
