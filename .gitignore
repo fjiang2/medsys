@@ -23,3 +23,8 @@
 /Sys/ViewManager/obj/Debug
 /Console/SqlCompare/obj/Debug
 /Console/SqlCompare/bin/Debug
+/App/DpoCmd/bin/Debug
+/App/Executable/bin/Debug
+/App/Stock/bin/Debug
+/App/Testing/bin/Debug
+/Sys/PersistentObjects/obj/Debug
