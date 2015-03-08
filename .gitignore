@@ -1,0 +1,25 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/App/Data/obj/Debug
+/App/DpoCmd/obj/Debug
+/App/Executable/obj/x86/Debug
+/App/PTA/obj/Debug
+/App/Stock/obj/Debug
+/App/Testing/obj/x86/Debug
+/App/X12/obj/x86/Debug
+/Sys/Workflow/obj/Debug
+/Sys/agsxmpp.ui/obj/Debug
+/Sys/BusinessRules/obj/Debug
+/Sys/Core/obj/Debug
+/Sys/Data/obj/Debug
+/Sys/DataManager/obj/Debug
+/Sys/Foundation/obj/Debug
+/Sys/Messaging/obj/Debug
+/Sys/Network/obj/Debug
+/Sys/Platform/obj/Debug
+/Sys/SmartList/obj/Debug
+/Sys/ViewManager/obj/Debug
+/Console/SqlCompare/obj/Debug
+/Console/SqlCompare/bin/Debug
