@@ -62,17 +62,32 @@ namespace Sys.Data.Comparison
             return builder.ToString();
         }
 
-        public string DatabaseDifference(string db1, string db2)
+        public string DatabaseDifference(string db1, string db2, string[] excludedTables)
         {
 
             DatabaseName dname1 = new DatabaseName(pvd1, db1);
             DatabaseName dname2 = new DatabaseName(pvd2, db2);
+
+            if (dname1.DatabaseExists())
+            {
+                Console.WriteLine("not exists database:" + db1);
+                return string.Empty;
+            }
+
+            if (dname2.DatabaseExists())
+            {
+                Console.WriteLine("not exists database:" + db2);
+                return string.Empty;
+            }
+
 
             string[] names = DatabaseSchema.GetTableNames(dname1);
 
             StringBuilder builder = new StringBuilder();
             foreach (string tableName in names)
             {
+                if (excludedTables.Contains(tableName))
+                    continue;
 
                 TableName tname1 = new TableName(dname1, tableName);
                 TableName tname2 = new TableName(dname2, tableName);

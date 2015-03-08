@@ -40,7 +40,7 @@ namespace SqlCompare
             Output(sql);
         }
 
-        public void Run()
+        public void Run(string[] excludedtables)
         {
 
 
@@ -71,7 +71,9 @@ namespace SqlCompare
             else
             {
                 Console.WriteLine(string.Format("compare database data {0} => {1}", CS1.InitialCatalog, CS2.InitialCatalog));
-                sql = compare.DatabaseDifference(CS1.InitialCatalog, CS2.InitialCatalog);
+                if (excludedtables != null && excludedtables.Length > 0)
+                    Console.WriteLine(string.Format("ignore tables: {0}", string.Join(",", excludedtables)));
+                sql = compare.DatabaseDifference(CS1.InitialCatalog, CS2.InitialCatalog, excludedtables);
             }
 
 
