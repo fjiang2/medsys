@@ -108,8 +108,9 @@ namespace SqlCompare
 
         private void Run(string[] args)
         {
-            string tableName1 = null;
-            string tableName2 = null;
+            string tableNamePattern1 = null;
+            string tableNamePattern2 = null;
+            string tableName = null;
 
 
             string where = null;
@@ -170,6 +171,9 @@ namespace SqlCompare
                         break;
                     case "/fk":
                         compareType = CompareAction.ForeignKey;
+                        break;
+                    case "/name":
+                        compareType = CompareAction.Name;
                         break;
 
                     case "/S":
@@ -235,8 +239,8 @@ namespace SqlCompare
                     case "/dt":
                         if (i < args.Length && parse(args[i++], out t1, out t2))
                         {
-                            tableName1 = t1;
-                            tableName2 = t2;
+                            tableNamePattern1 = t1;
+                            tableNamePattern2 = t2;
                             break;
                         }
                         else
@@ -248,7 +252,7 @@ namespace SqlCompare
                     case "/a":
                         if (i < args.Length)
                         {
-                            tableName1 = args[i++];
+                            tableName = args[i++];
                             compareType = CompareAction.AllRows;
 
                             if (i < args.Length && !args[i].StartsWith("/"))
@@ -310,32 +314,37 @@ namespace SqlCompare
                 return;
             }
 
-            Command cmd = new Command(cs1, cs2)
-            {
-                TableName1 = tableName1,
-                TableName2 = tableName2,
-                OutputFile = output
-            };
+            Command cmd = new Command(cs1, cs2, tableNamePattern1, tableNamePattern2) { OutputFile = output };
 
             try
             {
                 switch (compareType)
                 {
                     case CompareAction.AllRows:
-                        cmd.AllRows(tableName1, where);
+                        if(tableName != null)
+                            cmd.AllRows(tableName, where);
+                        else
+                            cmd.AllRows();
                         break;
 
                     case CompareAction.ParimaryKey:
-                        cmd.DisplayPK(tableName1);
+                        cmd.Side1.DisplayPK();
                         break;
 
                     case CompareAction.ForeignKey:
-                        cmd.DisplayFK(tableName1);
+                        cmd.Side1.DisplayFK();
                         break;
 
                     case CompareAction.Data:
                     case CompareAction.Schema:
                         cmd.Run(compareType, excludedtables);
+                        break;
+
+                    case CompareAction.Name:
+                        foreach (string item in new Side(cs1, tableNamePattern1).TableNames)
+                        {
+                            Console.WriteLine(item);
+                        }
                         break;
                 }
             }
@@ -403,13 +412,14 @@ namespace SqlCompare
             Console.WriteLine("     [/a table [where]]");
             Console.WriteLine("     [/e table1,table2,...,table");
             Console.WriteLine("     [/db datbase1:datbase2]|[/db datbase]");
-            Console.WriteLine("     [/dt table1:table2]|[/dt table]");
+            Console.WriteLine("     [/dt table1:table2]|[/dt table(wildcard*,?)]");
             Console.WriteLine("     [/o output file]");
             Console.WriteLine("/h,/?    : this help");
-            Console.WriteLine("/i       : ini file default file:SqlCompare.ini]");
-            Console.WriteLine("/s       : server alias defined on SqlCompare.ini]");
+            Console.WriteLine("/i       : ini file default file:sqlcompare.ini]");
+            Console.WriteLine("/s       : server alias defined on ini file]");
             Console.WriteLine("/schema  : compare schmea (default)");
             Console.WriteLine("/data    : compare data");
+            Console.WriteLine("/name    : display table names matched by /dt table");
             Console.WriteLine("/pk      : display primary key defined on /dt table");
             Console.WriteLine("/fk      : display foreign key defined on /dt table");
             Console.WriteLine("/db      : database name");

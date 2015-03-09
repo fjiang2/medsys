@@ -8,42 +8,43 @@ using Sys.Data.Comparison;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace SqlCompare
 {
-    public enum CompareAction
-    {
-        Schema = 1,
-        Data = 2,
-        ParimaryKey = 3,
-        ForeignKey = 4,
-        AllRows = 5
-    }
-
-
+   
     class Command
     {
+        private Compare compare;
+
         public string OutputFile { get; set; }
-        public string TableName1 { get; set; }
-        public string TableName2 { get; set; }
 
-        private SqlConnectionStringBuilder CS1;
-        private SqlConnectionStringBuilder CS2;
-        private DataProvider pvd1;
-        private DataProvider pvd2;
+        public Side Side1 {get; private set;}
+        public Side Side2 {get; private set;}
 
-        public Command(SqlConnectionStringBuilder cs1, SqlConnectionStringBuilder cs2)
+        public Command(SqlConnectionStringBuilder cs1, SqlConnectionStringBuilder cs2, string tableNamePattern1, string tableNamePattern2)
         {
-            this.CS1 = cs1;
-            this.CS2 = cs2;
-
-            this.pvd1 = DataProviderManager.Register("Source", DataProviderType.SqlServer, cs1.ConnectionString);
-            this.pvd2 = DataProviderManager.Register("Sink", DataProviderType.SqlServer, cs2.ConnectionString);
+            this.Side1 = new Side(cs1, tableNamePattern1);
+            this.Side2 = new Side(cs2, tableNamePattern2);
 
             OutputFile = "sqlcompare.sql";
+
+            this.compare = new Compare(this.Side1.Provider, this.Side2.Provider);
         }
 
-        private bool Exists(TableName tname)
+
+        public void AllRows()
+        {
+            Output(Side1.AllRows());
+        }
+
+        public void AllRows(string tableName, string where)
+        {
+            Output(Side1.AllRows(tableName,where));
+        }
+
+
+        public static bool Exists(TableName tname)
         {
             if (!tname.Exists())
             {
@@ -54,7 +55,7 @@ namespace SqlCompare
             return true;
         }
 
-        private bool Exists(DatabaseName dname)
+        public static bool Exists(DatabaseName dname)
         {
             if (!dname.Exists())
             {
@@ -65,140 +66,116 @@ namespace SqlCompare
             return true;
         }
 
-        public void AllRows(string tableName, string where)
-        {
-            var tname = new TableName(pvd1, tableName);
-            if (Exists(tname))
-            {
-                string sql = Compare.AllRows(tname, where);
-                Output(sql);
-            }
-        }
-
-        public void DisplayPK(string tableName)
-        {
-            TableName tname = new TableName(pvd1, tableName);
-            if (Exists(tname))
-            {
-                var dt = tname.PrimaryKeySchema();
-                Display(dt);
-            }
-        }
-
-        public void DisplayFK(string tableName)
-        {
-            TableName tname = new TableName(pvd1, tableName);
-            if (Exists(tname))
-            {
-                var dt = tname.ForeignKeySchema();
-                Display(dt);
-            }
-        }
-
-        private void Display(DataTable dt)
-        {
-            StringBuilder builder = new StringBuilder();
-            foreach(DataColumn column in dt.Columns)
-            {
-                builder.AppendFormat("{0}\t", column.ColumnName);
-            }
-            Console.WriteLine(builder.ToString());
-            foreach (DataRow row in dt.Rows)
-            {
-                builder = new StringBuilder();
-                foreach (DataColumn column in dt.Columns)
-                {
-                    builder.AppendFormat("{0}\t", row[column]);
-                }
-                
-                Console.WriteLine(builder.ToString());
-            }
-        }
 
         public void Run(CompareAction CompareType, string[] excludedtables)
         {
-
             excludedtables = excludedtables.Select(row => row.ToUpper()).ToArray();
+            DatabaseName db1 = Side1.DatabaseName;
+            DatabaseName db2 = Side2.DatabaseName;
 
-            Console.WriteLine(string.Format("server1: {0} default database:{1}", CS1.DataSource, CS1.InitialCatalog));
-            Console.WriteLine(string.Format("server2: {0} default database:{1}", CS2.DataSource, CS2.InitialCatalog));
+
+            Console.WriteLine(string.Format("server1: {0} default database:{1}", db1.Name, db2.Name));
+            Console.WriteLine(string.Format("server2: {0} default database:{1}", db1.Name, db2.Name));
 
 
-            var compare = new Compare(pvd1, pvd2);
-            DatabaseName db1 = new DatabaseName(pvd1, CS1.InitialCatalog);
-            DatabaseName db2 = new DatabaseName(pvd2, CS2.InitialCatalog);
-
+           
             if (!Exists(db1) || !Exists(db2))
                 return;
 
-            string sql = null;
+            StringBuilder builder = new StringBuilder();
 
-            if (TableName1 != null && TableName2 != null)
+            var N1 = Side1.TableNames;
+            var N2 = Side2.TableNames;
+
+
+            if (N1.Length != 0 && N2.Length != 0)
             {
-                TableName tname1 = new TableName(db1, TableName1);
-                TableName tname2 = new TableName(db2, TableName2);
-
-                if (!Exists(tname1) || !Exists(tname2))
-                    return;
-
-                Console.WriteLine(string.Format("compare table schema {0} => {1}", TableName1, TableName2));
-                sql = compare.TableSchemaDifference(tname1, tname2);
-                
-                if (sql == string.Empty)
+                if (N1.Length != N2.Length)
                 {
-                    if (excludedtables.Contains(tname1.Name.ToUpper()))
-                    {
-                        Console.WriteLine("skip to compare data on table {0}", tname1);
-                    }
-                    else if (excludedtables.Contains(tname2.Name.ToUpper()))
-                    {
-                        Console.WriteLine("skip to compare data on table {0}", tname2);
-                    }
-                    else
-                    {
-                        Console.WriteLine(string.Format("compare table data {0} => {1}", TableName1, TableName2));
-                        sql = compare.TableDifference(tname1, tname2);
-                    }
+                    Console.WriteLine("cannot compare,number of tables on the left and right are different");
+                    return;
+                }
+
+                for(int i=0; i<N1.Length; i++)
+                {
+                    builder.Append(CompareTable(N1[i], N2[i], excludedtables));
                 }
             }
             else if (CompareType == CompareAction.Schema)
             {
-                Console.WriteLine(string.Format("compare database schema {0} => {1}", CS1.InitialCatalog, CS2.InitialCatalog));
-                sql = compare.DatabaseSchemaDifference(db1, db2);
+                Console.WriteLine(string.Format("compare database schema {0} => {1}", db1.Name, db2.Name));
+                builder.Append(compare.DatabaseSchemaDifference(db1, db2));
             }
             else if (CompareType == CompareAction.Data)
             {
-                Console.WriteLine(string.Format("compare database data {0} => {1}", CS1.InitialCatalog, CS2.InitialCatalog));
+                Console.WriteLine(string.Format("compare database data {0} => {1}", db1.Name, db2.Name));
                 if (excludedtables != null && excludedtables.Length > 0)
                     Console.WriteLine(string.Format("ignore tables: {0}", string.Join(",", excludedtables)));
-                sql = compare.DatabaseDifference(db1, db2, excludedtables);
+                builder.Append(compare.DatabaseDifference(db1, db2, excludedtables));
             }
 
 
-            Output(sql);
+            Output(builder.ToString());
             
+        }
+
+        private string CompareTable(string tableName1, string tableName2, string[] excludedtables)
+        {
+            TableName tname1 = new TableName(Side1.DatabaseName, tableName1);
+            TableName tname2 = new TableName(Side2.DatabaseName, tableName2);
+
+            if (!Exists(tname1) || !Exists(tname2))
+                return string.Empty;
+
+            Console.WriteLine(string.Format("compare table schema {0} => {1}", tableName1, tableName2));
+            string sql = compare.TableSchemaDifference(tname1, tname2);
+
+            if (sql == string.Empty)
+            {
+                if (excludedtables.Contains(tname1.Name.ToUpper()))
+                {
+                    Console.WriteLine("skip to compare data on table {0}", tname1);
+                }
+                else if (excludedtables.Contains(tname2.Name.ToUpper()))
+                {
+                    Console.WriteLine("skip to compare data on table {0}", tname2);
+                }
+                else
+                {
+                    Console.WriteLine(string.Format("compare table data {0} => {1}", tableName1, tableName2));
+                    bool pk;
+                    sql = compare.TableDifference(tname1, tname2, out pk);
+                    
+                    if (!pk)
+                    {
+                        Console.WriteLine("warning: no primary key found : {0}", tname1);
+                    }
+                }
+            }
+            
+            return sql;
         }
 
         public void Output(string sql)
         {
             if (string.IsNullOrEmpty(sql))
             {
-                if (File.Exists(OutputFile))
-                {
-                    File.Delete(OutputFile);
-                    Console.WriteLine("Nothing is changed");
-                }
-
-                return;
+                sql = string.Empty;
+                Console.WriteLine("Nothing is changed");
             }
 
             using (var writer = new StreamWriter(OutputFile))
             {
                 writer.Write(sql);
             }
-
-            Console.WriteLine("output: {0}", OutputFile);
-            Console.WriteLine("completed.", OutputFile);
+            
+            if (!string.IsNullOrEmpty(sql))
+            {
+                Console.WriteLine("output: {0}", OutputFile);
+                Console.WriteLine("completed.", OutputFile);
+            }
         }
+
+
     }
 }
