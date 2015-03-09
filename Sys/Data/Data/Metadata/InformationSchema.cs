@@ -7,10 +7,10 @@ using System.Data;
 
 namespace Sys.Data
 {
-    public class InformationSchema
+    public static class InformationSchema
     {
 
-        public static DataTable TableSchema(TableName tableName)
+        public static DataTable TableSchema(this TableName tableName)
         {
             DataTable dt1;
             string SQL;
@@ -64,7 +64,7 @@ namespace Sys.Data
 
         }
 
-        public static DataTable PrimaryKeySchema(TableName tableName)
+        public static DataTable PrimaryKeySchema(this TableName tableName)
         { 
             string SQL = @"
             SELECT c.COLUMN_NAME, pk.CONSTRAINT_NAME
@@ -81,7 +81,7 @@ namespace Sys.Data
 
         }
 
-        public static DataTable ForeignKeySchema(TableName tableName)
+        public static DataTable ForeignKeySchema(this TableName tableName)
         {
             string SQL = @"
 SELECT  FK.TABLE_NAME AS FK_Table,
@@ -107,7 +107,7 @@ WHERE FK.TABLE_NAME='{0}'
         }
 
 
-        public static DataTable IdentityKeySchema(TableName tableName)
+        public static DataTable IdentityKeySchema(this TableName tableName)
         {
             if (tableName.Provider.DpType != DbProviderType.SqlCe)
             {
@@ -126,7 +126,7 @@ WHERE FK.TABLE_NAME='{0}'
             WHERE c.TABLE_NAME = '{0}' AND c.AUTOINC_INCREMENT = 1", tableName.Name);
         }
 
-        private static DataTable Use(TableName tableName, string script)
+        private static DataTable Use(this TableName tableName, string script)
         {
             StringBuilder builder = new StringBuilder();
 

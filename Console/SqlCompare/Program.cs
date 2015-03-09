@@ -14,31 +14,104 @@ namespace SqlCompare
 {
     class Program
     {
-        static VAL ini;
-        static VAL alias;
+        private VAL ini;
+        private VAL alias;
+        private string output;
+        private string[] excludedtables;
+        private CompareAction compareType;
 
-        static void Main(string[] args)
-        {
+        SqlConnectionStringBuilder cs1;
+        SqlConnectionStringBuilder cs2;
+
+        public Program()
+        { 
         
-            if (!TryReadIni("SqlCompare.ini", out ini))
-                return;
-            
-            alias = ini["alias"];
-            string output = (string)ini["output"];
+        }
 
+        private static bool TryReadIni(string inifile, out VAL ini)
+        {
+            ini = new VAL();
+            if (!File.Exists(inifile))
+            {
+                Console.WriteLine("configuration file {0} not exists", inifile);
+                return false;
+            }
+
+            using (var reader = new StreamReader(inifile))
+            {
+                string code = reader.ReadToEnd();
+                try
+                {
+                    ini = Script.Evaluate(code);
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("json format error in {0}", inifile);
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+
+        private bool ReadIni(string iniFile)
+        {
+            if (!TryReadIni(iniFile, out ini))
+                return false;
+
+            this.alias = ini["alias"];
+            this.output = (string)ini["output"];
+            
             var alias1 = (string)ini["alias1"];
             var alias2 = (string)ini["alias2"];
             
-            SqlConnectionStringBuilder cs1 = new SqlConnectionStringBuilder((string)alias[alias1]);
-            SqlConnectionStringBuilder cs2 = new SqlConnectionStringBuilder((string)alias[alias2]);
-            string[] excludedtables = ini["excludedtables"].HostValue as string[];
+            this.excludedtables = ini["excludedtables"].HostValue as string[];
+            this.compareType = (CompareAction)(int)ini["comparetype"];
 
+            this.cs1 = new SqlConnectionStringBuilder((string)alias[alias1]);
+            this.cs2 = new SqlConnectionStringBuilder((string)alias[alias2]);
+
+            return true;
+        }
+
+        static void Main(string[] args)
+        {
+            var iniFileName = "SqlCompare.ini";
+
+
+
+            int i = 0;
+            while (i < args.Length)
+            {
+                if (args[i++] == "/i")
+                {
+                    if (i < args.Length)
+                    {
+                        iniFileName = args[i++];
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("undefined configuration file");
+                        return;
+                    }
+                }
+            }
+
+            var p = new Program(); 
+            if (!p.ReadIni(iniFileName))
+                return;
+
+            p.Run(args);
+        }
+
+        private void Run(string[] args)
+        {
             string tableName1 = null;
             string tableName2 = null;
 
-            bool compareSchema = (bool)ini["compareschema"];
 
-            bool allRows = false;
             string where = null;
 
             int i = 0;
@@ -49,6 +122,17 @@ namespace SqlCompare
 
                 switch (args[i++])
                 {
+                    case "/i":
+                        if (i < args.Length)
+                        {
+                            i++;
+                            break;
+                        }
+                        else
+                        {
+                            return;
+                        }
+
                     case "/s":
                         if (i < args.Length && parse(args[i++], out t1, out t2))
                         {
@@ -76,11 +160,16 @@ namespace SqlCompare
                         }
 
                     case "/schema":
-                        compareSchema = true;
+                        compareType = CompareAction.Schema;
                         break;
-
                     case "/data":
-                        compareSchema = false;
+                        compareType = CompareAction.Data; 
+                        break;
+                    case "/pk":
+                        compareType = CompareAction.ParimaryKey;
+                        break;
+                    case "/fk":
+                        compareType = CompareAction.ForeignKey;
                         break;
 
                     case "/S":
@@ -160,7 +249,7 @@ namespace SqlCompare
                         if (i < args.Length)
                         {
                             tableName1 = args[i++];
-                            allRows = true;
+                            compareType = CompareAction.AllRows;
 
                             if (i < args.Length && !args[i].StartsWith("/"))
                             {
@@ -225,16 +314,30 @@ namespace SqlCompare
             {
                 TableName1 = tableName1,
                 TableName2 = tableName2,
-                OutputFile = output,
-                CompareSchema = compareSchema
+                OutputFile = output
             };
 
             try
             {
-                if (allRows)
-                    cmd.ExtractDataRows(tableName1, where);
-                else
-                    cmd.Run(excludedtables);
+                switch (compareType)
+                {
+                    case CompareAction.AllRows:
+                        cmd.ExtractDataRows(tableName1, where);
+                        break;
+
+                    case CompareAction.ParimaryKey:
+                        cmd.DisplayPK(tableName1);
+                        break;
+
+                    case CompareAction.ForeignKey:
+                        cmd.DisplayFK(tableName1);
+                        break;
+
+                    case CompareAction.Data:
+                    case CompareAction.Schema:
+                        cmd.Run(compareType, excludedtables);
+                        break;
+                }
             }
             catch (Exception ex)
             {
@@ -266,28 +369,7 @@ namespace SqlCompare
             return true;
         }
 
-        private static bool TryReadIni(string inifile, out VAL ini)
-        {
-            ini = new VAL();
-            if (!File.Exists(inifile))
-                return false;
-
-            using (var reader = new StreamReader(inifile))
-            {
-                string code = reader.ReadToEnd();
-                try
-                {
-                    ini = Script.Evaluate(code);
-                }
-                catch (Exception)
-                {
-                    Console.WriteLine("error in " + inifile);
-                    return false;
-                }
-            }
-
-            return true;
-        }
+      
 
         public static bool IsGoodConnectionString(SqlConnectionStringBuilder cs)
         {
@@ -314,6 +396,7 @@ namespace SqlCompare
         {
             Console.WriteLine("SqlCompare v1.0");
             Console.WriteLine("Usage: SqlCompare");
+            Console.WriteLine("     [/i configuration(ini) file]");
             Console.WriteLine("     [/s alias1:alias2]|[/s alias]");
             Console.WriteLine("     [/S server1:server2] [/U user1:user2] [/P password1:password2]");
             Console.WriteLine("     [/schema]|[/data]");
@@ -323,9 +406,12 @@ namespace SqlCompare
             Console.WriteLine("     [/dt table1:table2]|[/dt table]");
             Console.WriteLine("     [/o output file]");
             Console.WriteLine("/h,/?    : this help");
+            Console.WriteLine("/i       : ini file default file:SqlCompare.ini]");
             Console.WriteLine("/s       : server alias defined on SqlCompare.ini]");
             Console.WriteLine("/schema  : compare schmea (default)");
             Console.WriteLine("/data    : compare data");
+            Console.WriteLine("/pk      : display primary key defined on /dt table");
+            Console.WriteLine("/fk      : display foreign key defined on /dt table");
             Console.WriteLine("/db      : database name");
             Console.WriteLine("/dt      : table name");
             Console.WriteLine("/a       : generate rows from table");

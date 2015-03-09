@@ -11,12 +11,6 @@ namespace Sys.Data.Comparison
         DataProvider pvd1;
         DataProvider pvd2;
 
-        public Compare(string connectionString1, string connectionString2)
-        {
-            this.pvd1 = DataProviderManager.Register("Source", DataProviderType.SqlServer, connectionString1);
-            this.pvd2 = DataProviderManager.Register("Sink", DataProviderType.SqlServer, connectionString2);
-        }
-        
         public Compare(DataProvider pvd1, DataProvider pvd2)
         {
             this.pvd1 = pvd1;
