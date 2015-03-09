@@ -18,20 +18,10 @@ namespace Sys.Data.Comparison
         }
 
         #region compare database schema/data
-        public string DatabaseSchemaDifference(string db1, string db2)
+        public string DatabaseSchemaDifference(DatabaseName dname1, DatabaseName dname2)
         {
-
-            DatabaseName dname1 = new DatabaseName(pvd1, db1);
-            DatabaseName dname2 = new DatabaseName(pvd2, db2);
-
-            if (!dname1.Exists())
-            {
-                Console.WriteLine("invalid database name:" + db1);
-                return string.Empty;
-            }
-
             string[] names = dname1.GetTableNames();
-            
+
             StringBuilder builder = new StringBuilder();
             foreach (string tableName in names)
             {
@@ -56,25 +46,8 @@ namespace Sys.Data.Comparison
             return builder.ToString();
         }
 
-        public string DatabaseDifference(string db1, string db2, string[] excludedTables)
+        public string DatabaseDifference(DatabaseName dname1,  DatabaseName dname2, string[] excludedTables)
         {
-
-            DatabaseName dname1 = new DatabaseName(pvd1, db1);
-            DatabaseName dname2 = new DatabaseName(pvd2, db2);
-
-            if (dname1.Exists())
-            {
-                Console.WriteLine("not exists database:" + db1);
-                return string.Empty;
-            }
-
-            if (dname2.Exists())
-            {
-                Console.WriteLine("not exists database:" + db2);
-                return string.Empty;
-            }
-
-
             string[] names = dname1.GetTableNames();
 
             StringBuilder builder = new StringBuilder();
@@ -115,14 +88,6 @@ namespace Sys.Data.Comparison
 
         #region compare table schema/data
 
-        public string TableSchemaDifference(string dt1, string dt2)
-        {
-            TableName tname1 = new TableName(pvd1, dt1);
-            TableName tname2 = new TableName(pvd2, dt2);
-
-            return TableSchemaDifference(tname1, tname2);
-        }
-
         public string TableSchemaDifference(TableName tableName1, TableName tableName2)
         {
          
@@ -142,13 +107,10 @@ namespace Sys.Data.Comparison
         }
 
 
-        public string TableDifference(string dt1, string dt2)
+        public string TableDifference(TableName tableName1, TableName tableName2)
         {
-            TableName tname1 = new TableName(pvd1, dt1);
-            TableName tname2 = new TableName(pvd2, dt2);
-            
-            string[] primaryKeys = InformationSchema.PrimaryKeySchema(tname1).ToArray<string>(0);
-            string script = TableDifference(tname1, tname2, primaryKeys);
+            string[] primaryKeys = InformationSchema.PrimaryKeySchema(tableName1).ToArray<string>(0);
+            string script = TableDifference(tableName1, tableName2, primaryKeys);
             return script;
         }
 
@@ -164,20 +126,13 @@ namespace Sys.Data.Comparison
 
 
         #region create all rows 
-        public string AllRows(string tableName, string where)
+        public static string AllRows(TableName tableName, string where)
         {
-            var tname = new TableName(pvd1, tableName);
-
-            if(!tname.Exists())
-            {
-                Console.WriteLine("invalid table name:" + tname);
-                return string.Empty;
-            }
 
             if (string.IsNullOrEmpty(where))
-                return Compare.AllRows(tname, new TableReader(tname));
+                return Compare.AllRows(tableName, new TableReader(tableName));
             else
-                return Compare.AllRows(tname, new TableReader(tname, where, new object[] { }));
+                return Compare.AllRows(tableName, new TableReader(tableName, where, new object[] { }));
 
         }
 

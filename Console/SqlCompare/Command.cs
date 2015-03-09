@@ -8,7 +8,6 @@ using Sys.Data.Comparison;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
-using Sys.Data;
 
 namespace SqlCompare
 {
@@ -28,9 +27,8 @@ namespace SqlCompare
         public string TableName1 { get; set; }
         public string TableName2 { get; set; }
 
-        SqlConnectionStringBuilder CS1;
-        SqlConnectionStringBuilder CS2;
-
+        private SqlConnectionStringBuilder CS1;
+        private SqlConnectionStringBuilder CS2;
         private DataProvider pvd1;
         private DataProvider pvd2;
 
@@ -45,25 +43,56 @@ namespace SqlCompare
             OutputFile = "sqlcompare.sql";
         }
 
-        public void ExtractDataRows(string tableName, string where)
+        private bool Exists(TableName tname)
         {
-            var compare = new Compare(pvd1, pvd2);
-            string sql = compare.AllRows(tableName, where);
-            Output(sql);
+            if (!tname.Exists())
+            {
+                Console.WriteLine("table not exists : {0}", tname);
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool Exists(DatabaseName dname)
+        {
+            if (!dname.Exists())
+            {
+                Console.WriteLine("table not exists : {0}", dname);
+                return false;
+            }
+
+            return true;
+        }
+
+        public void AllRows(string tableName, string where)
+        {
+            var tname = new TableName(pvd1, tableName);
+            if (Exists(tname))
+            {
+                string sql = Compare.AllRows(tname, where);
+                Output(sql);
+            }
         }
 
         public void DisplayPK(string tableName)
         {
             TableName tname = new TableName(pvd1, tableName);
-            var dt = tname.PrimaryKeySchema();
-            Display(dt);
+            if (Exists(tname))
+            {
+                var dt = tname.PrimaryKeySchema();
+                Display(dt);
+            }
         }
 
         public void DisplayFK(string tableName)
         {
             TableName tname = new TableName(pvd1, tableName);
-            var dt = tname.ForeignKeySchema();
-            Display(dt);
+            if (Exists(tname))
+            {
+                var dt = tname.ForeignKeySchema();
+                Display(dt);
+            }
         }
 
         private void Display(DataTable dt)
@@ -95,31 +124,42 @@ namespace SqlCompare
 
 
             var compare = new Compare(pvd1, pvd2);
+            DatabaseName db1 = new DatabaseName(pvd1, CS1.InitialCatalog);
+            DatabaseName db2 = new DatabaseName(pvd2, CS2.InitialCatalog);
+
+            if (!Exists(db1) || !Exists(db2))
+                return;
 
             string sql = null;
 
             if (TableName1 != null && TableName2 != null)
             {
+                TableName tname1 = new TableName(db1, TableName1);
+                TableName tname2 = new TableName(db2, TableName2);
+
+                if (!Exists(tname1) || !Exists(tname2))
+                    return;
+
                 Console.WriteLine(string.Format("compare table schema {0} => {1}", TableName1, TableName2));
-                sql = compare.TableSchemaDifference(TableName1, TableName2);
+                sql = compare.TableSchemaDifference(tname1, tname2);
                 
                 if (sql == string.Empty)
                 {
                     Console.WriteLine(string.Format("compare table data {0} => {1}", TableName1, TableName2));
-                    sql = compare.TableDifference(TableName1, TableName2);
+                    sql = compare.TableDifference(tname1, tname2);
                 }
             }
             else if (CompareType == CompareAction.Schema)
             {
                 Console.WriteLine(string.Format("compare database schema {0} => {1}", CS1.InitialCatalog, CS2.InitialCatalog));
-                sql = compare.DatabaseSchemaDifference(CS1.InitialCatalog, CS2.InitialCatalog);
+                sql = compare.DatabaseSchemaDifference(db1, db2);
             }
             else if (CompareType == CompareAction.Data)
             {
                 Console.WriteLine(string.Format("compare database data {0} => {1}", CS1.InitialCatalog, CS2.InitialCatalog));
                 if (excludedtables != null && excludedtables.Length > 0)
                     Console.WriteLine(string.Format("ignore tables: {0}", string.Join(",", excludedtables)));
-                sql = compare.DatabaseDifference(CS1.InitialCatalog, CS2.InitialCatalog, excludedtables);
+                sql = compare.DatabaseDifference(db1, db2, excludedtables);
             }
 
 
@@ -131,8 +171,12 @@ namespace SqlCompare
         {
             if (string.IsNullOrEmpty(sql))
             {
-                if(File.Exists(OutputFile))
+                if (File.Exists(OutputFile))
+                {
                     File.Delete(OutputFile);
+                    Console.WriteLine("Nothing is changed");
+                }
+
                 return;
             }
 
@@ -141,7 +185,8 @@ namespace SqlCompare
                 writer.Write(sql);
             }
 
-            Console.WriteLine("completed.");
+            Console.WriteLine("output: {0}", OutputFile);
+            Console.WriteLine("completed.", OutputFile);
         }
     }
 }
