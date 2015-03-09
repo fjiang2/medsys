@@ -111,10 +111,15 @@ namespace Sys.Data.Comparison
         }
 
 
-        public string TableDifference(TableName tableName1, TableName tableName2)
+        public string TableDifference(TableName tableName1, TableName tableName2, out bool pk)
         {
             string[] primaryKeys = InformationSchema.PrimaryKeySchema(tableName1).ToArray<string>(0);
-            string script = TableDifference(tableName1, tableName2, primaryKeys);
+            pk = primaryKeys.Length > 0;
+            string script = string.Empty;
+
+            if (pk)
+                script = TableDifference(tableName1, tableName2, primaryKeys);
+
             return script;
         }
 

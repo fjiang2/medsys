@@ -19,6 +19,7 @@ namespace SqlCompare
         private string output;
         private string[] excludedtables;
         private CompareAction compareType;
+        private Dictionary<string, string[]> PK = new Dictionary<string, string[]>();
 
         SqlConnectionStringBuilder cs1;
         SqlConnectionStringBuilder cs2;
@@ -72,6 +73,15 @@ namespace SqlCompare
             this.cs1 = new SqlConnectionStringBuilder((string)alias[alias1]);
             this.cs2 = new SqlConnectionStringBuilder((string)alias[alias2]);
 
+            var pk = ini["primary_key"];
+            if (pk.Defined)
+            {
+                foreach (var item in pk)
+                { 
+                    string tableName = (string)item[0];
+                    PK.Add(tableName.ToUpper(), (string[])item[1].HostValue);
+                }
+            }
             return true;
         }
 
@@ -337,7 +347,7 @@ namespace SqlCompare
 
                     case CompareAction.Data:
                     case CompareAction.Schema:
-                        cmd.Run(compareType, excludedtables);
+                        cmd.Run(compareType, excludedtables, PK);
                         break;
 
                     case CompareAction.Name:

@@ -67,7 +67,7 @@ namespace SqlCompare
         }
 
 
-        public void Run(CompareAction CompareType, string[] excludedtables)
+        public void Run(CompareAction CompareType, string[] excludedtables, Dictionary<string,string[]> pk)
         {
             excludedtables = excludedtables.Select(row => row.ToUpper()).ToArray();
             DatabaseName db1 = Side1.DatabaseName;
@@ -98,7 +98,7 @@ namespace SqlCompare
 
                 for(int i=0; i<N1.Length; i++)
                 {
-                    builder.Append(CompareTable(N1[i], N2[i], excludedtables));
+                    builder.Append(CompareTable(N1[i], N2[i], excludedtables, pk));
                 }
             }
             else if (CompareType == CompareAction.Schema)
@@ -119,7 +119,7 @@ namespace SqlCompare
             
         }
 
-        private string CompareTable(string tableName1, string tableName2, string[] excludedtables)
+        private string CompareTable(string tableName1, string tableName2, string[] excludedtables, Dictionary<string, string[]> pk)
         {
             TableName tname1 = new TableName(Side1.DatabaseName, tableName1);
             TableName tname2 = new TableName(Side2.DatabaseName, tableName2);
@@ -143,12 +143,19 @@ namespace SqlCompare
                 else
                 {
                     Console.WriteLine(string.Format("compare table data {0} => {1}", tableName1, tableName2));
-                    bool pk;
-                    sql = compare.TableDifference(tname1, tname2, out pk);
-                    
-                    if (!pk)
+                    bool hasPk;
+                    sql = compare.TableDifference(tname1, tname2, out hasPk);
+
+                    if (!hasPk)
                     {
                         Console.WriteLine("warning: no primary key found : {0}", tname1);
+                        
+                        string key = tname1.Name.ToUpper();
+                        if (pk.ContainsKey(key))
+                        {
+                            Console.WriteLine("use predefine keys defined in ini file: {0}", tname1);
+                            sql = compare.TableDifference(tname1, tname2, pk[key]);
+                        }
                     }
                 }
             }
