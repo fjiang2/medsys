@@ -26,11 +26,11 @@ namespace SqlCompare
             alias = ini["alias"];
             string output = (string)ini["output"];
 
-            var server1 = (string)ini["server1"];
-            var server2 = (string)ini["server2"];
+            var alias1 = (string)ini["alias1"];
+            var alias2 = (string)ini["alias2"];
             
-            SqlConnectionStringBuilder cs1 = new SqlConnectionStringBuilder((string)alias[server1]);
-            SqlConnectionStringBuilder cs2 = new SqlConnectionStringBuilder((string)alias[server2]);
+            SqlConnectionStringBuilder cs1 = new SqlConnectionStringBuilder((string)alias[alias1]);
+            SqlConnectionStringBuilder cs2 = new SqlConnectionStringBuilder((string)alias[alias2]);
             string[] excludedtables = ini["excludedtables"].HostValue as string[];
 
             string tableName1 = null;
@@ -86,12 +86,16 @@ namespace SqlCompare
                     case "/S":
                         if (i < args.Length && parse(args[i++], out t1, out t2))
                         {
+                            var server1 = ini["server1"];
+                            var server2 = ini["server2"];
                             cs1.DataSource = t1;
                             cs1.DataSource = t2;
-                            cs1.UserID = "sa";
-                            cs2.UserID = "sa";
-                            cs1.Password = "";
-                            cs1.Password = "";
+                            cs1.InitialCatalog = (string)server1["initial_catalog"];
+                            cs1.InitialCatalog = (string)server2["initial_catalog"];
+                            cs1.UserID = (string)server1["user_id"];
+                            cs2.UserID = (string)server2["user_id"];
+                            cs1.Password = (string)server1["password"]; 
+                            cs1.Password = (string)server2["password"]; 
                             break;
                         }
                         else
@@ -205,6 +209,18 @@ namespace SqlCompare
                 }
             }
 
+            if (!IsGoodConnectionString(cs1))
+            {
+                Console.WriteLine("invalid connection string: {0}",  cs1.ConnectionString);
+                return;
+            }
+            
+            if (!IsGoodConnectionString(cs2))
+            {
+                Console.WriteLine("invalid connection string: {0}",  cs2.ConnectionString);
+                return;
+            }
+
             Command cmd = new Command(cs1, cs2)
             {
                 TableName1 = tableName1,
@@ -268,6 +284,27 @@ namespace SqlCompare
                     Console.WriteLine("error in " + inifile);
                     return false;
                 }
+            }
+
+            return true;
+        }
+
+        public static bool IsGoodConnectionString(SqlConnectionStringBuilder cs)
+        {
+            SqlConnection conn = new SqlConnection(cs.ConnectionString);
+            try
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("SELECT COUNT(name) FROM sys.tables", conn);
+                cmd.ExecuteScalar();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            finally
+            {
+                conn.Close();
             }
 
             return true;
