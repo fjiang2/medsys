@@ -118,6 +118,7 @@ namespace SqlCompare
         public void Run(CompareAction CompareType, string[] excludedtables)
         {
 
+            excludedtables = excludedtables.Select(row => row.ToUpper()).ToArray();
 
             Console.WriteLine(string.Format("server1: {0} default database:{1}", CS1.DataSource, CS1.InitialCatalog));
             Console.WriteLine(string.Format("server2: {0} default database:{1}", CS2.DataSource, CS2.InitialCatalog));
@@ -145,8 +146,19 @@ namespace SqlCompare
                 
                 if (sql == string.Empty)
                 {
-                    Console.WriteLine(string.Format("compare table data {0} => {1}", TableName1, TableName2));
-                    sql = compare.TableDifference(tname1, tname2);
+                    if (excludedtables.Contains(tname1.Name.ToUpper()))
+                    {
+                        Console.WriteLine("skip to compare data on table {0}", tname1);
+                    }
+                    else if (excludedtables.Contains(tname2.Name.ToUpper()))
+                    {
+                        Console.WriteLine("skip to compare data on table {0}", tname2);
+                    }
+                    else
+                    {
+                        Console.WriteLine(string.Format("compare table data {0} => {1}", TableName1, TableName2));
+                        sql = compare.TableDifference(tname1, tname2);
+                    }
                 }
             }
             else if (CompareType == CompareAction.Schema)

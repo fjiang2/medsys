@@ -49,17 +49,21 @@ namespace Sys.Data.Comparison
         public string DatabaseDifference(DatabaseName dname1,  DatabaseName dname2, string[] excludedTables)
         {
             string[] names = dname1.GetTableNames();
+            excludedTables = excludedTables.Select(row => row.ToUpper()).ToArray();
 
             StringBuilder builder = new StringBuilder();
             foreach (string tableName in names)
             {
-                if (excludedTables.Contains(tableName))
-                    continue;
-
                 TableName tname1 = new TableName(dname1, tableName);
                 TableName tname2 = new TableName(dname2, tableName);
 
                 Console.WriteLine(tname1);
+
+                if (excludedTables.Contains(tableName.ToUpper()))
+                {
+                    Console.WriteLine("skip to compare data on table {0}", tableName);
+                    continue;
+                }
 
                 string[] primaryKeys = InformationSchema.PrimaryKeySchema(tname1).ToArray<string>(0);
                 if (primaryKeys.Length == 0)
