@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Sys.Data;
-using Sys.Data.Comparison;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
+
 using Sys.Data;
+using Sys.Data.Comparison;
+
 
 namespace SqlCompare
 {
@@ -45,10 +46,10 @@ namespace SqlCompare
             OutputFile = "sqlcompare.sql";
         }
 
-        public void ExtractDataRows(string tableName, string where)
+        public void AllRows(string tableName, string where)
         {
-            var compare = new Compare(pvd1, pvd2);
-            string sql = compare.AllRows(tableName, where);
+            TableName tname = new TableName(pvd1, tableName);
+            string sql = Compare.AllRows(tname, where);
             Output(sql);
         }
 
@@ -101,12 +102,27 @@ namespace SqlCompare
             if (TableName1 != null && TableName2 != null)
             {
                 Console.WriteLine(string.Format("compare table schema {0} => {1}", TableName1, TableName2));
-                sql = compare.TableSchemaDifference(TableName1, TableName2);
+
+                TableName tname1 = new TableName(pvd1, TableName1);
+                TableName tname2 = new TableName(pvd2, TableName2);
+                if (!tname1.Exists())
+                {
+                    Console.WriteLine("table not exists : {0}", tname1);
+                    return;
+                }
+
+                if (!tname2.Exists())
+                {
+                    Console.WriteLine("table not exists : {0}", tname2);
+                    return;
+                }
+
+                sql = compare.TableSchemaDifference(tname1, tname2);
                 
                 if (sql == string.Empty)
                 {
                     Console.WriteLine(string.Format("compare table data {0} => {1}", TableName1, TableName2));
-                    sql = compare.TableDifference(TableName1, TableName2);
+                    sql = compare.TableDifference(tname1, tname2);
                 }
             }
             else if (CompareType == CompareAction.Schema)

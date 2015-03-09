@@ -115,14 +115,6 @@ namespace Sys.Data.Comparison
 
         #region compare table schema/data
 
-        public string TableSchemaDifference(string dt1, string dt2)
-        {
-            TableName tname1 = new TableName(pvd1, dt1);
-            TableName tname2 = new TableName(pvd2, dt2);
-
-            return TableSchemaDifference(tname1, tname2);
-        }
-
         public string TableSchemaDifference(TableName tableName1, TableName tableName2)
         {
          
@@ -142,13 +134,10 @@ namespace Sys.Data.Comparison
         }
 
 
-        public string TableDifference(string dt1, string dt2)
+        public string TableDifference(TableName tableName1, TableName tableName2)
         {
-            TableName tname1 = new TableName(pvd1, dt1);
-            TableName tname2 = new TableName(pvd2, dt2);
-            
-            string[] primaryKeys = InformationSchema.PrimaryKeySchema(tname1).ToArray<string>(0);
-            string script = TableDifference(tname1, tname2, primaryKeys);
+            string[] primaryKeys = InformationSchema.PrimaryKeySchema(tableName1).ToArray<string>(0);
+            string script = TableDifference(tableName1, tableName2, primaryKeys);
             return script;
         }
 
@@ -164,20 +153,18 @@ namespace Sys.Data.Comparison
 
 
         #region create all rows 
-        public string AllRows(string tableName, string where)
+        public static string AllRows(TableName tableName, string where)
         {
-            var tname = new TableName(pvd1, tableName);
-
-            if(!tname.Exists())
+            if(!tableName.Exists())
             {
-                Console.WriteLine("invalid table name:" + tname);
+                Console.WriteLine("invalid table name:" + tableName);
                 return string.Empty;
             }
 
             if (string.IsNullOrEmpty(where))
-                return Compare.AllRows(tname, new TableReader(tname));
+                return Compare.AllRows(tableName, new TableReader(tableName));
             else
-                return Compare.AllRows(tname, new TableReader(tname, where, new object[] { }));
+                return Compare.AllRows(tableName, new TableReader(tableName, where, new object[] { }));
 
         }
 
