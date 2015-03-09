@@ -30,13 +30,13 @@ namespace Sys.Data.Comparison
             DatabaseName dname1 = new DatabaseName(pvd1, db1);
             DatabaseName dname2 = new DatabaseName(pvd2, db2);
 
-            if (!dname1.DatabaseExists())
+            if (!dname1.Exists())
             {
                 Console.WriteLine("invalid database name:" + db1);
                 return string.Empty;
             }
 
-            string[] names = DatabaseSchema.GetTableNames(dname1);
+            string[] names = dname1.GetTableNames();
             
             StringBuilder builder = new StringBuilder();
             foreach (string tableName in names)
@@ -68,20 +68,20 @@ namespace Sys.Data.Comparison
             DatabaseName dname1 = new DatabaseName(pvd1, db1);
             DatabaseName dname2 = new DatabaseName(pvd2, db2);
 
-            if (dname1.DatabaseExists())
+            if (dname1.Exists())
             {
                 Console.WriteLine("not exists database:" + db1);
                 return string.Empty;
             }
 
-            if (dname2.DatabaseExists())
+            if (dname2.Exists())
             {
                 Console.WriteLine("not exists database:" + db2);
                 return string.Empty;
             }
 
 
-            string[] names = DatabaseSchema.GetTableNames(dname1);
+            string[] names = dname1.GetTableNames();
 
             StringBuilder builder = new StringBuilder();
             foreach (string tableName in names)
@@ -101,7 +101,7 @@ namespace Sys.Data.Comparison
                     continue;
                 }
 
-                if (DatabaseSchema.TableExists(tname2))
+                if (DatabaseSchema.Exists(tname2))
                 {
                     builder.Append(TableDifference(tname1, tname2, primaryKeys));
                 }
@@ -134,7 +134,7 @@ namespace Sys.Data.Comparison
          
             string script;
 
-            if (DatabaseSchema.TableExists(tableName2))
+            if (DatabaseSchema.Exists(tableName2))
             {
                 TableSchemaCompare compare = new TableSchemaCompare(tableName1, tableName2);
                 script = compare.Compare();
@@ -174,7 +174,7 @@ namespace Sys.Data.Comparison
         {
             var tname = new TableName(pvd1, tableName);
 
-            if(!tname.TableExists())
+            if(!tname.Exists())
             {
                 Console.WriteLine("invalid table name:" + tname);
                 return string.Empty;

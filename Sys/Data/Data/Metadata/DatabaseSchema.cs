@@ -26,7 +26,7 @@ namespace Sys.Data
     public static class DatabaseSchema
     {
 
-        public static bool DatabaseExists(this DatabaseName databaseName)
+        public static bool Exists(this DatabaseName databaseName)
         {
             try
             {
@@ -49,11 +49,11 @@ namespace Sys.Data
             SqlCmd.ExecuteNonQuery(databaseName.Provider, "CREATE DATABASE {0}", databaseName.Name);
         }
 
-        public static bool TableExists(this TableName tname)
+        public static bool Exists(this TableName tname)
         {
             try
             {
-                if (!DatabaseExists(tname.DatabaseName))
+                if (!Exists(tname.DatabaseName))
                     return false;
 
                 switch (tname.Provider.DpType)
@@ -73,16 +73,15 @@ namespace Sys.Data
         }
 
 
-        public static string CurrentDatabaseName(DataProvider provider)
+        public static string CurrentDatabaseName(this DataProvider provider)
         {
             switch (provider.DpType)
             {
                 case DbProviderType.SqlDb:
                     {
-                        //return (string)SqlCmd.ExecuteScalar(provider, "SELECT DB_NAME()");
-                        var connection = new SqlCmd(provider, string.Empty).DbProvider.DbConnection;
-
-                        return connection.Database.ToString();
+                        return (string)SqlCmd.ExecuteScalar(provider, "SELECT DB_NAME()");
+                        //var connection = new SqlCmd(provider, string.Empty).DbProvider.DbConnection;
+                        //return connection.Database.ToString();
                     }
 
                 case DbProviderType.SqlCe:
@@ -94,12 +93,7 @@ namespace Sys.Data
         }
 
 
-        public static string[] GetDatabaseNames()
-        {
-             return GetDatabaseNames(DataProvider.DefaultProvider);
-        }
-
-        public static string[] GetDatabaseNames(DataProvider provider)
+        public static string[] GetDatabaseNames(this DataProvider provider)
         {
             switch (provider.DpType)
             {
@@ -114,7 +108,7 @@ namespace Sys.Data
             }
         }
 
-        public static string[] GetTableNames(DatabaseName databaseName)
+        public static string[] GetTableNames(this DatabaseName databaseName)
         {
             switch (databaseName.Provider.DpType)
             {

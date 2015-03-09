@@ -177,7 +177,7 @@ namespace Sys.Data
         {
             get
             {
-                return DatabaseSchema.TableExists(tableName);
+                return DatabaseSchema.Exists(tableName);
             }
         }
 

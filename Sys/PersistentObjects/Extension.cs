@@ -96,7 +96,7 @@ namespace Sys.Data.Manager
             meta._tableID = tableId;
 
             List<dictDataColumnDpo> list;
-            if (DatabaseSchema.TableExists(typeof(dictDataColumnDpo).TableName()))
+            if (DatabaseSchema.Exists(typeof(dictDataColumnDpo).TableName()))
             {
                 list = new TableReader<dictDataColumnDpo>(dictDataColumnDpo._table_id.ColumnName() == tableId).ToList();
             }

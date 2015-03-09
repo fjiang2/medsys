@@ -60,7 +60,7 @@ namespace Sys.Platform.Forms
 
                 try
                 {
-                    databaseNames = DatabaseSchema.GetDatabaseNames(provider);
+                    databaseNames = provider.GetDatabaseNames();
                 }
                 catch (Exception) // no permisson to access this server
                 {
@@ -105,7 +105,7 @@ namespace Sys.Platform.Forms
                     DatabaseNode databaseNode = (DatabaseNode)treeNode;
                     Cursor.Current = Cursors.WaitCursor;
 
-                    string[] names = DatabaseSchema.GetTableNames(databaseNode.DatabaseName);
+                    string[] names = databaseNode.DatabaseName.GetTableNames();
 
                     //you are not allowed to open this database
                     if (names.Length == 0)

@@ -769,7 +769,7 @@ namespace Sys.Data
         /// <returns></returns>
         public bool CreateTable()
         {
-            if (DatabaseSchema.TableExists(this.TableName))
+            if (DatabaseSchema.Exists(this.TableName))
                 return false;
 
             string SQL = string.Format("USE [{0}];", TableName.DatabaseName.Name) + string.Format(this.CreateTableString, TableName.Name);

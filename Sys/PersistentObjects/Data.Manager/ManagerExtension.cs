@@ -82,7 +82,7 @@ namespace Sys.Data.Manager
         {
             int database_id = DictDatabase.RegisterOnly(databaseName);
 
-            string[] names = DatabaseSchema.GetTableNames(databaseName);
+            string[] names = databaseName.GetTableNames();
 
             int i = 0;
             foreach (string name in names)

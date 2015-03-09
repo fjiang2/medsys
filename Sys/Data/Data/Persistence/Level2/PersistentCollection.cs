@@ -49,7 +49,7 @@ namespace Sys.Data
         public PersistentCollection()
         {
             DataTable dataTable;
-            if (TableName.TableExists())
+            if (TableName.Exists())
             {
                 dataTable = SqlCmd.FillDataTable(TableName.Provider, "SELECT TOP 1 * FROM {0}", TableName);
                 dataTable.TableName = TableName.Name;

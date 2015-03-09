@@ -213,10 +213,17 @@ namespace SqlCompare
                 CompareSchema = compareSchema
             };
 
-            if (allRows)
-                cmd.ExtractDataRows(tableName1, where);
-            else
-                cmd.Run(excludedtables);
+            try
+            {
+                if (allRows)
+                    cmd.ExtractDataRows(tableName1, where);
+                else
+                    cmd.Run(excludedtables);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
 
         private static bool parse(string arg, out string t1, out string t2)
