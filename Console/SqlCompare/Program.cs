@@ -322,7 +322,7 @@ namespace SqlCompare
                 switch (compareType)
                 {
                     case CompareAction.AllRows:
-                        cmd.AllRows(tableName1, where);
+                        cmd.ExtractDataRows(tableName1, where);
                         break;
 
                     case CompareAction.ParimaryKey:
