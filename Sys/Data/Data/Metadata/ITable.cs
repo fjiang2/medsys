@@ -29,6 +29,7 @@ namespace Sys.Data
         bool IsPrimary { get; }
         bool IsIdentity { get; }
         bool IsComputed { get; }
+        string Definition { get; }
         int ColumnID { get; }
 
         IForeignKey ForeignKey { get; set; }

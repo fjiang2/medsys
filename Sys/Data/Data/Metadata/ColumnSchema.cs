@@ -52,6 +52,9 @@ namespace Sys.Data
         [Column("IsComputed", CType.Bit)]
         public bool IsComputed { get; set; }
 
+        [Column("definition", CType.NVarChar)]
+        public string Definition { get; set; }
+
         [Column("ColumnID", CType.Int)]
         public int ColumnID { get; set; }    //column_id is from column dictionary
         
@@ -382,8 +385,11 @@ namespace Sys.Data
             }
 
             if (column.IsComputed)
-                throw new JException("not support computed column: {0} during creating table", column.ColumnName);
-
+            {
+                line = string.Format("[{0}] AS {1}", column.ColumnName, column.Definition);
+                //throw new JException("not support computed column: {0}", column.ColumnName);
+            }
+                
             return line;
         }
     

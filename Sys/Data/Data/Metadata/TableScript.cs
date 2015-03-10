@@ -126,17 +126,17 @@ namespace Sys.Data
         
         private string updateCommandTemplate
         {
-            get { return string.Format("UPDATE {0} SET {1} WHERE {2}", tableName.Name, "{0}", "{1}"); }
+            get { return string.Format("UPDATE [{0}] SET {1} WHERE {2}", tableName.Name, "{0}", "{1}"); }
         }
 
         private string insertCommandTemplate
         {
-            get { return string.Format("INSERT INTO {0}({1}) VALUES({2})", tableName.Name, "{0}", "{1}"); }
+            get { return string.Format("INSERT INTO [{0}]({1}) VALUES({2})", tableName.Name, "{0}", "{1}"); }
         }
 
         private string deleteCommandTemplate
         {
-            get { return string.Format("DELETE FROM {0} WHERE {1}", tableName.Name, "{0}"); }
+            get { return string.Format("DELETE FROM [{0}] WHERE {1}", tableName.Name, "{0}"); }
         }
         
         #endregion

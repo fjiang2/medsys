@@ -161,7 +161,15 @@ namespace Sys.Data
             StringBuilder builder = new StringBuilder();
             foreach (var tableName in history)
             {
-                builder.AppendLine(new TableName(databaseName, tableName).GenerateScript());
+                Console.WriteLine("generate CREATE TABLE [{0}]", tableName);
+                try
+                {
+                    builder.AppendLine(new TableName(databaseName, tableName).GenerateScript());
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("failed to generate CREATE TABLE [{0}],{1}", tableName, ex.Message);
+                }
             }
 
             return builder.ToString();

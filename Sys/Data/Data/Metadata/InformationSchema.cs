@@ -30,10 +30,12 @@ namespace Sys.Data
                 c.precision,
                 c.scale,
                 c.is_identity AS IsIdentity,
-                c.is_computed AS IsComputed
+                c.is_computed AS IsComputed,
+                d.definition
              FROM sys.tables t 
                   INNER JOIN sys.columns c ON t.object_id = c.object_id 
                   INNER JOIN sys.types ty ON ty.system_type_id =c.system_type_id AND ty.name<>'sysname'
+                  LEFT JOIN sys.Computed_columns d ON t.object_id = d.object_id AND c.name = d.name
             WHERE t.name = '{1}' 
             ORDER BY c.column_id";
                     dt1 = SqlCmd.FillDataTable(tableName.Provider, SQL, tableName.DatabaseName.Name, tableName.Name);
