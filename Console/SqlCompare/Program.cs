@@ -17,14 +17,14 @@ namespace SqlCompare
        
         static void Main(string[] args)
         {
-            var cfg = "SqlCompare.ini";
+            var cfg = "sqlcompare.cfg";
 
             int i = 0;
             while (i < args.Length)
             {
                 switch (args[i++])
                 {
-                    case "/i":
+                    case "/cfg":
                         if (i < args.Length)
                         {
                             cfg = args[i++];
@@ -57,33 +57,35 @@ namespace SqlCompare
         {
             Console.WriteLine("SqlCompare v1.0");
             Console.WriteLine("Usage: SqlCompare");
-            Console.WriteLine("     [/i configuration(ini) file]");
+            Console.WriteLine("     [/cfg configuration file(.cfg)]");
             Console.WriteLine("     [/s alias1:alias2]|[/s alias]");
             Console.WriteLine("     [/S server1:server2] [/U user1:user2] [/P password1:password2]");
-            Console.WriteLine("     [/schema]|[/data]");
-            Console.WriteLine("     [/a table [where]]");
+            Console.WriteLine("     [/schema]|[/data]|[/pk]|[/fk]|[/row]");
             Console.WriteLine("     [/e table1,table2,...,table");
             Console.WriteLine("     [/db datbase1:datbase2]|[/db datbase]");
             Console.WriteLine("     [/dt table1:table2]|[/dt table(wildcard*,?)]");
-            Console.WriteLine("     [/o output file]");
+            Console.WriteLine("     [/i input file(.sql)]|[/o output file(.sql)]");
+            Console.WriteLine("");
             Console.WriteLine("/h,/?    : this help");
-            Console.WriteLine("/i       : ini file default file:sqlcompare.ini]");
+            Console.WriteLine("/cfg     : congfiguration file default file:sqlcompare.cfg]");
             Console.WriteLine("/s       : server alias defined on ini file]");
             Console.WriteLine("/schema  : compare schmea (default)");
             Console.WriteLine("/data    : compare data");
             Console.WriteLine("/name    : display table names matched by /dt table");
             Console.WriteLine("/pk      : display primary key defined on /dt table");
             Console.WriteLine("/fk      : display foreign key defined on /dt table");
-            Console.WriteLine("/db      : database name");
-            Console.WriteLine("/dt      : table name");
-            Console.WriteLine("/a       : generate rows from table");
+            Console.WriteLine("/row     : generate rows from table");
             Console.WriteLine("/g       : generate table script from database");
+            Console.WriteLine("/db      : database name");
+            Console.WriteLine("/dt      : table name (wildcard*,?)");
             Console.WriteLine("/e       : excluded table list during 2 databases data comparing");
+            Console.WriteLine("/i       : run sql script on server 2, let server2 += diff");
+            Console.WriteLine("/o       : result of comparsion(diff=server1-server2),sql script file");
             Console.WriteLine("examples:");
             Console.WriteLine("SqlCompare /s localhost /db northwind:southwind /schema");
             Console.WriteLine("SqlCompare /S localhost /U sa /P password /db northwind /schema");
             Console.WriteLine("SqlCompare /data /db northwind /dt Cust*");
-            Console.WriteLine("SqlCompare /a Products ProductID=20");
+            Console.WriteLine("SqlCompare /a /dt Products");
         }
     }
 }

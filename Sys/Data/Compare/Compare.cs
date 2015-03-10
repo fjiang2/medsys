@@ -162,7 +162,10 @@ namespace Sys.Data.Comparison
             StringBuilder builder = new StringBuilder();
             foreach (DataRow row in dt1.Rows)
                 builder.Append(script.INSERT(row)).AppendLine();
-
+            
+            if (dt1.Rows.Count >0)
+                builder.AppendLine(TableScript.GO);
+            
             return builder.ToString();
         }
 

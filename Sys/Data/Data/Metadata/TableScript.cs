@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data;
+using Sys.Data.Comparison;
 
-namespace Sys.Data.Comparison
+namespace Sys.Data
 {
     class TableScript
     {
+        public static readonly string GO = "GO";
+
         TableName tableName;
 
         public TableScript(TableName name)

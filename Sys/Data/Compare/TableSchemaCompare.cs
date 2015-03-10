@@ -51,7 +51,7 @@ namespace Sys.Data.Comparison
                 if (pk1.Keys.Length > 0)
                 {
                     builder.AppendLine(script.ADD_PRIMARY_KEY(pk1));
-                    builder.AppendLine("GO");
+                    builder.AppendLine(TableScript.GO);
                 }
             }
             else 
@@ -60,7 +60,7 @@ namespace Sys.Data.Comparison
                 {
                     builder.AppendLine(script.DROP_PRIMARY_KEY(pk1));
                     builder.AppendLine(script.ADD_PRIMARY_KEY(pk1));
-                    builder.AppendLine("GO");
+                    builder.AppendLine(TableScript.GO);
                 }
             }
 
@@ -73,7 +73,7 @@ namespace Sys.Data.Comparison
                 {
                     foreach (var fk in fk1.Keys)
                     {
-                        builder.AppendLine(script.ADD_FOREIGN_KEY(fk)).AppendLine("GO");
+                        builder.AppendLine(script.ADD_FOREIGN_KEY(fk)).AppendLine(TableScript.GO);
                     }
                 }
             }
@@ -85,8 +85,8 @@ namespace Sys.Data.Comparison
                     {
                         if (fk2.Keys.Where(k2 => k2.Constraint_Name.Equals(k1.Constraint_Name)).Count() == 0)
                         {
-                            builder.AppendLine(script.DROP_FOREIGN_KEY(k1)).AppendLine("GO");
-                            builder.AppendLine(script.ADD_FOREIGN_KEY(k1)).AppendLine("GO");
+                            builder.AppendLine(script.DROP_FOREIGN_KEY(k1)).AppendLine(TableScript.GO);
+                            builder.AppendLine(script.ADD_FOREIGN_KEY(k1)).AppendLine(TableScript.GO);
                         }
                     }
                 }

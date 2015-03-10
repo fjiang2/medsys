@@ -12,7 +12,7 @@ using System.Text.RegularExpressions;
 
 namespace SqlCompare
 {
-    class Side
+    class Side : Logger
     {
         private SqlConnectionStringBuilder cs;
         private string tableNamePattern;
@@ -41,16 +41,22 @@ namespace SqlCompare
         }
 
         public DatabaseName DatabaseName { get; private set; }
-      
 
-        public string AllRows()
+        public void ExecuteScript(string sql)
+        {
+            new SqlCmd(Provider, sql).ExecuteNonQuery();
+        }
+
+        public string AllRows(string[] tableNames)
         {
             StringBuilder builder = new StringBuilder();
-            foreach (var tableName in TableNames)
+            foreach (var tableName in tableNames)
             {
+                Log("generate insert clauses on table : {0}", tableName);
                 var tname = new TableName(Provider, tableName);
                 string sql = Compare.AllRows(tname, null);
-                builder.AppendLine(sql);
+                if (sql != String.Empty)
+                    builder.AppendLine(sql);
             }
 
             return builder.ToString();
@@ -68,13 +74,13 @@ namespace SqlCompare
             var names = TableNames;
             if(names.Length == 0)
             {
-                Console.WriteLine("no table found");
+                Log("no table found");
                 return;
             }
 
             foreach (string tableName in names)
             {
-                Console.WriteLine("[{0}]",tableName);
+                Log("[{0}]",tableName);
                 DisplayPK(tableName);
             }
         }
@@ -91,13 +97,13 @@ namespace SqlCompare
             var names = TableNames;
             if (names.Length == 0)
             {
-                Console.WriteLine("no table found");
+                Log("no table found");
                 return;
             }
 
             foreach (string tableName in names)
             {
-                Console.WriteLine("[{0}]", tableName);
+                Log("[{0}]", tableName);
                 DisplayFK(tableName);
             }
         }
@@ -115,7 +121,7 @@ namespace SqlCompare
             {
                 builder.AppendFormat("{0}\t", column.ColumnName);
             }
-            Console.WriteLine(builder.ToString());
+            Log(builder.ToString());
             foreach (DataRow row in dt.Rows)
             {
                 builder = new StringBuilder();
@@ -124,7 +130,7 @@ namespace SqlCompare
                     builder.AppendFormat("{0}\t", row[column]);
                 }
 
-                Console.WriteLine(builder.ToString());
+                Log(builder.ToString());
             }
         }
 

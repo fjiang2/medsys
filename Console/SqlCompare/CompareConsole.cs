@@ -12,12 +12,13 @@ using Tie;
 
 namespace SqlCompare
 {
-    class CompareConsole
+    class CompareConsole : Logger
     {
         private VAL ini;
         private VAL alias;
 
         private string output = "script.sql";
+        private string input = "script.sql";
         private string[] excludedtables = new string[]{};
         private CompareAction compareType = CompareAction.Schema;
         private Dictionary<string, string[]> PK = new Dictionary<string, string[]>();
@@ -35,7 +36,7 @@ namespace SqlCompare
             ini = new VAL();
             if (!File.Exists(fileName))
             {
-                Console.WriteLine("configuration file {0} not exists", fileName);
+                Logx("configuration file {0} not exists", fileName);
                 return false;
             }
 
@@ -48,7 +49,7 @@ namespace SqlCompare
                 }
                 catch (Exception)
                 {
-                    Console.WriteLine("json format error in {0}", fileName);
+                    Logx("json format error in {0}", fileName);
                     return false;
                 }
             }
@@ -107,10 +108,6 @@ namespace SqlCompare
         {
             string tableNamePattern1 = null;
             string tableNamePattern2 = null;
-            string tableName = null;
-
-
-            string where = null;
 
             int i = 0;
             string t1, t2;
@@ -120,7 +117,7 @@ namespace SqlCompare
 
                 switch (args[i++])
                 {
-                    case "/i":
+                    case "/cfg":
                         if (i < args.Length)
                         {
                             i++;
@@ -138,12 +135,12 @@ namespace SqlCompare
                             var s2 = alias[t2];
                             if (s1.Undefined)
                             {
-                                Console.WriteLine("undefined server alias", t1);
+                                Log("undefined server alias", t1);
                                 return;
                             }
                             if (s2.Undefined)
                             {
-                                Console.WriteLine("undefined server alias", t2);
+                                Log("undefined server alias", t2);
                                 return;
                             }
 
@@ -153,7 +150,7 @@ namespace SqlCompare
                         }
                         else
                         {
-                            Console.WriteLine("undefined database server alias");
+                            Log("undefined database server alias");
                             return;
                         }
 
@@ -176,6 +173,10 @@ namespace SqlCompare
                         compareType = CompareAction.GenerateScript;
                         break;
 
+                    case "/row":
+                        compareType = CompareAction.TableRows;
+                        break;
+
                     case "/S":
                         if (i < args.Length && parse(args[i++], out t1, out t2))
                         {
@@ -193,7 +194,7 @@ namespace SqlCompare
                         }
                         else
                         {
-                            Console.WriteLine("undefined server name");
+                            Log("undefined server name");
                             return;
                         }
 
@@ -206,7 +207,7 @@ namespace SqlCompare
                         }
                         else
                         {
-                            Console.WriteLine("undefined user name");
+                            Log("undefined user name");
                             return;
                         }
 
@@ -219,7 +220,7 @@ namespace SqlCompare
                         }
                         else
                         {
-                            Console.WriteLine("undefined server password");
+                            Log("undefined server password");
                             return;
                         }
 
@@ -232,7 +233,7 @@ namespace SqlCompare
                         }
                         else
                         {
-                            Console.WriteLine("undefined database name");
+                            Log("undefined database name");
                             return;
                         }
 
@@ -245,27 +246,10 @@ namespace SqlCompare
                         }
                         else
                         {
-                            Console.WriteLine("undefined table name");
+                            Log("undefined table name");
                             return;
                         }
 
-                    case "/a":
-                        if (i < args.Length)
-                        {
-                            tableName = args[i++];
-                            compareType = CompareAction.AllRows;
-
-                            if (i < args.Length && !args[i].StartsWith("/"))
-                            {
-                                where = args[i++];
-                            }
-                            break;
-                        }
-                        else
-                        {
-                            Console.WriteLine("undefined table name");
-                            return;
-                        }
 
                     case "/e":
                         if (i < args.Length)
@@ -275,11 +259,24 @@ namespace SqlCompare
                         }
                         else
                         {
-                            Console.WriteLine("undefined excluded table names");
+                            Log("undefined excluded table names");
                             return;
                         }
 
 
+                    case "/i":
+                        if (i < args.Length)
+                        {
+                            input = args[i++];
+                            compareType = CompareAction.Input;
+                            break;
+                        }
+                        else
+                        {
+                            Log("undefined input sql script file name");
+                            return;
+                        }
+                    
                     case "/o":
                         if (i < args.Length)
                         {
@@ -288,7 +285,7 @@ namespace SqlCompare
                         }
                         else
                         {
-                            Console.WriteLine("undefined output file name");
+                            Log("undefined output sql script file name");
                             return;
                         }
 
@@ -301,27 +298,34 @@ namespace SqlCompare
 
             if (!IsGoodConnectionString(cs1))
             {
-                Console.WriteLine("invalid connection string: {0}", cs1.ConnectionString);
+                Log("invalid connection string: {0}", cs1.ConnectionString);
                 return;
             }
 
             if (!IsGoodConnectionString(cs2))
             {
-                Console.WriteLine("invalid connection string: {0}", cs2.ConnectionString);
+                Log("invalid connection string: {0}", cs2.ConnectionString);
                 return;
             }
 
-            CompareAdapter cmd = new CompareAdapter(cs1, cs2, tableNamePattern1, tableNamePattern2) { OutputFile = output };
+            CompareAdapter cmd = new CompareAdapter(cs1, cs2, tableNamePattern1, tableNamePattern2) 
+            { 
+                OutputFile = output,
+                InputFile = input
+            };
+
+            excludedtables = excludedtables.Select(row => row.ToUpper()).ToArray();
 
             try
             {
                 switch (compareType)
                 {
-                    case CompareAction.AllRows:
-                        if (tableName != null)
-                            cmd.AllRows(tableName, where);
-                        else
-                            cmd.AllRows();
+                    case CompareAction.Input:
+                        cmd.ExecuteScript();
+                        break;
+
+                    case CompareAction.TableRows:
+                        cmd.AllRows(excludedtables);
                         break;
 
                     case CompareAction.ParimaryKey:
@@ -340,7 +344,7 @@ namespace SqlCompare
                     case CompareAction.Name:
                         foreach (string item in new Side(cs1, tableNamePattern1).TableNames)
                         {
-                            Console.WriteLine(item);
+                            Log(item);
                         }
                         break;
 
@@ -351,10 +355,12 @@ namespace SqlCompare
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                Log(ex.Message);
             }
         }
 
+
+        
         private static bool parse(string arg, out string t1, out string t2)
         {
             if (string.IsNullOrEmpty(arg))
