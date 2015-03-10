@@ -155,10 +155,11 @@ namespace Sys.Data
 
         public static string GenerateScript(this DatabaseName databaseName)
         {
+            StringBuilder builder = new StringBuilder();
+            builder.Append(GenerateDropTableScript(databaseName));
 
             List<string> history = TableDependency(databaseName);
 
-            StringBuilder builder = new StringBuilder();
             foreach (var tableName in history)
             {
                 Console.WriteLine("generate CREATE TABLE [{0}]", tableName);
@@ -177,15 +178,17 @@ namespace Sys.Data
 
         public static string GenerateDropTableScript(this DatabaseName databaseName)
         {
-
+            string drop = @"
+IF OBJECT_ID('{0}') IS NOT NULL
+  DROP TABLE [{0}]
+";
             List<string> history = TableDependency(databaseName);
             history.Reverse();
 
             StringBuilder builder = new StringBuilder();
             foreach (var tableName in history)
             {
-                builder.AppendFormat("DROP TABLE [{0}]", tableName)
-                    .AppendLine()
+                builder.AppendFormat(drop, tableName)
                     .AppendLine(TableScript.GO);
             }
 

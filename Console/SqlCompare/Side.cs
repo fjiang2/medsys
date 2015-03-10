@@ -44,7 +44,15 @@ namespace SqlCompare
 
         public void ExecuteScript(string sql)
         {
-            new SqlCmd(Provider, sql).ExecuteNonQuery();
+            string[] S = sql.Split(new string[] { "\r\nGO\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+
+            foreach (var s in S)
+            {
+                if (s.Replace("\r\n", "").Replace(" ", "").Replace("\t", "") == string.Empty)
+                    continue;
+
+                new SqlCmd(Provider, s).ExecuteNonQuery();
+            }
         }
 
         public string AllRows(string[] tableNames)
