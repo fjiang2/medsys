@@ -159,6 +159,9 @@ namespace SqlCompare
                     case "/data":
                         compareType = CompareAction.Data;
                         break;
+                    case "/column":
+                        compareType = CompareAction.Columns;
+                        break;
                     case "/pk":
                         compareType = CompareAction.ParimaryKey;
                         break;
@@ -173,6 +176,9 @@ namespace SqlCompare
                         break;
                     case "/row":
                         compareType = CompareAction.TableRows;
+                        break;
+                    case "/cmd":
+                        compareType = CompareAction.Command;
                         break;
                     case "/i":
                         compareType = CompareAction.Execute;
@@ -317,6 +323,10 @@ namespace SqlCompare
                         cmd.AllRows(excludedtables);
                         break;
 
+                    case CompareAction.Columns:
+                        cmd.Side1.DisplayColumns();
+                        break;
+
                     case CompareAction.ParimaryKey:
                         cmd.Side1.DisplayPK();
                         break;
@@ -340,6 +350,10 @@ namespace SqlCompare
                     case CompareAction.GenerateScript:
                         cmd.GenerateScript();
                         break;
+
+                    case CompareAction.Command:
+                        DoCommand(cmd);
+                        break;
                 }
             }
             catch (Exception ex)
@@ -349,7 +363,7 @@ namespace SqlCompare
         }
 
 
-        
+      
         private static bool parse(string arg, out string t1, out string t2)
         {
             if (string.IsNullOrEmpty(arg))
@@ -397,5 +411,130 @@ namespace SqlCompare
             return true;
         }
 
+
+
+        private void DoCommand(CompareAdapter adapter)
+        {
+            this.provider = adapter.Side1.Provider;
+
+            Console.WriteLine("SqlCompare SQL command console");
+            Console.WriteLine("type [help;] to help, type [;] to execute a command");
+            StringBuilder builder = new StringBuilder();
+            string line = null;
+            while (line != "exit")
+            {
+                Console.Write("#:");
+                line = Console.ReadLine();
+
+                if (line != "\r\n" && line != ";")
+                    builder.AppendLine(line);
+
+                if (line.EndsWith(";"))
+                {
+                    string text = builder.ToString().Trim();
+                    builder.Clear();
+
+                    if (text.EndsWith(";"))
+                        text = text.Substring(0, text.Length - 1);
+
+                    DoCommand(adapter, text);
+                }
+            }
+        }
+
+
+        private DataProvider provider;
+
+        private void DoCommand(CompareAdapter adapter, string text)
+        {
+            string[] A = text.Split(' ');
+            string cmd = null;
+            int n = A.Length;
+
+            if (n > 0)
+                cmd = A[0].ToLower();
+
+            switch (cmd)
+            {
+                case "column":
+                case "pk":
+                case "fk":
+                    if (n == 2)
+                    {
+                        TableName tname = new TableName(provider, A[1].Trim());
+                        DataTable dt = null;
+                        switch (cmd)
+                        {
+                            case "column":
+                                dt = tname.TableSchema();
+                                break;
+
+                            case "pk":
+                                dt = tname.PrimaryKeySchema();
+                                break;
+
+                            case "fk":
+                                dt = tname.ForeignKeySchema();
+                                break;
+                        }
+
+                        if (dt != null)
+                            ConsoleTable.DisplayTable(dt);
+                    }
+                    else
+                    {
+                        Console.WriteLine("invalid command");
+                    }
+                    break;
+
+                case "select":
+                    DataSet ds = new SqlCmd(provider, text).FillDataSet();
+                    if (ds != null)
+                    {
+                        foreach (DataTable dt in ds.Tables)
+                        {
+                            ConsoleTable.DisplayTable(dt);
+                            Console.WriteLine("<{0} rows>", dt.Rows.Count);
+                        }
+                    }
+                    break;
+
+                case "server1":
+                    this.provider = adapter.Side1.Provider;
+                    Console.WriteLine("server 1 selected");
+                    break;
+
+                case "server2":
+                    this.provider = adapter.Side2.Provider;
+                    Console.WriteLine("server 2 selected");
+                    break;
+
+                case "help":
+                case "?":
+                    Console.WriteLine("Help");
+                    Console.WriteLine("Command List:");
+                    Console.WriteLine("server1          : switch to source server (default)");
+                    Console.WriteLine("server2          : switch to sink server");
+                    Console.WriteLine("column tablename : show table structure");
+                    Console.WriteLine("pk tablename     : show table primary keys");
+                    Console.WriteLine("fk tablename     : show table foreign keys");
+                    Console.WriteLine("exit             : quit application");
+                    Console.WriteLine("all sql clauses, e.g. select * from table, update...");
+                    break;
+
+                default:
+                    try
+                    {
+                        new SqlCmd(provider, text).ExecuteNonQuery();
+                        Console.WriteLine("completed");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+
+                    break;
+            }
+        }
     }
 }

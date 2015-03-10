@@ -10,11 +10,13 @@ namespace SqlCompare
     {
         Schema = 1,
         Data = 2,
-        ParimaryKey = 3,
-        ForeignKey = 4,
-        TableRows = 5,
-        Name = 6,
-        GenerateScript = 7,
-        Execute = 8
+        Columns = 4,
+        ParimaryKey = 5,
+        ForeignKey = 6,
+        TableRows = 7,
+        Name = 8,
+        GenerateScript = 9,
+        Execute = 10,
+        Command = 11
     }
 }

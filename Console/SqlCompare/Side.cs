@@ -77,7 +77,7 @@ namespace SqlCompare
             return sql;
         }
 
-        public void DisplayPK()
+        public void DisplayColumns()
         {
             var names = TableNames;
             if(names.Length == 0)
@@ -89,15 +89,28 @@ namespace SqlCompare
             foreach (string tableName in names)
             {
                 Log("[{0}]",tableName);
-                DisplayPK(tableName);
+                TableName tname = new TableName(Provider, tableName);
+                var dt = tname.TableSchema();
+                ConsoleTable.DisplayTable(dt);
             }
         }
-
-        public void DisplayPK(string tableName)
+        
+        public void DisplayPK()
         {
-            TableName tname = new TableName(Provider, tableName);
-            var dt = tname.PrimaryKeySchema();
-            ConsoleTable.DisplayTable(dt);
+            var names = TableNames;
+            if (names.Length == 0)
+            {
+                Log("no table found");
+                return;
+            }
+
+            foreach (string tableName in names)
+            {
+                Log("[{0}]", tableName);
+                TableName tname = new TableName(Provider, tableName);
+                var dt = tname.PrimaryKeySchema();
+                ConsoleTable.DisplayTable(dt);
+            }
         }
 
         public void DisplayFK()
@@ -112,14 +125,10 @@ namespace SqlCompare
             foreach (string tableName in names)
             {
                 Log("[{0}]", tableName);
-                DisplayFK(tableName);
+                TableName tname = new TableName(Provider, tableName);
+                var dt = tname.ForeignKeySchema();
+                ConsoleTable.DisplayTable(dt);
             }
-        }
-        public void DisplayFK(string tableName)
-        {
-            TableName tname = new TableName(Provider, tableName);
-            var dt = tname.ForeignKeySchema();
-            ConsoleTable.DisplayTable(dt);
         }
 
 

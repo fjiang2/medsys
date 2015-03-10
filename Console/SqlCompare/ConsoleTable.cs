@@ -36,7 +36,7 @@ namespace SqlCompare
                 {
                     string item = "NULL";
                     if (row[i] != DBNull.Value)
-                        item = row[i].ToString();
+                        item = row[i].ToString().Trim();
 
                     if (item.Length > W[i])
                         W[i] = item.Length;
@@ -77,6 +77,7 @@ namespace SqlCompare
 
         private void DisplayLine(string[] row, char delimiter, char sp)
         {
+       
             StringBuilder builder = new StringBuilder();
 
             builder.Append(delimiter).Append(sp);
@@ -97,7 +98,13 @@ namespace SqlCompare
                     builder.Append(sp).Append(delimiter);
             }
 
-            Console.WriteLine(builder.ToString());
+            string text = builder.ToString();
+            int w = Console.WindowWidth;
+            
+            if(text.Length > w)
+                Console.WriteLine(text.Substring(0,w-1));
+            else
+                Console.WriteLine(text);
         }
 
         public static void DisplayTable(DataTable dt)

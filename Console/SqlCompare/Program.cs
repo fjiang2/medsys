@@ -72,11 +72,13 @@ namespace SqlCompare
             Console.WriteLine("/schema  : compare schmea (default)");
             Console.WriteLine("/data    : compare data");
             Console.WriteLine("/name    : display table names matched by /dt table");
+            Console.WriteLine("/column  : display table structure on /dt table");
             Console.WriteLine("/pk      : display primary key defined on /dt table");
             Console.WriteLine("/fk      : display foreign key defined on /dt table");
             Console.WriteLine("/row     : generate rows from table on server1");
             Console.WriteLine("/exec    : run sql script on server 2, let server2 += diff");
             Console.WriteLine("/g       : generate table script from database on server1");
+            Console.WriteLine("/cmd     : enter command window");
             Console.WriteLine("/db      : database name");
             Console.WriteLine("/dt      : table name (wildcard*,?)");
             Console.WriteLine("/e       : excluded table list during 2 databases data comparing");
