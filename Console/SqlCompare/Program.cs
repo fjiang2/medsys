@@ -77,6 +77,7 @@ namespace SqlCompare
             Console.WriteLine("/db      : database name");
             Console.WriteLine("/dt      : table name");
             Console.WriteLine("/a       : generate rows from table");
+            Console.WriteLine("/g       : generate table script from database");
             Console.WriteLine("/e       : excluded table list during 2 databases data comparing");
             Console.WriteLine("examples:");
             Console.WriteLine("SqlCompare /s localhost /db northwind:southwind /schema");

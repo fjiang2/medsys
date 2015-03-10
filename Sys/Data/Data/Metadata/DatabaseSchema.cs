@@ -154,8 +154,38 @@ namespace Sys.Data
         }
 
         public static string GenerateScript(this DatabaseName databaseName)
-        { 
+        {
 
+            List<string> history = TableDependency(databaseName);
+
+            StringBuilder builder = new StringBuilder();
+            foreach (var tableName in history)
+            {
+                builder.AppendLine(new TableName(databaseName, tableName).GenerateScript());
+            }
+
+            return builder.ToString();
+        }
+
+        public static string GenerateDropTableScript(this DatabaseName databaseName)
+        {
+
+            List<string> history = TableDependency(databaseName);
+            history.Reverse();
+
+            StringBuilder builder = new StringBuilder();
+            foreach (var tableName in history)
+            {
+                builder.AppendFormat("DROP TABLE [{0}]", tableName)
+                    .AppendLine()
+                    .AppendLine("GO");
+            }
+
+            return builder.ToString();
+        }
+
+        private static List<string> TableDependency(DatabaseName databaseName)
+        {
             string sql = @"
 SELECT  FK.TABLE_NAME AS FK_Table,
         PK.TABLE_NAME AS PK_Table
@@ -179,7 +209,6 @@ SELECT  FK.TABLE_NAME AS FK_Table,
             var dict = dt.GroupBy(row => (string)row[0], (Key, rows) => new { Fk = Key, Pk = rows.Select(row => (string)row[1]).ToArray() })
                 .ToDictionary(row => row.Fk, row => row.Pk);
 
-            StringBuilder builder = new StringBuilder();
 
             var names = databaseName.GetTableNames();
 
@@ -188,30 +217,27 @@ SELECT  FK.TABLE_NAME AS FK_Table,
             foreach (var name in names)
             {
                 if (history.IndexOf(name) < 0)
-                    Iterate(name, databaseName, dict, builder, history);
+                    Iterate(name, dict, history);
             }
-
-            return builder.ToString();
+            return history;
         }
 
-        private static void Iterate(string tableName, DatabaseName dname, Dictionary<string, string[]> dict, StringBuilder builder, List<string> history)
+        private static void Iterate(string tableName, Dictionary<string, string[]> dict,  List<string> history)
         {
             if (!dict.ContainsKey(tableName))
             {
                 if (history.IndexOf(tableName) < 0)
                 {
-                    builder.AppendLine(new TableName(dname, tableName).GenerateScript());
                     history.Add(tableName);
                 }
             }
             else
             {
                 foreach (var name in dict[tableName])
-                    Iterate(name, dname, dict, builder, history);
+                    Iterate(name, dict,  history);
 
                 if (history.IndexOf(tableName) < 0)
                 {
-                    builder.AppendLine(new TableName(dname, tableName).GenerateScript());
                     history.Add(tableName);
                 }
             }
