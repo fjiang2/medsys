@@ -22,13 +22,13 @@ namespace Sys.Data.Comparison
             TableSchema schema2 = new TableSchema(tableName2);
 
             StringBuilder builder = new StringBuilder();
-            TableScript scrpit = new TableScript(tableName1);
+            TableScript script = new TableScript(tableName1);
 
             foreach (ColumnSchema column in schema1.Columns)
             {
                 if (schema2.Columns.Where(c => c.ColumnName == column.ColumnName).Count() == 0)
                 {
-                    builder.AppendLine(scrpit.ADD_COLUMN(column));
+                    builder.AppendLine(script.ADD_COLUMN(column));
                 }
                 else if (schema2.Columns.Where(c =>
                     c.ColumnName.Equals(column.ColumnName) 
@@ -39,7 +39,7 @@ namespace Sys.Data.Comparison
                     ))
                     .Count() != 0)
                 {
-                    builder.AppendLine(scrpit.ALTER_COLUMN(column));
+                    builder.AppendLine(script.ALTER_COLUMN(column));
                 }
             }
 
@@ -50,7 +50,7 @@ namespace Sys.Data.Comparison
             {
                 if (pk1.Keys.Length > 0)
                 {
-                    builder.AppendLine(scrpit.ADD_PRIMARY_KEY(pk1));
+                    builder.AppendLine(script.ADD_PRIMARY_KEY(pk1));
                     builder.AppendLine("GO");
                 }
             }
@@ -58,8 +58,8 @@ namespace Sys.Data.Comparison
             {
                 if (pk1.Keys.Length > 0 && !Equals(pk1.Keys, pk2.Keys))
                 {
-                    builder.AppendLine(scrpit.DROP_PRIMARY_KEY(pk1));
-                    builder.AppendLine(scrpit.ADD_PRIMARY_KEY(pk1));
+                    builder.AppendLine(script.DROP_PRIMARY_KEY(pk1));
+                    builder.AppendLine(script.ADD_PRIMARY_KEY(pk1));
                     builder.AppendLine("GO");
                 }
             }
@@ -73,10 +73,8 @@ namespace Sys.Data.Comparison
                 {
                     foreach (var fk in fk1.Keys)
                     {
-                        builder.AppendLine(scrpit.ADD_FOREIGN_KEY(fk));
+                        builder.AppendLine(script.ADD_FOREIGN_KEY(fk)).AppendLine("GO");
                     }
-
-                    builder.AppendLine("GO");
                 }
             }
             else
@@ -87,9 +85,8 @@ namespace Sys.Data.Comparison
                     {
                         if (fk2.Keys.Where(k2 => k2.Constraint_Name.Equals(k1.Constraint_Name)).Count() == 0)
                         {
-                            builder.AppendLine(scrpit.DROP_FOREIGN_KEY(k1));
-                            builder.AppendLine(scrpit.ADD_FOREIGN_KEY(k1));
-                            builder.AppendLine("GO");
+                            builder.AppendLine(script.DROP_FOREIGN_KEY(k1)).AppendLine("GO");
+                            builder.AppendLine(script.ADD_FOREIGN_KEY(k1)).AppendLine("GO");
                         }
                     }
                 }

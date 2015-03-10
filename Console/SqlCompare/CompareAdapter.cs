@@ -13,7 +13,7 @@ using System.Text.RegularExpressions;
 namespace SqlCompare
 {
    
-    class Command
+    class CompareAdapter
     {
         private Compare compare;
 
@@ -22,7 +22,7 @@ namespace SqlCompare
         public Side Side1 {get; private set;}
         public Side Side2 {get; private set;}
 
-        public Command(SqlConnectionStringBuilder cs1, SqlConnectionStringBuilder cs2, string tableNamePattern1, string tableNamePattern2)
+        public CompareAdapter(SqlConnectionStringBuilder cs1, SqlConnectionStringBuilder cs2, string tableNamePattern1, string tableNamePattern2)
         {
             this.Side1 = new Side(cs1, tableNamePattern1);
             this.Side2 = new Side(cs2, tableNamePattern2);
@@ -88,17 +88,16 @@ namespace SqlCompare
             var N2 = Side2.TableNames;
 
 
-            if (N1.Length != 0 && N2.Length != 0)
+            if (N1 != null && N2 != null)
             {
-                if (N1.Length != N2.Length)
-                {
-                    Console.WriteLine("cannot compare,number of tables on the left and right are different");
-                    return;
-                }
-
                 for(int i=0; i<N1.Length; i++)
                 {
-                    builder.Append(CompareTable(N1[i], N2[i], excludedtables, pk));
+                    string n2 = N1[i];
+                    
+                    if (i < N2.Length)
+                        n2 = N2[i];
+
+                    builder.Append(CompareTable(N1[i], n2, excludedtables, pk));
                 }
             }
             else if (CompareType == CompareAction.Schema)

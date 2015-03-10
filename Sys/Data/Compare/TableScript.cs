@@ -108,8 +108,8 @@ namespace Sys.Data.Comparison
 
         public string ADD_FOREIGN_KEY(IForeignKey foreignKey)
         {
-            string reference = string.Format(" [{0}]([{1}])", foreignKey.FK_Table, foreignKey.FK_Column);
-            return string.Format("ALTER TABLE [{0}] ADD CONSTRAINT {1} FOREIGN KEY ([{2}]) REFERENCES {3} ON DELETE NO ACTION ON UPDATE NO ACTION",
+            string reference = string.Format(" [{0}]([{1}])", foreignKey.PK_Table, foreignKey.PK_Column);
+            return string.Format("ALTER TABLE [{0}] ADD CONSTRAINT [{1}] FOREIGN KEY ([{2}])\nREFERENCES {3}",
                 tableName.Name,
                 foreignKey.Constraint_Name,
                 foreignKey.FK_Column,

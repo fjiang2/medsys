@@ -33,7 +33,7 @@ namespace SqlCompare
             get
             {
                 if (tableNamePattern == null)
-                    return new string[0];
+                    return null;
 
                 var names = Search(tableNamePattern, this.DatabaseName.GetTableNames());
                 return names;

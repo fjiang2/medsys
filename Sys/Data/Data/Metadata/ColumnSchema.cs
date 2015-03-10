@@ -377,7 +377,7 @@ namespace Sys.Data
 
             if (column.IsIdentity)
             {
-                line += "IDENTITY(1,1)";
+                line += " IDENTITY(1,1)";
                 return line;
             }
 

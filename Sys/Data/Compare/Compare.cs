@@ -95,19 +95,36 @@ namespace Sys.Data.Comparison
         public string TableSchemaDifference(TableName tableName1, TableName tableName2)
         {
          
-            string script;
+            string sql;
 
             if (DatabaseSchema.Exists(tableName2))
             {
                 TableSchemaCompare compare = new TableSchemaCompare(tableName1, tableName2);
-                script = compare.Compare();
+                sql = compare.Compare();
             }
             else
             {
-                script = new TableScript(tableName1).CREATE_TABLE();
+                var script = new TableScript(tableName1);
+                sql = script.CREATE_TABLE();
+                TableSchema schema1 = new TableSchema(tableName1);
+
+                StringBuilder builder = new StringBuilder(sql);
+                builder.AppendLine("GO");
+                
+                var fk1 = schema1.ForeignKeys;
+                if (fk1.Keys.Length > 0)
+                {
+                    foreach (var fk in fk1.Keys)
+                    {
+                        builder.AppendLine(script.ADD_FOREIGN_KEY(fk)).AppendLine("GO");
+                    }
+
+                }
+
+                sql = builder.ToString();
             }
 
-            return script;
+            return sql;
         }
 
 
