@@ -156,8 +156,6 @@ namespace Sys.Data
         public static string GenerateScript(this DatabaseName databaseName)
         {
             StringBuilder builder = new StringBuilder();
-            builder.Append(GenerateDropTableScript(databaseName));
-
             List<string> history = TableDependency(databaseName);
 
             foreach (var tableName in history)

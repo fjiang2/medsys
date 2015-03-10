@@ -17,8 +17,7 @@ namespace SqlCompare
         private VAL ini;
         private VAL alias;
 
-        private string output = "script.sql";
-        private string input = "script.sql";
+        private string scriptFileName = "script.sql";
         private string[] excludedtables = new string[]{};
         private CompareAction compareType = CompareAction.Schema;
         private Dictionary<string, string[]> PK = new Dictionary<string, string[]>();
@@ -88,7 +87,7 @@ namespace SqlCompare
 
             x = ini["output"];
             if (x.Defined)
-                this.output = (string)x;
+                this.scriptFileName = (string)x;
 
             var pk = ini["primary_key"];
             if (pk.Defined)
@@ -172,9 +171,11 @@ namespace SqlCompare
                     case "/g":
                         compareType = CompareAction.GenerateScript;
                         break;
-
                     case "/row":
                         compareType = CompareAction.TableRows;
+                        break;
+                    case "/i":
+                        compareType = CompareAction.Execute;
                         break;
 
                     case "/S":
@@ -264,23 +265,11 @@ namespace SqlCompare
                         }
 
 
-                    case "/i":
-                        if (i < args.Length)
-                        {
-                            input = args[i++];
-                            compareType = CompareAction.Input;
-                            break;
-                        }
-                        else
-                        {
-                            Log("undefined input sql script file name");
-                            return;
-                        }
                     
-                    case "/o":
+                    case "/f":
                         if (i < args.Length)
                         {
-                            output = args[i++];
+                            scriptFileName = args[i++];
                             break;
                         }
                         else
@@ -310,8 +299,8 @@ namespace SqlCompare
 
             CompareAdapter cmd = new CompareAdapter(cs1, cs2, tableNamePattern1, tableNamePattern2) 
             { 
-                OutputFile = output,
-                InputFile = input
+                OutputFile = scriptFileName,
+                InputFile = scriptFileName
             };
 
             excludedtables = excludedtables.Select(row => row.ToUpper()).ToArray();
@@ -320,7 +309,7 @@ namespace SqlCompare
             {
                 switch (compareType)
                 {
-                    case CompareAction.Input:
+                    case CompareAction.Execute:
                         cmd.ExecuteScript();
                         break;
 

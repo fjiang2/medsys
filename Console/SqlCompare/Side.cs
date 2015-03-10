@@ -97,7 +97,7 @@ namespace SqlCompare
         {
             TableName tname = new TableName(Provider, tableName);
             var dt = tname.PrimaryKeySchema();
-            Display(dt);
+            ConsoleTable.DisplayTable(dt);
         }
 
         public void DisplayFK()
@@ -119,28 +119,9 @@ namespace SqlCompare
         {
             TableName tname = new TableName(Provider, tableName);
             var dt = tname.ForeignKeySchema();
-            Display(dt);
+            ConsoleTable.DisplayTable(dt);
         }
 
-        private void Display(DataTable dt)
-        {
-            StringBuilder builder = new StringBuilder();
-            foreach (DataColumn column in dt.Columns)
-            {
-                builder.AppendFormat("{0}\t", column.ColumnName);
-            }
-            Log(builder.ToString());
-            foreach (DataRow row in dt.Rows)
-            {
-                builder = new StringBuilder();
-                foreach (DataColumn column in dt.Columns)
-                {
-                    builder.AppendFormat("{0}\t", row[column]);
-                }
-
-                Log(builder.ToString());
-            }
-        }
 
         public static string[] Search(string pattern, string[] tableNames)
         {

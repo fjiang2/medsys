@@ -42,17 +42,32 @@ namespace SqlCompare
                 return;
             }
 
+            StringBuilder builder = new StringBuilder();
             using (var reader = new StreamReader(InputFile))
             {
-                string sql = reader.ReadToEnd();
-                Side2.ExecuteScript(sql);
+                while (!reader.EndOfStream)
+                {
+                    string line = reader.ReadLine();
+
+                    if (line == "GO")
+                    {
+                        string sql = builder.ToString();
+                        new SqlCmd(Side2.Provider, sql).ExecuteNonQuery();
+                        builder.Clear();
+                    }
+                    else if (line != string.Empty)
+                        builder.AppendLine(line);
+                }
             }
         }
 
         public void GenerateScript()
         {
             DatabaseName db1 = Side1.DatabaseName;
-            Output(db1.GenerateScript());
+            StringBuilder builder = new StringBuilder();
+            builder.Append(db1.GenerateDropTableScript());
+            builder.Append(db1.GenerateScript());
+            Output(builder.ToString());
         }
 
         public void AllRows(string[] excludedtables)

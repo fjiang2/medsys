@@ -49,6 +49,7 @@
     <Compile Include="CompareAdapter.cs" />
     <Compile Include="CompareAction.cs" />
     <Compile Include="CompareConsole.cs" />
+    <Compile Include="ConsoleTable.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

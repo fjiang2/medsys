@@ -15,6 +15,6 @@ namespace SqlCompare
         TableRows = 5,
         Name = 6,
         GenerateScript = 7,
-        Input = 8
+        Execute = 8
     }
 }
