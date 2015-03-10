@@ -172,6 +172,9 @@ namespace SqlCompare
                     case "/name":
                         compareType = CompareAction.Name;
                         break;
+                    case "/g":
+                        compareType = CompareAction.GenerateScript;
+                        break;
 
                     case "/S":
                         if (i < args.Length && parse(args[i++], out t1, out t2))
@@ -339,6 +342,10 @@ namespace SqlCompare
                         {
                             Console.WriteLine(item);
                         }
+                        break;
+
+                    case CompareAction.GenerateScript:
+                        cmd.GenerateScript();
                         break;
                 }
             }

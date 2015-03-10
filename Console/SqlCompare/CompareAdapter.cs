@@ -32,6 +32,11 @@ namespace SqlCompare
             this.compare = new Compare(this.Side1.Provider, this.Side2.Provider);
         }
 
+        public void GenerateScript()
+        {
+            DatabaseName db1 = Side1.DatabaseName;
+            Output(db1.GenerateScript());
+        }
 
         public void AllRows()
         {

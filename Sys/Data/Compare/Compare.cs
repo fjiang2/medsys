@@ -104,28 +104,13 @@ namespace Sys.Data.Comparison
             }
             else
             {
-                var script = new TableScript(tableName1);
-                sql = script.CREATE_TABLE();
-                TableSchema schema1 = new TableSchema(tableName1);
-
-                StringBuilder builder = new StringBuilder(sql);
-                builder.AppendLine("GO");
-                
-                var fk1 = schema1.ForeignKeys;
-                if (fk1.Keys.Length > 0)
-                {
-                    foreach (var fk in fk1.Keys)
-                    {
-                        builder.AppendLine(script.ADD_FOREIGN_KEY(fk)).AppendLine("GO");
-                    }
-
-                }
-
-                sql = builder.ToString();
+                sql = tableName1.GenerateScript();
             }
 
             return sql;
         }
+
+        
 
 
         public string TableDifference(TableName tableName1, TableName tableName2, out bool pk)

@@ -13,6 +13,7 @@ namespace SqlCompare
         ParimaryKey = 3,
         ForeignKey = 4,
         AllRows = 5,
-        Name = 6
+        Name = 6,
+        GenerateScript = 7
     }
 }

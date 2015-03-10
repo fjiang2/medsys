@@ -103,6 +103,34 @@ namespace Sys.Data
             return values;
         }
 
+        public static T[] ToArray<T>(this DataTable dataTable, Func<DataRow, T> func)
+        {
+            T[] values = new T[dataTable.Rows.Count];
+            
+            int i = 0;
+            foreach (DataRow row in dataTable.Rows)
+            {
+                values[i++] = func(row);
+            }
+            
+            return values;
+        }
+
+
+        //public static Dictionary<T1, T2> ToDictionary<T1, T2>(this DataTable dataTable, Func<DataRow, T1> keySelector, Func<DataRow, T2> elementSelector)
+        //{
+        //    Dictionary<T1, T2> dict = new Dictionary<T1, T2>();
+
+        //    foreach (DataRow row in dataTable.Rows)
+        //    {
+        //        dict.Add(keySelector(row), elementSelector(row));
+        //    }
+
+        //    return dict;
+        //}
+        
+
+
         #endregion
 
 

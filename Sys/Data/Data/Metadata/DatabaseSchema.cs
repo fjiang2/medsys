@@ -19,7 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data;
-
+using Sys.Data.Comparison;
 
 namespace Sys.Data
 {
@@ -126,6 +126,95 @@ namespace Sys.Data
                     return new string[0];
             }
 
+        }
+
+
+        public static string GenerateScript(this TableName tableName)
+        {
+            string sql;
+            var script = new TableScript(tableName);
+            sql = script.CREATE_TABLE();
+            TableSchema schema1 = new TableSchema(tableName);
+
+            StringBuilder builder = new StringBuilder(sql);
+            builder.AppendLine("GO");
+
+            var fk1 = schema1.ForeignKeys;
+            if (fk1.Keys.Length > 0)
+            {
+                foreach (var fk in fk1.Keys)
+                {
+                    builder.AppendLine(script.ADD_FOREIGN_KEY(fk)).AppendLine("GO");
+                }
+
+            }
+
+            sql = builder.ToString();
+            return sql;
+        }
+
+        public static string GenerateScript(this DatabaseName databaseName)
+        { 
+
+            string sql = @"
+SELECT  FK.TABLE_NAME AS FK_Table,
+        PK.TABLE_NAME AS PK_Table
+  FROM  INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS C
+        INNER JOIN INFORMATION_SCHEMA.TABLE_CONSTRAINTS FK ON C.CONSTRAINT_NAME = FK.CONSTRAINT_NAME
+        INNER JOIN INFORMATION_SCHEMA.TABLE_CONSTRAINTS PK ON C.UNIQUE_CONSTRAINT_NAME = PK.CONSTRAINT_NAME
+        INNER JOIN INFORMATION_SCHEMA.KEY_COLUMN_USAGE CU ON C.CONSTRAINT_NAME = CU.CONSTRAINT_NAME
+        INNER JOIN ( SELECT i1.TABLE_NAME ,
+                            i2.COLUMN_NAME
+                     FROM   INFORMATION_SCHEMA.TABLE_CONSTRAINTS i1
+                            INNER JOIN INFORMATION_SCHEMA.KEY_COLUMN_USAGE i2 ON i1.CONSTRAINT_NAME = i2.CONSTRAINT_NAME
+                     WHERE  i1.CONSTRAINT_TYPE = 'PRIMARY KEY'
+                   ) PT ON PT.TABLE_NAME = PK.TABLE_NAME
+ WHERE FK.TABLE_NAME <> PK.TABLE_NAME
+";
+
+            var dt = new SqlCmd(databaseName.Provider, sql)
+                .FillDataTable()
+                .AsEnumerable();
+
+            var dict = dt.GroupBy(row => (string)row[0], (Key, rows) => new { Fk = Key, Pk = rows.Select(row => (string)row[1]).ToArray() })
+                .ToDictionary(row => row.Fk, row => row.Pk);
+
+            StringBuilder builder = new StringBuilder();
+
+            var names = databaseName.GetTableNames();
+
+            List<string> history = new List<string>();
+
+            foreach (var name in names)
+            {
+                if (history.IndexOf(name) < 0)
+                    Iterate(name, databaseName, dict, builder, history);
+            }
+
+            return builder.ToString();
+        }
+
+        private static void Iterate(string tableName, DatabaseName dname, Dictionary<string, string[]> dict, StringBuilder builder, List<string> history)
+        {
+            if (!dict.ContainsKey(tableName))
+            {
+                if (history.IndexOf(tableName) < 0)
+                {
+                    builder.AppendLine(new TableName(dname, tableName).GenerateScript());
+                    history.Add(tableName);
+                }
+            }
+            else
+            {
+                foreach (var name in dict[tableName])
+                    Iterate(name, dname, dict, builder, history);
+
+                if (history.IndexOf(tableName) < 0)
+                {
+                    builder.AppendLine(new TableName(dname, tableName).GenerateScript());
+                    history.Add(tableName);
+                }
+            }
         }
     }
 }
