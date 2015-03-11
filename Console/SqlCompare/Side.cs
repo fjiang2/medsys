@@ -28,7 +28,7 @@ namespace SqlCompare
             this.DatabaseName = new DatabaseName(Provider, cs.InitialCatalog);
         }
 
-        public string[] TableNames
+        public string[] MatchedTableNames
         {
             get
             {
@@ -40,22 +40,74 @@ namespace SqlCompare
             }
         }
 
-        public DatabaseName DatabaseName { get; private set; }
-
-        public void ExecuteScript(string sql)
+        public string[] DefaultTableNames
         {
-            string[] S = sql.Split(new string[] { "\r\nGO\r\n" }, StringSplitOptions.RemoveEmptyEntries);
-
-            foreach (var s in S)
+            get
             {
-                if (s.Replace("\r\n", "").Replace(" ", "").Replace("\t", "") == string.Empty)
-                    continue;
+                string[] names = this.DatabaseName.GetTableNames();
+                if (tableNamePattern == null)
+                    return names;
 
-                new SqlCmd(Provider, s).ExecuteNonQuery();
+                names = Search(tableNamePattern, names);
+
+                return names;
             }
         }
 
-        public string AllRows(string[] tableNames)
+
+        public DatabaseName DatabaseName { get; private set; }
+
+
+        public string GenerateScript()
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.Append(DatabaseName.GenerateDropTableScript());
+            builder.Append(DatabaseName.GenerateScript());
+            return builder.ToString();
+        }
+
+        public void ExecuteScript(string scriptFile)
+        {
+            if (!File.Exists(scriptFile))
+            {
+                Log("input file not found: {0}", scriptFile);
+                return;
+            }
+
+            StringBuilder builder = new StringBuilder();
+            using (var reader = new StreamReader(scriptFile))
+            {
+                while (!reader.EndOfStream)
+                {
+                    string line = reader.ReadLine();
+
+                    if (line == "GO")
+                    {
+                        string sql = builder.ToString();
+                        new SqlCmd(this.Provider, sql).ExecuteNonQuery();
+                        builder.Clear();
+                    }
+                    else if (line != string.Empty)
+                        builder.AppendLine(line);
+                }
+            }
+        }
+
+        public string AllRowScript(string[] excludedtables)
+        {
+            List<string> list = new List<string>();
+            foreach (string name in this.DefaultTableNames)
+            {
+                if (!excludedtables.Contains(name.ToUpper()))
+                    list.Add(name);
+            }
+            
+            return AllRows(list.ToArray());
+        }
+
+
+
+        private string AllRows(string[] tableNames)
         {
             StringBuilder builder = new StringBuilder();
             foreach (var tableName in tableNames)
@@ -70,7 +122,7 @@ namespace SqlCompare
             return builder.ToString();
         }
 
-        public string AllRows(string tableName, string where)
+        private string AllRows(string tableName, string where)
         {
             var tname = new TableName(Provider, tableName);
             string sql = Compare.AllRows(tname, where);
@@ -79,14 +131,7 @@ namespace SqlCompare
 
         public void DisplayColumns()
         {
-            var names = TableNames;
-            if(names.Length == 0)
-            {
-                Log("no table found");
-                return;
-            }
-
-            foreach (string tableName in names)
+            foreach (string tableName in this.DefaultTableNames)
             {
                 Log("[{0}]",tableName);
                 TableName tname = new TableName(Provider, tableName);
@@ -97,14 +142,7 @@ namespace SqlCompare
         
         public void DisplayPK()
         {
-            var names = TableNames;
-            if (names.Length == 0)
-            {
-                Log("no table found");
-                return;
-            }
-
-            foreach (string tableName in names)
+            foreach (string tableName in this.DefaultTableNames)
             {
                 Log("[{0}]", tableName);
                 TableName tname = new TableName(Provider, tableName);
@@ -115,20 +153,45 @@ namespace SqlCompare
 
         public void DisplayFK()
         {
-            var names = TableNames;
-            if (names.Length == 0)
-            {
-                Log("no table found");
-                return;
-            }
 
-            foreach (string tableName in names)
+            foreach (string tableName in this.DefaultTableNames)
             {
                 Log("[{0}]", tableName);
                 TableName tname = new TableName(Provider, tableName);
                 var dt = tname.ForeignKeySchema();
                 ConsoleTable.DisplayTable(dt);
             }
+        }
+
+        public void DisplayMatchedTableNames()
+        {
+            DisplayTableNames(this.DefaultTableNames);
+        }
+
+        public void DisplayMatchedTableNames(string pattern)
+        {
+            var names = Search(pattern, this.DatabaseName.GetTableNames());
+            DisplayTableNames(names);
+        }
+
+
+        public void DisplayAllTableNames()
+        {
+            DisplayTableNames(this.DatabaseName.GetTableNames());
+        }
+
+        public void DisplayTableNames(string[] names)
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.Add("Table Name");
+            foreach (string item in names)
+            {
+                var newRow = dt.NewRow();
+                newRow[0] = item;
+                dt.Rows.Add(newRow);
+            }
+
+            ConsoleTable.DisplayTable(dt);
         }
 
 

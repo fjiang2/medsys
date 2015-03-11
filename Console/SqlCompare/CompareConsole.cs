@@ -19,7 +19,7 @@ namespace SqlCompare
 
         private string scriptFileName = "script.sql";
         private string[] excludedtables = new string[]{};
-        private CompareAction compareType = CompareAction.Schema;
+        private CompareAction compareType = CompareAction.CompareSchema;
         private Dictionary<string, string[]> PK = new Dictionary<string, string[]>();
 
         SqlConnectionStringBuilder cs1;
@@ -30,7 +30,7 @@ namespace SqlCompare
         
         }
 
-        private static bool TryReadIni(string fileName, out VAL ini)
+        private static bool TryReadCfg(string fileName, out VAL ini)
         {
             ini = new VAL();
             if (!File.Exists(fileName))
@@ -56,10 +56,30 @@ namespace SqlCompare
             return true;
         }
 
+        private void WriteFile(string sql)
+        {
+            if (string.IsNullOrEmpty(sql))
+            {
+                sql = string.Empty;
+                Log("Nothing is changed");
+            }
+
+            using (var writer = new StreamWriter(scriptFileName))
+            {
+                writer.Write(sql);
+            }
+
+            if (!string.IsNullOrEmpty(sql))
+            {
+                Log("output: {0}", scriptFileName);
+                Log("completed.");
+            }
+        }
+
 
         public bool Initialize(string fileName)
         {
-            if (!TryReadIni(fileName, out ini))
+            if (!TryReadCfg(fileName, out ini))
                 return false;
 
             this.alias = ini["alias"];
@@ -117,15 +137,9 @@ namespace SqlCompare
                 switch (args[i++])
                 {
                     case "/cfg":
-                        if (i < args.Length)
-                        {
-                            i++;
-                            break;
-                        }
-                        else
-                        {
-                            return;
-                        }
+                        i++;
+                        break;
+
 
                     case "/s":
                         if (i < args.Length && parse(args[i++], out t1, out t2))
@@ -134,12 +148,12 @@ namespace SqlCompare
                             var s2 = alias[t2];
                             if (s1.Undefined)
                             {
-                                Log("undefined server alias", t1);
+                                Log("undefined server alias ({0}) in configuration file", t1);
                                 return;
                             }
                             if (s2.Undefined)
                             {
-                                Log("undefined server alias", t2);
+                                Log("undefined server alias ({0}) in configuration file", t2);
                                 return;
                             }
 
@@ -149,40 +163,54 @@ namespace SqlCompare
                         }
                         else
                         {
-                            Log("undefined database server alias");
+                            Log("/s database server alias undefined");
                             return;
                         }
 
-                    case "/schema":
-                        compareType = CompareAction.Schema;
-                        break;
-                    case "/data":
-                        compareType = CompareAction.Data;
-                        break;
-                    case "/column":
-                        compareType = CompareAction.Columns;
-                        break;
-                    case "/pk":
-                        compareType = CompareAction.ParimaryKey;
-                        break;
-                    case "/fk":
-                        compareType = CompareAction.ForeignKey;
-                        break;
-                    case "/name":
-                        compareType = CompareAction.Name;
-                        break;
-                    case "/g":
-                        compareType = CompareAction.GenerateScript;
-                        break;
-                    case "/row":
-                        compareType = CompareAction.TableRows;
-                        break;
-                    case "/cmd":
-                        compareType = CompareAction.Command;
-                        break;
-                    case "/i":
-                        compareType = CompareAction.Execute;
-                        break;
+                    case "/c":
+                        if (i < args.Length && !args[i].StartsWith("/"))
+                        {
+                            switch (args[i++])
+                            {
+                                case "schema":
+                                    compareType = CompareAction.CompareSchema;
+                                    break;
+                                case "data":
+                                    compareType = CompareAction.CompareData;
+                                    break;
+                                case "column":
+                                    compareType = CompareAction.ShowTableStructure;
+                                    break;
+                                case "pk":
+                                    compareType = CompareAction.ShowParimaryKey;
+                                    break;
+                                case "fk":
+                                    compareType = CompareAction.ShowForeignKey;
+                                    break;
+                                case "table":
+                                    compareType = CompareAction.ShowTableName;
+                                    break;
+                                case "gen":
+                                    compareType = CompareAction.GenerateScript;
+                                    break;
+                                case "row":
+                                    compareType = CompareAction.GenerateTableRows;
+                                    break;
+                                case "cmd":
+                                    compareType = CompareAction.Command;
+                                    break;
+                                case "exec":
+                                    compareType = CompareAction.Execute;
+                                    break;
+                            }
+                            break;
+                        }
+                        else
+                        {
+                            Log("/c argument undefined");
+                            return;
+                        }
+
 
                     case "/S":
                         if (i < args.Length && parse(args[i++], out t1, out t2))
@@ -201,7 +229,7 @@ namespace SqlCompare
                         }
                         else
                         {
-                            Log("undefined server name");
+                            Log("/S server name undefined");
                             return;
                         }
 
@@ -214,7 +242,7 @@ namespace SqlCompare
                         }
                         else
                         {
-                            Log("undefined user name");
+                            Log("/U user name undefined");
                             return;
                         }
 
@@ -227,7 +255,7 @@ namespace SqlCompare
                         }
                         else
                         {
-                            Log("undefined server password");
+                            Log("/P server password undefined");
                             return;
                         }
 
@@ -259,28 +287,28 @@ namespace SqlCompare
 
 
                     case "/e":
-                        if (i < args.Length)
+                        if (i < args.Length && !args[i].StartsWith("/"))
                         {
                             excludedtables = args[i++].Split(',');
                             break;
                         }
                         else
                         {
-                            Log("undefined excluded table names");
+                            Log("/e undefined excluded table names");
                             return;
                         }
 
 
-                    
+
                     case "/f":
-                        if (i < args.Length)
+                        if (i < args.Length && !args[i].StartsWith("/"))
                         {
                             scriptFileName = args[i++];
                             break;
                         }
                         else
                         {
-                            Log("undefined output sql script file name");
+                            Log("/f undefined sql script file name");
                             return;
                         }
 
@@ -303,12 +331,7 @@ namespace SqlCompare
                 return;
             }
 
-            CompareAdapter cmd = new CompareAdapter(cs1, cs2, tableNamePattern1, tableNamePattern2) 
-            { 
-                OutputFile = scriptFileName,
-                InputFile = scriptFileName
-            };
-
+            CompareAdapter cmd = new CompareAdapter(cs1, cs2, tableNamePattern1, tableNamePattern2);
             excludedtables = excludedtables.Select(row => row.ToUpper()).ToArray();
 
             try
@@ -316,39 +339,49 @@ namespace SqlCompare
                 switch (compareType)
                 {
                     case CompareAction.Execute:
-                        cmd.ExecuteScript();
+                        cmd.Side2.ExecuteScript(scriptFileName);
+
                         break;
 
-                    case CompareAction.TableRows:
-                        cmd.AllRows(excludedtables);
-                        break;
-
-                    case CompareAction.Columns:
-                        cmd.Side1.DisplayColumns();
-                        break;
-
-                    case CompareAction.ParimaryKey:
-                        cmd.Side1.DisplayPK();
-                        break;
-
-                    case CompareAction.ForeignKey:
-                        cmd.Side1.DisplayFK();
-                        break;
-
-                    case CompareAction.Data:
-                    case CompareAction.Schema:
-                        cmd.Run(compareType, excludedtables, PK);
-                        break;
-
-                    case CompareAction.Name:
-                        foreach (string item in new Side(cs1, tableNamePattern1).TableNames)
-                        {
-                            Log(item);
-                        }
+                    case CompareAction.GenerateTableRows:
+                        WriteFile(cmd.Side1.AllRowScript(excludedtables));
                         break;
 
                     case CompareAction.GenerateScript:
-                        cmd.GenerateScript();
+                        WriteFile(cmd.Side1.GenerateScript());
+                        break;
+
+                    case CompareAction.ShowTableName:
+                        Log("server1:");
+                        cmd.Side1.DisplayMatchedTableNames();
+                        Log("server2:");
+                        cmd.Side2.DisplayMatchedTableNames();
+                        break;
+
+                    case CompareAction.ShowTableStructure:
+                        Log("server1:");
+                        cmd.Side1.DisplayColumns();
+                        Log("server2:");
+                        cmd.Side2.DisplayColumns();
+                        break;
+
+                    case CompareAction.ShowParimaryKey:
+                        Log("server1:");
+                        cmd.Side1.DisplayPK();
+                        Log("server2:");
+                        cmd.Side2.DisplayPK();
+                        break;
+
+                    case CompareAction.ShowForeignKey:
+                        Log("server1:");
+                        cmd.Side1.DisplayFK();
+                        Log("server2:");
+                        cmd.Side2.DisplayFK();
+                        break;
+
+                    case CompareAction.CompareData:
+                    case CompareAction.CompareSchema:
+                        WriteFile(cmd.Run(compareType, excludedtables, PK));
                         break;
 
                     case CompareAction.Command:
@@ -366,7 +399,7 @@ namespace SqlCompare
       
         private static bool parse(string arg, out string t1, out string t2)
         {
-            if (string.IsNullOrEmpty(arg))
+            if (string.IsNullOrEmpty(arg) || arg.StartsWith("/"))
             {
                 t1 = null;
                 t2 = null;
@@ -412,19 +445,26 @@ namespace SqlCompare
         }
 
 
+        private Side theSide;
 
         private void DoCommand(CompareAdapter adapter)
         {
-            this.provider = adapter.Side1.Provider;
+            this.theSide = adapter.Side1;
 
             Console.WriteLine("SqlCompare SQL command console");
-            Console.WriteLine("type [help;] to help, type [;] to execute a command");
+            Console.WriteLine("type [help] to help, [;] to execute a command, [exit] to quit");
             StringBuilder builder = new StringBuilder();
             string line = null;
             while (line != "exit")
             {
                 Console.Write("#:");
                 line = Console.ReadLine();
+
+                if (line == "help" || line == "?")
+                {
+                    Help();
+                    continue;
+                }
 
                 if (line != "\r\n" && line != ";")
                     builder.AppendLine(line);
@@ -441,18 +481,20 @@ namespace SqlCompare
                 }
             }
         }
-
-
-        private DataProvider provider;
-
+   
         private void DoCommand(CompareAdapter adapter, string text)
         {
             string[] A = text.Split(' ');
             string cmd = null;
+            string arg1 = null;
+
             int n = A.Length;
 
             if (n > 0)
                 cmd = A[0].ToLower();
+
+            if (n == 2)
+                arg1 = A[1].Trim();
 
             switch (cmd)
             {
@@ -461,7 +503,7 @@ namespace SqlCompare
                 case "fk":
                     if (n == 2)
                     {
-                        TableName tname = new TableName(provider, A[1].Trim());
+                        TableName tname = new TableName(theSide.Provider, arg1);
                         DataTable dt = null;
                         switch (cmd)
                         {
@@ -486,9 +528,17 @@ namespace SqlCompare
                         Console.WriteLine("invalid command");
                     }
                     break;
+                
+                case "table":
+                    if (arg1 == null)
+                        theSide.DisplayAllTableNames();
+                    else
+                        theSide.DisplayMatchedTableNames(arg1);
+
+                    break;
 
                 case "select":
-                    DataSet ds = new SqlCmd(provider, text).FillDataSet();
+                    DataSet ds = new SqlCmd(theSide.Provider, text).FillDataSet();
                     if (ds != null)
                     {
                         foreach (DataTable dt in ds.Tables)
@@ -500,33 +550,30 @@ namespace SqlCompare
                     break;
 
                 case "server1":
-                    this.provider = adapter.Side1.Provider;
+                    this.theSide = adapter.Side1;
                     Console.WriteLine("server 1 selected");
                     break;
 
                 case "server2":
-                    this.provider = adapter.Side2.Provider;
+                    this.theSide = adapter.Side2;
                     Console.WriteLine("server 2 selected");
                     break;
 
                 case "help":
                 case "?":
-                    Console.WriteLine("Help");
-                    Console.WriteLine("Command List:");
-                    Console.WriteLine("server1          : switch to source server (default)");
-                    Console.WriteLine("server2          : switch to sink server");
-                    Console.WriteLine("column tablename : show table structure");
-                    Console.WriteLine("pk tablename     : show table primary keys");
-                    Console.WriteLine("fk tablename     : show table foreign keys");
-                    Console.WriteLine("exit             : quit application");
-                    Console.WriteLine("all sql clauses, e.g. select * from table, update...");
+                    Help();
                     break;
 
                 default:
+                    if (char.IsDigit(cmd[0]))
+                    {
+                        Log("invalid command");
+                        break;
+                    }
+
                     try
                     {
-                        new SqlCmd(provider, text).ExecuteNonQuery();
-                        Console.WriteLine("completed");
+                        new SqlCmd(theSide.Provider, text).ExecuteNonQuery();
                     }
                     catch (Exception ex)
                     {
@@ -535,6 +582,22 @@ namespace SqlCompare
 
                     break;
             }
+        }
+
+        private static void Help()
+        {
+            Console.WriteLine("<Commands>");
+            Console.WriteLine("server1          : switch to source server 1 (default)");
+            Console.WriteLine("server2          : switch to sink server 2");
+            Console.WriteLine("table            : show all table names");
+            Console.WriteLine("table pattern    : show matched table names (wildcard*,?)");
+            Console.WriteLine("column tablename : show table structure");
+            Console.WriteLine("pk tablename     : show table primary keys");
+            Console.WriteLine("fk tablename     : show table foreign keys");
+            Console.WriteLine("all sql clauses, e.g. select * from table, update...");
+            Console.WriteLine("exit             : quit application");
+            Console.WriteLine("help             : this help");
+            Console.WriteLine("?                : this help");
         }
     }
 }

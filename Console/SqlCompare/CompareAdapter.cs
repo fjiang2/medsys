@@ -17,9 +17,6 @@ namespace SqlCompare
     {
         private Compare compare;
 
-        public string InputFile { get; set; }
-        public string OutputFile { get; set; }
-
         public Side Side1 {get; private set;}
         public Side Side2 {get; private set;}
 
@@ -27,67 +24,10 @@ namespace SqlCompare
         {
             this.Side1 = new Side(cs1, tableNamePattern1);
             this.Side2 = new Side(cs2, tableNamePattern2);
-
-            InputFile = "script.sql";
-            OutputFile = "script.sql";
-
             this.compare = new Compare(this.Side1.Provider, this.Side2.Provider);
         }
-
-        public void ExecuteScript()
-        {
-            if (!File.Exists(InputFile))
-            {
-                Log("input file not found: {0}", InputFile);
-                return;
-            }
-
-            StringBuilder builder = new StringBuilder();
-            using (var reader = new StreamReader(InputFile))
-            {
-                while (!reader.EndOfStream)
-                {
-                    string line = reader.ReadLine();
-
-                    if (line == "GO")
-                    {
-                        string sql = builder.ToString();
-                        new SqlCmd(Side2.Provider, sql).ExecuteNonQuery();
-                        builder.Clear();
-                    }
-                    else if (line != string.Empty)
-                        builder.AppendLine(line);
-                }
-            }
-        }
-
-        public void GenerateScript()
-        {
-            DatabaseName db1 = Side1.DatabaseName;
-            StringBuilder builder = new StringBuilder();
-            builder.Append(db1.GenerateDropTableScript());
-            builder.Append(db1.GenerateScript());
-            Output(builder.ToString());
-        }
-
-        public void AllRows(string[] excludedtables)
-        {
-            string[] names = Side1.TableNames;
-            if (names == null)
-                names = Side1.DatabaseName.GetTableNames();
-            
-            List<string> list = new List<string>();
-            foreach (string name in names)
-            {
-                if(!excludedtables.Contains(name.ToUpper()))
-                    list.Add(name);
-            }
-
-            Output(Side1.AllRows(list.ToArray()));
-        }
-
      
-        public static bool Exists(TableName tname)
+        private static bool Exists(TableName tname)
         {
             if (!tname.Exists())
             {
@@ -98,7 +38,7 @@ namespace SqlCompare
             return true;
         }
 
-        public static bool Exists(DatabaseName dname)
+        private static bool Exists(DatabaseName dname)
         {
             if (!dname.Exists())
             {
@@ -110,7 +50,7 @@ namespace SqlCompare
         }
 
 
-        public void Run(CompareAction CompareType, string[] excludedtables, Dictionary<string,string[]> pk)
+        public string Run(CompareAction CompareType, string[] excludedtables, Dictionary<string,string[]> pk)
         {
             DatabaseName db1 = Side1.DatabaseName;
             DatabaseName db2 = Side2.DatabaseName;
@@ -120,12 +60,12 @@ namespace SqlCompare
             Log("server2: {0} default database:{1}", db1.Name, db2.Name);
            
             if (!Exists(db1) || !Exists(db2))
-                return;
+                return string.Empty;
 
             StringBuilder builder = new StringBuilder();
 
-            var N1 = Side1.TableNames;
-            var N2 = Side2.TableNames;
+            var N1 = Side1.MatchedTableNames;
+            var N2 = Side2.MatchedTableNames;
             string sql;
 
             if (N1 != null && N2 != null)
@@ -133,21 +73,21 @@ namespace SqlCompare
                 if (N1.Length != N2.Length)
                 {
                     Log("number of comparing table are different: {0}!={1}", N1.Length, N2.Length);
-                    return;
+                    return string.Empty;
                 }
                 for(int i=0; i<N1.Length; i++)
                 {
                     builder.Append(CompareTable(N1[i], N2[i], excludedtables, pk));
                 }
             }
-            else if (CompareType == CompareAction.Schema)
+            else if (CompareType == CompareAction.CompareSchema)
             {
                 sql = CompareDatabaseSchema(db1, db2);
 
                 if (sql != string.Empty)
                     builder.Append(sql);
             }
-            else if (CompareType == CompareAction.Data)
+            else if (CompareType == CompareAction.CompareData)
             {
                 sql = CompareDatabaseSchema(db1, db2);
 
@@ -160,9 +100,7 @@ namespace SqlCompare
 
             }
 
-
-            Output(builder.ToString());
-            
+            return builder.ToString();
         }
 
         private string CompareDatabaseSchema(DatabaseName db1, DatabaseName db2)
@@ -226,25 +164,7 @@ namespace SqlCompare
             return sql;
         }
 
-        public void Output(string sql)
-        {
-            if (string.IsNullOrEmpty(sql))
-            {
-                sql = string.Empty;
-                Log("Nothing is changed");
-            }
-
-            using (var writer = new StreamWriter(OutputFile))
-            {
-                writer.Write(sql);
-            }
-            
-            if (!string.IsNullOrEmpty(sql))
-            {
-                Log("output: {0}", OutputFile);
-                Log("completed.", OutputFile);
-            }
-        }
+    
 
     }
 }

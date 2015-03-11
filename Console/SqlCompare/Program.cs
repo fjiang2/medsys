@@ -25,14 +25,14 @@ namespace SqlCompare
                 switch (args[i++])
                 {
                     case "/cfg":
-                        if (i < args.Length)
+                        if (i < args.Length && !args[i].StartsWith("/"))
                         {
                             cfg = args[i++];
                             goto L1;
                         }
                         else
                         {
-                            Console.WriteLine("undefined configuration file");
+                            Console.WriteLine("/cfg configuration file missing");
                             return;
                         }
 
@@ -60,34 +60,34 @@ namespace SqlCompare
             Console.WriteLine("     [/cfg configuration file(.cfg)]");
             Console.WriteLine("     [/s alias1:alias2]|[/s alias]");
             Console.WriteLine("     [/S server1:server2] [/U user1:user2] [/P password1:password2]");
-            Console.WriteLine("     [/schema|/data|/pk|/fk|/row|/exec]");
+            Console.WriteLine("     [/c schema|data|table|column|pk|fk|row|exec|gen|cmd]");
             Console.WriteLine("     [/e table1,table2,...,table");
             Console.WriteLine("     [/db datbase1:datbase2]|[/db datbase]");
             Console.WriteLine("     [/dt table1:table2]|[/dt table(wildcard*,?)]");
             Console.WriteLine("     [/f sql script file(.sql)]");
             Console.WriteLine("");
-            Console.WriteLine("/h,/?    : this help");
-            Console.WriteLine("/cfg     : congfiguration file default file:sqlcompare.cfg]");
-            Console.WriteLine("/s       : server alias defined on ini file]");
-            Console.WriteLine("/schema  : compare schmea (default)");
-            Console.WriteLine("/data    : compare data");
-            Console.WriteLine("/name    : display table names matched by /dt table");
-            Console.WriteLine("/column  : display table structure on /dt table");
-            Console.WriteLine("/pk      : display primary key defined on /dt table");
-            Console.WriteLine("/fk      : display foreign key defined on /dt table");
-            Console.WriteLine("/row     : generate rows from table on server1");
-            Console.WriteLine("/exec    : run sql script on server 2, let server2 += diff");
-            Console.WriteLine("/g       : generate table script from database on server1");
-            Console.WriteLine("/cmd     : enter command window");
-            Console.WriteLine("/db      : database name");
-            Console.WriteLine("/dt      : table name (wildcard*,?)");
-            Console.WriteLine("/e       : excluded table list during 2 databases data comparing");
-            Console.WriteLine("/f       : result of comparsion(diff=server1-server2),sql script file");
+            Console.WriteLine("/h,/?      : this help");
+            Console.WriteLine("/cfg       : congfiguration file default file:sqlcompare.cfg]");
+            Console.WriteLine("/s         : server alias defined on ini file]");
+            Console.WriteLine("/c schema  : compare schmea (default)");
+            Console.WriteLine("/c data    : compare data");
+            Console.WriteLine("/c gen     : generate table script from database on server1");
+            Console.WriteLine("/c row     : generate rows from table on server1");
+            Console.WriteLine("/c table   : display table names matched by /dt table");
+            Console.WriteLine("/c column  : display table structure on /dt table");
+            Console.WriteLine("/c pk      : display primary key defined on /dt table");
+            Console.WriteLine("/c fk      : display foreign key defined on /dt table");
+            Console.WriteLine("/c exec    : run sql script on server 2, let server2 += diff");
+            Console.WriteLine("/c cmd     : enter command window");
+            Console.WriteLine("/db        : database name");
+            Console.WriteLine("/dt        : table name (wildcard*,?)");
+            Console.WriteLine("/e         : excluded table list during 2 databases data comparing");
+            Console.WriteLine("/f         : result of comparsion(diff=server1-server2),sql script file");
             Console.WriteLine("examples:");
             Console.WriteLine("SqlCompare /s localhost /db northwind:southwind /schema");
-            Console.WriteLine("SqlCompare /S localhost /U sa /P password /db northwind /schema");
-            Console.WriteLine("SqlCompare /data /db northwind /dt Cust*");
-            Console.WriteLine("SqlCompare /a /dt Products");
+            Console.WriteLine("SqlCompare /S localhost /U sa /P password /db northwind /c schema");
+            Console.WriteLine("SqlCompare /c data /db northwind /dt Cust*");
+            Console.WriteLine("SqlCompare /c gen /dt Products");
         }
     }
 }
