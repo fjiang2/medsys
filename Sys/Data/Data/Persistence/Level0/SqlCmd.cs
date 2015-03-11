@@ -26,10 +26,24 @@ namespace Sys.Data
     public class SqlCmd : DbCmd
     {
 
+        public SqlCmd(DataProvider provider, string script, object parameters)
+            : base(provider, script)
+        {
+            if (parameters == null)
+                return;
+
+            foreach (var propertyInfo in parameters.GetType().GetProperties())
+            {
+                AddParameter("@" + propertyInfo.Name, propertyInfo.GetValue(parameters));
+            }
+
+        }
+
         public SqlCmd(DataProvider provider, string script)
             : base(provider, script)
         {
         }
+
 
         public SqlCmd(string script)
             : this(DataProvider.DefaultProvider, script)

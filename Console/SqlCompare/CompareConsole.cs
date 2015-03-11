@@ -18,7 +18,7 @@ namespace SqlCompare
         private VAL alias;
 
         private string scriptFileName = "script.sql";
-        private string[] excludedtables = new string[]{};
+        private string[] excludedtables = new string[] { };
         private CompareAction compareType = CompareAction.CompareSchema;
         private Dictionary<string, string[]> PK = new Dictionary<string, string[]>();
 
@@ -26,8 +26,8 @@ namespace SqlCompare
         SqlConnectionStringBuilder cs2;
 
         public CompareConsole()
-        { 
-        
+        {
+
         }
 
         private static bool TryReadCfg(string fileName, out VAL ini)
@@ -98,9 +98,9 @@ namespace SqlCompare
             }
 
             var x = ini["excludedtables"];
-            if(x.Defined)
+            if (x.Defined)
                 this.excludedtables = x.HostValue as string[];
-            
+
             x = ini["comparetype"];
             if (x.Defined)
                 this.compareType = (CompareAction)(int)x;
@@ -113,12 +113,12 @@ namespace SqlCompare
             if (pk.Defined)
             {
                 foreach (var item in pk)
-                { 
+                {
                     string tableName = (string)item[0];
                     PK.Add(tableName.ToUpper(), (string[])item[1].HostValue);
                 }
             }
-            
+
             return true;
         }
 
@@ -142,7 +142,7 @@ namespace SqlCompare
 
 
                     case "/s":
-                        if (i < args.Length && parse(args[i++], out t1, out t2))
+                        if (i < args.Length && args[i++].parse(out t1, out t2))
                         {
                             var s1 = alias[t1];
                             var s2 = alias[t2];
@@ -197,7 +197,7 @@ namespace SqlCompare
                                     compareType = CompareAction.GenerateTableRows;
                                     break;
                                 case "cmd":
-                                    compareType = CompareAction.Command;
+                                    compareType = CompareAction.Shell;
                                     break;
                                 case "exec":
                                     compareType = CompareAction.Execute;
@@ -213,7 +213,7 @@ namespace SqlCompare
 
 
                     case "/S":
-                        if (i < args.Length && parse(args[i++], out t1, out t2))
+                        if (i < args.Length && args[i++].parse(out t1, out t2))
                         {
                             var server1 = ini["server1"];
                             var server2 = ini["server2"];
@@ -234,7 +234,7 @@ namespace SqlCompare
                         }
 
                     case "/U":
-                        if (i < args.Length && parse(args[i++], out t1, out t2))
+                        if (i < args.Length && args[i++].parse(out t1, out t2))
                         {
                             cs1.UserID = t1;
                             cs1.UserID = t2;
@@ -247,7 +247,7 @@ namespace SqlCompare
                         }
 
                     case "/P":
-                        if (i < args.Length && parse(args[i++], out t1, out t2))
+                        if (i < args.Length && args[i++].parse(out t1, out t2))
                         {
                             cs1.Password = t1;
                             cs1.Password = t2;
@@ -260,7 +260,7 @@ namespace SqlCompare
                         }
 
                     case "/db":
-                        if (i < args.Length && parse(args[i++], out t1, out t2))
+                        if (i < args.Length && args[i++].parse(out t1, out t2))
                         {
                             cs1.InitialCatalog = t1;
                             cs2.InitialCatalog = t2;
@@ -273,7 +273,7 @@ namespace SqlCompare
                         }
 
                     case "/dt":
-                        if (i < args.Length && parse(args[i++], out t1, out t2))
+                        if (i < args.Length && args[i++].parse(out t1, out t2))
                         {
                             tableNamePattern1 = t1;
                             tableNamePattern2 = t2;
@@ -319,19 +319,19 @@ namespace SqlCompare
                 }
             }
 
-            if (!IsGoodConnectionString(cs1))
+            if (!cs1.IsGoodConnectionString())
             {
                 Log("invalid connection string: {0}", cs1.ConnectionString);
                 return;
             }
 
-            if (!IsGoodConnectionString(cs2))
+            if (!cs2.IsGoodConnectionString())
             {
                 Log("invalid connection string: {0}", cs2.ConnectionString);
                 return;
             }
 
-            CompareAdapter cmd = new CompareAdapter(cs1, cs2, tableNamePattern1, tableNamePattern2);
+            CompareAdapter adapter = new CompareAdapter(cs1, cs2, tableNamePattern1, tableNamePattern2);
             excludedtables = excludedtables.Select(row => row.ToUpper()).ToArray();
 
             try
@@ -339,53 +339,53 @@ namespace SqlCompare
                 switch (compareType)
                 {
                     case CompareAction.Execute:
-                        cmd.Side2.ExecuteScript(scriptFileName);
+                        adapter.Side2.ExecuteScript(scriptFileName);
 
                         break;
 
                     case CompareAction.GenerateTableRows:
-                        WriteFile(cmd.Side1.AllRowScript(excludedtables));
+                        WriteFile(adapter.Side1.AllRowScript(excludedtables));
                         break;
 
                     case CompareAction.GenerateScript:
-                        WriteFile(cmd.Side1.GenerateScript());
+                        WriteFile(adapter.Side1.GenerateScript());
                         break;
 
                     case CompareAction.ShowTableName:
                         Log("server1:");
-                        cmd.Side1.DisplayMatchedTableNames();
+                        adapter.Side1.DisplayMatchedTableNames();
                         Log("server2:");
-                        cmd.Side2.DisplayMatchedTableNames();
+                        adapter.Side2.DisplayMatchedTableNames();
                         break;
 
                     case CompareAction.ShowTableStructure:
                         Log("server1:");
-                        cmd.Side1.DisplayColumns();
+                        adapter.Side1.DisplayColumns();
                         Log("server2:");
-                        cmd.Side2.DisplayColumns();
+                        adapter.Side2.DisplayColumns();
                         break;
 
                     case CompareAction.ShowParimaryKey:
                         Log("server1:");
-                        cmd.Side1.DisplayPK();
+                        adapter.Side1.DisplayPK();
                         Log("server2:");
-                        cmd.Side2.DisplayPK();
+                        adapter.Side2.DisplayPK();
                         break;
 
                     case CompareAction.ShowForeignKey:
                         Log("server1:");
-                        cmd.Side1.DisplayFK();
+                        adapter.Side1.DisplayFK();
                         Log("server2:");
-                        cmd.Side2.DisplayFK();
+                        adapter.Side2.DisplayFK();
                         break;
 
                     case CompareAction.CompareData:
                     case CompareAction.CompareSchema:
-                        WriteFile(cmd.Run(compareType, excludedtables, PK));
+                        WriteFile(adapter.Run(compareType, excludedtables, PK));
                         break;
 
-                    case CompareAction.Command:
-                        DoCommand(cmd);
+                    case CompareAction.Shell:
+                        new SqlShell(adapter).DoCommand();
                         break;
                 }
             }
@@ -393,239 +393,6 @@ namespace SqlCompare
             {
                 Log(ex.Message);
             }
-        }
-
-
-      
-        private static bool parse(string arg, out string t1, out string t2)
-        {
-            if (string.IsNullOrEmpty(arg) || arg.StartsWith("/"))
-            {
-                t1 = null;
-                t2 = null;
-                return false;
-            }
-
-            string[] x = arg.Split(':');
-            if(x.Length == 1)
-            {
-                t1 = x[0];
-                t2 = x[0];
-            }
-            else
-            {
-                t1 = x[0];
-                t2 = x[1];
-            }
-
-            return true;
-        }
-
-      
-
-        public static bool IsGoodConnectionString(SqlConnectionStringBuilder cs)
-        {
-            SqlConnection conn = new SqlConnection(cs.ConnectionString);
-            try
-            {
-                conn.Open();
-                SqlCommand cmd = new SqlCommand("SELECT COUNT(name) FROM sys.tables", conn);
-                cmd.ExecuteScalar();
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-            finally
-            {
-                conn.Close();
-            }
-
-            return true;
-        }
-
-
-        private Side theSide;
-
-        private void DoCommand(CompareAdapter adapter)
-        {
-            this.theSide = adapter.Side1;
-
-            Console.WriteLine("SqlCompare SQL command console");
-            Console.WriteLine("type [help] to help, [;] to execute a command, [exit] to quit");
-            StringBuilder builder = new StringBuilder();
-            string line = null;
-            while (line != "exit")
-            {
-                Console.Write("#:");
-                line = Console.ReadLine();
-
-                if (line == "help" || line == "?")
-                {
-                    Help();
-                    continue;
-                }
-
-                if (line != "\r\n" && line != ";")
-                    builder.AppendLine(line);
-
-                if (line.EndsWith(";"))
-                {
-                    string text = builder.ToString().Trim();
-                    builder.Clear();
-
-                    if (text.EndsWith(";"))
-                        text = text.Substring(0, text.Length - 1);
-
-                    DoCommand(adapter, text);
-                }
-            }
-        }
-   
-        private void DoCommand(CompareAdapter adapter, string text)
-        {
-            string[] A = text.Split(' ');
-            string cmd = null;
-            string arg1 = null;
-
-            int n = A.Length;
-
-            if (n > 0)
-                cmd = A[0].ToLower();
-
-            if (n == 2)
-                arg1 = A[1].Trim();
-
-            switch (cmd)
-            {
-                case "column":
-                case "pk":
-                case "fk":
-                    if (n == 2)
-                    {
-                        TableName tname = new TableName(theSide.Provider, arg1);
-                        DataTable dt = null;
-                        switch (cmd)
-                        {
-                            case "column":
-                                dt = tname.TableSchema();
-                                break;
-
-                            case "pk":
-                                dt = tname.PrimaryKeySchema();
-                                break;
-
-                            case "fk":
-                                dt = tname.ForeignKeySchema();
-                                break;
-                        }
-
-                        if (dt != null)
-                            ConsoleTable.DisplayTable(dt);
-                    }
-                    else
-                    {
-                        Console.WriteLine("invalid command");
-                    }
-                    break;
-                
-                case "table":
-                    if (arg1 == null)
-                        theSide.DisplayAllTableNames();
-                    else
-                        theSide.DisplayMatchedTableNames(arg1);
-                    break;
-
-                case "find":
-                    if (arg1 != null)
-                        FindColumn(arg1);
-                    else
-                        Log("find object undefined");
-                    break;
-
-                case "select":
-                    DataSet ds = new SqlCmd(theSide.Provider, text).FillDataSet();
-                    if (ds != null)
-                    {
-                        foreach (DataTable dt in ds.Tables)
-                        {
-                            ConsoleTable.DisplayTable(dt);
-                            Console.WriteLine("<{0} rows>", dt.Rows.Count);
-                        }
-                    }
-                    break;
-
-                case "server1":
-                    this.theSide = adapter.Side1;
-                    Console.WriteLine("server 1 selected");
-                    break;
-
-                case "server2":
-                    this.theSide = adapter.Side2;
-                    Console.WriteLine("server 2 selected");
-                    break;
-
-                case "help":
-                case "?":
-                    Help();
-                    break;
-
-                default:
-                    if (char.IsDigit(cmd[0]))
-                    {
-                        Log("invalid command");
-                        break;
-                    }
-
-                    try
-                    {
-                        new SqlCmd(theSide.Provider, text).ExecuteNonQuery();
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex.Message);
-                    }
-
-                    break;
-            }
-        }
-
-        private void FindColumn(string match)
-        {
-            string sql = @"
- SELECT 
-	t.name as TableName,
-    c.name AS ColumnName,
-    ty.name AS DataType,
-    c.max_length AS Length,
-    CASE c.is_nullable WHEN 0 THEN 'NOT NULL' WHEN 1 THEN 'NULL' END AS Nullable
-FROM sys.tables t 
-        INNER JOIN sys.columns c ON t.object_id = c.object_id 
-        INNER JOIN sys.types ty ON ty.system_type_id =c.system_type_id AND ty.name<>'sysname'
-        LEFT JOIN sys.Computed_columns d ON t.object_id = d.object_id AND c.name = d.name
-WHERE c.name LIKE '%{0}%'
-ORDER BY c.name, c.column_id
-";
-            sql = string.Format(sql, match);
-            var dt = new SqlCmd(theSide.Provider, sql).FillDataTable();
-            ConsoleTable.DisplayTable(dt);
-        }
-
-        private static void Help()
-        {
-            Console.WriteLine("<Commands>");
-            Console.WriteLine("server1          : switch to source server 1 (default)");
-            Console.WriteLine("server2          : switch to sink server 2");
-            Console.WriteLine("find pattern     : find columns");
-            Console.WriteLine("table            : show all table names");
-            Console.WriteLine("table pattern    : show matched table names (wildcard*,?)");
-            Console.WriteLine("column tablename : show table structure");
-            Console.WriteLine("pk tablename     : show table primary keys");
-            Console.WriteLine("fk tablename     : show table foreign keys");
-            Console.WriteLine("all sql clauses, e.g. select * from table, update...");
-            Console.WriteLine("exit             : quit application");
-            Console.WriteLine("help             : this help");
-            Console.WriteLine("?                : this help");
         }
     }
 }

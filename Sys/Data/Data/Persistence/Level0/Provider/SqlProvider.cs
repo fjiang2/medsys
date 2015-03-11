@@ -60,9 +60,15 @@ namespace Sys.Data
             SqlDbType dbType = SqlDbType.NVarChar;
             if (value is Int32)
                 dbType = SqlDbType.Int;
+            else if (value is Int16)
+                dbType = SqlDbType.SmallInt;
+            else if (value is long)
+                dbType = SqlDbType.BigInt;
             else if (value is DateTime)
                 dbType = SqlDbType.DateTime;
             else if (value is Double)
+                dbType = SqlDbType.Float;
+            else if (value is Single)
                 dbType = SqlDbType.Float;
             else if (value is Decimal)
                 dbType = SqlDbType.Decimal;
@@ -70,6 +76,12 @@ namespace Sys.Data
                 dbType = SqlDbType.Bit;
             else if (value is string && ((string)value).Length > 4000)
                 dbType = SqlDbType.NText;
+            else if (value is string)
+                dbType = SqlDbType.NVarChar;
+            else if (value is byte[])
+                dbType = SqlDbType.Binary;
+            else if (value is Guid)
+                dbType = SqlDbType.UniqueIdentifier;
 
             SqlParameter param = new SqlParameter(parameterName, dbType);
             param.Value = value;
