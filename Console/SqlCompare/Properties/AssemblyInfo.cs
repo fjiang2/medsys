@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("SqlCompare")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("HP")]
+[assembly: AssemblyCompany("Datum Connect Inc.")]
 [assembly: AssemblyProduct("SqlCompare")]
-[assembly: AssemblyCopyright("Copyright © HP 2015")]
+[assembly: AssemblyCopyright("Copyright ©  DATCONN 2012-2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

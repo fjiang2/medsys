@@ -71,6 +71,10 @@ namespace SqlCompare
    
         private void DoCommand(string text)
         {
+            text = text.Trim();
+            if (text == string.Empty)
+                return;
+
             string[] A = text.Split(' ', '\r');
             string cmd = null;
             string arg1 = null;

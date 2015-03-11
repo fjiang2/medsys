@@ -156,7 +156,7 @@ namespace Sys.Data
         public static string GenerateScript(this DatabaseName databaseName)
         {
             StringBuilder builder = new StringBuilder();
-            List<string> history = TableDependency(databaseName);
+            string[] history = GetDependencyTableNames(databaseName);
 
             foreach (var tableName in history)
             {
@@ -180,11 +180,9 @@ namespace Sys.Data
 IF OBJECT_ID('{0}') IS NOT NULL
   DROP TABLE [{0}]
 ";
-            List<string> history = TableDependency(databaseName);
-            history.Reverse();
-
+            string[] history = GetDependencyTableNames(databaseName);
             StringBuilder builder = new StringBuilder();
-            foreach (var tableName in history)
+            foreach (var tableName in history.Reverse())
             {
                 builder.AppendFormat(drop, tableName)
                     .AppendLine(TableScript.GO);
@@ -193,7 +191,7 @@ IF OBJECT_ID('{0}') IS NOT NULL
             return builder.ToString();
         }
 
-        private static List<string> TableDependency(DatabaseName databaseName)
+        public static string[] GetDependencyTableNames(this DatabaseName databaseName)
         {
             string sql = @"
 SELECT  FK.TABLE_NAME AS FK_Table,
@@ -228,7 +226,8 @@ SELECT  FK.TABLE_NAME AS FK_Table,
                 if (history.IndexOf(name) < 0)
                     Iterate(name, dict, history);
             }
-            return history;
+            
+            return history.ToArray();
         }
 
         private static void Iterate(string tableName, Dictionary<string, string[]> dict,  List<string> history)

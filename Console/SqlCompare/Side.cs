@@ -35,7 +35,7 @@ namespace SqlCompare
                 if (tableNamePattern == null)
                     return null;
 
-                var names = Search(tableNamePattern, this.DatabaseName.GetTableNames());
+                var names = Search(tableNamePattern, this.DatabaseName.GetDependencyTableNames());
                 return names;
             }
         }

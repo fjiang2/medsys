@@ -9,8 +9,8 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("Sys Core library")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Datum Connect Inc.")]
-[assembly: AssemblyProduct("Database Persistent Object")]
-[assembly: AssemblyCopyright("Copyright ©  DATCONN 2012")]
+[assembly: AssemblyProduct("System Core")]
+[assembly: AssemblyCopyright("Copyright ©  DATCONN 2012-2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
