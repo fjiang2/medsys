@@ -534,7 +534,13 @@ namespace SqlCompare
                         theSide.DisplayAllTableNames();
                     else
                         theSide.DisplayMatchedTableNames(arg1);
+                    break;
 
+                case "find":
+                    if (arg1 != null)
+                        FindColumn(arg1);
+                    else
+                        Log("find object undefined");
                     break;
 
                 case "select":
@@ -584,11 +590,33 @@ namespace SqlCompare
             }
         }
 
+        private void FindColumn(string match)
+        {
+            string sql = @"
+ SELECT 
+	t.name as TableName,
+    c.name AS ColumnName,
+    ty.name AS DataType,
+    c.max_length AS Length,
+    CASE c.is_nullable WHEN 0 THEN 'NOT NULL' WHEN 1 THEN 'NULL' END AS Nullable
+FROM sys.tables t 
+        INNER JOIN sys.columns c ON t.object_id = c.object_id 
+        INNER JOIN sys.types ty ON ty.system_type_id =c.system_type_id AND ty.name<>'sysname'
+        LEFT JOIN sys.Computed_columns d ON t.object_id = d.object_id AND c.name = d.name
+WHERE c.name LIKE '%{0}%'
+ORDER BY c.name, c.column_id
+";
+            sql = string.Format(sql, match);
+            var dt = new SqlCmd(theSide.Provider, sql).FillDataTable();
+            ConsoleTable.DisplayTable(dt);
+        }
+
         private static void Help()
         {
             Console.WriteLine("<Commands>");
             Console.WriteLine("server1          : switch to source server 1 (default)");
             Console.WriteLine("server2          : switch to sink server 2");
+            Console.WriteLine("find pattern     : find columns");
             Console.WriteLine("table            : show all table names");
             Console.WriteLine("table pattern    : show matched table names (wildcard*,?)");
             Console.WriteLine("column tablename : show table structure");
