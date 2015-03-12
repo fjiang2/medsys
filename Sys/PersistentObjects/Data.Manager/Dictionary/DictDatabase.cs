@@ -102,7 +102,7 @@ namespace Sys.Data.Manager
             dpo.name = databaseName.Name;
             dpo.provider_id = (int)databaseName.Provider;
             dpo.enabled = true;
-            dpo.version = Const.Revision;
+            dpo.version = Const.DB_REVISION;
             dpo.Save();
 
             if(!instance.bases.ContainsKey(databaseName))

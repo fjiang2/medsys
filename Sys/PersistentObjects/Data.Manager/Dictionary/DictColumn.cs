@@ -36,7 +36,7 @@ namespace Sys.Data.Manager
             dictDataColumnDpo dpo = new dictDataColumnDpo();
             dpo.table_id = table_id;
             dpo.name = columnName;
-            dpo.version = Const.Revision;
+            dpo.version = Const.DB_REVISION;
             dpo.Save();
         }
 
