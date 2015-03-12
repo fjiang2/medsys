@@ -7,7 +7,7 @@ using System.Data;
 
 namespace SqlCompare
 {
-    public class ConsoleTable
+    class ConsoleTable : stdio
     {
         const char SPACE = ' ';
         const char CROSS = '+';
@@ -102,9 +102,9 @@ namespace SqlCompare
             int w = Console.WindowWidth;
             
             if(text.Length > w)
-                Console.WriteLine(text.Substring(0,w-1));
+                WriteLine(text.Substring(0,w-1));
             else
-                Console.WriteLine(text);
+                WriteLine(text);
         }
 
         public static void DisplayTable(DataTable dt)

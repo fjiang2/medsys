@@ -20,7 +20,7 @@ namespace Sys.Data.Comparison
         #region compare database schema/data
         public string DatabaseSchemaDifference(DatabaseName dname1, DatabaseName dname2)
         {
-            string[] names = dname1.GetTableNames();
+            string[] names = dname1.GetDependencyTableNames();
 
             StringBuilder builder = new StringBuilder();
             foreach (string tableName in names)
@@ -48,7 +48,7 @@ namespace Sys.Data.Comparison
 
         public string DatabaseDifference(DatabaseName dname1,  DatabaseName dname2, string[] excludedTables)
         {
-            string[] names = dname1.GetTableNames();
+            string[] names = dname1.GetDependencyTableNames();
             excludedTables = excludedTables.Select(row => row.ToUpper()).ToArray();
 
             StringBuilder builder = new StringBuilder();

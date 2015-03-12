@@ -12,7 +12,7 @@ using System.Text.RegularExpressions;
 
 namespace SqlCompare
 {
-    class Side : Logger
+    class Side : stdio
     {
         private SqlConnectionStringBuilder cs;
         private string tableNamePattern;
@@ -70,7 +70,7 @@ namespace SqlCompare
         {
             if (!File.Exists(scriptFile))
             {
-                Log("input file not found: {0}", scriptFile);
+                WriteLine("input file not found: {0}", scriptFile);
                 return;
             }
 
@@ -112,7 +112,7 @@ namespace SqlCompare
             StringBuilder builder = new StringBuilder();
             foreach (var tableName in tableNames)
             {
-                Log("generate insert clauses on table : {0}", tableName);
+                WriteLine("generate insert clauses on table : {0}", tableName);
                 var tname = new TableName(Provider, tableName);
                 string sql = Compare.AllRows(tname, null);
                 if (sql != String.Empty)
@@ -133,7 +133,7 @@ namespace SqlCompare
         {
             foreach (string tableName in this.DefaultTableNames)
             {
-                Log("[{0}]",tableName);
+                WriteLine("[{0}]",tableName);
                 TableName tname = new TableName(Provider, tableName);
                 var dt = tname.TableSchema();
                 ConsoleTable.DisplayTable(dt);
@@ -144,7 +144,7 @@ namespace SqlCompare
         {
             foreach (string tableName in this.DefaultTableNames)
             {
-                Log("[{0}]", tableName);
+                WriteLine("[{0}]", tableName);
                 TableName tname = new TableName(Provider, tableName);
                 var dt = tname.PrimaryKeySchema();
                 ConsoleTable.DisplayTable(dt);
@@ -156,7 +156,7 @@ namespace SqlCompare
 
             foreach (string tableName in this.DefaultTableNames)
             {
-                Log("[{0}]", tableName);
+                WriteLine("[{0}]", tableName);
                 TableName tname = new TableName(Provider, tableName);
                 var dt = tname.ForeignKeySchema();
                 ConsoleTable.DisplayTable(dt);

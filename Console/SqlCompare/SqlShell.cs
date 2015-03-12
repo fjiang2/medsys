@@ -12,7 +12,7 @@ using Tie;
 
 namespace SqlCompare
 {
-    class SqlShell : Logger
+    class SqlShell : stdio
     {
 
         private Side theSide;
@@ -28,16 +28,16 @@ namespace SqlCompare
         public void DoCommand()
         {
 
-            Console.WriteLine("SqlCompare SQL command console");
-            Console.WriteLine("type [help] to help, [;] to execute a command, [exit] to quit");
+            WriteLine("SqlCompare SQL command console");
+            WriteLine("type [help] to help, [;] to execute a command, [exit] to quit");
             StringBuilder builder = new StringBuilder();
             string line = null;
             while (true)
             {
             L1:
-                Console.Write("{0}> ", server);
+                Write("{0}> ", server);
             L2:
-                line = Console.ReadLine();
+                line = ReadLine();
 
                 if (line == "exit")
                     break;
@@ -116,7 +116,7 @@ namespace SqlCompare
                     }
                     else
                     {
-                        Console.WriteLine("invalid command");
+                        WriteLine("invalid command");
                     }
                     break;
                 
@@ -131,7 +131,7 @@ namespace SqlCompare
                     if (arg1 != null)
                         FindColumn(arg1);
                     else
-                        Log("find object undefined");
+                        WriteLine("find object undefined");
                     break;
 
                 case "select":
@@ -141,7 +141,7 @@ namespace SqlCompare
                         foreach (DataTable dt in ds.Tables)
                         {
                             ConsoleTable.DisplayTable(dt);
-                            Console.WriteLine("<{0} rows>", dt.Rows.Count);
+                            WriteLine("<{0} rows>", dt.Rows.Count);
                         }
                     }
                     break;
@@ -149,13 +149,13 @@ namespace SqlCompare
                 case "1":
                     this.theSide = adapter.Side1;
                     this.server = 1;
-                    Console.WriteLine("server 1 selected");
+                    WriteLine("server 1 selected");
                     break;
 
                 case "2":
                     this.theSide = adapter.Side2;
                     this.server = 2;
-                    Console.WriteLine("server 2 selected");
+                    WriteLine("server 2 selected");
                     break;
 
                 case "help":
@@ -166,7 +166,7 @@ namespace SqlCompare
                 default:
                     if (char.IsDigit(cmd[0]))
                     {
-                        Log("invalid command");
+                        WriteLine("invalid command");
                         break;
                     }
 
@@ -176,7 +176,7 @@ namespace SqlCompare
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine(ex.Message);
+                        WriteLine(ex.Message);
                     }
 
                     break;
@@ -188,7 +188,7 @@ namespace SqlCompare
             string sql = "SELECT name AS TableName FROM sys.tables WHERE name LIKE @PATTERN";
             var dt = new SqlCmd(theSide.Provider, sql, new { PATTERN = "%" + match + "%" }).FillDataTable();
             ConsoleTable.DisplayTable(dt);
-            Console.WriteLine("<Table>");
+            WriteLine("<Table>");
             
             sql = @"
  SELECT 
@@ -206,7 +206,7 @@ ORDER BY c.name, c.column_id
 ";
             dt = new SqlCmd(theSide.Provider, sql, new { PATTERN = "%"+ match+"%" }).FillDataTable();
             ConsoleTable.DisplayTable(dt);
-            Console.WriteLine("<Column>");
+            WriteLine("<Column>");
         }
 
         private static void Help()

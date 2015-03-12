@@ -12,7 +12,7 @@ using Tie;
 
 namespace SqlCompare
 {
-    class CompareConsole : Logger
+    class CompareConsole : stdio
     {
         private VAL ini;
         private VAL alias;
@@ -35,7 +35,7 @@ namespace SqlCompare
             ini = new VAL();
             if (!File.Exists(fileName))
             {
-                Logx("configuration file {0} not exists", fileName);
+                Console.WriteLine("configuration file {0} not exists", fileName);
                 return false;
             }
 
@@ -48,7 +48,7 @@ namespace SqlCompare
                 }
                 catch (Exception)
                 {
-                    Logx("json format error in {0}", fileName);
+                    Console.WriteLine("json format error in {0}", fileName);
                     return false;
                 }
             }
@@ -61,7 +61,7 @@ namespace SqlCompare
             if (string.IsNullOrEmpty(sql))
             {
                 sql = string.Empty;
-                Log("Nothing is changed");
+                WriteLine("Nothing is changed");
             }
 
             using (var writer = new StreamWriter(scriptFileName))
@@ -71,8 +71,8 @@ namespace SqlCompare
 
             if (!string.IsNullOrEmpty(sql))
             {
-                Log("output: {0}", scriptFileName);
-                Log("completed.");
+                WriteLine("output: {0}", scriptFileName);
+                WriteLine("completed.");
             }
         }
 
@@ -148,12 +148,12 @@ namespace SqlCompare
                             var s2 = alias[t2];
                             if (s1.Undefined)
                             {
-                                Log("undefined server alias ({0}) in configuration file", t1);
+                                WriteLine("undefined server alias ({0}) in configuration file", t1);
                                 return;
                             }
                             if (s2.Undefined)
                             {
-                                Log("undefined server alias ({0}) in configuration file", t2);
+                                WriteLine("undefined server alias ({0}) in configuration file", t2);
                                 return;
                             }
 
@@ -163,7 +163,7 @@ namespace SqlCompare
                         }
                         else
                         {
-                            Log("/s database server alias undefined");
+                            WriteLine("/s database server alias undefined");
                             return;
                         }
 
@@ -207,7 +207,7 @@ namespace SqlCompare
                         }
                         else
                         {
-                            Log("/c argument undefined");
+                            WriteLine("/c argument undefined");
                             return;
                         }
 
@@ -229,7 +229,7 @@ namespace SqlCompare
                         }
                         else
                         {
-                            Log("/S server name undefined");
+                            WriteLine("/S server name undefined");
                             return;
                         }
 
@@ -242,7 +242,7 @@ namespace SqlCompare
                         }
                         else
                         {
-                            Log("/U user name undefined");
+                            WriteLine("/U user name undefined");
                             return;
                         }
 
@@ -255,7 +255,7 @@ namespace SqlCompare
                         }
                         else
                         {
-                            Log("/P server password undefined");
+                            WriteLine("/P server password undefined");
                             return;
                         }
 
@@ -268,7 +268,7 @@ namespace SqlCompare
                         }
                         else
                         {
-                            Log("undefined database name");
+                            WriteLine("undefined database name");
                             return;
                         }
 
@@ -281,7 +281,7 @@ namespace SqlCompare
                         }
                         else
                         {
-                            Log("undefined table name");
+                            WriteLine("undefined table name");
                             return;
                         }
 
@@ -294,7 +294,7 @@ namespace SqlCompare
                         }
                         else
                         {
-                            Log("/e undefined excluded table names");
+                            WriteLine("/e undefined excluded table names");
                             return;
                         }
 
@@ -308,7 +308,7 @@ namespace SqlCompare
                         }
                         else
                         {
-                            Log("/f undefined sql script file name");
+                            WriteLine("/f undefined sql script file name");
                             return;
                         }
 
@@ -321,13 +321,13 @@ namespace SqlCompare
 
             if (!cs1.IsGoodConnectionString())
             {
-                Log("invalid connection string: {0}", cs1.ConnectionString);
+                WriteLine("invalid connection string: {0}", cs1.ConnectionString);
                 return;
             }
 
             if (!cs2.IsGoodConnectionString())
             {
-                Log("invalid connection string: {0}", cs2.ConnectionString);
+                WriteLine("invalid connection string: {0}", cs2.ConnectionString);
                 return;
             }
 
@@ -352,30 +352,30 @@ namespace SqlCompare
                         break;
 
                     case CompareAction.ShowTableName:
-                        Log("server1:");
+                        WriteLine("server1:");
                         adapter.Side1.DisplayMatchedTableNames();
-                        Log("server2:");
+                        WriteLine("server2:");
                         adapter.Side2.DisplayMatchedTableNames();
                         break;
 
                     case CompareAction.ShowTableStructure:
-                        Log("server1:");
+                        WriteLine("server1:");
                         adapter.Side1.DisplayColumns();
-                        Log("server2:");
+                        WriteLine("server2:");
                         adapter.Side2.DisplayColumns();
                         break;
 
                     case CompareAction.ShowParimaryKey:
-                        Log("server1:");
+                        WriteLine("server1:");
                         adapter.Side1.DisplayPK();
-                        Log("server2:");
+                        WriteLine("server2:");
                         adapter.Side2.DisplayPK();
                         break;
 
                     case CompareAction.ShowForeignKey:
-                        Log("server1:");
+                        WriteLine("server1:");
                         adapter.Side1.DisplayFK();
-                        Log("server2:");
+                        WriteLine("server2:");
                         adapter.Side2.DisplayFK();
                         break;
 
@@ -391,7 +391,7 @@ namespace SqlCompare
             }
             catch (Exception ex)
             {
-                Log(ex.Message);
+                WriteLine(ex.Message);
             }
         }
     }
