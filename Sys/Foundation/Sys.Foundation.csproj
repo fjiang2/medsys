@@ -134,7 +134,6 @@
     <Compile Include="Sys\LogException\ExceptionLogger.cs" />
     <Compile Include="Sys\Helper.cs" />
     <Compile Include="Sys\LogException\TextFileLogger.cs" />
-    <Compile Include="Sys\StringExtension.cs" />
     <Compile Include="Sys\SysInformation.cs" />
   </ItemGroup>
   <ItemGroup>
