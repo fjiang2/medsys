@@ -20,7 +20,6 @@ namespace Sys
         public static string POLICY_DEFAULT_PASSWORD    { get { return Configuration.Instance.GetValue<string>("Policy.Password.Default"); }    }
         public static string PATH_EXECUTABLE_INSTALL    { get { return Configuration.Instance.GetValue<string>("Path.Executable.Install"); } }
 
-        public static bool SINGLE_USER_SYSTEM = false;
 
 
         private static FieldInfo[] GetFields()
@@ -82,7 +81,8 @@ namespace Sys
             DataProviderManager.RegisterDefaultProvider(Const.CONNECTION_STRING);
             LoadDataProviders();
 
-            Const.DB_REVISION = Configuration.Instance.GetValue<int>("Revision");
+            Const.Revision = Configuration.Instance.GetValue<int>("Revision");
+            Const.COMPUTER_NAME = System.Windows.Forms.SystemInformation.ComputerName;
 
             MessageException.DefaultExceptionHandler = delegate(string title, string message)
             {

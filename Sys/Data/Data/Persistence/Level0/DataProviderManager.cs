@@ -172,12 +172,12 @@ namespace Sys.Data
             string initial = connectionString.Split(new char[] { ';' }).Where(segment => segment.Trim().StartsWith(INITIAL)).First();
             string appDatabase = initial.Replace(INITIAL, "").Replace("=", "").Trim();
 
-            Const.CONNECTION_STRING = connectionString;
-            Const.DB_APPLICATION = appDatabase;
+            Sys.Const.CONNECTION_STRING = connectionString;
+            Sys.Const.DB_APPLICATION = appDatabase;
             if (sysDatabase == null)
-                Const.DB_SYSTEM = appDatabase;
+                Sys.Const.DB_SYSTEM = appDatabase;
             else
-                Const.DB_SYSTEM = sysDatabase;
+                Sys.Const.DB_SYSTEM = sysDatabase;
 
             Instance.Add(DataProvider.DefaultProvider, new DataProviderConnection("Default", DataProviderType.SqlServer, connectionString));
             

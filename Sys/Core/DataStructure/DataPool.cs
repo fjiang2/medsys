@@ -71,6 +71,11 @@ namespace Sys
 
         private Policy policy;
 
+        public DataPool()
+            : this(Const.POLICY_DATAPOOL_MAXCOUNT)
+        {
+        }
+
         public DataPool(int maxCount)
             : this(maxCount, Policy.LRU)
         {

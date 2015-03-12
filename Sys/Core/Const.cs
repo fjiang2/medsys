@@ -18,46 +18,33 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Data;
-using Sys.Data;
-using Sys.PersistentObjects.DpoClass;
+using System.IO;
+using System.Reflection;
 
-namespace Sys.Data.Manager
+namespace Sys
 {
-    class DictColumn : dictDataColumnDpo
+    public class Const
     {
-        public DictColumn()
-        { 
-        }
+        public static string CONNECTION_STRING = "data source=localhost\\SQLEXPRESS;initial catalog=medsys;integrated security=SSPI;packet size=4096";
 
+ 
+        public static string DB_APPLICATION = "";
+        public static string DB_APPLICATION_TABLE_PREFIX = "app";
 
-        public static void RegisterOnly(int table_id, string columnName)
-        {
-            dictDataColumnDpo dpo = new dictDataColumnDpo();
-            dpo.table_id = table_id;
-            dpo.name = columnName;
-            dpo.version = Const.Revision;
-            dpo.Save();
-        }
+        public static string DB_SYSTEM = DB_APPLICATION;
+        public static string DB_SYSTEM_TABLE_PREFIX = "sys";
+        
+        public static int DB_SYSTEM_ID = 1;
+        public static int DB_APPLICATION_ID = 2;
 
+        public static bool SINGLE_USER_SYSTEM = false;
 
-        /// <summary>
-        /// TableName.ColumnId(string columnName) may have good performance, it is cached in MetaTable pool
-        /// </summary>
-        /// <param name="table_id"></param>
-        /// <param name="columnName"></param>
-        /// <returns></returns>
-        public static int GetId(int table_id, string columnName)
-        {
-            dictDataColumnDpo dpo = new dictDataColumnDpo();
-            dpo.table_id = table_id;
-            dpo.name = columnName;
-            dpo.Load();
+        public static int POLICY_DATAPOOL_MAXCOUNT = 10;
+        public static string COMPUTER_NAME = "";
 
-            if (dpo.Exists)
-                return dpo.column_id;
-            else
-                return -1;
-        }
+        public static int Revision = 1;
+
+       
     }
+
 }

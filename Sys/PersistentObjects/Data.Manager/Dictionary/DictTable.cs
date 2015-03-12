@@ -67,7 +67,7 @@ namespace Sys.Data.Manager
             
             dpo.database_id = database_id;
             dpo.name = tableName;
-            dpo.version = Const.DB_REVISION;
+            dpo.version = Const.Revision;
             dpo.Save();
 
             return dpo.table_id;
