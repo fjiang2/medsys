@@ -47,8 +47,17 @@ namespace SqlCompare
             L1:
 
             var site = new CompareConsole();
-            if (!site.Initialize(cfg))
+
+            try
+            {
+                if (!site.Initialize(cfg))
+                    return;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("error on configuration file {0}, {1}:", cfg, ex.Message);
                 return;
+            }
 
             site.Run(args);
         }

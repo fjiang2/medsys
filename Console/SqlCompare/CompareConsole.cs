@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using Sys.Data;
 using Sys.Data.Comparison;
 using System.Data;
@@ -128,18 +129,16 @@ namespace SqlCompare
             if (config.Defined)
             {
                 var web = config["web"];
-                if(web.Defined)
+                if (web.Defined)
                     foreach (var pair in web)
                     {
-                        alias = pair[0];
-                        var val = pair[1];
-                        string folder = (string)val["path"];
-                        string key = (string)val["key"];
-
-                        string file = string.Format("{0}\\web.config", folder);
-                        if (File.Exists(file))
+                        string key = (string)pair[0];
+                        string connectionString = GetConnectionString(pair[1]);
+                        
+                        if (connectionString != null)
                         {
-                            //AddAlias(pair);
+                            pair[1] = new VAL(connectionString);
+                            AddAlias(pair);
                         }
                     }
 
@@ -148,6 +147,30 @@ namespace SqlCompare
             }
 
             return true;
+
+        }
+
+        private string GetConnectionString(VAL val)
+        {
+            string folder = (string)val["path"];
+            string key = (string)val["key"];
+            string file = string.Format("{0}\\web.config", folder);
+            return GetConnectionString(file, key);
+        }
+
+        private string GetConnectionString(string fileName, string key)
+        {
+            if (!File.Exists(fileName))
+                return null;
+
+            XElement X = XElement.Load(fileName);
+            var connectionString = X
+                .Element("appSettings").Elements()
+                .Where(x => x.Attribute("key").Value.ToLower() == key.ToLower())
+                .Select(x => x.Attribute("value").Value)
+                .FirstOrDefault();
+
+            return connectionString;
         }
 
         private void AddAlias(VAL pair)
