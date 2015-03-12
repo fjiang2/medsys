@@ -20,10 +20,10 @@ namespace SqlCompare
         public Side Side1 {get; private set;}
         public Side Side2 {get; private set;}
 
-        public CompareAdapter(SqlConnectionStringBuilder cs1, SqlConnectionStringBuilder cs2, string tableNamePattern1, string tableNamePattern2)
+        public CompareAdapter(SqlConnectionStringBuilder cs1, SqlConnectionStringBuilder cs2)
         {
-            this.Side1 = new Side(cs1, tableNamePattern1);
-            this.Side2 = new Side(cs2, tableNamePattern2);
+            this.Side1 = new Side(cs1);
+            this.Side2 = new Side(cs2);
             this.compare = new Compare(this.Side1.Provider, this.Side2.Provider);
         }
      
@@ -50,7 +50,7 @@ namespace SqlCompare
         }
 
 
-        public string Run(CompareAction CompareType, string[] excludedtables, Dictionary<string,string[]> pk)
+        public string Run(CompareAction CompareType, string parttern1, string parttern2, string[] excludedtables, Dictionary<string,string[]> pk)
         {
             DatabaseName db1 = Side1.DatabaseName;
             DatabaseName db2 = Side2.DatabaseName;
@@ -64,8 +64,10 @@ namespace SqlCompare
 
             StringBuilder builder = new StringBuilder();
 
-            var N1 = Side1.MatchedTableNames;
-            var N2 = Side2.MatchedTableNames;
+            MatchedTable m1 = new MatchedTable(db1, parttern1);
+            MatchedTable m2 = new MatchedTable(db1, parttern2);
+            var N1 = m1.MatchedTableNames;
+            var N2 = m2.MatchedTableNames;
             string sql;
 
             if (N1 != null && N2 != null)

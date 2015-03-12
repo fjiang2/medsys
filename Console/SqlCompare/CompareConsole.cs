@@ -319,7 +319,7 @@ namespace SqlCompare
                 return;
             }
 
-            CompareAdapter adapter = new CompareAdapter(cs1, cs2, tableNamePattern1, tableNamePattern2);
+            CompareAdapter adapter = new CompareAdapter(cs1, cs2);
             excludedtables = excludedtables.Select(row => row.ToUpper()).ToArray();
 
             try
@@ -332,7 +332,7 @@ namespace SqlCompare
                         break;
 
                     case CompareAction.GenerateTableRows:
-                        WriteFile(adapter.Side1.GenerateRowScript(excludedtables));
+                        WriteFile(adapter.Side1.GenerateRowScript(tableNamePattern1, excludedtables));
                         break;
 
                     case CompareAction.GenerateScript:
@@ -341,7 +341,7 @@ namespace SqlCompare
 
                     case CompareAction.CompareData:
                     case CompareAction.CompareSchema:
-                        WriteFile(adapter.Run(compareType, excludedtables, PK));
+                        WriteFile(adapter.Run(compareType, tableNamePattern1, tableNamePattern2, excludedtables, PK));
                         break;
 
                     case CompareAction.Shell:

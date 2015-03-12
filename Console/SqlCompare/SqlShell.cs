@@ -121,7 +121,7 @@ namespace SqlCompare
                     break;
                 
                 case "table":
-                    theSide.DisplayMatchedTableNames(arg1);
+                    DisplayTableNames(new MatchedTable(theSide.DatabaseName, arg1).DefaultTableNames);
                     break;
 
                 case "find":
@@ -179,6 +179,22 @@ namespace SqlCompare
                     break;
             }
         }
+
+
+        public void DisplayTableNames(string[] names)
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.Add("Table Name");
+            foreach (string item in names)
+            {
+                var newRow = dt.NewRow();
+                newRow[0] = item;
+                dt.Rows.Add(newRow);
+            }
+
+            ConsoleTable.DisplayTable(dt);
+        }
+
 
         private void FindColumn(string match)
         {

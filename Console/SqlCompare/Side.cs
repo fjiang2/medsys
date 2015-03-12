@@ -15,47 +15,19 @@ namespace SqlCompare
     class Side : stdio
     {
         private SqlConnectionStringBuilder cs;
-        private string tableNamePattern;
-
         public readonly DataProvider Provider;
+        public readonly DatabaseName DatabaseName;
 
-        public Side(SqlConnectionStringBuilder cs, string tableNamePattern)
+
+        public Side(SqlConnectionStringBuilder cs)
         {
             this.cs = cs;
-            this.tableNamePattern = tableNamePattern;
 
             this.Provider = DataProviderManager.Register("side", DataProviderType.SqlServer, cs.ConnectionString);
             this.DatabaseName = new DatabaseName(Provider, cs.InitialCatalog);
         }
 
-        public string[] MatchedTableNames
-        {
-            get
-            {
-                if (tableNamePattern == null)
-                    return null;
 
-                var names = Search(tableNamePattern, this.DatabaseName.GetDependencyTableNames());
-                return names;
-            }
-        }
-
-        public string[] DefaultTableNames
-        {
-            get
-            {
-                string[] names = this.DatabaseName.GetTableNames();
-                if (tableNamePattern == null)
-                    return names;
-
-                names = Search(tableNamePattern, names);
-
-                return names;
-            }
-        }
-
-
-        public DatabaseName DatabaseName { get; private set; }
 
 
         public string GenerateScript()
@@ -93,10 +65,11 @@ namespace SqlCompare
             }
         }
 
-        public string GenerateRowScript(string[] excludedtables)
+        public string GenerateRowScript(string tableNamePattern, string[] excludedtables)
         {
             List<string> list = new List<string>();
-            foreach (string name in this.DefaultTableNames)
+            MatchedTable m = new MatchedTable(this.DatabaseName, tableNamePattern);
+            foreach (string name in m.DefaultTableNames)
             {
                 if (!excludedtables.Contains(name.ToUpper()))
                     list.Add(name);
@@ -132,44 +105,6 @@ namespace SqlCompare
        
 
 
-        public void DisplayMatchedTableNames(string pattern)
-        {
-            if (pattern == null)
-                DisplayTableNames(this.DatabaseName.GetTableNames());
-            else
-            {
-                var names = Search(pattern, this.DatabaseName.GetTableNames());
-                DisplayTableNames(names);
-            }
-        }
 
-
-        public void DisplayTableNames(string[] names)
-        {
-            DataTable dt = new DataTable();
-            dt.Columns.Add("Table Name");
-            foreach (string item in names)
-            {
-                var newRow = dt.NewRow();
-                newRow[0] = item;
-                dt.Rows.Add(newRow);
-            }
-
-            ConsoleTable.DisplayTable(dt);
-        }
-
-
-        public static string[] Search(string pattern, string[] tableNames)
-        {
-            string x = "^" + Regex.Escape(pattern)
-                                  .Replace(@"\*", ".*")
-                                  .Replace(@"\?", ".")
-                           + "$";
-
-            Regex regex = new Regex(x, RegexOptions.IgnoreCase);
-            var result = tableNames.Where(row => regex.IsMatch(row)).ToArray();
-
-            return result;
-        }
     }
 }
