@@ -15,7 +15,9 @@ namespace SqlCompare
     class CompareConsole : stdio
     {
         private VAL ini;
-        private VAL alias;
+
+        //<alias, connectionstring>
+        private Dictionary<string, string> binding = new Dictionary<string,string>();
 
         private string scriptFileName = "script.sql";
         private string[] excludedtables = new string[] { };
@@ -82,10 +84,13 @@ namespace SqlCompare
             if (!TryReadCfg(fileName, out ini))
                 return false;
 
-            this.alias = ini["alias"];
+            var alias = ini["alias"];
 
             if (alias.Defined)
             {
+                foreach (var pair in alias)
+                    AddAlias(pair);
+
                 var alias1 = (string)ini["alias1"];
                 var alias2 = (string)ini["alias2"];
                 this.cs1 = new SqlConnectionStringBuilder((string)alias[alias1]);
@@ -119,9 +124,41 @@ namespace SqlCompare
                 }
             }
 
+            var config = ini["config"];
+            if (config.Defined)
+            {
+                var web = config["web"];
+                if(web.Defined)
+                    foreach (var pair in web)
+                    {
+                        alias = pair[0];
+                        var val = pair[1];
+                        string folder = (string)val["path"];
+                        string key = (string)val["key"];
+
+                        string file = string.Format("{0}\\web.config", folder);
+                        if (File.Exists(file))
+                        {
+                            //AddAlias(pair);
+                        }
+                    }
+
+                var app = config["app"];
+
+            }
+
             return true;
         }
 
+        private void AddAlias(VAL pair)
+        {
+            string key = (string)pair[0];
+
+            if (binding.ContainsKey(key))
+                binding.Remove(key);
+
+            binding.Add(key, (string)pair[1]);
+        }
 
         public void Run(string[] args)
         {
@@ -144,18 +181,19 @@ namespace SqlCompare
                     case "/s":
                         if (i < args.Length && args[i++].parse(out t1, out t2))
                         {
-                            var s1 = alias[t1];
-                            var s2 = alias[t2];
-                            if (s1.Undefined)
+                            if (!binding.ContainsKey(t1))
                             {
                                 WriteLine("undefined server alias ({0}) in configuration file", t1);
                                 return;
                             }
-                            if (s2.Undefined)
+                            if (!binding.ContainsKey(t1))
                             {
                                 WriteLine("undefined server alias ({0}) in configuration file", t2);
                                 return;
                             }
+
+                            var s1 = binding[t1];
+                            var s2 = binding[t2];
 
                             cs1 = new SqlConnectionStringBuilder((string)s1);
                             cs2 = new SqlConnectionStringBuilder((string)s2);
