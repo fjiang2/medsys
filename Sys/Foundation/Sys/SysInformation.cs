@@ -9,6 +9,7 @@ using System.Data.SqlClient;
 using Sys.Data.Manager;
 using Tie;
 using Sys.OS;
+using Sys.Data;
 
 namespace Sys
 {

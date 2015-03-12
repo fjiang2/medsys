@@ -6,6 +6,7 @@ using System.Collections;
 using System.ComponentModel;
 using Sys.Platform.DpoClass;
 using Sys.Data.Manager;
+using Sys.Data;
 
 namespace Sys.Platform.Scheduler
 {

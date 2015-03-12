@@ -45,6 +45,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Account\ActiveAccount.cs" />
+    <Compile Include="Account\IAccount.cs" />
     <Compile Include="Compare\ColumnPair.cs" />
     <Compile Include="Compare\Compare.cs" />
     <Compile Include="Compare\RowCompare.cs" />
