@@ -18,7 +18,7 @@ namespace SqlCompare
         private VAL ini;
 
         //<alias, connectionstring>
-        private Dictionary<string, string> binding = new Dictionary<string,string>();
+        public readonly static Dictionary<string, string> binding = new Dictionary<string,string>();
 
         private string scriptFileName = "script.sql";
         private string[] excludedtables = new string[] { };
@@ -135,6 +135,7 @@ namespace SqlCompare
 
                     if (connectionString != null)
                     {
+                        connectionString = connectionString.Replace("Provider=sqloledb;", "");
                         pair[1] = new VAL(connectionString);
                         AddAlias(pair);
                     }
@@ -148,12 +149,21 @@ namespace SqlCompare
 
         private string GetConnectionString(VAL val)
         {
-            string fileName = (string)val["path"];
-            string key = (string)val["key"];
-            return GetConnectionString(fileName, key);
+            string fileName = (string)val["file"];
+            string path = (string)val["path"];
+
+            try
+            {
+                return GetConnectionString(fileName, path);
+            }
+            catch (Exception ex)
+            {
+                WriteLine("cannot find connection string on file {0}, {1}", fileName, ex.Message);
+                return null;
+            }
         }
 
-        private string GetConnectionString(string fileName, string key)
+        private string GetConnectionString(string fileName, string path)
         {
             if (!File.Exists(fileName))
             {
@@ -161,13 +171,17 @@ namespace SqlCompare
                 return null;
             }
 
+            string[] segments = path.Split('|');
             XElement X = XElement.Load(fileName);
-            var connectionString = X
-                .Elements()
-                .Where(x=>x.Name.ToString().ToLower() == "appsettings")
-                .First()
-                .Elements()
-                .Where(x => x.Attribute("key").Value.ToLower() == key.ToLower())
+            for(int i=0; i<segments.Length- 1; i++)
+            {
+                X = X.Element(segments[i]);
+            }
+
+            string attr = segments.Last();
+            string[] pair = attr.Split('=');
+            var connectionString = X.Elements()
+                .Where(x => x.Attribute(pair[0]).Value == pair[1])
                 .Select(x => x.Attribute("value").Value)
                 .FirstOrDefault();
 

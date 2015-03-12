@@ -131,6 +131,18 @@ namespace SqlCompare
                     WriteLine("server 2 selected(server={0} db={1})", theSide.CS.DataSource, theSide.CS.InitialCatalog);
                     break;
 
+                case "goto":
+                    if (CompareConsole.binding.ContainsKey(arg1))
+                    {
+                        this.theSide = new Side(new SqlConnectionStringBuilder(CompareConsole.binding[arg1]));
+                        this.server = 3;
+                        WriteLine("server 3 selected(server={0} db={1})", theSide.CS.DataSource, theSide.CS.InitialCatalog);
+                    }
+
+                    else
+                        WriteLine("undefined database server alias : {0}", arg1);
+                    break;
+
                 case "help":
                 case "?":
                     Help();
@@ -260,6 +272,7 @@ ORDER BY c.name, c.column_id
             Console.WriteLine("all sql clauses, e.g. select * from table, update...");
             Console.WriteLine("1                     : switch to source server 1 (default)");
             Console.WriteLine("2                     : switch to sink server 2");
+            Console.WriteLine("goto alias            : switch to database server");
             Console.WriteLine("exit                  : quit application");
             Console.WriteLine("help                  : this help");
             Console.WriteLine("?                     : this help");
