@@ -61,8 +61,9 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Tie">
-      <HintPath>..\..\Lib\Tie.dll</HintPath>
+    <Reference Include="Tie, Version=2.0.0.12, Culture=neutral, PublicKeyToken=783687458c7c579a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Tie.2.0.0.12\lib\net45\Tie.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -431,6 +432,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
     <None Include="Resources\bug.png" />
   </ItemGroup>
   <ItemGroup>

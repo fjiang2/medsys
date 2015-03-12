@@ -28,3 +28,6 @@
 /App/Stock/bin/Debug
 /App/Testing/bin/Debug
 /Sys/PersistentObjects/obj/Debug
+/App/Data/bin/Debug
+/App
+/Sys

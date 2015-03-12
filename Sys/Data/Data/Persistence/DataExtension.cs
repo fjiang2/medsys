@@ -463,11 +463,6 @@ namespace Sys.Data
             return "@" + name.Replace(" ", "").Replace("#", "");
         }
 
-        public static ident ToIdent(this string name)
-        {
-            return new ident(name);
-        }
-
 
         #region Metadata Table pool
         private static DataPool<TableName, TableSchema> pool = new DataPool<TableName, TableSchema>(20);

@@ -43,8 +43,9 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Tie">
-      <HintPath>..\..\Lib\Tie.dll</HintPath>
+    <Reference Include="Tie, Version=2.0.0.12, Culture=neutral, PublicKeyToken=783687458c7c579a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Tie.2.0.0.12\lib\net45\Tie.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -77,6 +78,9 @@
       <Project>{FE52736A-BA94-41FC-9FD3-A481A790FC9C}</Project>
       <Name>Sys.PersistentObjects</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

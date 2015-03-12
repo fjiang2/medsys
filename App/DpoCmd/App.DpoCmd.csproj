@@ -40,7 +40,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="Tie">
-      <HintPath>..\..\Lib\Tie.dll</HintPath>
+      <HintPath>..\..\packages\Tie.2.0.0.12\lib\net45\Tie.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Sys\Core\Sys.Core.csproj">

@@ -87,8 +87,9 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="Tie">
-      <HintPath>..\..\Lib\Tie.dll</HintPath>
+    <Reference Include="Tie, Version=2.0.0.12, Culture=neutral, PublicKeyToken=783687458c7c579a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Tie.2.0.0.12\lib\net45\Tie.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -106,6 +107,7 @@
     </Compile>
     <None Include="app.config" />
     <None Include="App.Executable_TemporaryKey.pfx" />
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

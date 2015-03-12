@@ -47,8 +47,9 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Tie">
-      <HintPath>..\..\Lib\Tie.dll</HintPath>
+    <Reference Include="Tie, Version=2.0.0.12, Culture=neutral, PublicKeyToken=783687458c7c579a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Tie.2.0.0.12\lib\net45\Tie.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -109,6 +110,9 @@
       <Project>{91f93c1b-f6b4-4ef6-8149-a6b2a9e47137}</Project>
       <Name>Sys.Data</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
