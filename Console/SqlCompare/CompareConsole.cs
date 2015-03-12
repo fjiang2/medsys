@@ -128,21 +128,17 @@ namespace SqlCompare
             var config = ini["config"];
             if (config.Defined)
             {
-                var web = config["web"];
-                if (web.Defined)
-                    foreach (var pair in web)
-                    {
-                        string key = (string)pair[0];
-                        string connectionString = GetConnectionString(pair[1]);
-                        
-                        if (connectionString != null)
-                        {
-                            pair[1] = new VAL(connectionString);
-                            AddAlias(pair);
-                        }
-                    }
+                foreach (var pair in config)
+                {
+                    string key = (string)pair[0];
+                    string connectionString = GetConnectionString(pair[1]);
 
-                var app = config["app"];
+                    if (connectionString != null)
+                    {
+                        pair[1] = new VAL(connectionString);
+                        AddAlias(pair);
+                    }
+                }
 
             }
 
@@ -152,20 +148,25 @@ namespace SqlCompare
 
         private string GetConnectionString(VAL val)
         {
-            string folder = (string)val["path"];
+            string fileName = (string)val["path"];
             string key = (string)val["key"];
-            string file = string.Format("{0}\\web.config", folder);
-            return GetConnectionString(file, key);
+            return GetConnectionString(fileName, key);
         }
 
         private string GetConnectionString(string fileName, string key)
         {
             if (!File.Exists(fileName))
+            {
+                Console.WriteLine("warning config file not exists: {0}", fileName);
                 return null;
+            }
 
             XElement X = XElement.Load(fileName);
             var connectionString = X
-                .Element("appSettings").Elements()
+                .Elements()
+                .Where(x=>x.Name.ToString().ToLower() == "appsettings")
+                .First()
+                .Elements()
                 .Where(x => x.Attribute("key").Value.ToLower() == key.ToLower())
                 .Select(x => x.Attribute("value").Value)
                 .FirstOrDefault();
