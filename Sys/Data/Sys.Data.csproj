@@ -50,6 +50,7 @@
     <Compile Include="Compare\RowCompare.cs" />
     <Compile Include="Compare\TableCompare.cs" />
     <Compile Include="Compare\TableSchemaCompare.cs" />
+    <Compile Include="Const.cs" />
     <Compile Include="Data\Metadata\TableScript.cs" />
     <Compile Include="Data\Attribute\AggregatedAttribute.cs" />
     <Compile Include="Data\Attribute\AssociationAttribute.cs" />

@@ -43,7 +43,7 @@ namespace Sys.Data.Manager
             logDataset.form_name = type.Signature;
             logDataset.date = DateTime.Now;
             logDataset.user_id = userID;
-            logDataset.machine_name = Const.COMPUTER_NAME; 
+            logDataset.machine_name = System.Environment.MachineName; 
             logDataset.Save();
 
             return new Transaction(logDataset.log_dataset_id);
