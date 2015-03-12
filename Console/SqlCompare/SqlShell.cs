@@ -78,54 +78,26 @@ namespace SqlCompare
             string[] A = text.Split(' ', '\r');
             string cmd = null;
             string arg1 = null;
+            string arg2 = null;
 
             int n = A.Length;
 
             if (n > 0)
                 cmd = A[0].ToLower();
 
-            if (n == 2)
+            if (n > 1)
                 arg1 = A[1].Trim();
+
+            if (n > 2)
+                arg2 = A[2].Trim();
 
             switch (cmd)
             {
-                case "column":
-                case "pk":
-                case "fk":
-                    if (n == 2)
-                    {
-                        foreach (var name in new MatchedDatabase(theSide.DatabaseName, arg1, null).DefaultTableNames)
-                        {
-                            WriteLine("<{0}>", name);
-                            TableName tname = new TableName(theSide.Provider, name);
-                            DataTable dt = null;
-                            switch (cmd)
-                            {
-                                case "column":
-                                    dt = tname.TableSchema();
-                                    break;
-
-                                case "pk":
-                                    dt = tname.PrimaryKeySchema();
-                                    break;
-
-                                case "fk":
-                                    dt = tname.ForeignKeySchema();
-                                    break;
-                            }
-
-                            if (dt != null)
-                                ConsoleTable.DisplayTable(dt);
-                        }
-                    }
+                case "show":
+                    if(arg1 != null)
+                        Show(arg1.ToLower(), arg2);
                     else
-                    {
-                        WriteLine("invalid command");
-                    }
-                    break;
-                
-                case "table":
-                    DisplayTableNames(new MatchedDatabase(theSide.DatabaseName, arg1, null).DefaultTableNames);
+                        WriteLine("invalid argument");
                     break;
 
                 case "find":
@@ -185,6 +157,56 @@ namespace SqlCompare
         }
 
 
+        private void Show(string arg1, string arg2)
+        {
+            string[] names;
+
+            names = new MatchedDatabase(theSide.DatabaseName, arg2, null).DefaultTableNames;
+            if (names.Length == 0)
+            {
+                WriteLine("cannot find any table name like \"{0}\"", arg2);
+                return;
+            }
+
+            switch (arg1)
+            {
+                case "column":
+                case "pk":
+                case "fk":
+                    foreach (var name in names)
+                    {
+                        TableName tname = new TableName(theSide.Provider, name);
+                        DataTable dt = null;
+                        switch (arg1)
+                        {
+                            case "column":
+                                dt = tname.TableSchema();
+                                break;
+
+                            case "pk":
+                                dt = tname.PrimaryKeySchema();
+                                break;
+
+                            case "fk":
+                                dt = tname.ForeignKeySchema();
+                                break;
+                        }
+
+                        WriteLine("<{0}>", name);
+                        ConsoleTable.DisplayTable(dt);
+                    }
+                    break;
+
+                case "table":
+                    DisplayTableNames(names);
+                    break;
+
+                default:
+                    WriteLine("invalid argument");
+                    break;
+            }
+        }
+
         public void DisplayTableNames(string[] names)
         {
             DataTable dt = new DataTable();
@@ -229,18 +251,18 @@ ORDER BY c.name, c.column_id
         private static void Help()
         {
             Console.WriteLine("<Commands>");
-            Console.WriteLine("1                : switch to source server 1 (default)");
-            Console.WriteLine("2                : switch to sink server 2");
-            Console.WriteLine("find pattern     : find table name and column name");
-            Console.WriteLine("table            : show all table names");
-            Console.WriteLine("table pattern    : show matched table names (wildcard*,?)");
-            Console.WriteLine("column tablename : show table structure");
-            Console.WriteLine("pk tablename     : show table primary keys");
-            Console.WriteLine("fk tablename     : show table foreign keys");
+            Console.WriteLine("find pattern          : find table name and column name");
+            Console.WriteLine("show table            : show all table names");
+            Console.WriteLine("show table pattern    : show matched table names (wildcard*,?)");
+            Console.WriteLine("show column tablename : show table structure");
+            Console.WriteLine("show pk tablename     : show table primary keys");
+            Console.WriteLine("show fk tablename     : show table foreign keys");
             Console.WriteLine("all sql clauses, e.g. select * from table, update...");
-            Console.WriteLine("exit             : quit application");
-            Console.WriteLine("help             : this help");
-            Console.WriteLine("?                : this help");
+            Console.WriteLine("1                     : switch to source server 1 (default)");
+            Console.WriteLine("2                     : switch to sink server 2");
+            Console.WriteLine("exit                  : quit application");
+            Console.WriteLine("help                  : this help");
+            Console.WriteLine("?                     : this help");
         }
     }
 }
