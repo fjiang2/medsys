@@ -50,7 +50,7 @@ namespace SqlCompare
         }
 
 
-        public string Run(CompareAction CompareType, string parttern1, string parttern2, string[] excludedtables, Dictionary<string,string[]> pk)
+        public string Run(CompareAction CompareType, MatchedDatabase m1, MatchedDatabase m2, Dictionary<string, string[]> pk)
         {
             DatabaseName db1 = Side1.DatabaseName;
             DatabaseName db2 = Side2.DatabaseName;
@@ -64,8 +64,6 @@ namespace SqlCompare
 
             StringBuilder builder = new StringBuilder();
 
-            MatchedTable m1 = new MatchedTable(db1, parttern1);
-            MatchedTable m2 = new MatchedTable(db1, parttern2);
             var N1 = m1.MatchedTableNames;
             var N2 = m2.MatchedTableNames;
             string sql;
@@ -79,7 +77,16 @@ namespace SqlCompare
                 }
                 for(int i=0; i<N1.Length; i++)
                 {
-                    builder.Append(CompareTable(N1[i], N2[i], excludedtables, pk));
+                    if (m1.Includes(N1[i]))
+                    {
+                        WriteLine("skip to compare data on table {0}", N1[i]);
+                    }
+                    else if (m2.Includes(N2[i]))
+                    {
+                        WriteLine("skip to compare data on table {0}", N2[i]);
+                    }
+
+                    builder.Append(CompareTable(N1[i], N2[i], pk));
                 }
             }
             else if (CompareType == CompareAction.CompareSchema)
@@ -96,7 +103,7 @@ namespace SqlCompare
                 if (sql != string.Empty)
                     builder.Append(sql);
 
-                sql = CompareDatabaseData(db1, db2, excludedtables);
+                sql = CompareDatabaseData(db1, db2, m1.Excludedtables);
                 if (sql != string.Empty)
                     builder.Append(sql);
 
@@ -119,7 +126,7 @@ namespace SqlCompare
             return compare.DatabaseDifference(db1, db2, excludedtables);
         }
 
-        private string CompareTable(string tableName1, string tableName2, string[] excludedtables, Dictionary<string, string[]> pk)
+        private string CompareTable(string tableName1, string tableName2, Dictionary<string, string[]> pk)
         {
             TableName tname1 = new TableName(Side1.DatabaseName, tableName1);
             TableName tname2 = new TableName(Side2.DatabaseName, tableName2);
@@ -132,37 +139,26 @@ namespace SqlCompare
 
             if (sql == string.Empty)
             {
-                if (excludedtables.Contains(tname1.Name.ToUpper()))
-                {
-                    WriteLine("skip to compare data on table {0}", tname1);
-                }
-                else if (excludedtables.Contains(tname2.Name.ToUpper()))
-                {
-                    WriteLine("skip to compare data on table {0}", tname2);
-                }
-                else
-                {
-                    WriteLine("compare table data {0} => {1}", tableName1, tableName2);
-                    bool hasPk;
-                    sql = compare.TableDifference(tname1, tname2, out hasPk);
+                WriteLine("compare table data {0} => {1}", tableName1, tableName2);
+                bool hasPk;
+                sql = compare.TableDifference(tname1, tname2, out hasPk);
 
-                    if (!hasPk)
+                if (!hasPk)
+                {
+                    WriteLine("warning: no primary key found : {0}", tname1);
+
+                    string key = tname1.Name.ToUpper();
+                    if (pk.ContainsKey(key))
                     {
-                        WriteLine("warning: no primary key found : {0}", tname1);
-                        
-                        string key = tname1.Name.ToUpper();
-                        if (pk.ContainsKey(key))
-                        {
-                            WriteLine("use predefine keys defined in ini file: {0}", tname1);
-                            sql = compare.TableDifference(tname1, tname2, pk[key]);
-                        }
+                        WriteLine("use predefine keys defined in ini file: {0}", tname1);
+                        sql = compare.TableDifference(tname1, tname2, pk[key]);
                     }
-
-                    if (sql != string.Empty)
-                        WriteLine(sql);
                 }
+
+                if (sql != string.Empty)
+                    WriteLine(sql);
             }
-            
+
             return sql;
         }
 

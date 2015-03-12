@@ -320,7 +320,8 @@ namespace SqlCompare
             }
 
             CompareAdapter adapter = new CompareAdapter(cs1, cs2);
-            excludedtables = excludedtables.Select(row => row.ToUpper()).ToArray();
+            MatchedDatabase m1 = new MatchedDatabase(adapter.Side1.DatabaseName, tableNamePattern1, excludedtables);
+            MatchedDatabase m2 = new MatchedDatabase(adapter.Side2.DatabaseName, tableNamePattern2, excludedtables);
 
             try
             {
@@ -341,7 +342,7 @@ namespace SqlCompare
 
                     case CompareAction.CompareData:
                     case CompareAction.CompareSchema:
-                        WriteFile(adapter.Run(compareType, tableNamePattern1, tableNamePattern2, excludedtables, PK));
+                        WriteFile(adapter.Run(compareType, m1, m2, PK));
                         break;
 
                     case CompareAction.Shell:

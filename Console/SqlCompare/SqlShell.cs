@@ -121,7 +121,7 @@ namespace SqlCompare
                     break;
                 
                 case "table":
-                    DisplayTableNames(new MatchedTable(theSide.DatabaseName, arg1).DefaultTableNames);
+                    DisplayTableNames(new MatchedDatabase(theSide.DatabaseName, arg1, null).DefaultTableNames);
                     break;
 
                 case "find":

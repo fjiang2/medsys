@@ -8,16 +8,20 @@ using Sys.Data;
 
 namespace SqlCompare
 {
-    class MatchedTable : stdio
+    class MatchedDatabase : stdio
     {
         private string tableNamePattern;
 
         public readonly DatabaseName DatabaseName;
+        public readonly string[] Excludedtables;
 
-        public MatchedTable(DatabaseName databaseName, string tableNamePattern)
+        public MatchedDatabase(DatabaseName databaseName, string tableNamePattern, string[] excludedtables)
         {
             this.tableNamePattern = tableNamePattern;
             this.DatabaseName = databaseName;
+            
+            if(excludedtables != null)
+                this.Excludedtables = excludedtables.Select(row => row.ToUpper()).ToArray(); ;
         }
 
 
@@ -47,7 +51,13 @@ namespace SqlCompare
             }
         }
 
+        public bool Includes(string tableName)
+        {
+            if (Excludedtables == null)
+                return true;
 
+              return !Excludedtables.Contains(tableName.ToUpper());
+        }
 
         public static string[] Search(string pattern, string[] tableNames)
         {

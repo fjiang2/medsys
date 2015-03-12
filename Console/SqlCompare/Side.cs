@@ -68,7 +68,7 @@ namespace SqlCompare
         public string GenerateRowScript(string tableNamePattern, string[] excludedtables)
         {
             List<string> list = new List<string>();
-            MatchedTable m = new MatchedTable(this.DatabaseName, tableNamePattern);
+            MatchedDatabase m = new MatchedDatabase(this.DatabaseName, tableNamePattern, excludedtables);
             foreach (string name in m.DefaultTableNames)
             {
                 if (!excludedtables.Contains(name.ToUpper()))

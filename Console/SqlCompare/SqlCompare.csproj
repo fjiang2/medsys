@@ -51,7 +51,7 @@
     <Compile Include="CompareConsole.cs" />
     <Compile Include="ConsoleTable.cs" />
     <Compile Include="Helper.cs" />
-    <Compile Include="MatchedTable.cs" />
+    <Compile Include="MatchedDatabase.cs" />
     <Compile Include="stdio.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
