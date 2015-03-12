@@ -121,10 +121,7 @@ namespace SqlCompare
                     break;
                 
                 case "table":
-                    if (arg1 == null)
-                        theSide.DisplayAllTableNames();
-                    else
-                        theSide.DisplayMatchedTableNames(arg1);
+                    theSide.DisplayMatchedTableNames(arg1);
                     break;
 
                 case "find":

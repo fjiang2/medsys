@@ -11,12 +11,8 @@ namespace SqlCompare
         CompareSchema = 1,
         CompareData = 2,
         Shell = 3,
-        ShowTableStructure = 4,
-        ShowParimaryKey = 5,
-        ShowForeignKey = 6,
-        ShowTableName = 7,
-        GenerateTableRows = 8,
-        GenerateScript = 9,
-        Execute = 10
+        GenerateTableRows = 10,
+        GenerateScript = 11,
+        Execute = 20
     }
 }

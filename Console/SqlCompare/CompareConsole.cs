@@ -178,25 +178,13 @@ namespace SqlCompare
                                 case "data":
                                     compareType = CompareAction.CompareData;
                                     break;
-                                case "column":
-                                    compareType = CompareAction.ShowTableStructure;
-                                    break;
-                                case "pk":
-                                    compareType = CompareAction.ShowParimaryKey;
-                                    break;
-                                case "fk":
-                                    compareType = CompareAction.ShowForeignKey;
-                                    break;
-                                case "table":
-                                    compareType = CompareAction.ShowTableName;
-                                    break;
                                 case "gen":
                                     compareType = CompareAction.GenerateScript;
                                     break;
                                 case "row":
                                     compareType = CompareAction.GenerateTableRows;
                                     break;
-                                case "cmd":
+                                case "shell":
                                     compareType = CompareAction.Shell;
                                     break;
                                 case "exec":
@@ -344,39 +332,11 @@ namespace SqlCompare
                         break;
 
                     case CompareAction.GenerateTableRows:
-                        WriteFile(adapter.Side1.AllRowScript(excludedtables));
+                        WriteFile(adapter.Side1.GenerateRowScript(excludedtables));
                         break;
 
                     case CompareAction.GenerateScript:
                         WriteFile(adapter.Side1.GenerateScript());
-                        break;
-
-                    case CompareAction.ShowTableName:
-                        WriteLine("server1:");
-                        adapter.Side1.DisplayMatchedTableNames();
-                        WriteLine("server2:");
-                        adapter.Side2.DisplayMatchedTableNames();
-                        break;
-
-                    case CompareAction.ShowTableStructure:
-                        WriteLine("server1:");
-                        adapter.Side1.DisplayColumns();
-                        WriteLine("server2:");
-                        adapter.Side2.DisplayColumns();
-                        break;
-
-                    case CompareAction.ShowParimaryKey:
-                        WriteLine("server1:");
-                        adapter.Side1.DisplayPK();
-                        WriteLine("server2:");
-                        adapter.Side2.DisplayPK();
-                        break;
-
-                    case CompareAction.ShowForeignKey:
-                        WriteLine("server1:");
-                        adapter.Side1.DisplayFK();
-                        WriteLine("server2:");
-                        adapter.Side2.DisplayFK();
                         break;
 
                     case CompareAction.CompareData:

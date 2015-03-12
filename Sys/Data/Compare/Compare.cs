@@ -78,7 +78,7 @@ namespace Sys.Data.Comparison
                 }
                 else
                 {
-                    builder.Append(Compare.AllRows(tname1));
+                    builder.Append(Compare.GenerateRows(tname1));
                 }
 
                 builder.AppendLine();
@@ -137,22 +137,22 @@ namespace Sys.Data.Comparison
 
 
         #region create all rows 
-        public static string AllRows(TableName tableName, string where)
+        public static string GenerateRows(TableName tableName, string where)
         {
 
             if (string.IsNullOrEmpty(where))
-                return Compare.AllRows(tableName, new TableReader(tableName));
+                return Compare.GenerateRows(tableName, new TableReader(tableName));
             else
-                return Compare.AllRows(tableName, new TableReader(tableName, where, new object[] { }));
+                return Compare.GenerateRows(tableName, new TableReader(tableName, where, new object[] { }));
 
         }
 
-        private static string AllRows(TableName tableName)
+        private static string GenerateRows(TableName tableName)
         {
-            return Compare.AllRows(tableName, new TableReader(tableName));
+            return Compare.GenerateRows(tableName, new TableReader(tableName));
         }
 
-        private static string AllRows(TableName tableName, TableReader reader)
+        private static string GenerateRows(TableName tableName, TableReader reader)
         {
 
             var dt1 = reader.Table;;

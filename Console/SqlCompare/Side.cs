@@ -93,7 +93,7 @@ namespace SqlCompare
             }
         }
 
-        public string AllRowScript(string[] excludedtables)
+        public string GenerateRowScript(string[] excludedtables)
         {
             List<string> list = new List<string>();
             foreach (string name in this.DefaultTableNames)
@@ -102,19 +102,19 @@ namespace SqlCompare
                     list.Add(name);
             }
             
-            return AllRows(list.ToArray());
+            return GenerateRows(list.ToArray());
         }
 
 
 
-        private string AllRows(string[] tableNames)
+        private string GenerateRows(string[] tableNames)
         {
             StringBuilder builder = new StringBuilder();
             foreach (var tableName in tableNames)
             {
                 WriteLine("generate insert clauses on table : {0}", tableName);
                 var tname = new TableName(Provider, tableName);
-                string sql = Compare.AllRows(tname, null);
+                string sql = Compare.GenerateRows(tname, null);
                 if (sql != String.Empty)
                     builder.AppendLine(sql);
             }
@@ -122,63 +122,27 @@ namespace SqlCompare
             return builder.ToString();
         }
 
-        private string AllRows(string tableName, string where)
+        private string GenerateRows(string tableName, string where)
         {
             var tname = new TableName(Provider, tableName);
-            string sql = Compare.AllRows(tname, where);
+            string sql = Compare.GenerateRows(tname, where);
             return sql;
         }
 
-        public void DisplayColumns()
-        {
-            foreach (string tableName in this.DefaultTableNames)
-            {
-                WriteLine("[{0}]",tableName);
-                TableName tname = new TableName(Provider, tableName);
-                var dt = tname.TableSchema();
-                ConsoleTable.DisplayTable(dt);
-            }
-        }
-        
-        public void DisplayPK()
-        {
-            foreach (string tableName in this.DefaultTableNames)
-            {
-                WriteLine("[{0}]", tableName);
-                TableName tname = new TableName(Provider, tableName);
-                var dt = tname.PrimaryKeySchema();
-                ConsoleTable.DisplayTable(dt);
-            }
-        }
+       
 
-        public void DisplayFK()
-        {
-
-            foreach (string tableName in this.DefaultTableNames)
-            {
-                WriteLine("[{0}]", tableName);
-                TableName tname = new TableName(Provider, tableName);
-                var dt = tname.ForeignKeySchema();
-                ConsoleTable.DisplayTable(dt);
-            }
-        }
-
-        public void DisplayMatchedTableNames()
-        {
-            DisplayTableNames(this.DefaultTableNames);
-        }
 
         public void DisplayMatchedTableNames(string pattern)
         {
-            var names = Search(pattern, this.DatabaseName.GetTableNames());
-            DisplayTableNames(names);
+            if (pattern == null)
+                DisplayTableNames(this.DatabaseName.GetTableNames());
+            else
+            {
+                var names = Search(pattern, this.DatabaseName.GetTableNames());
+                DisplayTableNames(names);
+            }
         }
 
-
-        public void DisplayAllTableNames()
-        {
-            DisplayTableNames(this.DatabaseName.GetTableNames());
-        }
 
         public void DisplayTableNames(string[] names)
         {
