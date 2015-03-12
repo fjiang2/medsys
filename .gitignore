@@ -29,5 +29,15 @@
 /App/Testing/bin/Debug
 /Sys/PersistentObjects/obj/Debug
 /App/Data/bin/Debug
-/App
-/Sys
+/Sys/Data/bin/Debug
+/Sys/DataManager/bin/Debug
+/Sys/Foundation/bin/Debug
+/Sys/Messaging/bin/Debug
+/Sys/PersistentObjects/bin/Debug
+/Sys/Platform/bin/Debug
+/Sys/SmartList/bin/Debug
+/Sys/ViewManager/bin/Debug
+/Sys/Workflow/bin/Debug
+/App/X12/bin/Debug
+/App/PTA/bin/Debug
+/Sys/BusinessRules/bin/Debug
