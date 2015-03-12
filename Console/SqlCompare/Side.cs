@@ -14,14 +14,14 @@ namespace SqlCompare
 {
     class Side : stdio
     {
-        private SqlConnectionStringBuilder cs;
+        public readonly SqlConnectionStringBuilder CS;
         public readonly DataProvider Provider;
         public readonly DatabaseName DatabaseName;
 
 
         public Side(SqlConnectionStringBuilder cs)
         {
-            this.cs = cs;
+            this.CS = cs;
 
             this.Provider = DataProviderManager.Register("side", DataProviderType.SqlServer, cs.ConnectionString);
             this.DatabaseName = new DatabaseName(Provider, cs.InitialCatalog);

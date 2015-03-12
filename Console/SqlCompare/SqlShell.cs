@@ -94,25 +94,29 @@ namespace SqlCompare
                 case "fk":
                     if (n == 2)
                     {
-                        TableName tname = new TableName(theSide.Provider, arg1);
-                        DataTable dt = null;
-                        switch (cmd)
+                        foreach (var name in new MatchedDatabase(theSide.DatabaseName, arg1, null).DefaultTableNames)
                         {
-                            case "column":
-                                dt = tname.TableSchema();
-                                break;
+                            WriteLine("<{0}>", name);
+                            TableName tname = new TableName(theSide.Provider, name);
+                            DataTable dt = null;
+                            switch (cmd)
+                            {
+                                case "column":
+                                    dt = tname.TableSchema();
+                                    break;
 
-                            case "pk":
-                                dt = tname.PrimaryKeySchema();
-                                break;
+                                case "pk":
+                                    dt = tname.PrimaryKeySchema();
+                                    break;
 
-                            case "fk":
-                                dt = tname.ForeignKeySchema();
-                                break;
+                                case "fk":
+                                    dt = tname.ForeignKeySchema();
+                                    break;
+                            }
+
+                            if (dt != null)
+                                ConsoleTable.DisplayTable(dt);
                         }
-
-                        if (dt != null)
-                            ConsoleTable.DisplayTable(dt);
                     }
                     else
                     {
@@ -146,13 +150,13 @@ namespace SqlCompare
                 case "1":
                     this.theSide = adapter.Side1;
                     this.server = 1;
-                    WriteLine("server 1 selected");
+                    WriteLine("server 1 selected(server={0} db={1})", theSide.CS.DataSource, theSide.CS.InitialCatalog);
                     break;
 
                 case "2":
                     this.theSide = adapter.Side2;
                     this.server = 2;
-                    WriteLine("server 2 selected");
+                    WriteLine("server 2 selected(server={0} db={1})", theSide.CS.DataSource, theSide.CS.InitialCatalog);
                     break;
 
                 case "help":
