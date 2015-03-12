@@ -30,7 +30,7 @@ namespace Sys
             this.id = id;
 
             if (!Validate())
-                throw new JException("Invalid ident: {0}", id);
+                throw new MessageException("Invalid ident: {0}", id);
         }
 
 

@@ -98,7 +98,7 @@ namespace Sys.Data.Manager
                         line = string.Format("{0}{1}\r\n", tab, ForeignKey.GetAttribute(column.ForeignKey, classFullName)) + line;
                     }
                     else
-                        throw new JException("cannot generate Dpo class of FK {0} before generate Dpo class of PK {1}",
+                        throw new MessageException("cannot generate Dpo class of FK {0} before generate Dpo class of PK {1}",
                             dpoClass.MetaTable.TableName,
                             pkTableName);
                 }

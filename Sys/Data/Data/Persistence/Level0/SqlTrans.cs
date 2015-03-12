@@ -78,11 +78,11 @@ namespace Sys.Data
                 {
                     if (sqlTransaction.Connection != null)
                     {
-                        throw new JException("An exception of type " + ex.GetType() + " was encountered while attempting to roll back the transaction.");
+                        throw new MessageException("An exception of type " + ex.GetType() + " was encountered while attempting to roll back the transaction.");
                     }
                 }
 
-                throw new JException(e.Message);
+                throw new MessageException(e.Message);
             }
             finally
             {

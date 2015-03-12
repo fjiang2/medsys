@@ -82,7 +82,7 @@ namespace Sys.Data.Log
             else
             {
 #if DEBUG
-                throw new Sys.JException("Logee type {0} is defined", transactionType);
+                throw new Sys.MessageException("Logee type {0} is defined", transactionType);
 #else
                 //return new DefaultLogee();  //use default logee
                 throw new Sys.JException("Logee type {0} is defined", transactionType);

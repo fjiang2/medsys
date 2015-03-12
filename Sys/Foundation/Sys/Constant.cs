@@ -84,7 +84,7 @@ namespace Sys
             Const.Revision = Configuration.Instance.GetValue<int>("Revision");
             Const.COMPUTER_NAME = System.Windows.Forms.SystemInformation.ComputerName;
 
-            JException.DefaultExceptionHandler = delegate(string title, string message)
+            MessageException.DefaultExceptionHandler = delegate(string title, string message)
             {
                 System.Windows.Forms.MessageBox.Show(message, title, System.Windows.Forms.MessageBoxButtons.OK);
             };

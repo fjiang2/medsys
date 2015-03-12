@@ -146,6 +146,13 @@ namespace Sys.Data.Manager
             } 
         }
 
+        public string Definition
+        {
+            get
+            {
+                return null; 
+            }
+        }
         public bool IsIdentity { get { return column.AutoIncrement; } }
 
 

@@ -33,7 +33,7 @@ namespace Sys.Data
         {
             DataProviderConnection providerConnection = DataProviderManager.Instance.GetConnection(provider);
             if (providerConnection == null)
-                throw new JException("provider connection not registered.");
+                throw new MessageException("provider connection not registered.");
 
             this.script = script
                           .Replace("$DB_SYSTEM", Const.DB_SYSTEM)
@@ -86,8 +86,8 @@ namespace Sys.Data
 
         protected virtual void ExceptionHandler(string message)
         {
-            if (JException.DefaultExceptionHandler != null)
-                JException.DefaultExceptionHandler("SQL Error", message);
+            if (MessageException.DefaultExceptionHandler != null)
+                MessageException.DefaultExceptionHandler("SQL Error", message);
             else
                 throw new Exception(message);
 

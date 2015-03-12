@@ -46,7 +46,7 @@ namespace Sys.Data
             if (primary.Length != 0)
                 this.locator = new Locator(primary);
             else
-                throw new JException("There is no locator defined.");
+                throw new MessageException("There is no locator defined.");
         }
 
         /// <summary>

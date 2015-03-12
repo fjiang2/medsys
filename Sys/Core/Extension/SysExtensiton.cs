@@ -38,20 +38,6 @@ namespace Sys
             return new ident(id);
         }
    
-        public static F[] GetArray<T, F>(this List<T> list, string fieldName)
-        {
-            FieldInfo fieldInfo = typeof(T).GetField(fieldName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-
-            F[] values = new F[list.Count];
-            int i = 0;
-            foreach (T t in list)
-            {
-                values[i++] = (F)fieldInfo.GetValue(t);
-            }
-            return values;
-        }
-
-
         /// <summary>
         /// Has attribute(T) defined?
         /// </summary>

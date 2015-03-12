@@ -75,7 +75,7 @@ namespace Sys.Data.Manager
                 if (type.Validate(messages))
                     type.GenerateCode(path, nameSpace);
                 else
-                    throw new JException(messages.ToString());
+                    throw new MessageException(messages.ToString());
             }
         }
 

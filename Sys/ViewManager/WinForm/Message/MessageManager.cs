@@ -70,7 +70,7 @@ namespace Sys.ViewManager.Forms
             return message;
         }
 
-        public Message Add(JException ex)
+        public Message Add(MessageException ex)
         {
             Message message = ex.GetMessage();
             this.messages.Add(message);

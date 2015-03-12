@@ -21,7 +21,7 @@ namespace Sys.ViewManager.Forms
 
             propertyInfo = type.GetProperty(property);
             if (property == null)
-                throw new Sys.JException("wrong property name {0} in {1}", property, type.FullName);
+                throw new Sys.MessageException("wrong property name {0} in {1}", property, type.FullName);
 
             this.fill = fill;
             this.collect = collect;

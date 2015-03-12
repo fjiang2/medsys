@@ -74,10 +74,10 @@ namespace Sys.Data
         public void UpdateObject(int identityId)
         {
             if (this.Identity.Length == 0)
-                throw new JException("no identity columns found");
+                throw new MessageException("no identity columns found");
 
             if (this.Identity.Length > 1)
-                throw new JException("multiple identity columns defined {0}", this.Identity);
+                throw new MessageException("multiple identity columns defined {0}", this.Identity);
 
             UpdateObject(this.Identity.ColumnNames[0].ColumnName() == identityId);
         }
@@ -103,13 +103,13 @@ namespace Sys.Data
         {
 
             if (source == null)
-                throw new JException("source cannot be null");
+                throw new MessageException("source cannot be null");
 
             Type t1 = this.GetType();
             Type t2 = source.GetType();
 
             if (t1 != t2 && !t2.IsSubclassOf(t1))
-                throw new JException("class type {0} is not matched to {1}.", t2.FullName, t1.FullName);
+                throw new MessageException("class type {0} is not matched to {1}.", t2.FullName, t1.FullName);
 
             foreach (PropertyInfo propertyInfo in this.columnProperties)
             {
@@ -227,7 +227,7 @@ namespace Sys.Data
                 if(this.Primary.Length != 0)
                     return new Locator(this.Primary);
 
-                throw new JException("There is no locator defined.");
+                throw new MessageException("There is no locator defined.");
             }
         }
 
@@ -261,7 +261,7 @@ namespace Sys.Data
                 if (dataTableAttribute != null)
                     return dataTableAttribute.TableName;
 
-                throw new JException("There is no table name defined.");
+                throw new MessageException("There is no table name defined.");
             }
         }
 
@@ -705,11 +705,11 @@ namespace Sys.Data
         {
             Type fieldType = propertyInfo.PropertyType;
             if (!fieldType.IsGenericType)
-                throw new JException("DPCollection is not generic type");
+                throw new MessageException("DPCollection is not generic type");
 
             Type[] typeParameters = fieldType.GetGenericArguments();
             if (typeParameters.Length != 1)
-                throw new JException("Too many generic parameters, DPCollection must declare like DPCollection<T> Children");
+                throw new MessageException("Too many generic parameters, DPCollection must declare like DPCollection<T> Children");
             
             if(typeParameters[0].IsSubclassOf(typeof(PersistentObject)))
                 return  typeParameters[0];
@@ -819,7 +819,7 @@ namespace Sys.Data
                     return (T)field.GetValue(this, null);
             }
 
-            throw new JException("Column name ({0}) not found.");
+            throw new MessageException("Column name ({0}) not found.");
         }
 
         public object GetColumnValue(string columnName)
@@ -830,7 +830,7 @@ namespace Sys.Data
                     return field.GetValue(this, null);
             }
 
-            throw new JException("Column name ({0}) not found.");
+            throw new MessageException("Column name ({0}) not found.");
         }
       
     }

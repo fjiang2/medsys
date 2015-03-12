@@ -76,12 +76,12 @@ namespace Sys.Security
                 return false;
 
             if(Inactive)
-                throw new JException(MessageCode.AccountClosed, "Account is closed, contact with supervisor.");
+                throw new MessageException(MessageCode.AccountClosed, "Account is closed, contact with supervisor.");
 
 
             tryTimes = tryTimes - 1;
             if (IsLocked())
-                throw new JException(MessageCode.AccountLocked, "Account is locked, contact with supervisor.");
+                throw new MessageException(MessageCode.AccountLocked, "Account is locked, contact with supervisor.");
 
             //check start date 
             if (Start_Date != null && System.DateTime.Now < Start_Date)

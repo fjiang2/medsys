@@ -83,7 +83,7 @@ namespace Sys.Data
             else if (type == typeof(Guid))
                 return CType.UniqueIdentifier;
 
-            throw new JException("Type {0} cannot be converted into SqlDbType", type.FullName);
+            throw new MessageException("Type {0} cannot be converted into SqlDbType", type.FullName);
         }
 
 
@@ -124,7 +124,7 @@ namespace Sys.Data
                 return OleDbType.Binary;
 
 
-            throw new JException("Type {0} cannot be converted into SqlDbType", type.FullName);
+            throw new MessageException("Type {0} cannot be converted into SqlDbType", type.FullName);
         }
 
 
@@ -193,7 +193,7 @@ namespace Sys.Data
 
             }
 
-            throw new JException("SqlDbType {0} cannot be converted into Type", type);
+            throw new MessageException("SqlDbType {0} cannot be converted into Type", type);
         }
 
         #endregion

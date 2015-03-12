@@ -73,7 +73,7 @@ namespace Sys.Platform.Forms
                 }
 
             }
-            catch (Sys.JException ex)
+            catch (Sys.MessageException ex)
             {
                 ep.SetError(txtUserName, ex.Message);
                 return;

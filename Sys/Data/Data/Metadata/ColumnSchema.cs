@@ -240,7 +240,7 @@ namespace Sys.Data
                     
             }
 
-            throw new JException("data type [{0}] is not supported", sqlType);
+            throw new MessageException("data type [{0}] is not supported", sqlType);
         }
 
 
@@ -408,7 +408,7 @@ namespace Sys.Data
                 case CType.Char:
                 case CType.NChar:
                     if (this.Oversize(val))
-                        throw new JException("Column Name={0}, length of value \"{1}\" {2} > {3}", ColumnName, val, val.Length, this.AdjuestedLength());
+                        throw new MessageException("Column Name={0}, length of value \"{1}\" {2} > {3}", ColumnName, val, val.Length, this.AdjuestedLength());
                     else
                         return val;
            

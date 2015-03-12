@@ -43,7 +43,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Account\ActiveAccount.cs" />
-    <Compile Include="Active.cs" />
     <Compile Include="CodeBuilder\Argument.cs" />
     <Compile Include="CodeBuilder\ClassBuilder.cs" />
     <Compile Include="CodeBuilder\Constructor.cs" />
@@ -70,7 +69,7 @@
     <Compile Include="Extension\DateTimeExtension.cs" />
     <Compile Include="Extension\EnumExtension.cs" />
     <Compile Include="Account\IAccount.cs" />
-    <Compile Include="JException.cs" />
+    <Compile Include="MessageException.cs" />
     <Compile Include="Message\Message.cs" />
     <Compile Include="Message\MessageBuilder.cs" />
     <Compile Include="Message\MessageCode.cs" />

@@ -81,7 +81,7 @@ namespace Sys.Data.Manager
                 if ((File.GetAttributes(fileName) & FileAttributes.ReadOnly) == FileAttributes.ReadOnly)    //this file is not checked out
                 {
                     if (isSpChanged)
-                        throw new JException("Stored Procedure {0}..{1} is modified, please check out class {2}.{3} to refresh", 
+                        throw new MessageException("Stored Procedure {0}..{1} is modified, please check out class {2}.{3} to refresh", 
                             databaseName.Name, 
                             spName, 
                             nameSpace, 

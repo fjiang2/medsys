@@ -247,7 +247,7 @@ namespace Sys.Workflow
             if (taskLock.OtherLocked)
             {
                 Sys.Security.UserAccount acc = new Security.UserAccount(taskLock.CheckedOutBy);
-                throw new JException("Task was checked out by {0} at {1}, you cannot start task.", acc.FullName, taskLock.TimeCheckedOut);
+                throw new MessageException("Task was checked out by {0} at {1}, you cannot start task.", acc.FullName, taskLock.TimeCheckedOut);
             }
 
             StartWork();

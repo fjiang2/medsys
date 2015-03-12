@@ -83,7 +83,7 @@ namespace Sys.Data
             string[] items = line.Split(separator);
 
             if (items.Length < this.Count)
-                throw new JException("#line(#{0}) data not match to table(#{1})", items.Length, this.Count);
+                throw new MessageException("#line(#{0}) data not match to table(#{1})", items.Length, this.Count);
 
             string[] values = new string[this.Count];
             int i = 0;

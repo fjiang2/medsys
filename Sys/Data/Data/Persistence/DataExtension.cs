@@ -234,7 +234,7 @@ namespace Sys.Data
             if (A.Length > 0)
                 return A[0].Level;
 
-            throw new JException("Table Level is not defined");
+            throw new MessageException("Table Level is not defined");
         }
 
         internal static string FieldName(this string columnName)
