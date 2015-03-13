@@ -97,7 +97,6 @@ namespace Sys.Data
             get { return this.dbProvider; }
         }
 
-     
     
         public override DataSet FillDataSet(DataSet dataSet)
         {

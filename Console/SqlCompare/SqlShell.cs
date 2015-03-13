@@ -59,7 +59,14 @@ namespace SqlCompare
                     if (text.EndsWith(";"))
                         text = text.Substring(0, text.Length - 1);
 
-                    DoCommand(text);
+                    try
+                    {
+                        DoCommand(text);
+                    }
+                    catch(Exception ex)
+                    {
+                        WriteLine(ex.Message);
+                    }
                 }
                 else if (builder.ToString() != "")
                 {
@@ -108,16 +115,17 @@ namespace SqlCompare
                         WriteLine("find object undefined");
                     break;
 
-                case "select":
+                case "select1":
                     DataSet ds = new SqlCmd(theSide.Provider, text).FillDataSet();
                     if (ds != null)
                     {
                         foreach (DataTable dt in ds.Tables)
-                        {
                             dt.ToConsole();
-                            WriteLine("<{0} row{0}>", dt.Rows.Count, dt.Rows.Count > 1 ? "s" : "");
-                        }
                     }
+                    break;
+
+                case "select":
+                    new SqlCmd(theSide.Provider, text).Execute(reader => reader.ToConsole(CompareConsole.MaxRows));
                     break;
 
                 case "1":
@@ -233,7 +241,6 @@ namespace SqlCompare
             string sql = "SELECT name AS TableName FROM sys.tables WHERE name LIKE @PATTERN";
             var dt = new SqlCmd(theSide.Provider, sql, new { PATTERN = "%" + match + "%" }).FillDataTable();
             dt.ToConsole();
-            WriteLine("<{0} Table{1}>", dt.Rows.Count, dt.Rows.Count > 1 ? "s" : "");
 
             sql = @"
  SELECT 
@@ -251,7 +258,6 @@ ORDER BY c.name, c.column_id
 ";
             dt = new SqlCmd(theSide.Provider, sql, new { PATTERN = "%" + match + "%" }).FillDataTable();
             dt.ToConsole();
-            WriteLine("<{0} Column{1}>", dt.Rows.Count, dt.Rows.Count > 1 ? "s" : "");
         }
 
         private static void Help()
@@ -263,6 +269,7 @@ ORDER BY c.name, c.column_id
             Console.WriteLine("show column tablename : show table structure");
             Console.WriteLine("show pk tablename     : show table primary keys");
             Console.WriteLine("show fk tablename     : show table foreign keys");
+            Console.WriteLine("show alias            : show connection-string alias list");
             Console.WriteLine("all sql clauses, e.g. select * from table, update...");
             Console.WriteLine("1                     : switch to source server 1 (default)");
             Console.WriteLine("2                     : switch to sink server 2");

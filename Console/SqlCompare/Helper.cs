@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data;
 using System.Data.SqlClient;
+using System.Data.Common;
 
 namespace SqlCompare
 {
@@ -40,21 +41,21 @@ namespace SqlCompare
         }
 
 
-        public static void ToConsole(this SqlDataReader reader)
+        public static void ToConsole(this DbDataReader reader, int maxRow = 0)
         {
             while (reader.HasRows)
             {
                 DataTable schemaTable = reader.GetSchemaTable();
 
-                string[] columns = schemaTable.AsEnumerable().Select(row => row.Field<string>("ColumnName")).ToArray();
+                var schema = schemaTable.AsEnumerable().Select(row => new { Name = row.Field<string>("ColumnName"), Type = row.Field<Type>("DataType") });
+
+                string[] columns = schema.Select(row => row.Name).ToArray();
+                Type[] types = schema.Select(row => row.Type).ToArray();
 
                 var D = new ConsoleTable(columns.Length);
 
                 D.MeasureWidth(columns);
-                //foreach (DataRow row in table.Rows)
-                //{
-                //    D.MeasureWidth(row.ItemArray);
-                //}
+                D.MeasureWidth(types);
 
                 D.DisplayLine();
                 D.DisplayLine(columns);
@@ -64,13 +65,27 @@ namespace SqlCompare
                     return;
 
                 object[] values = new object[columns.Length];
+                int count = 0;
+                bool limited = false;
                 while (reader.Read())
                 {
                     reader.GetValues(values);
                     D.DisplayLine(values);
+
+                    if (++count == maxRow)
+                    {
+                        limited = true;
+                        break;
+                    }
+
                 }
 
                 D.DisplayLine();
+                Console.WriteLine("<{0} row{1}> {2}",
+                    count,
+                    count > 1 ? "s" : "",
+                    limited ? "limit reached" : ""
+                    );
 
                 reader.NextResult();
             }
@@ -108,6 +123,7 @@ namespace SqlCompare
             }
 
             D.DisplayLine();
+            Console.WriteLine("<{0} row{1}>", table.Rows.Count, table.Rows.Count > 1 ? "s" : "");
         }
 
 

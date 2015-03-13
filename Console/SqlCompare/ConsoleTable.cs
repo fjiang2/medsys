@@ -13,6 +13,7 @@ namespace SqlCompare
         private const char CROSS = '+';
         private const char VER = '|';
         private const char HOR = '-';
+        private const char DOT = '.';
 
         private int[] W;
 
@@ -49,8 +50,8 @@ namespace SqlCompare
                 else
                     builder.Append(cell.Substring(0, W[i]));
 
-                
-                builder.Append(sp).Append(delimiter);
+
+                builder.Append(d >= 0 ? sp : DOT).Append(delimiter);
                 if (i < W.Length - 1)
                     builder.Append(sp);
             }
@@ -64,6 +65,18 @@ namespace SqlCompare
                 WriteLine(text);
         }
 
+        public void MeasureWidth(Type[] types)
+        {
+            for (int i = 0; i < W.Length; i++)
+            {
+                if (types[i] == typeof(DateTime))
+                {
+                    if (W[i] < 22)
+                        W[i] = 22;
+                }
+            }
+
+        }
         public void MeasureWidth(object[] columns)
         {
             for (int i = 0; i < W.Length; i++)

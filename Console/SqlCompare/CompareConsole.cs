@@ -19,6 +19,7 @@ namespace SqlCompare
 
         //<alias, connectionstring>
         public readonly static Dictionary<string, string> binding = new Dictionary<string,string>();
+        public static int MaxRows {get; set;}
 
         private string scriptFileName = "script.sql";
         private string[] excludedtables = new string[] { };
@@ -30,7 +31,7 @@ namespace SqlCompare
 
         public CompareConsole()
         {
-
+            MaxRows = 0;
         }
 
         private static bool TryReadCfg(string fileName, out VAL ini)
@@ -142,6 +143,10 @@ namespace SqlCompare
                 }
 
             }
+
+            x = ini["maxrows"];
+            if (x.Defined)
+                MaxRows = (int)x;
 
             return true;
 

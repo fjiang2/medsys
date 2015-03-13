@@ -156,6 +156,18 @@ namespace Sys.Data
 
 
 
+        public void Execute(Action<DbDataReader> action)
+        {
+            using (connection)
+            {
+                connection.Open();
+                DbDataReader reader = command.ExecuteReader();
+                action(reader);
+                
+                reader.Close();
+            }
+        }
+
         public abstract DataSet FillDataSet(DataSet dataSet);
         public abstract DataTable FillDataTable(DataSet dataSet, string tableName);
         public abstract DataTable FillDataTable(DataTable table);
