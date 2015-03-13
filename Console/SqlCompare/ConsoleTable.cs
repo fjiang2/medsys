@@ -75,8 +75,18 @@ namespace SqlCompare
                         W[i] = 22;
                 }
             }
-
         }
+
+        public void MeasureWidth(int[] maxWidth)
+        {
+            for (int i = 0; i < W.Length; i++)
+            {
+                if (maxWidth[i] < 20)
+                    W[i] = maxWidth[i];
+            }
+        }
+
+
         public void MeasureWidth(object[] columns)
         {
             for (int i = 0; i < W.Length; i++)

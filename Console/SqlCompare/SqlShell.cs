@@ -8,12 +8,17 @@ using Sys.Data.Comparison;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
+using Sys;
 using Tie;
 
 namespace SqlCompare
 {
     class SqlShell : stdio
     {
+        private const string MAXROWS = "maxrows";
+        private const string DATAREADER = "DataReader";
+
+        private Memory DS = new Memory();
 
         private Side theSide;
         private CompareAdapter adapter;
@@ -23,6 +28,9 @@ namespace SqlCompare
             this.adapter =adapter;
             this.theSide = adapter.Side1;
             this.server = 1;
+
+            DS.Add(MAXROWS, new VAL(100));
+            DS.Add(DATAREADER, new VAL(true));
         }
 
         public void DoCommand()
@@ -102,7 +110,7 @@ namespace SqlCompare
             switch (cmd)
             {
                 case "show":
-                    if(arg1 != null)
+                    if (arg1 != null)
                         Show(arg1.ToLower(), arg2);
                     else
                         WriteLine("invalid argument");
@@ -110,22 +118,27 @@ namespace SqlCompare
 
                 case "find":
                     if (arg1 != null)
-                        FindColumn(arg1);
+                        theSide.Provider.FindColumn(arg1);
                     else
                         WriteLine("find object undefined");
                     break;
 
-                case "select1":
-                    DataSet ds = new SqlCmd(theSide.Provider, text).FillDataSet();
-                    if (ds != null)
-                    {
-                        foreach (DataTable dt in ds.Tables)
-                            dt.ToConsole();
-                    }
+                case "set":
+                    Script.Execute(text.Replace("set", "") + ";", DS);
                     break;
 
                 case "select":
-                    new SqlCmd(theSide.Provider, text).Execute(reader => reader.ToConsole(CompareConsole.MaxRows));
+                    if (!GetValue<bool>(DATAREADER))
+                    {
+                        DataSet ds = new SqlCmd(theSide.Provider, text).FillDataSet();
+                        if (ds != null)
+                        {
+                            foreach (DataTable dt in ds.Tables)
+                                dt.ToConsole();
+                        }
+                    }
+                    else
+                        new SqlCmd(theSide.Provider, text).Execute(reader => reader.ToConsole(GetValue<int>(MAXROWS, 100)));
                     break;
 
                 case "1":
@@ -220,15 +233,18 @@ namespace SqlCompare
 
                 case "table":
                     names.Select(name => new { Table = name })
-                        .ToConsole(row => new object[] { row.Table });
+                        .ToConsole();
                     break;
 
                 case "alias":
                     CompareConsole.binding
                         .Select(kvp => new { Alias = kvp.Key, Connection = kvp.Value })
-                        .ToConsole(row => new object[] { row.Alias, row.Connection });
+                        .ToConsole();
                     break;
 
+                case "var":
+                    ((VAL)DS).Select(row => new { Variable = (string)row[0], Value = row[1] }).ToConsole();
+                    break;
                 default:
                     WriteLine("invalid argument");
                     break;
@@ -236,28 +252,14 @@ namespace SqlCompare
         }
 
 
-        private void FindColumn(string match)
+        private T GetValue<T>(string variable, T defaultValue = default(T))
         {
-            string sql = "SELECT name AS TableName FROM sys.tables WHERE name LIKE @PATTERN";
-            var dt = new SqlCmd(theSide.Provider, sql, new { PATTERN = "%" + match + "%" }).FillDataTable();
-            dt.ToConsole();
+            VAL val = DS[variable];
 
-            sql = @"
- SELECT 
-	t.name as TableName,
-    c.name AS ColumnName,
-    ty.name AS DataType,
-    c.max_length AS Length,
-    CASE c.is_nullable WHEN 0 THEN 'NOT NULL' WHEN 1 THEN 'NULL' END AS Nullable
-FROM sys.tables t 
-        INNER JOIN sys.columns c ON t.object_id = c.object_id 
-        INNER JOIN sys.types ty ON ty.system_type_id =c.system_type_id AND ty.name<>'sysname'
-        LEFT JOIN sys.Computed_columns d ON t.object_id = d.object_id AND c.name = d.name
-WHERE c.name LIKE @PATTERN
-ORDER BY c.name, c.column_id
-";
-            dt = new SqlCmd(theSide.Provider, sql, new { PATTERN = "%" + match + "%" }).FillDataTable();
-            dt.ToConsole();
+            if (val.Defined && val.HostValue is T)
+                return (T)val.HostValue;
+            else
+                return defaultValue;
         }
 
         private static void Help()
@@ -270,6 +272,8 @@ ORDER BY c.name, c.column_id
             Console.WriteLine("show pk tablename     : show table primary keys");
             Console.WriteLine("show fk tablename     : show table foreign keys");
             Console.WriteLine("show alias            : show connection-string alias list");
+            Console.WriteLine("show var              : show variable list");
+            Console.WriteLine("set var = value       : assign value to variable");
             Console.WriteLine("all sql clauses, e.g. select * from table, update...");
             Console.WriteLine("1                     : switch to source server 1 (default)");
             Console.WriteLine("2                     : switch to sink server 2");

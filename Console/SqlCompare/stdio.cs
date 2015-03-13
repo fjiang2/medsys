@@ -13,6 +13,11 @@ namespace SqlCompare
             Console.Write(format, args);
         }
 
+        protected void WriteLine(string value)
+        {
+            Console.WriteLine(value);
+        }
+
         protected void WriteLine(string format, params object[] args)
         {
             Console.WriteLine(format, args);

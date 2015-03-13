@@ -13,20 +13,39 @@ namespace SqlCompare
     {
 
 
-        public static void ToConsole<T>(this IEnumerable<T> source, Func<T, object[]> selector)
+        public static void ToConsole<T>(this IEnumerable<T> source)
         {
-            string[] columns = typeof(T).GetProperties().Select(p => p.Name).ToArray();
+            var properties = typeof(T).GetProperties();
+            string[] headers = properties.Select(p => p.Name).ToArray();
+            
+            Func<T, object[]> selector = row =>
+                {
+                    var values = new object[headers.Length];
+                    int i=0;
+                    
+                    foreach (var propertyInfo in properties)
+                    {
+                        values[i++] = propertyInfo.GetValue(row);
+                    }
+                    return values;
+                };
 
-            var D = new ConsoleTable(columns.Length);
+            source.ToConsole(headers, selector);
+        }
 
-            D.MeasureWidth(columns);
+        public static void ToConsole<T>(this IEnumerable<T> source, string[] headers, Func<T, object[]> selector)
+        {
+
+            var D = new ConsoleTable(headers.Length);
+
+            D.MeasureWidth(headers);
             foreach (var row in source)
             {
                 D.MeasureWidth(selector(row));
             }
 
             D.DisplayLine();
-            D.DisplayLine(columns);
+            D.DisplayLine(headers);
             D.DisplayLine();
 
             if (source.Count() == 0)
@@ -40,31 +59,36 @@ namespace SqlCompare
             D.DisplayLine();
         }
 
-
         public static void ToConsole(this DbDataReader reader, int maxRow = 0)
         {
             while (reader.HasRows)
             {
                 DataTable schemaTable = reader.GetSchemaTable();
 
-                var schema = schemaTable.AsEnumerable().Select(row => new { Name = row.Field<string>("ColumnName"), Type = row.Field<Type>("DataType") });
+                var schema = schemaTable
+                    .AsEnumerable()
+                    .Select(row => new {
+                        Name = row.Field<string>("ColumnName"),
+                        Size = row.Field<int>("ColumnSize"),
+                        Type = row.Field<Type>("DataType")
+                    });
 
-                string[] columns = schema.Select(row => row.Name).ToArray();
-                Type[] types = schema.Select(row => row.Type).ToArray();
+                string[] headers = schema.Select(row => row.Name).ToArray();
 
-                var D = new ConsoleTable(columns.Length);
+                var D = new ConsoleTable(headers.Length);
 
-                D.MeasureWidth(columns);
-                D.MeasureWidth(types);
+                D.MeasureWidth(schema.Select(row => row.Size).ToArray());
+                D.MeasureWidth(headers);
+                D.MeasureWidth(schema.Select(row => row.Type).ToArray());
 
                 D.DisplayLine();
-                D.DisplayLine(columns);
+                D.DisplayLine(headers);
                 D.DisplayLine();
 
                 if (!reader.HasRows)
                     return;
 
-                object[] values = new object[columns.Length];
+                object[] values = new object[headers.Length];
                 int count = 0;
                 bool limited = false;
                 while (reader.Read())
@@ -100,18 +124,18 @@ namespace SqlCompare
             foreach (DataColumn column in table.Columns)
                 list.Add(column.ColumnName);
 
-            string[] columns = list.ToArray();
+            string[] headers = list.ToArray();
 
-            var D = new ConsoleTable(columns.Length);
+            var D = new ConsoleTable(headers.Length);
 
-            D.MeasureWidth(columns);
+            D.MeasureWidth(headers);
             foreach (DataRow row in table.Rows)
             {
                 D.MeasureWidth(row.ItemArray);
             }
 
             D.DisplayLine();
-            D.DisplayLine(columns);
+            D.DisplayLine(headers);
             D.DisplayLine();
 
             if (table.Rows.Count == 0)

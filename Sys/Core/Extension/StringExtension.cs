@@ -90,5 +90,31 @@ namespace Sys
                 .Select(word => word.Substring(0, 1).ToUpper() + word.Substring(1).ToLower())
                 );
         }
+
+        /// <summary>
+        /// remove left and right letters of a string 
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="left">number of letter on left</param>
+        /// <param name="right">number of letter on right</param>
+        /// <returns></returns>
+        public static string Trim(this string value, int left, int right)
+        {
+            if (value == null)
+                throw new ArgumentException("string cannot be null");
+
+            int len = value.Length;
+
+            if (left > len - 1)
+                throw new ArgumentException("left is out of range");
+
+            if (right > len - 1)
+                throw new ArgumentException("left is out of range");
+
+            if (left + right > len - 1)
+                throw new ArgumentException("left+right is out of range"); 
+
+            return value.Substring(left, len - left - right);
+        }
     }
 }
