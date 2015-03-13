@@ -57,12 +57,8 @@ namespace SqlCompare
             }
 
             string text = builder.ToString();
-            int w = Console.WindowWidth;
-            
-            if(text.Length > w)
-                stdio.WriteLine(text.Substring(0,w-1));
-            else
-                stdio.WriteLine(text);
+
+            stdio.TrimWriteLine(text);
         }
 
         public void MeasureWidth(Type[] types)

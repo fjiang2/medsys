@@ -14,7 +14,7 @@ namespace SqlCompare
 {
     class Program
     {
-       
+
         static void Main(string[] args)
         {
             var cfg = "sqlcompare.cfg";
@@ -40,11 +40,11 @@ namespace SqlCompare
                     case "/?":
                         Help();
                         return;
-                }                
+                }
 
             }
 
-            L1:
+        L1:
 
             var site = new CompareConsole();
 
@@ -59,7 +59,18 @@ namespace SqlCompare
                 return;
             }
 
-            site.Run(args);
+            try
+            {
+                site.Run(args);
+            }
+            catch (Exception ex)
+            {
+                stdio.WriteLine(ex.Message);
+            }
+            finally
+            {
+                stdio.Close();
+            }
         }
        
         public static void Help()

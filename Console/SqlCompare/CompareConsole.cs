@@ -15,7 +15,7 @@ namespace SqlCompare
 {
     class CompareConsole  
     {
-        private VAL ini;
+        private VAL cfg;
 
         //<alias, connectionstring>
         public readonly static Dictionary<string, string> binding = new Dictionary<string,string>();
@@ -47,6 +47,7 @@ namespace SqlCompare
                 try
                 {
                     ini = Script.Evaluate(code);
+                    Context.cfg = new Memory(ini);
                 }
                 catch (Exception)
                 {
@@ -81,18 +82,18 @@ namespace SqlCompare
 
         public bool Initialize(string fileName)
         {
-            if (!TryReadCfg(fileName, out ini))
+            if (!TryReadCfg(fileName, out cfg))
                 return false;
 
-            var alias = ini["alias"];
+            var alias = cfg["alias"];
 
             if (alias.Defined)
             {
                 foreach (var pair in alias)
                     AddAlias(pair);
 
-                var alias1 = (string)ini["alias1"];
-                var alias2 = (string)ini["alias2"];
+                var alias1 = (string)cfg["alias1"];
+                var alias2 = (string)cfg["alias2"];
                 this.cs1 = new SqlConnectionStringBuilder((string)alias[alias1]);
                 this.cs2 = new SqlConnectionStringBuilder((string)alias[alias2]);
             }
@@ -102,19 +103,19 @@ namespace SqlCompare
                 this.cs2 = new SqlConnectionStringBuilder();
             }
 
-            var x = ini["excludedtables"];
+            var x = cfg["excludedtables"];
             if (x.Defined)
                 this.excludedtables = x.HostValue as string[];
 
-            x = ini["comparetype"];
+            x = cfg["comparetype"];
             if (x.Defined)
                 this.compareType = (CompareAction)(int)x;
 
-            x = ini["output"];
+            x = cfg["output"];
             if (x.Defined)
                 this.scriptFileName = (string)x;
 
-            var pk = ini["primary_key"];
+            var pk = cfg["primary_key"];
             if (pk.Defined)
             {
                 foreach (var item in pk)
@@ -124,7 +125,7 @@ namespace SqlCompare
                 }
             }
 
-            var config = ini["config"];
+            var config = cfg["config"];
             if (config.Defined)
             {
                 foreach (var pair in config)
@@ -142,7 +143,7 @@ namespace SqlCompare
 
             }
 
-            x = ini["query"];
+            x = cfg["query"];
             if (x.Defined)
             {
                 foreach (var pair in x)
@@ -284,8 +285,8 @@ namespace SqlCompare
                     case "/S":
                         if (i < args.Length && args[i++].parse(out t1, out t2))
                         {
-                            var server1 = ini["server1"];
-                            var server2 = ini["server2"];
+                            var server1 = cfg["server1"];
+                            var server2 = cfg["server2"];
                             cs1.DataSource = t1;
                             cs1.DataSource = t2;
                             cs1.InitialCatalog = (string)server1["initial_catalog"];
@@ -404,37 +405,31 @@ namespace SqlCompare
             MatchedDatabase m1 = new MatchedDatabase(adapter.Side1.DatabaseName, tableNamePattern1, excludedtables);
             MatchedDatabase m2 = new MatchedDatabase(adapter.Side2.DatabaseName, tableNamePattern2, excludedtables);
 
-            try
+            switch (compareType)
             {
-                switch (compareType)
-                {
-                    case CompareAction.Execute:
-                        adapter.Side2.ExecuteScript(scriptFileName);
+                case CompareAction.Execute:
+                    adapter.Side2.ExecuteScript(scriptFileName);
 
-                        break;
+                    break;
 
-                    case CompareAction.GenerateTableRows:
-                        WriteFile(adapter.Side1.GenerateRowScript(tableNamePattern1, excludedtables));
-                        break;
+                case CompareAction.GenerateTableRows:
+                    WriteFile(adapter.Side1.GenerateRowScript(tableNamePattern1, excludedtables));
+                    break;
 
-                    case CompareAction.GenerateScript:
-                        WriteFile(adapter.Side1.GenerateScript());
-                        break;
+                case CompareAction.GenerateScript:
+                    WriteFile(adapter.Side1.GenerateScript());
+                    break;
 
-                    case CompareAction.CompareData:
-                    case CompareAction.CompareSchema:
-                        WriteFile(adapter.Run(compareType, m1, m2, PK));
-                        break;
+                case CompareAction.CompareData:
+                case CompareAction.CompareSchema:
+                    WriteFile(adapter.Run(compareType, m1, m2, PK));
+                    break;
 
-                    case CompareAction.Shell:
-                        new SqlShell(adapter).DoCommand();
-                        break;
-                }
+                case CompareAction.Shell:
+                    new SqlShell(adapter).DoCommand();
+                    break;
             }
-            catch (Exception ex)
-            {
-                stdio.WriteLine(ex.Message);
-            }
+
         }
     }
 }
