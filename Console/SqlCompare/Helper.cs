@@ -86,7 +86,10 @@ namespace SqlCompare
                 D.DisplayLine();
 
                 if (!reader.HasRows)
+                {
+                    stdio.WriteLine("<0 row>");
                     return;
+                }
 
                 object[] values = new object[headers.Length];
                 int count = 0;
@@ -105,7 +108,7 @@ namespace SqlCompare
                 }
 
                 D.DisplayLine();
-                Console.WriteLine("<{0} row{1}> {2}",
+                stdio.WriteLine("<{0} row{1}> {2}",
                     count,
                     count > 1 ? "s" : "",
                     limited ? "limit reached" : ""
@@ -147,7 +150,7 @@ namespace SqlCompare
             }
 
             D.DisplayLine();
-            Console.WriteLine("<{0} row{1}>", table.Rows.Count, table.Rows.Count > 1 ? "s" : "");
+            stdio.WriteLine("<{0} row{1}>", table.Rows.Count, table.Rows.Count > 1 ? "s" : "");
         }
 
 

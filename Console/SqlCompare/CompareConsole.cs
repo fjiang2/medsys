@@ -13,7 +13,7 @@ using Tie;
 
 namespace SqlCompare
 {
-    class CompareConsole : stdio
+    class CompareConsole  
     {
         private VAL ini;
 
@@ -37,7 +37,7 @@ namespace SqlCompare
             ini = new VAL();
             if (!File.Exists(fileName))
             {
-                Console.WriteLine("configuration file {0} not exists", fileName);
+                stdio.WriteLine("configuration file {0} not exists", fileName);
                 return false;
             }
 
@@ -50,7 +50,7 @@ namespace SqlCompare
                 }
                 catch (Exception)
                 {
-                    Console.WriteLine("json format error in {0}", fileName);
+                    stdio.WriteLine("json format error in {0}", fileName);
                     return false;
                 }
             }
@@ -63,7 +63,7 @@ namespace SqlCompare
             if (string.IsNullOrEmpty(sql))
             {
                 sql = string.Empty;
-                WriteLine("Nothing is changed");
+                stdio.WriteLine("Nothing is changed");
             }
 
             using (var writer = new StreamWriter(scriptFileName))
@@ -73,8 +73,8 @@ namespace SqlCompare
 
             if (!string.IsNullOrEmpty(sql))
             {
-                WriteLine("output: {0}", scriptFileName);
-                WriteLine("completed.");
+                stdio.WriteLine("output: {0}", scriptFileName);
+                stdio.WriteLine("completed.");
             }
         }
 
@@ -163,7 +163,7 @@ namespace SqlCompare
             }
             catch (Exception ex)
             {
-                WriteLine("cannot find connection string on file {0}, {1}", fileName, ex.Message);
+                stdio.WriteLine("cannot find connection string on file {0}, {1}", fileName, ex.Message);
                 return null;
             }
         }
@@ -172,7 +172,7 @@ namespace SqlCompare
         {
             if (!File.Exists(fileName))
             {
-                Console.WriteLine("warning: not exists {0}", fileName);
+                stdio.WriteLine("warning: not exists {0}", fileName);
                 return null;
             }
 
@@ -226,12 +226,12 @@ namespace SqlCompare
                         {
                             if (!binding.ContainsKey(t1))
                             {
-                                WriteLine("undefined server alias ({0}) in configuration file", t1);
+                                stdio.WriteLine("undefined server alias ({0}) in configuration file", t1);
                                 return;
                             }
                             if (!binding.ContainsKey(t1))
                             {
-                                WriteLine("undefined server alias ({0}) in configuration file", t2);
+                                stdio.WriteLine("undefined server alias ({0}) in configuration file", t2);
                                 return;
                             }
 
@@ -244,7 +244,7 @@ namespace SqlCompare
                         }
                         else
                         {
-                            WriteLine("/s database server alias undefined");
+                            stdio.WriteLine("/s database server alias undefined");
                             return;
                         }
 
@@ -276,7 +276,7 @@ namespace SqlCompare
                         }
                         else
                         {
-                            WriteLine("/c argument undefined");
+                            stdio.WriteLine("/c argument undefined");
                             return;
                         }
 
@@ -298,7 +298,7 @@ namespace SqlCompare
                         }
                         else
                         {
-                            WriteLine("/S server name undefined");
+                            stdio.WriteLine("/S server name undefined");
                             return;
                         }
 
@@ -311,7 +311,7 @@ namespace SqlCompare
                         }
                         else
                         {
-                            WriteLine("/U user name undefined");
+                            stdio.WriteLine("/U user name undefined");
                             return;
                         }
 
@@ -324,7 +324,7 @@ namespace SqlCompare
                         }
                         else
                         {
-                            WriteLine("/P server password undefined");
+                            stdio.WriteLine("/P server password undefined");
                             return;
                         }
 
@@ -337,7 +337,7 @@ namespace SqlCompare
                         }
                         else
                         {
-                            WriteLine("undefined database name");
+                            stdio.WriteLine("undefined database name");
                             return;
                         }
 
@@ -350,7 +350,7 @@ namespace SqlCompare
                         }
                         else
                         {
-                            WriteLine("undefined table name");
+                            stdio.WriteLine("undefined table name");
                             return;
                         }
 
@@ -363,7 +363,7 @@ namespace SqlCompare
                         }
                         else
                         {
-                            WriteLine("/e undefined excluded table names");
+                            stdio.WriteLine("/e undefined excluded table names");
                             return;
                         }
 
@@ -377,7 +377,7 @@ namespace SqlCompare
                         }
                         else
                         {
-                            WriteLine("/f undefined sql script file name");
+                            stdio.WriteLine("/f undefined sql script file name");
                             return;
                         }
 
@@ -390,13 +390,13 @@ namespace SqlCompare
 
             if (!cs1.IsGoodConnectionString())
             {
-                WriteLine("invalid connection string: {0}", cs1.ConnectionString);
+                stdio.WriteLine("invalid connection string: {0}", cs1.ConnectionString);
                 return;
             }
 
             if (!cs2.IsGoodConnectionString())
             {
-                WriteLine("invalid connection string: {0}", cs2.ConnectionString);
+                stdio.WriteLine("invalid connection string: {0}", cs2.ConnectionString);
                 return;
             }
 
@@ -433,7 +433,7 @@ namespace SqlCompare
             }
             catch (Exception ex)
             {
-                WriteLine(ex.Message);
+                stdio.WriteLine(ex.Message);
             }
         }
     }

@@ -13,7 +13,7 @@ using Tie;
 
 namespace SqlCompare
 {
-    class SqlShell : stdio
+    class SqlShell  
     {
         private Side theSide;
         private CompareAdapter adapter;
@@ -29,16 +29,16 @@ namespace SqlCompare
         public void DoCommand()
         {
 
-            WriteLine("SqlCompare SQL command console");
-            WriteLine("type [help] to help, [;] to execute a command, [exit] to quit");
+            stdio.WriteLine("SqlCompare SQL command console");
+            stdio.WriteLine("type [help] to help, [;] to execute a command, [exit] to quit");
             StringBuilder builder = new StringBuilder();
             string line = null;
             while (true)
             {
             L1:
-                Write("{0}> ", server);
+                stdio.Write("{0}> ", server);
             L2:
-                line = ReadLine();
+                line = stdio.ReadLine();
 
                 if (line == "exit")
                     break;
@@ -71,12 +71,12 @@ namespace SqlCompare
                     }
                     catch(Exception ex)
                     {
-                        WriteLine(ex.Message);
+                        stdio.WriteLine(ex.Message);
                     }
                 }
                 else if (builder.ToString() != "")
                 {
-                    Console.Write("...");
+                    stdio.Write("...");
                     goto L2;
                 }
             }
@@ -111,14 +111,14 @@ namespace SqlCompare
                     if (arg1 != null)
                         Show(arg1.ToLower(), arg2);
                     else
-                        WriteLine("invalid argument");
+                        stdio.WriteLine("invalid argument");
                     break;
 
                 case "find":
                     if (arg1 != null)
                         theSide.Provider.FindColumn(arg1);
                     else
-                        WriteLine("find object undefined");
+                        stdio.WriteLine("find object undefined");
                     break;
 
                 case "set":
@@ -129,7 +129,7 @@ namespace SqlCompare
                     {
                         VAL result = Context.Evaluate(arg1);
                         if(result.IsNull)
-                            Console.WriteLine("undefined query function");
+                            stdio.WriteLine("undefined query function");
                         else if (result.IsInt)
                         {
                             //show error code
@@ -163,13 +163,13 @@ namespace SqlCompare
                 case "1":
                     this.theSide = adapter.Side1;
                     this.server = 1;
-                    WriteLine("server 1 selected({0})", showConnection(theSide.CS));
+                    stdio.WriteLine("server 1 selected({0})", showConnection(theSide.CS));
                     break;
 
                 case "2":
                     this.theSide = adapter.Side2;
                     this.server = 2;
-                    WriteLine("server 2 selected({0})", showConnection(theSide.CS));
+                    stdio.WriteLine("server 2 selected({0})", showConnection(theSide.CS));
                     break;
 
                 case "goto":
@@ -177,17 +177,17 @@ namespace SqlCompare
                     {
                         this.theSide = new Side(new SqlConnectionStringBuilder(CompareConsole.binding[arg1]));
                         this.server = 3;
-                        WriteLine("server 3 selected({0})", showConnection(theSide.CS));
+                        stdio.WriteLine("server 3 selected({0})", showConnection(theSide.CS));
                     }
 
                     else
-                        WriteLine("undefined database server alias : {0}", arg1);
+                        stdio.WriteLine("undefined database server alias : {0}", arg1);
                     break;
 
                 default:
                     if (char.IsDigit(cmd[0]))
                     {
-                        WriteLine("invalid command");
+                        stdio.WriteLine("invalid command");
                         break;
                     }
 
@@ -197,7 +197,7 @@ namespace SqlCompare
                     }
                     catch (Exception ex)
                     {
-                        WriteLine(ex.Message);
+                        stdio.WriteLine(ex.Message);
                     }
 
                     break;
@@ -212,7 +212,7 @@ namespace SqlCompare
             names = new MatchedDatabase(theSide.DatabaseName, arg2, null).DefaultTableNames;
             if (names.Length == 0)
             {
-                WriteLine("cannot find any table name like \"{0}\"", arg2);
+                stdio.WriteLine("cannot find any table name like \"{0}\"", arg2);
                 return;
             }
 
@@ -240,7 +240,7 @@ namespace SqlCompare
                                 break;
                         }
 
-                        WriteLine("<{0}>", name);
+                        stdio.WriteLine("<{0}>", name);
                         dt.ToConsole();
                     }
                     break;
@@ -260,7 +260,7 @@ namespace SqlCompare
                     Context.ToConsole();
                     break;
                 default:
-                    WriteLine("invalid argument");
+                    stdio.WriteLine("invalid argument");
                     break;
             }
         }
@@ -268,27 +268,27 @@ namespace SqlCompare
 
         private static void Help()
         {
-            Console.WriteLine("<Commands>");
-            Console.WriteLine("find pattern;         : find table name and column name");
-            Console.WriteLine("show table;           : show all table names");
-            Console.WriteLine("show table pattern;   : show matched table names (wildcard*,?)");
-            Console.WriteLine("show column tablename;: show table structure");
-            Console.WriteLine("show pk tablename;    : show table primary keys");
-            Console.WriteLine("show fk tablename;    : show table foreign keys");
-            Console.WriteLine("show alias;           : show connection-string alias list");
-            Console.WriteLine("show var;             : show variable list");
-            Console.WriteLine("set var = value;      : assign value to variable");
-            Console.WriteLine("run query(..);        : run predefined query. e.g. run query(var1=val1, var2=val2,...);");
-            Console.WriteLine("all sql clauses, e.g. select * from table, update...");
-            Console.WriteLine("1                     : switch to source server 1 (default)");
-            Console.WriteLine("2                     : switch to sink server 2");
-            Console.WriteLine("goto alias;           : switch to database server");
-            Console.WriteLine("exit                  : quit application");
-            Console.WriteLine("help                  : this help");
-            Console.WriteLine("?                     : this help");
-            Console.WriteLine("<Variable>");
-            Console.WriteLine("maxrows      : max number of row shown on select query");
-            Console.WriteLine("DataReader   : true: use SqlDataReader; false: use Fill DataSet");
+            stdio.WriteLine("<Commands>");
+            stdio.WriteLine("find pattern;         : find table name and column name");
+            stdio.WriteLine("show table;           : show all table names");
+            stdio.WriteLine("show table pattern;   : show matched table names (wildcard*,?)");
+            stdio.WriteLine("show column tablename;: show table structure");
+            stdio.WriteLine("show pk tablename;    : show table primary keys");
+            stdio.WriteLine("show fk tablename;    : show table foreign keys");
+            stdio.WriteLine("show alias;           : show connection-string alias list");
+            stdio.WriteLine("show var;             : show variable list");
+            stdio.WriteLine("set var = value;      : assign value to variable");
+            stdio.WriteLine("run query(..);        : run predefined query. e.g. run query(var1=val1, var2=val2,...);");
+            stdio.WriteLine("all sql clauses, e.g. select * from table, update...");
+            stdio.WriteLine("1                     : switch to source server 1 (default)");
+            stdio.WriteLine("2                     : switch to sink server 2");
+            stdio.WriteLine("goto alias;           : switch to database server");
+            stdio.WriteLine("exit                  : quit application");
+            stdio.WriteLine("help                  : this help");
+            stdio.WriteLine("?                     : this help");
+            stdio.WriteLine("<Variable>");
+            stdio.WriteLine("maxrows      : max number of row shown on select query");
+            stdio.WriteLine("DataReader   : true: use SqlDataReader; false: use Fill DataSet");
         }
     }
 }

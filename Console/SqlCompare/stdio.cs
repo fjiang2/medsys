@@ -6,24 +6,24 @@ using System.Threading.Tasks;
 
 namespace SqlCompare
 {
-    class stdio
+    sealed class stdio
     {
-        protected void Write(string format, params object[] args)
+        public static void Write(string format, params object[] args)
         {
             Console.Write(format, args);
         }
 
-        protected void WriteLine(string value)
+        public static void WriteLine(string value)
         {
             Console.WriteLine(value);
         }
 
-        protected void WriteLine(string format, params object[] args)
+        public static void WriteLine(string format, params object[] args)
         {
             Console.WriteLine(format, args);
         }
 
-        protected string ReadLine()
+        public static string ReadLine()
         {
             return Console.ReadLine();
         }

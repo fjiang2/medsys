@@ -8,7 +8,7 @@ using Sys.Data;
 
 namespace SqlCompare
 {
-    class MatchedDatabase : stdio
+    class MatchedDatabase  
     {
         private string tableNamePattern;
 

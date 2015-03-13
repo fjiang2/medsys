@@ -13,7 +13,7 @@ using System.Text.RegularExpressions;
 namespace SqlCompare
 {
 
-    class CompareAdapter : stdio
+    class CompareAdapter  
     {
         private Compare compare;
 
@@ -31,7 +31,7 @@ namespace SqlCompare
         {
             if (!tname.Exists())
             {
-                Console.WriteLine("table not exists : {0}", tname);
+                stdio.WriteLine("table not exists : {0}", tname);
                 return false;
             }
 
@@ -42,7 +42,7 @@ namespace SqlCompare
         {
             if (!dname.Exists())
             {
-                Console.WriteLine("table not exists : {0}", dname);
+                stdio.WriteLine("table not exists : {0}", dname);
                 return false;
             }
 
@@ -56,8 +56,8 @@ namespace SqlCompare
             DatabaseName db2 = Side2.DatabaseName;
 
 
-            WriteLine("server1: {0} default database:{1}", db1.Name, db2.Name);
-            WriteLine("server2: {0} default database:{1}", db1.Name, db2.Name);
+            stdio.WriteLine("server1: {0} default database:{1}", db1.Name, db2.Name);
+            stdio.WriteLine("server2: {0} default database:{1}", db1.Name, db2.Name);
            
             if (!Exists(db1) || !Exists(db2))
                 return string.Empty;
@@ -72,18 +72,18 @@ namespace SqlCompare
             {
                 if (N1.Length != N2.Length)
                 {
-                    WriteLine("number of comparing table are different: {0}!={1}", N1.Length, N2.Length);
+                    stdio.WriteLine("number of comparing table are different: {0}!={1}", N1.Length, N2.Length);
                     return string.Empty;
                 }
                 for(int i=0; i<N1.Length; i++)
                 {
                     if (m1.Includes(N1[i]))
                     {
-                        WriteLine("skip to compare data on table {0}", N1[i]);
+                        stdio.WriteLine("skip to compare data on table {0}", N1[i]);
                     }
                     else if (m2.Includes(N2[i]))
                     {
-                        WriteLine("skip to compare data on table {0}", N2[i]);
+                        stdio.WriteLine("skip to compare data on table {0}", N2[i]);
                     }
 
                     builder.Append(CompareTable(N1[i], N2[i], pk));
@@ -114,15 +114,15 @@ namespace SqlCompare
 
         private string CompareDatabaseSchema(DatabaseName db1, DatabaseName db2)
         {
-            WriteLine("compare database schema {0} => {1}", db1.Name, db2.Name);
+            stdio.WriteLine("compare database schema {0} => {1}", db1.Name, db2.Name);
             return compare.DatabaseSchemaDifference(db1, db2);
         }
 
         private string CompareDatabaseData(DatabaseName db1, DatabaseName db2, string[] excludedtables)
         {
-            WriteLine("compare database data {0} => {1}", db1.Name, db2.Name);
+            stdio.WriteLine("compare database data {0} => {1}", db1.Name, db2.Name);
             if (excludedtables != null && excludedtables.Length > 0)
-                WriteLine("ignore tables: {0}", string.Join(",", excludedtables));
+                stdio.WriteLine("ignore tables: {0}", string.Join(",", excludedtables));
             return compare.DatabaseDifference(db1, db2, excludedtables);
         }
 
@@ -134,29 +134,29 @@ namespace SqlCompare
             if (!Exists(tname1) || !Exists(tname2))
                 return string.Empty;
 
-            WriteLine("compare table schema {0} => {1}", tableName1, tableName2);
+            stdio.WriteLine("compare table schema {0} => {1}", tableName1, tableName2);
             string sql = compare.TableSchemaDifference(tname1, tname2);
 
             if (sql == string.Empty)
             {
-                WriteLine("compare table data {0} => {1}", tableName1, tableName2);
+                stdio.WriteLine("compare table data {0} => {1}", tableName1, tableName2);
                 bool hasPk;
                 sql = compare.TableDifference(tname1, tname2, out hasPk);
 
                 if (!hasPk)
                 {
-                    WriteLine("warning: no primary key found : {0}", tname1);
+                    stdio.WriteLine("warning: no primary key found : {0}", tname1);
 
                     string key = tname1.Name.ToUpper();
                     if (pk.ContainsKey(key))
                     {
-                        WriteLine("use predefine keys defined in ini file: {0}", tname1);
+                        stdio.WriteLine("use predefine keys defined in ini file: {0}", tname1);
                         sql = compare.TableDifference(tname1, tname2, pk[key]);
                     }
                 }
 
                 if (sql != string.Empty)
-                    WriteLine(sql);
+                    stdio.WriteLine(sql);
             }
 
             return sql;

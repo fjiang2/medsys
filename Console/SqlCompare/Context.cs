@@ -19,7 +19,7 @@ namespace SqlCompare
             Script.FunctionChain.Add(functions);
 
             DS.Add(MAXROWS, new VAL(100));
-            DS.Add(DATAREADER, new VAL(true));
+            DS.Add(DATAREADER, new VAL(false));
         }
 
         public static void Execute(string statement)
@@ -64,7 +64,7 @@ namespace SqlCompare
             var query = DS[func];
             if (query.ty == VALTYPE.stringcon)
             {
-                VAL val = new VAL();
+                VAL val = VAL.Array(0);
                 for (int i = 0; i < parameters.Size; i++)
                 {
                     VAL parameter = parameters[i];
@@ -72,20 +72,20 @@ namespace SqlCompare
 
                     if (name == null)
                     {
-                        Console.WriteLine("require parameter name at arguments({0}), run func(id=20,x=2);", i + 1);
+                        stdio.WriteLine("require parameter name at arguments({0}), run func(id=20,x=2);", i + 1);
                         return new VAL(2);
                     }
                     val.Add(name, parameter);
                 }
 
-                VAL result = new VAL();
+                VAL result = VAL.Array(0);
                 result.Add(query);
                 result.Add(val);
                 return result;
             }
             else
             {
-                Console.WriteLine("undefined function:{0}", func);
+                stdio.WriteLine("undefined function:{0}", func);
                 return new VAL(1);
             }
 

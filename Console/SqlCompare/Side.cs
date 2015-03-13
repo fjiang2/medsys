@@ -12,7 +12,7 @@ using System.Text.RegularExpressions;
 
 namespace SqlCompare
 {
-    class Side : stdio
+    class Side  
     {
         public readonly SqlConnectionStringBuilder CS;
         public readonly DataProvider Provider;
@@ -42,7 +42,7 @@ namespace SqlCompare
         {
             if (!File.Exists(scriptFile))
             {
-                WriteLine("input file not found: {0}", scriptFile);
+                stdio.WriteLine("input file not found: {0}", scriptFile);
                 return;
             }
 
@@ -85,7 +85,7 @@ namespace SqlCompare
             StringBuilder builder = new StringBuilder();
             foreach (var tableName in tableNames)
             {
-                WriteLine("generate insert clauses on table : {0}", tableName);
+                stdio.WriteLine("generate insert clauses on table : {0}", tableName);
                 var tname = new TableName(Provider, tableName);
                 string sql = Compare.GenerateRows(tname, null);
                 if (sql != String.Empty)

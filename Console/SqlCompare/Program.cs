@@ -32,7 +32,7 @@ namespace SqlCompare
                         }
                         else
                         {
-                            Console.WriteLine("/cfg configuration file missing");
+                            stdio.WriteLine("/cfg configuration file missing");
                             return;
                         }
 
@@ -55,7 +55,7 @@ namespace SqlCompare
             }
             catch (Exception ex)
             {
-                Console.WriteLine("error on configuration file {0}, {1}:", cfg, ex.Message);
+                stdio.WriteLine("error on configuration file {0}, {1}:", cfg, ex.Message);
                 return;
             }
 
@@ -64,35 +64,35 @@ namespace SqlCompare
        
         public static void Help()
         {
-            Console.WriteLine("SqlCompare v1.0");
-            Console.WriteLine("Usage: SqlCompare");
-            Console.WriteLine("     [/cfg configuration file(.cfg)]");
-            Console.WriteLine("     [/s alias1:alias2]|[/s alias]");
-            Console.WriteLine("     [/S server1:server2] [/U user1:user2] [/P password1:password2]");
-            Console.WriteLine("     [/c schema|data|row|exec|gen|shell]");
-            Console.WriteLine("     [/e table1,table2,...,table");
-            Console.WriteLine("     [/db datbase1:datbase2]|[/db datbase]");
-            Console.WriteLine("     [/dt table1:table2]|[/dt table(wildcard*,?)]");
-            Console.WriteLine("     [/f sql script file(.sql)]");
-            Console.WriteLine("");
-            Console.WriteLine("/h,/?      : this help");
-            Console.WriteLine("/cfg       : congfiguration file default file:sqlcompare.cfg]");
-            Console.WriteLine("/s         : server alias defined on ini file]");
-            Console.WriteLine("/c schema  : compare schmea (default)");
-            Console.WriteLine("/c data    : compare data");
-            Console.WriteLine("/c gen     : generate table script from database on server1");
-            Console.WriteLine("/c row     : generate rows from table on server1");
-            Console.WriteLine("/c exec    : run sql script on server 2, let server2 += diff");
-            Console.WriteLine("/c shell     : enter command window");
-            Console.WriteLine("/db        : database name");
-            Console.WriteLine("/dt        : table name (wildcard*,?)");
-            Console.WriteLine("/e         : excluded table list during 2 databases data comparing");
-            Console.WriteLine("/f         : result of comparsion(diff=server1-server2),sql script file");
-            Console.WriteLine("examples:");
-            Console.WriteLine("SqlCompare /s localhost /db northwind:southwind /schema");
-            Console.WriteLine("SqlCompare /S localhost /U sa /P password /db northwind /c schema");
-            Console.WriteLine("SqlCompare /c data /db northwind /dt Cust*");
-            Console.WriteLine("SqlCompare /c gen /dt Products");
+            stdio.WriteLine("SqlCompare v1.0");
+            stdio.WriteLine("Usage: SqlCompare");
+            stdio.WriteLine("     [/cfg configuration file(.cfg)]");
+            stdio.WriteLine("     [/s alias1:alias2]|[/s alias]");
+            stdio.WriteLine("     [/S server1:server2] [/U user1:user2] [/P password1:password2]");
+            stdio.WriteLine("     [/c schema|data|row|exec|gen|shell]");
+            stdio.WriteLine("     [/e table1,table2,...,table");
+            stdio.WriteLine("     [/db datbase1:datbase2]|[/db datbase]");
+            stdio.WriteLine("     [/dt table1:table2]|[/dt table(wildcard*,?)]");
+            stdio.WriteLine("     [/f sql script file(.sql)]");
+            stdio.WriteLine("");
+            stdio.WriteLine("/h,/?      : this help");
+            stdio.WriteLine("/cfg       : congfiguration file default file:sqlcompare.cfg]");
+            stdio.WriteLine("/s         : server alias defined on ini file]");
+            stdio.WriteLine("/c schema  : compare schmea (default)");
+            stdio.WriteLine("/c data    : compare data");
+            stdio.WriteLine("/c gen     : generate table script from database on server1");
+            stdio.WriteLine("/c row     : generate rows from table on server1");
+            stdio.WriteLine("/c exec    : run sql script on server 2, let server2 += diff");
+            stdio.WriteLine("/c shell     : enter command window");
+            stdio.WriteLine("/db        : database name");
+            stdio.WriteLine("/dt        : table name (wildcard*,?)");
+            stdio.WriteLine("/e         : excluded table list during 2 databases data comparing");
+            stdio.WriteLine("/f         : result of comparsion(diff=server1-server2),sql script file");
+            stdio.WriteLine("examples:");
+            stdio.WriteLine("SqlCompare /s localhost /db northwind:southwind /schema");
+            stdio.WriteLine("SqlCompare /S localhost /U sa /P password /db northwind /c schema");
+            stdio.WriteLine("SqlCompare /c data /db northwind /dt Cust*");
+            stdio.WriteLine("SqlCompare /c gen /dt Products");
         }
     }
 }

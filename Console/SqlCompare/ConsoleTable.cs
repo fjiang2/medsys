@@ -7,7 +7,7 @@ using System.Data;
 
 namespace SqlCompare
 {
-    class ConsoleTable : stdio
+    class ConsoleTable  
     {
         private const char SPACE = ' ';
         private const char CROSS = '+';
@@ -60,9 +60,9 @@ namespace SqlCompare
             int w = Console.WindowWidth;
             
             if(text.Length > w)
-                WriteLine(text.Substring(0,w-1));
+                stdio.WriteLine(text.Substring(0,w-1));
             else
-                WriteLine(text);
+                stdio.WriteLine(text);
         }
 
         public void MeasureWidth(Type[] types)
