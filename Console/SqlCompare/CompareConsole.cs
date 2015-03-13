@@ -142,6 +142,12 @@ namespace SqlCompare
 
             }
 
+            x = ini["query"];
+            if (x.Defined)
+            {
+                foreach (var pair in x)
+                    Context.DS.Add((string)pair[0], pair[1]);
+            }
             return true;
 
         }

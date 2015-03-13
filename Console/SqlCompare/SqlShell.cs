@@ -15,11 +15,6 @@ namespace SqlCompare
 {
     class SqlShell : stdio
     {
-        private const string MAXROWS = "maxrows";
-        private const string DATAREADER = "DataReader";
-
-        private Memory DS = new Memory();
-
         private Side theSide;
         private CompareAdapter adapter;
         private int server = 0;
@@ -29,8 +24,6 @@ namespace SqlCompare
             this.theSide = adapter.Side1;
             this.server = 1;
 
-            DS.Add(MAXROWS, new VAL(100));
-            DS.Add(DATAREADER, new VAL(true));
         }
 
         public void DoCommand()
@@ -53,6 +46,11 @@ namespace SqlCompare
                 {
                     Help();
                     builder.Clear();
+                    goto L1;
+                }
+                else if (line == "cls")
+                {
+                    Console.Clear();
                     goto L1;
                 }
 
@@ -124,11 +122,32 @@ namespace SqlCompare
                     break;
 
                 case "set":
-                    Script.Execute(text.Replace("set", "") + ";", DS);
+                    Context.Execute(text.Replace("set", "") + ";");
+                    break;
+
+                case "run":
+                    {
+                        VAL result = Context.Evaluate(arg1);
+                        if(result.IsNull)
+                            Console.WriteLine("undefined query function");
+                        else if (result.IsInt)
+                        {
+                            //show error code
+                        }
+                        else
+                        {
+                            DataSet ds = new SqlCmd(theSide.Provider, (string)result[0], result[1]).FillDataSet();
+                            if (ds != null)
+                            {
+                                foreach (DataTable dt in ds.Tables)
+                                    dt.ToConsole();
+                            }
+                        }
+                    }
                     break;
 
                 case "select":
-                    if (!GetValue<bool>(DATAREADER))
+                    if (!Context.GetValue<bool>(Context.DATAREADER))
                     {
                         DataSet ds = new SqlCmd(theSide.Provider, text).FillDataSet();
                         if (ds != null)
@@ -138,7 +157,7 @@ namespace SqlCompare
                         }
                     }
                     else
-                        new SqlCmd(theSide.Provider, text).Execute(reader => reader.ToConsole(GetValue<int>(MAXROWS, 100)));
+                        new SqlCmd(theSide.Provider, text).Execute(reader => reader.ToConsole(Context.GetValue<int>(Context.MAXROWS, 100)));
                     break;
 
                 case "1":
@@ -163,11 +182,6 @@ namespace SqlCompare
 
                     else
                         WriteLine("undefined database server alias : {0}", arg1);
-                    break;
-
-                case "help":
-                case "?":
-                    Help();
                     break;
 
                 default:
@@ -243,7 +257,7 @@ namespace SqlCompare
                     break;
 
                 case "var":
-                    ((VAL)DS).Select(row => new { Variable = (string)row[0], Value = row[1] }).ToConsole();
+                    Context.ToConsole();
                     break;
                 default:
                     WriteLine("invalid argument");
@@ -252,35 +266,29 @@ namespace SqlCompare
         }
 
 
-        private T GetValue<T>(string variable, T defaultValue = default(T))
-        {
-            VAL val = DS[variable];
-
-            if (val.Defined && val.HostValue is T)
-                return (T)val.HostValue;
-            else
-                return defaultValue;
-        }
-
         private static void Help()
         {
             Console.WriteLine("<Commands>");
-            Console.WriteLine("find pattern          : find table name and column name");
-            Console.WriteLine("show table            : show all table names");
-            Console.WriteLine("show table pattern    : show matched table names (wildcard*,?)");
-            Console.WriteLine("show column tablename : show table structure");
-            Console.WriteLine("show pk tablename     : show table primary keys");
-            Console.WriteLine("show fk tablename     : show table foreign keys");
-            Console.WriteLine("show alias            : show connection-string alias list");
-            Console.WriteLine("show var              : show variable list");
-            Console.WriteLine("set var = value       : assign value to variable");
+            Console.WriteLine("find pattern;         : find table name and column name");
+            Console.WriteLine("show table;           : show all table names");
+            Console.WriteLine("show table pattern;   : show matched table names (wildcard*,?)");
+            Console.WriteLine("show column tablename;: show table structure");
+            Console.WriteLine("show pk tablename;    : show table primary keys");
+            Console.WriteLine("show fk tablename;    : show table foreign keys");
+            Console.WriteLine("show alias;           : show connection-string alias list");
+            Console.WriteLine("show var;             : show variable list");
+            Console.WriteLine("set var = value;      : assign value to variable");
+            Console.WriteLine("run query(..);        : run predefined query. e.g. run query(var1=val1, var2=val2,...);");
             Console.WriteLine("all sql clauses, e.g. select * from table, update...");
             Console.WriteLine("1                     : switch to source server 1 (default)");
             Console.WriteLine("2                     : switch to sink server 2");
-            Console.WriteLine("goto alias            : switch to database server");
+            Console.WriteLine("goto alias;           : switch to database server");
             Console.WriteLine("exit                  : quit application");
             Console.WriteLine("help                  : this help");
             Console.WriteLine("?                     : this help");
+            Console.WriteLine("<Variable>");
+            Console.WriteLine("maxrows      : max number of row shown on select query");
+            Console.WriteLine("DataReader   : true: use SqlDataReader; false: use Fill DataSet");
         }
     }
 }

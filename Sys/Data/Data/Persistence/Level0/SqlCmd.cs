@@ -20,6 +20,7 @@ using System.Text;
 using System.Data.Common;
 using System.Data.SqlClient;
 using System.Data;
+using Tie;
 
 namespace Sys.Data
 {
@@ -32,10 +33,18 @@ namespace Sys.Data
             if (parameters == null)
                 return;
 
-            foreach (var propertyInfo in parameters.GetType().GetProperties())
+            if (parameters is VAL)
             {
-                AddParameter("@" + propertyInfo.Name, propertyInfo.GetValue(parameters));
+                foreach (var parameter in (VAL)parameters)
+                {
+                    AddParameter("@" + (string)parameter[0], parameter[1].HostValue);
+                }
             }
+            else
+                foreach (var propertyInfo in parameters.GetType().GetProperties())
+                {
+                    AddParameter("@" + propertyInfo.Name, propertyInfo.GetValue(parameters));
+                }
 
         }
 
