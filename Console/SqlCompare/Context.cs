@@ -44,7 +44,10 @@ namespace SqlCompare
 
         public static void ToConsole()
         {
-            ((VAL)DS).Select(row => new { Variable = (string)row[0], Value = row[1] }).ToConsole();
+            ((VAL)DS)
+                .Where(row => row[1].ty != VALTYPE.nullcon && row[1].ty != VALTYPE.voidcon)
+                .Select(row => new { Variable = (string)row[0], Value = row[1] })
+                .ToConsole();
         }
 
         public static VAL binding
@@ -59,31 +62,33 @@ namespace SqlCompare
         internal static VAL functions(string func, VAL parameters, Memory DS)
         {
             var query = DS[func];
+            if (query.ty == VALTYPE.stringcon)
+            {
+                VAL val = new VAL();
+                for (int i = 0; i < parameters.Size; i++)
+                {
+                    VAL parameter = parameters[i];
+                    string name = parameter.GetName();
 
-            if (query.Undefined)
+                    if (name == null)
+                    {
+                        Console.WriteLine("require parameter name at arguments({0}), run func(id=20,x=2);", i + 1);
+                        return new VAL(2);
+                    }
+                    val.Add(name, parameter);
+                }
+
+                VAL result = new VAL();
+                result.Add(query);
+                result.Add(val);
+                return result;
+            }
+            else
             {
                 Console.WriteLine("undefined function:{0}", func);
                 return new VAL(1);
             }
 
-            VAL val = new VAL();
-            for (int i = 0; i < parameters.Size; i++)
-            {
-                VAL parameter = parameters[i];
-                string name = parameter.GetName();
-
-                if (name == null)
-                {
-                    Console.WriteLine("undefined parameter name at arguments({0}), run func(id=20,x=2);", i + 1);
-                    return new VAL(2);
-                }
-                val.Add(name, parameter);
-            }
-
-            VAL result = new VAL();
-            result.Add(query);
-            result.Add(val);
-            return result;
         }
     }
 }
