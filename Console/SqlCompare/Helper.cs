@@ -11,6 +11,39 @@ namespace SqlCompare
     static class Helper
     {
 
+        public static void ToConsole(this DataTable table)
+        {
+
+            List<string> list = new List<string>();
+            foreach (DataColumn column in table.Columns)
+                list.Add(column.ColumnName);
+
+            string[] columns = list.ToArray();
+
+            var D = new ConsoleTable(columns.Length);
+
+            D.MeasureWidth(columns);
+            foreach (DataRow row in table.Rows)
+            {
+                D.MeasureWidth(row.ItemArray);
+            }
+
+            D.DisplayLine();
+            D.DisplayLine(columns);
+            D.DisplayLine();
+
+            if (table.Rows.Count == 0)
+                return;
+
+            foreach (DataRow row in table.Rows)
+            {
+                D.DisplayLine(row.ItemArray);
+            }
+
+            D.DisplayLine();
+        }
+
+
         public static bool parse(this string arg, out string t1, out string t2)
         {
             if (string.IsNullOrEmpty(arg) || arg.StartsWith("/"))

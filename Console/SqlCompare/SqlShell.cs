@@ -91,6 +91,7 @@ namespace SqlCompare
             if (n > 2)
                 arg2 = A[2].Trim();
 
+            Func<SqlConnectionStringBuilder, string> showConnection = cs=> string.Format("S={0} db={1} U={2} P={3}", cs.DataSource, cs.InitialCatalog, cs.UserID, cs.Password);
             switch (cmd)
             {
                 case "show":
@@ -113,8 +114,8 @@ namespace SqlCompare
                     {
                         foreach (DataTable dt in ds.Tables)
                         {
-                            ConsoleTable.DisplayTable(dt);
-                            WriteLine("<{0} rows>", dt.Rows.Count);
+                            dt.ToConsole();
+                            WriteLine("<{0} row{0}>", dt.Rows.Count, dt.Rows.Count > 1 ? "s" : "");
                         }
                     }
                     break;
@@ -122,13 +123,13 @@ namespace SqlCompare
                 case "1":
                     this.theSide = adapter.Side1;
                     this.server = 1;
-                    WriteLine("server 1 selected(server={0} db={1})", theSide.CS.DataSource, theSide.CS.InitialCatalog);
+                    WriteLine("server 1 selected({0})", showConnection(theSide.CS));
                     break;
 
                 case "2":
                     this.theSide = adapter.Side2;
                     this.server = 2;
-                    WriteLine("server 2 selected(server={0} db={1})", theSide.CS.DataSource, theSide.CS.InitialCatalog);
+                    WriteLine("server 2 selected({0})", showConnection(theSide.CS));
                     break;
 
                 case "goto":
@@ -136,7 +137,7 @@ namespace SqlCompare
                     {
                         this.theSide = new Side(new SqlConnectionStringBuilder(CompareConsole.binding[arg1]));
                         this.server = 3;
-                        WriteLine("server 3 selected(server={0} db={1})", theSide.CS.DataSource, theSide.CS.InitialCatalog);
+                        WriteLine("server 3 selected({0})", showConnection(theSide.CS));
                     }
 
                     else
@@ -205,7 +206,7 @@ namespace SqlCompare
                         }
 
                         WriteLine("<{0}>", name);
-                        ConsoleTable.DisplayTable(dt);
+                        dt.ToConsole();
                     }
                     break;
 
@@ -230,7 +231,7 @@ namespace SqlCompare
                 dt.Rows.Add(newRow);
             }
 
-            ConsoleTable.DisplayTable(dt);
+            dt.ToConsole();
         }
 
 
@@ -238,9 +239,9 @@ namespace SqlCompare
         {
             string sql = "SELECT name AS TableName FROM sys.tables WHERE name LIKE @PATTERN";
             var dt = new SqlCmd(theSide.Provider, sql, new { PATTERN = "%" + match + "%" }).FillDataTable();
-            ConsoleTable.DisplayTable(dt);
-            WriteLine("<Table>");
-            
+            dt.ToConsole();
+            WriteLine("<{0} Table{1}>", dt.Rows.Count, dt.Rows.Count > 1 ? "s" : "");
+
             sql = @"
  SELECT 
 	t.name as TableName,
@@ -255,9 +256,9 @@ FROM sys.tables t
 WHERE c.name LIKE @PATTERN
 ORDER BY c.name, c.column_id
 ";
-            dt = new SqlCmd(theSide.Provider, sql, new { PATTERN = "%"+ match+"%" }).FillDataTable();
-            ConsoleTable.DisplayTable(dt);
-            WriteLine("<Column>");
+            dt = new SqlCmd(theSide.Provider, sql, new { PATTERN = "%" + match + "%" }).FillDataTable();
+            dt.ToConsole();
+            WriteLine("<{0} Column{1}>", dt.Rows.Count, dt.Rows.Count > 1 ? "s" : "");
         }
 
         private static void Help()

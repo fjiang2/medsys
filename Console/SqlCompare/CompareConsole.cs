@@ -167,7 +167,7 @@ namespace SqlCompare
         {
             if (!File.Exists(fileName))
             {
-                Console.WriteLine("warning config file not exists: {0}", fileName);
+                Console.WriteLine("warning: not exists {0}", fileName);
                 return null;
             }
 

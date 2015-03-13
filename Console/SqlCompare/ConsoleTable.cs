@@ -9,73 +9,30 @@ namespace SqlCompare
 {
     class ConsoleTable : stdio
     {
-        const char SPACE = ' ';
-        const char CROSS = '+';
-        const char VER = '|';
-        const char HOR = '-';
+        private const char SPACE = ' ';
+        private const char CROSS = '+';
+        private const char VER = '|';
+        private const char HOR = '-';
 
         private int[] W;
-        private DataTable dt;
 
-        private ConsoleTable(DataTable table)
+        public ConsoleTable(int length)
         {
-            this.dt = table;
-
-            W = new int[table.Columns.Count];
-            for (int i = 0; i < W.Length; i++)
-            {
-                DataColumn c = table.Columns[i];
-
-                if (c.ColumnName.Length > W[i])
-                    W[i] = c.ColumnName.Length;
-            }
-
-            foreach (DataRow row in table.Rows)
-            {
-                for (int i = 0; i < W.Length; i++)
-                {
-                    string item = "NULL";
-                    if (row[i] != DBNull.Value)
-                        item = row[i].ToString().Trim();
-
-                    if (item.Length > W[i])
-                        W[i] = item.Length;
-                }
-            }
+            this.W = new int[length];
         }
 
-        private void Display()
+        public void DisplayLine()
         {
-            var line = Enumerable.Repeat("",W.Length).ToArray();
-            DisplayLine(line, CROSS, HOR);
-
-            List<string> list = new List<string>();
-            foreach (DataColumn column in dt.Columns)
-                list.Add(column.ColumnName);
-
-            DisplayLine(list.ToArray(), VER, SPACE);
-            DisplayLine(line, CROSS, HOR);
-
-            if (dt.Rows.Count == 0)
-                return;
-
-            string[] L = new string[W.Length];
-            foreach (DataRow row in dt.Rows)
-            {
-                for (int i = 0; i < W.Length; i++)
-                {
-                    L[i] = "NULL";
-                    if (row[i] != DBNull.Value)
-                        L[i] = row[i].ToString();
-                }
-
-                DisplayLine(L, VER, SPACE);
-            }
-            
+            var line = Enumerable.Repeat("", W.Length).ToArray();
             DisplayLine(line, CROSS, HOR);
         }
 
-        private void DisplayLine(string[] row, char delimiter, char sp)
+        public void DisplayLine(object[] row)
+        {
+            DisplayLine(row, VER, SPACE);
+        }
+
+        private void DisplayLine(object[] columns, char delimiter, char sp)
         {
        
             StringBuilder builder = new StringBuilder();
@@ -84,18 +41,18 @@ namespace SqlCompare
 
             for (int i = 0; i < W.Length; i++)
             {
-
-                int d = W[i] - row[i].Length;
+                string cell = Cell(columns[i]);
+                int d = W[i] - cell.Length;
 
                 if (d > 0)
-                    builder.Append(row[i]).Append(new string(sp, d));
+                    builder.Append(cell).Append(new string(sp, d));
                 else
-                    builder.Append(row[i].Substring(0, W[i]));
+                    builder.Append(cell.Substring(0, W[i]));
 
+                
+                builder.Append(sp).Append(delimiter);
                 if (i < W.Length - 1)
-                    builder.Append(sp).Append(delimiter).Append(sp);
-                else
-                    builder.Append(sp).Append(delimiter);
+                    builder.Append(sp);
             }
 
             string text = builder.ToString();
@@ -107,10 +64,30 @@ namespace SqlCompare
                 WriteLine(text);
         }
 
-        public static void DisplayTable(DataTable dt)
+        public void MeasureWidth(object[] columns)
         {
-            var x = new ConsoleTable(dt);
-            x.Display();
+            for (int i = 0; i < W.Length; i++)
+            {
+                string item = Cell(columns[i]);
+
+                if (item.Length > W[i])
+                    W[i] = item.Length;
+            }
+
         }
+
+        private string Cell(object cell)
+        {
+            if (cell == null)
+                return "null";
+
+            else if (cell == DBNull.Value)
+                return "NULL";
+
+            else
+                return cell.ToString().Trim();
+        }
+
+     
     }
 }
