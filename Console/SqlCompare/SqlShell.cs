@@ -211,27 +211,20 @@ namespace SqlCompare
                     break;
 
                 case "table":
-                    DisplayTableNames(names);
+                    names.Select(name => new { Table = name })
+                        .ToConsole(row => new object[] { row.Table });
+                    break;
+
+                case "alias":
+                    CompareConsole.binding
+                        .Select(kvp => new { Alias = kvp.Key, Connection = kvp.Value })
+                        .ToConsole(row => new object[] { row.Alias, row.Connection });
                     break;
 
                 default:
                     WriteLine("invalid argument");
                     break;
             }
-        }
-
-        public void DisplayTableNames(string[] names)
-        {
-            DataTable dt = new DataTable();
-            dt.Columns.Add("Table Name");
-            foreach (string item in names)
-            {
-                var newRow = dt.NewRow();
-                newRow[0] = item;
-                dt.Rows.Add(newRow);
-            }
-
-            dt.ToConsole();
         }
 
 

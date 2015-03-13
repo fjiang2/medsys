@@ -11,6 +11,73 @@ namespace SqlCompare
     static class Helper
     {
 
+
+        public static void ToConsole<T>(this IEnumerable<T> source, Func<T, object[]> selector)
+        {
+            string[] columns = typeof(T).GetProperties().Select(p => p.Name).ToArray();
+
+            var D = new ConsoleTable(columns.Length);
+
+            D.MeasureWidth(columns);
+            foreach (var row in source)
+            {
+                D.MeasureWidth(selector(row));
+            }
+
+            D.DisplayLine();
+            D.DisplayLine(columns);
+            D.DisplayLine();
+
+            if (source.Count() == 0)
+                return;
+
+            foreach (var row in source)
+            {
+                D.DisplayLine(selector(row));
+            }
+
+            D.DisplayLine();
+        }
+
+
+        public static void ToConsole(this SqlDataReader reader)
+        {
+            while (reader.HasRows)
+            {
+                DataTable schemaTable = reader.GetSchemaTable();
+
+                string[] columns = schemaTable.AsEnumerable().Select(row => row.Field<string>("ColumnName")).ToArray();
+
+                var D = new ConsoleTable(columns.Length);
+
+                D.MeasureWidth(columns);
+                //foreach (DataRow row in table.Rows)
+                //{
+                //    D.MeasureWidth(row.ItemArray);
+                //}
+
+                D.DisplayLine();
+                D.DisplayLine(columns);
+                D.DisplayLine();
+
+                if (!reader.HasRows)
+                    return;
+
+                object[] values = new object[columns.Length];
+                while (reader.Read())
+                {
+                    reader.GetValues(values);
+                    D.DisplayLine(values);
+                }
+
+                D.DisplayLine();
+
+                reader.NextResult();
+            }
+
+        }
+
+
         public static void ToConsole(this DataTable table)
         {
 
