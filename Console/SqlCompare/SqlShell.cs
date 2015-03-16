@@ -261,7 +261,7 @@ namespace SqlCompare
                         var list = cfg.GetValue("alias");
                         if (list.Defined)
                         {
-                            list.Select(kvp => new { Alias = (string)kvp[0].HostValue, Connection = (string)kvp[1] })
+                            list.Select(kvp => new { Alias = (string)kvp[0].HostValue, Connection = kvp[1].ToString() })
                             .ToConsole();
                         }
                         else

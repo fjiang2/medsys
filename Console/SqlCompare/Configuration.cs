@@ -32,7 +32,11 @@ namespace SqlCompare
             switch (func)
             {
                 case "config":
-                    return new VAL(SearchConnectionString(parameters));
+                    var conn = SearchConnectionString(parameters);
+                    if (conn != null)
+                        return new VAL(conn);
+                    else
+                        return new VAL();
             }
 
             return null;
@@ -104,6 +108,11 @@ namespace SqlCompare
             
             this.InputFile = GetValue<string>("input", "script.sql");
             this.OutputFile = GetValue<string>("output", "script.sql");
+
+            var log = Cfg["log"];
+            if(log.Defined)
+                Context.DS.Add("log", log);
+
 
             var pk = Cfg["primary_key"];
             if (pk.Defined)

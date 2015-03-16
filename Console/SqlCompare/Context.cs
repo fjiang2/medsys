@@ -84,10 +84,7 @@ namespace SqlCompare
                 return result;
             }
             else
-            {
-                stdio.WriteLine("undefined function:{0}", func);
-                return new VAL(1);
-            }
+                return null;
 
         }
     }

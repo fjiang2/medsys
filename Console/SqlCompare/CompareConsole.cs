@@ -25,18 +25,17 @@ namespace SqlCompare
             this.cfg = cfg;
             this.action = cfg.Action;
 
-            var alias1 = cfg.GetValue<string>("alias1");
-            if(alias1!=null)
-                this.cs1 = new SqlConnectionStringBuilder(alias1);
+            var comparison = cfg.GetValue("comparison");
+            if (comparison.Defined)
+            {
+                this.cs1 = new SqlConnectionStringBuilder((string)comparison[0]);
+                this.cs2 = new SqlConnectionStringBuilder((string)comparison[1]);
+            }
             else
+            {
                 this.cs1 = new SqlConnectionStringBuilder();
-
-
-            var alias2 = cfg.GetValue<string>("alias2");
-            if (alias2 != null)
-                this.cs2 = new SqlConnectionStringBuilder(alias2);
-            else
                 this.cs2 = new SqlConnectionStringBuilder();
+            }
         }
 
    
