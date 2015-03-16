@@ -275,7 +275,10 @@ namespace SqlCompare
                     break;
 
                 case ActionType.GenerateTableRows:
-                    WriteFile(adapter.Side1.GenerateRowScript(tableNamePattern1, cfg.excludedtables));
+                    using (var writer = new StreamWriter(cfg.OutputFile))
+                    {
+                        adapter.Side1.GenerateRowScript(writer, tableNamePattern1, cfg.excludedtables);
+                    }
                     break;
 
                 case ActionType.GenerateScript:

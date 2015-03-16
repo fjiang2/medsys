@@ -65,7 +65,7 @@ namespace SqlCompare
             }
         }
 
-        public string GenerateRowScript(string tableNamePattern, string[] excludedtables)
+        public void GenerateRowScript(StreamWriter writer, string tableNamePattern, string[] excludedtables)
         {
             List<string> list = new List<string>();
             MatchedDatabase m = new MatchedDatabase(this.DatabaseName, tableNamePattern, excludedtables);
@@ -74,32 +74,26 @@ namespace SqlCompare
                 if (!excludedtables.Contains(name.ToUpper()))
                     list.Add(name);
             }
-            
-            return GenerateRows(list.ToArray());
+
+            GenerateRows(writer, list.ToArray());
         }
 
 
 
-        private string GenerateRows(string[] tableNames)
+        private void GenerateRows(StreamWriter writer, string[] tableNames)
         {
-            StringBuilder builder = new StringBuilder();
             foreach (var tableName in tableNames)
             {
                 stdio.WriteLine("generate insert clauses on table : {0}", tableName);
                 var tname = new TableName(Provider, tableName);
-                string sql = Compare.GenerateRows(tname, null);
-                if (sql != String.Empty)
-                    builder.AppendLine(sql);
+                Compare.GenerateRows(writer, tname, null);
             }
-
-            return builder.ToString();
         }
 
-        private string GenerateRows(string tableName, string where)
+        private void GenerateRows(StreamWriter writer, string tableName, string where)
         {
             var tname = new TableName(Provider, tableName);
-            string sql = Compare.GenerateRows(tname, where);
-            return sql;
+            Compare.GenerateRows(writer, tname, where);
         }
 
        

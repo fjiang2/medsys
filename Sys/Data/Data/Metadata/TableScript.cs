@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data;
+using System.Data.Common;
 using Sys.Data.Comparison;
 
 namespace Sys.Data
@@ -23,8 +24,19 @@ namespace Sys.Data
         public string INSERT(DataRow row)
         {
             var direct = RowCompare.Direct(row);
-            var x1 = direct.Select(p => "[" + p.ColumnName + "]");
-            var x2 = direct.Select(p => p.ToScript());
+            return INSERT(direct);
+        }
+
+        public string INSERT(string[] columnName, object[] values)
+        {
+            var direct = RowCompare.Direct(columnName, values);
+            return INSERT(direct);
+        }
+
+        public string INSERT(IEnumerable<ColumnPair> pairs)
+        {
+            var x1 = pairs.Select(p => "[" + p.ColumnName + "]");
+            var x2 = pairs.Select(p => p.ToScript());
 
             return string.Format(insertCommandTemplate,
                 string.Join(",", x1),

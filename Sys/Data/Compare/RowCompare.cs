@@ -91,5 +91,18 @@ namespace Sys.Data.Comparison
 
             return list;
         }
+
+
+        public static IEnumerable<ColumnPair> Direct(string[] columnName, object[] values)
+        {
+            List<ColumnPair> list = new List<ColumnPair>();
+            for (int i = 0; i < columnName.Length; i++)
+            {
+                if (values[i] != DBNull.Value)
+                    list.Add(new ColumnPair { ColumnName = columnName[i], Value = values[i] });
+            }
+
+            return list;
+        }
     }
 }

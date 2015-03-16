@@ -42,6 +42,8 @@ namespace SqlCompare
             get
             {
                 string[] names = this.DatabaseName.GetTableNames();
+
+                names = names.Where(name => Includes(name)).ToArray();
                 if (tableNamePattern == null)
                     return names;
 

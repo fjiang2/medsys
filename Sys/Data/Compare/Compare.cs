@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data;
+using System.IO;
 
 namespace Sys.Data.Comparison
 {
@@ -46,7 +47,7 @@ namespace Sys.Data.Comparison
             return builder.ToString();
         }
 
-        public string DatabaseDifference(DatabaseName dname1,  DatabaseName dname2, string[] excludedTables)
+        public string DatabaseDifference(DatabaseName dname1, DatabaseName dname2, string[] excludedTables)
         {
             string[] names = dname1.GetDependencyTableNames();
             excludedTables = excludedTables.Select(row => row.ToUpper()).ToArray();
@@ -78,7 +79,7 @@ namespace Sys.Data.Comparison
                 }
                 else
                 {
-                    builder.Append(Compare.GenerateRows(tname1));
+                    builder.Append(Compare.GenerateRows(tname1, new TableReader(tname1)));
                 }
 
                 builder.AppendLine();
@@ -86,7 +87,7 @@ namespace Sys.Data.Comparison
 
             return builder.ToString();
         }
-        
+
         #endregion
 
 
@@ -94,7 +95,7 @@ namespace Sys.Data.Comparison
 
         public string TableSchemaDifference(TableName tableName1, TableName tableName2)
         {
-         
+
             string sql;
 
             if (DatabaseSchema.Exists(tableName2))
@@ -110,7 +111,7 @@ namespace Sys.Data.Comparison
             return sql;
         }
 
-        
+
 
 
         public string TableDifference(TableName tableName1, TableName tableName2, out bool pk)
@@ -125,7 +126,7 @@ namespace Sys.Data.Comparison
             return script;
         }
 
-    
+
         public string TableDifference(TableName tableName1, TableName tableName2, string[] primaryKeys)
         {
             TableCompare compare = new TableCompare(tableName1, tableName2);
@@ -136,42 +137,68 @@ namespace Sys.Data.Comparison
         #endregion
 
 
-        #region create all rows 
-        public static string GenerateRows(TableName tableName, string where)
-        {
+        #region create all rows
 
-            if (string.IsNullOrEmpty(where))
-                return Compare.GenerateRows(tableName, new TableReader(tableName));
-            else
-                return Compare.GenerateRows(tableName, new TableReader(tableName, where, new object[] { }));
-
-        }
-
-        private static string GenerateRows(TableName tableName)
-        {
-            return Compare.GenerateRows(tableName, new TableReader(tableName));
-        }
 
         private static string GenerateRows(TableName tableName, TableReader reader)
         {
 
-            var dt1 = reader.Table;;
+            var table = reader.Table; ;
 
             TableScript script = new TableScript(tableName);
 
             StringBuilder builder = new StringBuilder();
-            foreach (DataRow row in dt1.Rows)
+            foreach (DataRow row in table.Rows)
                 builder.Append(script.INSERT(row)).AppendLine();
-            
-            if (dt1.Rows.Count >0)
+
+            if (table.Rows.Count > 0)
                 builder.AppendLine(TableScript.GO);
-            
+
             return builder.ToString();
         }
 
+        public static void GenerateRows(StreamWriter writer, TableName tableName, string where)
+        {
+            string sql = string.Format("SELECT * FROM {0}", tableName);
+            if (where != null)
+                sql = string.Format("SELECT * FROM {0} WHERE {1}", tableName, where);
+
+            SqlCmd cmd = new SqlCmd(tableName.Provider, sql);
+            TableScript script = new TableScript(tableName);
+
+            int count = 0;
+            cmd.Execute(
+                reader =>
+                {
+                    DataTable schema = reader.GetSchemaTable();
+
+                    string[] columns = schema.AsEnumerable().Select(row => row.Field<string>("ColumnName")).ToArray();
+                    object[] values = new object[columns.Length];
+
+                    while (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            reader.GetValues(values);
+                            writer.WriteLine(script.INSERT(columns, values));
+
+                            count++;
+                            if (count % 5000 == 0)
+                                writer.WriteLine(TableScript.GO);
+
+                        }
+                        reader.NextResult();
+                    }
+                });
+
+            if (count != 0)
+                writer.WriteLine(TableScript.GO);
+
+        }
+
+
+
         #endregion
-
-
 
     }
 }
