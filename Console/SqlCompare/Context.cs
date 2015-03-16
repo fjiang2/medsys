@@ -13,7 +13,6 @@ namespace SqlCompare
         public const string DATAREADER = "DataReader";
 
         public static Memory DS = new Memory();
-        public static Memory cfg { get; set; }
 
         static Context()
         {

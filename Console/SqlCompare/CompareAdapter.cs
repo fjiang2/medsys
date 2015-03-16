@@ -50,7 +50,7 @@ namespace SqlCompare
         }
 
 
-        public string Run(CompareAction CompareType, MatchedDatabase m1, MatchedDatabase m2, Dictionary<string, string[]> pk)
+        public string Run(ActionType CompareType, MatchedDatabase m1, MatchedDatabase m2, Dictionary<string, string[]> pk)
         {
             DatabaseName db1 = Side1.DatabaseName;
             DatabaseName db2 = Side2.DatabaseName;
@@ -89,14 +89,14 @@ namespace SqlCompare
                     builder.Append(CompareTable(N1[i], N2[i], pk));
                 }
             }
-            else if (CompareType == CompareAction.CompareSchema)
+            else if (CompareType == ActionType.CompareSchema)
             {
                 sql = CompareDatabaseSchema(db1, db2);
 
                 if (sql != string.Empty)
                     builder.Append(sql);
             }
-            else if (CompareType == CompareAction.CompareData)
+            else if (CompareType == ActionType.CompareData)
             {
                 sql = CompareDatabaseSchema(db1, db2);
 

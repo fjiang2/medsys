@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SqlCompare
 {
-    public enum CompareAction
+    public enum ActionType
     {
         CompareSchema = 1,
         CompareData = 2,

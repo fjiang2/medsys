@@ -15,50 +15,31 @@ namespace SqlCompare
 {
     class CompareConsole  
     {
-        private VAL cfg;
+        Configuration cfg;
+        private SqlConnectionStringBuilder cs1;
+        private SqlConnectionStringBuilder cs2;
+        private ActionType action;
 
-        //<alias, connectionstring>
-        public readonly static Dictionary<string, string> binding = new Dictionary<string,string>();
-        
-        private string scriptFileName = "script.sql";
-        private string[] excludedtables = new string[] { };
-        private CompareAction compareType = CompareAction.CompareSchema;
-        private Dictionary<string, string[]> PK = new Dictionary<string, string[]>();
-
-        SqlConnectionStringBuilder cs1;
-        SqlConnectionStringBuilder cs2;
-
-        public CompareConsole()
+        public CompareConsole(Configuration cfg)
         {
+            this.cfg = cfg;
+            this.action = cfg.Action;
+
+            var alias1 = cfg.GetValue<string>("alias1");
+            if(alias1!=null)
+                this.cs1 = new SqlConnectionStringBuilder(alias1);
+            else
+                this.cs1 = new SqlConnectionStringBuilder();
+
+
+            var alias2 = cfg.GetValue<string>("alias2");
+            if (alias2 != null)
+                this.cs2 = new SqlConnectionStringBuilder(alias2);
+            else
+                this.cs2 = new SqlConnectionStringBuilder();
         }
 
-        private static bool TryReadCfg(string fileName, out VAL ini)
-        {
-            ini = new VAL();
-            if (!File.Exists(fileName))
-            {
-                stdio.WriteLine("configuration file {0} not exists", fileName);
-                return false;
-            }
-
-            using (var reader = new StreamReader(fileName))
-            {
-                string code = reader.ReadToEnd();
-                try
-                {
-                    ini = Script.Evaluate(code);
-                    Context.cfg = new Memory(ini);
-                }
-                catch (Exception)
-                {
-                    stdio.WriteLine("json format error in {0}", fileName);
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
+   
         private void WriteFile(string sql)
         {
             if (string.IsNullOrEmpty(sql))
@@ -67,142 +48,18 @@ namespace SqlCompare
                 stdio.WriteLine("Nothing is changed");
             }
 
-            using (var writer = new StreamWriter(scriptFileName))
+            using (var writer = new StreamWriter(cfg.OutputFile))
             {
                 writer.Write(sql);
             }
 
             if (!string.IsNullOrEmpty(sql))
             {
-                stdio.WriteLine("output: {0}", scriptFileName);
+                stdio.WriteLine("output: {0}", cfg.OutputFile);
                 stdio.WriteLine("completed.");
             }
         }
 
-
-        public bool Initialize(string fileName)
-        {
-            if (!TryReadCfg(fileName, out cfg))
-                return false;
-
-            var alias = cfg["alias"];
-
-            if (alias.Defined)
-            {
-                foreach (var pair in alias)
-                    AddAlias(pair);
-
-                var alias1 = (string)cfg["alias1"];
-                var alias2 = (string)cfg["alias2"];
-                this.cs1 = new SqlConnectionStringBuilder((string)alias[alias1]);
-                this.cs2 = new SqlConnectionStringBuilder((string)alias[alias2]);
-            }
-            else
-            {
-                this.cs1 = new SqlConnectionStringBuilder();
-                this.cs2 = new SqlConnectionStringBuilder();
-            }
-
-            var x = cfg["excludedtables"];
-            if (x.Defined)
-                this.excludedtables = x.HostValue as string[];
-
-            x = cfg["comparetype"];
-            if (x.Defined)
-                this.compareType = (CompareAction)(int)x;
-
-            x = cfg["output"];
-            if (x.Defined)
-                this.scriptFileName = (string)x;
-
-            var pk = cfg["primary_key"];
-            if (pk.Defined)
-            {
-                foreach (var item in pk)
-                {
-                    string tableName = (string)item[0];
-                    PK.Add(tableName.ToUpper(), (string[])item[1].HostValue);
-                }
-            }
-
-            var config = cfg["config"];
-            if (config.Defined)
-            {
-                foreach (var pair in config)
-                {
-                    string key = (string)pair[0];
-                    string connectionString = GetConnectionString(pair[1]);
-
-                    if (connectionString != null)
-                    {
-                        connectionString = connectionString.Replace("Provider=sqloledb;", "");
-                        pair[1] = new VAL(connectionString);
-                        AddAlias(pair);
-                    }
-                }
-
-            }
-
-            x = cfg["query"];
-            if (x.Defined)
-            {
-                foreach (var pair in x)
-                    Context.DS.Add((string)pair[0], pair[1]);
-            }
-            return true;
-
-        }
-
-        private string GetConnectionString(VAL val)
-        {
-            string fileName = (string)val["file"];
-            string path = (string)val["path"];
-
-            try
-            {
-                return GetConnectionString(fileName, path);
-            }
-            catch (Exception ex)
-            {
-                stdio.WriteLine("cannot find connection string on file {0}, {1}", fileName, ex.Message);
-                return null;
-            }
-        }
-
-        private string GetConnectionString(string fileName, string path)
-        {
-            if (!File.Exists(fileName))
-            {
-                stdio.WriteLine("warning: not exists {0}", fileName);
-                return null;
-            }
-
-            string[] segments = path.Split('|');
-            XElement X = XElement.Load(fileName);
-            for(int i=0; i<segments.Length- 1; i++)
-            {
-                X = X.Element(segments[i]);
-            }
-
-            string attr = segments.Last();
-            string[] pair = attr.Split('=');
-            var connectionString = X.Elements()
-                .Where(x => x.Attribute(pair[0]).Value == pair[1])
-                .Select(x => x.Attribute("value").Value)
-                .FirstOrDefault();
-
-            return connectionString;
-        }
-
-        private void AddAlias(VAL pair)
-        {
-            string key = (string)pair[0];
-
-            if (binding.ContainsKey(key))
-                binding.Remove(key);
-
-            binding.Add(key, (string)pair[1]);
-        }
 
         public void Run(string[] args)
         {
@@ -225,22 +82,21 @@ namespace SqlCompare
                     case "/s":
                         if (i < args.Length && args[i++].parse(out t1, out t2))
                         {
-                            if (!binding.ContainsKey(t1))
+                            var conn1 = cfg.GetConnectionString(t1);
+                            var conn2 = cfg.GetConnectionString(t1);
+                            if (conn1==null)
                             {
                                 stdio.WriteLine("undefined server alias ({0}) in configuration file", t1);
                                 return;
                             }
-                            if (!binding.ContainsKey(t1))
+                            if (conn2== null)
                             {
                                 stdio.WriteLine("undefined server alias ({0}) in configuration file", t2);
                                 return;
                             }
 
-                            var s1 = binding[t1];
-                            var s2 = binding[t2];
-
-                            cs1 = new SqlConnectionStringBuilder((string)s1);
-                            cs2 = new SqlConnectionStringBuilder((string)s2);
+                            cs1 = new SqlConnectionStringBuilder(conn1);
+                            cs2 = new SqlConnectionStringBuilder(conn1);
                             break;
                         }
                         else
@@ -255,22 +111,22 @@ namespace SqlCompare
                             switch (args[i++])
                             {
                                 case "schema":
-                                    compareType = CompareAction.CompareSchema;
+                                    action = ActionType.CompareSchema;
                                     break;
                                 case "data":
-                                    compareType = CompareAction.CompareData;
+                                    action = ActionType.CompareData;
                                     break;
                                 case "gen":
-                                    compareType = CompareAction.GenerateScript;
+                                    action = ActionType.GenerateScript;
                                     break;
                                 case "row":
-                                    compareType = CompareAction.GenerateTableRows;
+                                    action = ActionType.GenerateTableRows;
                                     break;
                                 case "shell":
-                                    compareType = CompareAction.Shell;
+                                    action = ActionType.Shell;
                                     break;
                                 case "exec":
-                                    compareType = CompareAction.Execute;
+                                    action = ActionType.Execute;
                                     break;
                             }
                             break;
@@ -285,16 +141,23 @@ namespace SqlCompare
                     case "/S":
                         if (i < args.Length && args[i++].parse(out t1, out t2))
                         {
-                            var server1 = cfg["server1"];
-                            var server2 = cfg["server2"];
-                            cs1.DataSource = t1;
-                            cs1.DataSource = t2;
-                            cs1.InitialCatalog = (string)server1["initial_catalog"];
-                            cs1.InitialCatalog = (string)server2["initial_catalog"];
-                            cs1.UserID = (string)server1["user_id"];
-                            cs2.UserID = (string)server2["user_id"];
-                            cs1.Password = (string)server1["password"];
-                            cs1.Password = (string)server2["password"];
+                            var server1 = cfg.GetValue("server1");
+                            if (server1.Defined)
+                            {
+                                cs1.DataSource = t1;
+                                cs1.InitialCatalog = (string)server1["initial_catalog"];
+                                cs1.UserID = (string)server1["user_id"];
+                                cs1.Password = (string)server1["password"];
+                            }
+
+                            var server2 = cfg.GetValue("server2");
+                            if (server2.Defined)
+                            {
+                                cs1.DataSource = t2;
+                                cs1.InitialCatalog = (string)server2["initial_catalog"];
+                                cs2.UserID = (string)server2["user_id"];
+                                cs1.Password = (string)server2["password"];
+                            }
                             break;
                         }
                         else
@@ -359,7 +222,7 @@ namespace SqlCompare
                     case "/e":
                         if (i < args.Length && !args[i].StartsWith("/"))
                         {
-                            excludedtables = args[i++].Split(',');
+                            cfg.excludedtables = args[i++].Split(',');
                             break;
                         }
                         else
@@ -373,7 +236,7 @@ namespace SqlCompare
                     case "/f":
                         if (i < args.Length && !args[i].StartsWith("/"))
                         {
-                            scriptFileName = args[i++];
+                            cfg.OutputFile = args[i++];
                             break;
                         }
                         else
@@ -402,31 +265,31 @@ namespace SqlCompare
             }
 
             CompareAdapter adapter = new CompareAdapter(cs1, cs2);
-            MatchedDatabase m1 = new MatchedDatabase(adapter.Side1.DatabaseName, tableNamePattern1, excludedtables);
-            MatchedDatabase m2 = new MatchedDatabase(adapter.Side2.DatabaseName, tableNamePattern2, excludedtables);
+            MatchedDatabase m1 = new MatchedDatabase(adapter.Side1.DatabaseName, tableNamePattern1, cfg.excludedtables);
+            MatchedDatabase m2 = new MatchedDatabase(adapter.Side2.DatabaseName, tableNamePattern2, cfg.excludedtables);
 
-            switch (compareType)
+            switch (action)
             {
-                case CompareAction.Execute:
-                    adapter.Side2.ExecuteScript(scriptFileName);
+                case ActionType.Execute:
+                    adapter.Side2.ExecuteScript(cfg.InputFile);
 
                     break;
 
-                case CompareAction.GenerateTableRows:
-                    WriteFile(adapter.Side1.GenerateRowScript(tableNamePattern1, excludedtables));
+                case ActionType.GenerateTableRows:
+                    WriteFile(adapter.Side1.GenerateRowScript(tableNamePattern1, cfg.excludedtables));
                     break;
 
-                case CompareAction.GenerateScript:
+                case ActionType.GenerateScript:
                     WriteFile(adapter.Side1.GenerateScript());
                     break;
 
-                case CompareAction.CompareData:
-                case CompareAction.CompareSchema:
-                    WriteFile(adapter.Run(compareType, m1, m2, PK));
+                case ActionType.CompareData:
+                case ActionType.CompareSchema:
+                    WriteFile(adapter.Run(cfg.Action, m1, m2, cfg.PK));
                     break;
 
-                case CompareAction.Shell:
-                    new SqlShell(adapter).DoCommand();
+                case ActionType.Shell:
+                    new SqlShell(cfg, adapter).DoCommand();
                     break;
             }
 

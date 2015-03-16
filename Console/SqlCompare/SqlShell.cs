@@ -18,12 +18,15 @@ namespace SqlCompare
         private Side theSide;
         private CompareAdapter adapter;
         private int server = 0;
-        public SqlShell(CompareAdapter adapter)
+        private Configuration cfg;
+
+        public SqlShell( Configuration cfg, CompareAdapter adapter)
         {
+            this.cfg = cfg;
             this.adapter =adapter;
             this.theSide = adapter.Side1;
             this.server = 1;
-
+            
         }
 
         public void DoCommand()
@@ -173,15 +176,18 @@ namespace SqlCompare
                     break;
 
                 case "goto":
-                    if (CompareConsole.binding.ContainsKey(arg1))
                     {
-                        this.theSide = new Side(new SqlConnectionStringBuilder(CompareConsole.binding[arg1]));
-                        this.server = 3;
-                        stdio.WriteLine("server 3 selected({0})", showConnection(theSide.CS));
-                    }
+                        var conn = cfg.GetConnectionString(arg1);
+                        if (conn != null)
+                        {
+                            this.theSide = new Side(new SqlConnectionStringBuilder(conn));
+                            this.server = 3;
+                            stdio.WriteLine("server 3 selected({0})", showConnection(theSide.CS));
+                        }
 
-                    else
-                        stdio.WriteLine("undefined database server alias : {0}", arg1);
+                        else
+                            stdio.WriteLine("undefined database server alias : {0}", arg1);
+                    }
                     break;
 
                 default:
@@ -251,9 +257,16 @@ namespace SqlCompare
                     break;
 
                 case "alias":
-                    CompareConsole.binding
-                        .Select(kvp => new { Alias = kvp.Key, Connection = kvp.Value })
-                        .ToConsole();
+                    {
+                        var list = cfg.GetValue("alias");
+                        if (list.Defined)
+                        {
+                            list.Select(kvp => new { Alias = (string)kvp[0].HostValue, Connection = (string)kvp[1] })
+                            .ToConsole();
+                        }
+                        else
+                            stdio.WriteLine("connection string alias not found");
+                    }
                     break;
 
                 case "var":

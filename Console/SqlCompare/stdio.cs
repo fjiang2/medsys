@@ -13,11 +13,8 @@ namespace SqlCompare
         private static StreamWriter writer = null;
         static stdio()
         {
-            var log = Context.cfg["log"];
-            if (log.Defined)
-            {
-                writer = new StreamWriter((string)log);
-            }
+            var log = "sqlcompare.log";
+            writer = new StreamWriter((string)log);
         }
 
         public static void Close()

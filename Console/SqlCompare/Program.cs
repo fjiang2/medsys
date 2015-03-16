@@ -17,7 +17,7 @@ namespace SqlCompare
 
         static void Main(string[] args)
         {
-            var cfg = "sqlcompare.cfg";
+            var cfgFile = "sqlcompare.cfg";
 
             int i = 0;
             while (i < args.Length)
@@ -27,7 +27,7 @@ namespace SqlCompare
                     case "/cfg":
                         if (i < args.Length && !args[i].StartsWith("/"))
                         {
-                            cfg = args[i++];
+                            cfgFile = args[i++];
                             goto L1;
                         }
                         else
@@ -46,21 +46,22 @@ namespace SqlCompare
 
         L1:
 
-            var site = new CompareConsole();
 
+            var cfg = new Configuration();
             try
             {
-                if (!site.Initialize(cfg))
+                if (!cfg.Initialize(cfgFile))
                     return;
             }
             catch (Exception ex)
             {
-                stdio.WriteLine("error on configuration file {0}, {1}:", cfg, ex.Message);
+                stdio.WriteLine("error on configuration file {0}, {1}:", cfgFile, ex.Message);
                 return;
             }
 
             try
             {
+                var site = new CompareConsole(cfg);
                 site.Run(args);
             }
             catch (Exception ex)
