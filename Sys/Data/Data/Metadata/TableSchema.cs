@@ -53,11 +53,7 @@ namespace Sys.Data
                 this._columns.Add(new ColumnSchema(row));
             }
 
-            this._identity = new IdentityKeys(this._columns);
-            this._computedColumns = new ComputedColumns(this._columns);
 
-            this._columns.UpdatePrimary(this.PrimaryKeys);
-            this._columns.UpdateForeign(this.ForeignKeys);
         }
         
         protected ColumnCollection _columns = null;
@@ -73,62 +69,29 @@ namespace Sys.Data
         }
 
 
-        #region Primary/Foreign Key
+        #region PrimaryKey/ForeignKey/Identity/Computed column
 
-        private PrimaryKeys _primary = null;
         public IPrimaryKeys PrimaryKeys
         {
-            get
-            {
-                if (this._primary == null)
-                   this._primary = new PrimaryKeys(this);
-
-                return this._primary;
-            }
+            get { return new PrimaryKeys(this); }
         }
 
-        private ForeignKeys _foreign = null;
         public IForeignKeys ForeignKeys
         {
-            get
-            {
-                if (this._foreign == null)
-                    this._foreign = new ForeignKeys(this);
-
-                return this._foreign;
-            }
+            get { return new ForeignKeys(this); }
         }
 
 
-        #endregion
-
-
-        
-        #region Identity/Computed column
-
-        private IdentityKeys _identity = null;
         public IIdentityKeys Identity
         {
-            get
-            {
-                if (this._columns == null)
-                    LoadSchema();
-
-                return this._identity;
-            }
+            get { return new IdentityKeys(this.Columns); }
         }
 
 
-        private ComputedColumns _computedColumns = null;
+
         public ComputedColumns ComputedColumns
         {
-            get
-            {
-                if (this._columns == null)
-                    LoadSchema();
-
-                return this._computedColumns;
-            }
+            get { return new ComputedColumns(this.Columns); }
         }
 
         #endregion

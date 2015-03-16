@@ -56,8 +56,8 @@ namespace SqlCompare
             DatabaseName db2 = Side2.DatabaseName;
 
 
-            stdio.WriteLine("server1: {0} default database:{1}", db1.Name, db2.Name);
-            stdio.WriteLine("server2: {0} default database:{1}", db1.Name, db2.Name);
+            stdio.WriteLine("server1: {0} default database:{1}", Side1.CS.DataSource, db1.Name);
+            stdio.WriteLine("server2: {0} default database:{1}", Side2.CS.DataSource, db2.Name);
            
             if (!Exists(db1) || !Exists(db2))
                 return string.Empty;

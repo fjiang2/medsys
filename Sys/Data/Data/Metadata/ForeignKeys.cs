@@ -41,7 +41,7 @@ namespace Sys.Data
 
             int i = 0;
             foreach (var fk in fkeys)
-                this.keys[i++] = new ForeignKey();
+                this.keys[i++] = new ForeignKey(fk);
         }
 
         public IForeignKey[] Keys

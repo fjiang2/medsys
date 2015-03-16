@@ -65,6 +65,9 @@ namespace Sys.Data.Comparison
                 }
             }
 
+            if (builder.ToString() != string.Empty)
+                builder.AppendLine(TableScript.GO);
+
             return builder.ToString();
         }
 
