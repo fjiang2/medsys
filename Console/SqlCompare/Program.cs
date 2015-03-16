@@ -94,6 +94,7 @@ namespace SqlCompare
             stdio.WriteLine("/c data    : compare data");
             stdio.WriteLine("/c gen     : generate table script from database on server1");
             stdio.WriteLine("/c row     : generate rows from table on server1");
+            stdio.WriteLine("/c struct  : generate datbase schema structure in *.xml file on server1");
             stdio.WriteLine("/c exec    : run sql script on server 2, let server2 += diff");
             stdio.WriteLine("/c shell     : enter command window");
             stdio.WriteLine("/db        : database name");

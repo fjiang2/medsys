@@ -19,6 +19,8 @@ namespace SqlCompare
 
         public string InputFile;
         public string OutputFile;
+        public string SchemaFile;
+
         public string[] excludedtables = new string[] { };
         public readonly Dictionary<string, string[]> PK = new Dictionary<string, string[]>();
 
@@ -108,6 +110,7 @@ namespace SqlCompare
             
             this.InputFile = GetValue<string>("input", "script.sql");
             this.OutputFile = GetValue<string>("output", "script.sql");
+            this.SchemaFile = GetValue<string>("schema", "schema.xml");
 
             var log = Cfg["log"];
             if(log.Defined)

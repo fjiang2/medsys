@@ -13,6 +13,7 @@ namespace SqlCompare
         Shell = 3,
         GenerateTableRows = 10,
         GenerateScript = 11,
+        GenerateSchema = 12,
         Execute = 20
     }
 }

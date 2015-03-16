@@ -121,6 +121,9 @@ namespace SqlCompare
                                 case "row":
                                     action = ActionType.GenerateTableRows;
                                     break;
+                                case "struct":
+                                    action = ActionType.GenerateSchema;
+                                    break;
                                 case "shell":
                                     action = ActionType.Shell;
                                     break;
@@ -280,9 +283,18 @@ namespace SqlCompare
                         adapter.Side1.GenerateRowScript(writer, tableNamePattern1, cfg.excludedtables);
                     }
                     break;
-
                 case ActionType.GenerateScript:
                     WriteFile(adapter.Side1.GenerateScript());
+                    break;
+
+                case ActionType.GenerateSchema:
+                    stdio.WriteLine("start to generate database schema to file: {0}", cfg.SchemaFile);
+                    using (var writer = new StreamWriter(cfg.SchemaFile))
+                    {
+                        DataSet ds = adapter.Side1.DatabaseName.DatabaseSchema();
+                        ds.WriteXml(writer, XmlWriteMode.WriteSchema);
+                    }
+                    stdio.WriteLine("completed");
                     break;
 
                 case ActionType.CompareData:
