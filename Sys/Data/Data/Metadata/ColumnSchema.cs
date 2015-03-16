@@ -28,6 +28,9 @@ namespace Sys.Data
     public class ColumnSchema : PersistentObject, IColumn
     {
 
+        [Column("TableName", CType.NVarChar)]
+        public string TableName { get; set; }
+
         [Column("ColumnName", CType.NVarChar, Primary = true)]
         public string ColumnName { get; set; }
 
@@ -54,6 +57,18 @@ namespace Sys.Data
 
         [Column("definition", CType.NVarChar)]
         public string Definition { get; set; }
+
+        [Column("PKContraintName", CType.NVarChar)]
+        public string PkContraintName { get; set; }
+
+        [Column("PK_Table", CType.NVarChar)]
+        public string PK_Table { get; set; }
+
+        [Column("PK_Column", CType.NVarChar)]
+        public string PK_Column { get; set; }
+
+        [Column("FKContraintName", CType.NVarChar)]
+        public string FkContraintName { get; set; }
 
         [Column("ColumnID", CType.Int)]
         public int ColumnID { get; set; }    //column_id is from column dictionary

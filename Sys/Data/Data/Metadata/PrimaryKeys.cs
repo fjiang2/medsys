@@ -34,12 +34,13 @@ namespace Sys.Data
             this.constraintName = "";
         }
 
-        public PrimaryKeys(TableName tname)
+        public PrimaryKeys(TableSchema schema)
         {
-            DataTable table = InformationSchema.PrimaryKeySchema(tname);
-            this.keys = table.ToArray<string>(0);
+            var pk = schema.Columns.Where(column => column.PkContraintName != null);
+            
+            this.keys = pk.Select(column => column.ColumnName).ToArray();
             if (this.keys.Length != 0)
-                this.constraintName = table.Cell<string>(0, 1);
+                this.constraintName = pk.Select(column => column.PkContraintName).First();
         }
 
         public string[] Keys

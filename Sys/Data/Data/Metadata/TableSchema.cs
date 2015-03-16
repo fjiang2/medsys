@@ -81,7 +81,7 @@ namespace Sys.Data
             get
             {
                 if (this._primary == null)
-                   this._primary = new PrimaryKeys(tableName);
+                   this._primary = new PrimaryKeys(this);
 
                 return this._primary;
             }
@@ -93,7 +93,7 @@ namespace Sys.Data
             get
             {
                 if (this._foreign == null)
-                    this._foreign = new ForeignKeys(tableName);
+                    this._foreign = new ForeignKeys(this);
 
                 return this._foreign;
             }

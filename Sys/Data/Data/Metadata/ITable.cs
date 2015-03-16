@@ -20,6 +20,7 @@ namespace Sys.Data
 
     public interface IColumn
     {
+        string TableName { get; }
         string ColumnName { get; }
         string DataType { get; }
         short Length { get; }
@@ -31,6 +32,9 @@ namespace Sys.Data
         bool IsComputed { get; }
         string Definition { get; }
         int ColumnID { get; }
+
+        string PkContraintName { get; }
+        string FkContraintName { get; }
 
         IForeignKey ForeignKey { get; set; }
         CType CType { get; }

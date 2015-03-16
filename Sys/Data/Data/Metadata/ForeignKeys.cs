@@ -34,22 +34,14 @@ namespace Sys.Data
             this.keys = columns;
         }
 
-        public ForeignKeys(TableName tname)
-        { 
+        public ForeignKeys(TableSchema schema)
+        {
+            var fkeys = schema.Columns.Where(column => column.FkContraintName != null).ToArray();
+            this.keys = new ForeignKey[fkeys.Length];
 
-            DataTable table = InformationSchema.ForeignKeySchema(tname);
-            
-            table.Columns.Add("DatabaseName", typeof(string));
-            table.Columns.Add("Provider", typeof(DataProvider));
-            foreach (DataRow row in table.Rows)
-            {
-                row["DatabaseName"] = tname.DatabaseName.Name;
-                row["Provider"] = tname.Provider;
-            }
-
-            table.AcceptChanges();
-
-            this.keys = new DPList<ForeignKey>(table).ToArray();
+            int i = 0;
+            foreach (var fk in fkeys)
+                this.keys[i++] = new ForeignKey();
         }
 
         public IForeignKey[] Keys
@@ -70,26 +62,20 @@ namespace Sys.Data
     }
 
 
-    class ForeignKey : PersistentObject, IForeignKey
+    class ForeignKey : IForeignKey
     {
 #pragma warning disable
 
-        [Column("DatabaseName", CType.NVarChar, Primary = true)]
         public string DatabaseName { get; set; }
 
-        [Column("FK_Table", CType.NVarChar, Primary = true)]
         public string FK_Table { get; set; }
 
-        [Column("FK_Column", CType.NVarChar, Primary = true)]
         public string FK_Column { get; set; }
 
-        [Column("PK_Table", CType.NVarChar)]
         public string PK_Table { get; set; }
 
-        [Column("PK_Column", CType.NVarChar)]
         public string PK_Column { get; set; }
 
-        [Column("Constraint_Name", CType.NVarChar)]
         public string Constraint_Name { get; set; }
 
 #pragma warning restore
@@ -100,9 +86,15 @@ namespace Sys.Data
         { 
         }
 
-        public ForeignKey(DataRow dataRow)
-            : base(dataRow)
-        { 
+        public ForeignKey(IColumn column)
+        {
+            ColumnSchema schema = (ColumnSchema)column;
+
+            this.FK_Table = column.TableName;
+            this.FK_Column = column.ColumnName;
+            this.PK_Table = schema.PK_Table;
+            this.PK_Column = schema.PK_Column;
+            this.Constraint_Name = schema.FkContraintName;
         }
 
       

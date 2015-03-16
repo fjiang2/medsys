@@ -43,9 +43,9 @@ namespace Sys.Data
             this.columnNames = columns.Where(column => column.IsIdentity).Select(column => column.ColumnName).ToArray();
         }
 
-        internal IdentityKeys(TableName tname)
+        internal IdentityKeys(TableSchema schema)
         { 
-            this.columnNames = InformationSchema.IdentityKeySchema(tname).ToArray<string>(0);
+            this.columnNames = schema.Columns.Where(column=> column.IsIdentity).Select(column=>column.ColumnName).ToArray();
         }
 
         public string[] ColumnNames
