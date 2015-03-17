@@ -31,16 +31,16 @@ namespace Sys.Data
         public PrimaryKeys(string[] columns)
         {
             this.keys = columns;
-            this.constraintName = "";
+            this.constraintName = null;
         }
 
-        public PrimaryKeys(TableSchema schema)
+        internal PrimaryKeys(ColumnCollection columns)
         {
-            var pk = schema.Columns.Where(column => column.PkContraintName != null);
+            var pk = columns.Where(column => (column as ColumnSchema).PkContraintName != null);
             
             this.keys = pk.Select(column => column.ColumnName).ToArray();
             if (this.keys.Length != 0)
-                this.constraintName = pk.Select(column => column.PkContraintName).First();
+                this.constraintName = pk.Select(column => (column as ColumnSchema).PkContraintName).First();
         }
 
         public string[] Keys

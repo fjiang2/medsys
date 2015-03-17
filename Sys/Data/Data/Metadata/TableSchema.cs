@@ -73,12 +73,12 @@ namespace Sys.Data
 
         public IPrimaryKeys PrimaryKeys
         {
-            get { return new PrimaryKeys(this); }
+            get { return new PrimaryKeys(this.Columns); }
         }
 
         public IForeignKeys ForeignKeys
         {
-            get { return new ForeignKeys(this); }
+            get { return new ForeignKeys(tableName, this.Columns); }
         }
 
 

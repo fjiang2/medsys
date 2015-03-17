@@ -43,11 +43,7 @@ namespace Sys.Data
             this.columnNames = columns.Where(column => column.IsIdentity).Select(column => column.ColumnName).ToArray();
         }
 
-        internal IdentityKeys(TableSchema schema)
-        { 
-            this.columnNames = schema.Columns.Where(column=> column.IsIdentity).Select(column=>column.ColumnName).ToArray();
-        }
-
+      
         public string[] ColumnNames
         {
             get

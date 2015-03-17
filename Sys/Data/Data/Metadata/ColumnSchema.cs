@@ -28,9 +28,6 @@ namespace Sys.Data
     public class ColumnSchema : PersistentObject, IColumn
     {
 
-        [Column("TableName", CType.NVarChar)]
-        public string TableName { get; set; }
-
         [Column("ColumnName", CType.NVarChar, Primary = true)]
         public string ColumnName { get; set; }
 
@@ -48,6 +45,9 @@ namespace Sys.Data
 
         [Column("scale", CType.TinyInt)]
         public byte Scale { get; set; }
+
+        [Column("IsPrimary", CType.Bit)]
+        public bool IsPrimary { get; set; }
 
         [Column("IsIdentity", CType.Bit)]
         public bool IsIdentity { get; set; }
@@ -76,8 +76,8 @@ namespace Sys.Data
         [Column("label", CType.NVarChar)]
         public string label { get; set; }    //label used as caption to support internationalization
 
+
         private CType ctype;
-        private bool isPrimary = false;
         private IForeignKey foreignKey;
 
         public ColumnSchema(DataRow dataRow)
@@ -97,7 +97,7 @@ namespace Sys.Data
             this.Scale = attr.Scale;
             this.IsIdentity = attr.Identity;
             this.IsComputed = attr.Computed;
-            this.isPrimary = attr.Primary;
+            this.IsPrimary = attr.Primary;
 
             this.ColumnID = -1; //useless here
             this.label = attr.Caption;
@@ -126,11 +126,7 @@ namespace Sys.Data
 
        
 
-        public bool IsPrimary
-        {
-            get { return this.isPrimary; }
-            set { this.isPrimary = value; }
-        }
+      
 
         public IForeignKey ForeignKey
         {
@@ -152,7 +148,7 @@ namespace Sys.Data
             && this.Scale.Equals(it.Scale)
             && this.IsIdentity.Equals(it.IsIdentity)
             && this.IsComputed.Equals(it.IsComputed)
-            && this.isPrimary.Equals(it.isPrimary);
+            && this.IsPrimary.Equals(it.IsPrimary);
         }
 
         public override string ToString()

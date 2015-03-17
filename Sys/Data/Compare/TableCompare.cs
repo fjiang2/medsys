@@ -15,24 +15,20 @@ namespace Sys.Data.Comparison
         internal IPrimaryKeys PkColumns;
         internal string[] NonPkColumns;
 
-        private TableName tableName1;
-        private TableName tableName2;
+        private TableSchema schema1;
+        private TableSchema schema2;
 
-        public TableCompare(TableName name1, TableName name2)
+        public TableCompare(TableSchema schema1, TableSchema schema2)
         {
-            tableName1 = name1;
-            tableName2 = name2;
+            this.schema1 = schema1;
+            this.schema2 = schema2;
         }
 
-        private string tableName
-        {
-            get { return tableName1.Name; }
-        }
 
         public string Compare(IPrimaryKeys pk)
         {
-            var dt1 = new TableReader(tableName1).Table;
-            var dt2 = new TableReader(tableName2).Table;
+            var dt1 = new TableReader(schema1.TableName).Table;
+            var dt2 = new TableReader(schema2.TableName).Table;
 
             return Compare(pk, dt1, dt2);
         }
@@ -43,7 +39,7 @@ namespace Sys.Data.Comparison
             this.NonPkColumns = table1.Columns.OfType<DataColumn>().Select(row => row.ColumnName).Except(PkColumns.Keys).ToArray();
 
             StringBuilder builder = new StringBuilder();
-            TableScript script = new TableScript(tableName1);
+            TableScript script = new TableScript(schema1.TableName);
             
             foreach (DataRow row1 in table1.Rows)
             {

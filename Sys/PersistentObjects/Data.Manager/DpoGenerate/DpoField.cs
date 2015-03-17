@@ -81,7 +81,7 @@ namespace Sys.Data.Manager
 
             if (column.ForeignKey != null && dpoClass.Dict != null)
             {
-                TableName pkTableName = new TableName(column.ForeignKey.Provider, column.ForeignKey.DatabaseName, column.ForeignKey.PK_Table);  //column.ForeignKey.TableName;
+                TableName pkTableName = new TableName(column.ForeignKey.TableName.DatabaseName, column.ForeignKey.PK_Table);  //column.ForeignKey.TableName;
 
                 if (dpoClass.Dict.ContainsKey(pkTableName))
                 {

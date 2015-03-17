@@ -20,7 +20,6 @@ namespace Sys.Data
 
     public interface IColumn
     {
-        string TableName { get; }
         string ColumnName { get; }
         string DataType { get; }
         short Length { get; }
@@ -32,9 +31,6 @@ namespace Sys.Data
         bool IsComputed { get; }
         string Definition { get; }
         int ColumnID { get; }
-
-        string PkContraintName { get; }
-        string FkContraintName { get; }
 
         IForeignKey ForeignKey { get; set; }
         CType CType { get; }
@@ -57,14 +53,13 @@ namespace Sys.Data
 
     public interface IForeignKey
     {
+        TableName TableName { get; }
+
         string FK_Table { get; }
         string FK_Column { get; }
         string PK_Table { get; }
         string PK_Column { get; }
         string Constraint_Name { get; }
-        
-        string DatabaseName { get;  }
-        DataProvider Provider { get; }
     }
 
     public interface IIdentityKeys

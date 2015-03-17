@@ -58,6 +58,9 @@ namespace Sys.Data.Comparison
                 TableName tname1 = new TableName(dname1, tableName);
                 TableName tname2 = new TableName(dname2, tableName);
 
+                TableSchema schema1 = new TableSchema(tname1);
+                TableSchema schema2 = new TableSchema(tname2);
+                
                 Console.WriteLine(tname1);
 
                 if (excludedTables.Contains(tableName.ToUpper()))
@@ -66,8 +69,7 @@ namespace Sys.Data.Comparison
                     continue;
                 }
 
-                string[] primaryKeys = InformationSchema.PrimaryKeySchema(tname1).ToArray<string>(0);
-                if (primaryKeys.Length == 0)
+                if (schema1.PrimaryKeys.Length == 0)
                 {
                     Console.WriteLine("undefined primary key");
                     continue;
@@ -75,7 +77,7 @@ namespace Sys.Data.Comparison
 
                 if (DatabaseSchema.Exists(tname2))
                 {
-                    builder.Append(TableDifference(tname1, tname2, primaryKeys));
+                    builder.Append(TableDifference(schema1, schema2, schema1.PrimaryKeys.Keys));
                 }
                 else
                 {
@@ -113,23 +115,9 @@ namespace Sys.Data.Comparison
 
 
 
-
-        public string TableDifference(TableName tableName1, TableName tableName2, out bool pk)
+        public string TableDifference(TableSchema schema1, TableSchema schema2, string[] primaryKeys)
         {
-            string[] primaryKeys = InformationSchema.PrimaryKeySchema(tableName1).ToArray<string>(0);
-            pk = primaryKeys.Length > 0;
-            string script = string.Empty;
-
-            if (pk)
-                script = TableDifference(tableName1, tableName2, primaryKeys);
-
-            return script;
-        }
-
-
-        public string TableDifference(TableName tableName1, TableName tableName2, string[] primaryKeys)
-        {
-            TableCompare compare = new TableCompare(tableName1, tableName2);
+            TableCompare compare = new TableCompare(schema1, schema2);
             IPrimaryKeys keys = new PrimaryKeys(primaryKeys);
             return compare.Compare(keys);
         }

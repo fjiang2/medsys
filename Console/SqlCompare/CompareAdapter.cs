@@ -131,6 +131,9 @@ namespace SqlCompare
             TableName tname1 = new TableName(Side1.DatabaseName, tableName1);
             TableName tname2 = new TableName(Side2.DatabaseName, tableName2);
 
+            TableSchema schema1 = new TableSchema(tname1);
+            TableSchema schema2 = new TableSchema(tname2);
+
             if (!Exists(tname1) || !Exists(tname2))
                 return string.Empty;
 
@@ -140,8 +143,8 @@ namespace SqlCompare
             if (sql == string.Empty)
             {
                 stdio.WriteLine("compare table data {0} => {1}", tableName1, tableName2);
-                bool hasPk;
-                sql = compare.TableDifference(tname1, tname2, out hasPk);
+                bool hasPk = schema1.PrimaryKeys.Length > 0;
+                sql = compare.TableDifference(schema1, schema2, schema1.PrimaryKeys.Keys);
 
                 if (!hasPk)
                 {
@@ -151,7 +154,7 @@ namespace SqlCompare
                     if (pk.ContainsKey(key))
                     {
                         stdio.WriteLine("use predefine keys defined in ini file: {0}", tname1);
-                        sql = compare.TableDifference(tname1, tname2, pk[key]);
+                        sql = compare.TableDifference(schema1, schema2, pk[key]);
                     }
                 }
 

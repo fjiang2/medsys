@@ -34,14 +34,14 @@ namespace Sys.Data
             this.keys = columns;
         }
 
-        public ForeignKeys(TableSchema schema)
+        public ForeignKeys(TableName tableName, ColumnCollection columns)
         {
-            var fkeys = schema.Columns.Where(column => column.FkContraintName != null).ToArray();
+            var fkeys = columns.Where(column => (column as ColumnSchema).FkContraintName != null).ToArray();
             this.keys = new ForeignKey[fkeys.Length];
 
             int i = 0;
             foreach (var fk in fkeys)
-                this.keys[i++] = new ForeignKey(fk);
+                this.keys[i++] = new ForeignKey(tableName, fk);
         }
 
         public IForeignKey[] Keys
@@ -64,11 +64,9 @@ namespace Sys.Data
 
     class ForeignKey : IForeignKey
     {
-#pragma warning disable
+        public TableName TableName { get; set; }
 
-        public string DatabaseName { get; set; }
-
-        public string FK_Table { get; set; }
+        public string FK_Table { get { return this.TableName.Name; } }
 
         public string FK_Column { get; set; }
 
@@ -78,24 +76,24 @@ namespace Sys.Data
 
         public string Constraint_Name { get; set; }
 
-#pragma warning restore
 
-        public DataProvider Provider { get; set; }
 
         public ForeignKey()
         { 
         }
 
-        public ForeignKey(IColumn column)
+        public ForeignKey(TableName tableName, IColumn column)
         {
+            this.TableName = tableName;
+
             ColumnSchema schema = (ColumnSchema)column;
 
-            this.FK_Table = column.TableName;
             this.FK_Column = column.ColumnName;
             this.PK_Table = schema.PK_Table;
             this.PK_Column = schema.PK_Column;
             this.Constraint_Name = schema.FkContraintName;
         }
+
 
       
     
