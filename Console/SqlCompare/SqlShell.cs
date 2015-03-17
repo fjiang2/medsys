@@ -296,6 +296,10 @@ namespace SqlCompare
                     theSide.DatabaseName.AllView().ToConsole();
                     break;
 
+                case "proc":
+                    theSide.DatabaseName.AllProc().ToConsole();
+                    break;
+                
                 case "table":
                     tnames.Select(name => new { Table = name })
                         .ToConsole();
@@ -336,6 +340,7 @@ namespace SqlCompare
             stdio.WriteLine("show ik tablename;    : show table identity keys");
             stdio.WriteLine("show view;            : show all views");
             stdio.WriteLine("show v viewnames;     : show view structure");
+            stdio.WriteLine("show proc;            : show all stored proc and func");
             stdio.WriteLine("show alias;           : show connection-string alias list");
             stdio.WriteLine("show var;             : show variable list");
             stdio.WriteLine("run query(..);        : run predefined query. e.g. run query(var1=val1,...);");

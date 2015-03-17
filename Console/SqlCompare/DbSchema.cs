@@ -122,11 +122,21 @@ namespace SqlCompare
 	            AND COL.TABLE_CATALOG = VCU.TABLE_CATALOG
 	            AND COL.TABLE_NAME    = VCU.TABLE_NAME
 	            AND COL.COLUMN_NAME   = VCU.COLUMN_NAME
-            WHERE VCU.VIEW_NAME   = '{0}'
+            WHERE VCU.VIEW_NAME = '{0}'
             ";
             return Use(tableName, SQL);
 
         }
 
+        public static DataTable AllProc(this DatabaseName databaseName)
+        {
+            string SQL = @"
+        SELECT Routine_Name , DATA_TYPE, ROUTINE_TYPE
+          FROM master.information_schema.routines 
+         WHERE Routine_Name IN (SELECT name FROM dbo.sysobjects)";
+            
+            return Use(databaseName, SQL);
+
+        }
     }
 }
