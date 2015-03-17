@@ -28,7 +28,7 @@ namespace Sys.ViewManager.Security
             DataTable dataTable = new TableReader<FormPermission>(
                         (FormPermission._Ty.ColumnName() == 1)
                     .AND(FormPermission._Role_ID.ColumnName().IN(
-                         new SqlClause()
+                         new SqlBuilder()
                             .SELECT.COLUMNS(UserRoleDpo._Role_ID.ColumnName())
                             .FROM<UserRoleDpo>()
                             .WHERE(UserRoleDpo._User_ID.ColumnName() ==Account.CurrentUser.UserID)

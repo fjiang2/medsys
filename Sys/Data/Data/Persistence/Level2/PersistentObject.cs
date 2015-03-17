@@ -88,7 +88,7 @@ namespace Sys.Data
         /// <param name="where"></param>
         public void UpdateObject(SqlExpr where)
         {
-            DataRow row = SqlCmd.FillDataRow(this.TableName.Provider, new SqlClause().SELECT.COLUMNS().FROM(TableName).WHERE(where).Clause);
+            DataRow row = SqlCmd.FillDataRow(this.TableName.Provider, new SqlBuilder().SELECT.COLUMNS().FROM(TableName).WHERE(where).Clause);
             this.exists = row != null;
             
             if(exists)
@@ -324,7 +324,7 @@ namespace Sys.Data
         {
             get
             {
-                return Meta.Identity;
+                return schema.Identity;
             }
         }
 
@@ -332,7 +332,7 @@ namespace Sys.Data
         {
             get
             {
-                return Meta.PrimaryKeys;
+                return schema.PrimaryKeys;
             }
         }
 
@@ -341,7 +341,7 @@ namespace Sys.Data
         {
             get
             {
-                return Meta.ComputedColumns;
+                return schema.ComputedColumns;
             }
         }
 
@@ -780,11 +780,11 @@ namespace Sys.Data
         
       
 
-        private TableSchema Meta
+        private TableSchema schema
         {
             get
             {
-                return this.TableName.GetCachedMetaTable();
+                return this.TableName.GetTableSchema();
             }
         }
 
@@ -798,7 +798,7 @@ namespace Sys.Data
                 }
 
                 //FROM SQL SERVER
-                return Meta.NewRow(); 
+                return schema.NewRow(); 
 
                 //or FROM ColumnAttribute
                 //return Reflex.GetEmptyDataTable(this.GetType()).NewRow();

@@ -162,7 +162,7 @@ namespace Sys.Data.Manager
 
         public static ColumnCollection MetaColumns(this TableName tableName)
         {
-            ITable meta = tableName.GetCachedMetaTable();
+            ITable meta = tableName.GetTableSchema();
             return meta.Columns;
         }
 

@@ -42,8 +42,8 @@ namespace Sys.Data
         PropertyInfo propertyInfo2;              //fieldof(DPCollection<RoleDpo>)  or fieldof(xxxDpo)
 
         
-        private SqlClause clause1;     //A := SELECT UserRoles.Role_ID FROM UserRoles WHERE UserRoles.User_ID=@[User.ID]
-        private SqlClause clause2;     //B := SELECT * FROM Roles WHERE Roles.Role_ID IN (A)
+        private SqlBuilder clause1;     //A := SELECT UserRoles.Role_ID FROM UserRoles WHERE UserRoles.User_ID=@[User.ID]
+        private SqlBuilder clause2;     //B := SELECT * FROM Roles WHERE Roles.Role_ID IN (A)
 
         public Mapping(PersistentObject dpo, PropertyInfo propertyInfo2)
         {
@@ -78,12 +78,12 @@ namespace Sys.Data
            
             if (mappingType == MappingType.Many2Many)
             {
-                this.clause1 = new SqlClause()
+                this.clause1 = new SqlBuilder()
                     .SELECT.COLUMNS(association.Relation2)
                     .FROM(association.TRelation)
                     .WHERE(association.Relation1.ColumnName() == association.Column1.ParameterName());
 
-                this.clause2 = new SqlClause()
+                this.clause2 = new SqlBuilder()
                     .SELECT
                     .COLUMNS()
                     .FROM(dpoType2)
@@ -96,7 +96,7 @@ namespace Sys.Data
                 if (association.Filter != null)
                     where = where.AND(association.Filter);
 
-                this.clause2 = new SqlClause()
+                this.clause2 = new SqlBuilder()
                     .SELECT
                     .COLUMNS()
                     .FROM(dpoType2)

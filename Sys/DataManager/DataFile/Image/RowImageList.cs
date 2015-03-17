@@ -143,7 +143,7 @@ namespace Sys.DataManager
             //    Sys.Security.Account.CurrentUser.User_ID
             //    );
 
-            new SqlClause()
+            new SqlBuilder()
                 .UPDATE<PictureDpo>()
                 .SET(PictureDpo._Row_Id.ColumnName() == rowObject.RowId)
                 .WHERE(

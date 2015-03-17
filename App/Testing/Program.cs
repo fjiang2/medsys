@@ -53,7 +53,7 @@ namespace App.Testing
 
         static void SqlClauseDemo()
         {
-            SqlClause sql1 = new SqlClause()
+            SqlBuilder sql1 = new SqlBuilder()
                 .SELECT.COLUMNS()
                 .FROM<UserDpo>()
                 .WHERE(
@@ -61,7 +61,7 @@ namespace App.Testing
                     .AND(UserDpo._First_Name.ColumnName() == "Unknown")
                     );
 
-            SqlClause sql2 = new SqlClause()
+            SqlBuilder sql2 = new SqlBuilder()
                 .SELECT.COLUMNS()
                 .FROM<UserDpo>()
                 .WHERE(
@@ -77,7 +77,7 @@ namespace App.Testing
 
 
             //potential bug, one user may open 1+ Image Windows
-            SqlClause clause = new SqlClause()
+            SqlBuilder clause = new SqlBuilder()
                 .UPDATE<UserDpo>()
                 .SET(
                     UserDpo._Email.ColumnName() == "my.email.com", 
@@ -117,7 +117,7 @@ namespace App.Testing
 
             string U = "U";
             string UR = "UR";
-            SqlClause clause = new SqlClause()
+            SqlBuilder clause = new SqlBuilder()
                 .SELECT.COLUMNS(
                     UserDpo.AllColumnNames(U),       //U.*
                     UserRoleDpo._Role_ID.ColumnName(UR) //UR.Role_ID

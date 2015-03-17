@@ -39,15 +39,15 @@ namespace Sys.Data.Persistence.Level4
         public TableReader(MappedColumn column1, MappedColumn column2, int value)
         {
 
-            SqlClause relationships = new SqlClause()
+            SqlBuilder relationships = new SqlBuilder()
                 .SELECT.COLUMNS().FROM<T1>().WHERE(column1.RelationName.ColumnName() == value);
 
-            SqlClause many = new SqlClause()
+            SqlBuilder many = new SqlBuilder()
                 .SELECT.COLUMNS()
                 .FROM<T2>()
                 .WHERE(column2.Name.ColumnName()
                     .IN(
-                         new SqlClause()
+                         new SqlBuilder()
                             .SELECT
                             .COLUMNS(column2.RelationName)
                             .FROM<T1>()

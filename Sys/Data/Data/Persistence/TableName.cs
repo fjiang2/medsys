@@ -128,7 +128,7 @@ namespace Sys.Data
         {
             get
             {
-                return this.GetCachedMetaTable().TableID;
+                return this.GetTableSchema().TableID;
             }
         }
 
@@ -139,7 +139,7 @@ namespace Sys.Data
             if (Id == -1)
                 return -1;
 
-            return this.GetCachedMetaTable().ColumnId(columnName);
+            return this.GetTableSchema().ColumnId(columnName);
         }
 
 

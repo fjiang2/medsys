@@ -82,7 +82,7 @@ namespace Sys.Data.Manager
 
         public bool ColumnExists(TableName table, string column)
         {
-            return table.GetCachedMetaTable().Columns.Exists(column);
+            return table.GetTableSchema().Columns.Exists(column);
         }
 
         public void AddColumn(TableName table, string column, SqlDbType type, int size, object defaultValue)

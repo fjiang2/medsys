@@ -90,7 +90,7 @@ namespace Sys.DataManager
             //    );
 
             //potential bug, one user may open 1+ documents Windows
-            new SqlClause()
+            new SqlBuilder()
             .UPDATE<Doc01Dpo>()
             .SET(Doc01Dpo._Row_Id.ColumnName() == rowObject.RowId)
             .WHERE(

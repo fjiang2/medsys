@@ -227,6 +227,7 @@ namespace SqlCompare
                 case "column":
                 case "pk":
                 case "fk":
+                case "ik":
                     foreach (var name in names)
                     {
                         TableName tname = new TableName(theSide.Provider, name);
@@ -244,10 +245,19 @@ namespace SqlCompare
                             case "fk":
                                 dt = tname.ForeignKeySchema();
                                 break;
+
+                            case "ik":
+                                dt = tname.IdentityKeySchema();
+                                break;
                         }
 
-                        stdio.WriteLine("<{0}>", name);
-                        dt.ToConsole();
+                        if (dt.Rows.Count > 0)
+                        {
+                            stdio.WriteLine("<{0}>", name);
+                            dt.ToConsole();
+                        }
+                        else
+                            stdio.WriteLine("not found at <{0}>", name);
                     }
                     break;
 
@@ -288,6 +298,7 @@ namespace SqlCompare
             stdio.WriteLine("show column tablename;: show table structure");
             stdio.WriteLine("show pk tablename;    : show table primary keys");
             stdio.WriteLine("show fk tablename;    : show table foreign keys");
+            stdio.WriteLine("show ik tablename;    : show table identity keys");
             stdio.WriteLine("show alias;           : show connection-string alias list");
             stdio.WriteLine("show var;             : show variable list");
             stdio.WriteLine("set var = value;      : assign value to variable");

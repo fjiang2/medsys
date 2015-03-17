@@ -468,7 +468,7 @@ namespace Sys.Data
         private static DataPool<TableName, TableSchema> pool = new DataPool<TableName, TableSchema>(20);
         
         //return TableId ==-1 , ColumnId == -1
-        internal static TableSchema GetCachedMetaTable(this TableName tname)
+        internal static TableSchema GetTableSchema(this TableName tname)
         {
             return pool.GetItem(tname);
         }

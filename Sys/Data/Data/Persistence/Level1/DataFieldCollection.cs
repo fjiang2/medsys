@@ -31,7 +31,7 @@ namespace Sys.Data
      
         public void UpdatePrimaryIdentity(TableName tableName)
         {
-            TableSchema meta = tableName.GetCachedMetaTable();
+            TableSchema meta = tableName.GetTableSchema();
 
             UpdatePrimaryIdentity(meta.PrimaryKeys, meta.Identity);
         }
@@ -95,7 +95,7 @@ namespace Sys.Data
         /// <returns></returns>
         public DataFieldCollection Add(TableName tname)
         {
-            var meta = tname.GetCachedMetaTable();      //some columns in [this.dataTable] may be from other tables
+            var meta = tname.GetTableSchema();      //some columns in [this.dataTable] may be from other tables
             Add(meta.NewRow());
 
             UpdatePrimaryIdentity(tname);

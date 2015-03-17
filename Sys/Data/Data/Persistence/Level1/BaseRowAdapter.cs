@@ -76,7 +76,7 @@ namespace Sys.Data
 
         public void Validate()
         {
-            ITable metaTable = tableName.GetCachedMetaTable();
+            ITable metaTable = tableName.GetTableSchema();
             foreach (ColumnAdapter column in columns)
             {
                 DataField field = column.Field;

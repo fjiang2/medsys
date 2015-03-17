@@ -22,7 +22,7 @@ using System.Text;
 
 namespace Sys.Data
 {
-    public sealed class SqlExpr : SqlClauseInfo
+    public sealed class SqlExpr : SqlBuilderInfo
     {
         private StringBuilder script = new StringBuilder();
 
@@ -270,7 +270,7 @@ namespace Sys.Data
         }
 
 
-        public SqlExpr IN(SqlClause select)
+        public SqlExpr IN(SqlBuilder select)
         {
             this
                     .Next(" IN (")

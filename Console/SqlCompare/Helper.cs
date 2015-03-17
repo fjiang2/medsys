@@ -246,6 +246,24 @@ WHERE FK.TABLE_NAME='{0}'
 
         }
 
+        public static DataTable IdentityKeySchema(this TableName tableName)
+        {
+            string SQL = @"
+                SELECT 
+	            t.name AS TableName,
+	            c.name AS ColumnName
+            FROM sys.tables t 
+	            JOIN sys.columns c ON t.object_id = c.object_id 
+            WHERE t.name = '{0}' AND 
+	                c.is_identity = 1
+            ORDER BY t.name
+            ";
+            return Use(tableName, SQL);
+
+        }
+
+
+
         private static DataTable Use(this TableName tableName, string script)
         {
             StringBuilder builder = new StringBuilder();
