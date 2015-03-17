@@ -24,9 +24,16 @@ namespace SqlCompare
         {
             this.cfg = cfg;
             this.adapter =adapter;
-            this.theSide = adapter.Side1;
             this.server = 1;
+
+            ChangeSide(adapter.Side1);
             
+        }
+
+        private void ChangeSide(Side side)
+        {
+            this.theSide = side;
+            Context.DS.AddHostObject(Context.THESIDE, side);
         }
 
         public void DoCommand()
@@ -124,10 +131,6 @@ namespace SqlCompare
                         stdio.WriteLine("find object undefined");
                     break;
 
-                case "set":
-                    Context.Execute(text.Replace("set", "") + ";");
-                    break;
-
                 case "run":
                     {
                         VAL result = Context.Evaluate(arg1);
@@ -163,14 +166,24 @@ namespace SqlCompare
                         new SqlCmd(theSide.Provider, text).Execute(reader => reader.ToConsole(Context.GetValue<int>(Context.MAXROWS, 100)));
                     break;
 
+                case "update":
+                case "delete":
+                case "insert":
+                case "exec":
+                case "create":
+                case "alter":
+                case "drop":
+                    new SqlCmd(theSide.Provider, text).ExecuteNonQuery();
+                    break;
+
                 case "1":
-                    this.theSide = adapter.Side1;
+                    ChangeSide(adapter.Side1);
                     this.server = 1;
                     stdio.WriteLine("server 1 selected({0})", showConnection(theSide.CS));
                     break;
 
                 case "2":
-                    this.theSide = adapter.Side2;
+                    ChangeSide(adapter.Side2);
                     this.server = 2;
                     stdio.WriteLine("server 2 selected({0})", showConnection(theSide.CS));
                     break;
@@ -180,7 +193,7 @@ namespace SqlCompare
                         var conn = cfg.GetConnectionString(arg1);
                         if (conn != null)
                         {
-                            this.theSide = new Side(new SqlConnectionStringBuilder(conn));
+                            ChangeSide(new Side(new SqlConnectionStringBuilder(conn)));
                             this.server = 3;
                             stdio.WriteLine("server 3 selected({0})", showConnection(theSide.CS));
                         }
@@ -196,14 +209,12 @@ namespace SqlCompare
                         stdio.WriteLine("invalid command");
                         break;
                     }
-
-                    try
+                    else
                     {
-                        new SqlCmd(theSide.Provider, text).ExecuteNonQuery();
-                    }
-                    catch (Exception ex)
-                    {
-                        stdio.WriteLine(ex.Message);
+                        if (text.EndsWith(";"))
+                            Tie.Script.Execute(text, Context.DS);
+                        else
+                            Tie.Script.Evaluate(text, Context.DS);
                     }
 
                     break;
@@ -301,15 +312,19 @@ namespace SqlCompare
             stdio.WriteLine("show ik tablename;    : show table identity keys");
             stdio.WriteLine("show alias;           : show connection-string alias list");
             stdio.WriteLine("show var;             : show variable list");
-            stdio.WriteLine("set var = value;      : assign value to variable");
-            stdio.WriteLine("run query(..);        : run predefined query. e.g. run query(var1=val1, var2=val2,...);");
-            stdio.WriteLine("all sql clauses, e.g. select * from table, update...");
+            stdio.WriteLine("run query(..);        : run predefined query. e.g. run query(var1=val1,...);");
+            stdio.WriteLine("all sql clauses, e.g. select/update/delete/create/drop...");
             stdio.WriteLine("1                     : switch to source server 1 (default)");
             stdio.WriteLine("2                     : switch to sink server 2");
             stdio.WriteLine("goto alias;           : switch to database server");
             stdio.WriteLine("exit                  : quit application");
             stdio.WriteLine("help                  : this help");
             stdio.WriteLine("?                     : this help");
+            stdio.WriteLine("<Functions>");
+            stdio.WriteLine("export(tablename, where, filename)");
+            stdio.WriteLine("                      : export INSERT claues(SELECT * FROM tablename WHERE");
+            stdio.WriteLine("export(tablename, filename)");
+            stdio.WriteLine("                      : export INSERT claues(SELECT * FROM tablename");
             stdio.WriteLine("<Variable>");
             stdio.WriteLine("maxrows      : max number of row shown on select query");
             stdio.WriteLine("DataReader   : true: use SqlDataReader; false: use Fill DataSet");

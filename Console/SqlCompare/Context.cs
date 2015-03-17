@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 using Tie;
+using Sys.Data;
 
 namespace SqlCompare
 {
@@ -11,6 +13,7 @@ namespace SqlCompare
     {
         public const string MAXROWS = "maxrows";
         public const string DATAREADER = "DataReader";
+        public const string THESIDE = "$TheSide";
 
         public static Memory DS = new Memory();
 
@@ -45,7 +48,7 @@ namespace SqlCompare
         public static void ToConsole()
         {
             ((VAL)DS)
-                .Where(row => row[1].ty != VALTYPE.nullcon && row[1].ty != VALTYPE.voidcon)
+                .Where(row => row[1].ty != VALTYPE.nullcon && row[1].ty != VALTYPE.voidcon && !row[0].Str.StartsWith("$"))
                 .Select(row => new { Variable = (string)row[0], Value = row[1] })
                 .ToConsole();
         }
@@ -59,32 +62,86 @@ namespace SqlCompare
         }
 
 
-        internal static VAL functions(string func, VAL parameters, Memory DS)
+        static VAL functions(string func, VAL parameters, Memory DS)
         {
-            var query = DS[func];
-            if (query.ty == VALTYPE.stringcon)
+            int size = parameters.Size;
+            VAL L0 = size > 0 ? parameters[0] : null;
+            VAL L1 = size > 1 ? parameters[1] : null;
+            VAL L2 = size > 2 ? parameters[2] : null;
+
+
+            switch (func)
             {
-                VAL val = VAL.Array(0);
-                for (int i = 0; i < parameters.Size; i++)
-                {
-                    VAL parameter = parameters[i];
-                    string name = parameter.GetName();
-
-                    if (name == null)
+                //export("tablename", "where", "script.sql");
+                //export("tablename", "script.sql");
+                case "export":
                     {
-                        stdio.WriteLine("require parameter name at arguments({0}), run func(id=20,x=2);", i + 1);
-                        return new VAL(2);
-                    }
-                    val.Add(name, parameter);
-                }
+                        string tableName = null;
+                        string where = null;
+                        string fileName = null;
 
-                VAL result = VAL.Array(0);
-                result.Add(query);
-                result.Add(val);
-                return result;
+                        if (size == 2 && L0.ty == VALTYPE.stringcon && L1.ty == VALTYPE.stringcon)
+                        {
+                            tableName = L0.Str;
+                            fileName = L1.Str;
+                        }
+                        if (size == 3 && L0.ty == VALTYPE.stringcon && L2.ty == VALTYPE.stringcon)
+                        {
+                            tableName = L0.Str;
+                            where = L1.Str;
+                            fileName = L2.Str;
+                        }
+
+                        if (tableName != null && fileName != null)
+                        {
+                            Side theSide = (Side)DS[THESIDE].HostValue;
+                            TableName tname = new TableName(theSide.DatabaseName, tableName);
+                            using (var writer = new StreamWriter(fileName))
+                            {
+                                if (where != null)
+                                {
+                                    theSide.GenerateRows(writer, tname, where);
+                                    stdio.WriteLine("insert clauses (SELECT * FROM {0} WHERE {1}) generated to {2}", tname, where, fileName);
+                                }
+                                else
+                                {
+                                    theSide.GenerateRows(writer, tname, null);
+                                    stdio.WriteLine("insert clauses (SELECT * FROM {0}) generated to {1}", tname, fileName);
+                                }
+                            }
+
+                            return new VAL();
+                        }
+                    }
+                    break;
+
+                default:
+                    var query = DS[func];
+                    if (query.ty == VALTYPE.stringcon)
+                    {
+                        VAL val = VAL.Array(0);
+                        for (int i = 0; i < parameters.Size; i++)
+                        {
+                            VAL parameter = parameters[i];
+                            string name = parameter.GetName();
+
+                            if (name == null)
+                            {
+                                stdio.WriteLine("require parameter name at arguments({0}), run func(id=20,x=2);", i + 1);
+                                return new VAL(2);
+                            }
+                            val.Add(name, parameter);
+                        }
+
+                        VAL result = VAL.Array(0);
+                        result.Add(query);
+                        result.Add(val);
+                        return result;
+                    }
+                    break;
             }
-            else
-                return null;
+            
+            return null;
 
         }
     }
