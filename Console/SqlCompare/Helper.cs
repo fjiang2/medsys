@@ -221,7 +221,7 @@ FROM    INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS C
                             INNER JOIN INFORMATION_SCHEMA.KEY_COLUMN_USAGE i2 ON i1.CONSTRAINT_NAME = i2.CONSTRAINT_NAME
                      WHERE  i1.CONSTRAINT_TYPE = 'PRIMARY KEY'
                    ) PT ON PT.TABLE_NAME = PK.TABLE_NAME
-WHERE FK.TABLE_NAME='{1}'       
+WHERE FK.TABLE_NAME='{0}'       
             ";
 
             return Use(tableName, SQL);

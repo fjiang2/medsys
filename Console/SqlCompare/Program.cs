@@ -100,7 +100,8 @@ namespace SqlCompare
             stdio.WriteLine("/db        : database name");
             stdio.WriteLine("/dt        : table name (wildcard*,?)");
             stdio.WriteLine("/e         : excluded table list during 2 databases data comparing");
-            stdio.WriteLine("/f         : result of comparsion(diff=server1-server2),sql script file");
+            stdio.WriteLine("/i         : input sql script file");
+            stdio.WriteLine("/o         : result of comparsion(diff=server1-server2),sql script file");
             stdio.WriteLine("examples:");
             stdio.WriteLine("SqlCompare /s localhost /db northwind:southwind /schema");
             stdio.WriteLine("SqlCompare /S localhost /U sa /P password /db northwind /c schema");

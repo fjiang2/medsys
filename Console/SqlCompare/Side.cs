@@ -53,7 +53,7 @@ namespace SqlCompare
                 {
                     string line = reader.ReadLine();
 
-                    if (line == "GO")
+                    if (line == "GO" || line=="go")
                     {
                         string sql = builder.ToString();
                         new SqlCmd(this.Provider, sql).ExecuteNonQuery();

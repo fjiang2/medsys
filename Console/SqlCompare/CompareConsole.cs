@@ -235,7 +235,19 @@ namespace SqlCompare
 
 
 
-                    case "/f":
+                    case "/i":
+                        if (i < args.Length && !args[i].StartsWith("/"))
+                        {
+                            cfg.InputFile = args[i++];
+                            break;
+                        }
+                        else
+                        {
+                            stdio.WriteLine("/i undefined sql script file name");
+                            return;
+                        }
+
+                    case "/o":
                         if (i < args.Length && !args[i].StartsWith("/"))
                         {
                             cfg.OutputFile = args[i++];
@@ -243,7 +255,7 @@ namespace SqlCompare
                         }
                         else
                         {
-                            stdio.WriteLine("/f undefined sql script file name");
+                            stdio.WriteLine("/o undefined sql script file name");
                             return;
                         }
 
