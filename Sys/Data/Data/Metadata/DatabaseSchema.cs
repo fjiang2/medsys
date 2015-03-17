@@ -131,10 +131,11 @@ namespace Sys.Data
 
         public static string GenerateScript(this TableName tableName)
         {
-            string sql;
-            var script = new TableScript(tableName);
-            sql = script.CREATE_TABLE();
             TableSchema schema1 = new TableSchema(tableName);
+
+            string sql;
+            var script = new TableScript(schema1);
+            sql = script.CREATE_TABLE();
 
             StringBuilder builder = new StringBuilder(sql);
             builder.AppendLine(TableScript.GO);

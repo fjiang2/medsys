@@ -12,24 +12,26 @@ namespace Sys.Data
     {
         public static readonly string GO = "GO";
 
-        TableName tableName;
+        private TableSchema schema;
+        private TableName tableName;
 
-        public TableScript(TableName name)
+        public TableScript(TableSchema schema)
         {
-            this.tableName = name;
+            this.schema = schema;
+            this.tableName = schema.TableName;
         }
 
         #region INSERT/UPDATE/DELETE
 
         public string INSERT(DataRow row)
         {
-            var direct = RowCompare.Direct(row);
+            var direct = RowCompare.Direct(row).Where(column=> !schema.Identity.ColumnNames.Contains(column.ColumnName));
             return INSERT(direct);
         }
 
         public string INSERT(string[] columnName, object[] values)
         {
-            var direct = RowCompare.Direct(columnName, values);
+            var direct = RowCompare.Direct(columnName, values).Where(column => !schema.Identity.ColumnNames.Contains(column.ColumnName));
             return INSERT(direct);
         }
 

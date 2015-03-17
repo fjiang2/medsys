@@ -81,7 +81,7 @@ namespace Sys.Data.Comparison
                 }
                 else
                 {
-                    builder.Append(Compare.GenerateRows(tname1, new TableReader(tname1)));
+                    builder.Append(Compare.GenerateRows(schema1, new TableReader(tname1)));
                 }
 
                 builder.AppendLine();
@@ -128,12 +128,12 @@ namespace Sys.Data.Comparison
         #region create all rows
 
 
-        private static string GenerateRows(TableName tableName, TableReader reader)
+        private static string GenerateRows(TableSchema schema, TableReader reader)
         {
 
             var table = reader.Table; ;
 
-            TableScript script = new TableScript(tableName);
+            TableScript script = new TableScript(schema);
 
             StringBuilder builder = new StringBuilder();
             foreach (DataRow row in table.Rows)
@@ -145,22 +145,23 @@ namespace Sys.Data.Comparison
             return builder.ToString();
         }
 
-        public static void GenerateRows(StreamWriter writer, TableName tableName, string where)
+        public static void GenerateRows(StreamWriter writer, TableSchema schema, string where)
         {
+            TableName tableName = schema.TableName;
             string sql = string.Format("SELECT * FROM {0}", tableName);
             if (where != null)
                 sql = string.Format("SELECT * FROM {0} WHERE {1}", tableName, where);
 
             SqlCmd cmd = new SqlCmd(tableName.Provider, sql);
-            TableScript script = new TableScript(tableName);
+            TableScript script = new TableScript(schema);
 
             int count = 0;
             cmd.Execute(
                 reader =>
                 {
-                    DataTable schema = reader.GetSchemaTable();
+                    DataTable schema1 = reader.GetSchemaTable();
 
-                    string[] columns = schema.AsEnumerable().Select(row => row.Field<string>("ColumnName")).ToArray();
+                    string[] columns = schema1.AsEnumerable().Select(row => row.Field<string>("ColumnName")).ToArray();
                     object[] values = new object[columns.Length];
 
                     while (reader.HasRows)

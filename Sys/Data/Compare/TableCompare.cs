@@ -39,7 +39,7 @@ namespace Sys.Data.Comparison
             this.NonPkColumns = table1.Columns.OfType<DataColumn>().Select(row => row.ColumnName).Except(PkColumns.Keys).ToArray();
 
             StringBuilder builder = new StringBuilder();
-            TableScript script = new TableScript(schema1.TableName);
+            TableScript script = new TableScript(schema1);
             
             foreach (DataRow row1 in table1.Rows)
             {

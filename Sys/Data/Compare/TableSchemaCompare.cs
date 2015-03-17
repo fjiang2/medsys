@@ -22,7 +22,7 @@ namespace Sys.Data.Comparison
             TableSchema schema2 = new TableSchema(tableName2);
 
             StringBuilder builder = new StringBuilder();
-            TableScript script = new TableScript(tableName1);
+            TableScript script = new TableScript(schema1);
 
             foreach (ColumnSchema column in schema1.Columns)
             {

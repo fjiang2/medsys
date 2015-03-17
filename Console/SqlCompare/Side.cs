@@ -69,10 +69,16 @@ namespace SqlCompare
         {
             List<string> list = new List<string>();
             MatchedDatabase m = new MatchedDatabase(this.DatabaseName, tableNamePattern, excludedtables);
-            foreach (string name in m.DefaultTableNames)
+
+            string[] history = this.DatabaseName.GetDependencyTableNames();
+
+            foreach (string name in history)
             {
-                if (!excludedtables.Contains(name.ToUpper()))
-                    list.Add(name);
+                if (m.DefaultTableNames.Contains(name))
+                {
+                    if (!excludedtables.Contains(name.ToUpper()))
+                        list.Add(name);
+                }
             }
 
             GenerateRows(writer, list.ToArray());
@@ -86,14 +92,14 @@ namespace SqlCompare
             {
                 stdio.WriteLine("generate insert clauses on table : {0}", tableName);
                 var tname = new TableName(Provider, tableName);
-                Compare.GenerateRows(writer, tname, null);
+                Compare.GenerateRows(writer, new TableSchema(tname), null);
             }
         }
 
         private void GenerateRows(StreamWriter writer, string tableName, string where)
         {
             var tname = new TableName(Provider, tableName);
-            Compare.GenerateRows(writer, tname, where);
+            Compare.GenerateRows(writer, new TableSchema(tname), where);
         }
 
        
