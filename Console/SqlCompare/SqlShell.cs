@@ -224,10 +224,13 @@ namespace SqlCompare
 
         private void Show(string arg1, string arg2)
         {
-            string[] names;
+            string[] tnames;
+            string[] vnames;
 
-            names = new MatchedDatabase(theSide.DatabaseName, arg2, null).DefaultTableNames;
-            if (names.Length == 0)
+            tnames = new MatchedDatabase(theSide.DatabaseName, arg2, null).DefaultTableNames;
+            vnames = new MatchedDatabase(theSide.DatabaseName, arg2, null).DefaultViewNames;
+
+            if (tnames.Length == 0)
             {
                 stdio.WriteLine("cannot find any table name like \"{0}\"", arg2);
                 return;
@@ -235,17 +238,17 @@ namespace SqlCompare
 
             switch (arg1)
             {
-                case "column":
+                case "t":
                 case "pk":
                 case "fk":
                 case "ik":
-                    foreach (var name in names)
+                    foreach (var name in tnames)
                     {
                         TableName tname = new TableName(theSide.Provider, name);
                         DataTable dt = null;
                         switch (arg1)
                         {
-                            case "column":
+                            case "t":
                                 dt = tname.TableSchema();
                                 break;
 
@@ -272,8 +275,29 @@ namespace SqlCompare
                     }
                     break;
 
+                case "v":
+                    foreach (var name in vnames)
+                    {
+                        TableName tname = new TableName(theSide.Provider, name);
+                        DataTable dt = null;
+                        dt = tname.ViewSchema();
+                        if (dt.Rows.Count > 0)
+                        {
+                            stdio.WriteLine("<{0}>", name);
+                            dt.ToConsole();
+                        }
+                        else
+                            stdio.WriteLine("not found at <{0}>", name);
+                    }
+                    break;
+
+
+                case "view":
+                    theSide.DatabaseName.AllView().ToConsole();
+                    break;
+
                 case "table":
-                    names.Select(name => new { Table = name })
+                    tnames.Select(name => new { Table = name })
                         .ToConsole();
                     break;
 
@@ -306,10 +330,12 @@ namespace SqlCompare
             stdio.WriteLine("find pattern;         : find table name and column name");
             stdio.WriteLine("show table;           : show all table names");
             stdio.WriteLine("show table pattern;   : show matched table names (wildcard*,?)");
-            stdio.WriteLine("show column tablename;: show table structure");
+            stdio.WriteLine("show t tablename;     : show table structure");
             stdio.WriteLine("show pk tablename;    : show table primary keys");
             stdio.WriteLine("show fk tablename;    : show table foreign keys");
             stdio.WriteLine("show ik tablename;    : show table identity keys");
+            stdio.WriteLine("show view;            : show all views");
+            stdio.WriteLine("show v viewnames;     : show view structure");
             stdio.WriteLine("show alias;           : show connection-string alias list");
             stdio.WriteLine("show var;             : show variable list");
             stdio.WriteLine("run query(..);        : run predefined query. e.g. run query(var1=val1,...);");

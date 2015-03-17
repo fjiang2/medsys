@@ -128,6 +128,13 @@ namespace Sys.Data
 
         }
 
+        public static string[] GetViewNames(this DatabaseName databaseName)
+        {
+            return SqlCmd
+                .FillDataTable(databaseName.Provider, "USE [{0}] ; SELECT name FROM sys.views ORDER BY name", databaseName.Name)
+                .ToArray<string>("name");
+        }
+
 
         public static string GenerateScript(this TableName tableName)
         {

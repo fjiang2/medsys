@@ -10,14 +10,14 @@ namespace SqlCompare
 {
     class MatchedDatabase  
     {
-        private string tableNamePattern;
+        private string namePattern;
 
         public readonly DatabaseName DatabaseName;
         public readonly string[] Excludedtables;
 
-        public MatchedDatabase(DatabaseName databaseName, string tableNamePattern, string[] excludedtables)
+        public MatchedDatabase(DatabaseName databaseName, string namePattern, string[] excludedtables)
         {
-            this.tableNamePattern = tableNamePattern;
+            this.namePattern = namePattern;
             this.DatabaseName = databaseName;
             
             if(excludedtables != null)
@@ -29,10 +29,10 @@ namespace SqlCompare
         {
             get
             {
-                if (tableNamePattern == null)
+                if (namePattern == null)
                     return null;
 
-                var names = Search(tableNamePattern, this.DatabaseName.GetDependencyTableNames());
+                var names = Search(namePattern, this.DatabaseName.GetDependencyTableNames());
                 return names;
             }
         }
@@ -44,10 +44,26 @@ namespace SqlCompare
                 string[] names = this.DatabaseName.GetTableNames();
 
                 names = names.Where(name => Includes(name)).ToArray();
-                if (tableNamePattern == null)
+                if (namePattern == null)
                     return names;
 
-                names = Search(tableNamePattern, names);
+                names = Search(namePattern, names);
+
+                return names;
+            }
+        }
+
+        public string[] DefaultViewNames
+        {
+            get
+            {
+                string[] names = this.DatabaseName.GetViewNames();
+
+                names = names.Where(name => Includes(name)).ToArray();
+                if (namePattern == null)
+                    return names;
+
+                names = Search(namePattern, names);
 
                 return names;
             }

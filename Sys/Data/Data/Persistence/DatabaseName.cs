@@ -38,7 +38,7 @@ namespace Sys.Data
         }
 
 
-        internal DataProvider Provider
+        public DataProvider Provider
         {
             get { return this.provider; }
         }
