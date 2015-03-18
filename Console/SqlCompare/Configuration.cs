@@ -17,9 +17,10 @@ namespace SqlCompare
 
         public ActionType Action = ActionType.CompareSchema;
 
-        public string InputFile;
-        public string OutputFile;
-        public string SchemaFile;
+        private string directory;
+        private string inputFile;
+        private string outputFile;
+        private string schemaFile;
 
         public string[] excludedtables = new string[] { };
         public readonly Dictionary<string, string[]> PK = new Dictionary<string, string[]>();
@@ -28,6 +29,40 @@ namespace SqlCompare
         {
             Script.FunctionChain.Add(functions);
         }
+
+
+        public string InputFile
+        { 
+            get
+            {
+                return string.Format("{0}\\{1}", directory, inputFile);
+            }
+            set
+            {
+                this.inputFile = value;
+            }
+        }
+        
+        public string OutputFile
+        {
+            get
+            {
+                return string.Format("{0}\\{1}", directory, outputFile);
+            }
+            set
+            {
+                this.outputFile = value;
+            }
+        }
+
+        public string SchemaFile
+        {
+            get
+            {
+                return string.Format("{0}\\{1}", directory, schemaFile);
+            }
+        }
+
 
         private static VAL functions(string func, VAL parameters, Memory DS)
         {
@@ -107,14 +142,21 @@ namespace SqlCompare
 
             this.excludedtables = GetValue<string[]>("excludedtables", new string[] { });
             this.Action = GetValue<ActionType>("comparetype", ActionType.CompareSchema);
-            
-            this.InputFile = GetValue<string>("input", "script.sql");
-            this.OutputFile = GetValue<string>("output", "script.sql");
-            this.SchemaFile = GetValue<string>("schema", "schema.xml");
+
+            this.directory = GetValue<string>("directory", "."); 
+            this.inputFile = GetValue<string>("input", "script.sql");
+            this.outputFile = GetValue<string>("output", "script.sql");
+            this.schemaFile = GetValue<string>("schema", "schema.xml");
+
+
+            if (this.directory != "." && !System.IO.Directory.Exists(directory))
+            {
+                System.IO.Directory.CreateDirectory(this.directory);
+            }
 
             var log = Cfg["log"];
             if(log.Defined)
-                Context.DS.Add("log", log);
+                Context.DS.Add("log", new VAL(string.Format("{0}\\{1}", directory, log.Str)));
 
 
             var pk = Cfg["primary_key"];
