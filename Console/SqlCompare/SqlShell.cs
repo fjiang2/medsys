@@ -7,6 +7,7 @@ using Sys.Data;
 using Sys.Data.Comparison;
 using System.Data;
 using System.Data.SqlClient;
+using System.Data.OleDb;
 using System.IO;
 using Sys;
 using Tie;
@@ -46,7 +47,7 @@ namespace SqlCompare
             while (true)
             {
             L1:
-                stdio.Write("{0}> ", server);
+                stdio.Write("{0}> ", theSide.Alias);
             L2:
                 line = stdio.ReadLine();
 
@@ -193,9 +194,20 @@ namespace SqlCompare
                         var conn = cfg.GetConnectionString(arg1);
                         if (conn != null)
                         {
-                            ChangeSide(new Side(new SqlConnectionStringBuilder(conn)));
+                            if (conn.ToLower().IndexOf("sqloledb")>=0)
+                            {
+                                var x1 = new OleDbConnectionStringBuilder(conn);
+                                var x2 = new SqlConnectionStringBuilder();
+                                x2.DataSource = x1.DataSource;
+                                x2.InitialCatalog = (string)x1["Initial Catalog"];
+                                x2.UserID = (string)x1["User Id"];
+                                x2.Password = (string)x1["Password"];
+                                conn = x2.ConnectionString;
+                            }
+
+                            ChangeSide(new Side(arg1, new SqlConnectionStringBuilder(conn)));
                             this.server = 3;
-                            stdio.WriteLine("server 3 selected({0})", showConnection(theSide.CS));
+                            stdio.WriteLine("({0}) selected", showConnection(theSide.CS));
                         }
 
                         else
@@ -291,6 +303,11 @@ namespace SqlCompare
                     }
                     break;
 
+                case "db":
+                    new SqlCmd(theSide.Provider, "SELECT name FROM sys.databases ORDER BY name")
+                        .FillDataTable()
+                        .ToConsole();
+                    break;
 
                 case "view":
                     theSide.DatabaseName.AllView().ToConsole();
@@ -332,6 +349,7 @@ namespace SqlCompare
         {
             stdio.WriteLine("<Commands>");
             stdio.WriteLine("find pattern;         : find table name and column name");
+            stdio.WriteLine("show db;              : show database names");
             stdio.WriteLine("show table;           : show all table names");
             stdio.WriteLine("show table pattern;   : show matched table names (wildcard*,?)");
             stdio.WriteLine("show t tablename;     : show table structure");

@@ -20,10 +20,10 @@ namespace SqlCompare
         public Side Side1 {get; private set;}
         public Side Side2 {get; private set;}
 
-        public CompareAdapter(SqlConnectionStringBuilder cs1, SqlConnectionStringBuilder cs2)
+        public CompareAdapter(Side side1, Side side2)
         {
-            this.Side1 = new Side(cs1);
-            this.Side2 = new Side(cs2);
+            this.Side1 = side1;
+            this.Side2 = side2;
             this.compare = new Compare(this.Side1.Provider, this.Side2.Provider);
         }
      

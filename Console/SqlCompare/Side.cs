@@ -17,10 +17,11 @@ namespace SqlCompare
         public readonly SqlConnectionStringBuilder CS;
         public readonly DataProvider Provider;
         public readonly DatabaseName DatabaseName;
+        public readonly string Alias;
 
-
-        public Side(SqlConnectionStringBuilder cs)
+        public Side(string alias, SqlConnectionStringBuilder cs)
         {
+            this.Alias = alias;
             this.CS = cs;
 
             this.Provider = DataProviderManager.Register(cs);

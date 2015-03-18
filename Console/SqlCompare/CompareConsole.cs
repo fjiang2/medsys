@@ -18,6 +18,9 @@ namespace SqlCompare
         Configuration cfg;
         private SqlConnectionStringBuilder cs1;
         private SqlConnectionStringBuilder cs2;
+        private string alias1 = "S1";
+        private string alias2 = "S2";
+
         private ActionType action;
 
         public CompareConsole(Configuration cfg)
@@ -28,8 +31,11 @@ namespace SqlCompare
             var comparison = cfg.GetValue("comparison");
             if (comparison.Defined)
             {
-                this.cs1 = new SqlConnectionStringBuilder((string)comparison[0]);
-                this.cs2 = new SqlConnectionStringBuilder((string)comparison[1]);
+                alias1 = (string)comparison[0];
+                alias2 = (string)comparison[1];
+                var a = cfg.GetValue("alias");
+                this.cs1 = new SqlConnectionStringBuilder((string)a[alias1]);
+                this.cs2 = new SqlConnectionStringBuilder((string)a[alias2]);
             }
             else
             {
@@ -79,18 +85,18 @@ namespace SqlCompare
 
 
                     case "/s":
-                        if (i < args.Length && args[i++].parse(out t1, out t2))
+                        if (i < args.Length && args[i++].parse(out alias1, out alias2))
                         {
-                            var conn1 = cfg.GetConnectionString(t1);
-                            var conn2 = cfg.GetConnectionString(t1);
+                            var conn1 = cfg.GetConnectionString(alias1);
+                            var conn2 = cfg.GetConnectionString(alias2);
                             if (conn1==null)
                             {
-                                stdio.WriteLine("undefined server alias ({0}) in configuration file", t1);
+                                stdio.WriteLine("undefined server alias ({0}) in configuration file", alias1);
                                 return;
                             }
                             if (conn2== null)
                             {
-                                stdio.WriteLine("undefined server alias ({0}) in configuration file", t2);
+                                stdio.WriteLine("undefined server alias ({0}) in configuration file", alias2);
                                 return;
                             }
 
@@ -146,6 +152,7 @@ namespace SqlCompare
                             var server1 = cfg.GetValue("server1");
                             if (server1.Defined)
                             {
+                                alias1 = (string)server1["alias"];
                                 cs1.DataSource = t1;
                                 cs1.InitialCatalog = (string)server1["initial_catalog"];
                                 cs1.UserID = (string)server1["user_id"];
@@ -155,6 +162,7 @@ namespace SqlCompare
                             var server2 = cfg.GetValue("server2");
                             if (server2.Defined)
                             {
+                                alias2 = (string)server2["alias"]; 
                                 cs1.DataSource = t2;
                                 cs1.InitialCatalog = (string)server2["initial_catalog"];
                                 cs2.UserID = (string)server2["user_id"];
@@ -278,7 +286,10 @@ namespace SqlCompare
                 return;
             }
 
-            CompareAdapter adapter = new CompareAdapter(cs1, cs2);
+            Side side1 = new Side(alias1, cs1);
+            Side side2 = new Side(alias2, cs2);
+
+            CompareAdapter adapter = new CompareAdapter(side1, side2);
             MatchedDatabase m1 = new MatchedDatabase(adapter.Side1.DatabaseName, tableNamePattern1, cfg.excludedtables);
             MatchedDatabase m2 = new MatchedDatabase(adapter.Side2.DatabaseName, tableNamePattern2, cfg.excludedtables);
 
