@@ -23,7 +23,7 @@ namespace SqlCompare
         {
             this.CS = cs;
 
-            this.Provider = DataProviderManager.Register("side", DataProviderType.SqlServer, cs.ConnectionString);
+            this.Provider = DataProviderManager.Register(cs);
             this.DatabaseName = new DatabaseName(Provider, cs.InitialCatalog);
         }
 

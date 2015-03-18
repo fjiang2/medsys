@@ -18,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Data.OleDb;
 
 namespace Sys.Data
 {
@@ -73,10 +74,6 @@ namespace Sys.Data
         }
 
 
-        public static DataProvider Register(string name, string connectionString)
-        {
-            return DataProviderManager.Register(name, DataProviderType.OleDbServer, connectionString);
-        }
-
+     
     }
 }

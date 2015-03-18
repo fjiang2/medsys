@@ -168,14 +168,12 @@ namespace Sys.Data
 
         public static DataProvider RegisterDefaultProvider(string connectionString, string sysDatabase)
         {
-            const string INITIAL = "initial catalog";
-            string initial = connectionString.Split(new char[] { ';' }).Where(segment => segment.Trim().StartsWith(INITIAL)).First();
-            string appDatabase = initial.Replace(INITIAL, "").Replace("=", "").Trim();
+            SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder(connectionString);
 
             Const.CONNECTION_STRING = connectionString;
-            Const.DB_APPLICATION = appDatabase;
+            Const.DB_APPLICATION = builder.InitialCatalog;
             if (sysDatabase == null)
-                Const.DB_SYSTEM = appDatabase;
+                Const.DB_SYSTEM = builder.InitialCatalog;
             else
                 Const.DB_SYSTEM = sysDatabase;
 
@@ -184,11 +182,11 @@ namespace Sys.Data
             return DataProvider.DefaultProvider;
         }
 
-        public static DataProviderConnection DefaultConnection
+        public static DbConnection DefaultDbConnection
         {
             get
             {
-                return Instance.GetConnection(DataProvider.DefaultProvider);
+                return Instance.GetConnection(DataProvider.DefaultProvider).NewDbConnection;
             }
         }
 
@@ -223,15 +221,22 @@ namespace Sys.Data
         }
 
 
-        public static void Unregister(DataProvider handle)
+        public static void Unregister(DataProvider provider)
         {
-            Instance.Remove(handle);
+            Instance.Remove(provider);
         }
 
 
-    
-       
-      
+        public static DataProvider Register(SqlConnectionStringBuilder builder)
+        {
+            return Register(builder.DataSource, DataProviderType.SqlServer, builder.ConnectionString);
+        }
+
+        public static DataProvider Register(OleDbConnectionStringBuilder builder)
+        {
+            return Register(builder.DataSource, DataProviderType.OleDbServer, builder.ConnectionString);
+        }
+
     }
 }
 

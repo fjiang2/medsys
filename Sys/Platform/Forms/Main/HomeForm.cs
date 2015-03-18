@@ -7,6 +7,7 @@ using System.Text;
 using System.Windows.Forms;
 using Sys.ViewManager.Forms;
 using Sys.OS;
+using Sys.Data;
 
 namespace Sys.Platform.Forms
 {
@@ -28,7 +29,7 @@ namespace Sys.Platform.Forms
 
             if (this.account.IsDeveloper)
             {
-                this.txtServerName.Text = Sys.Data.DataProviderManager.DefaultConnection.NewDbConnection.DataSource;
+                this.txtServerName.Text = DataProviderManager.DefaultDbConnection.DataSource;
             }
             else
             {
