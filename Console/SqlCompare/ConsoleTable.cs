@@ -104,7 +104,15 @@ namespace SqlCompare
                 return "NULL";
 
             else
-                return cell.ToString().Trim();
+            {
+                string result = cell.ToString().Trim();
+                
+                //when cell includes a big string with letter [\n]
+                if(result.Length > 200)
+                    result = result.Replace("\n", "");
+
+                return result;
+            }
         }
 
      
