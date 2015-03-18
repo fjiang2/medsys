@@ -13,7 +13,8 @@ namespace SqlCompare
         private static StreamWriter writer = null;
         static stdio()
         {
-            writer = new StreamWriter(Context.GetValue<string>("log", "sqlcompare.log"));
+            string fileName = Context.GetValue<string>("log", "sqlcompare.log");
+            writer = fileName.NewStreamWriter();
         }
 
         public static void Close()

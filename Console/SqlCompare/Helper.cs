@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Data;
 using System.Data.SqlClient;
 using System.Data.Common;
+using System.IO;
 using Sys.Data;
 
 namespace SqlCompare
@@ -13,7 +14,14 @@ namespace SqlCompare
     static class Helper
     {
 
+        public static StreamWriter NewStreamWriter(this string fileName)
+        {
+            string folder = Path.GetDirectoryName(fileName);
+            if (!Directory.Exists(folder))
+                Directory.CreateDirectory(folder);
 
+            return new StreamWriter(fileName);
+        }
         public static void ToConsole<T>(this IEnumerable<T> source)
         {
             var properties = typeof(T).GetProperties();

@@ -47,7 +47,7 @@ namespace SqlCompare
                 stdio.WriteLine("Nothing is changed");
             }
 
-            using (var writer = new StreamWriter(cfg.OutputFile))
+            using (var writer = cfg.OutputFile.NewStreamWriter())
             {
                 writer.Write(sql);
             }
@@ -290,7 +290,7 @@ namespace SqlCompare
                     break;
 
                 case ActionType.GenerateTableRows:
-                    using (var writer = new StreamWriter(cfg.OutputFile))
+                    using (var writer = cfg.OutputFile.NewStreamWriter())
                     {
                         adapter.Side1.GenerateRowScript(writer, tableNamePattern1, cfg.excludedtables);
                     }
@@ -301,7 +301,7 @@ namespace SqlCompare
 
                 case ActionType.GenerateSchema:
                     stdio.WriteLine("start to generate database schema to file: {0}", cfg.SchemaFile);
-                    using (var writer = new StreamWriter(cfg.SchemaFile))
+                    using (var writer = cfg.SchemaFile.NewStreamWriter())
                     {
                         DataSet ds = adapter.Side1.DatabaseName.DatabaseSchema();
                         ds.WriteXml(writer, XmlWriteMode.WriteSchema);

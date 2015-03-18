@@ -96,7 +96,7 @@ namespace SqlCompare
                         {
                             Side theSide = (Side)DS[THESIDE].HostValue;
                             TableName tname = new TableName(theSide.DatabaseName, tableName);
-                            using (var writer = new StreamWriter(fileName))
+                            using (var writer = fileName.NewStreamWriter())
                             {
                                 if (where != null)
                                 {

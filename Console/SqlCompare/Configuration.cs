@@ -17,10 +17,9 @@ namespace SqlCompare
 
         public ActionType Action = ActionType.CompareSchema;
 
-        private string directory;
-        private string inputFile;
-        private string outputFile;
-        private string schemaFile;
+        public string InputFile { get; set; }
+        public string OutputFile { get; set; }
+        public string SchemaFile { get; set; }
 
         public string[] excludedtables = new string[] { };
         public readonly Dictionary<string, string[]> PK = new Dictionary<string, string[]>();
@@ -28,39 +27,7 @@ namespace SqlCompare
         public Configuration()
         {
             Script.FunctionChain.Add(functions);
-        }
-
-
-        public string InputFile
-        { 
-            get
-            {
-                return string.Format("{0}\\{1}", directory, inputFile);
-            }
-            set
-            {
-                this.inputFile = value;
-            }
-        }
-        
-        public string OutputFile
-        {
-            get
-            {
-                return string.Format("{0}\\{1}", directory, outputFile);
-            }
-            set
-            {
-                this.outputFile = value;
-            }
-        }
-
-        public string SchemaFile
-        {
-            get
-            {
-                return string.Format("{0}\\{1}", directory, schemaFile);
-            }
+            HostType.Register(typeof(DateTime), true);
         }
 
 
@@ -143,20 +110,14 @@ namespace SqlCompare
             this.excludedtables = GetValue<string[]>("excludedtables", new string[] { });
             this.Action = GetValue<ActionType>("comparetype", ActionType.CompareSchema);
 
-            this.directory = GetValue<string>("directory", "."); 
-            this.inputFile = GetValue<string>("input", "script.sql");
-            this.outputFile = GetValue<string>("output", "script.sql");
-            this.schemaFile = GetValue<string>("schema", "schema.xml");
+            this.InputFile = GetValue<string>("input", "script.sql");
+            this.OutputFile = GetValue<string>("output", "script.sql");
+            this.SchemaFile = GetValue<string>("schema", "schema.xml");
 
-
-            if (this.directory != "." && !System.IO.Directory.Exists(directory))
-            {
-                System.IO.Directory.CreateDirectory(this.directory);
-            }
-
+        
             var log = Cfg["log"];
             if(log.Defined)
-                Context.DS.Add("log", new VAL(string.Format("{0}\\{1}", directory, log.Str)));
+                Context.DS.Add("log", log);
 
 
             var pk = Cfg["primary_key"];
@@ -186,13 +147,13 @@ namespace SqlCompare
         {
             if(val.Count != 2)
             {
-                stdio.WriteLine("required 2 parameters on function config(file,path), 1: app.config/web.config name; 2: path to reach connection string");
+                Console.WriteLine("required 2 parameters on function config(file,path), 1: app.config/web.config name; 2: path to reach connection string");
                 return null;
             }
 
             if (val[0].ty != VALTYPE.stringcon || val[1].ty != VALTYPE.stringcon)
             {
-                stdio.WriteLine("error on function config(file,path) argument type, 1: string, 2: string");
+                Console.WriteLine("error on function config(file,path) argument type, 1: string, 2: string");
                 return null;
             }
 
@@ -205,7 +166,7 @@ namespace SqlCompare
             }
             catch (Exception ex)
             {
-                stdio.WriteLine("cannot find connection string on file {0}, {1}", xmlFile, ex.Message);
+                Console.WriteLine("cannot find connection string on file {0}, {1}", xmlFile, ex.Message);
                 return null;
             }
         }
@@ -214,7 +175,7 @@ namespace SqlCompare
         {
             if (!File.Exists(xmlFile))
             {
-                stdio.WriteLine("warning: not exists {0}", xmlFile);
+                Console.WriteLine("warning: not exists {0}", xmlFile);
                 return null;
             }
 
