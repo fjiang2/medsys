@@ -204,7 +204,7 @@ namespace Sys.Data
         /// <summary>
         /// provider's handle is assigned during runtime
         /// </summary>
-        private static DataProvider dynamicProvider = new DataProvider(DataProvider.USER_HANDLE_BASE);
+        private static int PROVIDER = DataProvider.USER_HANDLE_BASE;
             
         /// <summary>
         /// 
@@ -215,7 +215,7 @@ namespace Sys.Data
         /// <returns></returns>
         public static DataProvider Register(string name, DataProviderType type, string connectionString)
         {
-            dynamicProvider = new DataProvider((int)dynamicProvider + 1);
+            DataProvider dynamicProvider = new DataProvider(PROVIDER++ + 1) { Name = name };
             Instance.Add(dynamicProvider, new DataProviderConnection(name, type, connectionString));
             return dynamicProvider;
         }

@@ -22,11 +22,11 @@ using Tie;
 
 namespace Sys.Data
 {
-    public struct DataProvider : IValizable, IComparable<DataProvider>, IComparable
+    public class DataProvider : IValizable, IComparable<DataProvider>, IComparable
     {
         internal const int DEFAULT_HANDLE = 0;
         internal const int USER_HANDLE_BASE = DEFAULT_HANDLE + 1000;
-        public static readonly DataProvider DefaultProvider = new DataProvider(DEFAULT_HANDLE);
+        public static readonly DataProvider DefaultProvider = new DataProvider(DEFAULT_HANDLE) { Name = "Default" };
      
         private int handle;
 
@@ -34,6 +34,8 @@ namespace Sys.Data
         {
             this.handle = handle;
         }
+
+        public string Name { get; set; }
 
         public override bool Equals(object obj)
         {

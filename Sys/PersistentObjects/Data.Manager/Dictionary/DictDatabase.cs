@@ -39,7 +39,7 @@ namespace Sys.Data.Manager
             foreach (DataRow row in dt.Rows)
             {
                 int handle = (int)row[dictDatabaseDpo._provider_id];
-                DataProvider provider = new DataProvider(handle);
+                DataProvider provider = new DataProvider(handle) { Name = (string)row[dictDatabaseDpo._name] };
                 DatabaseName databaseName = new DatabaseName(provider, (string)row[dictDatabaseDpo._name]);
                 bases.Add(databaseName, (int)row[dictDatabaseDpo._database_id]);
             }
