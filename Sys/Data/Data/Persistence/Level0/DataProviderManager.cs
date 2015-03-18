@@ -129,17 +129,9 @@ namespace Sys.Data
         }
 
 
-     
-
-
-
 //-----------------------------------------------------------------------------------------------------------------------------------
-
-
-
  
         #region Default Data Provider
-
 
         public static DataProvider RegisterDefaultProvider(string connectionString)
         {
@@ -163,21 +155,16 @@ namespace Sys.Data
             return DataProviderManager.DefaultProvider;
         }
 
-        public static DbConnection DefaultDbConnection
-        {
-            get
-            {
-                return DataProviderManager.DefaultProvider.NewDbConnection;
-            }
-        }
-
-        private static DataProvider defaultProvider;
-
+      
+        private static DataProvider defaultProvider = null;
         public static DataProvider DefaultProvider
         {
-            get
+            get 
             {
-                return defaultProvider;
+                if (defaultProvider == null)
+                    defaultProvider = new DataProvider(DataProvider.DEFAULT_HANDLE, "Default", DataProviderType.SqlServer, Const.CONNECTION_STRING);
+
+                return defaultProvider; 
             }
         }
 
@@ -198,9 +185,9 @@ namespace Sys.Data
         /// <returns></returns>
         public static DataProvider Register(string name, DataProviderType type, string connectionString)
         {
-            DataProvider dynamicProvider = new DataProvider(++PROVIDER, name, type, connectionString);
-            Instance.Add(dynamicProvider);
-            return dynamicProvider;
+            DataProvider pvd = new DataProvider(++PROVIDER, name, type, connectionString);
+            Instance.Add(pvd);
+            return pvd;
         }
 
 

@@ -32,7 +32,7 @@ namespace Sys.Data
 
         public SqlTrans()
         {
-            this.connection = (SqlConnection)DataProviderManager.DefaultDbConnection;
+            this.connection = (SqlConnection)DataProviderManager.DefaultProvider.NewDbConnection;
             this.connection.Open();
             this.sqlTransaction = connection.BeginTransaction();
         }

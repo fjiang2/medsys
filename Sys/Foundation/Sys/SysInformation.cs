@@ -132,7 +132,7 @@ namespace Sys
         /// <returns></returns>
         public static bool ValidDatabase()
         {
-            SqlConnection conn =  (SqlConnection)DataProviderManager.DefaultDbConnection;
+            SqlConnection conn =  (SqlConnection)DataProviderManager.DefaultProvider.NewDbConnection;
             try
             {
                 conn.Open();

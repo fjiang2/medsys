@@ -29,7 +29,7 @@ namespace Sys.Platform.Forms
 
             if (this.account.IsDeveloper)
             {
-                this.txtServerName.Text = DataProviderManager.DefaultDbConnection.DataSource;
+                this.txtServerName.Text = DataProviderManager.DefaultProvider.NewDbConnection.DataSource ;
             }
             else
             {
