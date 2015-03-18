@@ -153,6 +153,7 @@ namespace SqlCompare
                     }
                     break;
 
+                case "use":
                 case "select":
                     if (!Context.GetValue<bool>(Context.DATAREADER))
                     {
@@ -239,8 +240,8 @@ namespace SqlCompare
             string[] tnames;
             string[] vnames;
 
-            tnames = new MatchedDatabase(theSide.DatabaseName, arg2, null).DefaultTableNames;
             vnames = new MatchedDatabase(theSide.DatabaseName, arg2, null).DefaultViewNames;
+            tnames = new MatchedDatabase(theSide.DatabaseName, arg2, null).DefaultTableNames;
 
             if (tnames.Length == 0)
             {
