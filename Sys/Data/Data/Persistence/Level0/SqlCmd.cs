@@ -55,7 +55,7 @@ namespace Sys.Data
 
 
         public SqlCmd(string script)
-            : this(DataProvider.DefaultProvider, script)
+            : this(DataProviderManager.DefaultProvider, script)
         {
         }
 
@@ -87,7 +87,7 @@ namespace Sys.Data
                 userName, 
                 password);
 
-            ChangeConnection(new DataProviderConnection(serverName, DataProviderType.SqlServer, connectionString));
+            ChangeConnection(new DataProvider(base.provider.Handle, serverName, DataProviderType.SqlServer, connectionString));
         }
 
   
@@ -101,7 +101,7 @@ namespace Sys.Data
         }
 
 
-        public DbProvider DbProvider
+        internal DbProvider DbProvider
         {
             get { return this.dbProvider; }
         }

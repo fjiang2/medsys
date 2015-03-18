@@ -18,6 +18,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Data.Common;
+using System.Data.SqlClient;
+using System.Data.OleDb;
 using Tie;
 
 namespace Sys.Data
@@ -26,16 +29,22 @@ namespace Sys.Data
     {
         internal const int DEFAULT_HANDLE = 0;
         internal const int USER_HANDLE_BASE = DEFAULT_HANDLE + 1000;
-        public static readonly DataProvider DefaultProvider = new DataProvider(DEFAULT_HANDLE) { Name = "Default" };
      
         private int handle;
 
-        internal DataProvider(int handle)
+        internal DataProvider(int handle, string name, DataProviderType type, string connectionString)
         {
             this.handle = handle;
+            this.Name = name;
+            this.Type = type;
+            this.ConnectionString = connectionString;
         }
 
-        public string Name { get; set; }
+        internal int Handle { get { return this.handle; } }
+        
+        public string Name { get; private set; }
+        public DataProviderType Type {get; private set;}
+        public string ConnectionString { get; private set; }
 
         public override bool Equals(object obj)
         {
@@ -54,20 +63,15 @@ namespace Sys.Data
             return CompareTo((DataProvider)obj);
         }
 
-        public int CompareTo(DataProvider n)
+        public int CompareTo(DataProvider provider)
         {
-            return handle.CompareTo(n.handle);
+            return handle.CompareTo(provider.handle);
         }
 
 
         public override string ToString()
         {
-            DataProviderConnection connection = DataProviderManager.Instance.GetConnection(this);
-
-            if (connection != null)
-                return string.Format("Provider Handle={0} Name={1}", this.handle, connection.Name);
-            else
-                return string.Format("Provider Handle={0}", this.handle);
+            return string.Format("Provider Handle={0} Name={1}", this.handle, this.Name);
         }
 
         public static explicit operator int(DataProvider provider)
@@ -82,27 +86,53 @@ namespace Sys.Data
 
         public void SetVAL(VAL val)
         {
-            this.handle = val.Intcon;
+            this.Name = val["name"].Str;
+            this.Type = (DataProviderType)val["type"].Intcon;
+            this.ConnectionString = val["connection"].Str;
         }
-
         public VAL GetVAL()
         {
-            return new VAL(this.handle);
-        }
+            VAL val = new VAL();
+            val["name"] = new VAL(this.Name);
+            val["type"] = new VAL((int)this.Type);
+            val["connection"] = new VAL(this.ConnectionString);
 
-        public DataProviderConnection Connection
+            return val;
+        }
+       
+        internal DbProviderType DpType
         {
             get
             {
-                return DataProviderManager.Instance.GetConnection(this);
+                switch (Type)
+                {
+                    case DataProviderType.SqlServer:
+                        return DbProviderType.SqlDb;
+
+                    case DataProviderType.SqlServerCe:
+                        return DbProviderType.SqlCe;
+
+                    default:
+                        return DbProviderType.OleDb;
+                }
             }
         }
 
-        public DbProviderType DpType
+        public DbConnection NewDbConnection
         {
             get
             {
-                return Connection.DpType;
+                switch (DpType)
+                {
+                    case DbProviderType.SqlDb:
+                        return new SqlConnection(ConnectionString);
+
+                    case DbProviderType.OleDb:
+                        return new OleDbConnection(ConnectionString);
+
+                }
+
+                throw new NotImplementedException();
             }
         }
     }

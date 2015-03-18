@@ -293,7 +293,7 @@ namespace Sys.Data
             get
             {
                 if (dataTableAttribute != null)
-                    return !TableName.Provider.Equals(DataProvider.DefaultProvider);
+                    return !TableName.Provider.Equals(DataProviderManager.DefaultProvider);
 
                 return false;
             }

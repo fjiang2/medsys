@@ -48,7 +48,7 @@ namespace Sys.Data
             get 
             {
                 TableName tname;
-                DataProvider dataProvider = new DataProvider(this.Provider);
+                DataProvider dataProvider = DataProviderManager.Instance.GetProvider(this.Provider);
                 switch (this.Level)
                 {
                     case Level.System:

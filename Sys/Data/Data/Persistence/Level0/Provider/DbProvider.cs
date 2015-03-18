@@ -27,17 +27,17 @@ namespace Sys.Data
 {
     public abstract class DbProvider
     {
-        protected readonly DataProviderConnection connection;
+        protected readonly DataProvider provider;
         protected readonly string script;
 
    
 
-        public DbProvider(string script, DataProviderConnection connection)
+        public DbProvider(string script, DataProvider provider)
         {
             this.script = script;
-            this.connection = connection;
+            this.provider = provider;
 
-            this.DbConnection = this.connection.NewDbConnection;
+            this.DbConnection = this.provider.NewDbConnection;
             this.DbCommand = NewDbCommand();
 
             if (this.script.Contains(" "))  //Stored Procedure Name does not contain a space letter
@@ -51,7 +51,7 @@ namespace Sys.Data
 
         public DbProviderType DbType
         {
-            get { return this.connection.DpType; }
+            get { return this.provider.DpType; }
         }
 
         protected abstract DbDataAdapter NewDbDataAdapter();
@@ -80,15 +80,15 @@ namespace Sys.Data
         public abstract DbParameter AddParameter(string parameterName, object value);
         
 
-        public static DbProvider Factory(string script, DataProviderConnection connection)
+        public static DbProvider Factory(string script, DataProvider provider)
         {
-            switch (connection.DpType)
+            switch (provider.DpType)
             {
                 case DbProviderType.SqlDb:
-                    return new SqlProvider(script, connection);
+                    return new SqlProvider(script, provider);
 
                 case DbProviderType.OleDb:
-                    return new OleDbProvider(script, connection);
+                    return new OleDbProvider(script, provider);
 
             }
 

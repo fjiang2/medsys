@@ -31,7 +31,7 @@ namespace Sys.Data
     {
         private static DataProviderManager instance = null;
 
-        private Dictionary<DataProvider, DataProviderConnection> providers = new Dictionary<DataProvider, DataProviderConnection>();
+        private Dictionary<int, DataProvider> providers = new Dictionary<int, DataProvider>();
 
         private DataProviderManager()
         { 
@@ -49,22 +49,21 @@ namespace Sys.Data
 
         }
 
-        private DataProviderConnection Add(DataProvider provider, DataProviderConnection connection)
+        private void Add(DataProvider provider)
         {
-            if (providers.ContainsKey(provider))
+            if (providers.ContainsKey(provider.Handle))
             {
-                providers.Remove(provider);
+                providers.Remove(provider.Handle);
             }
 
-            providers.Add(provider, connection);
+            providers.Add(provider.Handle, provider);
 
-            return connection;
         }
 
      
         private void Remove(DataProvider provider)
         {
-             providers.Remove(provider);
+             providers.Remove(provider.Handle);
         }
 
 
@@ -73,47 +72,30 @@ namespace Sys.Data
             return string.Format("Registered Providers = #{0}", providers.Count);
         }
 
-      
+        
 
-        internal DataProviderConnection GetConnection(DataProvider provider)
+        public IEnumerable<DataProvider> Providers
         {
-            if (providers.ContainsKey(provider))
-                return providers[provider];
-            else
-                return null;
-        }
-
-        public DataProviderConnection GetConnection(int handle)
-        {
-            return GetConnection(GetProvider(handle));
-        }
-
-
-        public IEnumerable<KeyValuePair<DataProvider, DataProviderConnection>> Providers
-        {
-            get { return this.providers; }
+            get { return this.providers.Values; }
         }
 
         public DataProvider GetProvider(int handle)
         {
-            foreach (DataProvider provider in this.providers.Keys)
-            {
-                if ((int)provider == handle)
-                    return provider;
-            }
+            if (providers.ContainsKey(handle))
+                return providers[handle];
 
-            return DataProvider.DefaultProvider;
+            return DataProviderManager.DefaultProvider;
         }
 
         public DataProvider GetProvider(string name)
         {
-            foreach (KeyValuePair<DataProvider, DataProviderConnection> pair in this.providers)
+            foreach (var provider in this.providers.Values)
             {
-                if (pair.Value.Name == name)
-                    return pair.Key;
+                if (provider.Name == name)
+                    return provider;
             }
 
-            return DataProvider.DefaultProvider;
+            return DataProviderManager.DefaultProvider;
 
         }
 
@@ -126,8 +108,7 @@ namespace Sys.Data
                 int i = 0;
                 foreach (var pair in this.providers)
                 {
-                    val[i]["handle"] = pair.Key.GetVAL();
-                    val[i]["provider"] = pair.Value.GetVAL();
+                    val[i]["handle"] = pair.Value.GetVAL();
                     i++;
                 }
 
@@ -140,8 +121,7 @@ namespace Sys.Data
                 for (int i = 0; i < val.Size; i++)
                 {
                     DataProvider provider = new DataProvider(val[i]["handle"]);
-                    DataProviderConnection connection = new DataProviderConnection(val[i]["provider"]);
-                    Add(provider, connection);
+                    Add(provider );
                 }
 
               
@@ -177,24 +157,27 @@ namespace Sys.Data
             else
                 Const.DB_SYSTEM = sysDatabase;
 
-            Instance.Add(DataProvider.DefaultProvider, new DataProviderConnection("Default", DataProviderType.SqlServer, connectionString));
-            
-            return DataProvider.DefaultProvider;
+            defaultProvider = new DataProvider(DataProvider.DEFAULT_HANDLE, "Default", DataProviderType.SqlServer, connectionString);
+            Instance.Add(DataProviderManager.DefaultProvider);
+
+            return DataProviderManager.DefaultProvider;
         }
 
         public static DbConnection DefaultDbConnection
         {
             get
             {
-                return Instance.GetConnection(DataProvider.DefaultProvider).NewDbConnection;
+                return DataProviderManager.DefaultProvider.NewDbConnection;
             }
         }
+
+        private static DataProvider defaultProvider;
 
         public static DataProvider DefaultProvider
         {
             get
             {
-                return DataProvider.DefaultProvider;
+                return defaultProvider;
             }
         }
 
@@ -215,8 +198,8 @@ namespace Sys.Data
         /// <returns></returns>
         public static DataProvider Register(string name, DataProviderType type, string connectionString)
         {
-            DataProvider dynamicProvider = new DataProvider(PROVIDER++ + 1) { Name = name };
-            Instance.Add(dynamicProvider, new DataProviderConnection(name, type, connectionString));
+            DataProvider dynamicProvider = new DataProvider(++PROVIDER, name, type, connectionString);
+            Instance.Add(dynamicProvider);
             return dynamicProvider;
         }
 

@@ -39,7 +39,7 @@ namespace Sys.Data.Manager
             foreach (DataRow row in dt.Rows)
             {
                 int handle = (int)row[dictDatabaseDpo._provider_id];
-                DataProvider provider = new DataProvider(handle) { Name = (string)row[dictDatabaseDpo._name] };
+                DataProvider provider = DataProviderManager.Instance.GetProvider(handle);
                 DatabaseName databaseName = new DatabaseName(provider, (string)row[dictDatabaseDpo._name]);
                 bases.Add(databaseName, (int)row[dictDatabaseDpo._database_id]);
             }
@@ -48,7 +48,7 @@ namespace Sys.Data.Manager
 
         private int getId(DatabaseName databaseName)
         {
-            if (databaseName.Provider.Equals(DataProvider.DefaultProvider) 
+            if (databaseName.Provider.Equals(DataProviderManager.DefaultProvider) 
                 && databaseName.Name == Const.DB_SYSTEM)
                 
                 return Const.DB_SYSTEM_ID;

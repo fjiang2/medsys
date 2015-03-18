@@ -28,8 +28,8 @@ namespace Sys.Data
 {
     class OleDbProvider : DbProvider
     {
-        public OleDbProvider(string script, DataProviderConnection connection)
-            :base(script,connection)
+        public OleDbProvider(string script, DataProvider provider)
+            :base(script,provider)
         { 
         
         }

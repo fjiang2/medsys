@@ -76,7 +76,7 @@ namespace Sys.SmartList.Forms
 
             foreach (var provider in DataProviderManager.Instance.Providers)
             {
-                this.comboDataProviders.Items.Add(provider.Value.Name);
+                this.comboDataProviders.Items.Add(provider.Name);
             }
 
             CommandNodeDpo dpo1 = new CommandNodeDpo();
@@ -106,7 +106,7 @@ namespace Sys.SmartList.Forms
             binding.Bind(this.icbImage, CommandDpo._Image_Index);
 
             binding.Bind<ComboBox, int>(this.comboDataProviders,
-                    (control, value) => control.SelectedItem = DataProviderManager.Instance.GetConnection(value).Name,
+                    (control, value) => control.SelectedItem = DataProviderManager.Instance.GetProvider((string)control.SelectedItem).Name,
                     (control) => (int)DataProviderManager.Instance.GetProvider((string)control.SelectedItem),
                     CommandDpo._Data_Provider);
 

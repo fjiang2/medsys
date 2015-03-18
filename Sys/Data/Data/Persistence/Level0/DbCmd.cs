@@ -28,18 +28,16 @@ namespace Sys.Data
     {
         protected string script;
         protected DbProvider dbProvider;
+        protected DataProvider provider;
 
         public DbCmd(DataProvider provider, string script)
         {
-            DataProviderConnection providerConnection = DataProviderManager.Instance.GetConnection(provider);
-            if (providerConnection == null)
-                throw new MessageException("provider connection not registered.");
-
             this.script = script
                           .Replace("$DB_SYSTEM", Const.DB_SYSTEM)
                           .Replace("$DB_APPLICATION", Const.DB_APPLICATION);
 
-            this.dbProvider = DbProvider.Factory(script, providerConnection);
+            this.provider = provider;
+            this.dbProvider = DbProvider.Factory(script, provider);
         }
 
         protected DbCommand command
@@ -59,13 +57,13 @@ namespace Sys.Data
         }
 
       
-        public virtual void ChangeConnection(DataProviderConnection connection)
+        public virtual void ChangeConnection(DataProvider provider)
         {
             if (this.connection.State != ConnectionState.Closed)
                 this.connection.Close();
 
-            this.dbProvider = DbProvider.Factory(this.script, connection);
-            this.command.Connection = connection.NewDbConnection; 
+            this.dbProvider = DbProvider.Factory(this.script, provider);
+            this.command.Connection = provider.NewDbConnection; 
         }
 
         protected DbProviderType DbType

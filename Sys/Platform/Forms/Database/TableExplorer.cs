@@ -53,10 +53,10 @@ namespace Sys.Platform.Forms
             treeView1.ImageList.Images.Add("database", global::Sys.Platform.Properties.Resources.database);
             treeView1.ImageList.Images.Add("datatable", global::Sys.Platform.Properties.Resources.database_table);
 
-            foreach (var pair in DataProviderManager.Instance.Providers)
+            foreach (var provider in DataProviderManager.Instance.Providers)
             {
                 string[] databaseNames;
-                var provider = pair.Key;
+                
 
                 try
                 {
@@ -64,14 +64,14 @@ namespace Sys.Platform.Forms
                 }
                 catch (Exception) // no permisson to access this server
                 {
-                    MessageBox.Show(string.Format("not allowed to access server: {0}", DataProviderManager.Instance.GetConnection((int)provider).Name), 
+                    MessageBox.Show(string.Format("not allowed to access server: {0}", provider.Name), 
                         "Warning", 
                         System.Windows.Forms.MessageBoxButtons.OK);
                     
                     continue;
                 }
 
-                root = treeView1.Nodes.Add(pair.Value.Name);
+                root = treeView1.Nodes.Add(provider.Name);
                 foreach (string name in databaseNames)
                 {
                     TreeNode treeNode = new DatabaseNode(provider, name);

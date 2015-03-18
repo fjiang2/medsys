@@ -547,10 +547,10 @@ namespace Sys.Platform.Forms
         DataProvider provider;
         string text;
         
-        public MyProvider(KeyValuePair<DataProvider, DataProviderConnection> pair)
+        public MyProvider(DataProvider pair)
         {
-            this.provider = pair.Key;
-            this.text = pair.Value.Name;
+            this.provider = pair;
+            this.text = pair.Name;
         }
 
         public DataProvider Provider

@@ -21,7 +21,7 @@ namespace Sys.Data.Manager
         public DataTableDpoClass(DataTable table)
         {
             this.table = table;
-            this.tableName = new ClassTableName(DataProvider.DefaultProvider, "MEM", table.TableName);
+            this.tableName = new ClassTableName(DataProviderManager.DefaultProvider, "MEM", table.TableName);
 
 
 
