@@ -324,6 +324,9 @@ namespace SqlCompare
                     theSide.DatabaseName.AllProc().ToConsole();
                     break;
                 
+                case "index":
+                    theSide.DatabaseName.AllIndices().ToConsole();
+                    break; 
                 
                 case "alias":
                     {
@@ -356,6 +359,7 @@ namespace SqlCompare
             stdio.WriteLine("show table;           : show all table names");
             stdio.WriteLine("show view;            : show all views");
             stdio.WriteLine("show proc;            : show all stored proc and func");
+            stdio.WriteLine("show index;           : show all indices");
             stdio.WriteLine("show dt tablename;    : show table structure");
             stdio.WriteLine("show pk tablename;    : show table primary keys");
             stdio.WriteLine("show fk tablename;    : show table foreign keys");
