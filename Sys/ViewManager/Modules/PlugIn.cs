@@ -121,7 +121,7 @@ namespace Sys.ViewManager.Modules
                 .Replace("@UserMenus", Sys.ViewManager.DpoClass.UserMenuDpo.TABLE_NAME)
                 .Replace("@Assemblies", AssemblyDpo.TABLE_NAME);
 
-            DataProvider provider = typeof(Sys.ViewManager.DpoClass.ItemPermissionDpo).TableName().Provider;
+            ConnectionProvider provider = typeof(Sys.ViewManager.DpoClass.ItemPermissionDpo).TableName().Provider;
             SqlCmd.ExecuteNonQuery(provider, SQL, assemblyName, L);
             return true;
         }

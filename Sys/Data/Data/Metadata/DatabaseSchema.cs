@@ -73,7 +73,7 @@ namespace Sys.Data
         }
 
 
-        public static string CurrentDatabaseName(this DataProvider provider)
+        public static string CurrentDatabaseName(this ConnectionProvider provider)
         {
             switch (provider.DpType)
             {
@@ -93,7 +93,7 @@ namespace Sys.Data
         }
 
 
-        public static string[] GetDatabaseNames(this DataProvider provider)
+        public static string[] GetDatabaseNames(this ConnectionProvider provider)
         {
             switch (provider.DpType)
             {

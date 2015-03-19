@@ -28,13 +28,13 @@ namespace Sys.Data
     public class SqlBuilder : SqlBuilderInfo, ISqlClause
     {
         private StringBuilder script = new StringBuilder();
-        private DataProvider provider;
+        private ConnectionProvider provider;
 
         public SqlBuilder()
         {
-            this.provider = DataProviderManager.DefaultProvider;
+            this.provider = ConnectionProviderManager.DefaultProvider;
         }
-        public SqlBuilder(DataProvider privider)
+        public SqlBuilder(ConnectionProvider privider)
         {
             this.provider = privider;
         }
@@ -51,7 +51,7 @@ namespace Sys.Data
 
 
         
-        public DataProvider Provider
+        public ConnectionProvider Provider
         {
             get
             {

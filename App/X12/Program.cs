@@ -27,7 +27,7 @@ namespace X12
             Application.SetCompatibleTextRenderingDefault(false);
 
             string connetionString = connetionString = "data source=localhost\\SQLEXPRESS;initial catalog=medsys;integrated security=SSPI;packet size=4096";
-            DataProvider provider = DataProviderManager.RegisterDefaultProvider(connetionString);
+            ConnectionProvider provider = ConnectionProviderManager.RegisterDefaultProvider(connetionString);
 
             Assembly assembly = Assembly.GetExecutingAssembly();
             Manager mgr = new Manager(assembly);

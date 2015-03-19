@@ -191,7 +191,7 @@ namespace Sys.Platform.Forms
             }
 
             string connectionString = GetConnectionString();
-            DataProviderManager.RegisterDefaultProvider(connectionString);
+            ConnectionProviderManager.RegisterDefaultProvider(connectionString);
 
           
             Sys.Constant.DB_SYSTEM = databaseName;

@@ -27,7 +27,7 @@ namespace Sys.Data
     public class SqlCmd : DbCmd
     {
 
-        public SqlCmd(DataProvider provider, string script, object parameters)
+        public SqlCmd(ConnectionProvider provider, string script, object parameters)
             : base(provider, script)
         {
             if (parameters == null)
@@ -48,14 +48,14 @@ namespace Sys.Data
 
         }
 
-        public SqlCmd(DataProvider provider, string script)
+        public SqlCmd(ConnectionProvider provider, string script)
             : base(provider, script)
         {
         }
 
 
         public SqlCmd(string script)
-            : this(DataProviderManager.DefaultProvider, script)
+            : this(ConnectionProviderManager.DefaultProvider, script)
         {
         }
 
@@ -87,7 +87,7 @@ namespace Sys.Data
                 userName, 
                 password);
 
-            ChangeConnection(new DataProvider(base.provider.Handle, serverName, DataProviderType.SqlServer, connectionString));
+            ChangeConnection(new ConnectionProvider(base.provider.Handle, serverName, ConnectionProviderType.SqlServer, connectionString));
         }
 
   
@@ -175,13 +175,13 @@ namespace Sys.Data
 
 
         //--------------------------------------------------------------------------------------
-        public static object ExecuteScalar(DataProvider provider, string script, params object[] args)
+        public static object ExecuteScalar(ConnectionProvider provider, string script, params object[] args)
         {
             SqlCmd cmd = new SqlCmd(provider, string.Format(script, args));
             return cmd.ExecuteScalar();
         }
 
-        public static int ExecuteNonQuery(DataProvider provider, string script, params object[] args)
+        public static int ExecuteNonQuery(ConnectionProvider provider, string script, params object[] args)
         {
             SqlCmd cmd = new SqlCmd(provider, string.Format(script, args));
             return cmd.ExecuteNonQuery();
@@ -189,7 +189,7 @@ namespace Sys.Data
 
         public static DataTable FillDataTable(string script, params object[] args)
         {
-            return FillDataTable(DataProviderManager.DefaultProvider, script, args);
+            return FillDataTable(ConnectionProviderManager.DefaultProvider, script, args);
         }
 
         public static DataTable FillDataTable<T>(string script, params object[] args) where T : class,  IDPObject, new()
@@ -198,13 +198,13 @@ namespace Sys.Data
             return FillDataTable(tableName.Provider, script, args);
         }
 
-        public static DataTable FillDataTable(DataProvider provider, string script, params object[] args)
+        public static DataTable FillDataTable(ConnectionProvider provider, string script, params object[] args)
         {
             SqlCmd cmd = new SqlCmd(provider, string.Format(script, args));
             return cmd.FillDataTable();
         }
 
-        public static DataRow FillDataRow(DataProvider provider, string script, params object[] args)
+        public static DataRow FillDataRow(ConnectionProvider provider, string script, params object[] args)
         {
             SqlCmd cmd = new SqlCmd(provider, string.Format(script, args));
             return cmd.FillDataRow();

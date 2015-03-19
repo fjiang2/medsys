@@ -9,10 +9,10 @@ namespace Sys.Data.Comparison
 {
     public class Compare
     {
-        DataProvider pvd1;
-        DataProvider pvd2;
+        ConnectionProvider pvd1;
+        ConnectionProvider pvd2;
 
-        public Compare(DataProvider pvd1, DataProvider pvd2)
+        public Compare(ConnectionProvider pvd1, ConnectionProvider pvd2)
         {
             this.pvd1 = pvd1;
             this.pvd2 = pvd2;

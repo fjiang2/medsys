@@ -25,7 +25,7 @@ namespace Sys.Data
     {
         private string tableName;
         private Level level;
-        public int Provider = (int)DataProvider.DEFAULT_HANDLE;
+        public int Provider = (int)ConnectionProvider.DEFAULT_HANDLE;
 
         public bool DefaultValueUsed = false;
         public bool Pack = true;
@@ -48,7 +48,7 @@ namespace Sys.Data
             get 
             {
                 TableName tname;
-                DataProvider dataProvider = DataProviderManager.Instance.GetProvider(this.Provider);
+                ConnectionProvider dataProvider = ConnectionProviderManager.Instance.GetProvider(this.Provider);
                 switch (this.Level)
                 {
                     case Level.System:

@@ -28,9 +28,9 @@ namespace Sys.Data
     {
         protected string script;
         protected DbProvider dbProvider;
-        protected DataProvider provider;
+        protected ConnectionProvider provider;
 
-        public DbCmd(DataProvider provider, string script)
+        public DbCmd(ConnectionProvider provider, string script)
         {
             this.script = script
                           .Replace("$DB_SYSTEM", Const.DB_SYSTEM)
@@ -57,7 +57,7 @@ namespace Sys.Data
         }
 
       
-        public virtual void ChangeConnection(DataProvider provider)
+        public virtual void ChangeConnection(ConnectionProvider provider)
         {
             if (this.connection.State != ConnectionState.Closed)
                 this.connection.Close();

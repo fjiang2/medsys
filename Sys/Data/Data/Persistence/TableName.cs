@@ -26,7 +26,7 @@ namespace Sys.Data
         protected DatabaseName baseName;
         protected string tableName;
 
-        public TableName(DataProvider provider, string fullTableName)
+        public TableName(ConnectionProvider provider, string fullTableName)
         {
             //tableName may have format like [db.dbo.tableName], [db..tableName], or [tableName]
             string[] t = fullTableName.Split(new char[] { '.' });
@@ -58,7 +58,7 @@ namespace Sys.Data
             this.tableName = tableName;
         }
 
-        public TableName(DataProvider provider, string databaseName, string tableName)
+        public TableName(ConnectionProvider provider, string databaseName, string tableName)
         {
             this.baseName = new DatabaseName(provider, databaseName);
             this.tableName = tableName;
@@ -147,7 +147,7 @@ namespace Sys.Data
 
 
 
-        public DataProvider Provider
+        public ConnectionProvider Provider
         {
             get { return this.baseName.Provider; }
         }

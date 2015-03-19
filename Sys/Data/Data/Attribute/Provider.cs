@@ -26,12 +26,12 @@ namespace Sys.Data
        /// <summary>
        /// Default database provider
        /// </summary>
-        DefaultDataSource = DataProvider.DEFAULT_HANDLE,
+        DefaultDataSource = ConnectionProvider.DEFAULT_HANDLE,
 
-        DataSource1 = DataProvider.DEFAULT_HANDLE + 1,
-        DataSource2 = DataProvider.DEFAULT_HANDLE + 2,
-        DataSource3 = DataProvider.DEFAULT_HANDLE + 3,
-        DataSource4 = DataProvider.DEFAULT_HANDLE + 4,
-        DataSource5 = DataProvider.DEFAULT_HANDLE + 5
+        DataSource1 = ConnectionProvider.DEFAULT_HANDLE + 1,
+        DataSource2 = ConnectionProvider.DEFAULT_HANDLE + 2,
+        DataSource3 = ConnectionProvider.DEFAULT_HANDLE + 3,
+        DataSource4 = ConnectionProvider.DEFAULT_HANDLE + 4,
+        DataSource5 = ConnectionProvider.DEFAULT_HANDLE + 5
     }
 }

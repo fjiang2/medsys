@@ -22,7 +22,7 @@ namespace Sys.Data
         private bool isDataLoaded = false;
 
 
-        public SQLCommand(DataProvider provider, string script)
+        public SQLCommand(ConnectionProvider provider, string script)
             : base(provider, script)
         { 
         

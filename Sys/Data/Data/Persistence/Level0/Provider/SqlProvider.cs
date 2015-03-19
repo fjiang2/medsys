@@ -28,7 +28,7 @@ namespace Sys.Data
 {
     class SqlProvider : DbProvider
     {
-        public SqlProvider(string script, DataProvider provider)
+        public SqlProvider(string script, ConnectionProvider provider)
             : base(script, provider)
         { 
         }

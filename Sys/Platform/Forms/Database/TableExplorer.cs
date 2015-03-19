@@ -53,7 +53,7 @@ namespace Sys.Platform.Forms
             treeView1.ImageList.Images.Add("database", global::Sys.Platform.Properties.Resources.database);
             treeView1.ImageList.Images.Add("datatable", global::Sys.Platform.Properties.Resources.database_table);
 
-            foreach (var provider in DataProviderManager.Instance.Providers)
+            foreach (var provider in ConnectionProviderManager.Instance.Providers)
             {
                 string[] databaseNames;
                 
@@ -349,10 +349,10 @@ namespace Sys.Platform.Forms
 
     class DatabaseNode : TreeNode
     {
-        DataProvider provider;
+        ConnectionProvider provider;
         DatabaseName databaseName;
 
-        public DatabaseNode(DataProvider handle, string databaseName)
+        public DatabaseNode(ConnectionProvider handle, string databaseName)
             : base(databaseName)
         {
             this.provider = handle;

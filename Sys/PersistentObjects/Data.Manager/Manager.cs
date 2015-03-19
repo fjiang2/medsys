@@ -45,7 +45,7 @@ namespace Sys.Data.Manager
         /// <param name="isPack"></param>
         /// <param name="hasProvider"></param>
         /// <param name="dict"></param>
-        public static void CreateClass(DataProvider provider, string[] tableNames, string path, string nameSpace, 
+        public static void CreateClass(ConnectionProvider provider, string[] tableNames, string path, string nameSpace, 
             Level level, bool isPack, bool hasProvider,
             Dictionary<TableName, Type> dict)
         {

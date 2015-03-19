@@ -79,7 +79,7 @@ namespace Sys
 
             //DataProviderManager.Instance.Configuration = json["dataprovider"];
 
-            DataProviderManager.RegisterDefaultProvider(Const.CONNECTION_STRING);
+            ConnectionProviderManager.RegisterDefaultProvider(Const.CONNECTION_STRING);
             LoadDataProviders();
 
             Const.DB_REVISION = Configuration.Instance.GetValue<int>("Revision");
@@ -98,7 +98,7 @@ namespace Sys
             var list = new TableReader<DataProviderDpo>(DataProviderDpo._inactive.ColumnName() == 0).ToList();
             foreach (DataProviderDpo dpo in list)
             {
-                DataProviderManager.Register(dpo.name, (DataProviderType)dpo.type, dpo.connection);
+                ConnectionProviderManager.Register(dpo.name, (ConnectionProviderType)dpo.type, dpo.connection);
             }
         }
 

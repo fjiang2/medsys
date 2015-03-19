@@ -15,7 +15,7 @@ namespace SqlCompare
     class Side  
     {
         public readonly SqlConnectionStringBuilder CS;
-        public readonly DataProvider Provider;
+        public readonly ConnectionProvider Provider;
         public readonly DatabaseName DatabaseName;
         public readonly string Alias;
 
@@ -24,7 +24,7 @@ namespace SqlCompare
             this.Alias = alias;
             this.CS = cs;
 
-            this.Provider = DataProviderManager.Register(cs);
+            this.Provider = ConnectionProviderManager.Register(cs);
             this.DatabaseName = new DatabaseName(Provider, cs.InitialCatalog);
         }
 

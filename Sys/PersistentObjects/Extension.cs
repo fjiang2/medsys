@@ -43,7 +43,7 @@ namespace Sys.Data.Manager
 
             if (ctname.HasProvider)
             {
-                if (!tableName.Provider.Equals(DataProviderManager.DefaultProvider))
+                if (!tableName.Provider.Equals(ConnectionProviderManager.DefaultProvider))
                 {
                     attr.AppendFormat(", Provider = {0}", (int)tableName.Provider);
                 }

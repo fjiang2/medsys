@@ -45,7 +45,7 @@ namespace App.DpoCmd
 
         static void Main1(string[] args)
         {
-             DataProvider provider = DataProviderManager.RegisterDefaultProvider("data source=localhost\\sqlexpress;initial catalog=medsys;integrated security=SSPI;packet size=4096");
+             ConnectionProvider provider = ConnectionProviderManager.RegisterDefaultProvider("data source=localhost\\sqlexpress;initial catalog=medsys;integrated security=SSPI;packet size=4096");
 
              DatabaseName databaseName = new DatabaseName(provider, "medsys");
              string[] tablenames = databaseName.GetTableNames();

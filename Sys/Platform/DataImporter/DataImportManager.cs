@@ -53,14 +53,14 @@ namespace Sys.Platform.DataImporter
             this.importer = ReadImporter(setting.ClassName, setting.Mapping);
 
             if (dataSource != "")
-                this.dataSource = SqlCmd.FillDataTable(DataProviderManager.DefaultProvider, setting.DataSource); ;
+                this.dataSource = SqlCmd.FillDataTable(ConnectionProviderManager.DefaultProvider, setting.DataSource); ;
         }
 
         public DataImportManager(string importerName)
         {
             this.setting = new DataImportSetting(importerName);
             this.importer = ReadImporter(setting.ClassName, setting.Mapping);
-            this.dataSource = SqlCmd.FillDataTable(DataProviderManager.DefaultProvider, setting.DataSource); ;
+            this.dataSource = SqlCmd.FillDataTable(ConnectionProviderManager.DefaultProvider, setting.DataSource); ;
         }
 
         private IDataImporter ReadImporter(string className, string savedMapping)

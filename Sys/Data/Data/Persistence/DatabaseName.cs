@@ -23,10 +23,10 @@ namespace Sys.Data
 {
     public class DatabaseName : IComparable<DatabaseName>, IComparable
     {
-        private DataProvider provider;
+        private ConnectionProvider provider;
         private string name;
 
-        public DatabaseName(DataProvider provider, string databaseName)
+        public DatabaseName(ConnectionProvider provider, string databaseName)
         {
             this.provider = provider;
             this.name = databaseName;
@@ -38,7 +38,7 @@ namespace Sys.Data
         }
 
 
-        public DataProvider Provider
+        public ConnectionProvider Provider
         {
             get { return this.provider; }
         }

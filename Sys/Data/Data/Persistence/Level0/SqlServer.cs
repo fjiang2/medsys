@@ -145,7 +145,7 @@ namespace Sys.Data
 
         public static bool IsGoodConnectionString()
         {
-            SqlConnection conn = (SqlConnection)DataProviderManager.DefaultProvider.NewDbConnection;
+            SqlConnection conn = (SqlConnection)ConnectionProviderManager.DefaultProvider.NewDbConnection;
             try
             {
                 conn.Open();

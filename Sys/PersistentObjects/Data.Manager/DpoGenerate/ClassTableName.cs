@@ -29,7 +29,7 @@ namespace Sys.Data.Manager
         private bool pack = true;
         private bool hasProvider = true;
 
-        public ClassTableName(DataProvider provider, string databaseName, string tableName)
+        public ClassTableName(ConnectionProvider provider, string databaseName, string tableName)
             : base(provider, databaseName, tableName)
         {
 

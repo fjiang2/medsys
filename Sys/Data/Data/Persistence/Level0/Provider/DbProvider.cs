@@ -27,12 +27,12 @@ namespace Sys.Data
 {
     public abstract class DbProvider
     {
-        protected readonly DataProvider provider;
+        protected readonly ConnectionProvider provider;
         protected readonly string script;
 
    
 
-        public DbProvider(string script, DataProvider provider)
+        public DbProvider(string script, ConnectionProvider provider)
         {
             this.script = script;
             this.provider = provider;
@@ -80,7 +80,7 @@ namespace Sys.Data
         public abstract DbParameter AddParameter(string parameterName, object value);
         
 
-        public static DbProvider Factory(string script, DataProvider provider)
+        public static DbProvider Factory(string script, ConnectionProvider provider)
         {
             switch (provider.DpType)
             {

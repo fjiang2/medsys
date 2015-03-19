@@ -9,7 +9,7 @@ namespace SqlCompare
 {
     static class Tools
     {
-        public static void FindColumn(this DataProvider provider, string match)
+        public static void FindColumn(this ConnectionProvider provider, string match)
         {
             string sql = "SELECT name AS TableName FROM sys.tables WHERE name LIKE @PATTERN";
             var dt = new SqlCmd(provider, sql, new { PATTERN = "%" + match + "%" }).FillDataTable();

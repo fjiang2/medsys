@@ -26,7 +26,7 @@ namespace App.Testing
         static void Main(string[] args)
         {
 
-            DataProviderManager.RegisterDefaultProvider(conn_localhost_medsys);
+            ConnectionProviderManager.RegisterDefaultProvider(conn_localhost_medsys);
 
             //NTreeViewDemo();
            //SqlClauseDemo();
@@ -45,7 +45,7 @@ namespace App.Testing
         private static void SqlServerCompactDemo()
         {
             string conn1 = "data source=C:\\devel\\medsys\\database1.sdf";
-            var pvd1 = DataProviderManager.Register("Compact", DataProviderType.SqlServerCe, conn1);
+            var pvd1 = ConnectionProviderManager.Register("Compact", ConnectionProviderType.SqlServerCe, conn1);
 
             var table = new SqlCmd(pvd1, "SELECT * FROM CtrlType").FillDataTable();
         }

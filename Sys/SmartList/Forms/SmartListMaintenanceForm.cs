@@ -74,7 +74,7 @@ namespace Sys.SmartList.Forms
             this.rgViewMode.LoadEnum<DataViewMode>();
             this.icbImage.Load(CommandTree.ImageList, CommandTree.Items);
 
-            foreach (var provider in DataProviderManager.Instance.Providers)
+            foreach (var provider in ConnectionProviderManager.Instance.Providers)
             {
                 this.comboDataProviders.Items.Add(provider.Name);
             }
@@ -106,8 +106,8 @@ namespace Sys.SmartList.Forms
             binding.Bind(this.icbImage, CommandDpo._Image_Index);
 
             binding.Bind<ComboBox, int>(this.comboDataProviders,
-                    (control, value) => control.SelectedItem = DataProviderManager.Instance.GetProvider((string)control.SelectedItem).Name,
-                    (control) => (int)DataProviderManager.Instance.GetProvider((string)control.SelectedItem),
+                    (control, value) => control.SelectedItem = ConnectionProviderManager.Instance.GetProvider((string)control.SelectedItem).Name,
+                    (control) => (int)ConnectionProviderManager.Instance.GetProvider((string)control.SelectedItem),
                     CommandDpo._Data_Provider);
 
             if (tbproperties.Text != "")

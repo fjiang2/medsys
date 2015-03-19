@@ -335,7 +335,7 @@ namespace Sys.SmartList.Forms
 			hasCriteriaForm = false;
 			VAL controls = parameters[ParameterForm._Controls];
 
-            DataProvider provider = DataProviderManager.Instance.GetProvider(handle);
+            ConnectionProvider provider = ConnectionProviderManager.Instance.GetProvider(handle);
             SQLCommand cmd = new SQLCommand(provider, script);
 			if (controls.Defined)
 			{

@@ -25,7 +25,7 @@ namespace Sys.Platform.Forms
         string rootPath = "C:\\temp";
         private BackgroundWorker worker;
 
-        DataProvider provider;
+        ConnectionProvider provider;
 
         public GenDpoForm()
             : this(Sys.Constant.DB_APPLICATION)
@@ -63,7 +63,7 @@ namespace Sys.Platform.Forms
             this.dpoDict = Library.GetTableDpoDict();
             treeTables.AfterSelect += new TreeViewEventHandler(treeTables_AfterSelect);
 
-            foreach (var provider in DataProviderManager.Instance.Providers)
+            foreach (var provider in ConnectionProviderManager.Instance.Providers)
             {
                 comboServer.Items.Add(new MyProvider(provider));
             }
@@ -544,16 +544,16 @@ namespace Sys.Platform.Forms
 
     class MyProvider
     {
-        DataProvider provider;
+        ConnectionProvider provider;
         string text;
         
-        public MyProvider(DataProvider pair)
+        public MyProvider(ConnectionProvider pair)
         {
             this.provider = pair;
             this.text = pair.Name;
         }
 
-        public DataProvider Provider
+        public ConnectionProvider Provider
         {
             get { return this.provider; }
         }

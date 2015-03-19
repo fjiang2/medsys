@@ -79,7 +79,7 @@ namespace Sys.Data.Manager
             }
         }
 
-        public static void GenerateEnumType(DataProvider provider, string tableName, string[] enumTypes, string path, string nameSpace)
+        public static void GenerateEnumType(ConnectionProvider provider, string tableName, string[] enumTypes, string path, string nameSpace)
         {
             TableName tname = new TableName(provider, tableName);
             List<EnumField> list = new List<EnumField>();
@@ -116,7 +116,7 @@ namespace Sys.Data.Manager
         /// <param name="tableName"></param>
         /// <param name="path"></param>
         /// <param name="nameSpace"></param>
-        public static void GenerateEnumType(DataProvider provider, string tableName, string path, string nameSpace)
+        public static void GenerateEnumType(ConnectionProvider provider, string tableName, string path, string nameSpace)
         {
             List<EnumField> list = new TableReader(new TableName(provider, tableName)).ToList<EnumField>();
             EnumTypeManager manager = new EnumTypeManager(list);

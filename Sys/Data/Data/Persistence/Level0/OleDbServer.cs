@@ -31,29 +31,29 @@ namespace Sys.Data
         private const string Access     = "Provider=Microsoft.Jet.OLEDB.4.0; Data Source=@mdb; Jet OLEDB:Database Password=@Password"; 
         
             
-        public static DataProvider RegisterExcel2007(string xlsName, bool HasHeader = false)
+        public static ConnectionProvider RegisterExcel2007(string xlsName, bool HasHeader = false)
         {
-            return DataProviderManager.Register(xlsName, DataProviderType.Excel2007, 
+            return ConnectionProviderManager.Register(xlsName, ConnectionProviderType.Excel2007, 
                 Excel2007
                     .Replace("@XLS", xlsName)
                     .Replace("@HDR", HasHeader ? "Yes" : "No")
                 );
         }
 
-        public static DataProvider RegisterExcel2010(string xlsName, bool HasHeader = false)
+        public static ConnectionProvider RegisterExcel2010(string xlsName, bool HasHeader = false)
         {
-            return DataProviderManager.Register(xlsName, DataProviderType.Excel2010, 
+            return ConnectionProviderManager.Register(xlsName, ConnectionProviderType.Excel2010, 
                 Excel2010
                     .Replace("@XLS", xlsName)
                     .Replace("@HDR", HasHeader ? "Yes" : "No")
                 );
         }
 
-        public static DataProvider RegisterMySQL(string serverName, string userName, string password)
+        public static ConnectionProvider RegisterMySQL(string serverName, string userName, string password)
         {
-            return DataProviderManager.Register(
+            return ConnectionProviderManager.Register(
                 serverName, 
-                DataProviderType.MySQL,
+                ConnectionProviderType.MySQL,
                 MySQL
                     .Replace("@ServerName", serverName)
                     .Replace("@UserName", userName)
@@ -61,11 +61,11 @@ namespace Sys.Data
                 );
         }
 
-        public static DataProvider RegisterOracle(string database, string userName, string password)
+        public static ConnectionProvider RegisterOracle(string database, string userName, string password)
         {
-            return DataProviderManager.Register(
+            return ConnectionProviderManager.Register(
                 database,
-                DataProviderType.Oracle,
+                ConnectionProviderType.Oracle,
                 Oracle
                     .Replace("@Database", database)
                     .Replace("@UserName", userName)
