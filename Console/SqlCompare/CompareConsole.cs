@@ -101,7 +101,7 @@ namespace SqlCompare
                             }
 
                             cs1 = new SqlConnectionStringBuilder(conn1);
-                            cs2 = new SqlConnectionStringBuilder(conn1);
+                            cs2 = new SqlConnectionStringBuilder(conn2);
                             break;
                         }
                         else
@@ -322,7 +322,7 @@ namespace SqlCompare
 
                 case ActionType.CompareData:
                 case ActionType.CompareSchema:
-                    WriteFile(adapter.Run(cfg.Action, m1, m2, cfg.PK));
+                    WriteFile(adapter.Run(action, m1, m2, cfg.PK));
                     break;
 
                 case ActionType.Shell:

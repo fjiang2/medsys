@@ -251,7 +251,7 @@ namespace SqlCompare
 
             switch (arg1)
             {
-                case "t":
+                case "dt":
                 case "pk":
                 case "fk":
                 case "ik":
@@ -261,7 +261,7 @@ namespace SqlCompare
                         DataTable dt = null;
                         switch (arg1)
                         {
-                            case "t":
+                            case "dt":
                                 dt = tname.TableSchema();
                                 break;
 
@@ -288,7 +288,7 @@ namespace SqlCompare
                     }
                     break;
 
-                case "v":
+                case "vw":
                     foreach (var name in vnames)
                     {
                         TableName tname = new TableName(theSide.Provider, name);
@@ -310,19 +310,21 @@ namespace SqlCompare
                         .ToConsole();
                     break;
 
+                case "table":
+                    tnames.Select(name => new { Table = name })
+                        .ToConsole();
+                    break;
+                
                 case "view":
-                    theSide.DatabaseName.AllView().ToConsole();
+                    vnames.Select(name => new { View = name })
+                        .ToConsole();
                     break;
 
                 case "proc":
                     theSide.DatabaseName.AllProc().ToConsole();
                     break;
                 
-                case "table":
-                    tnames.Select(name => new { Table = name })
-                        .ToConsole();
-                    break;
-
+                
                 case "alias":
                     {
                         var list = cfg.GetValue("alias");
@@ -350,16 +352,15 @@ namespace SqlCompare
         {
             stdio.WriteLine("<Commands>");
             stdio.WriteLine("find pattern;         : find table name and column name");
-            stdio.WriteLine("show db;              : show database names");
+            stdio.WriteLine("show db;              : show all database names");
             stdio.WriteLine("show table;           : show all table names");
-            stdio.WriteLine("show table pattern;   : show matched table names (wildcard*,?)");
-            stdio.WriteLine("show t tablename;     : show table structure");
+            stdio.WriteLine("show view;            : show all views");
+            stdio.WriteLine("show proc;            : show all stored proc and func");
+            stdio.WriteLine("show dt tablename;    : show table structure");
             stdio.WriteLine("show pk tablename;    : show table primary keys");
             stdio.WriteLine("show fk tablename;    : show table foreign keys");
             stdio.WriteLine("show ik tablename;    : show table identity keys");
-            stdio.WriteLine("show view;            : show all views");
-            stdio.WriteLine("show v viewnames;     : show view structure");
-            stdio.WriteLine("show proc;            : show all stored proc and func");
+            stdio.WriteLine("show vw viewnames;    : show view structure");
             stdio.WriteLine("show alias;           : show connection-string alias list");
             stdio.WriteLine("show var;             : show variable list");
             stdio.WriteLine("run query(..);        : run predefined query. e.g. run query(var1=val1,...);");

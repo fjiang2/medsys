@@ -63,7 +63,8 @@ namespace SqlCompare
                 return string.Empty;
 
             StringBuilder builder = new StringBuilder();
-
+            builder.AppendFormat("--compare server={0} db={1}", Side1.CS.DataSource, db1.Name).AppendLine();
+            builder.AppendFormat("--        server={0} db={1} @ {2}", Side2.CS.DataSource, db2.Name, DateTime.Now).AppendLine();
             var N1 = m1.MatchedTableNames;
             var N2 = m2.MatchedTableNames;
             string sql;
@@ -98,10 +99,10 @@ namespace SqlCompare
             }
             else if (CompareType == ActionType.CompareData)
             {
-                sql = CompareDatabaseSchema(db1, db2);
+                //sql = CompareDatabaseSchema(db1, db2);
 
-                if (sql != string.Empty)
-                    builder.Append(sql);
+                //if (sql != string.Empty)
+                //    builder.Append(sql);
 
                 sql = CompareDatabaseData(db1, db2, m1.Excludedtables);
                 if (sql != string.Empty)
@@ -161,6 +162,8 @@ namespace SqlCompare
                 if (sql != string.Empty)
                     stdio.WriteLine(sql);
             }
+            else
+                stdio.WriteLine(sql);
 
             return sql;
         }
