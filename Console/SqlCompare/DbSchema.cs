@@ -135,10 +135,11 @@ namespace SqlCompare
         {
             string SQL = @"
         SELECT Routine_Name , DATA_TYPE, ROUTINE_TYPE
-          FROM master.information_schema.routines 
-         WHERE Routine_Name IN (SELECT name FROM dbo.sysobjects)";
+          FROM {0}.information_schema.routines 
+         WHERE Routine_Name IN (SELECT name FROM dbo.sysobjects)
+        ";
             
-            return Use(databaseName, SQL);
+            return Use(databaseName, string.Format(SQL, databaseName.Name));
 
         }
 
