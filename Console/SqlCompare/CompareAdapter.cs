@@ -127,23 +127,20 @@ namespace SqlCompare
             return compare.DatabaseDifference(db1, db2, excludedtables);
         }
 
-        private string CompareTable(string tableName1, string tableName2, Dictionary<string, string[]> pk)
+        private string CompareTable(TableName tname1, TableName tname2, Dictionary<string, string[]> pk)
         {
-            TableName tname1 = new TableName(Side1.DatabaseName, tableName1);
-            TableName tname2 = new TableName(Side2.DatabaseName, tableName2);
-
             TableSchema schema1 = new TableSchema(tname1);
             TableSchema schema2 = new TableSchema(tname2);
 
             if (!Exists(tname1) || !Exists(tname2))
                 return string.Empty;
 
-            stdio.WriteLine("compare table schema {0} => {1}", tableName1, tableName2);
+            stdio.WriteLine("compare table schema {0} => {1}", tname1.ShortName, tname2.ShortName);
             string sql = compare.TableSchemaDifference(tname1, tname2);
 
             if (sql == string.Empty)
             {
-                stdio.WriteLine("compare table data {0} => {1}", tableName1, tableName2);
+                stdio.WriteLine("compare table data {0} => {1}", tname1.ShortName, tname2.ShortName);
                 bool hasPk = schema1.PrimaryKeys.Length > 0;
                 sql = compare.TableDifference(schema1, schema2, schema1.PrimaryKeys.Keys);
 

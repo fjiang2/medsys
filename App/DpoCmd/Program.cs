@@ -48,14 +48,14 @@ namespace App.DpoCmd
              ConnectionProvider provider = ConnectionProviderManager.RegisterDefaultProvider("data source=localhost\\sqlexpress;initial catalog=medsys;integrated security=SSPI;packet size=4096");
 
              DatabaseName databaseName = new DatabaseName(provider, "medsys");
-             string[] tablenames = databaseName.GetTableNames();
+             TableName[] tablenames = databaseName.GetTableNames();
 
              Dictionary<TableName, Type> dpoDict = new Dictionary<TableName, Type>();
 
-            foreach (string tablename in tablenames)
+            foreach (var tablename in tablenames)
              {
 
-                 ClassTableName ctname = new ClassTableName(provider, databaseName.Name, tablename);
+                 ClassTableName ctname = new ClassTableName(provider, databaseName.Name, tablename.Name);
                  if (!dpoDict.ContainsKey(ctname))
                      continue;
 

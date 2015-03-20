@@ -105,16 +105,14 @@ namespace Sys.Platform.Forms
                     DatabaseNode databaseNode = (DatabaseNode)treeNode;
                     Cursor.Current = Cursors.WaitCursor;
 
-                    string[] names = databaseNode.DatabaseName.GetTableNames();
+                    TableName[] names = databaseNode.DatabaseName.GetTableNames();
 
                     //you are not allowed to open this database
                     if (names.Length == 0)
                         return;
 
-                    foreach (string name in names)
+                    foreach (var tname in names)
                     {
-                        TableName tname = new TableName(databaseNode.DatabaseName, name);
-
                         TreeNode node = new TableNode(tname);
                         node.ImageKey = "datatable";
                         node.SelectedImageKey = node.ImageKey;

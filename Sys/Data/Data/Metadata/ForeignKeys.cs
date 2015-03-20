@@ -66,12 +66,12 @@ namespace Sys.Data
     {
         public TableName TableName { get; set; }
 
+        public string FK_Schema { get { return this.TableName.SchemaName; } }
         public string FK_Table { get { return this.TableName.Name; } }
-
         public string FK_Column { get; set; }
 
+        public string PK_Schema { get; set; }
         public string PK_Table { get; set; }
-
         public string PK_Column { get; set; }
 
         public string Constraint_Name { get; set; }
@@ -89,6 +89,8 @@ namespace Sys.Data
             ColumnSchema schema = (ColumnSchema)column;
 
             this.FK_Column = column.ColumnName;
+
+            this.PK_Schema = schema.PK_Schema;
             this.PK_Table = schema.PK_Table;
             this.PK_Column = schema.PK_Column;
             this.Constraint_Name = schema.FkContraintName;

@@ -12,7 +12,7 @@ namespace Sys.Data
 
         private static string SQL_SCHEMA = @"
 SELECT 
-    SCHEMA_NAME(t.schema_id) AS SchemaName,
+	SCHEMA_NAME(t.schema_id) AS SchemaName,
 	t.name AS TableName,
     c.name AS ColumnName,
     ty.name AS DataType,
@@ -25,6 +25,7 @@ SELECT
     c.is_computed AS IsComputed,
     d.definition,
 	p.CONSTRAINT_NAME AS PKContraintName,
+	f.PK_Schema,
 	f.PK_Table,
 	f.PK_Column,
 	f.Constraint_Name AS FKContraintName
@@ -37,8 +38,10 @@ SELECT
 						INNER JOIN INFORMATION_SCHEMA.KEY_COLUMN_USAGE k ON  k.TABLE_NAME = pk.TABLE_NAME AND k.CONSTRAINT_NAME = pk.CONSTRAINT_NAME
 						WHERE pk.CONSTRAINT_TYPE = 'PRIMARY KEY'
 						) p	ON p.TABLE_NAME = t.name  AND p.COLUMN_NAME = c.name
-		LEFT JOIN (SELECT  FK.TABLE_NAME AS FK_Table,
+		LEFT JOIN (SELECT   FK.TABLE_SCHEMA AS FK_Schema,
+							FK.TABLE_NAME AS FK_Table,
 							CU.COLUMN_NAME AS FK_Column,
+							PK.TABLE_SCHEMA AS PK_Schema,
 							PK.TABLE_NAME AS PK_Table,
 							PT.COLUMN_NAME AS PK_Column,
 							C.CONSTRAINT_NAME AS Constraint_Name 

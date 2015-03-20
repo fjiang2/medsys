@@ -117,9 +117,9 @@ namespace Sys.Data.Manager
         {
             int database_id = DictDatabase.RegisterOnly(databaseName);
 
-            string[] names = databaseName.GetTableNames();
-            foreach (string name in names)
-                DictTable.Register(database_id, new TableName(databaseName, name));
+            TableName[] names = databaseName.GetTableNames();
+            foreach (var name in names)
+                DictTable.Register(database_id, name);
 
             return names.Length;
 

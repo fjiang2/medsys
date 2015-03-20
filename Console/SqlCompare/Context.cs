@@ -95,7 +95,14 @@ namespace SqlCompare
                         if (tableName != null && fileName != null)
                         {
                             Side theSide = (Side)DS[THESIDE].HostValue;
-                            TableName tname = new TableName(theSide.DatabaseName, tableName);
+                            string schema = "dbo";
+                            if (tableName.IndexOf(".") > 0)
+                            {
+                                string[] L = tableName.Split('.');
+                                schema = L[0];
+                                tableName = L[1];
+                            }
+                            TableName tname = new TableName(theSide.DatabaseName, schema, tableName);
                             using (var writer = fileName.NewStreamWriter())
                             {
                                 if (where != null)

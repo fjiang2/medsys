@@ -71,14 +71,14 @@ namespace SqlCompare
             List<TableName> list = new List<TableName>();
             MatchedDatabase m = new MatchedDatabase(this.DatabaseName, tableNamePattern, excludedtables);
 
-            string[] history = this.DatabaseName.GetDependencyTableNames();
+            TableName[] history = this.DatabaseName.GetDependencyTableNames();
 
-            foreach (string name in history)
+            foreach (var name in history)
             {
                 if (m.DefaultTableNames.Contains(name))
                 {
-                    if (!excludedtables.Contains(name.ToUpper()))
-                        list.Add(new TableName(this.DatabaseName, name));
+                    if (!excludedtables.Contains(name.ShortName.ToUpper()))
+                        list.Add(name);
                 }
             }
 

@@ -25,7 +25,7 @@ namespace SqlCompare
         }
 
 
-        public string[] MatchedTableNames
+        public TableName[] MatchedTableNames
         {
             get
             {
@@ -37,11 +37,11 @@ namespace SqlCompare
             }
         }
 
-        public string[] DefaultTableNames
+        public TableName[] DefaultTableNames
         {
             get
             {
-                string[] names = this.DatabaseName.GetTableNames();
+                TableName[] names = this.DatabaseName.GetTableNames();
 
                 names = names.Where(name => Includes(name)).ToArray();
                 if (namePattern == null)
@@ -53,11 +53,11 @@ namespace SqlCompare
             }
         }
 
-        public string[] DefaultViewNames
+        public TableName[] DefaultViewNames
         {
             get
             {
-                string[] names = this.DatabaseName.GetViewNames();
+                TableName[] names = this.DatabaseName.GetViewNames();
 
                 names = names.Where(name => Includes(name)).ToArray();
                 if (namePattern == null)
@@ -69,15 +69,15 @@ namespace SqlCompare
             }
         }
 
-        public bool Includes(string tableName)
+        public bool Includes(TableName tableName)
         {
             if (Excludedtables == null)
                 return true;
 
-              return !Excludedtables.Contains(tableName.ToUpper());
+              return !Excludedtables.Contains(tableName.ShortName.ToUpper());
         }
 
-        public static string[] Search(string pattern, string[] tableNames)
+        public static TableName[] Search(string pattern, TableName[] tableNames)
         {
             string x = "^" + Regex.Escape(pattern)
                                   .Replace(@"\*", ".*")
@@ -85,7 +85,7 @@ namespace SqlCompare
                            + "$";
 
             Regex regex = new Regex(x, RegexOptions.IgnoreCase);
-            var result = tableNames.Where(row => regex.IsMatch(row)).ToArray();
+            var result = tableNames.Where(tname => regex.IsMatch(tname.ShortName)).ToArray();
 
             return result;
         }

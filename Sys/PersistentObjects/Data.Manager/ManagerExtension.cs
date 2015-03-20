@@ -82,15 +82,15 @@ namespace Sys.Data.Manager
         {
             int database_id = DictDatabase.RegisterOnly(databaseName);
 
-            string[] names = databaseName.GetTableNames();
+            TableName[] names = databaseName.GetTableNames();
 
             int i = 0;
-            foreach (string name in names)
+            foreach (var name in names)
             {
                 thread.ReportProgress((int)(i * 100.0 / names.Length));
                 i++;
 
-                DictTable.Register(database_id, new TableName(databaseName, name));
+                DictTable.Register(database_id, name);
             }
 
             return names.Length;

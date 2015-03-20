@@ -61,6 +61,9 @@ namespace Sys.Data
         [Column("PKContraintName", CType.NVarChar)]
         public string PkContraintName { get; set; }
 
+        [Column("PK_Schema", CType.NVarChar)]
+        public string PK_Schema { get; set; }
+
         [Column("PK_Table", CType.NVarChar)]
         public string PK_Table { get; set; }
 

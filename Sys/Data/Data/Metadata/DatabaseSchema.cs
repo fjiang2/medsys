@@ -108,31 +108,35 @@ namespace Sys.Data
             }
         }
 
-        public static string[] GetTableNames(this DatabaseName databaseName)
+        public static TableName[] GetTableNames(this DatabaseName databaseName)
         {
             switch (databaseName.Provider.DpType)
             {
                 case DbProviderType.OleDb:
                 case DbProviderType.SqlDb:
                     return SqlCmd
-                        .FillDataTable(databaseName.Provider, "USE [{0}] ; SELECT Name FROM sys.Tables ORDER BY Name", databaseName.Name)
-                        .ToArray<string>("Name");
+                        .FillDataTable(databaseName.Provider, 
+                            "USE [{0}] ; SELECT SCHEMA_NAME(schema_id) AS SchemaName, name as TableName FROM sys.Tables ORDER BY Name", 
+                            databaseName.Name)
+                        .AsEnumerable()
+                        .Select(row=> new TableName(databaseName, row.Field<string>("SchemaName"), row.Field<string>("TableName")))
+                        .ToArray();
 
-                case DbProviderType.SqlCe:
-                    return SqlCmd
-                            .FillDataTable(databaseName.Provider, "SELECT TABLE_NAME AS Name FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE='TABLE'")
-                            .ToArray<string>(0);
                 default:
-                    return new string[0];
+                    return new TableName[0];
             }
 
         }
 
-        public static string[] GetViewNames(this DatabaseName databaseName)
+        public static TableName[] GetViewNames(this DatabaseName databaseName)
         {
             return SqlCmd
-                .FillDataTable(databaseName.Provider, "USE [{0}] ; SELECT name FROM sys.views ORDER BY name", databaseName.Name)
-                .ToArray<string>("name");
+                .FillDataTable(databaseName.Provider, 
+                    "USE [{0}] ; SELECT  SCHEMA_NAME(schema_id) SchemaName, name AS TableName FROM sys.views ORDER BY name", 
+                    databaseName.Name)
+                    .AsEnumerable()
+                    .Select(row=>new TableName(databaseName, row.Field<string>(0), row.Field<string>(1)))
+                    .ToArray();
         }
 
 
@@ -164,14 +168,14 @@ namespace Sys.Data
         public static string GenerateScript(this DatabaseName databaseName)
         {
             StringBuilder builder = new StringBuilder();
-            string[] history = GetDependencyTableNames(databaseName);
+            TableName[] history = GetDependencyTableNames(databaseName);
 
             foreach (var tableName in history)
             {
                 Console.WriteLine("generate CREATE TABLE [{0}]", tableName);
                 try
                 {
-                    builder.AppendLine(new TableName(databaseName, tableName).GenerateScript());
+                    builder.AppendLine(tableName.GenerateScript());
                 }
                 catch (Exception ex)
                 {
@@ -188,7 +192,7 @@ namespace Sys.Data
 IF OBJECT_ID('{0}') IS NOT NULL
   DROP TABLE [{0}]
 ";
-            string[] history = GetDependencyTableNames(databaseName);
+            TableName[] history = GetDependencyTableNames(databaseName);
             StringBuilder builder = new StringBuilder();
             foreach (var tableName in history.Reverse())
             {
@@ -199,10 +203,13 @@ IF OBJECT_ID('{0}') IS NOT NULL
             return builder.ToString();
         }
 
-        public static string[] GetDependencyTableNames(this DatabaseName databaseName)
+        public static TableName[] GetDependencyTableNames(this DatabaseName databaseName)
         {
             string sql = @"
-SELECT  FK.TABLE_NAME AS FK_Table,
+SELECT  
+		FK.TABLE_SCHEMA AS FK_SCHEMA,
+		FK.TABLE_NAME AS FK_Table,
+		PK.TABLE_SCHEMA AS FK_SCHEMA,
         PK.TABLE_NAME AS PK_Table
   FROM  INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS C
         INNER JOIN INFORMATION_SCHEMA.TABLE_CONSTRAINTS FK ON C.CONSTRAINT_NAME = FK.CONSTRAINT_NAME
@@ -221,24 +228,26 @@ SELECT  FK.TABLE_NAME AS FK_Table,
                 .FillDataTable()
                 .AsEnumerable();
 
-            var dict = dt.GroupBy(row => (string)row[0], (Key, rows) => new { Fk = Key, Pk = rows.Select(row => (string)row[1]).ToArray() })
+            var dict = dt.GroupBy(
+                    row => new TableName(databaseName, (string)row[0], (string)row[1]), 
+                    (Key, rows) => new { Fk = Key, Pk = rows.Select(row => new TableName(databaseName, (string)row[2], (string)row[3])).ToArray() })
                 .ToDictionary(row => row.Fk, row => row.Pk);
 
 
-            var names = databaseName.GetTableNames();
+            TableName[] names = databaseName.GetTableNames();
 
-            List<string> history = new List<string>();
+            List<TableName> history = new List<TableName>();
 
-            foreach (var name in names)
+            foreach (var tname in names)
             {
-                if (history.IndexOf(name) < 0)
-                    Iterate(name, dict, history);
+                if (history.IndexOf(tname) < 0)
+                    Iterate(tname, dict, history);
             }
             
             return history.ToArray();
         }
 
-        private static void Iterate(string tableName, Dictionary<string, string[]> dict,  List<string> history)
+        private static void Iterate(TableName tableName, Dictionary<TableName, TableName[]> dict, List<TableName> history)
         {
             if (!dict.ContainsKey(tableName))
             {

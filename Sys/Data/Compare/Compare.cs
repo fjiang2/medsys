@@ -21,17 +21,17 @@ namespace Sys.Data.Comparison
         #region compare database schema/data
         public string DatabaseSchemaDifference(DatabaseName dname1, DatabaseName dname2)
         {
-            string[] names = dname1.GetDependencyTableNames();
+            TableName[] names = dname1.GetDependencyTableNames();
 
             StringBuilder builder = new StringBuilder();
-            foreach (string tableName in names)
+            foreach (TableName tableName in names)
             {
 #if DEBUG
                 Console.WriteLine(tableName);
 #endif
                 try
                 {
-                    string sql = TableSchemaDifference(new TableName(dname1, tableName), new TableName(dname2, tableName));
+                    string sql = TableSchemaDifference(tableName, new TableName(dname2, tableName.SchemaName, tableName.Name));
                     builder.Append(sql);
 #if DEBUG
                     if (sql != string.Empty)
@@ -49,21 +49,21 @@ namespace Sys.Data.Comparison
 
         public string DatabaseDifference(DatabaseName dname1, DatabaseName dname2, string[] excludedTables)
         {
-            string[] names = dname1.GetDependencyTableNames();
+            TableName[] names = dname1.GetDependencyTableNames();
             excludedTables = excludedTables.Select(row => row.ToUpper()).ToArray();
 
             StringBuilder builder = new StringBuilder();
-            foreach (string tableName in names)
+            foreach (TableName tableName in names)
             {
-                TableName tname1 = new TableName(dname1, tableName);
-                TableName tname2 = new TableName(dname2, tableName);
+                TableName tname1 = tableName;
+                TableName tname2 = new TableName(dname2, tableName.SchemaName, tableName.Name);
 
                 TableSchema schema1 = new TableSchema(tname1);
                 TableSchema schema2 = new TableSchema(tname2);
                 
                 Console.WriteLine(tname1);
 
-                if (excludedTables.Contains(tableName.ToUpper()))
+                if (excludedTables.Contains(tableName.ShortName.ToUpper()))
                 {
                     Console.WriteLine("skip to compare data on table {0}", tableName);
                     continue;

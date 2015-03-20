@@ -239,8 +239,8 @@ namespace SqlCompare
 
         private void Show(string arg1, string arg2)
         {
-            string[] tnames;
-            string[] vnames;
+            TableName[] tnames;
+            TableName[] vnames;
 
             vnames = new MatchedDatabase(theSide.DatabaseName, arg2, null).DefaultViewNames;
             tnames = new MatchedDatabase(theSide.DatabaseName, arg2, null).DefaultTableNames;
@@ -257,9 +257,8 @@ namespace SqlCompare
                 case "pk":
                 case "fk":
                 case "ik":
-                    foreach (var name in tnames)
+                    foreach (var tname in tnames)
                     {
-                        TableName tname = new TableName(theSide.Provider, name);
                         DataTable dt = null;
                         switch (arg1)
                         {
@@ -282,27 +281,26 @@ namespace SqlCompare
 
                         if (dt.Rows.Count > 0)
                         {
-                            stdio.WriteLine("<{0}>", name);
+                            stdio.WriteLine("<{0}>", tname.ShortName);
                             dt.ToConsole();
                         }
                         else
-                            stdio.WriteLine("not found at <{0}>", name);
+                            stdio.WriteLine("not found at <{0}>", tname.ShortName);
                     }
                     break;
 
                 case "vw":
-                    foreach (var name in vnames)
+                    foreach (var tname in vnames)
                     {
-                        TableName tname = new TableName(theSide.Provider, name);
                         DataTable dt = null;
                         dt = tname.ViewSchema();
                         if (dt.Rows.Count > 0)
                         {
-                            stdio.WriteLine("<{0}>", name);
+                            stdio.WriteLine("<{0}>", tname.ShortName);
                             dt.ToConsole();
                         }
                         else
-                            stdio.WriteLine("not found at <{0}>", name);
+                            stdio.WriteLine("not found at <{0}>", tname.ShortName);
                     }
                     break;
 
@@ -313,12 +311,12 @@ namespace SqlCompare
                     break;
 
                 case "table":
-                    tnames.Select(name => new { Table = name })
+                    tnames.Select(tname => new { Schema = tname.SchemaName, Table = tname.Name })
                         .ToConsole();
                     break;
                 
                 case "view":
-                    vnames.Select(name => new { View = name })
+                    vnames.Select(tname => new { Schema = tname.SchemaName, View = tname.Name })
                         .ToConsole();
                     break;
 

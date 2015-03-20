@@ -55,17 +55,13 @@ namespace Sys.Data
 
       
 
-        public TableName(DatabaseName databaseName, string tableName)
+        public TableName(DatabaseName databaseName, string schemaName, string tableName)
         {
             this.baseName = databaseName;
+            this.schema = schemaName;
             this.tableName = tableName;
         }
 
-        public TableName(ConnectionProvider provider, string databaseName, string tableName)
-        {
-            this.baseName = new DatabaseName(provider, databaseName);
-            this.tableName = tableName;
-        }
 
         public int CompareTo(object obj)
         {
@@ -96,20 +92,36 @@ namespace Sys.Data
             get { return this.tableName; }
         }
 
-
+        public string SchemaName
+        {
+            get { return this.schema; }
+        }
         public DatabaseName DatabaseName
         {
             get { return this.baseName; }
         }
 
-        public string FullName
+        public string ShortName
         {
             get 
+            {
+                if (this.schema != "dbo")
+                {
+                    return string.Format("{0}.[{1}]", this.schema, this.tableName);
+                }
+                else
+                    return this.tableName;
+            }
+        }
+
+        public string FullName
+        {
+            get
             {
                 if (this.baseName.Name != "")
                 {
                     //Visual Studio 2010 Windows Form Design Mode, does not support format [database]..[table]
-                    if(baseName.Provider.DpType != DbProviderType.SqlCe)
+                    if (baseName.Provider.DpType != DbProviderType.SqlCe)
                         return string.Format("{0}.{1}.[{2}]", this.baseName.Name, this.schema, this.tableName);
                     else
                         return string.Format("[{0}]", this.tableName);

@@ -161,16 +161,14 @@ namespace Sys.Platform.Forms
         {
             treeTables.Nodes.Clear();
 
-            TableName tname = new TableName(this.provider, DatabaseName, "any");
+            TableName tname = new TableName(new DatabaseName(this.provider, DatabaseName),"dbo", "any");
             
             this.txtDatabaseId.Text = tname.DatabaseId().ToString();
-            string[] tableNames = new DatabaseName(provider, DatabaseName).GetTableNames();
+            TableName[] tableNames = new DatabaseName(provider, DatabaseName).GetTableNames();
             if (showNewTables)
             {
-                foreach (string tableName in tableNames)
+                foreach (TableName name in tableNames)
                 {
-                    TableName name = new TableName(this.provider, DatabaseName, tableName);
-
                     if (dpoDict.ContainsKey(name))
                         continue;
                     else
@@ -180,17 +178,16 @@ namespace Sys.Platform.Forms
                             continue;
                     }
 
-                    TreeNode node = new TreeNode(tableName);
+                    TreeNode node = new TreeNode(name.ShortName);
                     node.ImageIndex = 2;
                     treeTables.Nodes.Add(node);
                 }
             }
             else
             {
-                foreach (string tableName in tableNames)
+                foreach (TableName name in tableNames)
                 {
-                    TreeNode node = new TreeNode(tableName);
-                    TableName name = new TableName(this.provider, DatabaseName, tableName);
+                    TreeNode node = new TreeNode(name.ShortName);
 
                     if (dpoDict.ContainsKey(name))
                         node.ImageIndex = 1;
