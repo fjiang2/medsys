@@ -85,7 +85,7 @@ namespace SqlCompare
                            + "$";
 
             Regex regex = new Regex(x, RegexOptions.IgnoreCase);
-            var result = tableNames.Where(tname => regex.IsMatch(tname.ShortName)).ToArray();
+            var result = tableNames.Where(tname => regex.IsMatch(tname.Name)).ToArray();
 
             return result;
         }

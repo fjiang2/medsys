@@ -39,8 +39,11 @@ namespace SqlCompare
         public static DataTable ForeignKeySchema(this TableName tableName)
         {
             string SQL = @"
-            SELECT  FK.TABLE_NAME AS FK_Table,
+            SELECT  
+                    FK.TABLE_SCHEMA AS FK_Schema,
+                    FK.TABLE_NAME AS FK_Table,
                     CU.COLUMN_NAME AS FK_Column,
+                    PK.TABLE_SCHEMA AS PK_Schema,
                     PK.TABLE_NAME AS PK_Table,
                     PT.COLUMN_NAME AS PK_Column,
                     C.CONSTRAINT_NAME AS Constraint_Name 

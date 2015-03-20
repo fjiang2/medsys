@@ -27,7 +27,7 @@ namespace Sys.Data.Comparison
             foreach (TableName tableName in names)
             {
 #if DEBUG
-                Console.WriteLine(tableName);
+                Console.WriteLine(tableName.ShortName);
 #endif
                 try
                 {
