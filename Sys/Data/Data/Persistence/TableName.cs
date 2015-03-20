@@ -24,6 +24,7 @@ namespace Sys.Data
     public class TableName : IComparable<TableName>, IComparable
     {
         protected DatabaseName baseName;
+        protected string schema = "dbo";
         protected string tableName;
 
         public TableName(ConnectionProvider provider, string fullTableName)
@@ -36,12 +37,14 @@ namespace Sys.Data
             if (t.Length > 1)
             {
                 databaseName = t[0];
+                this.schema = t[1];
                 this.tableName = t[2];
             }
             else
                 this.tableName = fullTableName;
 
             databaseName = databaseName.Replace("[", "").Replace("]", "");
+            this.schema = this.schema.Replace("[", "").Replace("]", "");
             this.tableName = this.tableName.Replace("[", "").Replace("]", "");
 
             if (databaseName == "")
@@ -107,7 +110,7 @@ namespace Sys.Data
                 {
                     //Visual Studio 2010 Windows Form Design Mode, does not support format [database]..[table]
                     if(baseName.Provider.DpType != DbProviderType.SqlCe)
-                        return string.Format("{0}..[{1}]", this.baseName.Name, this.tableName);
+                        return string.Format("{0}.{1}.[{2}]", this.baseName.Name, this.schema, this.tableName);
                     else
                         return string.Format("[{0}]", this.tableName);
                 }

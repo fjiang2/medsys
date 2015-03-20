@@ -149,6 +149,8 @@ namespace SqlCompare
                                 foreach (DataTable dt in ds.Tables)
                                     dt.ToConsole();
                             }
+                            else
+                                stdio.WriteLine("cannot retrieve data from server");
                         }
                     }
                     break;
@@ -175,7 +177,7 @@ namespace SqlCompare
                 case "create":
                 case "alter":
                 case "drop":
-                    new SqlCmd(theSide.Provider, text).ExecuteNonQuery();
+                    stdio.WriteLine("{0} of rows affected", new SqlCmd(theSide.Provider, text).ExecuteNonQuery());
                     break;
 
                 case "1":

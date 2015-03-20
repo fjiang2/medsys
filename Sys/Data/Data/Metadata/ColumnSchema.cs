@@ -134,6 +134,11 @@ namespace Sys.Data
             set { this.foreignKey = value; }
         }
 
+        public override int GetHashCode()
+        {
+            return this.ColumnName.GetHashCode();
+        }
+
         public override bool Equals(object obj)
         {
             ColumnSchema it = obj as ColumnSchema;
@@ -248,7 +253,16 @@ namespace Sys.Data
 
                 case "geography":
                     return CType.Binary;
-                    
+
+                case "date":
+                    return CType.Date;
+
+                case "time":
+                    return CType.Time;
+
+                case "xml":
+                    return CType.Xml;
+
             }
 
             throw new MessageException("data type [{0}] is not supported", sqlType);
@@ -270,12 +284,14 @@ namespace Sys.Data
                     ty = "string";
                     break;
 
+                case "date":
                 case "datetime":
                 case "smalldatetime":
                     ty = "DateTime";
                     if (nullable) ty += "?";
                     break;
 
+                case "time":
                 case "timestamp":
                     ty = "TimeSpan";
                     if (nullable) ty += "?";
@@ -428,6 +444,7 @@ namespace Sys.Data
                     throw new NotImplementedException(string.Format("cannot convert {0} into type of {1}", val, CType.Binary));
                     
 
+                case CType.Date:
                 case CType.DateTime:
                     if(val.IndexOf("-") > 0)    //2011-10-30
                     {
@@ -449,6 +466,12 @@ namespace Sys.Data
                     else 
                     {
                         return Convert.ToDateTime(val);
+                    }
+
+                case CType.Time:
+                    {
+                        string[] time = val.Split(':');
+                        return new TimeSpan(Convert.ToInt32(time[0]), Convert.ToInt32(time[1]), Convert.ToInt32(time[2]));
                     }
 
                 case CType.Float:
@@ -480,6 +503,8 @@ namespace Sys.Data
                 
                 case CType.BigInt:
                     return Convert.ToInt64(val);
+
+//                case CType.Xml:
 
                 default:
                     throw new NotImplementedException(string.Format("cannot convert {0} into type of {1}", val, ctype));
