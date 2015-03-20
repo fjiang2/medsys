@@ -31,11 +31,13 @@ namespace Sys.Data.Comparison
                     builder.AppendLine(script.ADD_COLUMN(column));
                 }
                 else if (schema2.Columns.Where(c =>
-                    c.ColumnName.Equals(column.ColumnName) 
-                    && (!c.CType.Equals(column.CType)
-                    || !c.Nullable.Equals(column.Nullable)
-                    || !c.Precision.Equals(column.Precision)
-                    || !c.Scale.Equals(column.Scale)
+                    c.ColumnName.Equals(column.ColumnName)
+                    && (c.CType != column.CType
+                    || c.Nullable != column.Nullable
+                    || c.Precision != column.Precision
+                    || c.Scale != column.Scale
+                    || c.IsIdentity != column.IsIdentity
+                    || c.IsComputed != column.IsComputed
                     ))
                     .Count() != 0)
                 {

@@ -61,11 +61,11 @@ namespace Sys.Data.Comparison
                 TableSchema schema1 = new TableSchema(tname1);
                 TableSchema schema2 = new TableSchema(tname2);
                 
-                Console.WriteLine(tname1);
+                Console.WriteLine(tname1.ShortName);
 
                 if (excludedTables.Contains(tableName.ShortName.ToUpper()))
                 {
-                    Console.WriteLine("skip to compare data on table {0}", tableName);
+                    Console.WriteLine("skip to compare data on table {0}", tableName.ShortName);
                     continue;
                 }
 

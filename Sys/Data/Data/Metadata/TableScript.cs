@@ -21,6 +21,8 @@ namespace Sys.Data
             this.tableName = schema.TableName;
         }
 
+     
+
         #region INSERT/UPDATE/DELETE
 
         public string INSERT(DataRow row)
@@ -70,13 +72,13 @@ namespace Sys.Data
         {
             TableSchema schema1 = new TableSchema(tableName);
             string format = TableSchema.GenerateCREATE_TABLE(schema1);
-            string script = string.Format(format, tableName.Name);
+            string script = string.Format(format, tableName.FormalName);
             return script;
         }
 
         public string DROP_TABLE()
         {
-            string script = string.Format("DROP TABLE [{0}]", tableName.Name);
+            string script = string.Format("DROP TABLE {0}", tableName.FormalName);
             return script;
         }
         
@@ -87,17 +89,17 @@ namespace Sys.Data
 
         public string ADD_COLUMN(IColumn column)
         {
-            return string.Format("ALTER TABLE [{0}] ADD {1}", tableName.Name, ColumnSchema.GetSQLField(column));
+            return string.Format("ALTER TABLE {0} ADD {1}", tableName.FormalName, ColumnSchema.GetSQLField(column));
         }
 
         public string ALTER_COLUMN(IColumn column)
         {
-            return string.Format("ALTER TABLE [{0}] ALTER COLUMN {1}", tableName.Name, ColumnSchema.GetSQLField(column));
+            return string.Format("ALTER TABLE {0} ALTER COLUMN {1}", tableName.FormalName, ColumnSchema.GetSQLField(column));
         }
 
         public string DROP_COLUMN(IColumn column)
         {
-            return string.Format("ALTER TABLE [{0}] DROP  COLUMN {1}", tableName.Name, column.ColumnName);
+            return string.Format("ALTER TABLE {0} DROP  COLUMN {1}", tableName.FormalName, column.ColumnName);
         }
 
         #endregion
@@ -106,12 +108,12 @@ namespace Sys.Data
 
         public string ADD_PRIMARY_KEY(IPrimaryKeys primaryKey)
         {
-            return string.Format("ALTER TABLE [{0}] ADD PRIMARY KEY ({1})", tableName.Name, string.Join(",", primaryKey.Keys));
+            return string.Format("ALTER TABLE {0} ADD PRIMARY KEY ({1})", tableName.FormalName, string.Join(",", primaryKey.Keys));
         }
 
         public string DROP_PRIMARY_KEY(IPrimaryKeys primaryKey)
         {
-            return string.Format("ALTER TABLE [{0}] DROP CONSTRAINT ({1})", tableName.Name, primaryKey.ConstraintName);
+            return string.Format("ALTER TABLE {0} DROP CONSTRAINT ({1})", tableName.FormalName, primaryKey.ConstraintName);
         }
 
         #endregion
@@ -120,14 +122,19 @@ namespace Sys.Data
 
         public string DROP_FOREIGN_KEY(IForeignKey foreignKey)
         {
-            return string.Format("ALTER TABLE [{0}] DROP CONSTRAINT ({1})", tableName.Name, foreignKey.Constraint_Name);
+            return string.Format("ALTER TABLE {0} DROP CONSTRAINT ({1})", tableName.FormalName, foreignKey.Constraint_Name);
         }
 
         public string ADD_FOREIGN_KEY(IForeignKey foreignKey)
         {
-            string reference = string.Format(" [{0}]([{1}])", foreignKey.PK_Table, foreignKey.PK_Column);
-            return string.Format("ALTER TABLE [{0}] ADD CONSTRAINT [{1}] FOREIGN KEY ([{2}])\nREFERENCES {3}",
-                tableName.Name,
+            string reference;
+            if(foreignKey.PK_Schema != TableName.dbo)
+                reference = string.Format(" [{0}].[{1}]([{2}])", foreignKey.PK_Schema, foreignKey.PK_Table, foreignKey.PK_Column);
+            else
+                reference = string.Format(" [{0}]([{1}])", foreignKey.PK_Table, foreignKey.PK_Column);
+
+            return string.Format("ALTER TABLE {0} ADD CONSTRAINT [{1}] FOREIGN KEY ([{2}])\nREFERENCES {3}",
+                tableName.FormalName,
                 foreignKey.Constraint_Name,
                 foreignKey.FK_Column,
                 reference
@@ -140,17 +147,17 @@ namespace Sys.Data
         
         private string updateCommandTemplate
         {
-            get { return string.Format("UPDATE [{0}] SET {1} WHERE {2}", tableName.Name, "{0}", "{1}"); }
+            get { return string.Format("UPDATE {0} SET {1} WHERE {2}", tableName.FormalName, "{0}", "{1}"); }
         }
 
         private string insertCommandTemplate
         {
-            get { return string.Format("INSERT INTO [{0}]({1}) VALUES({2})", tableName.Name, "{0}", "{1}"); }
+            get { return string.Format("INSERT INTO {0}({1}) VALUES({2})", tableName.FormalName, "{0}", "{1}"); }
         }
 
         private string deleteCommandTemplate
         {
-            get { return string.Format("DELETE FROM [{0}] WHERE {1}", tableName.Name, "{0}"); }
+            get { return string.Format("DELETE FROM {0} WHERE {1}", tableName.FormalName, "{0}"); }
         }
         
         #endregion

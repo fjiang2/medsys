@@ -23,8 +23,10 @@ namespace Sys.Data
 {
     public class TableName : IComparable<TableName>, IComparable
     {
+        public const string dbo = "dbo";
+
         protected DatabaseName baseName;
-        protected string schema = "dbo";
+        protected string schema = dbo;
         protected string tableName;
 
         public TableName(ConnectionProvider provider, string fullTableName)
@@ -101,13 +103,24 @@ namespace Sys.Data
             get { return this.baseName; }
         }
 
+        public string FormalName
+        {
+            get 
+            {
+                if (this.schema != dbo)
+                    return string.Format("[{0}].[{1}]", this.schema, this.tableName); 
+                else
+                    return string.Format("[{0}]", this.tableName);
+            }
+        }
+
         public string ShortName
         {
             get 
             {
-                if (this.schema != "dbo")
+                if (this.schema != dbo)
                 {
-                    return string.Format("{0}.[{1}]", this.schema, this.tableName);
+                    return string.Format("{0}.{1}", this.schema, this.tableName);
                 }
                 else
                     return this.tableName;

@@ -12,8 +12,8 @@ namespace Sys.Data
 
         private static string SQL_SCHEMA = @"
 SELECT 
-	SCHEMA_NAME(t.schema_id) AS SchemaName,
-	t.name AS TableName,
+	--SCHEMA_NAME(t.schema_id) AS SchemaName,
+	--t.name AS TableName,
     c.name AS ColumnName,
     ty.name AS DataType,
     c.max_length AS Length,

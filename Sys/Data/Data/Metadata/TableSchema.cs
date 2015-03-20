@@ -185,7 +185,7 @@ namespace Sys.Data
 
 
             string SQL = @"
-CREATE TABLE [dbo].[{0}]
+CREATE TABLE {0}
 (
 {1}
 {2}

@@ -172,14 +172,14 @@ namespace Sys.Data
 
             foreach (var tableName in history)
             {
-                Console.WriteLine("generate CREATE TABLE [{0}]", tableName);
+                Console.WriteLine("generate CREATE TABLE {0}", tableName.FormalName);
                 try
                 {
                     builder.AppendLine(tableName.GenerateScript());
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("failed to generate CREATE TABLE [{0}],{1}", tableName, ex.Message);
+                    Console.WriteLine("failed to generate CREATE TABLE {0},{1}", tableName.FormalName, ex.Message);
                 }
             }
 
@@ -190,13 +190,13 @@ namespace Sys.Data
         {
             string drop = @"
 IF OBJECT_ID('{0}') IS NOT NULL
-  DROP TABLE [{0}]
+  DROP TABLE {1}
 ";
             TableName[] history = GetDependencyTableNames(databaseName);
             StringBuilder builder = new StringBuilder();
             foreach (var tableName in history.Reverse())
             {
-                builder.AppendFormat(drop, tableName)
+                builder.AppendFormat(drop, tableName.Name, tableName.FormalName)
                     .AppendLine(TableScript.GO);
             }
 
