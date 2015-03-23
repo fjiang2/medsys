@@ -276,7 +276,7 @@ namespace Sys.Data.Manager
             {
                 var fieldDef = dict_column_field[column.ColumnName];
                 string fieldName = fieldDef.FieldName;
-                fill.AddStatements("{0} = ({1})row.GetValue(_{0})", fieldName, fieldDef.Type);
+                fill.AddStatements("this.{0} = ({1})row.GetValue(_{0})", fieldName, fieldDef.Type);
                 collect.AddStatements("row.SetValue(_{0}, this.{0})", fieldName);
             }
 

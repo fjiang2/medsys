@@ -46,7 +46,11 @@ namespace Sys.Data.Manager
             if (database_id == -1)
                 return -1;
 
+
             dictDataTableDpo dpo = new dictDataTableDpo();
+            if (!dpo.TableName.Exists())
+                return -1;
+
             dpo.database_id = database_id;
             dpo.name = tname.Name;
             dpo.Load();

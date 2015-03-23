@@ -15,9 +15,9 @@ namespace App.DpoCmd
 {
     class Program
     {
-        static void Main0()
+        static void Main()
         {
-            ConnectionProvider provider = ConnectionProviderManager.RegisterDefaultProvider("data source=localhost\\sqlexpress;initial catalog=medsys;integrated security=SSPI;packet size=4096");
+            ConnectionProvider provider = ConnectionProviderManager.RegisterDefaultProvider("data source=localhost\\sqlexpress;initial catalog=northwind;integrated security=SSPI;packet size=4096");
 
             DatabaseName dname = new DatabaseName(provider, "northwind");
             string path = "D:\\devel\\GitHub\\medsys\\App\\DpoCmd";
@@ -41,7 +41,7 @@ namespace App.DpoCmd
 
         }
       
-        static void Main(string[] args)
+        static void Main1(string[] args)
         {
             DataTable table = new DataTable();
             table.TableName = "Fruit";

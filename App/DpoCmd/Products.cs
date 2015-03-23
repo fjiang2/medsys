@@ -14,7 +14,7 @@ using Sys.Data.Manager;
 
 namespace Northwind
 {
-    [Revision(1)]
+    [Revision(3)]
     [Table("Products", Level.Application, Pack = false)]    //Primary Keys = ProductID;  Identity = ProductID;
     public partial class Products : DPObject
     {
