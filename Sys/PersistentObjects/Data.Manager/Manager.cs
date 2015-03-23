@@ -21,6 +21,7 @@ using System.Text;
 using System.Reflection;
 using System.IO;
 using Sys.Data;
+using Sys.CodeBuilder;
 
 namespace Sys.Data.Manager
 {

@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Sys.Data;
+using Sys.CodeBuilder;
 
 namespace Sys.Data.Manager
 {
@@ -45,7 +46,7 @@ namespace Sys.Data.Manager
         }
 
         public ClassName(Type ty)
-            :this(ty.Namespace, AccessModifier.Public, ty.Name)
+            : this(ty.Namespace, AccessModifier.Public, ty.Name)
         {
             if (ty.IsPublic)
                 this.modifier = AccessModifier.Public;

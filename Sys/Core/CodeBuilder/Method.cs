@@ -29,13 +29,13 @@ namespace Sys.CodeBuilder
 
         
         //internal string Method(....)
-        public Method(ModifierType modifier, Type returnType, string methodName)
+        public Method(AccessModifier modifier, Type returnType, string methodName)
             : this(modifier, returnType, methodName, new Argument[] { })
         {
         }
 
         //protected void Method(....)
-        public Method(ModifierType modifier, Type returnType, string methodName, Argument[] args)
+        public Method(AccessModifier modifier, Type returnType, string methodName, Argument[] args)
         {
             this.signature = string.Format("{0}{1} {2}({3})", 
                 new Modifier(modifier), 
@@ -46,12 +46,12 @@ namespace Sys.CodeBuilder
         }
 
       
-        public Method(ModifierType modifier, string methodName)
+        public Method(AccessModifier modifier, string methodName)
             : this(modifier, methodName, new Argument[] { })
         {
         }
 
-        public Method(ModifierType modifier, string methodName,  Argument[] args)
+        public Method(AccessModifier modifier, string methodName,  Argument[] args)
         {
             this.signature = string.Format("{0}void {1}({2})",
                 new Modifier(modifier), 

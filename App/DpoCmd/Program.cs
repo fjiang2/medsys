@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Sys;
 using Sys.Data;
 using Sys.Data.Manager;
+using Sys.CodeBuilder;
 
 namespace App.DpoCmd
 {
@@ -37,7 +38,7 @@ namespace App.DpoCmd
             table.Columns.Add("LocalCounter", typeof(string));
 
             table.Columns.Add("MODESTR", typeof(string));
-            table.Columns.Add("SPLITINDEXSTR", typeof(string));	
+            table.Columns.Add("SPLITINDEXSTR", typeof(string));
 
 
             table.GenTableDpo("C:\\temp", new ClassName("AVL", AccessModifier.Public, "Fake"));

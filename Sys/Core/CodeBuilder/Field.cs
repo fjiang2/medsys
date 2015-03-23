@@ -26,12 +26,12 @@ namespace Sys.CodeBuilder
         string fieldSignature;
 
         public Field(Type type, string fieldName)
-            : this(ModifierType.Private, type, fieldName)
+            : this(AccessModifier.Private, type, fieldName)
         {
         }
 
 
-        public Field(ModifierType modifier, Type type, string fieldName)
+        public Field(AccessModifier modifier, Type type, string fieldName)
         {
             this.fieldSignature = string.Format("{0}{1} {2};",
                 new Modifier(modifier),
@@ -40,7 +40,7 @@ namespace Sys.CodeBuilder
         }
 
 
-        public Field(ModifierType modifier, Type type, string fieldName, object value)
+        public Field(AccessModifier modifier, Type type, string fieldName, object value)
         {
             this.fieldSignature = string.Format("{0}{1} {2} = {3};",
                 new Modifier(modifier),

@@ -48,7 +48,7 @@
     <Compile Include="CodeBuilder\Format.cs" />
     <Compile Include="CodeBuilder\Method.cs" />
     <Compile Include="CodeBuilder\Modifier.cs" />
-    <Compile Include="CodeBuilder\ModifierType.cs" />
+    <Compile Include="CodeBuilder\AccessModifier.cs" />
     <Compile Include="CodeBuilder\Property.cs" />
     <Compile Include="CodeBuilder\Statement.cs" />
     <Compile Include="CodeBuilder\Statements.cs" />

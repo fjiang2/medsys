@@ -30,11 +30,11 @@ namespace Sys.CodeBuilder
 
         
         public Property(Type returnType, string methodName)
-            : this(ModifierType.Public, returnType, methodName)
+            : this(AccessModifier.Public, returnType, methodName)
         {
         }
 
-        public Property(ModifierType modifier, Type returnType, string propertyName)
+        public Property(AccessModifier modifier, Type returnType, string propertyName)
         {
             this.signature = string.Format("{0} {1} {2}", 
                 new Modifier(modifier), 

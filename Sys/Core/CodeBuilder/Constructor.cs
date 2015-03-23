@@ -30,24 +30,24 @@ namespace Sys.CodeBuilder
         
         //public Constructor(...)
         public Constructor(string constructorName)
-            : this(ModifierType.Public, constructorName, new Argument[] { })
+            : this(AccessModifier.Public, constructorName, new Argument[] { })
         {
         }
 
         //public Constructor(...)
-        public Constructor(ModifierType modifier, string constructorName)
+        public Constructor(AccessModifier modifier, string constructorName)
             : this(modifier, constructorName, new Argument[] { })
         {
         }
 
 
         //protected Constructor(...)
-        public Constructor(ModifierType modifier, string constructorName, Argument[] args)
+        public Constructor(AccessModifier modifier, string constructorName, Argument[] args)
             : this(modifier, constructorName, args, new Argument[] { })
         {
         }
 
-        public Constructor(ModifierType modifier, string constructorName, Argument[] args, Argument[] baseAgrs)
+        public Constructor(AccessModifier modifier, string constructorName, Argument[] args, Argument[] baseAgrs)
         {
             string _constructor = string.Format("{0}{1}({2})",
                 new Modifier(modifier),

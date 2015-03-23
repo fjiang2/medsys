@@ -25,14 +25,14 @@ namespace Sys.CodeBuilder
     {
         public const string CRLF = "\r\n";
 
-        ModifierType modifier;
+        AccessModifier modifier;
 
-        public Modifier(ModifierType modifier)
+        public Modifier(AccessModifier modifier)
         {
             this.modifier = modifier;
         }
 
-        public ModifierType ModifierType
+        public AccessModifier ModifierType
         {
             get { return this.modifier; }
         }
@@ -46,35 +46,35 @@ namespace Sys.CodeBuilder
         {
             StringBuilder s = new StringBuilder();
 
-            if ((modifier & ModifierType.Public) == ModifierType.Public)
+            if ((modifier & AccessModifier.Public) == AccessModifier.Public)
                 s.Append("public ");
-            else if ((modifier & ModifierType.Private) == ModifierType.Private)
+            else if ((modifier & AccessModifier.Private) == AccessModifier.Private)
                 s.Append("private ");
-            else if ((modifier & ModifierType.Internal) == ModifierType.Internal)
+            else if ((modifier & AccessModifier.Internal) == AccessModifier.Internal)
                 s.Append("internal ");
-            else if ((modifier & ModifierType.Protected) == ModifierType.Protected)
+            else if ((modifier & AccessModifier.Protected) == AccessModifier.Protected)
                 s.Append("protected ");
 
 
-            if ((modifier & ModifierType.Const) == ModifierType.Const)
+            if ((modifier & AccessModifier.Const) == AccessModifier.Const)
                 s.Append("const ");
-            else if ((modifier & ModifierType.Static) == ModifierType.Static)
+            else if ((modifier & AccessModifier.Static) == AccessModifier.Static)
                 s.Append("static ");
-            else if ((modifier & ModifierType.Readonly) == ModifierType.Readonly)
+            else if ((modifier & AccessModifier.Readonly) == AccessModifier.Readonly)
                 s.Append("readonly ");
 
             
-            if ((modifier & ModifierType.Virtual) == ModifierType.Virtual)
+            if ((modifier & AccessModifier.Virtual) == AccessModifier.Virtual)
                 s.Append("virtual ");
-            else if ((modifier & ModifierType.Override) == ModifierType.Override)
+            else if ((modifier & AccessModifier.Override) == AccessModifier.Override)
                 s.Append("override ");
 
-            if ((modifier & ModifierType.Abstract) == ModifierType.Abstract)
+            if ((modifier & AccessModifier.Abstract) == AccessModifier.Abstract)
                 s.Append("abstract ");
-            else if ((modifier & ModifierType.Sealed) == ModifierType.Sealed)
+            else if ((modifier & AccessModifier.Sealed) == AccessModifier.Sealed)
                 s.Append("sealed ");
 
-            if ((modifier & ModifierType.Event) == ModifierType.Event)
+            if ((modifier & AccessModifier.Event) == AccessModifier.Event)
                 s.Append("event ");
 
             return s.ToString();

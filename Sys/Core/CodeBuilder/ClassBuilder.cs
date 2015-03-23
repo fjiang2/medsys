@@ -36,12 +36,12 @@ namespace Sys.CodeBuilder
         private string className;
         private Type[] inherits;
 
-        public ClassBuilder(string nameSpace, ModifierType modifer, string className)
+        public ClassBuilder(string nameSpace, AccessModifier modifer, string className)
             :this(nameSpace, modifer, className, new Type[]{})
         { 
         }
 
-        public ClassBuilder(string nameSpace, ModifierType modifer, string className, Type[] inherits)
+        public ClassBuilder(string nameSpace, AccessModifier modifer, string className, Type[] inherits)
         {
             this.nameSpace = nameSpace;
             this.classModifier = new Modifier(modifer);

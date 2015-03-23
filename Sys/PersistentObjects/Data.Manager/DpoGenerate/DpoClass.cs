@@ -23,7 +23,7 @@ using Sys.Data;
 using System.Reflection;
 using System.Linq;
 using Tie;
-
+using Sys.CodeBuilder;
 
 namespace Sys.Data.Manager
 {

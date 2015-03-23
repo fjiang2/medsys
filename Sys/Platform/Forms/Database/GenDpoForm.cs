@@ -14,7 +14,7 @@ using Sys.Data;
 using Sys.Modules;
 using System.Threading;
 using Sys.OS;
-
+using Sys.CodeBuilder;
 
 namespace Sys.Platform.Forms
 {
@@ -109,9 +109,9 @@ namespace Sys.Platform.Forms
                 this.txtClass.Text = ty.Name;
 
                 if(ty.IsPublic)
-                    this.Modifier = Data.Manager.AccessModifier.Public;
-                else 
-                    this.Modifier = Data.Manager.AccessModifier.Internal;
+                    this.Modifier = AccessModifier.Public;
+                else
+                    this.Modifier = AccessModifier.Internal;
 
 
                 DPObject dpo = (DPObject)Activator.CreateInstance(ty);
@@ -224,7 +224,7 @@ namespace Sys.Platform.Forms
         {
             get
             {
-                return  (AccessModifier)this.rgModifier.GetEnum();
+                return (AccessModifier)this.rgModifier.GetEnum();
             }
             set
             {

@@ -61,7 +61,6 @@
     <Compile Include="Data.Manager\Dictionary\DictColumn.cs" />
     <Compile Include="Data.Manager\Dictionary\DictDatabase.cs" />
     <Compile Include="Data.Manager\Dictionary\DictTable.cs" />
-    <Compile Include="Data.Manager\DpoGenerate\AccessModifier.cs" />
     <Compile Include="Data.Manager\DpoGenerate\ClassName.cs" />
     <Compile Include="Data.Manager\DpoGenerate\ClassTableName.cs" />
     <Compile Include="Data.Manager\DpoGenerate\DpoClass.cs" />
