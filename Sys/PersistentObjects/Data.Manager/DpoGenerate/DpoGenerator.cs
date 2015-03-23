@@ -40,6 +40,9 @@ namespace Sys.Data.Manager
         public bool HasTableAttribute { get; set; }
         public bool HasColumnAttribute { get; set; }
         public Dictionary<TableName, Type> Dict { get; set; }
+        
+        public string OuputPath { get; set; }
+        public bool MustGenerate { get; set;}
 
         public DpoGenerator(ClassTableName ctname, ITable schema, ClassName cname)
         {
@@ -47,6 +50,8 @@ namespace Sys.Data.Manager
             this.HasColumnAttribute = false;
             this.Dict = new Dictionary<TableName, Type>();
             this.RegisterTable = true;
+            this.OuputPath = "C:\\temp\\dpo";
+            this.MustGenerate = true;
 
             this.ctname = ctname;
             this.cname = cname;
@@ -68,9 +73,11 @@ namespace Sys.Data.Manager
 
         }
 
-        public bool WriteFile(string fileName, bool mustGenerate)
+        public bool SaveCode()
         {
-            if (!mustGenerate)
+            string fileName = string.Format("{0}\\{1}.cs", OuputPath, cname.Class);
+
+            if (!MustGenerate)
             {
                 if (File.Exists(fileName))
                 {

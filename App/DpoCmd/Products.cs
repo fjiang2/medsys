@@ -14,7 +14,7 @@ using Sys.Data.Manager;
 
 namespace Northwind
 {
-    [Revision(3)]
+    [Revision(7)]
     [Table("Products", Level.Application, Pack = false)]    //Primary Keys = ProductID;  Identity = ProductID;
     public partial class Products : DPObject
     {
@@ -105,32 +105,32 @@ namespace Northwind
 
 		public override void Fill(DataRow row)
 		{
-			ProductID = (int)row.GetValue(_ProductID);
-			ProductName = (string)row.GetValue(_ProductName);
-			SupplierID = (int?)row.GetValue(_SupplierID);
-			CategoryID = (int?)row.GetValue(_CategoryID);
-			QuantityPerUnit = (string)row.GetValue(_QuantityPerUnit);
-			UnitPrice = (decimal?)row.GetValue(_UnitPrice);
-			UnitsInStock = (short?)row.GetValue(_UnitsInStock);
-			UnitsOnOrder = (short?)row.GetValue(_UnitsOnOrder);
-			ReorderLevel = (short?)row.GetValue(_ReorderLevel);
-			Discontinued = (bool)row.GetValue(_Discontinued);
-			Options = (string)row.GetValue(_Options);
+			this.ProductID = GetField<int>(row, _ProductID);
+			this.ProductName = GetField<string>(row, _ProductName);
+			this.SupplierID = GetField<int?>(row, _SupplierID);
+			this.CategoryID = GetField<int?>(row, _CategoryID);
+			this.QuantityPerUnit = GetField<string>(row, _QuantityPerUnit);
+			this.UnitPrice = GetField<decimal?>(row, _UnitPrice);
+			this.UnitsInStock = GetField<short?>(row, _UnitsInStock);
+			this.UnitsOnOrder = GetField<short?>(row, _UnitsOnOrder);
+			this.ReorderLevel = GetField<short?>(row, _ReorderLevel);
+			this.Discontinued = GetField<bool>(row, _Discontinued);
+			this.Options = GetField<string>(row, _Options);
 		}
 
 		public override void Collect(DataRow row)
 		{
-			row.SetValue(_ProductID, this.ProductID);
-			row.SetValue(_ProductName, this.ProductName);
-			row.SetValue(_SupplierID, this.SupplierID);
-			row.SetValue(_CategoryID, this.CategoryID);
-			row.SetValue(_QuantityPerUnit, this.QuantityPerUnit);
-			row.SetValue(_UnitPrice, this.UnitPrice);
-			row.SetValue(_UnitsInStock, this.UnitsInStock);
-			row.SetValue(_UnitsOnOrder, this.UnitsOnOrder);
-			row.SetValue(_ReorderLevel, this.ReorderLevel);
-			row.SetValue(_Discontinued, this.Discontinued);
-			row.SetValue(_Options, this.Options);
+			SetField(row, _ProductID, this.ProductID);
+			SetField(row, _ProductName, this.ProductName);
+			SetField(row, _SupplierID, this.SupplierID);
+			SetField(row, _CategoryID, this.CategoryID);
+			SetField(row, _QuantityPerUnit, this.QuantityPerUnit);
+			SetField(row, _UnitPrice, this.UnitPrice);
+			SetField(row, _UnitsInStock, this.UnitsInStock);
+			SetField(row, _UnitsOnOrder, this.UnitsOnOrder);
+			SetField(row, _ReorderLevel, this.ReorderLevel);
+			SetField(row, _Discontinued, this.Discontinued);
+			SetField(row, _Options, this.Options);
 		}
 
     }

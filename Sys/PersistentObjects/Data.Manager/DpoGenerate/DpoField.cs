@@ -75,7 +75,7 @@ namespace Sys.Data.Manager
             if(dpoClass.HasColumnAttribute)
                 line += string.Format("//{0}({1}) {2}", column.DataType, column.AdjuestedLength(), column.Nullable ? "null" : "not null");
 
-            dpoClass.dict_column_field.Add(column.ColumnName, new FieldDefinition(ty, fieldName));
+            dpoClass.dict_column_field.Add(column.ColumnName, new PropertyDefinition(ty, fieldName));
 
             
 
@@ -115,7 +115,7 @@ namespace Sys.Data.Manager
         public string GetConstStringColumnName()
         {
             string line = "        ";
-            line += string.Format("public const string _{0} = \"{1}\";", dpoClass.dict_column_field[column.ColumnName].FieldName, column.ColumnName);
+            line += string.Format("public const string _{0} = \"{1}\";", dpoClass.dict_column_field[column.ColumnName].PropertyName, column.ColumnName);
             
             return line;
         }

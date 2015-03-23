@@ -20,8 +20,12 @@ namespace Sys.Data.Manager
 
         public DataTableDpoClass(DataTable table)
         {
+
+            DatabaseName dname = new DatabaseName(ConnectionProviderManager.DefaultProvider, "MEM");
+
             this.table = table;
-            this.tableName = new ClassTableName(ConnectionProviderManager.DefaultProvider, "MEM", table.TableName);
+
+            this.tableName = new ClassTableName(new TableName(dname, TableName.dbo, table.TableName));
 
 
 

@@ -81,7 +81,7 @@ namespace Sys.Data.Manager
                 {
 
                     DPObject dpo = (DPObject)Activator.CreateInstance(type);
-                    ClassTableName ctname = new ClassTableName(dpo.TableName.Provider, dpo.TableName.DatabaseName.Name, dpo.TableName.Name)
+                    ClassTableName ctname = new ClassTableName(dpo.TableName)
                      {
                          Level = dpo.Level,
                          Pack = dpo.IsPack,

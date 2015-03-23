@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data.Manager\DpoGenerate\DataTableDpoClass.cs" />
+    <Compile Include="Data.Manager\DpoGenerate\PropertyDefinition.cs" />
     <Compile Include="Data.Manager\LogDpoClass.cs" />
     <Compile Include="Extension.cs" />
     <Compile Include="MgCode\DpoClass\DataProviderDpo.cs" />

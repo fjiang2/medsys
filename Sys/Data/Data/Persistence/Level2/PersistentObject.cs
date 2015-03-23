@@ -372,7 +372,33 @@ namespace Sys.Data
 
 
         #region Fill/Collect
-        
+
+        protected T GetField<T>(DataRow row, string columnName)
+        {
+            if (!row.Table.Columns.Contains(columnName))
+                return default(T);
+
+            object value = row[columnName];
+
+            if (value == System.DBNull.Value)
+            {
+                return default(T);
+            }
+
+            return (T)value;
+        }
+
+        protected void SetField(DataRow row, string columnName, object value)
+        {
+            if (row.Table.Columns.Contains(columnName))
+            {
+                if (value == null)
+                    row[columnName] = System.DBNull.Value;
+                else
+                    row[columnName] = value;
+            }
+        }
+
         /// <summary>
         /// Fill object properties
         /// </summary>

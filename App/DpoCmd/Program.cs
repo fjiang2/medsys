@@ -15,6 +15,7 @@ namespace App.DpoCmd
 {
     class Program
     {
+
         static void Main()
         {
             ConnectionProvider provider = ConnectionProviderManager.RegisterDefaultProvider("data source=localhost\\sqlexpress;initial catalog=northwind;integrated security=SSPI;packet size=4096");
@@ -33,11 +34,12 @@ namespace App.DpoCmd
             {
                 HasTableAttribute = true,
                 HasColumnAttribute = true,
-                RegisterTable = false
+                RegisterTable = false,
+                OuputPath = path
             };
 
             gen.Generate();
-            bool result = gen.WriteFile(string.Format("{0}\\{1}.cs", path, cname.Class), true);
+            bool result = gen.SaveCode();
 
         }
       

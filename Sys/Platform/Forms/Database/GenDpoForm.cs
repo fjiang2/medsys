@@ -95,7 +95,7 @@ namespace Sys.Platform.Forms
             string tableName = node.Text;
             this.txtTableName.Text = tableName;
 
-            ClassTableName tname = new ClassTableName(this.provider, DatabaseName, tableName);
+            ClassTableName tname = new ClassTableName(DataBaseName, tableName);
             
             this.txtTableId.Text = tname.Id.ToString();
 
@@ -161,10 +161,10 @@ namespace Sys.Platform.Forms
         {
             treeTables.Nodes.Clear();
 
-            TableName tname = new TableName(new DatabaseName(this.provider, DatabaseName),"dbo", "any");
+            TableName tname = new TableName(new DatabaseName(this.provider, _databaseName),"dbo", "any");
             
             this.txtDatabaseId.Text = tname.DatabaseId().ToString();
-            TableName[] tableNames = new DatabaseName(provider, DatabaseName).GetTableNames();
+            TableName[] tableNames = new DatabaseName(provider, _databaseName).GetTableNames();
             if (showNewTables)
             {
                 foreach (TableName name in tableNames)
@@ -210,14 +210,14 @@ namespace Sys.Platform.Forms
             string moduleName = (string)this.comboModule.SelectedItem;
 
             if (chkFolder.Checked && Level == Level.Fixed)
-                this.txtNamespace.Text = string.Format("{0}.{1}.{2}", moduleName, Setting.DPO_CLASS_SUB_NAMESPACE, DatabaseName);
+                this.txtNamespace.Text = string.Format("{0}.{1}.{2}", moduleName, Setting.DPO_CLASS_SUB_NAMESPACE, _databaseName);
             else
                 this.txtNamespace.Text = string.Format("{0}.{1}", moduleName, Setting.DPO_CLASS_SUB_NAMESPACE);
 
 
             this.txtPath.Text = Library.AssemblyPath(moduleName, Setting.DPO_CLASS_PATH);
             if (chkFolder.Checked && Level == Level.Fixed)
-                this.txtPath.Text += string.Format("\\{0}", DatabaseName);
+                this.txtPath.Text += string.Format("\\{0}", _databaseName);
         }
 
         private AccessModifier Modifier
@@ -283,15 +283,17 @@ namespace Sys.Platform.Forms
             }
         }
 
-        private string DatabaseName
+        private string _databaseName
         {
-            get
-            {
-                return this.comboDatabase.Text;
-            }
+            get { return this.comboDatabase.Text; }
         }
 
-        private string TableName { get { return this.txtTableName.Text; } }
+        private DatabaseName DataBaseName 
+        { 
+            get { return new DatabaseName(this.provider, _databaseName);  } 
+        }
+
+        private string _tableName { get { return this.txtTableName.Text; } }
 
     
 
@@ -302,7 +304,7 @@ namespace Sys.Platform.Forms
             this.txtOutput.Text = "";
 
             string className = this.txtClass.Text;
-            ClassTableName ctname = new ClassTableName(this.provider, DatabaseName, TableName) 
+            ClassTableName ctname = new ClassTableName(DataBaseName, _tableName) 
             { 
                 Level = this.Level,
                 Pack = this.Pack,
@@ -311,7 +313,7 @@ namespace Sys.Platform.Forms
 
             ClassName cname = new ClassName(Namespace, Modifier, className);
 
-            if (className == "" || TableName == "" || Namespace == "")
+            if (className == "" || _tableName == "" || Namespace == "")
             {
                 this.ErrorMessage = "class or namespace name is not defined";
                 
@@ -350,7 +352,7 @@ namespace Sys.Platform.Forms
                 if (!node.Checked)
                     continue;
 
-                ClassTableName ctname = new ClassTableName(this.provider, DatabaseName, node.Text);
+                ClassTableName ctname = new ClassTableName(DataBaseName, node.Text);
                 if (!dpoDict.ContainsKey(ctname))
                     continue;
 
@@ -395,7 +397,7 @@ namespace Sys.Platform.Forms
                 if (!node.Checked)
                     continue;
 
-                ClassTableName ctname = new ClassTableName(this.provider, DatabaseName, node.Text)
+                ClassTableName ctname = new ClassTableName(DataBaseName, node.Text)
                             {
                                 Level = this.Level,
                                 Pack = this.Pack,
@@ -462,7 +464,7 @@ namespace Sys.Platform.Forms
 
             progressBar1.Visible = true;
             txtCounter.Visible = true;
-            DatabaseName db = new DatabaseName(provider, this.DatabaseName);
+            DatabaseName db = new DatabaseName(provider, this._databaseName);
 
             worker = new BackgroundWorker();
             worker.WorkerReportsProgress = true;
@@ -476,7 +478,7 @@ namespace Sys.Platform.Forms
             {
                 progressBar1.Visible = false;
                 txtCounter.Visible = false;
-                this.InformationMessage = string.Format("database [{0}] dictionary are updated.", DatabaseName);
+                this.InformationMessage = string.Format("database [{0}] dictionary are updated.", _databaseName);
             };
 
 
@@ -499,9 +501,9 @@ namespace Sys.Platform.Forms
 
             try
             {
-                Sys.Data.Manager.SpDatabase sp = new SpDatabase(new DatabaseName(provider, DatabaseName), Path);
+                Sys.Data.Manager.SpDatabase sp = new SpDatabase(new DatabaseName(provider, _databaseName), Path);
                 int count = sp.Generate(Namespace, "sa", "password");
-                this.InformationMessage = string.Format("{0} stored procedures are updated at database [{1}].", count, DatabaseName);
+                this.InformationMessage = string.Format("{0} stored procedures are updated at database [{1}].", count, _databaseName);
             }
             catch (Exception ex)
             {

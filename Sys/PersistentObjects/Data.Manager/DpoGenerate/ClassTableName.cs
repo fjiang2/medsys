@@ -26,18 +26,17 @@ namespace Sys.Data.Manager
     public sealed class ClassTableName : TableName
     {
 
-        public ClassTableName(ConnectionProvider provider, string databaseName, string tableName)
-            : base(new DatabaseName(provider, databaseName), TableName.dbo, tableName)
+        public ClassTableName(DatabaseName databaseName, string tableName)
+            : this( new TableName(databaseName, TableName.dbo, tableName))
         {
-            Level = Level.Fixed;
-            Pack = true;
-            HasProvider = true;
         }
 
         public ClassTableName(TableName tname)
             : base(new DatabaseName(tname.Provider, tname.DatabaseName.Name), tname.SchemaName, tname.Name)
         {
-
+            Level = Level.Fixed;
+            Pack = true;
+            HasProvider = true;
         }
 
 

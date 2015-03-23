@@ -146,7 +146,9 @@ namespace Sys.Data.Manager
             { 
                 HasTableAttribute =hasTableAttribute, 
                 HasColumnAttribute = hasColumnAttribute,
-                Dict = dict
+                Dict = dict,
+                OuputPath = path,
+                MustGenerate = mustGenerate
             };
 
             gen.Generate();
@@ -156,7 +158,7 @@ namespace Sys.Data.Manager
                 Directory.CreateDirectory(path);
             }
 
-            bool result =  gen.WriteFile(string.Format("{0}\\{1}.cs", path, cname.Class), mustGenerate);
+            bool result =  gen.SaveCode();
 
            
             return result;

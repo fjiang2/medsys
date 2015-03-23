@@ -27,22 +27,7 @@ using Sys.CodeBuilder;
 
 namespace Sys.Data.Manager
 {
-    class FieldDefinition
-    {
-        public readonly string FieldName;
-        public readonly string Type;
-
-        public FieldDefinition(string type, string name)
-        {
-            this.FieldName = name;
-            this.Type = type;
-        }
-
-        public override string ToString()
-        {
-            return string.Format("{0} {1}", Type, FieldName);
-        }
-    }
+ 
 
     class DpoClass
     {
@@ -53,7 +38,7 @@ namespace Sys.Data.Manager
         private List<string> nonvalized;
         private List<string> nullableFields;
 
-        public Dictionary<string, FieldDefinition> dict_column_field = new Dictionary<string, FieldDefinition>();
+        public Dictionary<string, PropertyDefinition> dict_column_field = new Dictionary<string, PropertyDefinition>();
         public bool HasColumnAttribute = true;
         public bool HasTableAttribute = true;
         
@@ -135,7 +120,7 @@ namespace Sys.Data.Manager
 
                 if (column.CType == CType.Int)
                 {
-                    return string.Format(DPObjectIdProperty, dict_column_field[key].FieldName);
+                    return string.Format(DPObjectIdProperty, dict_column_field[key].PropertyName);
                 }
                 
             }
@@ -220,7 +205,7 @@ namespace Sys.Data.Manager
                 if (s != "")
                     s += ", ";
 
-                s += "_" + dict_column_field[p].FieldName;
+                s += "_" + dict_column_field[p].PropertyName;
             }
 
             return s;
@@ -251,13 +236,13 @@ namespace Sys.Data.Manager
                 if (s1 != "")
                     s1 += ", ";
 
-                s1 += string.Format("{0} {1}", dict_column_field[p].Type, dict_column_field[p].FieldName.ToLower());
+                s1 += string.Format("{0} {1}", dict_column_field[p].Type, dict_column_field[p].PropertyName.ToLower());
             }
 
             string s2 = "";
             foreach (string p in keys)
             {
-                s2 += string.Format("this.{0} = {1}; ", dict_column_field[p].FieldName, dict_column_field[p].FieldName.ToLower());
+                s2 += string.Format("this.{0} = {1}; ", dict_column_field[p].PropertyName, dict_column_field[p].PropertyName.ToLower());
             }
 
             return constructor
@@ -275,9 +260,9 @@ namespace Sys.Data.Manager
             foreach (IColumn column in metaTable.Columns)
             {
                 var fieldDef = dict_column_field[column.ColumnName];
-                string fieldName = fieldDef.FieldName;
-                fill.AddStatements("this.{0} = ({1})row.GetValue(_{0})", fieldName, fieldDef.Type);
-                collect.AddStatements("row.SetValue(_{0}, this.{0})", fieldName);
+                string fieldName = fieldDef.PropertyName;
+                fill.AddStatements("this.{0} = GetField<{1}>(row, _{0})", fieldName, fieldDef.Type);
+                collect.AddStatements("SetField(row, _{0}, this.{0})", fieldName);
             }
 
             return fill.ToString() +"\r\n" + collect.ToString();
