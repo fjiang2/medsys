@@ -36,7 +36,7 @@ namespace Sys.CodeBuilder
 
         public Property(ModifierType modifier, Type returnType, string propertyName)
         {
-            this.signature = string.Format("{0}{1} {2}", 
+            this.signature = string.Format("{0} {1} {2}", 
                 new Modifier(modifier), 
                 new TypeInfo(returnType), 
                 propertyName
@@ -86,25 +86,31 @@ namespace Sys.CodeBuilder
         {
             this.tab = 2;
 
-            this.Add(this.signature);
-            this.Add("{");
-            
-            this.tab++;
-            if (gets.Count != 0)
+            if (gets.Count == 0 && sets.Count == 0)
             {
-                this.Add("get");
-                code.Append(gets.Code);
-               
+                this.AddFormat("{0} {{get; set; }}", this.signature);
             }
+            else
+            {
+                this.Add(this.signature);
+                this.Add("{");
+                this.tab++;
+                if (gets.Count != 0)
+                {
+                    this.Add("get");
+                    code.Append(gets.Code);
 
-            if (sets.Count != 0)
-            {
-                this.Add("set");
-                code.Append(sets.Code);
+                }
+
+                if (sets.Count != 0)
+                {
+                    this.Add("set");
+                    code.Append(sets.Code);
+                }
+
+                this.tab--;
+                this.Add("}");
             }
-            
-            this.tab--;
-            this.Add("}");
 
             return code.ToString();
         }
