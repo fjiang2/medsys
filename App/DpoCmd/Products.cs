@@ -14,8 +14,8 @@ using Sys.Data.Manager;
 
 namespace Northwind
 {
-    [Revision(7)]
-    [Table("Products", Level.Application, Pack = false)]    //Primary Keys = ProductID;  Identity = ProductID;
+    [Revision(8)]
+    [Table("Products", Level.Application)]    //Primary Keys = ProductID;  Identity = ProductID;
     public partial class Products : DPObject
     {
         [Column(_ProductID, CType.Int, Identity = true, Primary = true)]                          public int ProductID {get; set;} //int(4) not null

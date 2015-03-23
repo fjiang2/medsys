@@ -147,7 +147,7 @@ namespace Sys.Data.Manager
                 HasTableAttribute =hasTableAttribute, 
                 HasColumnAttribute = hasColumnAttribute,
                 Dict = dict,
-                OuputPath = path,
+                OutputPath = path,
                 MustGenerate = mustGenerate
             };
 
@@ -158,7 +158,7 @@ namespace Sys.Data.Manager
                 Directory.CreateDirectory(path);
             }
 
-            bool result =  gen.SaveCode();
+            bool result =  gen.Save();
 
            
             return result;

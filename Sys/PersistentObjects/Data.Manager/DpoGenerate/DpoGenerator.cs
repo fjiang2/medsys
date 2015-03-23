@@ -41,7 +41,7 @@ namespace Sys.Data.Manager
         public bool HasColumnAttribute { get; set; }
         public Dictionary<TableName, Type> Dict { get; set; }
         
-        public string OuputPath { get; set; }
+        public string OutputPath { get; set; }
         public bool MustGenerate { get; set;}
 
         public DpoGenerator(ClassTableName ctname, ITable schema, ClassName cname)
@@ -50,7 +50,7 @@ namespace Sys.Data.Manager
             this.HasColumnAttribute = false;
             this.Dict = new Dictionary<TableName, Type>();
             this.RegisterTable = true;
-            this.OuputPath = "C:\\temp\\dpo";
+            this.OutputPath = "C:\\temp\\dpo";
             this.MustGenerate = true;
 
             this.ctname = ctname;
@@ -73,9 +73,9 @@ namespace Sys.Data.Manager
 
         }
 
-        public bool SaveCode()
+        public bool Save()
         {
-            string fileName = string.Format("{0}\\{1}.cs", OuputPath, cname.Class);
+            string fileName = string.Format("{0}\\{1}.cs", OutputPath, cname.Class);
 
             if (!MustGenerate)
             {
@@ -96,7 +96,12 @@ namespace Sys.Data.Manager
 
             if (schema.TableID == -1 && RegisterTable)
                 throw new MessageException("Table ID {0} is not defined", ctname);
-            
+
+            if (!Directory.Exists(OutputPath))
+            {
+                Directory.CreateDirectory(OutputPath);
+            }
+
             StreamWriter sw = new StreamWriter(fileName);
             sw.Write(sourceCode);
             sw.Close();

@@ -35,11 +35,11 @@ namespace App.DpoCmd
                 HasTableAttribute = true,
                 HasColumnAttribute = true,
                 RegisterTable = false,
-                OuputPath = path
+                OutputPath = path
             };
 
             gen.Generate();
-            bool result = gen.SaveCode();
+            bool result = gen.Save();
 
         }
       
