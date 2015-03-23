@@ -41,7 +41,7 @@ namespace App.DpoCmd
             table.Columns.Add("SPLITINDEXSTR", typeof(string));
 
 
-            table.GenTableDpo("C:\\temp", new ClassName("AVL", AccessModifier.Public, "Fake"));
+            table.GenTableDpo("D:\\devel\\GitHub\\medsys\\App\\DpoCmd", new ClassName("AVL", AccessModifier.Public, "Demo"));
         }
 
         static void Main1(string[] args)

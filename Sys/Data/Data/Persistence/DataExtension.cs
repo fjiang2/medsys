@@ -475,6 +475,31 @@ namespace Sys.Data
         #endregion
 
 
-      
+        public static object GetValue(this DataRow row, string columnName)
+        {
+            if (!row.Table.Columns.Contains(columnName))
+                return null;
+
+            object value = row[columnName];
+
+            if (value == System.DBNull.Value)
+            {
+                return null;
+            }
+
+            return value;
+        }
+
+        public static void SetValue(this DataRow row, string columnName, object value)
+        {
+            if (row.Table.Columns.Contains(columnName))
+            {
+                if (value == null)
+                    row[columnName] = System.DBNull.Value;
+                else
+                    row[columnName] = value;
+            }
+        }
+
     }
 }

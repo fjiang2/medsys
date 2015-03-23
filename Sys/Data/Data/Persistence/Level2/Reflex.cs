@@ -161,29 +161,6 @@ namespace Sys.Data
         }
 
 
-        /// <summary>
-        /// Colllect from DPO instance and Fill into dataRow
-        /// </summary>
-        /// <param name="instance">data from</param>
-        /// <param name="dataRow">data to</param>
-        public static void CollectInstance(object instance, DataRow dataRow)
-        {
-            foreach (PropertyInfo propertyInfo in Reflex.GetColumnProperties(instance))
-            {
-                ColumnAttribute attribute = Reflex.GetColumnAttribute(dataRow, propertyInfo);
-
-                if (attribute != null && dataRow.Table.Columns.Contains(attribute.ColumnNameSaved))
-                {
-                    if (propertyInfo.GetValue(instance, null) == null)
-                        dataRow[attribute.ColumnNameSaved] = System.DBNull.Value;
-                    else
-                        dataRow[attribute.ColumnNameSaved] = propertyInfo.GetValue(instance, null);
-                }
-            }
-        }
-
-
-
         public static DataTable GetEmptyDataTable<T>() where T : class, IDPObject
         {
             return GetEmptyDataTable(typeof(T));

@@ -372,6 +372,11 @@ namespace Sys.Data
 
 
         #region Fill/Collect
+        
+        /// <summary>
+        /// Fill object properties
+        /// </summary>
+        /// <param name="dataRow"></param>
         public virtual void Fill(DataRow dataRow)
         {
 
@@ -386,18 +391,27 @@ namespace Sys.Data
         }
 
 
-
-
-      
-
+        /// <summary>
+        /// Collect property values and save to DataRow
+        /// </summary>
+        /// <param name="dataRow"></param>
         public virtual void Collect(DataRow dataRow)
         {
-            Reflex.CollectInstance(this, dataRow);
+            foreach (PropertyInfo propertyInfo in Reflex.GetColumnProperties(this))
+            {
+                ColumnAttribute attribute = Reflex.GetColumnAttribute(dataRow, propertyInfo);
+
+                if (attribute != null && dataRow.Table.Columns.Contains(attribute.ColumnNameSaved))
+                {
+                    if (propertyInfo.GetValue(this, null) == null)
+                        dataRow[attribute.ColumnNameSaved] = System.DBNull.Value;
+                    else
+                        dataRow[attribute.ColumnNameSaved] = propertyInfo.GetValue(this, null);
+                }
+            }
         }
 
-
-    
-
+     
 
 
         public void FillIdentity(DataRow dataRow)
