@@ -26,39 +26,47 @@ using Sys.Data.Manager;
 
 namespace Sys.Data.Manager
 {
-  
-
-    class DpoGenerator
+    public class DpoGenerator
     {
-        string sourceCode;
-        ClassTableName tname;
-        ClassName cname;
+        private string sourceCode;
+        private ClassTableName ctname;
+        private ClassName cname;
 
-        ITable metaTable;
-        DpoClass dpoClass;
+        private ITable schema;
+        private DpoClass dpoClass;
 
-        public DpoGenerator(ClassTableName ctname, ITable metaTable, ClassName cname, bool hasTableAttribute, bool hasColumnAttribute, Dictionary<TableName, Type> dict)
+
+        public bool RegisterTable { get; set; }
+        public bool HasTableAttribute { get; set; }
+        public bool HasColumnAttribute { get; set; }
+        public Dictionary<TableName, Type> Dict { get; set; }
+
+        public DpoGenerator(ClassTableName ctname, ITable schema, ClassName cname)
         {
-            this.tname = ctname;
-            this.cname = cname;
-            
-            //metaTable = ctname.GetMetaTable();
-            this.metaTable = metaTable;
+            this.HasTableAttribute = true;
+            this.HasColumnAttribute = false;
+            this.Dict = new Dictionary<TableName, Type>();
+            this.RegisterTable = true;
 
-            if (metaTable.TableID == -1)
+            this.ctname = ctname;
+            this.cname = cname;
+            this.schema = schema;
+        }
+
+        public void Generate()
+        {
+            if (schema.TableID == -1 && RegisterTable)
             {
                 DictTable.MustRegister(ctname);
             }
 
-            dpoClass = new DpoClass(metaTable, cname, dict);
-            dpoClass.HasTableAttribute = hasTableAttribute;
-            dpoClass.HasColumnAttribute = hasColumnAttribute;
+            dpoClass = new DpoClass(schema, cname, Dict);
+            dpoClass.HasTableAttribute = HasTableAttribute;
+            dpoClass.HasColumnAttribute = HasColumnAttribute;
 
             this.sourceCode = dpoClass.Generate(cname.Modifier, ctname);
 
         }
-
-     
 
         public bool WriteFile(string fileName, bool mustGenerate)
         {
@@ -68,19 +76,19 @@ namespace Sys.Data.Manager
                 {
                     if ((File.GetAttributes(fileName) & FileAttributes.ReadOnly) == FileAttributes.ReadOnly)    //this file is not checked out
                     {
-                        if (dpoClass.IsTableChanged(tname))
-                            throw new MessageException("{0} is modified, please check out class {1} to refresh", tname, cname.Class);
+                        if (dpoClass.IsTableChanged(ctname))
+                            throw new MessageException("{0} is modified, please check out class {1} to refresh", ctname, cname.Class);
 
                         return false;
                     }
                 }
 
-                if (!dpoClass.IsTableChanged(tname))
+                if (!dpoClass.IsTableChanged(ctname))
                     return false;
             }
 
-            if (metaTable.TableID == -1)
-                throw new MessageException("Table ID {0} is not defined", tname);
+            if (schema.TableID == -1 && RegisterTable)
+                throw new MessageException("Table ID {0} is not defined", ctname);
             
             StreamWriter sw = new StreamWriter(fileName);
             sw.Write(sourceCode);
@@ -89,11 +97,5 @@ namespace Sys.Data.Manager
             return true;
         }
 
-
-
-     
     }
-
-
-
 }

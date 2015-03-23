@@ -25,45 +25,25 @@ namespace Sys.Data.Manager
 {
     public sealed class ClassTableName : TableName
     {
-        private Level level = Level.Fixed;
-        private bool pack = true;
-        private bool hasProvider = true;
 
         public ClassTableName(ConnectionProvider provider, string databaseName, string tableName)
             : base(new DatabaseName(provider, databaseName), TableName.dbo, tableName)
         {
-
+            Level = Level.Fixed;
+            Pack = true;
+            HasProvider = true;
         }
 
-        internal ClassTableName(TableName tname)
+        public ClassTableName(TableName tname)
             : base(new DatabaseName(tname.Provider, tname.DatabaseName.Name), tname.SchemaName, tname.Name)
         {
 
         }
 
 
-        public Level Level
-        {
-            get { return this.level; }
-        }
-
-        public bool Pack
-        {
-            get { return this.pack; }
-        }
-
-        public bool HasProvider
-        {
-            get { return this.hasProvider; }
-        }
-
-        public void SetProperties(Level level, bool pack, bool hasProvider)
-        {
-            this.level = level;
-            this.pack = pack;
-            this.hasProvider = hasProvider;
-        }
-
+        public Level Level { get; set;}
+        public bool Pack { get; set;}
+        public bool HasProvider { get; set; }
       
 
         public string SubNamespace

@@ -36,6 +36,9 @@ namespace Sys.Data.Manager
         private DictDatabase()
         {
             DataTable dt = new TableReader<dictDatabaseDpo>().Table;
+            if (dt == null)
+                return;
+
             foreach (DataRow row in dt.Rows)
             {
                 int handle = (int)row[dictDatabaseDpo._provider_id];

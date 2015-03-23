@@ -108,18 +108,19 @@ namespace Sys.Data.Manager
 
         public static bool GenTableDpo(this ClassTableName tname, string path, bool mustGenerate, ClassName cname, bool hasColumnAttribute, Dictionary<TableName, Type> dict)
         {
-            bool result = GenTableDpo(tname, tname.GetMetaTable(), path, mustGenerate, cname, true, hasColumnAttribute, dict);
+            bool result = GenTableDpo(tname, tname.GetSchema(), path, mustGenerate, cname, true, hasColumnAttribute, dict);
             LogDpoClass.Log(tname, path, cname);
 
             return result;
         }
 
-        public static bool GenTableDpo(this DataTable table,  string path, ClassName cname)
+
+        public static bool GenTableDpo(this DataTable table, string path, ClassName cname)
         {
 
-            ITable metatable = new DataTableDpoClass(table);
-            ClassTableName tname = new ClassTableName(metatable.TableName);
-            return GenTableDpo(tname, metatable, path, true, cname, false, false, new Dictionary<TableName, Type>());
+            ITable schema = new DataTableDpoClass(table);
+            ClassTableName tname = new ClassTableName(schema.TableName);
+            return GenTableDpo(tname, schema, path, true, cname, false, false, new Dictionary<TableName, Type>());
         }
 
 
@@ -141,7 +142,14 @@ namespace Sys.Data.Manager
             }
 
 
-            DpoGenerator gen = new DpoGenerator(tname, metatable, cname, hasTableAttribute, hasColumnAttribute, dict);
+            DpoGenerator gen = new DpoGenerator(tname, metatable, cname)
+            { 
+                HasTableAttribute =hasTableAttribute, 
+                HasColumnAttribute = hasColumnAttribute,
+                Dict = dict
+            };
+
+            gen.Generate();
 
             if (!Directory.Exists(path))
             {
@@ -160,13 +168,6 @@ namespace Sys.Data.Manager
 
         #endregion
 
-        public static ColumnCollection MetaColumns(this TableName tableName)
-        {
-            ITable meta = tableName.GetTableSchema();
-            return meta.Columns;
-        }
-
-     
 
     }
 }

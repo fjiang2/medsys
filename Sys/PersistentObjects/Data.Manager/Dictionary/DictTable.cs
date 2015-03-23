@@ -78,7 +78,7 @@ namespace Sys.Data.Manager
         {
             int table_id = RegisterOnly(database_id, tname.Name);
 
-            DataTable dataTable = tname.GetMetaTable().EmptyDataTable;
+            DataTable dataTable = tname.GetSchema().EmptyDataTable;
 
             //Create Table if not exist
             dictDataColumnDpo dpo = new dictDataColumnDpo();

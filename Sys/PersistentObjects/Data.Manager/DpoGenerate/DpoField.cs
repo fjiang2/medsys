@@ -115,7 +115,7 @@ namespace Sys.Data.Manager
         public string GetConstStringColumnName()
         {
             string line = "        ";
-            line += string.Format("public const string _{0} = \"{1}\";", dpoClass.dict_column_field[column.ColumnName].Name, column.ColumnName);
+            line += string.Format("public const string _{0} = \"{1}\";", dpoClass.dict_column_field[column.ColumnName].FieldName, column.ColumnName);
             
             return line;
         }

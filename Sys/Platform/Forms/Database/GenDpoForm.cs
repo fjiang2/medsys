@@ -302,10 +302,14 @@ namespace Sys.Platform.Forms
             this.txtOutput.Text = "";
 
             string className = this.txtClass.Text;
-            ClassTableName ctname = new ClassTableName(this.provider, DatabaseName, TableName);
+            ClassTableName ctname = new ClassTableName(this.provider, DatabaseName, TableName) 
+            { 
+                Level = this.Level,
+                Pack = this.Pack,
+                HasProvider = this.HasProvier
+            };
 
             ClassName cname = new ClassName(Namespace, Modifier, className);
-            ctname.SetProperties(this.Level, this.Pack, this.HasProvier);
 
             if (className == "" || TableName == "" || Namespace == "")
             {
@@ -355,7 +359,9 @@ namespace Sys.Platform.Forms
 
                 DPObject dpo = (DPObject)Activator.CreateInstance(ty);
                 ClassName cname = new ClassName(dpo);
-                ctname.SetProperties(dpo.Level, dpo.IsPack, dpo.HasProvider);
+                ctname.Level = dpo.Level;
+                ctname.Pack = dpo.IsPack;
+                ctname.HasProvider = dpo.HasProvider;
 
                 if (ctname.GenTableDpo(path, this.chkMustGenerate.Checked, cname, true, dpoDict))
                     output += string.Format("class {0} is upgraded from table {1} at {2}\r\n", cname, ctname, path);
@@ -389,8 +395,14 @@ namespace Sys.Platform.Forms
                 if (!node.Checked)
                     continue;
 
-                ClassTableName ctname = new ClassTableName(this.provider, DatabaseName, node.Text);
-                ctname.SetProperties(this.Level, this.Pack, this.HasProvier);
+                ClassTableName ctname = new ClassTableName(this.provider, DatabaseName, node.Text)
+                            {
+                                Level = this.Level,
+                                Pack = this.Pack,
+                                HasProvider = this.HasProvier
+                            };
+
+                
                 
                 if (dpoDict.ContainsKey(ctname))
                     continue;

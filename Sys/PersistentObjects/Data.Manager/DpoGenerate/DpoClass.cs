@@ -29,18 +29,18 @@ namespace Sys.Data.Manager
 {
     class FieldDefinition
     {
-        public readonly string Name;
+        public readonly string FieldName;
         public readonly string Type;
 
         public FieldDefinition(string type, string name)
         {
-            this.Name = name;
+            this.FieldName = name;
             this.Type = type;
         }
 
         public override string ToString()
         {
-            return string.Format("{0} {1}", Type, Name);
+            return string.Format("{0} {1}", Type, FieldName);
         }
     }
 
@@ -135,7 +135,7 @@ namespace Sys.Data.Manager
 
                 if (column.CType == CType.Int)
                 {
-                    return string.Format(DPObjectIdProperty, dict_column_field[key].Name);
+                    return string.Format(DPObjectIdProperty, dict_column_field[key].FieldName);
                 }
                 
             }
@@ -220,7 +220,7 @@ namespace Sys.Data.Manager
                 if (s != "")
                     s += ", ";
 
-                s += "_" + dict_column_field[p].Name;
+                s += "_" + dict_column_field[p].FieldName;
             }
 
             return s;
@@ -251,13 +251,13 @@ namespace Sys.Data.Manager
                 if (s1 != "")
                     s1 += ", ";
 
-                s1 += string.Format("{0} {1}", dict_column_field[p].Type, dict_column_field[p].Name.ToLower());
+                s1 += string.Format("{0} {1}", dict_column_field[p].Type, dict_column_field[p].FieldName.ToLower());
             }
 
             string s2 = "";
             foreach (string p in keys)
             {
-                s2 += string.Format("this.{0} = {1}; ", dict_column_field[p].Name, dict_column_field[p].Name.ToLower());
+                s2 += string.Format("this.{0} = {1}; ", dict_column_field[p].FieldName, dict_column_field[p].FieldName.ToLower());
             }
 
             return constructor
@@ -274,8 +274,9 @@ namespace Sys.Data.Manager
 
             foreach (IColumn column in metaTable.Columns)
             {
-                string fieldName = dict_column_field[column.ColumnName].Name;
-                fill.AddStatements("row.GetValue(_{0})", fieldName);
+                var fieldDef = dict_column_field[column.ColumnName];
+                string fieldName = fieldDef.FieldName;
+                fill.AddStatements("{0} = ({1})row.GetValue(_{0})", fieldName, fieldDef.Type);
                 collect.AddStatements("row.SetValue(_{0}, this.{0})", fieldName);
             }
 

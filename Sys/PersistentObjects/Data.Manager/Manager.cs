@@ -53,10 +53,15 @@ namespace Sys.Data.Manager
             foreach (string fullName in tableNames)
             {
                 TableName tableName = new TableName(provider, fullName);
-                ClassTableName ctname = new ClassTableName(provider, tableName.DatabaseName.Name, tableName.Name);
+                ClassTableName ctname = new ClassTableName(tableName)
+                {
+                    Level = level,
+                    Pack = isPack,
+                    HasProvider = hasProvider
+                };
 
                 ClassName cname = new ClassName(nameSpace, AccessModifier.Public, ctname);
-                ctname.SetProperties(level, isPack, hasProvider);
+                
                 ctname.GenTableDpo(path, true, cname, true, dict);
             }
         }
@@ -76,10 +81,13 @@ namespace Sys.Data.Manager
                 {
 
                     DPObject dpo = (DPObject)Activator.CreateInstance(type);
-                    ClassTableName ctname = new ClassTableName(dpo.TableName.Provider, dpo.TableName.DatabaseName.Name, dpo.TableName.Name);
-
+                    ClassTableName ctname = new ClassTableName(dpo.TableName.Provider, dpo.TableName.DatabaseName.Name, dpo.TableName.Name)
+                     {
+                         Level = dpo.Level,
+                         Pack = dpo.IsPack,
+                         HasProvider = dpo.HasProvider
+                     };
                     ClassName cname = new ClassName(dpo);
-                    ctname.SetProperties(dpo.Level, dpo.IsPack, dpo.HasProvider);
                     ctname.GenTableDpo(path, true, cname, true, dict);
                 }
             }
