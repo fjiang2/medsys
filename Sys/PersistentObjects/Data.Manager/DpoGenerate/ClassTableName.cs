@@ -30,13 +30,13 @@ namespace Sys.Data.Manager
         private bool hasProvider = true;
 
         public ClassTableName(ConnectionProvider provider, string databaseName, string tableName)
-            : base(new DatabaseName(provider, databaseName), "dbo", tableName)
+            : base(new DatabaseName(provider, databaseName), TableName.dbo, tableName)
         {
 
         }
 
         internal ClassTableName(TableName tname)
-            : base(new DatabaseName(tname.Provider, tname.DatabaseName.Name), "dbo", tname.Name)
+            : base(new DatabaseName(tname.Provider, tname.DatabaseName.Name), tname.SchemaName, tname.Name)
         {
 
         }

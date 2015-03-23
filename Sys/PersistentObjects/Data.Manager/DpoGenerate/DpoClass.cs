@@ -266,7 +266,21 @@ namespace Sys.Data.Manager
 
         }
 
+        private string FillAndCollect()
+        {
 
+            Method fill = new Method(AccessModifier.Public | AccessModifier.Override, "Fill", new Argument[] { new Argument(typeof(DataRow), "row") });
+            Method collect = new Method(AccessModifier.Public | AccessModifier.Override, "Fill", new Argument[] { new Argument(typeof(DataRow), "row") });
+
+            foreach (IColumn column in metaTable.Columns)
+            {
+                string fieldName = dict_column_field[column.ColumnName].Name;
+                fill.AddStatements("this.{0} = row[_{0}]", fieldName);
+                collect.AddStatements("row[_{0}] = this.{0}", fieldName);
+            }
+
+            return fill.ToString() +"\r\n" + collect.ToString();
+        }
 
         private string Fields()
         {
@@ -381,6 +395,8 @@ namespace @NAMESPACE
 @CONSTANT
 
 @CREATE_TABLE
+
+@FILL_COLLECT
     }
 }
 
@@ -447,7 +463,8 @@ namespace @NAMESPACE
                       .Replace("@PRIMARYKEYS", PrimaryKeys())
                       .Replace("@IDENTITYKEYS", IdentitiyKeys())
                       .Replace("@CONSTANT", CONSTANT)
-                      .Replace("@CREATE_TABLE", CREATE_TABLE);
+                      .Replace("@CREATE_TABLE", CREATE_TABLE)
+                      .Replace("@FILL_COLLECT", FillAndCollect());
 
 
             return clss;

@@ -24,9 +24,9 @@ namespace App.DpoCmd
             table.Columns.Add("OK", typeof(string));
             table.Columns.Add("OKPERC", typeof(string));
             table.Columns.Add("FAIL", typeof(string));
-            table.Columns.Add("FAILPERC", typeof(string));
+            table.Columns.Add("FAIL PERC", typeof(string));
 
-            table.Columns.Add("PATTERNSTR", typeof(string));
+            table.Columns.Add("PATTERN STR", typeof(string));
             table.Columns.Add("PATTERN_NO", typeof(int));
             table.Columns.Add("CYCLESTR", typeof(string));
             table.Columns.Add("CYCLE_NO", typeof(int));
