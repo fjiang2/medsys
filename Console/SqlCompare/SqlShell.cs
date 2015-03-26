@@ -218,6 +218,21 @@ namespace SqlCompare
                     }
                     break;
 
+                case "compare":
+                        MatchedDatabase m1 = new MatchedDatabase(adapter.Side1.DatabaseName, arg2, cfg.excludedtables);
+                        MatchedDatabase m2 = new MatchedDatabase(adapter.Side2.DatabaseName, arg2, cfg.excludedtables);
+                        using (var writer = cfg.OutputFile.NewStreamWriter())
+                        {
+                            var type = ActionType.CompareSchema;
+                            if (arg1 == "data")
+                                type = ActionType.CompareData;
+
+                            var sql = adapter.Run(type, m1, m2, cfg.PK);
+                            writer.Write(sql);
+                        }
+                        stdio.WriteLine("completed");
+                    break;
+
                 default:
                     if (char.IsDigit(cmd[0]))
                     {
@@ -353,36 +368,39 @@ namespace SqlCompare
 
         private static void Help()
         {
+            stdio.WriteLine("Notes: table names support wildcard matching, e.g. Prod*,Pro?ucts");
             stdio.WriteLine("<Commands>");
-            stdio.WriteLine("find pattern;         : find table name and column name");
-            stdio.WriteLine("show db;              : show all database names");
-            stdio.WriteLine("show table;           : show all table names");
-            stdio.WriteLine("show view;            : show all views");
-            stdio.WriteLine("show proc;            : show all stored proc and func");
-            stdio.WriteLine("show index;           : show all indices");
-            stdio.WriteLine("show dt tablename;    : show table structure");
-            stdio.WriteLine("show pk tablename;    : show table primary keys");
-            stdio.WriteLine("show fk tablename;    : show table foreign keys");
-            stdio.WriteLine("show ik tablename;    : show table identity keys");
-            stdio.WriteLine("show vw viewnames;    : show view structure");
-            stdio.WriteLine("show alias;           : show connection-string alias list");
-            stdio.WriteLine("show var;             : show variable list");
-            stdio.WriteLine("run query(..);        : run predefined query. e.g. run query(var1=val1,...);");
-            stdio.WriteLine("all sql clauses, e.g. select/update/delete/create/drop...");
-            stdio.WriteLine("1                     : switch to source server 1 (default)");
-            stdio.WriteLine("2                     : switch to sink server 2");
-            stdio.WriteLine("goto alias;           : switch to database server");
-            stdio.WriteLine("exit                  : quit application");
-            stdio.WriteLine("help                  : this help");
-            stdio.WriteLine("?                     : this help");
+            stdio.WriteLine("<compare schema> tables : compare schema of tables");
+            stdio.WriteLine("<compare data> tables   : compare data of tables");
+            stdio.WriteLine("<find pattern>          : find table name and column name");
+            stdio.WriteLine("<show db>               : show all database names");
+            stdio.WriteLine("<show table>            : show all table names");
+            stdio.WriteLine("<show view>             : show all views");
+            stdio.WriteLine("<show proc>             : show all stored proc and func");
+            stdio.WriteLine("<show index>            : show all indices");
+            stdio.WriteLine("<show dt> tablename     : show table structure");
+            stdio.WriteLine("<show pk> tablename     : show table primary keys");
+            stdio.WriteLine("<show fk> tablename     : show table foreign keys");
+            stdio.WriteLine("<show ik> tablename     : show table identity keys");
+            stdio.WriteLine("<show vw> viewnames     : show view structure");
+            stdio.WriteLine("<show alias>            : show connection-string alias list");
+            stdio.WriteLine("<show var>              : show variable list");
+            stdio.WriteLine("<run> query(..)         : run predefined query. e.g. run query(var1=val1,...);");
+            stdio.WriteLine("Sql commands, e.g. select/update/delete/create/drop...");
+            stdio.WriteLine("<1>                     : switch to source server 1 (default)");
+            stdio.WriteLine("<2>                     : switch to sink server 2");
+            stdio.WriteLine("<goto> alias            : switch to database server");
+            stdio.WriteLine("<exit>                  : quit application");
+            stdio.WriteLine("<help>                  : this help");
+            stdio.WriteLine("<?>                     : this help");
             stdio.WriteLine("<Functions>");
-            stdio.WriteLine("export(tablename, where, filename)");
-            stdio.WriteLine("                      : export INSERT claues(SELECT * FROM tablename WHERE");
-            stdio.WriteLine("export(tablename, filename)");
-            stdio.WriteLine("                      : export INSERT claues(SELECT * FROM tablename");
+            stdio.WriteLine("  export(tablename, where, filename)");
+            stdio.WriteLine("                        : export INSERT sql script, SELECT * FROM tablename WHERE ...");
+            stdio.WriteLine("  export(tablename, filename)");
+            stdio.WriteLine("                        : export INSERT sql script, SELECT * FROM tablename");
             stdio.WriteLine("<Variable>");
-            stdio.WriteLine("maxrows      : max number of row shown on select query");
-            stdio.WriteLine("DataReader   : true: use SqlDataReader; false: use Fill DataSet");
+            stdio.WriteLine("  maxrows               : max number of row shown on select query");
+            stdio.WriteLine("  DataReader            : true: use SqlDataReader; false: use Fill DataSet");
         }
     }
 }
