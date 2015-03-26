@@ -181,18 +181,38 @@ namespace SqlCompare
                     break;
 
                 case "1":
+                    if (arg1 != null)
+                    {
+                        var conn = cfg.GetConnectionString(arg1);
+                        if (conn != null)
+                        {
+                            Side side = new Side(arg1, new SqlConnectionStringBuilder(conn));
+                            adapter = new CompareAdapter(side, adapter.Side2);
+                        }
+                    }
+
                     ChangeSide(adapter.Side1);
                     this.server = 1;
                     stdio.WriteLine("server 1 selected({0})", showConnection(theSide.CS));
                     break;
 
                 case "2":
+                    if (arg1 != null)
+                    {
+                        var conn = cfg.GetConnectionString(arg1);
+                        if (conn != null)
+                        {
+                            Side side = new Side(arg1, new SqlConnectionStringBuilder(conn));
+                            adapter = new CompareAdapter(adapter.Side1, side);
+                        }
+                    }
                     ChangeSide(adapter.Side2);
                     this.server = 2;
                     stdio.WriteLine("server 2 selected({0})", showConnection(theSide.CS));
                     break;
 
                 case "goto":
+                    if(arg1 != null)
                     {
                         var conn = cfg.GetConnectionString(arg1);
                         if (conn != null)
@@ -208,29 +228,49 @@ namespace SqlCompare
                                 conn = x2.ConnectionString;
                             }
 
-                            ChangeSide(new Side(arg1, new SqlConnectionStringBuilder(conn)));
+                            Side side = new Side(arg1, new SqlConnectionStringBuilder(conn));
+                            ChangeSide(side);
                             this.server = 3;
-                            stdio.WriteLine("({0}) selected", showConnection(theSide.CS));
+                          
                         }
 
                         else
                             stdio.WriteLine("undefined database server alias : {0}", arg1);
                     }
+                    else
+                        stdio.WriteLine("command argument missing");
                     break;
 
                 case "compare":
-                        MatchedDatabase m1 = new MatchedDatabase(adapter.Side1.DatabaseName, arg2, cfg.excludedtables);
-                        MatchedDatabase m2 = new MatchedDatabase(adapter.Side2.DatabaseName, arg2, cfg.excludedtables);
+                    if (arg1 != null)
+                    {
+                        string t1 = null;
+                        string t2 = null;
+                        if(arg2 != null)
+                            arg2.parse(out t1, out t2);
+
+                        MatchedDatabase m1 = new MatchedDatabase(adapter.Side1.DatabaseName, t1, cfg.excludedtables);
+                        MatchedDatabase m2 = new MatchedDatabase(adapter.Side2.DatabaseName, t2, cfg.excludedtables);
                         using (var writer = cfg.OutputFile.NewStreamWriter())
                         {
                             var type = ActionType.CompareSchema;
                             if (arg1 == "data")
                                 type = ActionType.CompareData;
+                            else if (arg1 == "schema")
+                                type = ActionType.CompareSchema;
+                            else
+                            {
+                                stdio.WriteLine("invalid command argument");
+                                break;
+                            }
 
                             var sql = adapter.Run(type, m1, m2, cfg.PK);
                             writer.Write(sql);
                         }
                         stdio.WriteLine("completed");
+                    }
+                    else
+                        stdio.WriteLine("command argument missing");
                     break;
 
                 default:
@@ -387,8 +427,8 @@ namespace SqlCompare
             stdio.WriteLine("<show var>              : show variable list");
             stdio.WriteLine("<run> query(..)         : run predefined query. e.g. run query(var1=val1,...);");
             stdio.WriteLine("Sql commands, e.g. select/update/delete/create/drop...");
-            stdio.WriteLine("<1>                     : switch to source server 1 (default)");
-            stdio.WriteLine("<2>                     : switch to sink server 2");
+            stdio.WriteLine("<1> [alias]             : switch to source server 1 (default)");
+            stdio.WriteLine("<2> [alias]             : switch to sink server 2");
             stdio.WriteLine("<goto> alias            : switch to database server");
             stdio.WriteLine("<exit>                  : quit application");
             stdio.WriteLine("<help>                  : this help");
