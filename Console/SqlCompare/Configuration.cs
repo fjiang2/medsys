@@ -77,10 +77,15 @@ namespace SqlCompare
         {
             VAL val = Cfg[variable];
 
-            if (val.Defined && val.HostValue is T)
-                return (T)val.HostValue;
-            else
-                return defaultValue;
+            if (val.Defined)
+            {
+                if (val.HostValue is T)
+                    return (T)val.HostValue;
+                else if(typeof(T).IsEnum && val.HostValue is int)
+                    return (T)val.HostValue;
+            }
+
+            return defaultValue;
         }
 
         public VAL GetValue(VAR variable)
@@ -108,7 +113,7 @@ namespace SqlCompare
                 return false;
 
             this.excludedtables = GetValue<string[]>("excludedtables", new string[] { });
-            this.Action = GetValue<ActionType>("comparetype", ActionType.CompareSchema);
+            this.Action = GetValue<ActionType>("actiontype", ActionType.CompareSchema);
 
             this.InputFile = GetValue<string>("input", "script.sql");
             this.OutputFile = GetValue<string>("output", "script.sql");
