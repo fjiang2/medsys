@@ -107,7 +107,7 @@ namespace SqlCompare
                             {
                                 if (where != null)
                                 {
-                                    theSide.GenerateRows(writer, tname, where);
+                                    theSide.GenerateRows(writer, tname, new Locator(where));
                                     stdio.WriteLine("insert clauses (SELECT * FROM {0} WHERE {1}) generated to {2}", tname, where, fileName);
                                 }
                                 else

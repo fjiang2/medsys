@@ -145,7 +145,7 @@ namespace Sys.Data.Comparison
             return builder.ToString();
         }
 
-        public static void GenerateRows(StreamWriter writer, TableSchema schema, string where)
+        public static void GenerateRows(StreamWriter writer, TableSchema schema, Locator where)
         {
             TableName tableName = schema.TableName;
             string sql = string.Format("SELECT * FROM {0}", tableName);

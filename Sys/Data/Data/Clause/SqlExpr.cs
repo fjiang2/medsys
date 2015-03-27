@@ -313,10 +313,10 @@ namespace Sys.Data
             }
         }
 
-        public SqlExpr IN(IEnumerable collection)
+        public SqlExpr IN<T>(IEnumerable<T> collection)
         {
             this.Next(" IN (")
-                .Next(string.Join(",", collection))
+                .Next(string.Join<T>(",", collection))
                 .Next(")");
 
             return this;

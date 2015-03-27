@@ -96,7 +96,7 @@ namespace SqlCompare
             }
         }
 
-        public void GenerateRows(StreamWriter writer, TableName tableName, string where)
+        public void GenerateRows(StreamWriter writer, TableName tableName, Locator where)
         {
             Compare.GenerateRows(writer, new TableSchema(tableName), where);
         }

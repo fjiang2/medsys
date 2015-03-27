@@ -412,7 +412,7 @@ namespace SqlCompare
             stdio.WriteLine("<Commands>");
             stdio.WriteLine("<compare schema> tables : compare schema of tables");
             stdio.WriteLine("<compare data> tables   : compare data of tables");
-            stdio.WriteLine("<find pattern>          : find table name and column name");
+            stdio.WriteLine("<find> pattern          : find table name or column name");
             stdio.WriteLine("<show db>               : show all database names");
             stdio.WriteLine("<show table>            : show all table names");
             stdio.WriteLine("<show view>             : show all views");
@@ -426,19 +426,26 @@ namespace SqlCompare
             stdio.WriteLine("<show alias>            : show connection-string alias list");
             stdio.WriteLine("<show var>              : show variable list");
             stdio.WriteLine("<run> query(..)         : run predefined query. e.g. run query(var1=val1,...);");
-            stdio.WriteLine("Sql commands, e.g. select/update/delete/create/drop...");
             stdio.WriteLine("<1> [alias]             : switch to source server 1 (default)");
             stdio.WriteLine("<2> [alias]             : switch to sink server 2");
             stdio.WriteLine("<goto> alias            : switch to database server");
             stdio.WriteLine("<exit>                  : quit application");
             stdio.WriteLine("<help>                  : this help");
             stdio.WriteLine("<?>                     : this help");
+            stdio.WriteLine("<SQL>");
+            stdio.WriteLine("select ... from table where ...");
+            stdio.WriteLine("update table set ... where ...");
+            stdio.WriteLine("delete from table where...");
+            stdio.WriteLine("create table ...");
+            stdio.WriteLine("drop table ...");
+            stdio.WriteLine("alter ...");
+            stdio.WriteLine("exec ...");
             stdio.WriteLine("<Functions>");
             stdio.WriteLine("  export(tablename, where, filename)");
             stdio.WriteLine("                        : export INSERT sql script, SELECT * FROM tablename WHERE ...");
             stdio.WriteLine("  export(tablename, filename)");
             stdio.WriteLine("                        : export INSERT sql script, SELECT * FROM tablename");
-            stdio.WriteLine("<Variable>");
+            stdio.WriteLine("<Variables>");
             stdio.WriteLine("  maxrows               : max number of row shown on select query");
             stdio.WriteLine("  DataReader            : true: use SqlDataReader; false: use Fill DataSet");
         }
