@@ -67,11 +67,11 @@
     <Compile Include="Data\Attribute\Provider.cs" />
     <Compile Include="Data\Attribute\RevisionAttribute.cs" />
     <Compile Include="Data\Attribute\TableAttribute.cs" />
-    <Compile Include="Data\Clause\SqlBuilder.cs" />
-    <Compile Include="Data\Clause\SqlBuilderInfo.cs" />
-    <Compile Include="Data\Clause\SqlExpr.cs" />
-    <Compile Include="Data\Clause\SqlExprExtension.cs" />
-    <Compile Include="Data\Clause\SqlValue.cs" />
+    <Compile Include="SqlBuilder\SqlBuilder.cs" />
+    <Compile Include="SqlBuilder\SqlBuilderInfo.cs" />
+    <Compile Include="SqlBuilder\SqlExpr.cs" />
+    <Compile Include="SqlBuilder\SqlExprExtension.cs" />
+    <Compile Include="SqlBuilder\SqlValue.cs" />
     <Compile Include="Data\Conversion.cs" />
     <Compile Include="Data\DbType.cs" />
     <Compile Include="Data\DefaultRowValue.cs" />
@@ -92,7 +92,7 @@
     <Compile Include="Data\Persistence\Level0\ConnectionProviderManager.cs" />
     <Compile Include="Data\Persistence\Level0\ConnectionProviderType.cs" />
     <Compile Include="Data\Persistence\Level0\DbCmd.cs" />
-    <Compile Include="Data\Persistence\Level0\ISqlClause.cs" />
+    <Compile Include="SqlBuilder\ISqlBuilder.cs" />
     <Compile Include="Data\Persistence\Level0\OleDbServer.cs" />
     <Compile Include="Data\Persistence\Level0\Provider\DbProvider.cs" />
     <Compile Include="Data\Persistence\Level0\Provider\IProvider.cs" />

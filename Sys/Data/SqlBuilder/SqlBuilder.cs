@@ -25,7 +25,7 @@ namespace Sys.Data
     /// <summary>
     /// SQL clauses builder
     /// </summary>
-    public class SqlBuilder : SqlBuilderInfo, ISqlClause
+    public sealed class SqlBuilder : SqlBuilderInfo, ISqlBuilder
     {
         private StringBuilder script = new StringBuilder();
         private ConnectionProvider provider;
@@ -34,6 +34,7 @@ namespace Sys.Data
         {
             this.provider = ConnectionProviderManager.DefaultProvider;
         }
+
         public SqlBuilder(ConnectionProvider privider)
         {
             this.provider = privider;
@@ -568,11 +569,6 @@ namespace Sys.Data
         }
 
         
-
-        public void AddParameterValue(string name, object value)
-        { 
-        }
-
         public string Clause
         {
             get 
@@ -587,7 +583,12 @@ namespace Sys.Data
             return script.ToString();
         }
 
-
+        public DataSet ExecuteQuery()
+        {
+            SqlCmd cmd = new SqlCmd(this);
+            return cmd.FillDataSet();
+        }
+        
         public int ExecuteNonQuery()
         {
             SqlCmd cmd = new SqlCmd(this);

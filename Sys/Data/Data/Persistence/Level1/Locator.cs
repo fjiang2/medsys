@@ -53,9 +53,9 @@ namespace Sys.Data
         {
         }
 
-        public Locator(SqlExpr exp)
+        public Locator(SqlExpr expression)
         {
-            this.where = exp.ToString();
+            this.where = expression.ToString();
         }
 
         /// <summary>

@@ -59,8 +59,8 @@ namespace Sys.Data
         {
         }
 
-        public SqlCmd(ISqlClause sql)
-            : this(sql.Provider, sql.Clause)
+        public SqlCmd(ISqlBuilder builder)
+            : this(builder.Provider, builder.Clause)
         { 
         
         }

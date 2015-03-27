@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Data.Common;
 using System.Data;
+using System.Diagnostics.Contracts;
 
 using DataProviderHandle = System.Int32;
 
@@ -193,18 +194,84 @@ namespace Sys.Data
             return null;
         }
 
-        public DataRow FillDataRow()
+
+        public IEnumerable<T> FillDataColumn<T>(int column)
         {
-            DataTable dt = FillDataTable();
-            if (dt == null)
-                return null;
+            Contract.Requires(column >= 0);
 
-            if (dt.Rows.Count >= 1)
-                return dt.Rows[0];
+            List<T> list = new List<T>();
 
-            return null;
+            DataTable table = FillDataTable();
+            if (table == null)
+                return list;
+
+            foreach (DataRow row in table.Rows)
+            {
+                object obj = row[column];
+                list.Add(ToObject<T>(obj));
+            }
+
+            return list;
         }
 
+        public IEnumerable<T> FillDataColumn<T>(string columnName)
+        {
+            Contract.Requires(!string.IsNullOrEmpty(columnName));
+
+            List<T> list = new List<T>();
+
+            DataTable table = FillDataTable();
+            if (table == null)
+                return list;
+
+            foreach (DataRow row in table.Rows)
+            {
+                object obj = row[columnName];
+                list.Add(ToObject<T>(obj));
+            }
+
+            return list;
+        }
+
+        public DataRow FillDataRow()
+        {
+            return FillDataRow(0);
+        }
+
+        public DataRow FillDataRow(int row)
+        {
+            Contract.Requires(row >= 0);
+
+            DataTable table = FillDataTable();
+            if (table != null && row < table.Rows.Count)
+                return table.Rows[row];
+            else
+                return null;
+        }
+
+        public object FillObject()
+        {
+            DataRow row = FillDataRow();
+            if (row != null && row.Table.Columns.Count > 0)
+                return row[0];
+            else
+                return null;
+        }
+
+        public T FillObject<T>()
+        {
+            var obj = FillObject();
+
+            return ToObject<T>(obj);
+        }
+
+        private static T ToObject<T>(object obj)
+        {
+            if (obj != null && obj != DBNull.Value)
+                return (T)obj;
+            else
+                return default(T);
+        }
 
         public DataTable ReadDataTable()
         {
