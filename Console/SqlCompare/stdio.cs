@@ -52,6 +52,35 @@ namespace SqlCompare
             writer.Flush();
         }
 
+        public static void DisplayTitle(string value)
+        {
+            var keep = Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine(value);
+            Console.ForegroundColor =keep;
+
+            if (writer != null)
+            {
+                writer.WriteLine(value);
+                writer.Flush();
+            }
+        }
+
+        public static void ShowError(string format, params object[] args)
+        {
+            string value = string.Format(format, args);
+            var keep = Console.ForegroundColor;
+            //Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.WriteLine(value);
+            Console.ForegroundColor = keep;
+
+            if (writer != null)
+            {
+                writer.WriteLine(value);
+                writer.Flush();
+            }
+        }
+
         public static void TrimWriteLine(string value)
         {
             int w = Console.WindowWidth;

@@ -122,21 +122,21 @@ namespace SqlCompare
                     if (arg1 != null)
                         Show(arg1.ToLower(), arg2);
                     else
-                        stdio.WriteLine("invalid argument");
+                        stdio.ShowError("invalid argument");
                     break;
 
                 case "find":
                     if (arg1 != null)
                         theSide.FindName(arg1);
                     else
-                        stdio.WriteLine("find object undefined");
+                        stdio.ShowError("find object undefined");
                     break;
 
                 case "run":
                     {
                         VAL result = Context.Evaluate(arg1);
                         if(result.IsNull)
-                            stdio.WriteLine("undefined query function");
+                            stdio.ShowError("undefined query function");
                         else if (result.IsInt)
                         {
                             //show error code
@@ -150,7 +150,7 @@ namespace SqlCompare
                                     dt.ToConsole();
                             }
                             else
-                                stdio.WriteLine("cannot retrieve data from server");
+                                stdio.ShowError("cannot retrieve data from server");
                         }
                     }
                     break;
@@ -235,10 +235,10 @@ namespace SqlCompare
                         }
 
                         else
-                            stdio.WriteLine("undefined database server alias : {0}", arg1);
+                            stdio.ShowError("undefined database server alias : {0}", arg1);
                     }
                     else
-                        stdio.WriteLine("command argument missing");
+                        stdio.ShowError("command argument missing");
                     break;
 
                 case "compare":
@@ -260,7 +260,7 @@ namespace SqlCompare
                                 type = ActionType.CompareSchema;
                             else
                             {
-                                stdio.WriteLine("invalid command argument");
+                                stdio.ShowError("invalid command argument");
                                 break;
                             }
 
@@ -270,13 +270,13 @@ namespace SqlCompare
                         stdio.WriteLine("completed");
                     }
                     else
-                        stdio.WriteLine("command argument missing");
+                        stdio.ShowError("command argument missing");
                     break;
 
                 default:
                     if (char.IsDigit(cmd[0]))
                     {
-                        stdio.WriteLine("invalid command");
+                        stdio.ShowError("invalid command");
                         break;
                     }
                     else
@@ -284,7 +284,10 @@ namespace SqlCompare
                         if (text.EndsWith(";"))
                             Tie.Script.Execute(text, Context.DS);
                         else
-                            Tie.Script.Evaluate(text, Context.DS);
+                        {
+                            var val = Tie.Script.Evaluate(text, Context.DS);
+                            stdio.WriteLine(string.Format("{0} = {1}", text, val));
+                        }
                     }
 
                     break;
@@ -302,7 +305,7 @@ namespace SqlCompare
 
             if (tnames.Length == 0 && vnames.Length == 0)
             {
-                stdio.WriteLine("cannot find any table/view name like \"{0}\"", arg2);
+                stdio.ShowError("cannot find any table/view name like \"{0}\"", arg2);
                 return;
             }
 
@@ -392,7 +395,7 @@ namespace SqlCompare
                             .ToConsole();
                         }
                         else
-                            stdio.WriteLine("connection string alias not found");
+                            stdio.ShowError("connection string alias not found");
                     }
                     break;
 
@@ -400,7 +403,7 @@ namespace SqlCompare
                     Context.ToConsole();
                     break;
                 default:
-                    stdio.WriteLine("invalid argument");
+                    stdio.ShowError("invalid argument");
                     break;
             }
         }
