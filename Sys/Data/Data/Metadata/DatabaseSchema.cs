@@ -132,7 +132,7 @@ namespace Sys.Data
         {
             return SqlCmd
                 .FillDataTable(databaseName.Provider, 
-                    "USE [{0}] ; SELECT  SCHEMA_NAME(schema_id) SchemaName, name AS TableName FROM sys.views ORDER BY name", 
+                    "USE [{0}] ; SELECT  SCHEMA_NAME(schema_id) SchemaName, name FROM sys.views ORDER BY name", 
                     databaseName.Name)
                     .AsEnumerable()
                     .Select(row=>new TableName(databaseName, row.Field<string>(0), row.Field<string>(1)))

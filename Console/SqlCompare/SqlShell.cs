@@ -127,7 +127,7 @@ namespace SqlCompare
 
                 case "find":
                     if (arg1 != null)
-                        theSide.Provider.FindColumn(arg1);
+                        theSide.FindName(arg1);
                     else
                         stdio.WriteLine("find object undefined");
                     break;
@@ -300,9 +300,9 @@ namespace SqlCompare
             vnames = new MatchedDatabase(theSide.DatabaseName, arg2, null).DefaultViewNames;
             tnames = new MatchedDatabase(theSide.DatabaseName, arg2, null).DefaultTableNames;
 
-            if (tnames.Length == 0)
+            if (tnames.Length == 0 && vnames.Length == 0)
             {
-                stdio.WriteLine("cannot find any table name like \"{0}\"", arg2);
+                stdio.WriteLine("cannot find any table/view name like \"{0}\"", arg2);
                 return;
             }
 
@@ -345,17 +345,17 @@ namespace SqlCompare
                     break;
 
                 case "vw":
-                    foreach (var tname in vnames)
+                    foreach (var vname in vnames)
                     {
                         DataTable dt = null;
-                        dt = tname.ViewSchema();
+                        dt = vname.ViewSchema();
                         if (dt.Rows.Count > 0)
                         {
-                            stdio.WriteLine("<{0}>", tname.ShortName);
+                            stdio.WriteLine("<{0}>", vname.ShortName);
                             dt.ToConsole();
                         }
                         else
-                            stdio.WriteLine("not found at <{0}>", tname.ShortName);
+                            stdio.WriteLine("not found at <{0}>", vname.ShortName);
                     }
                     break;
 

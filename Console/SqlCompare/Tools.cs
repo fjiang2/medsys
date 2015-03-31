@@ -4,16 +4,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Sys.Data;
+using System.Text.RegularExpressions;
+using System.Data;
 
 namespace SqlCompare
 {
     static class Tools
     {
-        public static void FindColumn(this ConnectionProvider provider, string match)
+        public static void FindName(this Side side, string match)
         {
-            string sql = "SELECT name AS TableName FROM sys.tables WHERE name LIKE @PATTERN";
-            var dt = new SqlCmd(provider, sql, new { PATTERN = "%" + match + "%" }).FillDataTable();
-            dt.ToConsole();
+            string sql = "SELECT name AS TableName FROM sys.tables";
+            var dt = new SqlCmd(side.Provider, sql).FillDataTable();
+            Search(match, dt, "TableName");
+            if (dt.Rows.Count != 0)
+            {
+                stdio.WriteLine("Tables");
+                dt.ToConsole();
+            };
+
 
             sql = @"
  SELECT 
@@ -26,11 +34,69 @@ FROM sys.tables t
         INNER JOIN sys.columns c ON t.object_id = c.object_id 
         INNER JOIN sys.types ty ON ty.system_type_id =c.system_type_id AND ty.name<>'sysname'
         LEFT JOIN sys.Computed_columns d ON t.object_id = d.object_id AND c.name = d.name
-WHERE c.name LIKE @PATTERN
 ORDER BY c.name, c.column_id
 ";
-            dt = new SqlCmd(provider, sql, new { PATTERN = "%" + match + "%" }).FillDataTable();
-            dt.ToConsole();
+            dt = new SqlCmd(side.Provider, sql).FillDataTable();
+            Search(match, dt, "ColumnName");
+            if (dt.Rows.Count != 0)
+            {
+                stdio.WriteLine("Table Columns");
+                dt.ToConsole();
+            };
+
+
+            sql = @"SELECT  SCHEMA_NAME(schema_id) SchemaName, name AS ViewName FROM sys.views ORDER BY name";
+            dt = new SqlCmd(side.Provider, sql).FillDataTable();
+            Search(match, dt, "ViewName");
+            if (dt.Rows.Count != 0)
+            {
+                stdio.WriteLine("Views");
+                dt.ToConsole();
+            }
+
+            sql = @"
+  SELECT 
+	            VCU.TABLE_NAME AS ViewName, 
+	            COL.COLUMN_NAME AS ColumnName,
+	            COL.DATA_TYPE,
+	            COL.IS_NULLABLE
+            FROM INFORMATION_SCHEMA.VIEW_COLUMN_USAGE AS VCU
+	            JOIN INFORMATION_SCHEMA.COLUMNS AS COL
+	            ON  COL.TABLE_SCHEMA  = VCU.TABLE_SCHEMA
+	            AND COL.TABLE_CATALOG = VCU.TABLE_CATALOG
+	            AND COL.TABLE_NAME    = VCU.TABLE_NAME
+	            AND COL.COLUMN_NAME   = VCU.COLUMN_NAME";
+
+            dt = new SqlCmd(side.Provider, sql).FillDataTable();
+            Search(match, dt, "ColumnName");
+            if (dt.Rows.Count != 0)
+            {
+                stdio.WriteLine("View Columns");
+                dt.ToConsole();
+            }
+        }
+
+
+
+        public static DataTable Search(string pattern, DataTable table, string columnName)
+        {
+            string x = "^" + Regex.Escape(pattern)
+                                  .Replace(@"\*", ".*")
+                                  .Replace(@"\?", ".")
+                           + "$";
+
+            Regex regex = new Regex(x, RegexOptions.IgnoreCase);
+            foreach (DataRow row in table.Rows)
+            {
+                if(!regex.IsMatch(row[columnName].ToString()))
+                    row.Delete();
+            }
+
+            table.AcceptChanges();
+            return table;
         }
     }
+
+
+
 }

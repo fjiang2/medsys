@@ -115,8 +115,8 @@ namespace SqlCompare
         {
             string SQL = @"
              SELECT 
-	            VCU.TABLE_NAME, 
-	            COL.COLUMN_NAME,
+	            VCU.TABLE_NAME AS ViewName, 
+	            COL.COLUMN_NAME AS ColumnName,
 	            COL.DATA_TYPE,
 	            COL.IS_NULLABLE
             FROM INFORMATION_SCHEMA.VIEW_COLUMN_USAGE AS VCU
