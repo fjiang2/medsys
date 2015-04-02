@@ -40,7 +40,8 @@ namespace Sys.Data.Comparison
 
             StringBuilder builder = new StringBuilder();
             TableScript script = new TableScript(schema1);
-            
+
+            List<DataRow> R2 = new List<DataRow>();
             foreach (DataRow row1 in table1.Rows)
             {
                 var row2 = table2.AsEnumerable().Where(row => RowCompare.Compare(PkColumns.Keys, row, row1)).FirstOrDefault();
@@ -53,11 +54,21 @@ namespace Sys.Data.Comparison
 
                         builder.AppendLine(script.UPDATE(compare));
                     }
+                    R2.Add(row2);
                 }
                 else
                 {
                     builder.Append(script.INSERT(row1));
                     builder.AppendLine();
+                }
+            }
+
+
+            foreach (DataRow row2 in table2.Rows)
+            {
+                if (R2.IndexOf(row2) < 0)
+                {
+                    builder.AppendLine(script.DELETE(row2, pk));
                 }
             }
 

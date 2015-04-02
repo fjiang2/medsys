@@ -315,35 +315,47 @@ namespace SqlCompare
                 case "pk":
                 case "fk":
                 case "ik":
-                    foreach (var tname in tnames)
                     {
-                        DataTable dt = null;
-                        switch (arg1)
+                        List<string> list = new List<string>();
+                        foreach (var tname in tnames)
                         {
-                            case "dt":
-                                dt = tname.TableSchema();
-                                break;
+                            DataTable dt = null;
+                            switch (arg1)
+                            {
+                                case "dt":
+                                    dt = tname.TableSchema();
+                                    break;
 
-                            case "pk":
-                                dt = tname.PrimaryKeySchema();
-                                break;
+                                case "pk":
+                                    dt = tname.PrimaryKeySchema();
+                                    break;
 
-                            case "fk":
-                                dt = tname.ForeignKeySchema();
-                                break;
+                                case "fk":
+                                    dt = tname.ForeignKeySchema();
+                                    break;
 
-                            case "ik":
-                                dt = tname.IdentityKeySchema();
-                                break;
+                                case "ik":
+                                    dt = tname.IdentityKeySchema();
+                                    break;
+                            }
+
+                            if (dt.Rows.Count > 0)
+                            {
+                                stdio.WriteLine("<{0}>", tname.ShortName);
+                                dt.ToConsole();
+                            }
+                            else
+                            {
+                                list.Add(tname.ShortName);
+                                stdio.WriteLine("not found at " + tname.ShortName);
+                            }
                         }
 
-                        if (dt.Rows.Count > 0)
+                        if (list.Count > 0)
                         {
-                            stdio.WriteLine("<{0}>", tname.ShortName);
-                            dt.ToConsole();
+                            stdio.WriteLine("not found on tables below");
+                            list.Select(row => new { TableName = row }).ToConsole();
                         }
-                        else
-                            stdio.WriteLine("not found at <{0}>", tname.ShortName);
                     }
                     break;
 
