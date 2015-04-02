@@ -240,6 +240,23 @@ namespace SqlCompare
                     else
                         stdio.ShowError("command argument missing");
                     break;
+                
+                case "copy":
+                    if (arg1 == "result")
+                    {
+                        if (!File.Exists(this.cfg.OutputFile))
+                        {
+                            stdio.ShowError("no output file found : {0}", this.cfg.OutputFile);
+                            break;
+                        }
+                        using (var reader = new StreamReader(this.cfg.OutputFile))
+                        {
+                            string data = reader.ReadToEnd();
+                            System.Windows.Clipboard.SetText(data);
+                            stdio.WriteLine("copied to clipboard");
+                        }
+                    }
+                    break;
 
                 case "compare":
                     if (arg1 != null)
@@ -444,6 +461,7 @@ namespace SqlCompare
             stdio.WriteLine("<1> [alias]             : switch to source server 1 (default)");
             stdio.WriteLine("<2> [alias]             : switch to sink server 2");
             stdio.WriteLine("<goto> alias            : switch to database server");
+            stdio.WriteLine("<copy result>           : copy sql script ouput to clipboard");
             stdio.WriteLine("<exit>                  : quit application");
             stdio.WriteLine("<help>                  : this help");
             stdio.WriteLine("<?>                     : this help");

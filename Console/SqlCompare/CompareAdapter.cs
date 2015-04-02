@@ -63,8 +63,9 @@ namespace SqlCompare
                 return string.Empty;
 
             StringBuilder builder = new StringBuilder();
-            builder.AppendFormat("--compare server={0} db={1}", Side1.CS.DataSource, db1.Name).AppendLine();
-            builder.AppendFormat("--        server={0} db={1} @ {2}", Side2.CS.DataSource, db2.Name, DateTime.Now).AppendLine();
+            builder.AppendFormat("-- SqlCompare:", Side1.CS.DataSource, db1.Name).AppendLine();
+            builder.AppendFormat("-- compare server={0} db={1}", Side1.CS.DataSource, db1.Name).AppendLine();
+            builder.AppendFormat("--         server={0} db={1} @ {2}", Side2.CS.DataSource, db2.Name, DateTime.Now).AppendLine();
             var N1 = m1.MatchedTableNames;
             var N2 = m2.MatchedTableNames;
             string sql;
