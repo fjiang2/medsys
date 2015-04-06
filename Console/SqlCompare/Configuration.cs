@@ -50,7 +50,7 @@ namespace SqlCompare
         {
             if (!File.Exists(cfgFile))
             {
-                stdio.WriteLine("configuration file {0} not exists", cfgFile);
+                Console.WriteLine("configuration file {0} not exists", cfgFile);
                 return false;
             }
 
