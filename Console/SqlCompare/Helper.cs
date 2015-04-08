@@ -16,12 +16,20 @@ namespace SqlCompare
 
         public static StreamWriter NewStreamWriter(this string fileName)
         {
-            string folder = Path.GetDirectoryName(fileName);
-            if (!Directory.Exists(folder))
-                Directory.CreateDirectory(folder);
+            try
+            {
+                string folder = Path.GetDirectoryName(fileName);
+                if (!Directory.Exists(folder))
+                    Directory.CreateDirectory(folder);
+            }
+            catch (ArgumentException)
+            { 
+            }
 
             return new StreamWriter(fileName);
         }
+
+
         public static void ToConsole<T>(this IEnumerable<T> source)
         {
             var properties = typeof(T).GetProperties();

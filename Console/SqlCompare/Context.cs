@@ -78,21 +78,19 @@ namespace SqlCompare
                     {
                         string tableName = null;
                         string where = null;
-                        string fileName = null;
+                        string fileName = (string)DS["output"];
 
+                        if (size == 1 && L0.ty == VALTYPE.stringcon )
+                        {
+                            tableName = L0.Str;
+                        }
                         if (size == 2 && L0.ty == VALTYPE.stringcon && L1.ty == VALTYPE.stringcon)
                         {
                             tableName = L0.Str;
-                            fileName = L1.Str;
-                        }
-                        if (size == 3 && L0.ty == VALTYPE.stringcon && L2.ty == VALTYPE.stringcon)
-                        {
-                            tableName = L0.Str;
                             where = L1.Str;
-                            fileName = L2.Str;
                         }
 
-                        if (tableName != null && fileName != null)
+                        if (tableName != null)
                         {
                             Side theSide = (Side)DS[THESIDE].HostValue;
                             string schema = "dbo";
@@ -103,21 +101,23 @@ namespace SqlCompare
                                 tableName = L[1];
                             }
                             TableName tname = new TableName(theSide.DatabaseName, schema, tableName);
+
+                            int count = 0;
                             using (var writer = fileName.NewStreamWriter())
                             {
                                 if (where != null)
                                 {
-                                    theSide.GenerateRows(writer, tname, new Locator(where));
+                                    count = theSide.GenerateRows(writer, tname, new Locator(where));
                                     stdio.WriteLine("insert clauses (SELECT * FROM {0} WHERE {1}) generated to {2}", tname, where, fileName);
                                 }
                                 else
                                 {
-                                    theSide.GenerateRows(writer, tname, null);
+                                    count = theSide.GenerateRows(writer, tname, null);
                                     stdio.WriteLine("insert clauses (SELECT * FROM {0}) generated to {1}", tname, fileName);
                                 }
                             }
 
-                            return new VAL();
+                            return new VAL(count);
                         }
                     }
                     break;

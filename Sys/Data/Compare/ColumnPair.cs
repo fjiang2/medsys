@@ -41,6 +41,25 @@ namespace Sys.Data.Comparison
                 return Value.ToString();
         }
 
+        public static string ToScript(IColumn column)
+        {
+            string name = "@" + column.ColumnName;
+
+            switch (column.CType)
+            {
+                case CType.VarChar:
+                case CType.Char:
+                case CType.NVarChar:
+                case CType.NChar:
+                case CType.DateTime:
+                case CType.DateTime2:
+                case CType.DateTimeOffset:
+                    return DELIMETER + name + DELIMETER;
+            }
+         
+            return name;
+        }
+
         public static string ByteArrayToHexString(byte[] bytes)
         {
             char[] c = new char[bytes.Length * 2];

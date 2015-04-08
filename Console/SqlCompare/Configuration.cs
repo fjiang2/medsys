@@ -124,6 +124,9 @@ namespace SqlCompare
             if(log.Defined)
                 Context.DS.Add("log", log);
 
+             Context.DS.Add("output", new VAL(this.OutputFile));
+
+            
 
             var pk = Cfg["primary_key"];
             if (pk.Defined)

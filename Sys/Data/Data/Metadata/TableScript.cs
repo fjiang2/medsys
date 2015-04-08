@@ -37,6 +37,19 @@ namespace Sys.Data
             return INSERT(direct);
         }
 
+        public string INSERT(IEnumerable<IColumn> columns)
+        {
+            var x1 = columns.Select(column => "[" + column.ColumnName + "]");
+            var x2 = columns.Select(column => ColumnPair.ToScript(column));
+
+            return string.Format(insertCommandTemplate,
+             string.Join(",", x1),
+             string.Join(",", x2)
+             );
+        }
+
+       
+
         public string INSERT(IEnumerable<ColumnPair> pairs)
         {
             var x1 = pairs.Select(p => "[" + p.ColumnName + "]");

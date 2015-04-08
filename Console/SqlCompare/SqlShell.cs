@@ -241,6 +241,20 @@ namespace SqlCompare
                         stdio.ShowError("command argument missing");
                     break;
                 
+                case "template":
+                    if (arg1 != null)
+                    {
+                        string sql = theSide.GenerateRowTemplate(new TableName(theSide.DatabaseName, "dbo", arg1));
+                        stdio.WriteLine(sql);
+                        using (var writer = cfg.OutputFile.NewStreamWriter())
+                        {
+                            writer.WriteLine(sql);
+                        }
+                    }
+                    else
+                        stdio.ShowError("command argument missing");
+                    break;
+
                 case "copy":
                     if (arg1 == "result")
                     {
@@ -474,10 +488,9 @@ namespace SqlCompare
             stdio.WriteLine("alter ...");
             stdio.WriteLine("exec ...");
             stdio.WriteLine("<Functions>");
-            stdio.WriteLine("  export(tablename, where, filename)");
-            stdio.WriteLine("                        : export INSERT sql script, SELECT * FROM tablename WHERE ...");
-            stdio.WriteLine("  export(tablename, filename)");
-            stdio.WriteLine("                        : export INSERT sql script, SELECT * FROM tablename");
+            stdio.WriteLine("  export(tablename, where)");
+            stdio.WriteLine("                        : export INSERT script, SELECT * FROM table WHERE ...");
+            stdio.WriteLine("  export(tablename)     : export INSERT script, SELECT * FROM table");
             stdio.WriteLine("<Variables>");
             stdio.WriteLine("  maxrows               : max number of row shown on select query");
             stdio.WriteLine("  DataReader            : true: use SqlDataReader; false: use Fill DataSet");

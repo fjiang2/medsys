@@ -145,7 +145,7 @@ namespace Sys.Data.Comparison
             return builder.ToString();
         }
 
-        public static void GenerateRows(StreamWriter writer, TableSchema schema, Locator where)
+        public static int GenerateRows(StreamWriter writer, TableSchema schema, Locator where)
         {
             TableName tableName = schema.TableName;
             string sql = string.Format("SELECT * FROM {0}", tableName);
@@ -183,9 +183,15 @@ namespace Sys.Data.Comparison
             if (count != 0)
                 writer.WriteLine(TableScript.GO);
 
+            return count;
         }
 
-
+        public static string GenerateRowTemplate(TableSchema schema)
+        {
+            TableName tableName = schema.TableName;
+            TableScript script = new TableScript(schema);
+            return script.INSERT( schema.Columns);
+        }
 
         #endregion
 

@@ -96,13 +96,17 @@ namespace SqlCompare
             }
         }
 
-        public void GenerateRows(StreamWriter writer, TableName tableName, Locator where)
+        public int GenerateRows(StreamWriter writer, TableName tableName, Locator where)
         {
-            Compare.GenerateRows(writer, new TableSchema(tableName), where);
+            return Compare.GenerateRows(writer, new TableSchema(tableName), where);
         }
 
 
-
+        public string GenerateRowTemplate(TableName tableName)
+        {
+            return Compare.GenerateRowTemplate(new TableSchema(tableName));
+        }
+        
         public override string ToString()
         {
             return string.Format("Side: Server= {0} Db={1}",CS.DataSource, this.DatabaseName.Name);
