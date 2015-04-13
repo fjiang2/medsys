@@ -35,7 +35,7 @@ namespace Sys.BusinessRules
             if (func == "error" || func == "warning" || func == "information" || func == "fatal")
             {
 
-                Validator validator = (Validator)facts["$ActiveValidator"].value;
+                Validator validator = (Validator)facts["$ActiveValidator"].Value;
 
                 if (func == "error")
                     severityLevel = MessageLevel.Error;

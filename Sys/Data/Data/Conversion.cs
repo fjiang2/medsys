@@ -72,8 +72,8 @@ namespace Sys.Data
                 VAL key = field[0];
                 VAL value = field[1];
                 Type ty;
-                if (value.value != null)
-                    ty = value.value.GetType();
+                if (value.Value != null)
+                    ty = value.Value.GetType();
                 else
                     ty = typeof(string);
 

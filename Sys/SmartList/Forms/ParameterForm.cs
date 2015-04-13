@@ -176,7 +176,7 @@ namespace Sys.SmartList.Forms
             for (int i = 0; i < x.Size; i++)
             {
                 string parameterName = x[i][0].Str;
-                object obj = x[i][1].value;
+                object obj = x[i][1].Value;
                 cmd.AddParameter("@" + parameterName, obj);
 
                 DS2.Add(parameterName, x[i][1]);

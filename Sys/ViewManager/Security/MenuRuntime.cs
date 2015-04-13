@@ -122,7 +122,7 @@ namespace Sys.ViewManager.Security
         {
             get
             {
-                return (UserMenuItem)DS[_SCOPE].value;
+                return (UserMenuItem)DS[_SCOPE].Value;
             }
         }
 

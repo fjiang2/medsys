@@ -21,7 +21,7 @@ namespace Sys.BusinessRules
             if (func == "error" || func == "warning" || func == "information" || func == "fatal")
             {
 
-                Rule rule = (Rule)facts["$ActiveRule"].value;
+                Rule rule = (Rule)facts["$ActiveRule"].Value;
 
                 if (func == "error")
                     severityLevel = MessageLevel.Error;

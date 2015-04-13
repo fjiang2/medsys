@@ -297,8 +297,8 @@ namespace Sys.Workflow
         public Form DoAction()
         {
             VAL form = workflowInstance.InvokeFunction(this.State.Data.StateAction, new object[] { this, workflowInstance.Context });
-            if (form.value is Form)
-                this.form =  (Form)form.value;
+            if (form.Value is Form)
+                this.form =  (Form)form.Value;
 
             return this.form;
         }
@@ -408,7 +408,7 @@ namespace Sys.Workflow
                 if (context.Undefined)
                 {
                     context = VAL.Array();
-                    Scope.Add(CollaborativeWorkflowInstance.NS_CONTEXT, context);
+                    Scope.AddMember(CollaborativeWorkflowInstance.NS_CONTEXT, context);
                 }
 
                 return context;

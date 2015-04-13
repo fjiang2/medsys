@@ -32,7 +32,7 @@ namespace Sys.Security
         public override void Save()
         {
             VAL v = new VAL();
-            foreach (var key in memory.Keys)
+            foreach (var key in memory.Names)
             {
                 VAL val = memory[key];
                 if (val.IsHostType)

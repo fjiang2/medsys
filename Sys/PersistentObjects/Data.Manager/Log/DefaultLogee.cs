@@ -128,10 +128,10 @@ namespace Sys.Data.Manager
                     if (!row1[x].ToString().Equals(row2[x].ToString()))
                     {
                         if (row1[x] != System.DBNull.Value)
-                            v1.Add(x, row1[x]);
+                            v1.AddMember(x, row1[x]);
 
                         if (row2[x] != System.DBNull.Value)
-                            v2.Add(x, row2[x]);
+                            v2.AddMember(x, row2[x]);
                     }
                 }
 
@@ -142,7 +142,7 @@ namespace Sys.Data.Manager
                 {
                     string x = dataColumn.ColumnName;
                     if (row2[x] != System.DBNull.Value)
-                        v2.Add(x, row2[x]);
+                        v2.AddMember(x, row2[x]);
                 }
 
             }
@@ -152,7 +152,7 @@ namespace Sys.Data.Manager
                 {
                     string x = dataColumn.ColumnName;
                     if (row1[x] != System.DBNull.Value)
-                        v1.Add(x, row1[x]);
+                        v1.AddMember(x, row1[x]);
                 }
 
             }

@@ -104,13 +104,13 @@ namespace Sys.SmartList
                 for (int i = 0; i < x.Size; i++)
                 {
                     string parameterName = x[i][0].Str;
-                    object obj = x[i][1].value;
+                    object obj = x[i][1].Value;
                     if (obj == null)
                         continue;
 
                     for (int j = 0; j < header.Size; j++)
                     {
-                        header[j].value = header[j].Str.Replace("@" + parameterName, obj.ToString());
+                        header[j].UpdateObject(header[j].VALTYPE, header[j].Str.Replace("@" + parameterName, obj.ToString()));
                     }
 
                 }

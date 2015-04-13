@@ -34,17 +34,17 @@ namespace Sys.Workflow
                      * 
                      * */
                 case "from":
-                    if (size == 0 || !(L0.value is CollaborativeActivity))
+                    if (size == 0 || !(L0.Value is CollaborativeActivity))
                         break;
 
-                    activity = (CollaborativeActivity)(L0.value);
+                    activity = (CollaborativeActivity)(L0.Value);
                     if (size == 1)
                     {
                         return VAL.Boxing(activity.PrevActivities[0]);
                     }
                     else if (size == 2)
                     {
-                        if (L1.value is string)     //stateName
+                        if (L1.Value is string)     //stateName
                         {
                             if (activity.Data.PS > L1)
                                 return VAL.NewHostType(activity.WorkflowInstance.Activities[L1.Str]);
@@ -55,23 +55,23 @@ namespace Sys.Workflow
                     break;
 
                 case "statusof":
-                    activity = (CollaborativeActivity)(L0.value);
+                    activity = (CollaborativeActivity)(L0.Value);
                     if (size == 1)
                     {
                         return VAL.Boxing(activity.Data.ActivityResult);
                     }
                     else if (size == 2)
                     {
-                        if (L1.value is TaskStatus)
+                        if (L1.Value is TaskStatus)
                         {
-                            if (activity.Data.TaskStatus == (TaskStatus)(L1.value))
+                            if (activity.Data.TaskStatus == (TaskStatus)(L1.Value))
                                 return VAL.Boxing(activity);
                             else
                                 return new VAL();
                         }
-                        else if (L1.value is ActivityResult)
+                        else if (L1.Value is ActivityResult)
                         {
-                            if (activity.Data.ActivityResult == (ActivityResult)(L1.value))
+                            if (activity.Data.ActivityResult == (ActivityResult)(L1.Value))
                                 return VAL.Boxing(activity);
                             else
                                 return new VAL();

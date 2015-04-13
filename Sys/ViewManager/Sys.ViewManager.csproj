@@ -112,9 +112,9 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="Tie, Version=2.0.0.13, Culture=neutral, PublicKeyToken=783687458c7c579a, processorArchitecture=MSIL">
+    <Reference Include="Tie, Version=2.0.0.14, Culture=neutral, PublicKeyToken=783687458c7c579a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Tie.2.0.0.13\lib\net45\Tie.dll</HintPath>
+      <HintPath>..\..\packages\Tie.2.0.0.14\lib\net45\Tie.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

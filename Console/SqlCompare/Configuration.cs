@@ -159,7 +159,7 @@ namespace SqlCompare
                 return null;
             }
 
-            if (val[0].ty != VALTYPE.stringcon || val[1].ty != VALTYPE.stringcon)
+            if (val[0].VALTYPE != VALTYPE.stringcon || val[1].VALTYPE != VALTYPE.stringcon)
             {
                 Console.WriteLine("error on function config(file,path) argument type, 1: string, 2: string");
                 return null;

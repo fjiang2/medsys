@@ -21,7 +21,7 @@ namespace Sys
 
         public IEnumerator GetEnumerator()
         {
-            return memory.Keys.GetEnumerator();
+            return memory.Names.GetEnumerator();
         }
 
         public bool ContainsKey(string keyName)
@@ -88,14 +88,14 @@ namespace Sys
             if (v.IsNull)
                 return null;
             else
-                return v.value;
+                return v.Value;
         }
 
         public byte[] GetBytesValue(string key)
         {
-            if (memory[key].value is string)
+            if (memory[key].Value is string)
             {
-                string hexString = memory[key].value as string;
+                string hexString = memory[key].Value as string;
                 return StringExtension.HexStringToByteArray(hexString);
             }
             return null;
@@ -115,7 +115,7 @@ namespace Sys
         public virtual void Save()
         {
             VAL v = new VAL();
-            foreach (var key in memory.Keys)
+            foreach (var key in memory.Names)
             {
                 VAL val = memory[key];
                 if (val.IsHostType)

@@ -48,7 +48,7 @@ namespace SqlCompare
         public static void ToConsole()
         {
             ((VAL)DS)
-                .Where(row => row[1].ty != VALTYPE.nullcon && row[1].ty != VALTYPE.voidcon && !row[0].Str.StartsWith("$"))
+                .Where(row => row[1].VALTYPE != VALTYPE.nullcon && row[1].VALTYPE != VALTYPE.voidcon && !row[0].Str.StartsWith("$"))
                 .Select(row => new { Variable = (string)row[0], Value = row[1] })
                 .ToConsole();
         }
@@ -80,11 +80,11 @@ namespace SqlCompare
                         string where = null;
                         string fileName = (string)DS["output"];
 
-                        if (size == 1 && L0.ty == VALTYPE.stringcon )
+                        if (size == 1 && L0.VALTYPE == VALTYPE.stringcon)
                         {
                             tableName = L0.Str;
                         }
-                        if (size == 2 && L0.ty == VALTYPE.stringcon && L1.ty == VALTYPE.stringcon)
+                        if (size == 2 && L0.VALTYPE == VALTYPE.stringcon && L1.VALTYPE == VALTYPE.stringcon)
                         {
                             tableName = L0.Str;
                             where = L1.Str;
@@ -124,7 +124,7 @@ namespace SqlCompare
 
                 default:
                     var query = DS[func];
-                    if (query.ty == VALTYPE.stringcon)
+                    if (query.VALTYPE == VALTYPE.stringcon)
                     {
                         VAL val = VAL.Array(0);
                         for (int i = 0; i < parameters.Size; i++)
@@ -137,7 +137,7 @@ namespace SqlCompare
                                 stdio.WriteLine("require parameter name at arguments({0}), run func(id=20,x=2);", i + 1);
                                 return new VAL(2);
                             }
-                            val.Add(name, parameter);
+                            val.AddMember(name, parameter);
                         }
 
                         VAL result = VAL.Array(0);
