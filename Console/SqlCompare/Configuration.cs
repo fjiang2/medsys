@@ -63,7 +63,7 @@ namespace SqlCompare
                 }
                 catch (Exception ex)
                 {
-                    stdio.WriteLine("configuration file format error in {0}, {1}", cfgFile, ex.Message);
+                    Console.WriteLine("configuration file format error in {0}, {1}", cfgFile, ex.Message);
                     return false;
                 }
             }
@@ -73,21 +73,7 @@ namespace SqlCompare
 
       
 
-        public T GetValue<T>(VAR variable, T defaultValue = default(T))
-        {
-            VAL val = Cfg[variable];
-
-            if (val.Defined)
-            {
-                if (val.HostValue is T)
-                    return (T)val.HostValue;
-                else if(typeof(T).IsEnum && val.HostValue is int)
-                    return (T)val.HostValue;
-            }
-
-            return defaultValue;
-        }
-
+     
         public VAL GetValue(VAR variable)
         {
             return Cfg[variable];
@@ -112,12 +98,12 @@ namespace SqlCompare
             if (!TryReadCfg(cfgFile))
                 return false;
 
-            this.excludedtables = GetValue<string[]>("excludedtables", new string[] { });
-            this.Action = GetValue<ActionType>("actiontype", ActionType.CompareSchema);
+            this.excludedtables = Cfg.GetValue<string[]>("excludedtables", new string[] { });
+            this.Action = Cfg.GetValue<ActionType>("actiontype", ActionType.CompareSchema);
 
-            this.InputFile = GetValue<string>("input", "script.sql");
-            this.OutputFile = GetValue<string>("output", "script.sql");
-            this.SchemaFile = GetValue<string>("schema", "schema.xml");
+            this.InputFile = Cfg.GetValue<string>("input", "script.sql");
+            this.OutputFile = Cfg.GetValue<string>("output", "script.sql");
+            this.SchemaFile = Cfg.GetValue<string>("schema", "schema.xml");
 
         
             var log = Cfg["log"];
