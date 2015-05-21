@@ -272,6 +272,13 @@ namespace SqlCompare
                     }
                     break;
 
+                case "open":
+                    if (arg1 == "log")
+                    {
+                        stdio.OpenLog();
+                    }
+                    break;
+
                 case "compare":
                     if (arg1 != null)
                     {
@@ -476,6 +483,7 @@ namespace SqlCompare
             stdio.WriteLine("<2> [alias]             : switch to sink server 2");
             stdio.WriteLine("<goto> alias            : switch to database server");
             stdio.WriteLine("<copy result>           : copy sql script ouput to clipboard");
+            stdio.WriteLine("<open log>              : open log file");
             stdio.WriteLine("<exit>                  : quit application");
             stdio.WriteLine("<help>                  : this help");
             stdio.WriteLine("<?>                     : this help");

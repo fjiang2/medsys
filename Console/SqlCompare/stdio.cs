@@ -23,6 +23,25 @@ namespace SqlCompare
                 writer.Close();
         }
 
+        public static void OpenLog()
+        {
+            string fileName = Context.GetValue<string>("log", "sqlcompare.log");
+            //if (fileName.StartsWith(".\\"))
+            //{
+            //    string path = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            //    fileName = path + fileName.Substring(1);
+            //}
+            
+            System.Diagnostics.Process process = new System.Diagnostics.Process();
+            process.StartInfo.ErrorDialog = true;
+            process.StartInfo.UseShellExecute = false;
+            //process.StartInfo.WorkingDirectory = startin;
+            process.StartInfo.FileName = "notepad.exe";
+            process.StartInfo.Arguments = fileName;
+            if(File.Exists(fileName))
+                process.Start();
+        }
+
         public static void Write(string format, params object[] args)
         {
             Console.Write(format, args);
