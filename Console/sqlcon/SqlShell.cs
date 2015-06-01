@@ -39,8 +39,7 @@ namespace sqlcon
 
         public void DoCommand()
         {
-
-            stdio.WriteLine("SqlCompare SQL command console");
+            stdio.WriteLine("sqlcon(SQL Command Console)");
             stdio.WriteLine("type [help] to help, [;] to execute a command, [exit] to quit");
             StringBuilder builder = new StringBuilder();
             string line = null;

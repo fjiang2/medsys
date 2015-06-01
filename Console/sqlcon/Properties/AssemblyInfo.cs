@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("SqlCompare")]
+[assembly: AssemblyTitle("sqlcon")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Datum Connect Inc.")]
-[assembly: AssemblyProduct("SqlCompare")]
+[assembly: AssemblyProduct("sqlcon")]
 [assembly: AssemblyCopyright("Copyright ©  DATCONN 2012-2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

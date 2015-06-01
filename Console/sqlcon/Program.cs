@@ -76,8 +76,8 @@ namespace sqlcon
        
         public static void Help()
         {
-            stdio.WriteLine("SqlCompare v1.0");
-            stdio.WriteLine("Usage: SqlCompare");
+            stdio.WriteLine("sqlcon v1.0");
+            stdio.WriteLine("Usage: sqlcon");
             stdio.WriteLine("     [/cfg configuration file(.cfg)]");
             stdio.WriteLine("     [/s alias1:alias2]|[/s alias]");
             stdio.WriteLine("     [/S server1:server2] [/U user1:user2] [/P password1:password2]");
@@ -103,10 +103,10 @@ namespace sqlcon
             stdio.WriteLine("/i         : input sql script file");
             stdio.WriteLine("/o         : result of comparsion(diff=server1-server2),sql script file");
             stdio.WriteLine("examples:");
-            stdio.WriteLine("SqlCompare /s localhost /db northwind:southwind /schema");
-            stdio.WriteLine("SqlCompare /S localhost /U sa /P password /db northwind /c schema");
-            stdio.WriteLine("SqlCompare /c data /db northwind /dt Cust*");
-            stdio.WriteLine("SqlCompare /c gen /dt Products");
+            stdio.WriteLine("sqlcon /s localhost /db northwind:southwind /schema");
+            stdio.WriteLine("sqlcon /S localhost /U sa /P password /db northwind /c schema");
+            stdio.WriteLine("sqlcon /c data /db northwind /dt Cust*");
+            stdio.WriteLine("sqlcon /c gen /dt Products");
         }
     }
 }

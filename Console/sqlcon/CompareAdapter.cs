@@ -63,7 +63,7 @@ namespace sqlcon
                 return string.Empty;
 
             StringBuilder builder = new StringBuilder();
-            builder.AppendFormat("-- SqlCompare:", Side1.CS.DataSource, db1.Name).AppendLine();
+            builder.AppendFormat("-- sqlcon:", Side1.CS.DataSource, db1.Name).AppendLine();
             builder.AppendFormat("-- compare server={0} db={1}", Side1.CS.DataSource, db1.Name).AppendLine();
             builder.AppendFormat("--         server={0} db={1} @ {2}", Side2.CS.DataSource, db2.Name, DateTime.Now).AppendLine();
             var N1 = m1.MatchedTableNames;
