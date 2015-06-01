@@ -47,7 +47,7 @@ namespace sqlcon
             while (true)
             {
             L1:
-                stdio.Write("{0}> ", theSide.Alias);
+                stdio.Write("{0}/{1}> ", theSide.Alias, theSide.DatabaseName.Name);
             L2:
                 line = stdio.ReadLine();
 
