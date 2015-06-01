@@ -7,8 +7,8 @@
     <ProjectGuid>{C60691C9-DA2E-4DFD-9923-9349A1777C5D}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SqlCompare</RootNamespace>
-    <AssemblyName>SqlCompare</AssemblyName>
+    <RootNamespace>sqlcon</RootNamespace>
+    <AssemblyName>sqlcon</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -65,7 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="SqlCompare.cfg">
+    <None Include="sqlcon.cfg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

@@ -12,7 +12,7 @@ using System.IO;
 using Sys;
 using Tie;
 
-namespace SqlCompare
+namespace sqlcon
 {
     class SqlShell  
     {

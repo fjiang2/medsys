@@ -7,7 +7,7 @@ using Sys.Data;
 using System.Text.RegularExpressions;
 using System.Data;
 
-namespace SqlCompare
+namespace sqlcon
 {
     static class Tools
     {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using Sys.Data;
 
-namespace SqlCompare
+namespace sqlcon
 {
     class MatchedDatabase  
     {

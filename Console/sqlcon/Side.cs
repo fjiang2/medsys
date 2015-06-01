@@ -10,7 +10,7 @@ using System.Data.SqlClient;
 using System.IO;
 using System.Text.RegularExpressions;
 
-namespace SqlCompare
+namespace sqlcon
 {
     class Side  
     {

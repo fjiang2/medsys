@@ -7,7 +7,7 @@ using System.IO;
 using Tie;
 using Sys.Data;
 
-namespace SqlCompare
+namespace sqlcon
 {
     static class Context
     {

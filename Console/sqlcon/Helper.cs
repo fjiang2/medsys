@@ -9,7 +9,7 @@ using System.Data.Common;
 using System.IO;
 using Sys.Data;
 
-namespace SqlCompare
+namespace sqlcon
 {
     static class Helper
     {

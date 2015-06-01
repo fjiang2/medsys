@@ -10,14 +10,14 @@ using System.Data.SqlClient;
 using System.IO;
 using Tie;
 
-namespace SqlCompare
+namespace sqlcon
 {
     class Program
     {
         [STAThread]
         static void Main(string[] args)
         {
-            var cfgFile = "sqlcompare.cfg";
+            var cfgFile = "sqlcon.cfg";
 
             int i = 0;
             while (i < args.Length)

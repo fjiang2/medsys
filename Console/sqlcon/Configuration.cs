@@ -8,7 +8,7 @@ using System.IO;
 using System.Data.SqlClient;
 using Tie;
 
-namespace SqlCompare
+namespace sqlcon
 {
     class Configuration
     {

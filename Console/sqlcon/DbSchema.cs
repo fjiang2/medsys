@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Data;
 using Sys.Data;
 
-namespace SqlCompare
+namespace sqlcon
 {
     static class DbSchema
     {

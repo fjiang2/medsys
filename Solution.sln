@@ -49,7 +49,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App.Executable", "App\Execu
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Console", "Console", "{E4D550EC-5F08-46B8-8100-F7BEBF8034EF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlCompare", "Console\SqlCompare\SqlCompare.csproj", "{C60691C9-DA2E-4DFD-9923-9349A1777C5D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sqlcon", "Console\sqlcon\sqlcon.csproj", "{C60691C9-DA2E-4DFD-9923-9349A1777C5D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

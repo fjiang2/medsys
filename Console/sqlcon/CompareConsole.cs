@@ -11,7 +11,7 @@ using System.Data.SqlClient;
 using System.IO;
 using Tie;
 
-namespace SqlCompare
+namespace sqlcon
 {
     class CompareConsole  
     {
