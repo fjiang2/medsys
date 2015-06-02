@@ -66,7 +66,15 @@ namespace Sys.Data
             set { ConnectionBuilder["Initial Catalog"] = value; }
         }
 
-        public string TableName { get; set; }
+
+        public string DataSource
+        {
+            get { return ConnectionBuilder["Data Source"].ToString(); }
+            set { ConnectionBuilder["Data Source"] = value; }
+
+        }
+
+      
 
         public override bool Equals(object obj)
         {
