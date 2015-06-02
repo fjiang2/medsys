@@ -25,7 +25,7 @@ namespace Sys.Platform.Forms
         string rootPath = "C:\\temp";
         private BackgroundWorker worker;
 
-        ConnectionProvider provider;
+        ServerName serverName;
 
         public GenDpoForm()
             : this(Sys.Constant.DB_APPLICATION)
@@ -160,11 +160,10 @@ namespace Sys.Platform.Forms
         private void showTreeTables(bool showNewTables)
         {
             treeTables.Nodes.Clear();
-
-            TableName tname = new TableName(new DatabaseName(this.provider, _databaseName),"dbo", "any");
+            TableName tname = new TableName(new DatabaseName(serverName, _databaseName),"dbo", "any");
             
             this.txtDatabaseId.Text = tname.DatabaseId().ToString();
-            TableName[] tableNames = new DatabaseName(provider, _databaseName).GetTableNames();
+            TableName[] tableNames = new DatabaseName(serverName, _databaseName).GetTableNames();
             if (showNewTables)
             {
                 foreach (TableName name in tableNames)
@@ -289,8 +288,8 @@ namespace Sys.Platform.Forms
         }
 
         private DatabaseName DataBaseName 
-        { 
-            get { return new DatabaseName(this.provider, _databaseName);  } 
+        {
+            get { return new DatabaseName(this.serverName, _databaseName); } 
         }
 
         private string _tableName { get { return this.txtTableName.Text; } }
@@ -464,7 +463,7 @@ namespace Sys.Platform.Forms
 
             progressBar1.Visible = true;
             txtCounter.Visible = true;
-            DatabaseName db = new DatabaseName(provider, this._databaseName);
+            DatabaseName db = new DatabaseName(serverName, this._databaseName);
 
             worker = new BackgroundWorker();
             worker.WorkerReportsProgress = true;
@@ -501,7 +500,7 @@ namespace Sys.Platform.Forms
 
             try
             {
-                Sys.Data.Manager.SpDatabase sp = new SpDatabase(new DatabaseName(provider, _databaseName), Path);
+                Sys.Data.Manager.SpDatabase sp = new SpDatabase(new DatabaseName(serverName, _databaseName), Path);
                 int count = sp.Generate(Namespace, "sa", "password");
                 this.InformationMessage = string.Format("{0} stored procedures are updated at database [{1}].", count, _databaseName);
             }
@@ -538,10 +537,11 @@ namespace Sys.Platform.Forms
 
         private void comboServer_SelectedIndexChanged(object sender, EventArgs e)
         {
-            this.provider = ((MyProvider)comboServer.SelectedItem).Provider;
+            var provider = ((MyProvider)comboServer.SelectedItem).Provider;
+            this.serverName = new ServerName(provider);
             
             comboDatabase.Items.Clear();
-            foreach (string db in this.provider.GetDatabaseNames())
+            foreach (string db in provider.GetDatabaseNames())
                 comboDatabase.Items.Add(db);
 
 

@@ -24,7 +24,7 @@ namespace sqlcon
             this.CS = cs;
 
             this.Provider = ConnectionProviderManager.Register(alias, cs);
-            this.DatabaseName = new DatabaseName(Provider, cs.InitialCatalog);
+            this.DatabaseName = new DatabaseName(new ServerName(Provider), cs.InitialCatalog);
         }
 
 

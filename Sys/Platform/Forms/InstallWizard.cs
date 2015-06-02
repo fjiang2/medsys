@@ -133,7 +133,7 @@ namespace Sys.Platform.Forms
                 try
                 {
                     text = text.Trim();
-                    DatabaseName databaseName = new DatabaseName(ConnectionProviderManager.DefaultProvider, text);
+                    DatabaseName databaseName = new DatabaseName(new ServerName(ConnectionProviderManager.DefaultProvider), text);
                     databaseName.CreateDatabase();
                     MessageBox.Show("Database created", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     sqlServerControl1.RefreshDatabaseList(databaseName.Name);

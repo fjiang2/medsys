@@ -23,12 +23,12 @@ namespace Sys.Data
 {
     public class DatabaseName : IComparable<DatabaseName>, IComparable, IDataElementName
     {
-        private ConnectionProvider provider;
+        private ServerName serverName;
         private string name;
 
-        public DatabaseName(ConnectionProvider provider, string databaseName)
+        public DatabaseName(ServerName serverName, string databaseName)
         {
-            this.provider = provider;
+            this.serverName = serverName;
             this.name = databaseName;
         }
 
@@ -37,10 +37,14 @@ namespace Sys.Data
             get { return this.name; }
         }
 
+        public ServerName ServerName
+        {
+            get { return this.serverName; }
+        }
 
         public ConnectionProvider Provider
         {
-            get { return this.provider; }
+            get { return this.serverName.Provider; }
         }
 
         public int CompareTo(object obj)
@@ -50,28 +54,28 @@ namespace Sys.Data
 
         public int CompareTo(DatabaseName n)
         {
-            if (this.provider.CompareTo(n.provider) == 0)
+            if (this.serverName.CompareTo(n.serverName) == 0)
                return this.name.CompareTo(n.name);
 
-            return this.provider.CompareTo(n.provider);
+            return this.serverName.CompareTo(n.serverName);
         }
 
 
         public override int GetHashCode()
         {
-            return name.GetHashCode() + this.provider.GetHashCode() * 324819;
+            return name.GetHashCode() + this.serverName.GetHashCode() * 324819;
         }
 
         public override bool Equals(object obj)
         {
             DatabaseName dname = (DatabaseName)obj;
-            return this.name.Equals(dname.name) && this.provider.Equals(dname.provider);
+            return this.name.Equals(dname.name) && this.serverName.Equals(dname.serverName);
         }
 
 
         public override string ToString()
         {
-            return string.Format("{0}, {1}", this.provider, this.name);
+            return string.Format("{0}\\{1}", this.serverName, this.name);
         }
     }
 }

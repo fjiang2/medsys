@@ -26,10 +26,13 @@ namespace Sys.Data
         private ConnectionProvider provider;
         private string name;
 
-        public ServerName(ConnectionProvider provider, string alias)
+        public ServerName(ConnectionProvider provider, string alias = null)
         {
             this.provider = provider;
-            this.name = alias;
+            if (alias != null)
+                this.name = alias;
+            else
+                this.name = provider.Name;
         }
 
         public string Name
@@ -50,27 +53,23 @@ namespace Sys.Data
 
         public int CompareTo(ServerName n)
         {
-            if (this.provider.CompareTo(n.provider) == 0)
-               return this.name.CompareTo(n.name);
-
             return this.provider.CompareTo(n.provider);
         }
 
-
         public override int GetHashCode()
         {
-            return name.GetHashCode() + this.provider.GetHashCode() * 324819;
+            return this.provider.GetHashCode();
         }
 
         public override bool Equals(object obj)
         {
             ServerName dname = (ServerName)obj;
-            return this.name.Equals(dname.name) && this.provider.Equals(dname.provider);
+            return this.provider.Equals(dname.provider);
         }
 
         public override string ToString()
         {
-            return string.Format("{0}, {1}", this.provider, this.name);
+            return string.Format("\\{0}", this.name);
         }
     }
 }

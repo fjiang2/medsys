@@ -32,7 +32,7 @@ namespace Sys.Data.Manager
         }
 
         public ClassTableName(TableName tname)
-            : base(new DatabaseName(tname.Provider, tname.DatabaseName.Name), tname.SchemaName, tname.Name)
+            : base(new DatabaseName(new ServerName(tname.Provider), tname.DatabaseName.Name), tname.SchemaName, tname.Name)
         {
             Level = Level.Fixed;
             Pack = true;
