@@ -197,14 +197,14 @@ namespace Sys.Data
         }
 
 
-        public static ConnectionProvider Register(SqlConnectionStringBuilder builder)
+        public static ConnectionProvider Register(string name, SqlConnectionStringBuilder builder)
         {
-            return Register(builder.DataSource, ConnectionProviderType.SqlServer, builder.ConnectionString);
+            return Register(name, ConnectionProviderType.SqlServer, builder.ConnectionString);
         }
 
-        public static ConnectionProvider Register(OleDbConnectionStringBuilder builder)
+        public static ConnectionProvider Register(string name, OleDbConnectionStringBuilder builder)
         {
-            return Register(builder.DataSource, ConnectionProviderType.OleDbServer, builder.ConnectionString);
+            return Register(name, ConnectionProviderType.OleDbServer, builder.ConnectionString);
         }
 
     }

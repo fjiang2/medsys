@@ -17,19 +17,21 @@ namespace sqlcon
         public readonly SqlConnectionStringBuilder CS;
         public readonly ConnectionProvider Provider;
         public readonly DatabaseName DatabaseName;
-        public readonly string Alias;
+        
 
         public Side(string alias, SqlConnectionStringBuilder cs)
         {
-            this.Alias = alias;
             this.CS = cs;
 
-            this.Provider = ConnectionProviderManager.Register(cs);
+            this.Provider = ConnectionProviderManager.Register(alias, cs);
             this.DatabaseName = new DatabaseName(Provider, cs.InitialCatalog);
         }
 
 
-
+        public string Alias
+        {
+            get { return this.Provider.Name; }
+        }
 
         public string GenerateScript()
         {

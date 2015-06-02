@@ -29,21 +29,44 @@ namespace Sys.Data
     {
         internal const int DEFAULT_HANDLE = 0;
         internal const int USER_HANDLE_BASE = DEFAULT_HANDLE + 1000;
-     
+
         internal ConnectionProvider(int handle, string name, ConnectionProviderType type, string connectionString)
         {
             this.Handle = handle;
             this.Name = name;
             this.Type = type;
-            this.ConnectionString = connectionString;
+
+            SetDbConnectionString(connectionString);
         }
 
+    
         public string Name { get; private set; }
 
         internal int Handle { get; private set;}
         internal ConnectionProviderType Type { get; private set; }
-        internal string ConnectionString { get; private set; }
         
+        internal string ConnectionString 
+        { 
+            get { return this.ConnectionBuilder.ConnectionString; }
+        }
+
+        internal DbConnectionStringBuilder ConnectionBuilder { get; private set; }
+
+        private void SetDbConnectionString(string connectionString)
+        {
+            if (Type == ConnectionProviderType.SqlServer)
+                this.ConnectionBuilder = new SqlConnectionStringBuilder(connectionString);
+            else
+                this.ConnectionBuilder = new OleDbConnectionStringBuilder(connectionString);
+        }
+
+        public string Catalog
+        {
+            get { return ConnectionBuilder["Initial Catalog"].ToString(); }
+            set { ConnectionBuilder["Initial Catalog"] = value; }
+        }
+
+        public string TableName { get; set; }
 
         public override bool Equals(object obj)
         {
@@ -73,6 +96,11 @@ namespace Sys.Data
             return string.Format("Provider Handle={0} Name={1}", this.Handle, this.Name);
         }
 
+        public string ToSimpleString()
+        {
+            return string.Format("{0}\\{1}", this.Name, this.Catalog);
+        }
+
         public static explicit operator int(ConnectionProvider provider)
         {
             return provider.Handle;
@@ -88,8 +116,10 @@ namespace Sys.Data
             this.Handle = val["handle"].Intcon;
             this.Name = val["name"].Str;
             this.Type = (ConnectionProviderType)val["type"].Intcon;
-            this.ConnectionString = val["connection"].Str;
+            SetDbConnectionString(val["connection"].Str);
         }
+
+
         public VAL GetVAL()
         {
             VAL val = new VAL();
