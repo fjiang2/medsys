@@ -28,7 +28,7 @@ namespace sqlcon
             this.server = 1;
 
             ChangeSide(adapter.Side1);
-            
+            new DbPathBuilder(cfg);
         }
 
         private void ChangeSide(Side side)

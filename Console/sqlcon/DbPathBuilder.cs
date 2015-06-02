@@ -7,7 +7,7 @@ using System.Data.Common;
 using System.Data.SqlClient;
 using System.Data.OleDb;
 using Sys.Data;
-
+using Sys;
 
 namespace sqlcon
 {
@@ -23,20 +23,48 @@ namespace sqlcon
 
     class DbPathBuilder
     {
-        Configuration cfg;
-        ConnectionProvider provider;
-        TableName TableName;
-        Locator Locater;
+        private Configuration cfg;
+        private Tree<IDataElementName> tree = new Tree<IDataElementName>();
 
-        public DbPathBuilder(Configuration cfg, ConnectionProvider provider)
+        public DbPathBuilder(Configuration cfg)
         {
             this.cfg = cfg;
-            this.provider = provider;
+            var snames = cfg.GetServerNames();
+
+            foreach (var sname in snames)
+                AddDataSource(sname);
+
+            if (tree.Nodes.Count > 0)
+                current = tree.Nodes.First();
         }
 
-        public DbPathLevel current = DbPathLevel.Catalog;
+        public TreeNode<IDataElementName> current;
 
-        
+        public void AddDataSource(ServerName name)
+        {
+            var snode = new TreeNode<IDataElementName>(name);
+            tree.Nodes.Add(snode);
+        }
+
+        public void AddCatalog(DatabaseName name)
+        {
+            var snode = tree.Nodes.Find(node => (node.Item as ServerName) == name.ServerName);
+            snode.Nodes.Add(new TreeNode<IDataElementName>(name));
+        }
+
+        public void AddTable(TableName name)
+        {
+            tree.Nodes.Add(new TreeNode<IDataElementName>(name));
+        }
+
+        public void AddLocator(TableName name)
+        {
+            tree.Nodes.Add(new TreeNode<IDataElementName>(name));
+        }
+
+
+        ConnectionProvider provider;
+
         public void ChangePath(string path)
         {
             string[] paths = path.Split('\\');
@@ -47,14 +75,6 @@ namespace sqlcon
                 if (n > 1)
                     ChangeDataSource(paths[1]);
                    
-                if (n > 2)
-                    this.provider.Catalog = paths[2];
-
-                if (n > 3)
-                    this.TableName = new TableName(this.provider, paths[3]);
-
-                if (n > 4)
-                    this.Locater = new Locator(paths[4]);
 
             }
 

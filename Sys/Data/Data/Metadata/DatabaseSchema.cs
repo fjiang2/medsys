@@ -93,12 +93,12 @@ namespace Sys.Data
         }
 
 
-        public static string[] GetDatabaseNames(this ConnectionProvider provider)
+        public static string[] GetDatabaseNames(this ServerName serverName)
         {
-            switch (provider.DpType)
+            switch (serverName.Provider.DpType)
             {
                 case DbProviderType.SqlDb:
-                    return SqlCmd.FillDataTable(provider, "SELECT Name FROM sys.databases ORDER BY Name").ToArray<string>("name");
+                    return SqlCmd.FillDataTable(serverName.Provider, "SELECT Name FROM sys.databases ORDER BY Name").ToArray<string>("name");
 
                 case DbProviderType.SqlCe:
                     return new string[] {"Database"};

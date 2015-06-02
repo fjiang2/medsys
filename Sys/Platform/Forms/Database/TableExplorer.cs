@@ -60,7 +60,7 @@ namespace Sys.Platform.Forms
 
                 try
                 {
-                    databaseNames = provider.GetDatabaseNames();
+                    databaseNames = new ServerName(provider).GetDatabaseNames();
                 }
                 catch (Exception) // no permisson to access this server
                 {

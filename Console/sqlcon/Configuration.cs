@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using System.IO;
 using System.Data.SqlClient;
+using System.Data.OleDb;
 using Tie;
+using Sys.Data;
 
 namespace sqlcon
 {
@@ -77,6 +79,36 @@ namespace sqlcon
         public VAL GetValue(VAR variable)
         {
             return Cfg[variable];
+        }
+
+        public ServerName[] GetServerNames()
+        {
+            var aliasMap = Cfg.GetValue("alias");
+            if (aliasMap.Undefined)
+                return new ServerName[0];
+
+            List<ServerName> snames = new List<ServerName>();
+            foreach (var pair in aliasMap)
+            {
+                string alias = pair[0].Str;
+                string connectionString = pair[1].Str;
+                if (connectionString.ToLower().IndexOf("sqloledb") >= 0)
+                {
+                    var x1 = new OleDbConnectionStringBuilder(connectionString);
+                    var x2 = new SqlConnectionStringBuilder();
+                    x2.DataSource = x1.DataSource;
+                    x2.InitialCatalog = (string)x1["Initial Catalog"];
+                    x2.UserID = (string)x1["User Id"];
+                    x2.Password = (string)x1["Password"];
+                    connectionString = x2.ConnectionString;
+                }
+
+                ConnectionProvider provider = ConnectionProviderManager.Register(alias, new SqlConnectionStringBuilder(connectionString));
+                var sname = new ServerName(provider);
+                snames.Add(sname);
+            }
+             
+            return snames.ToArray();
         }
 
         public string GetConnectionString(string aliasName)

@@ -541,7 +541,7 @@ namespace Sys.Platform.Forms
             this.serverName = new ServerName(provider);
             
             comboDatabase.Items.Clear();
-            foreach (string db in provider.GetDatabaseNames())
+            foreach (string db in serverName.GetDatabaseNames())
                 comboDatabase.Items.Add(db);
 
 
