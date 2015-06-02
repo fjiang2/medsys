@@ -21,7 +21,7 @@ using System.Text;
 
 namespace Sys.Data
 {
-    public class DatabaseName : IComparable<DatabaseName>, IComparable
+    public class DatabaseName : IComparable<DatabaseName>, IComparable, IDataElementName
     {
         private ConnectionProvider provider;
         private string name;
@@ -67,6 +67,7 @@ namespace Sys.Data
             DatabaseName dname = (DatabaseName)obj;
             return this.name.Equals(dname.name) && this.provider.Equals(dname.provider);
         }
+
 
         public override string ToString()
         {

@@ -17,7 +17,8 @@ namespace sqlcon
         DataSource,
         Catalog,
         Table,
-        Locator
+        Locator,
+        Column
     }
 
     class DbPathBuilder

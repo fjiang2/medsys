@@ -21,7 +21,7 @@ using System.Text;
 
 namespace Sys.Data
 {
-    public class TableName : IComparable<TableName>, IComparable
+    public class TableName : IComparable<TableName>, IComparable, IDataElementName
     {
         public const string dbo = "dbo";
 
