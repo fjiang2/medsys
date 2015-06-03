@@ -140,7 +140,9 @@ namespace sqlcon
                             stdio.ShowError("undefined database server alias : {0}", arg1);
                     }
                     else
-                        stdio.WriteLine(pathTree.ToString());
+                    {
+                       pathTree.dir();
+                    }
 
                     return true;
             }

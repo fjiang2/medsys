@@ -109,37 +109,7 @@ namespace sqlcon
                 return;
             }
 
-            if (current == tree.RootNode)
-            { 
-            
-            }
-            else if (current.Item is ServerName)
-            {
-                ServerName sname = (ServerName)current.Item;
-                if (refresh || current.Nodes.Count == 0)
-                {
-                    if (refresh)
-                        current.Nodes.Clear();
-
-                    DatabaseName[] dnames = sname.GetDatabaseNames();
-                    foreach (var dname in dnames)
-                        current.Nodes.Add(new TreeNode<IDataElementName>(dname));
-                }
-            }
-            else if (current.Item is DatabaseName)
-            {
-                DatabaseName dname = (DatabaseName)current.Item;
-                if (refresh || current.Nodes.Count == 0)
-                {
-                    if (refresh)
-                        current.Nodes.Clear();
-
-                    TableName[] tnames = dname.GetTableNames();
-                    foreach (var tname in tnames)
-                        current.Nodes.Add(new TreeNode<IDataElementName>(tname));
-                }
-            }
-
+            Expand(current, refresh);
 
             var node = current.Nodes.Find(x => x.Item.Name == path);
             if (node != null)
@@ -148,6 +118,49 @@ namespace sqlcon
                 stdio.ShowError("invalid path:{0}", path);
 
             return;
+        }
+
+        private void Expand(TreeNode<IDataElementName> node, bool refresh)
+        {
+            if (node == tree.RootNode)
+            {
+            }
+            else if (node.Item is ServerName)
+            {
+                ExpandServerName(node, refresh);
+            }
+            else if (node.Item is DatabaseName)
+            {
+                ExpandDatabaseName(node, refresh);
+            }
+        }
+
+        private static void ExpandServerName(TreeNode<IDataElementName> node, bool refresh)
+        {
+            ServerName sname = (ServerName)node.Item;
+            if (refresh || node.Nodes.Count == 0)
+            {
+                if (refresh)
+                    node.Nodes.Clear();
+
+                DatabaseName[] dnames = sname.GetDatabaseNames();
+                foreach (var dname in dnames)
+                    node.Nodes.Add(new TreeNode<IDataElementName>(dname));
+            }
+        }
+
+        private static void ExpandDatabaseName(TreeNode<IDataElementName> node, bool refresh)
+        {
+            DatabaseName dname = (DatabaseName)node.Item;
+            if (refresh || node.Nodes.Count == 0)
+            {
+                if (refresh)
+                    node.Nodes.Clear();
+
+                TableName[] tnames = dname.GetTableNames();
+                foreach (var tname in tnames)
+                    node.Nodes.Add(new TreeNode<IDataElementName>(tname));
+            }
         }
 
         public void ChangePath(ServerName serverName, DatabaseName databaseName)
@@ -166,6 +179,27 @@ namespace sqlcon
                 ChangePath(item, false);
             }
 
+        }
+
+
+        public void dir()
+        {
+            //ChangePath(path);
+
+            if (current.Nodes.Count == 0)
+                Expand(current, true);
+
+            if (current.Item is DatabaseName)
+            {
+                foreach (var node in current.Nodes)
+                {
+                    TableName tname = (TableName)node.Item;
+                    int count = new SqlCmd(tname.Provider, string.Format("SELECT COUNT(*) FROM {0}", tname)).FillObject<int>();
+                    stdio.WriteLine("{0,20} {1,12} Row(s)", tname.Name, count);
+                }
+
+                stdio.WriteLine("\t{0} Table(s) {1} View(s)", current.Nodes.Count, 0);
+            }
         }
 
         public override string ToString()
