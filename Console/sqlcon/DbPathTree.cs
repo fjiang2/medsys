@@ -43,9 +43,6 @@ namespace sqlcon
 
         }
 
-    
-
-
         public void AddDataSource(ServerName name)
         {
             var snode = new TreeNode<IDataElementName>(name);
@@ -112,7 +109,11 @@ namespace sqlcon
                 return;
             }
 
-            if (current.Item is ServerName)
+            if (current == tree.RootNode)
+            { 
+            
+            }
+            else if (current.Item is ServerName)
             {
                 ServerName sname = (ServerName)current.Item;
                 if (refresh || current.Nodes.Count == 0)
@@ -149,6 +150,11 @@ namespace sqlcon
             return;
         }
 
+        public void ChangePath(ServerName serverName, DatabaseName databaseName)
+        { 
+            string path = string.Format(@"\{0}\{1}", serverName.Name, databaseName.Name);
+            ChangePath(path);
+        }
         
         public void ChangePath(string path)
         {

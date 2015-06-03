@@ -40,6 +40,8 @@ namespace sqlcon
 
         public void DoCommand()
         {
+            pathTree.ChangePath(theSide.ServerName, theSide.DatabaseName); 
+
             stdio.WriteLine("sqlcon(SQL Command Console)");
             stdio.WriteLine("type [help] to help, [;] to execute a command, [exit] to quit");
             StringBuilder builder = new StringBuilder();
@@ -264,7 +266,6 @@ namespace sqlcon
                     stdio.WriteLine("server 2 selected({0})", showConnection(theSide.Provider));
                     break;
 
-               
                 
                 case "goto":
                     if (arg1 != null)

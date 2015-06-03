@@ -16,10 +16,12 @@ namespace sqlcon
     class CompareConsole  
     {
         Configuration cfg;
-        private SqlConnectionStringBuilder cs1;
-        private SqlConnectionStringBuilder cs2;
+
+        private ServerName sname1;
+        private ServerName sname2;
         private string alias1 = "S1";
         private string alias2 = "S2";
+
 
         private ActionType action;
 
@@ -31,16 +33,10 @@ namespace sqlcon
             var comparison = cfg.GetValue("comparison");
             if (comparison.Defined)
             {
-                alias1 = (string)comparison[0];
-                alias2 = (string)comparison[1];
-                var a = cfg.GetValue("alias");
-                this.cs1 = new SqlConnectionStringBuilder((string)a[alias1]);
-                this.cs2 = new SqlConnectionStringBuilder((string)a[alias2]);
-            }
-            else
-            {
-                this.cs1 = new SqlConnectionStringBuilder();
-                this.cs2 = new SqlConnectionStringBuilder();
+                this.alias1 = (string)comparison[0];
+                this.alias2 = (string)comparison[1];
+                this.sname1 = cfg.GetServerName(alias1);
+                this.sname2 = cfg.GetServerName(alias2);
             }
         }
 
@@ -68,6 +64,9 @@ namespace sqlcon
 
         public void Run(string[] args)
         {
+            SqlConnectionStringBuilder cs1 = new SqlConnectionStringBuilder();
+            SqlConnectionStringBuilder cs2 = new SqlConnectionStringBuilder();
+
             string tableNamePattern1 = null;
             string tableNamePattern2 = null;
 
@@ -87,21 +86,18 @@ namespace sqlcon
                     case "/s":
                         if (i < args.Length && args[i++].parse(out alias1, out alias2))
                         {
-                            var conn1 = cfg.GetConnectionString(alias1);
-                            var conn2 = cfg.GetConnectionString(alias2);
-                            if (conn1==null)
+                            this.sname1 = cfg.GetServerName(alias1);
+                            this.sname2 = cfg.GetServerName(alias2);
+                            if (sname1==null)
                             {
                                 stdio.WriteLine("undefined server alias ({0}) in configuration file", alias1);
                                 return;
                             }
-                            if (conn2== null)
+                            if (sname2== null)
                             {
                                 stdio.WriteLine("undefined server alias ({0}) in configuration file", alias2);
                                 return;
                             }
-
-                            cs1 = new SqlConnectionStringBuilder(conn1);
-                            cs2 = new SqlConnectionStringBuilder(conn2);
                             break;
                         }
                         else
@@ -162,7 +158,7 @@ namespace sqlcon
                             var server2 = cfg.GetValue("server2");
                             if (server2.Defined)
                             {
-                                alias2 = (string)server2["alias"]; 
+                                alias2 = (string)server2["alias"];
                                 cs1.DataSource = t2;
                                 cs1.InitialCatalog = (string)server2["initial_catalog"];
                                 cs2.UserID = (string)server2["user_id"];
@@ -274,20 +270,32 @@ namespace sqlcon
                 }
             }
 
-            if (!cs1.IsGoodConnectionString())
+            if (sname1 == null)
             {
-                stdio.WriteLine("invalid connection string: {0}", cs1.ConnectionString);
-                return;
+                if (!cs1.IsGoodConnectionString())
+                {
+                    stdio.WriteLine("invalid connection string: {0}", cs1.ConnectionString);
+                    return;
+                }
+                
+                sname1 = new ServerName(ConnectionProviderManager.Register(alias1, cs1));
+                cfg.ServerNames.Add(sname1);
             }
 
-            if (!cs2.IsGoodConnectionString())
+            if (sname2 == null)
             {
-                stdio.WriteLine("invalid connection string: {0}", cs2.ConnectionString);
-                return;
+                if (!cs2.IsGoodConnectionString())
+                {
+                    stdio.WriteLine("invalid connection string: {0}", cs2.ConnectionString);
+                    return;
+                }
+                
+                sname2 = new ServerName(ConnectionProviderManager.Register(alias1, cs1));
+                cfg.ServerNames.Add(sname2);
             }
 
-            Side side1 = new Side(alias1, cs1);
-            Side side2 = new Side(alias2, cs2);
+            Side side1 = new Side(sname1);
+            Side side2 = new Side(sname2);
 
             CompareAdapter adapter = new CompareAdapter(side1, side2);
             MatchedDatabase m1 = new MatchedDatabase(adapter.Side1.DatabaseName, tableNamePattern1, cfg.excludedtables);

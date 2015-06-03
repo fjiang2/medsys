@@ -23,11 +23,7 @@ namespace sqlcon
             this.DatabaseName = new DatabaseName(serverName, Provider.InitialCatalog);
         }
 
-        public Side(string alais, SqlConnectionStringBuilder builder)
-            :this(new ServerName(ConnectionProviderManager.Register(alais, builder)))
-        {
-        }
-
+      
         public ConnectionProvider Provider
         {
             get { return this.ServerName.Provider; }
