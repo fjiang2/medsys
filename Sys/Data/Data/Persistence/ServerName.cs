@@ -29,10 +29,7 @@ namespace Sys.Data
         internal ServerName(ConnectionProvider provider, string alias)
         {
             this.provider = provider;
-            if (alias != null)
-                this.name = alias;
-            else
-                this.name = provider.DataSource.Replace("\\", ".");
+            this.name = alias;
         }
 
         public string Name

@@ -62,27 +62,27 @@ namespace Sys.Data
 
         public string InitialCatalog
         {
-            get { return ConnectionBuilder["Initial Catalog"].ToString(); }
+            get { return (string)ConnectionBuilder["Initial Catalog"]; }
             set { ConnectionBuilder["Initial Catalog"] = value; }
         }
 
 
         public string DataSource
         {
-            get { return ConnectionBuilder["Data Source"].ToString(); }
+            get { return (string)ConnectionBuilder["Data Source"]; }
             set { ConnectionBuilder["Data Source"] = value; }
 
         }
 
         public string UserId
         {
-            get { return ConnectionBuilder["User Id"].ToString(); }
+            get { return (string)ConnectionBuilder["User Id"]; }
             set { ConnectionBuilder["User Id"] = value; }
         }
       
         public string Password
         {
-            get { return ConnectionBuilder["Password"].ToString(); }
+            get { return (string)ConnectionBuilder["Password"]; }
             set { ConnectionBuilder["Password"] = value; }
         }
 
@@ -185,30 +185,47 @@ namespace Sys.Data
             }
         }
 
-        private DatabaseName defaultDatabaseName = null;
-        private ServerName serverName = null;
         
+        private string _serverAlias = null;
+        public string ServerAlias 
+        {
+            get
+            {
+                if (_serverAlias == null)
+                    _serverAlias = this.DataSource.Replace("\\", ".");
+
+                return _serverAlias;
+            }
+            set
+            {
+                _serverAlias = value;
+            }
+        }
+
+        private static Dictionary<string, ServerName> _serverNames = new Dictionary<string, ServerName>();
         public ServerName ServerName
         {
             get
             {
-                if (serverName == null)
+                if (!_serverNames.ContainsKey(this.DataSource))
                 {
-                    serverName = new ServerName(this, null);
+                    _serverNames.Add(this.DataSource, new ServerName(this, ServerAlias));
                 }
 
-                return serverName;
+                return _serverNames[this.DataSource];
             }
         }
 
+
+        private DatabaseName _defaultDatabaseName = null;
         public DatabaseName DefaultDatabaseName
         {
             get
             {
-                if (defaultDatabaseName == null)
-                    defaultDatabaseName = new DatabaseName(ServerName, InitialCatalog);
+                if (_defaultDatabaseName == null)
+                    _defaultDatabaseName = new DatabaseName(ServerName, InitialCatalog);
 
-                return defaultDatabaseName;
+                return _defaultDatabaseName;
             }
         }
     }

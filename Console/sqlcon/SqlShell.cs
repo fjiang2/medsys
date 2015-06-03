@@ -27,21 +27,21 @@ namespace sqlcon
             this.cfg = cfg;
             this.adapter = adapter;
             this.server = 1;
+            this.pathTree = new DbPathTree(cfg);
 
             ChangeSide(adapter.Side1);
-            this.pathTree = new DbPathTree(cfg);
         }
 
         private void ChangeSide(Side side)
         {
             this.theSide = side;
             Context.DS.AddHostObject(Context.THESIDE, side);
+
+            pathTree.ChangePath(theSide.ServerName, theSide.DatabaseName); 
         }
 
         public void DoCommand()
         {
-            pathTree.ChangePath(theSide.ServerName, theSide.DatabaseName); 
-
             stdio.WriteLine("sqlcon(SQL Command Console)");
             stdio.WriteLine("type [help] to help, [;] to execute a command, [exit] to quit");
             StringBuilder builder = new StringBuilder();
@@ -49,7 +49,7 @@ namespace sqlcon
             while (true)
             {
             L1:
-                stdio.Write("{0}> ", theSide.Provider.ToSimpleString());
+                stdio.Write("{0}> ", pathTree);
             L2:
                 line = stdio.ReadLine();
 

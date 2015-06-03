@@ -109,62 +109,71 @@ namespace sqlcon
         {
             List<ConnectionProvider> snames = new List<ConnectionProvider>();
 
-            var aliasMap = Cfg.GetValue("alias");
-            if (aliasMap.Undefined)
+            var machines = Cfg.GetValue("alias");
+            if (machines.Undefined)
                 return snames;
 
-            foreach (var pair in aliasMap)
+            foreach (var machine in machines)
             {
-                if (pair[0].IsNull || pair[1].IsNull)
+                if (machine[0].IsNull || machine[1].IsNull)
                 {
-                    stdio.ShowError("invalid connection string {0}={1}", pair[0].ToSimpleString(), pair[1]);
+                    stdio.ShowError("undefined server name {0}={1}", machine[0].ToSimpleString(), machine[1]);
                     continue;
                 }
 
-                string alias = pair[0].Str;
-                string connectionString = PeelOleDb(pair[1].Str);
-                ConnectionProvider provider = ConnectionProviderManager.Register(alias, new SqlConnectionStringBuilder(connectionString));
-                snames.Add(provider);
+                string name = machine[0].Str;
+
+                foreach (var pair in machine[1])
+                {
+                    if (pair[0].IsNull || pair[1].IsNull)
+                    {
+                        stdio.ShowError("undefined connection string {0}={1}", pair[0].ToSimpleString(), pair[1]);
+                        continue;
+                    }
+
+                    string connectionAlias = pair[0].Str;
+                    string connectionString = PeelOleDb(pair[1].Str);
+                    ConnectionProvider provider = ConnectionProviderManager.Register(connectionAlias, new SqlConnectionStringBuilder(connectionString));
+                    provider.ServerAlias = name;
+                    snames.Add(provider);
+                }
             }
              
             return snames;
         }
 
-        public string GetConnectionString(string aliasName)
-        {
-            var aliasMap = Cfg.GetValue("alias");
-            if (aliasMap.Undefined)
-                return null;
-
-            var x = aliasMap[aliasName];
-            if (x.Undefined)
-                return null;
-
-            else
-                return PeelOleDb((string)x);
-        }
 
         public List<ServerName> ServerNames
         {
             get
             {
-                return Providers.Select(pvd => pvd.ServerName).ToList();
+                return Providers.Select(pvd => pvd.ServerName).Distinct().ToList();
             }
         }
 
         public ServerName GetServerName(string alias)
         {
-            return GetProvider(alias).ServerName;
+            string[] x = alias.Split('\\');
+            if (x.Length != 3)
+            {
+                stdio.ShowError("invalid server path: {0}, correct format is server\\database", alias);
+                return null;
+            }
+
+            return GetProvider(x[1], x[2]).ServerName;
         }
 
 
-        public ConnectionProvider GetProvider(string alias)
+        public ConnectionProvider GetProvider(string serverAlias, string connectionAlias)
         {
-            var provider = Providers.Find(x => x.Name == alias);
+            var provider = Providers.Find(x => x.Name == connectionAlias && x.ServerAlias == serverAlias);
             if (provider != null)
                 return provider;
             else
+            {
+                stdio.ShowError("invalid server path: \\{0}\\{1}", serverAlias, connectionAlias);
                 return null;
+            }
         }
 
         public bool Initialize(string cfgFile)
