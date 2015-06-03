@@ -53,7 +53,7 @@
     <Compile Include="Configuration.cs" />
     <Compile Include="ConsoleTable.cs" />
     <Compile Include="Context.cs" />
-    <Compile Include="DbPathBuilder.cs" />
+    <Compile Include="DbPathTree.cs" />
     <Compile Include="DbSchema.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="MatchedDatabase.cs" />

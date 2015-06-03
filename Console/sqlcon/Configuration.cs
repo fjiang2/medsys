@@ -32,7 +32,6 @@ namespace sqlcon
             HostType.Register(typeof(DateTime), true);
         }
 
-
         private static VAL functions(string func, VAL parameters, Memory DS)
         {
             switch (func)
@@ -73,9 +72,6 @@ namespace sqlcon
             return true;
         }
 
-      
-
-     
         public VAL GetValue(VAR variable)
         {
             return Cfg[variable];
@@ -97,14 +93,26 @@ namespace sqlcon
             return connectionString;
         }
 
-
-        public ServerName[] GetServerNames()
+        private List<ServerName> serverNames = null;
+        public List<ServerName> ServerNames
         {
+            get
+            {
+                if (serverNames == null)
+                    serverNames = GetServerNames();
+
+                return serverNames;
+            }
+        }
+
+        private List<ServerName> GetServerNames()
+        {
+            List<ServerName> snames = new List<ServerName>();
+
             var aliasMap = Cfg.GetValue("alias");
             if (aliasMap.Undefined)
-                return new ServerName[0];
+                return snames;
 
-            List<ServerName> snames = new List<ServerName>();
             foreach (var pair in aliasMap)
             {
                 if (pair[0].IsNull || pair[1].IsNull)
@@ -120,7 +128,7 @@ namespace sqlcon
                 snames.Add(sname);
             }
              
-            return snames.ToArray();
+            return snames;
         }
 
         public string GetConnectionString(string aliasName)
@@ -135,6 +143,16 @@ namespace sqlcon
 
             else
                 return PeelOleDb((string)x);
+        }
+
+
+        public ServerName GetServerName(string alias)
+        {
+            var sname = ServerNames.Find(x => x.Name == alias);
+            if (sname != null)
+                return sname;
+            else
+                return null;
         }
 
         public bool Initialize(string cfgFile)

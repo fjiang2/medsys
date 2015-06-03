@@ -24,24 +24,26 @@ namespace sqlcon
 
 
 
-    class DbPathBuilder 
+    class DbPathTree 
     {
         private Configuration cfg;
         private Tree<IDataElementName> tree;
         private TreeNode<IDataElementName> current;
 
-        public DbPathBuilder(Configuration cfg)
+        public DbPathTree(Configuration cfg)
         {
             tree = new Tree<IDataElementName>();
             current = tree.RootNode;
 
             this.cfg = cfg;
-            var snames = cfg.GetServerNames();
+            var snames = cfg.ServerNames;
 
             foreach (var sname in snames)
                 AddDataSource(sname);
 
         }
+
+    
 
 
         public void AddDataSource(ServerName name)

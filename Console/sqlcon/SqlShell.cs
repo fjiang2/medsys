@@ -20,16 +20,16 @@ namespace sqlcon
         private CompareAdapter adapter;
         private int server = 0;
         private Configuration cfg;
-        private DbPathBuilder pathBuilder;
+        private DbPathTree pathTree;
 
-        public SqlShell( Configuration cfg, CompareAdapter adapter)
+        public SqlShell(Configuration cfg, CompareAdapter adapter)
         {
             this.cfg = cfg;
-            this.adapter =adapter;
+            this.adapter = adapter;
             this.server = 1;
 
             ChangeSide(adapter.Side1);
-            this.pathBuilder = new DbPathBuilder(cfg);
+            this.pathTree = new DbPathTree(cfg);
         }
 
         private void ChangeSide(Side side)
@@ -65,6 +65,11 @@ namespace sqlcon
                     case "cls":
                         Console.Clear();
                         goto L1;
+
+                    default:
+                        if (DoSingleLineCommand(line))
+                            goto L1;
+                        break;
                 }
 
                 if (line != "" && line != ";")
@@ -94,10 +99,51 @@ namespace sqlcon
                 }
             }
         }
-        
-        private void DoSingleLineCommand(string line)
-        { 
-        
+
+        private bool DoSingleLineCommand(string text)
+        {
+            text = text.Trim();
+            if (text == string.Empty)
+                return false;
+
+            string[] A = text.Split(' ', '\r');
+            string cmd = null;
+            string arg1 = null;
+            string arg2 = null;
+
+            int n = A.Length;
+
+            if (n > 0)
+                cmd = A[0].ToLower();
+
+            if (n > 1)
+                arg1 = A[1].Trim();
+
+            if (n > 2)
+                arg2 = A[2].Trim();
+
+            switch (cmd)
+            {
+                case "dir":
+                    if (arg1 != null)
+                    {
+                        var sname = cfg.GetServerName(arg1);
+                        if (sname != null)
+                        {
+                            Side side = new Side(sname);
+                            ChangeSide(side);
+                            this.server = 3;
+                        }
+                        else
+                            stdio.ShowError("undefined database server alias : {0}", arg1);
+                    }
+                    else
+                        stdio.WriteLine(pathTree.ToString());
+
+                    return true;
+            }
+
+            return false;
         }
 
         private void DoMultipleLineCommand(string text)
@@ -190,10 +236,10 @@ namespace sqlcon
                 case "1":
                     if (arg1 != null)
                     {
-                        var conn = cfg.GetConnectionString(arg1);
-                        if (conn != null)
+                        var sname = cfg.GetServerName(arg1);
+                        if (sname != null)
                         {
-                            Side side = new Side(arg1, new SqlConnectionStringBuilder(conn));
+                            Side side = new Side(sname);
                             adapter = new CompareAdapter(side, adapter.Side2);
                         }
                     }
@@ -206,10 +252,10 @@ namespace sqlcon
                 case "2":
                     if (arg1 != null)
                     {
-                        var conn = cfg.GetConnectionString(arg1);
-                        if (conn != null)
+                        var sname = cfg.GetServerName(arg1);
+                        if (sname != null)
                         {
-                            Side side = new Side(arg1, new SqlConnectionStringBuilder(conn));
+                            Side side = new Side(sname);
                             adapter = new CompareAdapter(adapter.Side1, side);
                         }
                     }
@@ -218,30 +264,15 @@ namespace sqlcon
                     stdio.WriteLine("server 2 selected({0})", showConnection(theSide.Provider));
                     break;
 
-                case "dir":
-                    if(arg1 != null)
-                    {
-                        var conn = cfg.GetConnectionString(arg1);
-                        if (conn != null)
-                        {
-                            Side side = new Side(arg1, new SqlConnectionStringBuilder(conn));
-                            ChangeSide(side);
-                            this.server = 3;
-                        }
-                        else
-                            stdio.ShowError("undefined database server alias : {0}", arg1);
-                    }
-                    else
-                        stdio.WriteLine(pathBuilder.ToString());
-                    break;
+               
                 
                 case "goto":
                     if (arg1 != null)
                     {
-                        var conn = cfg.GetConnectionString(arg1);
-                        if (conn != null)
+                        var sname = cfg.GetServerName(arg1);
+                        if (sname != null)
                         {
-                            Side side = new Side(arg1, new SqlConnectionStringBuilder(conn));
+                            Side side = new Side(sname);
                             ChangeSide(side);
                             this.server = 3;
                         }
