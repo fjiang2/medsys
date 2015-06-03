@@ -90,6 +90,12 @@ namespace sqlcon
             List<ServerName> snames = new List<ServerName>();
             foreach (var pair in aliasMap)
             {
+                if (pair[0].IsNull || pair[1].IsNull)
+                {
+                    stdio.ShowError("invalid connection string {0}={1}", pair[0].ToSimpleString(), pair[1]);
+                    continue;
+                }
+
                 string alias = pair[0].Str;
                 string connectionString = pair[1].Str;
                 if (connectionString.ToLower().IndexOf("sqloledb") >= 0)

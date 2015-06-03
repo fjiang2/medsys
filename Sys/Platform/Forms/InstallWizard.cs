@@ -205,10 +205,10 @@ namespace Sys.Platform.Forms
 
                 //Remove old items
                 comboxDefaultDatabase.Items.Clear();
-                string[] databases = new ServerName(ConnectionProviderManager.DefaultProvider).GetDatabaseNames();
-                foreach (string database in databases)
+                DatabaseName[] databases = new ServerName(ConnectionProviderManager.DefaultProvider).GetDatabaseNames();
+                foreach (DatabaseName database in databases)
                 {
-                    comboxDefaultDatabase.Items.Add(database);
+                    comboxDefaultDatabase.Items.Add(database.Name);
                 }
             }
             catch (Exception)

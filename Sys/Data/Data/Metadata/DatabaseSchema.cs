@@ -93,19 +93,24 @@ namespace Sys.Data
         }
 
 
-        public static string[] GetDatabaseNames(this ServerName serverName)
+        public static DatabaseName[] GetDatabaseNames(this ServerName serverName)
         {
+            string[] dnames;
             switch (serverName.Provider.DpType)
             {
                 case DbProviderType.SqlDb:
-                    return SqlCmd.FillDataTable(serverName.Provider, "SELECT Name FROM sys.databases ORDER BY Name").ToArray<string>("name");
-
+                    dnames = SqlCmd.FillDataTable(serverName.Provider, "SELECT Name FROM sys.databases ORDER BY Name").ToArray<string>("name");
+                    break;
+                
                 case DbProviderType.SqlCe:
-                    return new string[] {"Database"};
-
+                    dnames = new string[] {"Database"};
+                    break;
+                
                 default:
                     throw new NotSupportedException();
             }
+
+            return dnames.Select(dname => new DatabaseName(serverName, dname)).ToArray();
         }
 
         public static TableName[] GetTableNames(this DatabaseName databaseName)

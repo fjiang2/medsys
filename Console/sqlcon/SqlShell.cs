@@ -20,6 +20,7 @@ namespace sqlcon
         private CompareAdapter adapter;
         private int server = 0;
         private Configuration cfg;
+        private DbPathBuilder pathBuilder;
 
         public SqlShell( Configuration cfg, CompareAdapter adapter)
         {
@@ -28,7 +29,7 @@ namespace sqlcon
             this.server = 1;
 
             ChangeSide(adapter.Side1);
-            new DbPathBuilder(cfg);
+            this.pathBuilder = new DbPathBuilder(cfg);
         }
 
         private void ChangeSide(Side side)
@@ -210,29 +211,16 @@ namespace sqlcon
                     stdio.WriteLine("server 2 selected({0})", showConnection(theSide.CS));
                     break;
 
-                case "goto":
+                case "cd":
                     if(arg1 != null)
                     {
                         var conn = cfg.GetConnectionString(arg1);
                         if (conn != null)
                         {
-                            if (conn.ToLower().IndexOf("sqloledb")>=0)
-                            {
-                                var x1 = new OleDbConnectionStringBuilder(conn);
-                                var x2 = new SqlConnectionStringBuilder();
-                                x2.DataSource = x1.DataSource;
-                                x2.InitialCatalog = (string)x1["Initial Catalog"];
-                                x2.UserID = (string)x1["User Id"];
-                                x2.Password = (string)x1["Password"];
-                                conn = x2.ConnectionString;
-                            }
-
                             Side side = new Side(arg1, new SqlConnectionStringBuilder(conn));
                             ChangeSide(side);
                             this.server = 3;
-                          
                         }
-
                         else
                             stdio.ShowError("undefined database server alias : {0}", arg1);
                     }

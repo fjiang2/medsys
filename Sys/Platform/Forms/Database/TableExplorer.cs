@@ -55,7 +55,7 @@ namespace Sys.Platform.Forms
 
             foreach (var provider in ConnectionProviderManager.Instance.Providers)
             {
-                string[] databaseNames;
+                DatabaseName[] databaseNames;
                 
 
                 try
@@ -72,9 +72,9 @@ namespace Sys.Platform.Forms
                 }
 
                 root = treeView1.Nodes.Add(provider.Name);
-                foreach (string name in databaseNames)
+                foreach (DatabaseName dname in databaseNames)
                 {
-                    TreeNode treeNode = new DatabaseNode(provider, name);
+                    TreeNode treeNode = new DatabaseNode(provider, dname.Name);
                     treeNode.ImageKey = "database";
                     treeNode.SelectedImageKey = treeNode.ImageKey;
                     root.Nodes.Add(treeNode);
