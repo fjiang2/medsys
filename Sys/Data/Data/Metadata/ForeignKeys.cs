@@ -124,6 +124,15 @@ namespace Sys.Data
                 && this.FK_Column.Equals(key.FK_Column)
                 ;
         }
+
+        public override int GetHashCode()
+        {
+            if (Constraint_Name != null)
+                return Constraint_Name.GetHashCode();
+            else
+                return base.GetHashCode();
+        }
+
         public override string ToString()
         {
             return string.Format("TABLE {0} CONSTRAINT {1} FOREIGN KEY({2}) REFERENCES {3}({4})", FK_Table, Constraint_Name, FK_Column, PK_Table, PK_Column);

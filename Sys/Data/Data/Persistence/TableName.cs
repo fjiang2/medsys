@@ -52,7 +52,7 @@ namespace Sys.Data
             if (databaseName == "")
                 databaseName = provider.CurrentDatabaseName();
 
-            this.baseName = new DatabaseName(new ServerName(provider), databaseName);
+            this.baseName = new DatabaseName(provider.ServerName, databaseName);
         }
 
       

@@ -133,7 +133,7 @@ namespace Sys.Platform.Forms
                 try
                 {
                     text = text.Trim();
-                    DatabaseName databaseName = new DatabaseName(new ServerName(ConnectionProviderManager.DefaultProvider), text);
+                    DatabaseName databaseName = new DatabaseName(ConnectionProviderManager.DefaultProvider.ServerName, text);
                     databaseName.CreateDatabase();
                     MessageBox.Show("Database created", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     sqlServerControl1.RefreshDatabaseList(databaseName.Name);
@@ -205,7 +205,7 @@ namespace Sys.Platform.Forms
 
                 //Remove old items
                 comboxDefaultDatabase.Items.Clear();
-                DatabaseName[] databases = new ServerName(ConnectionProviderManager.DefaultProvider).GetDatabaseNames();
+                DatabaseName[] databases = ConnectionProviderManager.DefaultProvider.ServerName.GetDatabaseNames();
                 foreach (DatabaseName database in databases)
                 {
                     comboxDefaultDatabase.Items.Add(database.Name);

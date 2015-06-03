@@ -49,7 +49,7 @@ namespace Sys.Data
             {
                 TableName tname;
                 ConnectionProvider dataProvider = ConnectionProviderManager.Instance.GetProvider(this.Provider);
-                ServerName serverName = new ServerName(dataProvider);
+                ServerName serverName = dataProvider.ServerName;
                 switch (this.Level)
                 {
                     case Level.System:

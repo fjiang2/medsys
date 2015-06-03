@@ -174,7 +174,7 @@ namespace sqlcon
             var p = current;
             while (p != tree.RootNode)
             {
-                items.Add(current.Item.Name);
+                items.Add(p.Item.Name);
                 p = p.Parent;
             }
             

@@ -538,7 +538,7 @@ namespace Sys.Platform.Forms
         private void comboServer_SelectedIndexChanged(object sender, EventArgs e)
         {
             var provider = ((MyProvider)comboServer.SelectedItem).Provider;
-            this.serverName = new ServerName(provider);
+            this.serverName = provider.ServerName;
             
             comboDatabase.Items.Clear();
             foreach (DatabaseName db in serverName.GetDatabaseNames())

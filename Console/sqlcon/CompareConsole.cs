@@ -277,9 +277,10 @@ namespace sqlcon
                     stdio.WriteLine("invalid connection string: {0}", cs1.ConnectionString);
                     return;
                 }
-                
-                sname1 = new ServerName(ConnectionProviderManager.Register(alias1, cs1));
-                cfg.ServerNames.Add(sname1);
+
+                var provider = ConnectionProviderManager.Register(alias1, cs1);
+                sname1 = provider.ServerName;
+                cfg.Providers.Add(provider);
             }
 
             if (sname2 == null)
@@ -289,9 +290,10 @@ namespace sqlcon
                     stdio.WriteLine("invalid connection string: {0}", cs2.ConnectionString);
                     return;
                 }
-                
-                sname2 = new ServerName(ConnectionProviderManager.Register(alias1, cs1));
-                cfg.ServerNames.Add(sname2);
+
+                var provider = ConnectionProviderManager.Register(alias2, cs2);
+                sname2 = provider.ServerName;
+                cfg.Providers.Add(provider);
             }
 
             Side side1 = new Side(sname1);

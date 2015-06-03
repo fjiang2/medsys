@@ -26,13 +26,13 @@ namespace Sys.Data
         private ConnectionProvider provider;
         private string name;
 
-        public ServerName(ConnectionProvider provider, string alias = null)
+        internal ServerName(ConnectionProvider provider, string alias)
         {
             this.provider = provider;
             if (alias != null)
                 this.name = alias;
             else
-                this.name = provider.Name;
+                this.name = provider.DataSource.Replace("\\", ".");
         }
 
         public string Name

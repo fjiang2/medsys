@@ -20,7 +20,7 @@ namespace App.DpoCmd
         {
             ConnectionProvider provider = ConnectionProviderManager.RegisterDefaultProvider("data source=localhost\\sqlexpress;initial catalog=northwind;integrated security=SSPI;packet size=4096");
 
-            ServerName sname = new ServerName(provider);
+            ServerName sname = provider.ServerName;
             DatabaseName dname = new DatabaseName(sname, "northwind");
             string path = "D:\\devel\\GitHub\\medsys\\App\\DpoCmd";
 

@@ -21,7 +21,7 @@ namespace Sys.Data.Manager
         public DataTableDpoClass(DataTable table)
         {
 
-            DatabaseName dname = new DatabaseName(new ServerName(ConnectionProviderManager.DefaultProvider), "MEM");
+            DatabaseName dname = new DatabaseName(ConnectionProviderManager.DefaultProvider.ServerName, "MEM");
 
             this.table = table;
 

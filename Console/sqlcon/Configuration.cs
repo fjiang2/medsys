@@ -93,21 +93,21 @@ namespace sqlcon
             return connectionString;
         }
 
-        private List<ServerName> serverNames = null;
-        public List<ServerName> ServerNames
+        private List<ConnectionProvider> providers = null;
+        public List<ConnectionProvider> Providers
         {
             get
             {
-                if (serverNames == null)
-                    serverNames = GetServerNames();
+                if (providers == null)
+                    providers = GetConnectionProviders();
 
-                return serverNames;
+                return providers;
             }
         }
 
-        private List<ServerName> GetServerNames()
+        private List<ConnectionProvider> GetConnectionProviders()
         {
-            List<ServerName> snames = new List<ServerName>();
+            List<ConnectionProvider> snames = new List<ConnectionProvider>();
 
             var aliasMap = Cfg.GetValue("alias");
             if (aliasMap.Undefined)
@@ -124,8 +124,7 @@ namespace sqlcon
                 string alias = pair[0].Str;
                 string connectionString = PeelOleDb(pair[1].Str);
                 ConnectionProvider provider = ConnectionProviderManager.Register(alias, new SqlConnectionStringBuilder(connectionString));
-                var sname = new ServerName(provider);
-                snames.Add(sname);
+                snames.Add(provider);
             }
              
             return snames;
@@ -145,12 +144,25 @@ namespace sqlcon
                 return PeelOleDb((string)x);
         }
 
+        public List<ServerName> ServerNames
+        {
+            get
+            {
+                return Providers.Select(pvd => pvd.ServerName).ToList();
+            }
+        }
 
         public ServerName GetServerName(string alias)
         {
-            var sname = ServerNames.Find(x => x.Name == alias);
-            if (sname != null)
-                return sname;
+            return GetProvider(alias).ServerName;
+        }
+
+
+        public ConnectionProvider GetProvider(string alias)
+        {
+            var provider = Providers.Find(x => x.Name == alias);
+            if (provider != null)
+                return provider;
             else
                 return null;
         }

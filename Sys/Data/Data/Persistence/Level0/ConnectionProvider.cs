@@ -184,5 +184,32 @@ namespace Sys.Data
                 throw new NotImplementedException();
             }
         }
+
+        private DatabaseName defaultDatabaseName = null;
+        private ServerName serverName = null;
+        
+        public ServerName ServerName
+        {
+            get
+            {
+                if (serverName == null)
+                {
+                    serverName = new ServerName(this, null);
+                }
+
+                return serverName;
+            }
+        }
+
+        public DatabaseName DefaultDatabaseName
+        {
+            get
+            {
+                if (defaultDatabaseName == null)
+                    defaultDatabaseName = new DatabaseName(ServerName, InitialCatalog);
+
+                return defaultDatabaseName;
+            }
+        }
     }
 }
