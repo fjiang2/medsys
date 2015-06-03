@@ -60,7 +60,7 @@ namespace Sys.Data
                 this.ConnectionBuilder = new OleDbConnectionStringBuilder(connectionString);
         }
 
-        public string Catalog
+        public string InitialCatalog
         {
             get { return ConnectionBuilder["Initial Catalog"].ToString(); }
             set { ConnectionBuilder["Initial Catalog"] = value; }
@@ -74,7 +74,17 @@ namespace Sys.Data
 
         }
 
+        public string UserId
+        {
+            get { return ConnectionBuilder["User Id"].ToString(); }
+            set { ConnectionBuilder["User Id"] = value; }
+        }
       
+        public string Password
+        {
+            get { return ConnectionBuilder["Password"].ToString(); }
+            set { ConnectionBuilder["Password"] = value; }
+        }
 
         public override bool Equals(object obj)
         {
@@ -106,7 +116,7 @@ namespace Sys.Data
 
         public string ToSimpleString()
         {
-            return string.Format("{0}\\{1}", this.Name, this.Catalog);
+            return string.Format("{0}\\{1}", this.Name, this.InitialCatalog);
         }
 
         public static explicit operator int(ConnectionProvider provider)

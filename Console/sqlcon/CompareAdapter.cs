@@ -56,16 +56,16 @@ namespace sqlcon
             DatabaseName db2 = Side2.DatabaseName;
 
 
-            stdio.WriteLine("server1: {0} default database:{1}", Side1.CS.DataSource, db1.Name);
-            stdio.WriteLine("server2: {0} default database:{1}", Side2.CS.DataSource, db2.Name);
+            stdio.WriteLine("server1: {0} default database:{1}", Side1.Provider.DataSource, db1.Name);
+            stdio.WriteLine("server2: {0} default database:{1}", Side2.Provider.DataSource, db2.Name);
            
             if (!Exists(db1) || !Exists(db2))
                 return string.Empty;
 
             StringBuilder builder = new StringBuilder();
-            builder.AppendFormat("-- sqlcon:", Side1.CS.DataSource, db1.Name).AppendLine();
-            builder.AppendFormat("-- compare server={0} db={1}", Side1.CS.DataSource, db1.Name).AppendLine();
-            builder.AppendFormat("--         server={0} db={1} @ {2}", Side2.CS.DataSource, db2.Name, DateTime.Now).AppendLine();
+            builder.AppendFormat("-- sqlcon:", Side1.Provider.DataSource, db1.Name).AppendLine();
+            builder.AppendFormat("-- compare server={0} db={1}", Side1.Provider.DataSource, db1.Name).AppendLine();
+            builder.AppendFormat("--         server={0} db={1} @ {2}", Side2.Provider.DataSource, db2.Name, DateTime.Now).AppendLine();
             var N1 = m1.MatchedTableNames;
             var N2 = m2.MatchedTableNames;
             string sql;

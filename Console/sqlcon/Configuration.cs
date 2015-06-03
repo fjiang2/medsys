@@ -81,6 +81,23 @@ namespace sqlcon
             return Cfg[variable];
         }
 
+        private static string PeelOleDb(string connectionString)
+        {
+            if (connectionString.ToLower().IndexOf("sqloledb") >= 0)
+            {
+                var x1 = new OleDbConnectionStringBuilder(connectionString);
+                var x2 = new SqlConnectionStringBuilder();
+                x2.DataSource = x1.DataSource;
+                x2.InitialCatalog = (string)x1["Initial Catalog"];
+                x2.UserID = (string)x1["User Id"];
+                x2.Password = (string)x1["Password"];
+                return x2.ConnectionString;
+            }
+
+            return connectionString;
+        }
+
+
         public ServerName[] GetServerNames()
         {
             var aliasMap = Cfg.GetValue("alias");
@@ -97,18 +114,7 @@ namespace sqlcon
                 }
 
                 string alias = pair[0].Str;
-                string connectionString = pair[1].Str;
-                if (connectionString.ToLower().IndexOf("sqloledb") >= 0)
-                {
-                    var x1 = new OleDbConnectionStringBuilder(connectionString);
-                    var x2 = new SqlConnectionStringBuilder();
-                    x2.DataSource = x1.DataSource;
-                    x2.InitialCatalog = (string)x1["Initial Catalog"];
-                    x2.UserID = (string)x1["User Id"];
-                    x2.Password = (string)x1["Password"];
-                    connectionString = x2.ConnectionString;
-                }
-
+                string connectionString = PeelOleDb(pair[1].Str);
                 ConnectionProvider provider = ConnectionProviderManager.Register(alias, new SqlConnectionStringBuilder(connectionString));
                 var sname = new ServerName(provider);
                 snames.Add(sname);
@@ -128,7 +134,7 @@ namespace sqlcon
                 return null;
 
             else
-                return (string)x;
+                return PeelOleDb((string)x);
         }
 
         public bool Initialize(string cfgFile)

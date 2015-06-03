@@ -53,16 +53,18 @@ namespace sqlcon
 
                 if (line == "exit")
                     break;
-                else if (line == "help" || line == "?")
+
+                switch (line)
                 {
-                    Help();
-                    builder.Clear();
-                    goto L1;
-                }
-                else if (line == "cls")
-                {
-                    Console.Clear();
-                    goto L1;
+                    case "help":
+                    case "?":
+                        Help();
+                        builder.Clear();
+                        goto L1;
+
+                    case "cls":
+                        Console.Clear();
+                        goto L1;
                 }
 
                 if (line != "" && line != ";")
@@ -78,7 +80,7 @@ namespace sqlcon
 
                     try
                     {
-                        DoCommand(text);
+                        DoMultipleLineCommand(text);
                     }
                     catch(Exception ex)
                     {
@@ -92,8 +94,13 @@ namespace sqlcon
                 }
             }
         }
-   
-        private void DoCommand(string text)
+        
+        private void DoSingleLineCommand(string line)
+        { 
+        
+        }
+
+        private void DoMultipleLineCommand(string text)
         {
             text = text.Trim();
             if (text == string.Empty)
@@ -115,7 +122,7 @@ namespace sqlcon
             if (n > 2)
                 arg2 = A[2].Trim();
 
-            Func<SqlConnectionStringBuilder, string> showConnection = cs=> string.Format("S={0} db={1} U={2} P={3}", cs.DataSource, cs.InitialCatalog, cs.UserID, cs.Password);
+            Func<ConnectionProvider, string> showConnection = cs=> string.Format("S={0} db={1} U={2} P={3}", cs.DataSource, cs.InitialCatalog, cs.UserId, cs.Password);
             switch (cmd)
             {
                 case "show":
@@ -193,7 +200,7 @@ namespace sqlcon
 
                     ChangeSide(adapter.Side1);
                     this.server = 1;
-                    stdio.WriteLine("server 1 selected({0})", showConnection(theSide.CS));
+                    stdio.WriteLine("server 1 selected({0})", showConnection(theSide.Provider));
                     break;
 
                 case "2":
@@ -208,11 +215,28 @@ namespace sqlcon
                     }
                     ChangeSide(adapter.Side2);
                     this.server = 2;
-                    stdio.WriteLine("server 2 selected({0})", showConnection(theSide.CS));
+                    stdio.WriteLine("server 2 selected({0})", showConnection(theSide.Provider));
                     break;
 
-                case "cd":
+                case "dir":
                     if(arg1 != null)
+                    {
+                        var conn = cfg.GetConnectionString(arg1);
+                        if (conn != null)
+                        {
+                            Side side = new Side(arg1, new SqlConnectionStringBuilder(conn));
+                            ChangeSide(side);
+                            this.server = 3;
+                        }
+                        else
+                            stdio.ShowError("undefined database server alias : {0}", arg1);
+                    }
+                    else
+                        stdio.WriteLine(pathBuilder.ToString());
+                    break;
+                
+                case "goto":
+                    if (arg1 != null)
                     {
                         var conn = cfg.GetConnectionString(arg1);
                         if (conn != null)
@@ -227,7 +251,7 @@ namespace sqlcon
                     else
                         stdio.ShowError("command argument missing");
                     break;
-                
+
                 case "template":
                     if (arg1 != null)
                     {

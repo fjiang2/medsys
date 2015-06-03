@@ -14,17 +14,23 @@ namespace sqlcon
 {
     class Side  
     {
-        public readonly SqlConnectionStringBuilder CS;
-        public readonly ConnectionProvider Provider;
         public readonly DatabaseName DatabaseName;
-        
+        public readonly ServerName ServerName;
 
-        public Side(string alias, SqlConnectionStringBuilder cs)
+        public Side(ServerName serverName)
         {
-            this.CS = cs;
+            this.ServerName = serverName;
+            this.DatabaseName = new DatabaseName(serverName, Provider.InitialCatalog);
+        }
 
-            this.Provider = ConnectionProviderManager.Register(alias, cs);
-            this.DatabaseName = new DatabaseName(new ServerName(Provider), cs.InitialCatalog);
+        public Side(string alais, SqlConnectionStringBuilder builder)
+            :this(new ServerName(ConnectionProviderManager.Register(alais, builder)))
+        {
+        }
+
+        public ConnectionProvider Provider
+        {
+            get { return this.ServerName.Provider; }
         }
 
 
@@ -111,7 +117,7 @@ namespace sqlcon
         
         public override string ToString()
         {
-            return string.Format("Side: Server= {0} Db={1}",CS.DataSource, this.DatabaseName.Name);
+            return string.Format("Side: Server= {0} Db={1}",Provider.DataSource, this.DatabaseName.Name);
         }
 
     }
