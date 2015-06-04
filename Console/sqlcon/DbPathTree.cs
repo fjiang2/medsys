@@ -166,6 +166,9 @@ namespace sqlcon
 
             Expand(node);
 
+            if (node.Item is DatabaseName && segment.IndexOf(".") == -1)
+                segment = TableName.dbo + "." + segment;
+
             var xnode = node.Nodes.Find(x => x.Item.Path.ToUpper() == segment.ToUpper());
             if (xnode != null)
                 return xnode;

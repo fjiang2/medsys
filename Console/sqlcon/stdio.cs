@@ -23,9 +23,8 @@ namespace sqlcon
                 writer.Close();
         }
 
-        public static void OpenLog()
+        public static void OpenEditor(string fileName)
         {
-            string fileName = Context.GetValue<string>("log");
             string editor = Context.GetValue<string>("editor");
             
             System.Diagnostics.Process process = new System.Diagnostics.Process();
@@ -34,8 +33,10 @@ namespace sqlcon
             //process.StartInfo.WorkingDirectory = startin;
             process.StartInfo.FileName = editor;
             process.StartInfo.Arguments = fileName;
-            if(File.Exists(fileName))
+            if (File.Exists(fileName))
                 process.Start();
+            else
+                stdio.ShowError("file not found: {0}", fileName);
         }
 
         public static void Write(string format, params object[] args)

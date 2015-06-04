@@ -170,6 +170,11 @@ namespace sqlcon
             }
         }
 
+        private static string showConnection(ConnectionProvider cs)
+        {
+            return string.Format("S={0} db={1} U={2} P={3}", cs.DataSource, cs.InitialCatalog, cs.UserId, cs.Password);
+        }
+      
         private void DoMultipleLineCommand(string text)
         {
             text = text.Trim();
@@ -192,8 +197,7 @@ namespace sqlcon
             if (n > 2)
                 arg2 = A[2].Trim();
 
-            Func<ConnectionProvider, string> showConnection = cs=> string.Format("S={0} db={1} U={2} P={3}", cs.DataSource, cs.InitialCatalog, cs.UserId, cs.Password);
-            switch (cmd)
+             switch (cmd)
             {
                 case "show":
                     if (arg1 != null)
@@ -318,7 +322,7 @@ namespace sqlcon
                     break;
 
                 case "copy":
-                    if (arg1 == "result")
+                    if (arg1 == "output")
                     {
                         if (!File.Exists(this.cfg.OutputFile))
                         {
@@ -335,10 +339,25 @@ namespace sqlcon
                     break;
 
                 case "open":
-                    if (arg1 == "log")
+                    switch (arg1)
                     {
-                        stdio.OpenLog();
+                        case "input":
+                            stdio.OpenEditor(cfg.InputFile);
+                            break;
+
+                        case "output":
+                            stdio.OpenEditor(cfg.OutputFile);
+                            break;
+
+                        case "schema":
+                            stdio.OpenEditor(cfg.SchemaFile);
+                            break;
+
+                        case "log":
+                            stdio.OpenEditor(Context.GetValue<string>("log"));
+                            break;
                     }
+
                     break;
 
                 case "compare":
@@ -371,6 +390,35 @@ namespace sqlcon
                     }
                     else
                         stdio.ShowError("command argument missing");
+                    break;
+
+                case "export":
+                    {
+                        string fileName = cfg.OutputFile;
+                        TableName tname = pathTree.GetCurrent<TableName>();
+                        Locator where = pathTree.GetCurrent<Locator>();
+                        if (tname == null)
+                        {
+                            stdio.ShowError("warning: table is not available");
+                            break;
+                        }
+
+                        int count;
+
+                        using (var writer = fileName.NewStreamWriter())
+                        {
+                            if (where != null)
+                            {
+                                count = theSide.GenerateRows(writer, tname, where);
+                                stdio.WriteLine("insert clauses (SELECT * FROM {0} WHERE {1}) generated to {2}", tname, where, fileName);
+                            }
+                            else
+                            {
+                                count = theSide.GenerateRows(writer, tname, null);
+                                stdio.WriteLine("insert clauses (SELECT * FROM {0}) generated to {1}", tname, fileName);
+                            }
+                        }
+                    }
                     break;
 
                 default:
@@ -511,6 +559,10 @@ namespace sqlcon
                     }
                     break;
 
+                case "current":
+                    stdio.WriteLine("current: {0}({1})", theSide.Provider.Name, showConnection(theSide.Provider));
+                    break;
+
                 case "var":
                     Context.ToConsole();
                     break;
@@ -523,8 +575,14 @@ namespace sqlcon
 
         private static void Help()
         {
-            stdio.WriteLine("type [;] to execute command");
             stdio.WriteLine("Notes: table names support wildcard matching, e.g. Prod*,Pro?ucts");
+            stdio.WriteLine("<exit>                  : quit application");
+            stdio.WriteLine("<help>                  : this help");
+            stdio.WriteLine("<?>                     : this help");
+            stdio.WriteLine("cd [path]               : change current directory");
+            stdio.WriteLine("dir [path]              : list data structure directory");
+            stdio.WriteLine();
+            stdio.WriteLine("type [;] to execute following commands or functions");
             stdio.WriteLine("<Commands>");
             stdio.WriteLine("<compare schema> tables : compare schema of tables");
             stdio.WriteLine("<compare data> tables   : compare data of tables");
@@ -540,18 +598,17 @@ namespace sqlcon
             stdio.WriteLine("<show ik> tablename     : show table identity keys");
             stdio.WriteLine("<show vw> viewnames     : show view structure");
             stdio.WriteLine("<show connection>       : show connection-string list");
+            stdio.WriteLine("<show current>          : show current active connection-string");
             stdio.WriteLine("<show var>              : show variable list");
             stdio.WriteLine("<run> query(..)         : run predefined query. e.g. run query(var1=val1,...);");
             stdio.WriteLine("<1> [path]              : switch to source server 1 (default)");
             stdio.WriteLine("<2> [path]              : switch to sink server 2");
             stdio.WriteLine("<goto> path             : switch to database server");
-            stdio.WriteLine("<copy result>           : copy sql script ouput to clipboard");
+            stdio.WriteLine("<copy output>           : copy sql script ouput to clipboard");
             stdio.WriteLine("<open log>              : open log file");
-            stdio.WriteLine("<exit>                  : quit application");
-            stdio.WriteLine("<help>                  : this help");
-            stdio.WriteLine("<?>                     : this help");
-            stdio.WriteLine("cd [path]               : change current directory");
-            stdio.WriteLine("dir [path]              : list data structure directory");
+            stdio.WriteLine("<open input>            : open input file");
+            stdio.WriteLine("<open output>           : open output file");
+            stdio.WriteLine("<open schema>           : open schema file");
             stdio.WriteLine("<SQL>");
             stdio.WriteLine("select ... from table where ...");
             stdio.WriteLine("update table set ... where ...");
@@ -560,6 +617,7 @@ namespace sqlcon
             stdio.WriteLine("drop table ...");
             stdio.WriteLine("alter ...");
             stdio.WriteLine("exec ...");
+            stdio.WriteLine("export                  : export export INSERT script");
             stdio.WriteLine("<Functions>");
             stdio.WriteLine("  export(tablename, where)");
             stdio.WriteLine("                        : export INSERT script, SELECT * FROM table WHERE ...");
