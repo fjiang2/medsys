@@ -49,7 +49,11 @@ namespace Sys.Data
 
         public ConnectionProvider Provider
         {
-            get { return this.provider; }
+            get
+            {
+                this.provider.InitialCatalog = name;
+                return this.provider; 
+            }
         }
 
         public int CompareTo(object obj)

@@ -53,6 +53,11 @@ namespace sqlcon
             }
         }
 
+        public static void WriteLine()
+        {
+            WriteLine("");
+        }
+
         public static void WriteLine(string value)
         {
             Console.WriteLine(value);

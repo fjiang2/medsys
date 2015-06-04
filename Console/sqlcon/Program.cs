@@ -86,7 +86,7 @@ namespace sqlcon
             stdio.WriteLine("     [/db datbase1:datbase2]|[/db datbase]");
             stdio.WriteLine("     [/dt table1:table2]|[/dt table(wildcard*,?)]");
             stdio.WriteLine("     [/f sql script file(.sql)]");
-            stdio.WriteLine("");
+            stdio.WriteLine();
             stdio.WriteLine("/h,/?      : this help");
             stdio.WriteLine("/cfg       : congfiguration file default file:sqlcompare.cfg]");
             stdio.WriteLine("/s         : server alias defined on ini file]");

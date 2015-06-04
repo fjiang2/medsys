@@ -14,8 +14,8 @@ namespace sqlcon
 {
     class Side  : IDataPath
     {
-        public readonly DatabaseName DatabaseName;
-        public readonly ConnectionProvider provider;
+        public DatabaseName DatabaseName { get; private set; }
+        private ConnectionProvider provider;
 
         public Side(ConnectionProvider provider)
         {
@@ -23,6 +23,12 @@ namespace sqlcon
             this.DatabaseName = new DatabaseName(provider, Provider.InitialCatalog);
         }
 
+
+        public void UpdateDatabase(ConnectionProvider provider)
+        {
+            this.provider = provider;
+            this.DatabaseName = new DatabaseName(provider, Provider.InitialCatalog);
+        }
       
         public ConnectionProvider Provider
         {

@@ -84,16 +84,23 @@ namespace sqlcon
             get { return this.current.Item; }
         }
 
-        public ServerName ServerName
+        public DatabaseName CurrentDatabaseName
         {
             get
             {
+                if (current == tree.RootNode)
+                    return null;
+
                 var p = current;
-                while (!(p.Item is ServerName))
+                while (!(p.Item is DatabaseName))
                 {
                     p = p.Parent;
+
+                    if (p == null)
+                        return null;
                 }
-                return (ServerName)p.Item;
+
+                return (DatabaseName)p.Item;
             }
         }
 
@@ -183,27 +190,30 @@ namespace sqlcon
 
         #endregion
 
-        public void ChangePath(ServerName serverName, DatabaseName databaseName)
+        public void chdir(ServerName serverName, DatabaseName databaseName)
         {
             string path = string.Format(@"\{0}\{1}", serverName.Path, databaseName.Path);
-            ChangePath(path);
+            chdir(path);
         }
 
-        public void ChangePath(string path)
+        public bool chdir(string path)
         {
             string wildcard;
             string[] segments = parsePath(path, out wildcard);
             if (wildcard != null)
             {
                 stdio.ShowError("invalid path");
-                return;
+                return false;
             }
 
             var node = Navigate(segments);
             if (node != null)
+            {
                 current = node;
+                return true;
+            }
 
-            return;
+            return false;
         }
 
         #region Expand TreeNode

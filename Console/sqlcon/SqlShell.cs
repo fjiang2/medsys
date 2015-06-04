@@ -18,7 +18,6 @@ namespace sqlcon
     {
         private Side theSide;
         private CompareAdapter adapter;
-        private int server = 0;
         private Configuration cfg;
         private DbPathTree pathTree;
 
@@ -26,7 +25,6 @@ namespace sqlcon
         {
             this.cfg = cfg;
             this.adapter = adapter;
-            this.server = 1;
             this.pathTree = new DbPathTree(cfg);
 
             ChangeSide(adapter.Side1);
@@ -37,13 +35,14 @@ namespace sqlcon
             this.theSide = side;
             Context.DS.AddHostObject(Context.THESIDE, side);
 
-            pathTree.ChangePath(theSide.Provider.ServerName, theSide.DatabaseName); 
+            pathTree.chdir(theSide.Provider.ServerName, theSide.DatabaseName); 
         }
 
         public void DoCommand()
         {
-            stdio.WriteLine("sqlcon(SQL Command Console)");
-            stdio.WriteLine("type [help] to help, [;] to execute a command, [exit] to quit");
+            stdio.WriteLine("SQL Server Command Console [Version 1.0.0.0]");
+            stdio.WriteLine("Copyright (c) 2014-2015 Datconn. All rights reserved.");
+            stdio.WriteLine();
             StringBuilder builder = new StringBuilder();
             string line = null;
             while (true)
@@ -70,7 +69,10 @@ namespace sqlcon
 
                     default:
                         if (DoSingleLineCommand(line))
+                        {
+                            stdio.WriteLine();
                             goto L1;
+                        }
                         break;
                 }
 
@@ -88,6 +90,7 @@ namespace sqlcon
                     try
                     {
                         DoMultipleLineCommand(text);
+                        stdio.WriteLine();
                     }
                     catch(Exception ex)
                     {
@@ -132,23 +135,36 @@ namespace sqlcon
 
                 case "cd":
                     if (arg1 != null)
-                        pathTree.ChangePath(arg1);
+                        chdir(arg1);
+                    else
+                        stdio.WriteLine(pathTree.ToString());
                     return true;
 
                 case "cd\\":
-                    pathTree.ChangePath("\\");
+                    chdir("\\");
                     return true;
 
                 case "cd.":
-                    pathTree.ChangePath(".");
+                    chdir(".");
                     return true;
 
                 case "cd..":
-                    pathTree.ChangePath("..");
+                    chdir("..");
                     return true;
             }
 
             return false;
+        }
+
+
+        private void chdir(string path)
+        {
+            if (pathTree.chdir(path))
+            {
+                var dname = pathTree.CurrentDatabaseName;
+                if (dname != null)
+                    theSide.UpdateDatabase(dname.Provider);
+            }
         }
 
         private void DoMultipleLineCommand(string text)
@@ -241,31 +257,29 @@ namespace sqlcon
                 case "1":
                     if (arg1 != null)
                     {
-                        var sname = cfg.GetProvider(arg1);
-                        if (sname != null)
+                        var pvd = cfg.GetProvider(arg1);
+                        if (pvd != null)
                         {
-                            Side side = new Side(sname);
+                            Side side = new Side(pvd);
                             adapter = new CompareAdapter(side, adapter.Side2);
                         }
                     }
 
                     ChangeSide(adapter.Side1);
-                    this.server = 1;
                     stdio.WriteLine("server 1 selected({0})", showConnection(theSide.Provider));
                     break;
 
                 case "2":
                     if (arg1 != null)
                     {
-                        var sname = cfg.GetProvider(arg1);
-                        if (sname != null)
+                        var pvd = cfg.GetProvider(arg1);
+                        if (pvd != null)
                         {
-                            Side side = new Side(sname);
+                            Side side = new Side(pvd);
                             adapter = new CompareAdapter(adapter.Side1, side);
                         }
                     }
                     ChangeSide(adapter.Side2);
-                    this.server = 2;
                     stdio.WriteLine("server 2 selected({0})", showConnection(theSide.Provider));
                     break;
 
@@ -278,7 +292,6 @@ namespace sqlcon
                         {
                             Side side = new Side(sname);
                             ChangeSide(side);
-                            this.server = 3;
                         }
                         else
                             stdio.ShowError("undefined database server alias : {0}", arg1);
@@ -507,6 +520,7 @@ namespace sqlcon
 
         private static void Help()
         {
+            stdio.WriteLine("type [;] to execute command");
             stdio.WriteLine("Notes: table names support wildcard matching, e.g. Prod*,Pro?ucts");
             stdio.WriteLine("<Commands>");
             stdio.WriteLine("<compare schema> tables : compare schema of tables");
@@ -533,6 +547,8 @@ namespace sqlcon
             stdio.WriteLine("<exit>                  : quit application");
             stdio.WriteLine("<help>                  : this help");
             stdio.WriteLine("<?>                     : this help");
+            stdio.WriteLine("cd [path]               : change current directory");
+            stdio.WriteLine("dir [path]              : list data structure directory");
             stdio.WriteLine("<SQL>");
             stdio.WriteLine("select ... from table where ...");
             stdio.WriteLine("update table set ... where ...");
@@ -548,6 +564,7 @@ namespace sqlcon
             stdio.WriteLine("<Variables>");
             stdio.WriteLine("  maxrows               : max number of row shown on select query");
             stdio.WriteLine("  DataReader            : true: use SqlDataReader; false: use Fill DataSet");
+            stdio.WriteLine();
         }
     }
 }
