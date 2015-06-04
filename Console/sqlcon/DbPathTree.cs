@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 using System.Data.Common;
 using System.Data.SqlClient;
 using System.Data.OleDb;
+using System.Data;
 using System.Text.RegularExpressions;
-using Sys.Data;
 using Sys;
+using Sys.Data;
 
 namespace sqlcon
 {
@@ -166,10 +167,11 @@ namespace sqlcon
 
             Expand(node);
 
+            string seg = segment;
             if (node.Item is DatabaseName && segment.IndexOf(".") == -1)
-                segment = TableName.dbo + "." + segment;
+                seg = TableName.dbo + "." + segment;
 
-            var xnode = node.Nodes.Find(x => x.Item.Path.ToUpper() == segment.ToUpper());
+            var xnode = node.Nodes.Find(x => x.Item.Path.ToUpper() == seg.ToUpper());
             if (xnode != null)
                 return xnode;
             else
@@ -334,7 +336,7 @@ namespace sqlcon
                             ExpandServerName(node, Refreshing);
                         }
 
-                        stdio.WriteLine("{0,2}. {1,26} <SVR> {2,10} Databases", i, sname.Path, sname.Disconnected ? "?" : node.Nodes.Count.ToString());
+                        stdio.WriteLine("[{0,2}] {1,26} <SVR> {2,10} Databases", i, sname.Path, sname.Disconnected ? "?" : node.Nodes.Count.ToString());
                     }
                 }
 
@@ -362,7 +364,7 @@ namespace sqlcon
                             if (node.Nodes.Count == 0)
                                 ExpandDatabaseName(node, true);
 
-                            stdio.WriteLine("{0,2}. {1,26} <DB> {2,10} Tables", i, dname.Name, node.Nodes.Count);
+                            stdio.WriteLine("[{0,2}] {1,26} <DB> {2,10} Tables", i, dname.Name, node.Nodes.Count);
                         }
                     }
 
@@ -382,7 +384,7 @@ namespace sqlcon
                     {
                         count++;
                         //int rows = new SqlCmd(tname.Provider, string.Format("SELECT COUNT(*) FROM {0}", tname)).FillObject<int>();
-                        stdio.WriteLine("{0,3}. {1,15}.{2,-37} <TAB>", i, tname.SchemaName, tname.Name);
+                        stdio.WriteLine("[{0,3}] {1,15}.{2,-37} <TAB>", i, tname.SchemaName, tname.Name);
                     }
                 }
 
@@ -391,7 +393,31 @@ namespace sqlcon
             }
             else if (pt.Item is TableName)
             {
-                stdio.WriteLine("\t{0} Column(s)", pt.Nodes.Count);
+                TableName tname = (TableName)pt.Item;
+                TableSchema schema = new TableSchema(tname);
+
+                int i = 0;
+                int count = 0;
+                foreach (IColumn column in schema.Columns)
+                {
+                    if (check(tname))
+                    {
+                        count++;
+                        List<string> L = new List<string>();
+                        if (column.IsIdentity) L.Add("++");
+                        if (column.IsPrimary) L.Add("PK");
+                        if ((column as ColumnSchema).FkContraintName != null) L.Add("FK");
+                        string keys = string.Join(",", L);
+
+                        stdio.WriteLine("[{0,3}] {1,30} {2,-15} {3,10} {4,10}",
+                            ++i,
+                            column.ColumnName,
+                            string.Format("{0}({1})", column.DataType.ToUpper(), column.Length),
+                            keys,
+                            column.Nullable ? "NULL" : "NOT NULL");
+                    }
+                }
+                stdio.WriteLine("\t{0} Column(s)", count);
             }
 
         }
