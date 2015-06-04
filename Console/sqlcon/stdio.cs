@@ -13,7 +13,7 @@ namespace sqlcon
         private static StreamWriter writer = null;
         static stdio()
         {
-            string fileName = Context.GetValue<string>("log", "sqlcompare.log");
+            string fileName = Context.GetValue<string>("log", "sqlcon.log");
             writer = fileName.NewStreamWriter();
         }
 
@@ -25,18 +25,14 @@ namespace sqlcon
 
         public static void OpenLog()
         {
-            string fileName = Context.GetValue<string>("log", "sqlcompare.log");
-            //if (fileName.StartsWith(".\\"))
-            //{
-            //    string path = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-            //    fileName = path + fileName.Substring(1);
-            //}
+            string fileName = Context.GetValue<string>("log");
+            string editor = Context.GetValue<string>("editor");
             
             System.Diagnostics.Process process = new System.Diagnostics.Process();
             process.StartInfo.ErrorDialog = true;
             process.StartInfo.UseShellExecute = false;
             //process.StartInfo.WorkingDirectory = startin;
-            process.StartInfo.FileName = "notepad.exe";
+            process.StartInfo.FileName = editor;
             process.StartInfo.Arguments = fileName;
             if(File.Exists(fileName))
                 process.Start();

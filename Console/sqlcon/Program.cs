@@ -9,6 +9,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.IO;
 using Tie;
+using Sys;
 
 namespace sqlcon
 {
@@ -17,9 +18,14 @@ namespace sqlcon
         [STAThread]
         static void Main(string[] args)
         {
-            stdio.WriteLine("SQL Server Command Console [Version 1.0.0.0]");
-            stdio.WriteLine("Copyright (c) 2014-2015 Datconn. All rights reserved.");
-            stdio.WriteLine();
+            Console.WriteLine("SQL Server Command Console [Version 1.0.0.0]");
+            Console.WriteLine("Copyright (c) 2014-2015 Datconn. All rights reserved.");
+            Console.WriteLine();
+
+            MessageException.DefaultExceptionHandler = delegate(string title, string message)
+            {
+                stdio.ShowError(message);
+            };
 
             var cfgFile = "sqlcon.cfg";
 
@@ -92,7 +98,7 @@ namespace sqlcon
             stdio.WriteLine("     [/f sql script file(.sql)]");
             stdio.WriteLine();
             stdio.WriteLine("/h,/?      : this help");
-            stdio.WriteLine("/cfg       : congfiguration file default file:sqlcompare.cfg]");
+            stdio.WriteLine("/cfg       : congfiguration file default file:sqlcon.cfg]");
             stdio.WriteLine("/s         : server alias defined on ini file]");
             stdio.WriteLine("/c schema  : compare schmea (default)");
             stdio.WriteLine("/c data    : compare data");

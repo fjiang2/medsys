@@ -184,11 +184,12 @@ namespace sqlcon
 
         
             var log = Cfg["log"];
-            if(log.Defined)
-                Context.DS.Add("log", log);
+            if(log.Defined)  Context.DS.Add("log", log);
 
-             Context.DS.Add("output", new VAL(this.OutputFile));
+            Context.DS.Add("output", new VAL(this.OutputFile));
 
+            var editor = Cfg.GetValue<string>("editor", "notepad.exe");
+            Context.DS.Add("editor", new VAL(editor));
             
 
             var pk = Cfg["primary_key"];
