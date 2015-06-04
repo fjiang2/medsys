@@ -149,7 +149,7 @@ namespace Sys.Data
                     "USE [{0}] ; SELECT  SCHEMA_NAME(schema_id) SchemaName, name FROM sys.views ORDER BY name",
                     databaseName.Name)
                     .AsEnumerable()
-                    .Select(row => new TableName(databaseName, row.Field<string>(0), row.Field<string>(1)))
+                    .Select(row => new TableName(databaseName, row.Field<string>(0), row.Field<string>(1)) { IsViewName = true })
                     .ToArray();
         }
 

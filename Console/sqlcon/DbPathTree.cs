@@ -274,6 +274,12 @@ namespace sqlcon
                 TableName[] tnames = dname.GetTableNames();
                 foreach (var tname in tnames)
                     node.Nodes.Add(new TreeNode<IDataPath>(tname));
+
+                TableName[] vnames = dname.GetViewNames();
+
+                foreach (var vname in vnames)
+                    node.Nodes.Add(new TreeNode<IDataPath>(vname));
+
             }
         }
 
@@ -309,12 +315,12 @@ namespace sqlcon
             if (pt.Nodes.Count == 0)
                 Expand(pt);
 
-            Func<IDataPath, bool> check = xname =>
+            Func<string, bool> check = xname =>
                 {
                     if (wildcard != null)
                     {
                         Regex regex = wildcard.WildcardRegex();
-                        return regex.IsMatch(xname.Path);
+                        return regex.IsMatch(xname);
                     }
                     return true;
                 };
@@ -328,7 +334,7 @@ namespace sqlcon
                     ServerName sname = (ServerName)node.Item;
                     ++i;
 
-                    if (check(sname))
+                    if (check(sname.Path))
                     {
                         count++;
                         if (node.Nodes.Count == 0)
@@ -358,7 +364,7 @@ namespace sqlcon
                         DatabaseName dname = (DatabaseName)node.Item;
                         ++i;
 
-                        if (check(dname))
+                        if (check(dname.Path))
                         {
                             count++;
                             if (node.Nodes.Count == 0)
@@ -374,22 +380,23 @@ namespace sqlcon
             else if (pt.Item is DatabaseName)
             {
                 int i = 0;
-                int count = 0;
+                int[] count = new int[] { 0, 0 };
                 foreach (var node in pt.Nodes)
                 {
                     TableName tname = (TableName)node.Item;
                     ++i;
 
-                    if (check(tname))
+                    if (check(tname.Path))
                     {
-                        count++;
-                        //int rows = new SqlCmd(tname.Provider, string.Format("SELECT COUNT(*) FROM {0}", tname)).FillObject<int>();
-                        stdio.WriteLine("[{0,3}] {1,15}.{2,-37} <TAB>", i, tname.SchemaName, tname.Name);
+                        if (!tname.IsViewName) count[0]++;
+                        if (tname.IsViewName) count[1]++;
+
+                        stdio.WriteLine("[{0,3}] {1,15}.{2,-37} <{3}>", i, tname.SchemaName, tname.Name, tname.IsViewName ? "VIEW" : "TABLE");
                     }
                 }
 
-                stdio.WriteLine("\t{0} Table(s)", count);
-                stdio.WriteLine("\t{0} View(s)", 0);
+                stdio.WriteLine("\t{0} Table(s)", count[0]);
+                stdio.WriteLine("\t{0} View(s)", count[1]);
             }
             else if (pt.Item is TableName)
             {
@@ -400,32 +407,27 @@ namespace sqlcon
                 int count = 0;
                 foreach (IColumn column in schema.Columns)
                 {
-                    if (check(tname))
+                    if (check(column.ColumnName))
                     {
                         count++;
                         List<string> L = new List<string>();
                         if (column.IsIdentity) L.Add("++");
-                        if (column.IsPrimary) L.Add("PK");
-                        if ((column as ColumnSchema).FkContraintName != null) L.Add("FK");
+                        if (column.IsPrimary) L.Add("pk");
+                        if ((column as ColumnSchema).FkContraintName != null) L.Add("fk");
                         string keys = string.Join(",", L);
 
-                        stdio.WriteLine("[{0,3}] {1,30} {2,-15} {3,10} {4,10}",
+                        stdio.WriteLine("({0:000}) {1,26} {2,-16} {3,10} {4,10}",
                             ++i,
-                            column.ColumnName,
-                            string.Format("{0}({1})", column.DataType.ToUpper(), column.Length),
+                            string.Format("[{0}]", column.ColumnName),
+                            ColumnSchema.GetSQLType(column),
                             keys,
-                            column.Nullable ? "NULL" : "NOT NULL");
+                            column.Nullable ? "null" : "not null");
                     }
                 }
                 stdio.WriteLine("\t{0} Column(s)", count);
             }
 
         }
-
-
-    
-
-           
 
     
         public override string ToString()

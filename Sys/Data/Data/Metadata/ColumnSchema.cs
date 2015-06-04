@@ -371,6 +371,27 @@ namespace Sys.Data
 
         public static string GetSQLField(IColumn column)
         {
+            string ty = GetSQLType(column);
+
+            string line = string.Format("[{0}] {1} {2}", column.ColumnName, ty, column.Nullable ? "NULL" : "NOT NULL");
+
+            if (column.IsIdentity)
+            {
+                line += " IDENTITY(1,1)";
+                return line;
+            }
+
+            if (column.IsComputed)
+            {
+                line = string.Format("[{0}] AS {1}", column.ColumnName, column.Definition);
+                //throw new JException("not support computed column: {0}", column.ColumnName);
+            }
+                
+            return line;
+        }
+
+        public static string GetSQLType(IColumn column)
+        {
             string ty = "";
             string DataType = column.DataType;
             int Length = column.Length;
@@ -405,22 +426,7 @@ namespace Sys.Data
                     ty = DataType;
                     break;
             }
-
-            string line = string.Format("[{0}] {1} {2}", column.ColumnName, ty, column.Nullable ? "NULL" : "NOT NULL");
-
-            if (column.IsIdentity)
-            {
-                line += " IDENTITY(1,1)";
-                return line;
-            }
-
-            if (column.IsComputed)
-            {
-                line = string.Format("[{0}] AS {1}", column.ColumnName, column.Definition);
-                //throw new JException("not support computed column: {0}", column.ColumnName);
-            }
-                
-            return line;
+            return ty;
         }
     
         #endregion

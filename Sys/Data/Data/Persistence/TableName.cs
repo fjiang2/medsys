@@ -179,9 +179,7 @@ namespace Sys.Data
         }
 
 
-      
-
-
+        public bool IsViewName { get; set; }
 
         public ConnectionProvider Provider
         {
