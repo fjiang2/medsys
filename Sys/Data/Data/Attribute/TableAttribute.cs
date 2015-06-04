@@ -49,15 +49,14 @@ namespace Sys.Data
             {
                 TableName tname;
                 ConnectionProvider dataProvider = ConnectionProviderManager.Instance.GetProvider(this.Provider);
-                ServerName serverName = dataProvider.ServerName;
                 switch (this.Level)
                 {
                     case Level.System:
-                        tname = new TableName(new DatabaseName(serverName, Const.DB_SYSTEM), "dbo", this.tableName);
+                        tname = new TableName(new DatabaseName(dataProvider, Const.DB_SYSTEM), "dbo", this.tableName);
                         break;
 
                     case Level.Application:
-                        tname = new TableName(new DatabaseName(serverName, Const.DB_APPLICATION), "dbo", this.tableName);
+                        tname = new TableName(new DatabaseName(dataProvider, Const.DB_APPLICATION), "dbo", this.tableName);
                         break; 
 
                     default:

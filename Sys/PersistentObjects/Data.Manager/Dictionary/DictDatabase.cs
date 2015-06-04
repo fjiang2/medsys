@@ -43,7 +43,7 @@ namespace Sys.Data.Manager
             {
                 int handle = (int)row[dictDatabaseDpo._provider_id];
                 ConnectionProvider provider = ConnectionProviderManager.Instance.GetProvider(handle);
-                DatabaseName databaseName = new DatabaseName(provider.ServerName, (string)row[dictDatabaseDpo._name]);
+                DatabaseName databaseName = new DatabaseName(provider, (string)row[dictDatabaseDpo._name]);
                 bases.Add(databaseName, (int)row[dictDatabaseDpo._database_id]);
             }
 

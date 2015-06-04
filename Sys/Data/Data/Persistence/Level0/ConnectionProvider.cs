@@ -111,7 +111,7 @@ namespace Sys.Data
 
         public override string ToString()
         {
-            return string.Format("Provider Handle={0} Name={1}", this.Handle, this.Name);
+            return string.Format("Handle={0}, Name={1}\\{2}", this.Handle, this.ServerAlias, this.Name);
         }
 
         public string ToSimpleString()
@@ -223,7 +223,7 @@ namespace Sys.Data
             get
             {
                 if (_defaultDatabaseName == null)
-                    _defaultDatabaseName = new DatabaseName(ServerName, InitialCatalog);
+                    _defaultDatabaseName = new DatabaseName(this, InitialCatalog);
 
                 return _defaultDatabaseName;
             }

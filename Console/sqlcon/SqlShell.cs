@@ -37,7 +37,7 @@ namespace sqlcon
             this.theSide = side;
             Context.DS.AddHostObject(Context.THESIDE, side);
 
-            pathTree.ChangePath(theSide.ServerName, theSide.DatabaseName); 
+            pathTree.ChangePath(theSide.Provider.ServerName, theSide.DatabaseName); 
         }
 
         public void DoCommand()
@@ -241,7 +241,7 @@ namespace sqlcon
                 case "1":
                     if (arg1 != null)
                     {
-                        var sname = cfg.GetServerName(arg1);
+                        var sname = cfg.GetProvider(arg1);
                         if (sname != null)
                         {
                             Side side = new Side(sname);
@@ -257,7 +257,7 @@ namespace sqlcon
                 case "2":
                     if (arg1 != null)
                     {
-                        var sname = cfg.GetServerName(arg1);
+                        var sname = cfg.GetProvider(arg1);
                         if (sname != null)
                         {
                             Side side = new Side(sname);
@@ -273,7 +273,7 @@ namespace sqlcon
                 case "goto":
                     if (arg1 != null)
                     {
-                        var sname = cfg.GetServerName(arg1);
+                        var sname = cfg.GetProvider(arg1);
                         if (sname != null)
                         {
                             Side side = new Side(sname);

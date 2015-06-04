@@ -354,7 +354,7 @@ namespace Sys.Platform.Forms
             : base(databaseName)
         {
             this.provider = handle;
-            this.databaseName = new DatabaseName(this.provider.ServerName, this.Text); 
+            this.databaseName = new DatabaseName(this.provider, this.Text); 
         }
 
         public DatabaseName DatabaseName

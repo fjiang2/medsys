@@ -12,27 +12,27 @@ using System.Text.RegularExpressions;
 
 namespace sqlcon
 {
-    class Side  
+    class Side  : IDataPath
     {
         public readonly DatabaseName DatabaseName;
-        public readonly ServerName ServerName;
+        public readonly ConnectionProvider provider;
 
-        public Side(ServerName serverName)
+        public Side(ConnectionProvider provider)
         {
-            this.ServerName = serverName;
-            this.DatabaseName = new DatabaseName(serverName, Provider.InitialCatalog);
+            this.provider = provider;
+            this.DatabaseName = new DatabaseName(provider, Provider.InitialCatalog);
         }
 
       
         public ConnectionProvider Provider
         {
-            get { return this.ServerName.Provider; }
+            get { return this.provider; }
         }
 
 
-        public string Alias
+        public string Path
         {
-            get { return this.Provider.Name; }
+            get { return this.provider.Name; }
         }
 
         public string GenerateScript()

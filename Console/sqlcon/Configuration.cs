@@ -151,7 +151,7 @@ namespace sqlcon
             }
         }
 
-        public ServerName GetServerName(string alias)
+        public ConnectionProvider GetProvider(string alias)
         {
             string[] x = alias.Split('\\');
             if (x.Length != 3)
@@ -160,11 +160,11 @@ namespace sqlcon
                 return null;
             }
 
-            return GetProvider(x[1], x[2]).ServerName;
+            return GetProvider(x[1], x[2]);
         }
 
 
-        public ConnectionProvider GetProvider(string serverAlias, string connectionAlias)
+        private ConnectionProvider GetProvider(string serverAlias, string connectionAlias)
         {
             var provider = Providers.Find(x => x.Name == connectionAlias && x.ServerAlias == serverAlias);
             if (provider != null)

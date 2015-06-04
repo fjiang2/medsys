@@ -110,7 +110,7 @@ namespace Sys.Data
                     throw new NotSupportedException();
             }
 
-            return dnames.Select(dname => new DatabaseName(serverName, dname)).ToArray();
+            return dnames.Select(dname => new DatabaseName(serverName.Provider, dname)).ToArray();
         }
 
         public static TableName[] GetTableNames(this DatabaseName databaseName)

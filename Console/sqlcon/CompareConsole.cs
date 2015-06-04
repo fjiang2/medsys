@@ -17,8 +17,8 @@ namespace sqlcon
     {
         Configuration cfg;
 
-        private ServerName sname1;
-        private ServerName sname2;
+        private ConnectionProvider pvd1;
+        private ConnectionProvider pvd2;
         private string alias1 = "S1";
         private string alias2 = "S2";
 
@@ -35,8 +35,8 @@ namespace sqlcon
             {
                 this.alias1 = (string)comparison[0];
                 this.alias2 = (string)comparison[1];
-                this.sname1 = cfg.GetServerName(alias1);
-                this.sname2 = cfg.GetServerName(alias2);
+                this.pvd1 = cfg.GetProvider(alias1);
+                this.pvd2 = cfg.GetProvider(alias2);
             }
         }
 
@@ -86,14 +86,14 @@ namespace sqlcon
                     case "/s":
                         if (i < args.Length && args[i++].parse(out alias1, out alias2))
                         {
-                            this.sname1 = cfg.GetServerName(alias1);
-                            this.sname2 = cfg.GetServerName(alias2);
-                            if (sname1==null)
+                            this.pvd1 = cfg.GetProvider(alias1);
+                            this.pvd2 = cfg.GetProvider(alias2);
+                            if (pvd1==null)
                             {
                                 stdio.WriteLine("undefined server alias ({0}) in configuration file", alias1);
                                 return;
                             }
-                            if (sname2== null)
+                            if (pvd2== null)
                             {
                                 stdio.WriteLine("undefined server alias ({0}) in configuration file", alias2);
                                 return;
@@ -270,7 +270,7 @@ namespace sqlcon
                 }
             }
 
-            if (sname1 == null)
+            if (pvd1 == null)
             {
                 if (!cs1.IsGoodConnectionString())
                 {
@@ -278,12 +278,11 @@ namespace sqlcon
                     return;
                 }
 
-                var provider = ConnectionProviderManager.Register(alias1, cs1);
-                sname1 = provider.ServerName;
-                cfg.Providers.Add(provider);
+                pvd1 = ConnectionProviderManager.Register(alias1, cs1);
+                cfg.Providers.Add(pvd1);
             }
 
-            if (sname2 == null)
+            if (pvd2 == null)
             {
                 if (!cs2.IsGoodConnectionString())
                 {
@@ -291,13 +290,12 @@ namespace sqlcon
                     return;
                 }
 
-                var provider = ConnectionProviderManager.Register(alias2, cs2);
-                sname2 = provider.ServerName;
-                cfg.Providers.Add(provider);
+                pvd2 = ConnectionProviderManager.Register(alias2, cs2);
+                cfg.Providers.Add(pvd2);
             }
 
-            Side side1 = new Side(sname1);
-            Side side2 = new Side(sname2);
+            Side side1 = new Side(pvd1);
+            Side side2 = new Side(pvd2);
 
             CompareAdapter adapter = new CompareAdapter(side1, side2);
             MatchedDatabase m1 = new MatchedDatabase(adapter.Side1.DatabaseName, tableNamePattern1, cfg.excludedtables);
