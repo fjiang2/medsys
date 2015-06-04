@@ -89,12 +89,7 @@ ORDER BY c.name, c.column_id
 
         public static DataTable Search(string pattern, DataTable table, string columnName)
         {
-            string x = "^" + Regex.Escape(pattern)
-                                  .Replace(@"\*", ".*")
-                                  .Replace(@"\?", ".")
-                           + "$";
-
-            Regex regex = new Regex(x, RegexOptions.IgnoreCase);
+            Regex regex = WildcardRegex(pattern);
             foreach (DataRow row in table.Rows)
             {
                 if(!regex.IsMatch(row[columnName].ToString()))
@@ -103,6 +98,18 @@ ORDER BY c.name, c.column_id
 
             table.AcceptChanges();
             return table;
+        }
+
+
+        public static Regex WildcardRegex(this string pattern)
+        {
+            string x = "^" + Regex.Escape(pattern)
+                                  .Replace(@"\*", ".*")
+                                  .Replace(@"\?", ".")
+                           + "$";
+
+            Regex regex = new Regex(x, RegexOptions.IgnoreCase);
+            return regex;
         }
     }
 

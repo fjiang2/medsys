@@ -79,12 +79,7 @@ namespace sqlcon
 
         public static TableName[] Search(string pattern, TableName[] tableNames)
         {
-            string x = "^" + Regex.Escape(pattern)
-                                  .Replace(@"\*", ".*")
-                                  .Replace(@"\?", ".")
-                           + "$";
-
-            Regex regex = new Regex(x, RegexOptions.IgnoreCase);
+            Regex regex = pattern.WildcardRegex();
             var result = tableNames.Where(tname => regex.IsMatch(tname.Name)).ToArray();
 
             return result;

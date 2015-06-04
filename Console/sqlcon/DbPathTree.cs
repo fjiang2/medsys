@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Data.Common;
 using System.Data.SqlClient;
 using System.Data.OleDb;
+using System.Text.RegularExpressions;
 using Sys.Data;
 using Sys;
 
@@ -98,23 +99,41 @@ namespace sqlcon
 
         public bool Refreshing { get; set; }
 
-        #region Navigate TreeNode
-
-        private TreeNode<IDataPath> Navigate(string path)
+        private string[] parsePath(string path, out string wildcard)
         {
+            wildcard = null;
+
             if (string.IsNullOrEmpty(path))
-                return current;
+                return new string[0];
 
             string[] segments = path.Split('\\');
-            if (string.IsNullOrEmpty(segments[0]))
-                segments[0] = "\\";
+            int n1 = 0;
+            int n2 = segments.Length - 1;
+
+            if (string.IsNullOrEmpty(segments[n1]))
+                segments[n1] = "\\";
+
+            if (segments[n2] == "")
+                return segments.Take(n2).ToArray();
+            else if (segments[n2].IndexOf('*') >= 0 || segments[n2].IndexOf('?') >= 0)
+            {
+                wildcard = segments[n2];
+                return segments.Take(n2).ToArray();
+            }
+            
+            return segments;
+        }
+
+        #region Navigate TreeNode
+
+        private TreeNode<IDataPath> Navigate(string[] segments)
+        {
+            if (segments.Length == 0)
+                return current;
 
             var node = current;
             foreach (string segment in segments)
             {
-                if (string.IsNullOrEmpty(segment))
-                    break;
-
                 node = Navigate(node, segment);
                 if (node == null)
                     return null;
@@ -172,7 +191,15 @@ namespace sqlcon
 
         public void ChangePath(string path)
         {
-            var node = Navigate(path);
+            string wildcard;
+            string[] segments = parsePath(path, out wildcard);
+            if (wildcard != null)
+            {
+                stdio.ShowError("invalid path");
+                return;
+            }
+
+            var node = Navigate(segments);
             if (node != null)
                 current = node;
 
@@ -249,62 +276,88 @@ namespace sqlcon
         public void dir(string path)
         {
             var pt = current;
+            string wildcard = null;
+
             if (path != null)
             {
-                pt = Navigate(path);
+                string[] segments = parsePath(path, out wildcard);
+                pt = Navigate(segments);
             }
 
             if (pt.Nodes.Count == 0)
                 Expand(pt);
 
+            Func<IDataPath, bool> check = xname =>
+                {
+                    if (wildcard != null)
+                    {
+                        Regex regex = wildcard.WildcardRegex();
+                        return regex.IsMatch(xname.Path);
+                    }
+                    return true;
+                };
+
             if (pt == tree.RootNode)
             {
                 int i = 0;
+                int count = 0;
                 foreach (var node in pt.Nodes)
                 {
                     ServerName sname = (ServerName)node.Item;
+                    ++i;
 
-                    int count = 0;
-                    if (node.Nodes.Count == 0)
-                        ExpandServerName(node, true);
+                    if (check(sname))
+                    {
+                        count++;
+                        if (node.Nodes.Count == 0)
+                            ExpandServerName(node, true);
 
-                    count = node.Nodes.Count;
-
-                    stdio.WriteLine("{0,2}. {1,26} <SVR> {2,10} Databases", ++i, sname.Path, count);
+                        stdio.WriteLine("{0,2}. {1,26} <SVR> {2,10} Databases", i, sname.Path, node.Nodes.Count);
+                    }
                 }
 
-                stdio.WriteLine("\t{0} Server(s)", pt.Nodes.Count);
+                stdio.WriteLine("\t{0} Server(s)", count);
             }
             else if (pt.Item is ServerName)
             {
                 int i = 0;
+                int count = 0;
                 foreach (var node in pt.Nodes)
                 {
                     DatabaseName dname = (DatabaseName)node.Item;
-                    
-                    int count = 0;
-                    if (node.Nodes.Count == 0)
-                        ExpandDatabaseName(node, true);
+                    ++i;
 
-                    count = node.Nodes.Count;
+                    if (check(dname))
+                    {
+                        count++;
+                        if (node.Nodes.Count == 0)
+                            ExpandDatabaseName(node, true);
 
-                    stdio.WriteLine("{0,2}. {1,26} <DB> {2,10} Tables", ++i, dname.Name, count);
+                        stdio.WriteLine("{0,2}. {1,26} <DB> {2,10} Tables", i, dname.Name, node.Nodes.Count);
+                    }
                 }
 
-                stdio.WriteLine("\t{0} Database(s)", pt.Nodes.Count);
+                stdio.WriteLine("\t{0} Database(s)", count);
             
             }
             else if (pt.Item is DatabaseName)
             {
                 int i = 0;
+                int count = 0;
                 foreach (var node in pt.Nodes)
                 {
                     TableName tname = (TableName)node.Item;
-                    int count = new SqlCmd(tname.Provider, string.Format("SELECT COUNT(*) FROM {0}", tname)).FillObject<int>();
-                    stdio.WriteLine("{0,2}. {1,15}.{2,-37} <TAB> {3,10} Rows", ++i, tname.SchemaName, tname.Name, count);
+                    ++i;
+
+                    if (check(tname))
+                    {
+                        count++;
+                        int rows = new SqlCmd(tname.Provider, string.Format("SELECT COUNT(*) FROM {0}", tname)).FillObject<int>();
+                        stdio.WriteLine("{0,2}. {1,15}.{2,-37} <TAB> {3,10} Rows", i, tname.SchemaName, tname.Name, rows);
+                    }
                 }
 
-                stdio.WriteLine("\t{0} Table(s)", pt.Nodes.Count);
+                stdio.WriteLine("\t{0} Table(s)", count);
                 stdio.WriteLine("\t{0} View(s)", 0);
             }
             else if (pt.Item is TableName)
@@ -314,6 +367,12 @@ namespace sqlcon
 
         }
 
+
+    
+
+           
+
+    
         public override string ToString()
         {
             List<string> items = new List<string>();

@@ -120,8 +120,8 @@ namespace Sys.Data
                 case DbProviderType.OleDb:
                 case DbProviderType.SqlDb:
                     return SqlCmd
-                        .FillDataTable(databaseName.Provider, 
-                            "USE [{0}] ; SELECT SCHEMA_NAME(schema_id) AS SchemaName, name as TableName FROM sys.Tables ORDER BY Name", 
+                        .FillDataTable(databaseName.Provider,
+                            "USE [{0}] ; SELECT SCHEMA_NAME(schema_id) AS SchemaName, name as TableName FROM sys.Tables ORDER BY SchemaName,Name", 
                             databaseName.Name)
                         .AsEnumerable()
                         .Select(row=> new TableName(databaseName, row.Field<string>("SchemaName"), row.Field<string>("TableName")))
