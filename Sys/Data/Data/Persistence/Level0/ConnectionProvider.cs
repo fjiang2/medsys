@@ -208,15 +208,14 @@ namespace Sys.Data
             get
             {
                 string key = this.DataSource;
-               // key = this.ServerAlias;
+                key = this.ServerAlias;
                 if (!_serverNames.ContainsKey(key))
                 {
                     _serverNames.Add(key, new ServerName(this, ServerAlias));
                 }
 
-                return _serverNames[key];
-
-                //return new ServerName(this, ServerAlias);
+                var sname = _serverNames[key];
+                return sname;
             }
         }
 

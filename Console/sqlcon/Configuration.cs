@@ -136,9 +136,11 @@ namespace sqlcon
         {
             get
             {
-                return Providers.Select(pvd => pvd.ServerName)
+                var names = Providers.Select(pvd => pvd.ServerName)
                     .Distinct()
                     .ToList();
+
+                return names;
             }
         }
 
@@ -155,16 +157,16 @@ namespace sqlcon
         }
 
 
-        private ConnectionProvider GetProvider(string serverAlias, string databaseName)
+        private ConnectionProvider GetProvider(string serverName, string databaseName)
         {
-            var provider = Providers.Find(x => x.ServerAlias == serverAlias);
+            var provider = Providers.Find(x => x.ServerAlias == serverName);
             if (provider != null)
             {
-                return ConnectionProviderManager.NewConnectionProvider(provider, databaseName);
+                return ConnectionProviderManager.CloneConnectionProvider(provider, serverName, databaseName);
             }
             else
             {
-                stdio.ShowError("invalid server path: \\{0}\\{1}", serverAlias, databaseName);
+                stdio.ShowError("invalid server path: \\{0}\\{1}", serverName, databaseName);
                 return null;
             }
         }

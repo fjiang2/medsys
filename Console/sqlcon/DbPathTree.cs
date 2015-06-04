@@ -84,24 +84,21 @@ namespace sqlcon
             get { return this.current.Item; }
         }
 
-        public DatabaseName CurrentDatabaseName
+        public T GetCurrent<T>() where T : IDataPath
         {
-            get
+            if (current == tree.RootNode)
+                return default(T);
+
+            var p = current;
+            while (!(p.Item is T))
             {
-                if (current == tree.RootNode)
-                    return null;
+                p = p.Parent;
 
-                var p = current;
-                while (!(p.Item is DatabaseName))
-                {
-                    p = p.Parent;
-
-                    if (p == null)
-                        return null;
-                }
-
-                return (DatabaseName)p.Item;
+                if (p == null)
+                    return default(T);
             }
+
+            return (T)p.Item;
         }
 
         public bool Refreshing { get; set; }
@@ -245,9 +242,19 @@ namespace sqlcon
                 if (refresh)
                     node.Nodes.Clear();
 
-                DatabaseName[] dnames = sname.GetDatabaseNames();
-                foreach (var dname in dnames)
-                    node.Nodes.Add(new TreeNode<IDataPath>(dname));
+                if (sname.Disconnected)
+                    return;
+
+                try
+                {
+                    DatabaseName[] dnames = sname.GetDatabaseNames();
+                    foreach (var dname in dnames)
+                        node.Nodes.Add(new TreeNode<IDataPath>(dname));
+                }
+                catch (Exception)
+                {
+                    sname.Disconnected = true;
+                }
             }
         }
 
@@ -320,9 +327,11 @@ namespace sqlcon
                     {
                         count++;
                         if (node.Nodes.Count == 0)
-                            ExpandServerName(node, true);
+                        {
+                            ExpandServerName(node, Refreshing);
+                        }
 
-                        stdio.WriteLine("{0,2}. {1,26} <SVR> {2,10} Databases", i, sname.Path, node.Nodes.Count);
+                        stdio.WriteLine("{0,2}. {1,26} <SVR> {2,10} Databases", i, sname.Path, sname.Disconnected ? "?" : node.Nodes.Count.ToString());
                     }
                 }
 
@@ -330,25 +339,32 @@ namespace sqlcon
             }
             else if (pt.Item is ServerName)
             {
-                int i = 0;
-                int count = 0;
-                foreach (var node in pt.Nodes)
+                ServerName sname = (ServerName)pt.Item;
+                if (sname.Disconnected)
                 {
-                    DatabaseName dname = (DatabaseName)node.Item;
-                    ++i;
-
-                    if (check(dname))
-                    {
-                        count++;
-                        if (node.Nodes.Count == 0)
-                            ExpandDatabaseName(node, true);
-
-                        stdio.WriteLine("{0,2}. {1,26} <DB> {2,10} Tables", i, dname.Name, node.Nodes.Count);
-                    }
+                    stdio.WriteLine("\t? Database(s)");
                 }
+                else
+                {
+                    int i = 0;
+                    int count = 0;
+                    foreach (var node in pt.Nodes)
+                    {
+                        DatabaseName dname = (DatabaseName)node.Item;
+                        ++i;
 
-                stdio.WriteLine("\t{0} Database(s)", count);
-            
+                        if (check(dname))
+                        {
+                            count++;
+                            if (node.Nodes.Count == 0)
+                                ExpandDatabaseName(node, true);
+
+                            stdio.WriteLine("{0,2}. {1,26} <DB> {2,10} Tables", i, dname.Name, node.Nodes.Count);
+                        }
+                    }
+
+                    stdio.WriteLine("\t{0} Database(s)", count);
+                }
             }
             else if (pt.Item is DatabaseName)
             {

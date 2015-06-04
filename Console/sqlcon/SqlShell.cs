@@ -140,10 +140,6 @@ namespace sqlcon
                         stdio.WriteLine(pathTree.ToString());
                     return true;
 
-                case "cd\\":
-                    chdir("\\");
-                    return true;
-
                 case "cd.":
                     chdir(".");
                     return true;
@@ -170,7 +166,7 @@ namespace sqlcon
         {
             if (pathTree.chdir(path))
             {
-                var dname = pathTree.CurrentDatabaseName;
+                var dname = pathTree.GetCurrent<DatabaseName>();
                 if (dname != null)
                     theSide.UpdateDatabase(dname.Provider);
             }
