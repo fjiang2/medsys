@@ -24,7 +24,7 @@ namespace Sys.Data
     /// <summary>
     /// Modeling SQL WHERE clause
     /// </summary>
-    public class Locator : IDataElementName
+    public class Locator : IDataPath
     {
         private string where;
         bool unique = true;
@@ -72,7 +72,7 @@ namespace Sys.Data
             return string.IsNullOrEmpty(locator.where);
         }
 
-        public string Name
+        public string Path
         {
             get { return where; }
         }

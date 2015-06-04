@@ -21,7 +21,7 @@ using System.Text;
 
 namespace Sys.Data
 {
-    public class DatabaseName : IComparable<DatabaseName>, IComparable, IDataElementName
+    public class DatabaseName : IComparable<DatabaseName>, IComparable, IDataPath
     {
         private ServerName serverName;
         private string name;
@@ -37,6 +37,11 @@ namespace Sys.Data
             get { return this.name; }
         }
 
+        public string Path
+        {
+            get { return this.name; }
+        }
+        
         public ServerName ServerName
         {
             get { return this.serverName; }

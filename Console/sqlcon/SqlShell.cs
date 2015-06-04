@@ -145,6 +145,23 @@ namespace sqlcon
                     }
 
                     return true;
+
+                case "cd":
+                    if (arg1 != null)
+                        pathTree.ChangePath(arg1);
+                    return true;
+
+                case "cd\\":
+                    pathTree.ChangePath("\\");
+                    return true;
+
+                case "cd.":
+                    pathTree.ChangePath(".");
+                    return true;
+
+                case "cd..":
+                    pathTree.ChangePath("..");
+                    return true;
             }
 
             return false;

@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Sys.Data
 {
-    public interface IDataElementName
+    public interface IDataPath
     {
-        string Name { get; }
+        string Path { get; }
     }
 }

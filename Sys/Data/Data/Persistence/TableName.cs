@@ -21,7 +21,7 @@ using System.Text;
 
 namespace Sys.Data
 {
-    public class TableName : IComparable<TableName>, IComparable, IDataElementName
+    public class TableName : IComparable<TableName>, IComparable, IDataPath
     {
         public const string dbo = "dbo";
 
@@ -92,6 +92,14 @@ namespace Sys.Data
         public string Name
         {
             get { return this.tableName; }
+        }
+
+        public string Path
+        {
+            get
+            {
+                return string.Format("{0}.{1}", this.schema, this.tableName);
+            }
         }
 
         public string SchemaName

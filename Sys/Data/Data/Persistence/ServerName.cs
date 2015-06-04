@@ -21,7 +21,7 @@ using System.Text;
 
 namespace Sys.Data
 {
-    public class ServerName : IComparable<ServerName>, IComparable, IDataElementName
+    public class ServerName : IComparable<ServerName>, IComparable, IDataPath
     {
         private ConnectionProvider provider;
         private string name;
@@ -32,7 +32,7 @@ namespace Sys.Data
             this.name = alias;
         }
 
-        public string Name
+        public string Path
         {
             get { return this.name; }
         }
