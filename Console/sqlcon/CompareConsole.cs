@@ -88,21 +88,21 @@ namespace sqlcon
                         {
                             this.pvd1 = cfg.GetProvider(alias1);
                             this.pvd2 = cfg.GetProvider(alias2);
-                            if (pvd1==null)
+                            if (pvd1 == null)
                             {
-                                stdio.WriteLine("undefined server alias ({0}) in configuration file", alias1);
+                                stdio.WriteLine("undefined server name ({0}) in configuration file", alias1);
                                 return;
                             }
-                            if (pvd2== null)
+                            if (pvd2 == null)
                             {
-                                stdio.WriteLine("undefined server alias ({0}) in configuration file", alias2);
+                                stdio.WriteLine("undefined server name ({0}) in configuration file", alias2);
                                 return;
                             }
                             break;
                         }
                         else
                         {
-                            stdio.WriteLine("/s database server alias undefined");
+                            stdio.WriteLine("/s database server name undefined");
                             return;
                         }
 
@@ -148,7 +148,7 @@ namespace sqlcon
                             var server1 = cfg.GetValue("server1");
                             if (server1.Defined)
                             {
-                                alias1 = (string)server1["alias"];
+                                alias1 = (string)server1["name"];
                                 cs1.DataSource = t1;
                                 cs1.InitialCatalog = (string)server1["initial_catalog"];
                                 cs1.UserID = (string)server1["user_id"];
@@ -158,7 +158,7 @@ namespace sqlcon
                             var server2 = cfg.GetValue("server2");
                             if (server2.Defined)
                             {
-                                alias2 = (string)server2["alias"];
+                                alias2 = (string)server2["name"];
                                 cs1.DataSource = t2;
                                 cs1.InitialCatalog = (string)server2["initial_catalog"];
                                 cs2.UserID = (string)server2["user_id"];

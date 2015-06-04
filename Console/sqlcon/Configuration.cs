@@ -109,7 +109,7 @@ namespace sqlcon
         {
             List<ConnectionProvider> pvds = new List<ConnectionProvider>();
 
-            var machines = Cfg.GetValue("alias");
+            var machines = Cfg.GetValue("servers");
             if (machines.Undefined)
                 return pvds;
 
@@ -117,7 +117,7 @@ namespace sqlcon
             {
                 if (pair[0].IsNull || pair[1].IsNull)
                 {
-                    stdio.ShowError("warning: undefined connection string at alias.{0}", pair[0].ToSimpleString());
+                    stdio.ShowError("warning: undefined connection string at servers.{0}", pair[0].ToSimpleString());
                     continue;
                 }
 
@@ -143,12 +143,12 @@ namespace sqlcon
             }
         }
 
-        public ConnectionProvider GetProvider(string alias)
+        public ConnectionProvider GetProvider(string path)
         {
-            string[] x = alias.Split('\\');
+            string[] x = path.Split('\\');
             if (x.Length != 3)
             {
-                stdio.ShowError("invalid server path: {0}, correct format is server\\database", alias);
+                stdio.ShowError("invalid server path: {0}, correct format is server\\database", path);
                 return null;
             }
 

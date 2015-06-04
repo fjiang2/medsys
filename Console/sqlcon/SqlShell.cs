@@ -297,7 +297,7 @@ namespace sqlcon
                             ChangeSide(side);
                         }
                         else
-                            stdio.ShowError("undefined database server alias : {0}", arg1);
+                            stdio.ShowError("undefined database server name : {0}", arg1);
                     }
                     else
                         stdio.ShowError("command argument missing");
@@ -498,16 +498,16 @@ namespace sqlcon
                     theSide.DatabaseName.AllIndices().ToConsole();
                     break; 
                 
-                case "alias":
+                case "connection":
                     {
-                        var list = cfg.GetValue("alias");
+                        var list = cfg.GetValue("servers");
                         if (list.Defined)
                         {
                             list.Select(kvp => new { Alias = (string)kvp[0].HostValue, Connection = kvp[1].ToString() })
                             .ToConsole();
                         }
                         else
-                            stdio.ShowError("connection string alias not found");
+                            stdio.ShowError("connection string not found");
                     }
                     break;
 
@@ -539,12 +539,12 @@ namespace sqlcon
             stdio.WriteLine("<show fk> tablename     : show table foreign keys");
             stdio.WriteLine("<show ik> tablename     : show table identity keys");
             stdio.WriteLine("<show vw> viewnames     : show view structure");
-            stdio.WriteLine("<show alias>            : show connection-string alias list");
+            stdio.WriteLine("<show connection>       : show connection-string list");
             stdio.WriteLine("<show var>              : show variable list");
             stdio.WriteLine("<run> query(..)         : run predefined query. e.g. run query(var1=val1,...);");
-            stdio.WriteLine("<1> [alias]             : switch to source server 1 (default)");
-            stdio.WriteLine("<2> [alias]             : switch to sink server 2");
-            stdio.WriteLine("<goto> alias            : switch to database server");
+            stdio.WriteLine("<1> [path]              : switch to source server 1 (default)");
+            stdio.WriteLine("<2> [path]              : switch to sink server 2");
+            stdio.WriteLine("<goto> path             : switch to database server");
             stdio.WriteLine("<copy result>           : copy sql script ouput to clipboard");
             stdio.WriteLine("<open log>              : open log file");
             stdio.WriteLine("<exit>                  : quit application");

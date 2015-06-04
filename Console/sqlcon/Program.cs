@@ -89,7 +89,7 @@ namespace sqlcon
             stdio.WriteLine("sqlcon v1.0");
             stdio.WriteLine("Usage: sqlcon");
             stdio.WriteLine("     [/cfg configuration file(.cfg)]");
-            stdio.WriteLine("     [/s alias1:alias2]|[/s alias]");
+            stdio.WriteLine("     [/s name1:name2]|[/s name]");
             stdio.WriteLine("     [/S server1:server2] [/U user1:user2] [/P password1:password2]");
             stdio.WriteLine("     [/c schema|data|row|exec|gen|shell]");
             stdio.WriteLine("     [/e table1,table2,...,table");
@@ -99,7 +99,7 @@ namespace sqlcon
             stdio.WriteLine();
             stdio.WriteLine("/h,/?      : this help");
             stdio.WriteLine("/cfg       : congfiguration file default file:sqlcon.cfg]");
-            stdio.WriteLine("/s         : server alias defined on ini file]");
+            stdio.WriteLine("/s         : server name defined on ini file]");
             stdio.WriteLine("/c schema  : compare schmea (default)");
             stdio.WriteLine("/c data    : compare data");
             stdio.WriteLine("/c gen     : generate table script from database on server1");
