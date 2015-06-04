@@ -117,14 +117,13 @@ namespace sqlcon
             {
                 if (pair[0].IsNull || pair[1].IsNull)
                 {
-                    stdio.ShowError("undefined connection string {0}={1}", pair[0].ToSimpleString(), pair[1]);
+                    stdio.ShowError("warning: undefined connection string at alias.{0}", pair[0].ToSimpleString());
                     continue;
                 }
 
-                string name = pair[0].Str;
+                string serverName = pair[0].Str;
                 string connectionString = PeelOleDb(pair[1].Str);
-                ConnectionProvider provider = ConnectionProviderManager.Register("master", new SqlConnectionStringBuilder(connectionString));
-                provider.ServerAlias = name;
+                ConnectionProvider provider = ConnectionProviderManager.Register(serverName, new SqlConnectionStringBuilder(connectionString));
                 pvds.Add(provider);
             }
              
@@ -159,7 +158,7 @@ namespace sqlcon
 
         private ConnectionProvider GetProvider(string serverName, string databaseName)
         {
-            var provider = Providers.Find(x => x.ServerAlias == serverName);
+            var provider = Providers.Find(x => x.Name == serverName);
             if (provider != null)
             {
                 return ConnectionProviderManager.CloneConnectionProvider(provider, serverName, databaseName);

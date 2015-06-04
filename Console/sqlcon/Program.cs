@@ -17,6 +17,10 @@ namespace sqlcon
         [STAThread]
         static void Main(string[] args)
         {
+            stdio.WriteLine("SQL Server Command Console [Version 1.0.0.0]");
+            stdio.WriteLine("Copyright (c) 2014-2015 Datconn. All rights reserved.");
+            stdio.WriteLine();
+
             var cfgFile = "sqlcon.cfg";
 
             int i = 0;

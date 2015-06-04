@@ -111,7 +111,7 @@ namespace Sys.Data
 
         public override string ToString()
         {
-            return string.Format("Handle={0}, Name={1}\\{2}, DataSource={3}", this.Handle, this.ServerAlias, this.Name, this.DataSource);
+            return string.Format("Handle={0}, Name={1}\\{2}, DataSource={3}", this.Handle, this.Name, this.InitialCatalog, this.DataSource);
         }
 
         public string ToSimpleString()
@@ -186,32 +186,16 @@ namespace Sys.Data
         }
 
         
-        private string _serverAlias = null;
-        public string ServerAlias 
-        {
-            get
-            {
-                if (_serverAlias == null)
-                    _serverAlias = this.DataSource.Replace("\\", ".");
-
-                return _serverAlias;
-            }
-            set
-            {
-                _serverAlias = value;
-            }
-        }
-
         private static Dictionary<string, ServerName> _serverNames = new Dictionary<string, ServerName>();
         public ServerName ServerName
         {
             get
             {
                 string key = this.DataSource;
-                key = this.ServerAlias;
+                key = this.Name;
                 if (!_serverNames.ContainsKey(key))
                 {
-                    _serverNames.Add(key, new ServerName(this, ServerAlias));
+                    _serverNames.Add(key, new ServerName(this, Name));
                 }
 
                 var sname = _serverNames[key];

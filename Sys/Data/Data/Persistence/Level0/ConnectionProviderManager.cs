@@ -210,8 +210,7 @@ namespace Sys.Data
         public static ConnectionProvider CloneConnectionProvider(ConnectionProvider provider, string serverName, string databaseName)
         {
             provider.InitialCatalog = databaseName;
-            var pvd = ConnectionProviderManager.Register(databaseName, new SqlConnectionStringBuilder(provider.ConnectionString));
-            pvd.ServerAlias = serverName;
+            var pvd = ConnectionProviderManager.Register(serverName, new SqlConnectionStringBuilder(provider.ConnectionString));
             return pvd;
         }
     }

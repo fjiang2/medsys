@@ -40,9 +40,7 @@ namespace sqlcon
 
         public void DoCommand()
         {
-            stdio.WriteLine("SQL Server Command Console [Version 1.0.0.0]");
-            stdio.WriteLine("Copyright (c) 2014-2015 Datconn. All rights reserved.");
-            stdio.WriteLine();
+        
             StringBuilder builder = new StringBuilder();
             string line = null;
             while (true)
