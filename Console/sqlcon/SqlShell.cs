@@ -127,23 +127,7 @@ namespace sqlcon
             switch (cmd)
             {
                 case "dir":
-                    if (arg1 != null)
-                    {
-                        var sname = cfg.GetServerName(arg1);
-                        if (sname != null)
-                        {
-                            Side side = new Side(sname);
-                            ChangeSide(side);
-                            this.server = 3;
-                        }
-                        else
-                            stdio.ShowError("undefined database server alias : {0}", arg1);
-                    }
-                    else
-                    {
-                       pathTree.dir();
-                    }
-
+                    pathTree.dir(arg1);
                     return true;
 
                 case "cd":

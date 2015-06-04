@@ -96,52 +96,107 @@ namespace sqlcon
             }
         }
 
-        public void ChangePath(string path, bool refresh)
+        public bool Refreshing { get; set; }
+
+        #region Navigate TreeNode
+
+        private TreeNode<IDataPath> Navigate(string path)
         {
-            if (path == "\\")
-            {
-                current = tree.RootNode;
-                return;
-            }
-            else if (path == ".")
-            {
-                return;
-            }
-            else if (path == "..")
-            {
-                if (current != tree.RootNode)
-                    current = current.Parent;
+            if (string.IsNullOrEmpty(path))
+                return current;
 
-                return;
+            string[] segments = path.Split('\\');
+            if (string.IsNullOrEmpty(segments[0]))
+                segments[0] = "\\";
+
+            var node = current;
+            foreach (string segment in segments)
+            {
+                if (string.IsNullOrEmpty(segment))
+                    break;
+
+                node = Navigate(node, segment);
+                if (node == null)
+                    return null;
             }
 
-            Expand(current, refresh);
+            return node;
+        }
 
-            var node = current.Nodes.Find(x => x.Item.Path == path);
+        private TreeNode<IDataPath> Navigate(TreeNode<IDataPath> node, string segment)
+        {
+            if (segment == "\\")
+            {
+                return tree.RootNode;
+            }
+            else if (segment == ".")
+            {
+                return node;
+            }
+            else if (segment == "..")
+            {
+                if (node != tree.RootNode)
+                    return node.Parent;
+                else
+                    return node;
+            }
+
+            Expand(node);
+
+            var xnode = node.Nodes.Find(x => x.Item.Path == segment);
+            if (xnode != null)
+                return xnode;
+            else
+            {
+                int result;
+                if (int.TryParse(segment, out result))
+                {
+                    result--;
+
+                    if (result >= 0 && result < node.Nodes.Count)
+                        return node.Nodes[result];
+                }
+                
+                stdio.ShowError("invalid path", segment);
+                return null;
+            }
+        }
+
+        #endregion
+
+        public void ChangePath(ServerName serverName, DatabaseName databaseName)
+        {
+            string path = string.Format(@"\{0}\{1}", serverName.Path, databaseName.Path);
+            ChangePath(path);
+        }
+
+        public void ChangePath(string path)
+        {
+            var node = Navigate(path);
             if (node != null)
                 current = node;
-            else
-                stdio.ShowError("invalid path", path);
 
             return;
         }
 
-        private void Expand(TreeNode<IDataPath> node, bool refresh)
+        #region Expand TreeNode
+
+        private void Expand(TreeNode<IDataPath> node)
         {
             if (node == tree.RootNode)
             {
             }
             else if (node.Item is ServerName)
             {
-                ExpandServerName(node, refresh);
+                ExpandServerName(node, this.Refreshing);
             }
             else if (node.Item is DatabaseName)
             {
-                ExpandDatabaseName(node, refresh);
+                ExpandDatabaseName(node, this.Refreshing);
             }
             else if (node.Item is TableName)
             {
-                ExpandTableName(node, refresh);
+                ExpandTableName(node, this.Refreshing);
             }
         }
 
@@ -186,42 +241,25 @@ namespace sqlcon
                 //    node.Nodes.Add(new TreeNode<IDataElementName>(tname));
             }
         }
-
-        public void ChangePath(ServerName serverName, DatabaseName databaseName)
-        { 
-            string path = string.Format(@"\{0}\{1}", serverName.Path, databaseName.Path);
-            ChangePath(path);
-        }
         
-        public void ChangePath(string path)
+        #endregion
+
+      
+
+        public void dir(string path)
         {
-            if (string.IsNullOrEmpty(path))
-                return;
-
-            string[] items = path.Split('\\');
-            if (string.IsNullOrEmpty(items[0]))
-                items[0] = "\\";
-
-            foreach(string item in items)
+            var pt = current;
+            if (path != null)
             {
-                if(!string.IsNullOrEmpty(item))
-                    ChangePath(item, false);
+                pt = Navigate(path);
             }
 
-        }
-
-
-        public void dir()
-        {
-            //ChangePath(path);
-
-            var pt = current;
-
             if (pt.Nodes.Count == 0)
-                Expand(pt, true);
+                Expand(pt);
 
             if (pt == tree.RootNode)
             {
+                int i = 0;
                 foreach (var node in pt.Nodes)
                 {
                     ServerName sname = (ServerName)node.Item;
@@ -232,13 +270,14 @@ namespace sqlcon
 
                     count = node.Nodes.Count;
 
-                    stdio.WriteLine("{0,26} <SVR> {1,10} Database(s)", sname.Path, count);
+                    stdio.WriteLine("{0,2}. {1,26} <SVR> {2,10} Databases", ++i, sname.Path, count);
                 }
 
                 stdio.WriteLine("\t{0} Server(s)", pt.Nodes.Count);
             }
             else if (pt.Item is ServerName)
             {
+                int i = 0;
                 foreach (var node in pt.Nodes)
                 {
                     DatabaseName dname = (DatabaseName)node.Item;
@@ -249,7 +288,7 @@ namespace sqlcon
 
                     count = node.Nodes.Count;
 
-                    stdio.WriteLine("{0,26} <DB> {1,10} Table(s)", dname.Name, count);
+                    stdio.WriteLine("{0,2}. {1,26} <DB> {2,10} Tables", ++i, dname.Name, count);
                 }
 
                 stdio.WriteLine("\t{0} Database(s)", pt.Nodes.Count);
@@ -257,16 +296,22 @@ namespace sqlcon
             }
             else if (pt.Item is DatabaseName)
             {
+                int i = 0;
                 foreach (var node in pt.Nodes)
                 {
                     TableName tname = (TableName)node.Item;
                     int count = new SqlCmd(tname.Provider, string.Format("SELECT COUNT(*) FROM {0}", tname)).FillObject<int>();
-                    stdio.WriteLine("{0,16}.{1,-38} <TAB> {2,10} Row(s)", tname.SchemaName, tname.Name, count);
+                    stdio.WriteLine("{0,2}. {1,15}.{2,-37} <TAB> {3,10} Rows", ++i, tname.SchemaName, tname.Name, count);
                 }
 
                 stdio.WriteLine("\t{0} Table(s)", pt.Nodes.Count);
                 stdio.WriteLine("\t{0} View(s)", 0);
             }
+            else if (pt.Item is TableName)
+            {
+                stdio.WriteLine("\t{0} Column(s)", pt.Nodes.Count);
+            }
+
         }
 
         public override string ToString()
@@ -280,7 +325,7 @@ namespace sqlcon
             }
             
             items.Reverse();
-            return string.Join("\\", items);
+            return "\\" + string.Join("\\", items);
         }
     }
 }
