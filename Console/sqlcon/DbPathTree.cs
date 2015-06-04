@@ -169,7 +169,7 @@ namespace sqlcon
 
             Expand(node);
 
-            var xnode = node.Nodes.Find(x => x.Item.Path == segment);
+            var xnode = node.Nodes.Find(x => x.Item.Path.ToUpper() == segment.ToUpper());
             if (xnode != null)
                 return xnode;
             else
@@ -362,8 +362,8 @@ namespace sqlcon
                     if (check(tname))
                     {
                         count++;
-                        int rows = new SqlCmd(tname.Provider, string.Format("SELECT COUNT(*) FROM {0}", tname)).FillObject<int>();
-                        stdio.WriteLine("{0,2}. {1,15}.{2,-37} <TAB> {3,10} Rows", i, tname.SchemaName, tname.Name, rows);
+                        //int rows = new SqlCmd(tname.Provider, string.Format("SELECT COUNT(*) FROM {0}", tname)).FillObject<int>();
+                        stdio.WriteLine("{0,3}. {1,15}.{2,-37} <TAB>", i, tname.SchemaName, tname.Name);
                     }
                 }
 

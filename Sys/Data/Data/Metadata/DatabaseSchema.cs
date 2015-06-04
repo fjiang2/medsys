@@ -85,7 +85,7 @@ namespace Sys.Data
                     }
 
                 case DbProviderType.SqlCe:
-                    return "Database" ;
+                    return "Database";
 
                 default:
                     throw new NotSupportedException();
@@ -93,6 +93,7 @@ namespace Sys.Data
         }
 
 
+        private static string[] __sys_tables = { "master", "model", "msdb", "tempdb" };
         public static DatabaseName[] GetDatabaseNames(this ServerName serverName)
         {
             string[] dnames;
@@ -100,12 +101,20 @@ namespace Sys.Data
             {
                 case DbProviderType.SqlDb:
                     dnames = SqlCmd.FillDataTable(serverName.Provider, "SELECT Name FROM sys.databases ORDER BY Name").ToArray<string>("name");
+                    List<string> L = new List<string>();
+                    foreach (var dname in dnames)
+                    {
+                        if (!__sys_tables.Contains(dname))
+                            L.Add(dname);
+                    }
+
+                    dnames = L.ToArray();
                     break;
-                
+
                 case DbProviderType.SqlCe:
-                    dnames = new string[] {"Database"};
+                    dnames = new string[] { "Database" };
                     break;
-                
+
                 default:
                     throw new NotSupportedException();
             }
@@ -121,10 +130,10 @@ namespace Sys.Data
                 case DbProviderType.SqlDb:
                     return SqlCmd
                         .FillDataTable(databaseName.Provider,
-                            "USE [{0}] ; SELECT SCHEMA_NAME(schema_id) AS SchemaName, name as TableName FROM sys.Tables ORDER BY SchemaName,Name", 
+                            "USE [{0}] ; SELECT SCHEMA_NAME(schema_id) AS SchemaName, name as TableName FROM sys.Tables ORDER BY SchemaName,Name",
                             databaseName.Name)
                         .AsEnumerable()
-                        .Select(row=> new TableName(databaseName, row.Field<string>("SchemaName"), row.Field<string>("TableName")))
+                        .Select(row => new TableName(databaseName, row.Field<string>("SchemaName"), row.Field<string>("TableName")))
                         .ToArray();
 
                 default:
@@ -136,11 +145,11 @@ namespace Sys.Data
         public static TableName[] GetViewNames(this DatabaseName databaseName)
         {
             return SqlCmd
-                .FillDataTable(databaseName.Provider, 
-                    "USE [{0}] ; SELECT  SCHEMA_NAME(schema_id) SchemaName, name FROM sys.views ORDER BY name", 
+                .FillDataTable(databaseName.Provider,
+                    "USE [{0}] ; SELECT  SCHEMA_NAME(schema_id) SchemaName, name FROM sys.views ORDER BY name",
                     databaseName.Name)
                     .AsEnumerable()
-                    .Select(row=>new TableName(databaseName, row.Field<string>(0), row.Field<string>(1)))
+                    .Select(row => new TableName(databaseName, row.Field<string>(0), row.Field<string>(1)))
                     .ToArray();
         }
 
@@ -234,7 +243,7 @@ SELECT
                 .AsEnumerable();
 
             var dict = dt.GroupBy(
-                    row => new TableName(databaseName, (string)row[0], (string)row[1]), 
+                    row => new TableName(databaseName, (string)row[0], (string)row[1]),
                     (Key, rows) => new { Fk = Key, Pk = rows.Select(row => new TableName(databaseName, (string)row[2], (string)row[3])).ToArray() })
                 .ToDictionary(row => row.Fk, row => row.Pk);
 
@@ -248,7 +257,7 @@ SELECT
                 if (history.IndexOf(tname) < 0)
                     Iterate(tname, dict, history);
             }
-            
+
             return history.ToArray();
         }
 
@@ -264,7 +273,7 @@ SELECT
             else
             {
                 foreach (var name in dict[tableName])
-                    Iterate(name, dict,  history);
+                    Iterate(name, dict, history);
 
                 if (history.IndexOf(tableName) < 0)
                 {
