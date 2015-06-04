@@ -151,6 +151,15 @@ namespace sqlcon
                 case "cd..":
                     chdir("..");
                     return true;
+
+                default:
+                    if (cmd.StartsWith("cd\\"))
+                    {
+                        arg1 = cmd.Substring(2);
+                        chdir(arg1);
+                        return true;
+                    }
+                    break;
             }
 
             return false;

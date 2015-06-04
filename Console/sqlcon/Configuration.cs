@@ -107,39 +107,28 @@ namespace sqlcon
 
         private List<ConnectionProvider> GetConnectionProviders()
         {
-            List<ConnectionProvider> snames = new List<ConnectionProvider>();
+            List<ConnectionProvider> pvds = new List<ConnectionProvider>();
 
             var machines = Cfg.GetValue("alias");
             if (machines.Undefined)
-                return snames;
+                return pvds;
 
-            foreach (var machine in machines)
+            foreach (var pair in machines)
             {
-                if (machine[0].IsNull || machine[1].IsNull)
+                if (pair[0].IsNull || pair[1].IsNull)
                 {
-                    stdio.ShowError("undefined server name {0}={1}", machine[0].ToSimpleString(), machine[1]);
+                    stdio.ShowError("undefined connection string {0}={1}", pair[0].ToSimpleString(), pair[1]);
                     continue;
                 }
 
-                string name = machine[0].Str;
-
-                foreach (var pair in machine[1])
-                {
-                    if (pair[0].IsNull || pair[1].IsNull)
-                    {
-                        stdio.ShowError("undefined connection string {0}={1}", pair[0].ToSimpleString(), pair[1]);
-                        continue;
-                    }
-
-                    string connectionAlias = pair[0].Str;
-                    string connectionString = PeelOleDb(pair[1].Str);
-                    ConnectionProvider provider = ConnectionProviderManager.Register(connectionAlias, new SqlConnectionStringBuilder(connectionString));
-                    provider.ServerAlias = name;
-                    snames.Add(provider);
-                }
+                string name = pair[0].Str;
+                string connectionString = PeelOleDb(pair[1].Str);
+                ConnectionProvider provider = ConnectionProviderManager.Register("master", new SqlConnectionStringBuilder(connectionString));
+                provider.ServerAlias = name;
+                pvds.Add(provider);
             }
              
-            return snames;
+            return pvds;
         }
 
 
@@ -147,7 +136,9 @@ namespace sqlcon
         {
             get
             {
-                return Providers.Select(pvd => pvd.ServerName).Distinct().ToList();
+                return Providers.Select(pvd => pvd.ServerName)
+                    .Distinct()
+                    .ToList();
             }
         }
 
@@ -164,14 +155,16 @@ namespace sqlcon
         }
 
 
-        private ConnectionProvider GetProvider(string serverAlias, string connectionAlias)
+        private ConnectionProvider GetProvider(string serverAlias, string databaseName)
         {
-            var provider = Providers.Find(x => x.Name == connectionAlias && x.ServerAlias == serverAlias);
+            var provider = Providers.Find(x => x.ServerAlias == serverAlias);
             if (provider != null)
-                return provider;
+            {
+                return ConnectionProviderManager.NewConnectionProvider(provider, databaseName);
+            }
             else
             {
-                stdio.ShowError("invalid server path: \\{0}\\{1}", serverAlias, connectionAlias);
+                stdio.ShowError("invalid server path: \\{0}\\{1}", serverAlias, databaseName);
                 return null;
             }
         }

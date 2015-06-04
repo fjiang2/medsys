@@ -111,7 +111,7 @@ namespace Sys.Data
 
         public override string ToString()
         {
-            return string.Format("Handle={0}, Name={1}\\{2}", this.Handle, this.ServerAlias, this.Name);
+            return string.Format("Handle={0}, Name={1}\\{2}, DataSource={3}", this.Handle, this.ServerAlias, this.Name, this.DataSource);
         }
 
         public string ToSimpleString()
@@ -207,12 +207,16 @@ namespace Sys.Data
         {
             get
             {
-                if (!_serverNames.ContainsKey(this.DataSource))
+                string key = this.DataSource;
+               // key = this.ServerAlias;
+                if (!_serverNames.ContainsKey(key))
                 {
-                    _serverNames.Add(this.DataSource, new ServerName(this, ServerAlias));
+                    _serverNames.Add(key, new ServerName(this, ServerAlias));
                 }
 
-                return _serverNames[this.DataSource];
+                return _serverNames[key];
+
+                //return new ServerName(this, ServerAlias);
             }
         }
 
@@ -228,5 +232,7 @@ namespace Sys.Data
                 return _defaultDatabaseName;
             }
         }
+
+    
     }
 }

@@ -207,6 +207,11 @@ namespace Sys.Data
             return Register(name, ConnectionProviderType.OleDbServer, builder.ConnectionString);
         }
 
+        public static ConnectionProvider NewConnectionProvider(ConnectionProvider provider, string databaseName)
+        {
+            provider.InitialCatalog = databaseName;
+            return ConnectionProviderManager.Register(databaseName, new SqlConnectionStringBuilder(provider.ConnectionString));
+        }
     }
 }
 
