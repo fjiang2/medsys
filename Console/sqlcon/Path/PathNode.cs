@@ -9,10 +9,12 @@ namespace sqlcon
 {
     class PathNode : IDataPath
     {
-        public readonly PathLevel Level;
-        public PathNode(PathLevel level)
+        public PathLevel Level {get; set;}
+        public IDataPath Parent { get; set; }
+        
+        public PathNode()
         {
-            this.Level = level;
+            this.Level = PathLevel.Unknown;
         }
 
         public string Path

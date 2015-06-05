@@ -111,7 +111,7 @@ namespace sqlcon
             }
 
             if (pt.Nodes.Count == 0)
-                Expand(pt);
+                Expand(pt, this.Refreshing);
 
             Display(pt, wildcard);
 

@@ -21,19 +21,13 @@ namespace sqlcon
     
         private void Display(TreeNode<IDataPath> pt, string wildcard)
         {
-            if (pt == RootNode)
-            {
-                DisplayServerName(pt, wildcard);
-            }
-            else if (pt.Item is ServerName)
-            {
-                DisplayDatabaseName(pt, wildcard);
-            }
-            else if (pt.Item is DatabaseName)
-            {
-                DisplayTableName(pt, wildcard);
-            }
-            else if (pt.Item is TableName)
+            DisplayServerName(pt, wildcard);
+            DisplayDatabaseName(pt, wildcard);
+            DisplayPathNode(pt, wildcard);
+            DisplayTableName(pt, wildcard);
+            DisplayViewName(pt, wildcard);
+            
+            if (pt.Item is TableName)
             {
                 DisplayColumnName((TableName)pt.Item, wildcard);
             }
@@ -41,6 +35,9 @@ namespace sqlcon
 
         private void DisplayServerName(TreeNode<IDataPath> pt, string wildcard)
         {
+            if (pt != RootNode)
+                return;
+
             int i = 0;
             int count = 0;
             foreach (var node in pt.Nodes)
@@ -65,6 +62,9 @@ namespace sqlcon
 
         private static void DisplayDatabaseName(TreeNode<IDataPath> pt, string wildcard)
         {
+            if (!(pt.Item is ServerName))
+                return;
+
             ServerName sname = (ServerName)pt.Item;
             if (sname.Disconnected)
             {
@@ -93,10 +93,35 @@ namespace sqlcon
             }
         }
 
+        private static void DisplayPathNode(TreeNode<IDataPath> pt, string wildcard)
+        {
+            if (!(pt.Item is DatabaseName))
+                return;
+
+            int i = 0;
+            foreach (var node in pt.Nodes)
+            {
+                PathNode pname = (PathNode)node.Item;
+                if (node.Nodes.Count == 0)
+                {
+
+                }
+                stdio.WriteLine("[{0}] {1}", ++i, pname);
+            }
+        }
+
         private static void DisplayTableName(TreeNode<IDataPath> pt, string wildcard)
         {
+            if (!(pt.Item is PathNode))
+                return;
+
+            PathNode pname = (PathNode)pt.Item;
+            if (pname.Level != PathLevel.Tables)
+                return;
+
+
             int i = 0;
-            int[] count = new int[] { 0, 0 };
+            int count = 0;
             foreach (var node in pt.Nodes)
             {
                 TableName tname = (TableName)node.Item;
@@ -104,19 +129,45 @@ namespace sqlcon
 
                 if (IsMatch(wildcard, tname.Path))
                 {
-                    if (!tname.IsViewName) count[0]++;
-                    if (tname.IsViewName) count[1]++;
-
-                    stdio.WriteLine("[{0,3}] {1,15}.{2,-37} <{3}>", i, tname.SchemaName, tname.Name, tname.IsViewName ? "VIEW" : "TABLE");
+                    count++;
+                    stdio.WriteLine("[{0,3}] {1,15}.{2,-37} <TABLE>", i, tname.SchemaName, tname.Name);
                 }
             }
 
-            stdio.WriteLine("\t{0} Table(s)", count[0]);
-            stdio.WriteLine("\t{0} View(s)", count[1]);
+            stdio.WriteLine("\t{0} Table(s)", count);
+        }
+
+
+        private static void DisplayViewName(TreeNode<IDataPath> pt, string wildcard)
+        {
+            if (!(pt.Item is PathNode))
+                return;
+
+            PathNode pname = (PathNode)pt.Item;
+            if (pname.Level != PathLevel.Views)
+                return;
+
+
+            int i = 0;
+            int count = 0;
+            foreach (var node in pt.Nodes)
+            {
+                TableName tname = (TableName)node.Item;
+                ++i;
+
+                if (IsMatch(wildcard, tname.Path))
+                {
+                    count++;
+                    stdio.WriteLine("[{0,3}] {1,15}.{2,-37} <VIEW>", i, tname.SchemaName, tname.Name);
+                }
+            }
+
+            stdio.WriteLine("\t{0} View(s)", count);
         }
 
         private static void DisplayColumnName(TableName tname, string wildcard)
         {
+
             TableSchema schema = new TableSchema(tname);
 
             int i = 0;

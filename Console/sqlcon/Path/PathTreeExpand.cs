@@ -10,27 +10,23 @@ namespace sqlcon
 {
     partial class PathTree
     {
-        private void Expand(TreeNode<IDataPath> node)
+        private void Expand(TreeNode<IDataPath> node, bool refresh)
         {
             if (node == RootNode)
-            {
-            }
-            else if (node.Item is ServerName)
-            {
-                ExpandServerName(node, this.Refreshing);
-            }
-            else if (node.Item is DatabaseName)
-            {
-                ExpandDatabaseName(node, this.Refreshing);
-            }
-            else if (node.Item is TableName)
-            {
-                ExpandTableName(node, this.Refreshing);
-            }
+                return;
+
+            ExpandServerName(node, refresh);
+            ExpandDatabaseName(node, refresh);
+            ExpandTables(node, refresh);
+            ExpandViews(node, refresh);
+            ExpandTableName(node, refresh);
         }
 
         private static void ExpandServerName(TreeNode<IDataPath> node, bool refresh)
         {
+            if (!(node.Item is ServerName))
+                return;
+
             ServerName sname = (ServerName)node.Item;
             if (refresh || node.Nodes.Count == 0)
             {
@@ -55,7 +51,30 @@ namespace sqlcon
 
         private static void ExpandDatabaseName(TreeNode<IDataPath> node, bool refresh)
         {
+            if (!(node.Item is DatabaseName))
+                return;
+
             DatabaseName dname = (DatabaseName)node.Item;
+            if (node.Nodes.Count == 0)
+            {
+                node.Nodes.Add(new TreeNode<IDataPath>(new PathNode { Level = PathLevel.Tables, Parent = dname }));
+                node.Nodes.Add(new TreeNode<IDataPath>(new PathNode { Level = PathLevel.Views, Parent = dname }));
+                node.Nodes.Add(new TreeNode<IDataPath>(new PathNode { Level = PathLevel.Proc, Parent = dname }));
+                node.Nodes.Add(new TreeNode<IDataPath>(new PathNode { Level = PathLevel.Func, Parent = dname }));
+
+            }
+        }
+
+        private static void ExpandTables(TreeNode<IDataPath> node, bool refresh)
+        {
+            if (!(node.Item is PathNode))
+                return;
+
+            PathNode pname = (PathNode)node.Item;
+            if (pname.Level != PathLevel.Tables)
+                return;
+
+            DatabaseName dname = (DatabaseName)pname.Parent;
             if (refresh || node.Nodes.Count == 0)
             {
                 if (refresh)
@@ -64,6 +83,23 @@ namespace sqlcon
                 TableName[] tnames = dname.GetTableNames();
                 foreach (var tname in tnames)
                     node.Nodes.Add(new TreeNode<IDataPath>(tname));
+            }
+        }
+
+        private static void ExpandViews(TreeNode<IDataPath> node, bool refresh)
+        {
+            if (!(node.Item is PathNode))
+                return;
+
+            PathNode pname = (PathNode)node.Item;
+            if (pname.Level != PathLevel.Views)
+                return;
+
+            DatabaseName dname = (DatabaseName)pname.Parent;
+            if (refresh || node.Nodes.Count == 0)
+            {
+                if (refresh)
+                    node.Nodes.Clear();
 
                 TableName[] vnames = dname.GetViewNames();
 
@@ -75,6 +111,9 @@ namespace sqlcon
 
         private static void ExpandTableName(TreeNode<IDataPath> node, bool refresh)
         {
+            if (!(node.Item is TableName))
+                return;
+
             TableName tname = (TableName)node.Item;
             if (refresh || node.Nodes.Count == 0)
             {
@@ -85,6 +124,7 @@ namespace sqlcon
                 //foreach (var tname in tnames)
                 //    node.Nodes.Add(new TreeNode<IDataElementName>(tname));
             }
+
         }
         
     }

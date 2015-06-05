@@ -79,7 +79,7 @@ namespace sqlcon
                 return Navigate(Navigate(node, ".."), "..");
             }
 
-            Expand(node);
+            Expand(node, this.Refreshing);
 
             string seg = segment;
             if (node.Item is DatabaseName && segment.IndexOf(".") == -1)

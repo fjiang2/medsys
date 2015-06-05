@@ -8,6 +8,7 @@ namespace sqlcon
 {
     enum PathLevel
     {
+        Unknown,
         Tables,
         Views,
         Proc,
