@@ -18,25 +18,21 @@ namespace sqlcon
 
     partial class PathTree 
     {
-    
+
         private void Display(TreeNode<IDataPath> pt, string wildcard)
         {
-            DisplayServerName(pt, wildcard);
-            DisplayDatabaseName(pt, wildcard);
-            DisplayPathNode(pt, wildcard);
-            DisplayTableName(pt, wildcard);
-            DisplayViewName(pt, wildcard);
-            
-            if (pt.Item is TableName)
-            {
-                DisplayColumnName((TableName)pt.Item, wildcard);
-            }
+            if (DisplayServerName(pt, wildcard)) return;
+            if (DisplayDatabaseName(pt, wildcard)) return;
+            if (DisplayPathNode(pt, wildcard)) return;
+            if (DisplayTableName(pt, wildcard)) return;
+            if (DisplayViewName(pt, wildcard)) return;
+            if (DisplayColumnName(pt, wildcard)) return;
         }
 
-        private void DisplayServerName(TreeNode<IDataPath> pt, string wildcard)
+        private bool DisplayServerName(TreeNode<IDataPath> pt, string wildcard)
         {
             if (pt != RootNode)
-                return;
+                return false;
 
             int i = 0;
             int count = 0;
@@ -58,12 +54,14 @@ namespace sqlcon
             }
 
             stdio.WriteLine("\t{0} Server(s)", count);
+
+            return true;
         }
 
-        private static void DisplayDatabaseName(TreeNode<IDataPath> pt, string wildcard)
+        private static bool DisplayDatabaseName(TreeNode<IDataPath> pt, string wildcard)
         {
             if (!(pt.Item is ServerName))
-                return;
+                return false;
 
             ServerName sname = (ServerName)pt.Item;
             if (sname.Disconnected)
@@ -91,12 +89,14 @@ namespace sqlcon
 
                 stdio.WriteLine("\t{0} Database(s)", count);
             }
+
+            return true;
         }
 
-        private static void DisplayPathNode(TreeNode<IDataPath> pt, string wildcard)
+        private static bool DisplayPathNode(TreeNode<IDataPath> pt, string wildcard)
         {
             if (!(pt.Item is DatabaseName))
-                return;
+                return false;
 
             int i = 0;
             foreach (var node in pt.Nodes)
@@ -108,16 +108,18 @@ namespace sqlcon
                 }
                 stdio.WriteLine("[{0}] {1}", ++i, pname);
             }
+            
+            return true;
         }
 
-        private static void DisplayTableName(TreeNode<IDataPath> pt, string wildcard)
+        private static bool DisplayTableName(TreeNode<IDataPath> pt, string wildcard)
         {
             if (!(pt.Item is PathNode))
-                return;
+                return false;
 
             PathNode pname = (PathNode)pt.Item;
             if (pname.Level != PathLevel.Tables)
-                return;
+                return false;
 
 
             int i = 0;
@@ -135,17 +137,19 @@ namespace sqlcon
             }
 
             stdio.WriteLine("\t{0} Table(s)", count);
+
+            return true;
         }
 
 
-        private static void DisplayViewName(TreeNode<IDataPath> pt, string wildcard)
+        private static bool DisplayViewName(TreeNode<IDataPath> pt, string wildcard)
         {
             if (!(pt.Item is PathNode))
-                return;
+                return false;
 
             PathNode pname = (PathNode)pt.Item;
             if (pname.Level != PathLevel.Views)
-                return;
+                return false;
 
 
             int i = 0;
@@ -163,12 +167,21 @@ namespace sqlcon
             }
 
             stdio.WriteLine("\t{0} View(s)", count);
+
+            return true;
         }
 
-        private static void DisplayColumnName(TableName tname, string wildcard)
+        private static bool DisplayColumnName(TreeNode<IDataPath> pt, string wildcard)
         {
+            if (!(pt.Item is TableName))
+                return false;
+
+            TableName tname = (TableName)pt.Item;
+            if(tname.IsViewName)
+                return false;
 
             TableSchema schema = new TableSchema(tname);
+            stdio.WriteLine("TABLE: {0}", tname.Path);
 
             int i = 0;
             int count = 0;
@@ -192,6 +205,8 @@ namespace sqlcon
                 }
             }
             stdio.WriteLine("\t{0} Column(s)", count);
+
+            return true;
         }
 
     
