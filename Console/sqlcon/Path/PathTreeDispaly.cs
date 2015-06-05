@@ -21,7 +21,7 @@ namespace sqlcon
     
         private void Display(TreeNode<IDataPath> pt, string wildcard)
         {
-            if (pt == tree.RootNode)
+            if (pt == RootNode)
             {
                 DisplayServerName(pt, wildcard);
             }

@@ -18,59 +18,26 @@ namespace sqlcon
     {
         private Configuration cfg;
         private Tree<IDataPath> tree;
-        private TreeNode<IDataPath> current;
+
 
         public PathTree(Configuration cfg)
         {
             tree = new Tree<IDataPath>();
-            current = tree.RootNode;
+            current = RootNode;
 
             this.cfg = cfg;
             var snames = cfg.ServerNames;
 
             foreach (var sname in snames)
-                AddDataSource(sname);
-
-        }
-
-        public void AddDataSource(ServerName name)
-        {
-            var snode = new TreeNode<IDataPath>(name);
-            tree.Nodes.Add(snode);
-        }
-
-
-        private bool IsRootNode
-        {
-            get { return current == tree.RootNode; }
-        }
-
-     
-        public IDataPath Current
-        {
-            get { return this.current.Item; }
-        }
-
-        public T GetCurrent<T>() where T : IDataPath
-        {
-            if (current == tree.RootNode)
-                return default(T);
-
-            var p = current;
-            while (!(p.Item is T))
             {
-                p = p.Parent;
-
-                if (p == null)
-                    return default(T);
+                var snode = new TreeNode<IDataPath>(sname);
+                tree.Nodes.Add(snode);
             }
-
-            return (T)p.Item;
         }
 
         public bool Refreshing { get; set; }
 
-        private string[] parsePath(string path, out string wildcard)
+        private static string[] parsePath(string path, out string wildcard)
         {
             wildcard = null;
 
@@ -95,73 +62,7 @@ namespace sqlcon
             return segments;
         }
 
-        #region Navigate TreeNode
-
-        private TreeNode<IDataPath> Navigate(string[] segments)
-        {
-            if (segments.Length == 0)
-                return current;
-
-            var node = current;
-            foreach (string segment in segments)
-            {
-                node = Navigate(node, segment);
-                if (node == null)
-                    return null;
-            }
-
-            return node;
-        }
-
-        private TreeNode<IDataPath> Navigate(TreeNode<IDataPath> node, string segment)
-        {
-            if (segment == "\\")
-            {
-                return tree.RootNode;
-            }
-            else if (segment == ".")
-            {
-                return node;
-            }
-            else if (segment == "..")
-            {
-                if (node != tree.RootNode)
-                    return node.Parent;
-                else
-                    return node;
-            }
-            else if (segment == "...")
-            {
-                return Navigate(Navigate(node, ".."), "..");
-            }
-
-            Expand(node);
-
-            string seg = segment;
-            if (node.Item is DatabaseName && segment.IndexOf(".") == -1)
-                seg = TableName.dbo + "." + segment;
-
-            var xnode = node.Nodes.Find(x => x.Item.Path.ToUpper() == seg.ToUpper());
-            if (xnode != null)
-                return xnode;
-            else
-            {
-                int result;
-                if (int.TryParse(segment, out result))
-                {
-                    result--;
-
-                    if (result >= 0 && result < node.Nodes.Count)
-                        return node.Nodes[result];
-                }
-                
-                stdio.ShowError("invalid path", segment);
-                return null;
-            }
-        }
-
-        #endregion
-
+       
         public void chdir(ServerName serverName, DatabaseName databaseName)
         {
             string path = string.Format(@"\{0}\{1}", serverName.Path, databaseName.Path);
@@ -221,7 +122,7 @@ namespace sqlcon
         {
             List<string> items = new List<string>();
             var p = current;
-            while (p != tree.RootNode)
+            while (p != RootNode)
             {
                 items.Add(p.Item.Path);
                 p = p.Parent;

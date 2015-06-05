@@ -12,7 +12,7 @@ namespace sqlcon
     {
         private void Expand(TreeNode<IDataPath> node)
         {
-            if (node == tree.RootNode)
+            if (node == RootNode)
             {
             }
             else if (node.Item is ServerName)
