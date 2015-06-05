@@ -19,13 +19,13 @@ namespace sqlcon
         private Side theSide;
         private CompareAdapter adapter;
         private Configuration cfg;
-        private DbPathTree pathTree;
+        private PathTree pathTree;
 
         public SqlShell(Configuration cfg, CompareAdapter adapter)
         {
             this.cfg = cfg;
             this.adapter = adapter;
-            this.pathTree = new DbPathTree(cfg);
+            this.pathTree = new PathTree(cfg);
 
             ChangeSide(adapter.Side1);
         }
@@ -144,6 +144,10 @@ namespace sqlcon
 
                 case "cd..":
                     chdir("..");
+                    return true;
+
+                case "cd...":
+                    chdir("..\\..");
                     return true;
 
                 default:

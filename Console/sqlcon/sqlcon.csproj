@@ -53,10 +53,14 @@
     <Compile Include="Configuration.cs" />
     <Compile Include="ConsoleTable.cs" />
     <Compile Include="Context.cs" />
-    <Compile Include="DbPathTree.cs" />
+    <Compile Include="Path\PathLevel.cs" />
+    <Compile Include="Path\PathNode.cs" />
+    <Compile Include="Path\PathTreeDispaly.cs" />
+    <Compile Include="Path\PathTree.cs" />
     <Compile Include="DbSchema.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="MatchedDatabase.cs" />
+    <Compile Include="Path\PathTreeExpand.cs" />
     <Compile Include="stdio.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
