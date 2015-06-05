@@ -23,10 +23,9 @@ namespace sqlcon
         {
             if (DisplayServerName(pt, wildcard)) return;
             if (DisplayDatabaseName(pt, wildcard)) return;
-            if (DisplayPathNode(pt, wildcard)) return;
             if (DisplayTableName(pt, wildcard)) return;
-            if (DisplayViewName(pt, wildcard)) return;
-            if (DisplayColumnName(pt, wildcard)) return;
+            if (DisplayTableColumnName(pt, wildcard)) return;
+            if (DisplayViewColumnName(pt, wildcard)) return;
         }
 
         private bool DisplayServerName(TreeNode<IDataPath> pt, string wildcard)
@@ -83,7 +82,7 @@ namespace sqlcon
                         if (node.Nodes.Count == 0)
                             ExpandDatabaseName(node, true);
 
-                        stdio.WriteLine("[{0,2}] {1,26} <DB> {2,10} Tables", i, dname.Name, node.Nodes.Count);
+                        stdio.WriteLine("[{0,2}] {1,26} <DB> {2,10} Tables/Views", i, dname.Name, node.Nodes.Count);
                     }
                 }
 
@@ -93,37 +92,14 @@ namespace sqlcon
             return true;
         }
 
-        private static bool DisplayPathNode(TreeNode<IDataPath> pt, string wildcard)
+      
+        private static bool DisplayTableName(TreeNode<IDataPath> pt, string wildcard)
         {
             if (!(pt.Item is DatabaseName))
                 return false;
 
             int i = 0;
-            foreach (var node in pt.Nodes)
-            {
-                PathNode pname = (PathNode)node.Item;
-                if (node.Nodes.Count == 0)
-                {
-
-                }
-                stdio.WriteLine("[{0}] {1}", ++i, pname);
-            }
-            
-            return true;
-        }
-
-        private static bool DisplayTableName(TreeNode<IDataPath> pt, string wildcard)
-        {
-            if (!(pt.Item is PathNode))
-                return false;
-
-            PathNode pname = (PathNode)pt.Item;
-            if (pname.Level != PathLevel.Tables)
-                return false;
-
-
-            int i = 0;
-            int count = 0;
+            int[] count = new int[] { 0, 0 };
             foreach (var node in pt.Nodes)
             {
                 TableName tname = (TableName)node.Item;
@@ -131,47 +107,22 @@ namespace sqlcon
 
                 if (IsMatch(wildcard, tname.Path))
                 {
-                    count++;
-                    stdio.WriteLine("[{0,3}] {1,15}.{2,-37} <TABLE>", i, tname.SchemaName, tname.Name);
+                    if (!tname.IsViewName) count[0]++;
+                    if (tname.IsViewName) count[1]++;
+
+                    stdio.WriteLine("[{0,3}] {1,15}.{2,-37} <{3}>", i, tname.SchemaName, tname.Name, tname.IsViewName ? "VIEW" : "TABLE");
                 }
             }
 
-            stdio.WriteLine("\t{0} Table(s)", count);
+            stdio.WriteLine("\t{0} Table(s)", count[0]);
+            stdio.WriteLine("\t{0} View(s)", count[1]);
 
             return true;
         }
 
+   
 
-        private static bool DisplayViewName(TreeNode<IDataPath> pt, string wildcard)
-        {
-            if (!(pt.Item is PathNode))
-                return false;
-
-            PathNode pname = (PathNode)pt.Item;
-            if (pname.Level != PathLevel.Views)
-                return false;
-
-
-            int i = 0;
-            int count = 0;
-            foreach (var node in pt.Nodes)
-            {
-                TableName tname = (TableName)node.Item;
-                ++i;
-
-                if (IsMatch(wildcard, tname.Path))
-                {
-                    count++;
-                    stdio.WriteLine("[{0,3}] {1,15}.{2,-37} <VIEW>", i, tname.SchemaName, tname.Name);
-                }
-            }
-
-            stdio.WriteLine("\t{0} View(s)", count);
-
-            return true;
-        }
-
-        private static bool DisplayColumnName(TreeNode<IDataPath> pt, string wildcard)
+        private static bool DisplayTableColumnName(TreeNode<IDataPath> pt, string wildcard)
         {
             if (!(pt.Item is TableName))
                 return false;
@@ -190,6 +141,7 @@ namespace sqlcon
                 if (IsMatch(wildcard, column.ColumnName))
                 {
                     count++;
+                    
                     List<string> L = new List<string>();
                     if (column.IsIdentity) L.Add("++");
                     if (column.IsPrimary) L.Add("pk");
@@ -197,11 +149,11 @@ namespace sqlcon
                     string keys = string.Join(",", L);
 
                     stdio.WriteLine("({0:000}) {1,26} {2,-16} {3,10} {4,10}",
-                        ++i,
-                        string.Format("[{0}]", column.ColumnName),
-                        ColumnSchema.GetSQLType(column),
-                        keys,
-                        column.Nullable ? "null" : "not null");
+                       ++i,
+                       string.Format("[{0}]", column.ColumnName),
+                       ColumnSchema.GetSQLType(column),
+                       keys,
+                       column.Nullable ? "null" : "not null");
                 }
             }
             stdio.WriteLine("\t{0} Column(s)", count);
@@ -209,6 +161,37 @@ namespace sqlcon
             return true;
         }
 
+        private static bool DisplayViewColumnName(TreeNode<IDataPath> pt, string wildcard)
+        {
+            if (!(pt.Item is TableName))
+                return false;
+
+            TableName vname = (TableName)pt.Item;
+            if (!vname.IsViewName)
+                return false;
+
+            DataTable schema = vname.ViewSchema();
+            stdio.WriteLine("VIEW: {0}", vname.Path);
+
+            int i = 0;
+            int count = 0;
+            foreach (DataRow column in schema.Rows)
+            {
+                //if (IsMatch(wildcard, column.ColumnName))
+                //{
+                //    count++;
+
+                //    stdio.WriteLine("({0:000}) {1,26} {2,-16} {3,10} {4,10}",
+                //        ++i,
+                //        string.Format("[{0}]", column.ColumnName),
+                //        ColumnSchema.GetSQLType(column),
+                //        column.Nullable ? "null" : "not null");
+                //}
+            }
+            stdio.WriteLine("\t{0} Column(s)", count);
+
+            return true;
+        }
     
     }
 }

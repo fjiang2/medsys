@@ -150,6 +150,181 @@ namespace sqlcon
                     chdir("..\\..");
                     return true;
 
+                case "show":
+                    if (arg1 != null)
+                        Show(arg1.ToLower(), arg2);
+                    else
+                        stdio.ShowError("invalid argument");
+                    return true;
+
+                case "find":
+                    if (arg1 != null)
+                        theSide.FindName(arg1);
+                    else
+                        stdio.ShowError("find object undefined");
+                    return true;
+
+                case "1":
+                    if (arg1 != null)
+                    {
+                        var pvd = cfg.GetProvider(arg1);
+                        if (pvd != null)
+                        {
+                            Side side = new Side(pvd);
+                            adapter = new CompareAdapter(side, adapter.Side2);
+                        }
+                    }
+
+                    ChangeSide(adapter.Side1);
+                    stdio.WriteLine("server 1 selected({0})", showConnection(theSide.Provider));
+                    return true;
+
+                case "2":
+                    if (arg1 != null)
+                    {
+                        var pvd = cfg.GetProvider(arg1);
+                        if (pvd != null)
+                        {
+                            Side side = new Side(pvd);
+                            adapter = new CompareAdapter(adapter.Side1, side);
+                        }
+                    }
+                    ChangeSide(adapter.Side2);
+                    stdio.WriteLine("server 2 selected({0})", showConnection(theSide.Provider));
+                    return true;
+
+
+                case "goto":
+                    if (arg1 != null)
+                    {
+                        var sname = cfg.GetProvider(arg1);
+                        if (sname != null)
+                        {
+                            Side side = new Side(sname);
+                            ChangeSide(side);
+                        }
+                        else
+                            stdio.ShowError("undefined database server name : {0}", arg1);
+                    }
+                    else
+                        stdio.ShowError("command argument missing");
+                    return true;
+
+                case "template":
+                    if (arg1 != null)
+                    {
+                        string sql = theSide.GenerateRowTemplate(new TableName(theSide.DatabaseName, "dbo", arg1));
+                        stdio.WriteLine(sql);
+                        using (var writer = cfg.OutputFile.NewStreamWriter())
+                        {
+                            writer.WriteLine(sql);
+                        }
+                    }
+                    else
+                        stdio.ShowError("command argument missing");
+                    return true;
+
+                case "copy":
+                    if (arg1 == "output")
+                    {
+                        if (!File.Exists(this.cfg.OutputFile))
+                        {
+                            stdio.ShowError("no output file found : {0}", this.cfg.OutputFile);
+                            break;
+                        }
+                        using (var reader = new StreamReader(this.cfg.OutputFile))
+                        {
+                            string data = reader.ReadToEnd();
+                            System.Windows.Clipboard.SetText(data);
+                            stdio.WriteLine("copied to clipboard");
+                        }
+                    }
+                    return true;
+
+                case "open":
+                    switch (arg1)
+                    {
+                        case "input":
+                            stdio.OpenEditor(cfg.InputFile);
+                            break;
+
+                        case "output":
+                            stdio.OpenEditor(cfg.OutputFile);
+                            break;
+
+                        case "schema":
+                            stdio.OpenEditor(cfg.SchemaFile);
+                            break;
+
+                        case "log":
+                            stdio.OpenEditor(Context.GetValue<string>("log"));
+                            break;
+                    }
+
+                    return true;
+
+                case "compare":
+                    if (arg1 != null)
+                    {
+                        string t1 = null;
+                        string t2 = null;
+                        if (arg2 != null)
+                            arg2.parse(out t1, out t2);
+
+                        MatchedDatabase m1 = new MatchedDatabase(adapter.Side1.DatabaseName, t1, cfg.excludedtables);
+                        MatchedDatabase m2 = new MatchedDatabase(adapter.Side2.DatabaseName, t2, cfg.excludedtables);
+                        using (var writer = cfg.OutputFile.NewStreamWriter())
+                        {
+                            var type = ActionType.CompareSchema;
+                            if (arg1 == "data")
+                                type = ActionType.CompareData;
+                            else if (arg1 == "schema")
+                                type = ActionType.CompareSchema;
+                            else
+                            {
+                                stdio.ShowError("invalid command argument");
+                                break;
+                            }
+
+                            var sql = adapter.Run(type, m1, m2, cfg.PK);
+                            writer.Write(sql);
+                        }
+                        stdio.WriteLine("completed");
+                    }
+                    else
+                        stdio.ShowError("command argument missing");
+                    return true;
+
+                case "export":
+                    {
+                        string fileName = cfg.OutputFile;
+                        TableName tname = pathTree.GetCurrent<TableName>();
+                        Locator where = pathTree.GetCurrent<Locator>();
+                        if (tname == null)
+                        {
+                            stdio.ShowError("warning: table is not available");
+                            break;
+                        }
+
+                        int count;
+
+                        using (var writer = fileName.NewStreamWriter())
+                        {
+                            if (where != null)
+                            {
+                                count = theSide.GenerateRows(writer, tname, where);
+                                stdio.WriteLine("insert clauses (SELECT * FROM {0} WHERE {1}) generated to {2}", tname, where, fileName);
+                            }
+                            else
+                            {
+                                count = theSide.GenerateRows(writer, tname, null);
+                                stdio.WriteLine("insert clauses (SELECT * FROM {0}) generated to {1}", tname, fileName);
+                            }
+                        }
+                    }
+                    return true;
+
+
                 default:
                     if (cmd.StartsWith("cd\\"))
                     {
@@ -203,20 +378,7 @@ namespace sqlcon
 
              switch (cmd)
             {
-                case "show":
-                    if (arg1 != null)
-                        Show(arg1.ToLower(), arg2);
-                    else
-                        stdio.ShowError("invalid argument");
-                    break;
-
-                case "find":
-                    if (arg1 != null)
-                        theSide.FindName(arg1);
-                    else
-                        stdio.ShowError("find object undefined");
-                    break;
-
+           
                 case "run":
                     {
                         VAL result = Context.Evaluate(arg1);
@@ -265,166 +427,6 @@ namespace sqlcon
                     stdio.WriteLine("{0} of rows affected", new SqlCmd(theSide.Provider, text).ExecuteNonQuery());
                     break;
 
-                case "1":
-                    if (arg1 != null)
-                    {
-                        var pvd = cfg.GetProvider(arg1);
-                        if (pvd != null)
-                        {
-                            Side side = new Side(pvd);
-                            adapter = new CompareAdapter(side, adapter.Side2);
-                        }
-                    }
-
-                    ChangeSide(adapter.Side1);
-                    stdio.WriteLine("server 1 selected({0})", showConnection(theSide.Provider));
-                    break;
-
-                case "2":
-                    if (arg1 != null)
-                    {
-                        var pvd = cfg.GetProvider(arg1);
-                        if (pvd != null)
-                        {
-                            Side side = new Side(pvd);
-                            adapter = new CompareAdapter(adapter.Side1, side);
-                        }
-                    }
-                    ChangeSide(adapter.Side2);
-                    stdio.WriteLine("server 2 selected({0})", showConnection(theSide.Provider));
-                    break;
-
-                
-                case "goto":
-                    if (arg1 != null)
-                    {
-                        var sname = cfg.GetProvider(arg1);
-                        if (sname != null)
-                        {
-                            Side side = new Side(sname);
-                            ChangeSide(side);
-                        }
-                        else
-                            stdio.ShowError("undefined database server name : {0}", arg1);
-                    }
-                    else
-                        stdio.ShowError("command argument missing");
-                    break;
-
-                case "template":
-                    if (arg1 != null)
-                    {
-                        string sql = theSide.GenerateRowTemplate(new TableName(theSide.DatabaseName, "dbo", arg1));
-                        stdio.WriteLine(sql);
-                        using (var writer = cfg.OutputFile.NewStreamWriter())
-                        {
-                            writer.WriteLine(sql);
-                        }
-                    }
-                    else
-                        stdio.ShowError("command argument missing");
-                    break;
-
-                case "copy":
-                    if (arg1 == "output")
-                    {
-                        if (!File.Exists(this.cfg.OutputFile))
-                        {
-                            stdio.ShowError("no output file found : {0}", this.cfg.OutputFile);
-                            break;
-                        }
-                        using (var reader = new StreamReader(this.cfg.OutputFile))
-                        {
-                            string data = reader.ReadToEnd();
-                            System.Windows.Clipboard.SetText(data);
-                            stdio.WriteLine("copied to clipboard");
-                        }
-                    }
-                    break;
-
-                case "open":
-                    switch (arg1)
-                    {
-                        case "input":
-                            stdio.OpenEditor(cfg.InputFile);
-                            break;
-
-                        case "output":
-                            stdio.OpenEditor(cfg.OutputFile);
-                            break;
-
-                        case "schema":
-                            stdio.OpenEditor(cfg.SchemaFile);
-                            break;
-
-                        case "log":
-                            stdio.OpenEditor(Context.GetValue<string>("log"));
-                            break;
-                    }
-
-                    break;
-
-                case "compare":
-                    if (arg1 != null)
-                    {
-                        string t1 = null;
-                        string t2 = null;
-                        if(arg2 != null)
-                            arg2.parse(out t1, out t2);
-
-                        MatchedDatabase m1 = new MatchedDatabase(adapter.Side1.DatabaseName, t1, cfg.excludedtables);
-                        MatchedDatabase m2 = new MatchedDatabase(adapter.Side2.DatabaseName, t2, cfg.excludedtables);
-                        using (var writer = cfg.OutputFile.NewStreamWriter())
-                        {
-                            var type = ActionType.CompareSchema;
-                            if (arg1 == "data")
-                                type = ActionType.CompareData;
-                            else if (arg1 == "schema")
-                                type = ActionType.CompareSchema;
-                            else
-                            {
-                                stdio.ShowError("invalid command argument");
-                                break;
-                            }
-
-                            var sql = adapter.Run(type, m1, m2, cfg.PK);
-                            writer.Write(sql);
-                        }
-                        stdio.WriteLine("completed");
-                    }
-                    else
-                        stdio.ShowError("command argument missing");
-                    break;
-
-                case "export":
-                    {
-                        string fileName = cfg.OutputFile;
-                        TableName tname = pathTree.GetCurrent<TableName>();
-                        Locator where = pathTree.GetCurrent<Locator>();
-                        if (tname == null)
-                        {
-                            stdio.ShowError("warning: table is not available");
-                            break;
-                        }
-
-                        int count;
-
-                        using (var writer = fileName.NewStreamWriter())
-                        {
-                            if (where != null)
-                            {
-                                count = theSide.GenerateRows(writer, tname, where);
-                                stdio.WriteLine("insert clauses (SELECT * FROM {0} WHERE {1}) generated to {2}", tname, where, fileName);
-                            }
-                            else
-                            {
-                                count = theSide.GenerateRows(writer, tname, null);
-                                stdio.WriteLine("insert clauses (SELECT * FROM {0}) generated to {1}", tname, fileName);
-                            }
-                        }
-                    }
-                    break;
-
                 default:
                     if (char.IsDigit(cmd[0]))
                     {
@@ -438,7 +440,7 @@ namespace sqlcon
                         else
                         {
                             var val = Tie.Script.Evaluate(text, Context.DS);
-                            stdio.WriteLine(string.Format("{0} = {1}", text, val));
+                            stdio.WriteLine(string.Format("{0} results {1}", text, val));
                         }
                     }
 
@@ -586,7 +588,6 @@ namespace sqlcon
             stdio.WriteLine("cd [path]               : change current directory");
             stdio.WriteLine("dir [path]              : list data structure directory");
             stdio.WriteLine();
-            stdio.WriteLine("type [;] to execute following commands or functions");
             stdio.WriteLine("<Commands>");
             stdio.WriteLine("<compare schema> tables : compare schema of tables");
             stdio.WriteLine("<compare data> tables   : compare data of tables");
@@ -613,6 +614,8 @@ namespace sqlcon
             stdio.WriteLine("<open input>            : open input file");
             stdio.WriteLine("<open output>           : open output file");
             stdio.WriteLine("<open schema>           : open schema file");
+            stdio.WriteLine();
+            stdio.WriteLine("type [;] to execute following SQL script or functions");
             stdio.WriteLine("<SQL>");
             stdio.WriteLine("select ... from table where ...");
             stdio.WriteLine("update table set ... where ...");

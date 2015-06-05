@@ -10,121 +10,89 @@ namespace sqlcon
 {
     partial class PathTree
     {
-        private void Expand(TreeNode<IDataPath> node, bool refresh)
+        private void Expand(TreeNode<IDataPath> pt, bool refresh)
         {
-            if (node == RootNode)
+            if (pt == RootNode)
                 return;
 
-            ExpandServerName(node, refresh);
-            ExpandDatabaseName(node, refresh);
-            ExpandTables(node, refresh);
-            ExpandViews(node, refresh);
-            ExpandTableName(node, refresh);
+            if (ExpandServerName(pt, refresh)) return;
+            if (ExpandDatabaseName(pt, refresh)) return;
+            if (ExpandTableName(pt, refresh)) return;
         }
 
-        private static void ExpandServerName(TreeNode<IDataPath> node, bool refresh)
+        private static bool ExpandServerName(TreeNode<IDataPath> pt, bool refresh)
         {
-            if (!(node.Item is ServerName))
-                return;
+            if (!(pt.Item is ServerName))
+                return false;
 
-            ServerName sname = (ServerName)node.Item;
-            if (refresh || node.Nodes.Count == 0)
+            ServerName sname = (ServerName)pt.Item;
+            if (refresh || pt.Nodes.Count == 0)
             {
                 if (refresh)
-                    node.Nodes.Clear();
+                    pt.Nodes.Clear();
 
                 if (sname.Disconnected)
-                    return;
+                    return false;
 
                 try
                 {
                     DatabaseName[] dnames = sname.GetDatabaseNames();
                     foreach (var dname in dnames)
-                        node.Nodes.Add(new TreeNode<IDataPath>(dname));
+                        pt.Nodes.Add(new TreeNode<IDataPath>(dname));
                 }
                 catch (Exception)
                 {
                     sname.Disconnected = true;
                 }
             }
+
+            return true;
         }
 
-        private static void ExpandDatabaseName(TreeNode<IDataPath> node, bool refresh)
+
+        private static bool ExpandDatabaseName(TreeNode<IDataPath> pt, bool refresh)
         {
-            if (!(node.Item is DatabaseName))
-                return;
+            if (!(pt.Item is DatabaseName))
+                return false;
 
-            DatabaseName dname = (DatabaseName)node.Item;
-            if (node.Nodes.Count == 0)
-            {
-                node.Nodes.Add(new TreeNode<IDataPath>(new PathNode { Level = PathLevel.Tables, Parent = dname }));
-                node.Nodes.Add(new TreeNode<IDataPath>(new PathNode { Level = PathLevel.Views, Parent = dname }));
-                node.Nodes.Add(new TreeNode<IDataPath>(new PathNode { Level = PathLevel.Proc, Parent = dname }));
-                node.Nodes.Add(new TreeNode<IDataPath>(new PathNode { Level = PathLevel.Func, Parent = dname }));
-
-            }
-        }
-
-        private static void ExpandTables(TreeNode<IDataPath> node, bool refresh)
-        {
-            if (!(node.Item is PathNode))
-                return;
-
-            PathNode pname = (PathNode)node.Item;
-            if (pname.Level != PathLevel.Tables)
-                return;
-
-            DatabaseName dname = (DatabaseName)pname.Parent;
-            if (refresh || node.Nodes.Count == 0)
+            DatabaseName dname = (DatabaseName)pt.Item;
+            
+            if (refresh || pt.Nodes.Count == 0)
             {
                 if (refresh)
-                    node.Nodes.Clear();
+                    pt.Nodes.Clear();
 
                 TableName[] tnames = dname.GetTableNames();
                 foreach (var tname in tnames)
-                    node.Nodes.Add(new TreeNode<IDataPath>(tname));
-            }
-        }
-
-        private static void ExpandViews(TreeNode<IDataPath> node, bool refresh)
-        {
-            if (!(node.Item is PathNode))
-                return;
-
-            PathNode pname = (PathNode)node.Item;
-            if (pname.Level != PathLevel.Views)
-                return;
-
-            DatabaseName dname = (DatabaseName)pname.Parent;
-            if (refresh || node.Nodes.Count == 0)
-            {
-                if (refresh)
-                    node.Nodes.Clear();
+                    pt.Nodes.Add(new TreeNode<IDataPath>(tname));
 
                 TableName[] vnames = dname.GetViewNames();
-
                 foreach (var vname in vnames)
-                    node.Nodes.Add(new TreeNode<IDataPath>(vname));
-
+                    pt.Nodes.Add(new TreeNode<IDataPath>(vname));
             }
+
+            return true;
         }
 
-        private static void ExpandTableName(TreeNode<IDataPath> node, bool refresh)
-        {
-            if (!(node.Item is TableName))
-                return;
 
-            TableName tname = (TableName)node.Item;
-            if (refresh || node.Nodes.Count == 0)
+
+        private static bool ExpandTableName(TreeNode<IDataPath> pt, bool refresh)
+        {
+            if (!(pt.Item is TableName))
+                return false;
+
+            TableName tname = (TableName)pt.Item;
+            if (refresh || pt.Nodes.Count == 0)
             {
                 if (refresh)
-                    node.Nodes.Clear();
+                    pt.Nodes.Clear();
 
                 //TableName[] tnames = tname.;
                 //foreach (var tname in tnames)
                 //    node.Nodes.Add(new TreeNode<IDataElementName>(tname));
             }
 
+            return true;
         }
         
     }
