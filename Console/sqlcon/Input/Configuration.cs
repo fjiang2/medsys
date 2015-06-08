@@ -14,6 +14,25 @@ namespace sqlcon
 {
     class Configuration
     {
+        public const string _COMPARISON = "comparison";
+        public const string _SERVER1 = "server1";
+        public const string _SERVER2 = "server2";
+        
+        const string _FUNC_CONFIG = "config";
+        const string _SERVERS = "servers";
+        
+        const string _FILE_INPUT = "input";
+        const string _FILE_OUTPUT = "output";
+        const string _FILE_SCHEMA = "schema";
+        const string _FILE_LOG = "log";
+        const string _FILE_EDITOR = "editor";
+
+        const string _ACTION_TYPE = "actiontype";
+        const string _EXCLUDED_TABLES = "excludedtables";
+
+        const string _QUEREY = "query";
+        const string _PRIMARY_KEY = "primary_key";
+
         private Memory Cfg = new Memory();
 
 
@@ -36,7 +55,7 @@ namespace sqlcon
         {
             switch (func)
             {
-                case "config":
+                case _FUNC_CONFIG:
                     var conn = SearchConnectionString(parameters);
                     if (conn != null)
                         return new VAL(conn);
@@ -109,7 +128,7 @@ namespace sqlcon
         {
             List<ConnectionProvider> pvds = new List<ConnectionProvider>();
 
-            var machines = Cfg.GetValue("servers");
+            var machines = Cfg.GetValue(_SERVERS);
             if (machines.Undefined)
                 return pvds;
 
@@ -175,22 +194,22 @@ namespace sqlcon
             if (!TryReadCfg(cfgFile))
                 return false;
 
-            this.excludedtables = Cfg.GetValue<string[]>("excludedtables", new string[] { });
-            this.Action = Cfg.GetValue<ActionType>("actiontype", ActionType.CompareSchema);
+            this.excludedtables = Cfg.GetValue<string[]>(_EXCLUDED_TABLES, new string[] { });
+            this.Action = Cfg.GetValue<ActionType>(_ACTION_TYPE, ActionType.CompareSchema);
 
-            this.InputFile = Cfg.GetValue<string>("input", "script.sql");
-            this.OutputFile = Cfg.GetValue<string>("output", "script.sql");
-            this.SchemaFile = Cfg.GetValue<string>("schema", "schema.xml");
+            this.InputFile = Cfg.GetValue<string>(_FILE_INPUT, "script.sql");
+            this.OutputFile = Cfg.GetValue<string>(_FILE_OUTPUT, "script.sql");
+            this.SchemaFile = Cfg.GetValue<string>(_FILE_SCHEMA, "schema.xml");
 
-        
-            var log = Cfg["log"];
-            if(log.Defined)  Context.DS.Add("log", log);
 
-            var editor = Cfg.GetValue<string>("editor", "notepad.exe");
-            Context.DS.Add("editor", new VAL(editor));
-            
+            var log = Cfg[_FILE_LOG];
+            if (log.Defined) Context.DS.Add(_FILE_LOG, log);
 
-            var pk = Cfg["primary_key"];
+            var editor = Cfg.GetValue<string>(_FILE_EDITOR, "notepad.exe");
+            Context.DS.Add(_FILE_EDITOR, new VAL(editor));
+
+
+            var pk = Cfg[_PRIMARY_KEY];
             if (pk.Defined)
             {
                 foreach (var item in pk)
@@ -200,9 +219,9 @@ namespace sqlcon
                 }
             }
 
-         
 
-            var x = Cfg["query"];
+
+            var x = Cfg[_QUEREY];
             if (x.Defined)
             {
                 foreach (var pair in x)
@@ -241,6 +260,13 @@ namespace sqlcon
             }
         }
 
+
+        /// <summary>
+        /// search *.config file
+        /// </summary>
+        /// <param name="xmlFile"></param>
+        /// <param name="path"></param>
+        /// <returns></returns>
         private static string SearchConnectionString(string xmlFile, string path)
         {
             if (!File.Exists(xmlFile))

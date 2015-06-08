@@ -30,7 +30,7 @@ namespace sqlcon
             this.cfg = cfg;
             this.action = cfg.Action;
 
-            var comparison = cfg.GetValue("comparison");
+            var comparison = cfg.GetValue(Configuration._COMPARISON);
             if (comparison.Defined)
             {
                 this.alias1 = (string)comparison[0];
@@ -145,7 +145,7 @@ namespace sqlcon
                     case "/S":
                         if (i < args.Length && args[i++].parse(out t1, out t2))
                         {
-                            var server1 = cfg.GetValue("server1");
+                            var server1 = cfg.GetValue(Configuration._SERVER1);
                             if (server1.Defined)
                             {
                                 alias1 = (string)server1["name"];
@@ -155,7 +155,7 @@ namespace sqlcon
                                 cs1.Password = (string)server1["password"];
                             }
 
-                            var server2 = cfg.GetValue("server2");
+                            var server2 = cfg.GetValue(Configuration._SERVER2);
                             if (server2.Defined)
                             {
                                 alias2 = (string)server2["name"];

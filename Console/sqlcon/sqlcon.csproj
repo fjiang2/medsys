@@ -50,26 +50,28 @@
     <Compile Include="CompareAdapter.cs" />
     <Compile Include="ActionType.cs" />
     <Compile Include="CompareConsole.cs" />
-    <Compile Include="Configuration.cs" />
-    <Compile Include="ConsoleTable.cs" />
+    <Compile Include="Input\Configuration.cs" />
+    <Compile Include="Output\ConsoleTable.cs" />
     <Compile Include="Context.cs" />
+    <Compile Include="Input\Commnad.cs" />
     <Compile Include="Path\PathLevel.cs" />
     <Compile Include="Path\PathNode.cs" />
     <Compile Include="Path\PathTreeDispaly.cs" />
     <Compile Include="Path\PathTree.cs" />
-    <Compile Include="DbSchema.cs" />
+    <Compile Include="DataSource\DbSchema.cs" />
     <Compile Include="Helper.cs" />
-    <Compile Include="MatchedDatabase.cs" />
+    <Compile Include="DataSource\MatchedDatabase.cs" />
     <Compile Include="Path\PathTreeExpand.cs" />
     <Compile Include="Path\PathTreeNavigation.cs" />
-    <Compile Include="stdio.cs" />
+    <Compile Include="Output\stdio.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Side.cs" />
+    <Compile Include="DataSource\Side.cs" />
     <Compile Include="SqlShell.cs" />
     <Compile Include="Tools.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Output\ConsoleGrid.cs" />
     <None Include="packages.config" />
     <None Include="sqlcon.cfg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -85,6 +87,7 @@
       <Name>Sys.Data</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
