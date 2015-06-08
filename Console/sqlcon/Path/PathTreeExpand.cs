@@ -34,16 +34,9 @@ namespace sqlcon
                 if (sname.Disconnected)
                     return false;
 
-                try
-                {
-                    DatabaseName[] dnames = sname.GetDatabaseNames();
-                    foreach (var dname in dnames)
-                        pt.Nodes.Add(new TreeNode<IDataPath>(dname));
-                }
-                catch (Exception)
-                {
-                    sname.Disconnected = true;
-                }
+                DatabaseName[] dnames = sname.GetDatabaseNames();
+                foreach (var dname in dnames)
+                    pt.Nodes.Add(new TreeNode<IDataPath>(dname));
             }
 
             return true;

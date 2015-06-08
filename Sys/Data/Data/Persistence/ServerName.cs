@@ -30,11 +30,19 @@ namespace Sys.Data
         {
             this.provider = provider;
             this.name = alias;
-            
-            this.Disconnected = false;
         }
 
-        public bool Disconnected { get; set; }
+        private bool? _disconnected = null;
+        public bool Disconnected 
+        {
+            get
+            {
+                if (_disconnected == null)
+                    _disconnected = !this.Provider.CheckConnection();
+
+                return (bool)_disconnected;
+            }
+        }
 
         public string Path
         {

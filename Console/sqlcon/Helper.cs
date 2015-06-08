@@ -171,6 +171,49 @@ namespace sqlcon
         }
 
 
+
+        public static void ToVConsole(this DataTable table)
+        {
+
+            List<string> list = new List<string>();
+            foreach (DataColumn column in table.Columns)
+                list.Add(column.ColumnName);
+
+            string[] headers = list.ToArray();
+
+            int m = table.Rows.Count;
+            int n = table.Columns.Count;
+
+            var D = new ConsoleTable(m + 1);
+
+            object[] L = new object[m + 1];
+
+            for (int i = 0; i < n; i++)
+            {
+                int k=0;
+                L[k++] = headers[i];
+                foreach (DataRow row in table.Rows)
+                    L[k++] = row[i];
+                
+                D.MeasureWidth(L);
+            }
+
+            D.DisplayLine();
+
+            for (int i = 0; i < n; i++)
+            {
+                int k = 0;
+                L[k++] = headers[i];
+                foreach (DataRow row in table.Rows)
+                    L[k++] = row[i];
+
+                D.DisplayLine(L);
+            }
+
+            D.DisplayLine();
+            stdio.WriteLine("<{0} row{1}>", table.Rows.Count, table.Rows.Count > 1 ? "s" : "");
+        }
+
         public static bool parse(this string arg, out string t1, out string t2)
         {
             if (string.IsNullOrEmpty(arg) || arg.StartsWith("/"))

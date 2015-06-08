@@ -60,6 +60,28 @@ namespace Sys.Data
                 this.ConnectionBuilder = new OleDbConnectionStringBuilder(connectionString);
         }
 
+        public bool CheckConnection()
+        {
+            SqlConnection conn = new SqlConnection(ConnectionString);
+            try
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("SELECT COUNT(name) FROM sys.tables", conn);
+                cmd.ExecuteScalar();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return true;
+        }
+
+
         public string InitialCatalog
         {
             get { return (string)ConnectionBuilder["Initial Catalog"]; }
