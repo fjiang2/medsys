@@ -118,6 +118,20 @@ namespace sqlcon
             }
         }
 
+
+        public static ConsoleKey ReadKey()
+        {
+            ConsoleKeyInfo keyInfo = Console.ReadKey();
+
+            if (writer != null)
+            {
+                writer.Write(keyInfo.Key.ToString());
+                writer.Flush();
+            }
+
+            return keyInfo.Key;
+        }
+
         public static string ReadLine()
         {
             string line = Console.ReadLine();
