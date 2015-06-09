@@ -163,10 +163,7 @@ namespace sqlcon
             else
             {
                 SqlBuilder builder;
-                if (cmd.top == 0)
-                    builder = new SqlBuilder(tname.Provider).SELECT.COLUMNS().FROM(tname);
-                else
-                    builder = new SqlBuilder(tname.Provider).SELECT.TOP(cmd.top).COLUMNS().FROM(tname);
+                builder = new SqlBuilder(tname.Provider).SELECT.TOP(cmd.top).COLUMNS().FROM(tname);
 
                 DataTable table = new SqlCmd(builder)
                     .FillDataTable();

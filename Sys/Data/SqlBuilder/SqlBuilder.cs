@@ -144,7 +144,9 @@ namespace Sys.Data
 
         public SqlBuilder TOP(int n)
         {
-            script.Append(" TOP ").Append(n);
+            if (n > 0)
+                script.Append(" TOP ").Append(n);
+         
             return this;
         }
 
