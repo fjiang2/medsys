@@ -137,6 +137,21 @@ namespace sqlcon
                     chdir("..\\..");
                     return true;
 
+                case "set":
+                    pathTree.set(cmd);
+                    return true;
+
+                case "del":
+                    pathTree.del(cmd);
+                    return true;
+
+                case "ren":
+                    return true;
+
+                case "rem":
+                    stdio.WriteLine(text);
+                    return true;
+
                 case "show":
                     if (cmd.arg1 != null)
                         Show(cmd.arg1.ToLower(), cmd.arg2);
@@ -410,7 +425,7 @@ namespace sqlcon
                 case "create":
                 case "alter":
                 case "drop":
-                    stdio.WriteLine("{0} of rows affected", new SqlCmd(theSide.Provider, text).ExecuteNonQuery());
+                    stdio.WriteLine("{0} of row(s) affected", new SqlCmd(theSide.Provider, text).ExecuteNonQuery());
                     break;
 
                 default:

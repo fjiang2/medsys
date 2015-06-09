@@ -96,6 +96,56 @@ namespace sqlcon
 
         }
 
+        public void set(Command cmd)
+        {
+            if (cmd.arg1 == null)
+                return;
+
+            var pt = current;
+            if (!(pt.Item is Locator))
+                return;
+
+            Locator locator = (Locator)pt.Item;
+            TableName tname = (TableName)pt.Parent.Item;
+
+            try
+            {
+                SqlBuilder builder = new SqlBuilder(tname.Provider).UPDATE(tname).SET(cmd.arg1).WHERE(locator);
+                int count = new SqlCmd(builder).ExecuteNonQuery();
+                stdio.WriteLine("{0} of row(s) affected", count);
+            }
+            catch (Exception ex)
+            {
+                stdio.ShowError(ex.Message);
+            }
+        }
+
+
+        public void del(Command cmd)
+        {
+            var pt = current;
+            if (!(pt.Item is Locator))
+                return;
+
+            Locator locator = (Locator)pt.Item;
+            TableName tname = (TableName)pt.Parent.Item;
+            stdio.Write("are you sure to delete (y/n)?");
+            if (stdio.ReadKey() != ConsoleKey.Y)
+                return;
+            
+            stdio.WriteLine();
+            
+            try
+            {
+                SqlBuilder builder = new SqlBuilder(tname.Provider).DELETE(tname).WHERE(locator);
+                int count = new SqlCmd(builder).ExecuteNonQuery();
+                stdio.WriteLine("{0} of row(s) affected", count);
+            }
+            catch (Exception ex)
+            {
+                stdio.ShowError(ex.Message);
+            }
+        }
 
         public override string ToString()
         {

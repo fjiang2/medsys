@@ -282,6 +282,14 @@ namespace Sys.Data
         }
 
 
+        public SqlBuilder SET(string assignments)
+        {
+            script.Append(" SET ");
+            script.Append(assignments);
+
+            return this.CRLF;
+        }
+
         public SqlBuilder INSERT<T>(params string[] columns)
         {
             return INSERT(typeof(T).TableName(), columns);
