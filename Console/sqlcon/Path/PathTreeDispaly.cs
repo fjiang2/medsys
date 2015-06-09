@@ -21,14 +21,15 @@ namespace sqlcon
 
         private void Display(TreeNode<IDataPath> pt, Command cmd)
         {
-            if (DisplayServerName(pt, cmd)) return;
-            if (DisplayDatabaseName(pt, cmd)) return;
-            if (DisplayTableName(pt, cmd)) return;
-            if (DisplayTableColumnName(pt, cmd)) return;
-            if (DisplayViewColumnName(pt, cmd)) return;
+            if (DisplayServerNodes(pt, cmd)) return;
+            if (DisplayDatabaseNodes(pt, cmd)) return;
+            if (DisplayTableNodes(pt, cmd)) return;
+            if (DisplayTableSubNodes(pt, cmd)) return;
+            if (DisplayViewNodes(pt, cmd)) return;
+            if (DisplayLocatorData(pt, cmd)) return;
         }
 
-        private bool DisplayServerName(TreeNode<IDataPath> pt, Command cmd)
+        private bool DisplayServerNodes(TreeNode<IDataPath> pt, Command cmd)
         {
             if (pt != RootNode)
                 return false;
@@ -57,7 +58,7 @@ namespace sqlcon
             return true;
         }
 
-        private static bool DisplayDatabaseName(TreeNode<IDataPath> pt, Command cmd)
+        private static bool DisplayDatabaseNodes(TreeNode<IDataPath> pt, Command cmd)
         {
             if (!(pt.Item is ServerName))
                 return false;
@@ -93,7 +94,7 @@ namespace sqlcon
         }
 
 
-        private static bool DisplayTableName(TreeNode<IDataPath> pt, Command cmd)
+        private static bool DisplayTableNodes(TreeNode<IDataPath> pt, Command cmd)
         {
             if (!(pt.Item is DatabaseName))
                 return false;
@@ -122,43 +123,23 @@ namespace sqlcon
 
 
 
-        private static bool DisplayTableColumnName(TreeNode<IDataPath> pt, Command cmd)
+        private static bool DisplayTableSubNodes(TreeNode<IDataPath> pt, Command cmd)
         {
             if (!(pt.Item is TableName))
                 return false;
 
             TableName tname = (TableName)pt.Item;
-            if(tname.IsViewName)
-                return false;
 
             if (cmd.IsStruct)
             {
-                TableSchema schema = new TableSchema(tname);
-                stdio.WriteLine("TABLE: {0}", tname.Path);
+                if (tname.IsViewName)
+                    return false;
 
-                int i = 0;
-                int count = 0;
-                foreach (IColumn column in schema.Columns)
-                {
-                    if (IsMatch(cmd.wildcard, column.ColumnName))
-                    {
-                        count++;
-
-                        List<string> L = new List<string>();
-                        if (column.IsIdentity) L.Add("++");
-                        if (column.IsPrimary) L.Add("pk");
-                        if ((column as ColumnSchema).FkContraintName != null) L.Add("fk");
-                        string keys = string.Join(",", L);
-
-                        stdio.WriteLine("({0:000}) {1,26} {2,-16} {3,10} {4,10}",
-                           ++i,
-                           string.Format("[{0}]", column.ColumnName),
-                           ColumnSchema.GetSQLType(column),
-                           keys,
-                           column.Nullable ? "null" : "not null");
-                    }
-                }
-                stdio.WriteLine("\t{0} Column(s)", count);
+                _DisplayColumnNodes(cmd, tname);
+            }
+            else if (cmd.HasWhere)
+            {
+                _DisplayLocatorNodes(pt, cmd);
             }
             else
             {
@@ -175,7 +156,56 @@ namespace sqlcon
             return true;
         }
 
-        private static bool DisplayViewColumnName(TreeNode<IDataPath> pt, Command cmd)
+        private static void _DisplayColumnNodes(Command cmd, TableName tname)
+        {
+            TableSchema schema = new TableSchema(tname);
+            stdio.WriteLine("TABLE: {0}", tname.Path);
+
+            int i = 0;
+            int count = 0;
+            foreach (IColumn column in schema.Columns)
+            {
+                if (IsMatch(cmd.wildcard, column.ColumnName))
+                {
+                    count++;
+
+                    List<string> L = new List<string>();
+                    if (column.IsIdentity) L.Add("++");
+                    if (column.IsPrimary) L.Add("pk");
+                    if ((column as ColumnSchema).FkContraintName != null) L.Add("fk");
+                    string keys = string.Join(",", L);
+
+                    stdio.WriteLine("({0:000}) {1,26} {2,-16} {3,10} {4,10}",
+                       ++i,
+                       string.Format("[{0}]", column.ColumnName),
+                       ColumnSchema.GetSQLType(column),
+                       keys,
+                       column.Nullable ? "null" : "not null");
+                }
+            }
+            stdio.WriteLine("\t{0} Column(s)", count);
+        }
+
+        private static void _DisplayLocatorNodes(TreeNode<IDataPath> pt, Command cmd)
+        {
+            int i = 0;
+            int count = 0;
+            foreach (var node in pt.Nodes)
+            {
+                Locator locator = (Locator)node.Item;
+                ++i;
+
+                if (IsMatch(cmd.wildcard, locator.Path))
+                {
+                    count++;
+                    stdio.WriteLine("[{0,3}] {1} <WHERE>", i, locator);
+                }
+            }
+
+            stdio.WriteLine("\t{0} Where(s)", count);
+        }
+
+        private static bool DisplayViewNodes(TreeNode<IDataPath> pt, Command cmd)
         {
             if (!(pt.Item is TableName))
                 return false;
@@ -205,6 +235,34 @@ namespace sqlcon
             stdio.WriteLine("\t{0} Column(s)", count);
 
             return true;
+        }
+
+        private static bool DisplayLocatorData(TreeNode<IDataPath> pt, Command cmd)
+        {
+            if (!(pt.Item is Locator))
+                return false;
+
+            TableName tname = (TableName)pt.Parent.Item;
+            Locator locator = (Locator)pt.Item;
+            SqlBuilder builder;
+
+            try
+            {
+                builder = new SqlBuilder(tname.Provider).SELECT.TOP(cmd.top).COLUMNS().FROM(tname).WHERE(locator);
+
+                DataTable table = new SqlCmd(builder)
+                    .FillDataTable();
+                if (cmd.IsVertical)
+                    table.ToVConsole();
+                else
+                    table.ToConsole();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                stdio.ShowError(ex.Message);
+                return false;
+            }
         }
     
     }

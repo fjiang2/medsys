@@ -19,8 +19,9 @@ namespace sqlcon
         public readonly bool HasHelp;
         public readonly bool IsStruct;
         public readonly bool IsVertical;
+        public readonly bool HasWhere;
 
-        public readonly int top = 10;
+        public readonly int top = 20;
 
         public Command(string line)
         {
@@ -54,6 +55,10 @@ namespace sqlcon
 
                     case "/t":
                         IsVertical = true;
+                        break;
+
+                    case "/w":
+                        HasWhere = true;
                         break;
 
                     case "/all":

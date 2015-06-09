@@ -99,6 +99,14 @@ namespace sqlcon
                         return node.Nodes[result];
                 }
 
+                if (node.Item is TableName)
+                {
+                    var locator = new Locator(segment);
+                    var lnode = new TreeNode<IDataPath>(locator);
+                    node.Nodes.Add(lnode);
+                    return lnode;
+                }
+
                 stdio.ShowError("invalid path", segment);
                 return null;
             }

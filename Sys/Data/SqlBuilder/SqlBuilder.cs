@@ -333,6 +333,13 @@ namespace Sys.Data
             return this.CRLF;
         }
 
+        public SqlBuilder WHERE(Locator locator)
+        {
+            script.Append(" WHERE ").Append(locator);
+            return this.CRLF;
+        }
+
+
         #endregion
 
 
