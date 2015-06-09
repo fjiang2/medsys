@@ -13,9 +13,13 @@ namespace sqlcon
 
         public bool HasHelp { get; private set; }
 
-
         public bool IsStruct { get; private set; }
         public bool IsVertical { get; private set; }
+
+        public string Action { get; private set; }
+
+        public string arg1 { get; private set; }
+        public string arg2 { get; private set; }
 
         public Command(string line)
         {
@@ -28,9 +32,19 @@ namespace sqlcon
                 return;
 
             string[] L = line.Split(' ');
-            foreach (string l in L)
+            if (L.Length == 0)
+                return;
+            
+            this.Action = L[0].ToLower();
+            if (L.Length > 1)
+                this.arg1 = L[1];
+
+            if (L.Length > 2)
+                this.arg2 = L[2];
+
+            for (int i = 1; i < L.Length; i++)
             {
-                switch (l)
+                switch (L[i])
                 {
                     case "/s":
                         IsStruct = true;
@@ -45,7 +59,7 @@ namespace sqlcon
                         break;
 
                     default:
-                        this.Segments = parsePath(line);
+                        this.Segments = parsePath(L[i]);
                         break;
                 }
             }

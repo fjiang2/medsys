@@ -109,31 +109,18 @@ namespace sqlcon
             if (text == string.Empty)
                 return false;
 
-            string[] A = text.Split(' ', '\r');
-            string cmd = null;
-            string arg1 = null;
-            string arg2 = null;
 
-            int n = A.Length;
+            Command cmd = new Command(text);
 
-            if (n > 0)
-                cmd = A[0].ToLower();
-
-            if (n > 1)
-                arg1 = A[1].Trim();
-
-            if (n > 2)
-                arg2 = A[2].Trim();
-
-            switch (cmd)
+            switch (cmd.Action)
             {
                 case "dir":
-                    pathTree.dir(arg1);
+                    pathTree.dir(cmd);
                     return true;
 
                 case "cd":
-                    if (arg1 != null)
-                        chdir(arg1);
+                    if (cmd.arg1 != null)
+                        chdir(cmd.arg1);
                     else
                         stdio.WriteLine(pathTree.ToString());
                     return true;
@@ -151,23 +138,23 @@ namespace sqlcon
                     return true;
 
                 case "show":
-                    if (arg1 != null)
-                        Show(arg1.ToLower(), arg2);
+                    if (cmd.arg1 != null)
+                        Show(cmd.arg1.ToLower(), cmd.arg2);
                     else
                         stdio.ShowError("invalid argument");
                     return true;
 
                 case "find":
-                    if (arg1 != null)
-                        theSide.FindName(arg1);
+                    if (cmd.arg1 != null)
+                        theSide.FindName(cmd.arg1);
                     else
                         stdio.ShowError("find object undefined");
                     return true;
 
                 case "1":
-                    if (arg1 != null)
+                    if (cmd.arg1 != null)
                     {
-                        var pvd = cfg.GetProvider(arg1);
+                        var pvd = cfg.GetProvider(cmd.arg1);
                         if (pvd != null)
                         {
                             Side side = new Side(pvd);
@@ -180,9 +167,9 @@ namespace sqlcon
                     return true;
 
                 case "2":
-                    if (arg1 != null)
+                    if (cmd.arg1 != null)
                     {
-                        var pvd = cfg.GetProvider(arg1);
+                        var pvd = cfg.GetProvider(cmd.arg1);
                         if (pvd != null)
                         {
                             Side side = new Side(pvd);
@@ -195,25 +182,25 @@ namespace sqlcon
 
 
                 case "goto":
-                    if (arg1 != null)
+                    if (cmd.arg1 != null)
                     {
-                        var sname = cfg.GetProvider(arg1);
+                        var sname = cfg.GetProvider(cmd.arg1);
                         if (sname != null)
                         {
                             Side side = new Side(sname);
                             ChangeSide(side);
                         }
                         else
-                            stdio.ShowError("undefined database server name : {0}", arg1);
+                            stdio.ShowError("undefined database server name : {0}", cmd.arg1);
                     }
                     else
                         stdio.ShowError("command argument missing");
                     return true;
 
                 case "template":
-                    if (arg1 != null)
+                    if (cmd.arg1 != null)
                     {
-                        string sql = theSide.GenerateRowTemplate(new TableName(theSide.DatabaseName, "dbo", arg1));
+                        string sql = theSide.GenerateRowTemplate(new TableName(theSide.DatabaseName, "dbo", cmd.arg1));
                         stdio.WriteLine(sql);
                         using (var writer = cfg.OutputFile.NewStreamWriter())
                         {
@@ -225,7 +212,7 @@ namespace sqlcon
                     return true;
 
                 case "copy":
-                    if (arg1 == "output")
+                    if (cmd.arg1 == "output")
                     {
                         if (!File.Exists(this.cfg.OutputFile))
                         {
@@ -242,7 +229,7 @@ namespace sqlcon
                     return true;
 
                 case "open":
-                    switch (arg1)
+                    switch (cmd.arg1)
                     {
                         case "input":
                             stdio.OpenEditor(cfg.InputFile);
@@ -264,21 +251,21 @@ namespace sqlcon
                     return true;
 
                 case "compare":
-                    if (arg1 != null)
+                    if (cmd.arg1 != null)
                     {
                         string t1 = null;
                         string t2 = null;
-                        if (arg2 != null)
-                            arg2.parse(out t1, out t2);
+                        if (cmd.arg2 != null)
+                            cmd.arg2.parse(out t1, out t2);
 
                         MatchedDatabase m1 = new MatchedDatabase(adapter.Side1.DatabaseName, t1, cfg.excludedtables);
                         MatchedDatabase m2 = new MatchedDatabase(adapter.Side2.DatabaseName, t2, cfg.excludedtables);
                         using (var writer = cfg.OutputFile.NewStreamWriter())
                         {
                             var type = ActionType.CompareSchema;
-                            if (arg1 == "data")
+                            if (cmd.arg1 == "data")
                                 type = ActionType.CompareData;
-                            else if (arg1 == "schema")
+                            else if (cmd.arg1 == "schema")
                                 type = ActionType.CompareSchema;
                             else
                             {
@@ -326,10 +313,9 @@ namespace sqlcon
 
 
                 default:
-                    if (cmd.StartsWith("cd\\"))
+                    if (cmd.Action.StartsWith("cd\\"))
                     {
-                        arg1 = cmd.Substring(2);
-                        chdir(arg1);
+                        chdir(cmd.Action.Substring(2));
                         return true;
                     }
                     break;
