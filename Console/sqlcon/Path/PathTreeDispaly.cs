@@ -19,16 +19,16 @@ namespace sqlcon
     partial class PathTree 
     {
 
-        private void Display(TreeNode<IDataPath> pt, string wildcard)
+        private void Display(TreeNode<IDataPath> pt, Command cmd)
         {
-            if (DisplayServerName(pt, wildcard)) return;
-            if (DisplayDatabaseName(pt, wildcard)) return;
-            if (DisplayTableName(pt, wildcard)) return;
-            if (DisplayTableColumnName(pt, wildcard)) return;
-            if (DisplayViewColumnName(pt, wildcard)) return;
+            if (DisplayServerName(pt, cmd)) return;
+            if (DisplayDatabaseName(pt, cmd)) return;
+            if (DisplayTableName(pt, cmd)) return;
+            if (DisplayTableColumnName(pt, cmd)) return;
+            if (DisplayViewColumnName(pt, cmd)) return;
         }
 
-        private bool DisplayServerName(TreeNode<IDataPath> pt, string wildcard)
+        private bool DisplayServerName(TreeNode<IDataPath> pt, Command cmd)
         {
             if (pt != RootNode)
                 return false;
@@ -40,7 +40,7 @@ namespace sqlcon
                 ServerName sname = (ServerName)node.Item;
                 ++i;
 
-                if (IsMatch(wildcard, sname.Path))
+                if (IsMatch(cmd.wildcard, sname.Path))
                 {
                     count++;
                     if (node.Nodes.Count == 0)
@@ -57,7 +57,7 @@ namespace sqlcon
             return true;
         }
 
-        private static bool DisplayDatabaseName(TreeNode<IDataPath> pt, string wildcard)
+        private static bool DisplayDatabaseName(TreeNode<IDataPath> pt, Command cmd)
         {
             if (!(pt.Item is ServerName))
                 return false;
@@ -76,7 +76,7 @@ namespace sqlcon
                     DatabaseName dname = (DatabaseName)node.Item;
                     ++i;
 
-                    if (IsMatch(wildcard, dname.Path))
+                    if (IsMatch(cmd.wildcard, dname.Path))
                     {
                         count++;
                         if (node.Nodes.Count == 0)
@@ -92,8 +92,8 @@ namespace sqlcon
             return true;
         }
 
-      
-        private static bool DisplayTableName(TreeNode<IDataPath> pt, string wildcard)
+
+        private static bool DisplayTableName(TreeNode<IDataPath> pt, Command cmd)
         {
             if (!(pt.Item is DatabaseName))
                 return false;
@@ -105,7 +105,7 @@ namespace sqlcon
                 TableName tname = (TableName)node.Item;
                 ++i;
 
-                if (IsMatch(wildcard, tname.Path))
+                if (IsMatch(cmd.wildcard, tname.Path))
                 {
                     if (!tname.IsViewName) count[0]++;
                     if (tname.IsViewName) count[1]++;
@@ -120,9 +120,9 @@ namespace sqlcon
             return true;
         }
 
-   
 
-        private static bool DisplayTableColumnName(TreeNode<IDataPath> pt, string wildcard)
+
+        private static bool DisplayTableColumnName(TreeNode<IDataPath> pt, Command cmd)
         {
             if (!(pt.Item is TableName))
                 return false;
@@ -131,37 +131,48 @@ namespace sqlcon
             if(tname.IsViewName)
                 return false;
 
-            TableSchema schema = new TableSchema(tname);
-            stdio.WriteLine("TABLE: {0}", tname.Path);
-
-            int i = 0;
-            int count = 0;
-            foreach (IColumn column in schema.Columns)
+            if (cmd.IsStruct)
             {
-                if (IsMatch(wildcard, column.ColumnName))
+                TableSchema schema = new TableSchema(tname);
+                stdio.WriteLine("TABLE: {0}", tname.Path);
+
+                int i = 0;
+                int count = 0;
+                foreach (IColumn column in schema.Columns)
                 {
-                    count++;
-                    
-                    List<string> L = new List<string>();
-                    if (column.IsIdentity) L.Add("++");
-                    if (column.IsPrimary) L.Add("pk");
-                    if ((column as ColumnSchema).FkContraintName != null) L.Add("fk");
-                    string keys = string.Join(",", L);
+                    if (IsMatch(cmd.wildcard, column.ColumnName))
+                    {
+                        count++;
 
-                    stdio.WriteLine("({0:000}) {1,26} {2,-16} {3,10} {4,10}",
-                       ++i,
-                       string.Format("[{0}]", column.ColumnName),
-                       ColumnSchema.GetSQLType(column),
-                       keys,
-                       column.Nullable ? "null" : "not null");
+                        List<string> L = new List<string>();
+                        if (column.IsIdentity) L.Add("++");
+                        if (column.IsPrimary) L.Add("pk");
+                        if ((column as ColumnSchema).FkContraintName != null) L.Add("fk");
+                        string keys = string.Join(",", L);
+
+                        stdio.WriteLine("({0:000}) {1,26} {2,-16} {3,10} {4,10}",
+                           ++i,
+                           string.Format("[{0}]", column.ColumnName),
+                           ColumnSchema.GetSQLType(column),
+                           keys,
+                           column.Nullable ? "null" : "not null");
+                    }
                 }
+                stdio.WriteLine("\t{0} Column(s)", count);
             }
-            stdio.WriteLine("\t{0} Column(s)", count);
-
+            else
+            {
+                DataTable table = new SqlCmd(new SqlBuilder(tname.Provider).SELECT.TOP(10).COLUMNS().FROM(tname))
+                    .FillDataTable();
+                if (cmd.IsVertical)
+                    table.ToVConsole();
+                else
+                    table.ToConsole();
+            }
             return true;
         }
 
-        private static bool DisplayViewColumnName(TreeNode<IDataPath> pt, string wildcard)
+        private static bool DisplayViewColumnName(TreeNode<IDataPath> pt, Command cmd)
         {
             if (!(pt.Item is TableName))
                 return false;

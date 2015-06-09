@@ -47,13 +47,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CompareAdapter.cs" />
-    <Compile Include="ActionType.cs" />
+    <Compile Include="Shell\CompareAdapter.cs" />
+    <Compile Include="Shell\ActionType.cs" />
     <Compile Include="CompareConsole.cs" />
     <Compile Include="Input\Configuration.cs" />
     <Compile Include="Output\ConsoleTable.cs" />
-    <Compile Include="Context.cs" />
-    <Compile Include="Input\Commnad.cs" />
+    <Compile Include="Shell\Context.cs" />
+    <Compile Include="Input\Command.cs" />
     <Compile Include="Path\PathLevel.cs" />
     <Compile Include="Path\PathNode.cs" />
     <Compile Include="Path\PathTreeDispaly.cs" />
@@ -67,7 +67,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DataSource\Side.cs" />
-    <Compile Include="SqlShell.cs" />
+    <Compile Include="Shell\SqlShell.cs" />
     <Compile Include="Tools.cs" />
   </ItemGroup>
   <ItemGroup>

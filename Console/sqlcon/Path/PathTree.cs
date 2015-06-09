@@ -37,31 +37,6 @@ namespace sqlcon
 
         public bool Refreshing { get; set; }
 
-        private static string[] parsePath(string path, out string wildcard)
-        {
-            wildcard = null;
-
-            if (string.IsNullOrEmpty(path))
-                return new string[0];
-
-            string[] segments = path.Split('\\');
-            int n1 = 0;
-            int n2 = segments.Length - 1;
-
-            if (string.IsNullOrEmpty(segments[n1]))
-                segments[n1] = "\\";
-
-            if (segments[n2] == "")
-                return segments.Take(n2).ToArray();
-            else if (segments[n2].IndexOf('*') >= 0 || segments[n2].IndexOf('?') >= 0)
-            {
-                wildcard = segments[n2];
-                return segments.Take(n2).ToArray();
-            }
-            
-            return segments;
-        }
-
        
         public void chdir(ServerName serverName, DatabaseName databaseName)
         {
@@ -71,9 +46,9 @@ namespace sqlcon
 
         public bool chdir(string path)
         {
-            string wildcard;
-            string[] segments = parsePath(path, out wildcard);
-            if (wildcard != null)
+            Command cmd = new Command(path);
+            string[] segments = cmd.Segments;
+            if (cmd.wildcard != null)
             {
                 stdio.ShowError("invalid path");
                 return false;
@@ -102,18 +77,18 @@ namespace sqlcon
         public void dir(string path)
         {
             var pt = current;
-            string wildcard = null;
 
-            if (path != null)
+            Command cmd = new Command(path);
+
+            if (cmd.Segments.Length != 0)
             {
-                string[] segments = parsePath(path, out wildcard);
-                pt = Navigate(segments);
+                pt = Navigate(cmd.Segments);
             }
 
             if (pt.Nodes.Count == 0)
                 Expand(pt, this.Refreshing);
 
-            Display(pt, wildcard);
+            Display(pt, cmd);
 
         }
 

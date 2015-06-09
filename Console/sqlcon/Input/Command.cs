@@ -6,17 +6,49 @@ using System.Threading.Tasks;
 
 namespace sqlcon
 {
-    class Commnad
+    class Command
     {
         public string wildcard { get; private set; }
         public string[] Segments { get; private set; }
 
         public bool HasHelp { get; private set; }
-        public bool HasStruct { get; private set; }
 
-        public Commnad(string path)
+
+        public bool IsStruct { get; private set; }
+        public bool IsVertical { get; private set; }
+
+        public Command(string line)
         {
-            this.Segments = parsePath(path);
+            this.wildcard = null;
+            this.Segments = new string[0];
+            this.IsStruct = false;
+            this.IsVertical = false;
+
+            if (string.IsNullOrEmpty(line))
+                return;
+
+            string[] L = line.Split(' ');
+            foreach (string l in L)
+            {
+                switch (l)
+                {
+                    case "/s":
+                        IsStruct = true;
+                        break;
+
+                    case "/t":
+                        IsVertical = true;
+                        break;
+
+                    case "/?":
+                        HasHelp = true;
+                        break;
+
+                    default:
+                        this.Segments = parsePath(line);
+                        break;
+                }
+            }
         }
 
         private string[] parsePath(string path)

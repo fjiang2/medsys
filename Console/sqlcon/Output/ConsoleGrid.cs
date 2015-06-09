@@ -151,6 +151,63 @@ namespace sqlcon
         }
 
 
+        public static void ToVConsole<T>(this IEnumerable<T> source)
+        {
+            var properties = typeof(T).GetProperties();
+            string[] headers = properties.Select(p => p.Name).ToArray();
+
+            Func<T, object[]> selector = row =>
+            {
+                var values = new object[headers.Length];
+                int i = 0;
+
+                foreach (var propertyInfo in properties)
+                {
+                    values[i++] = propertyInfo.GetValue(row);
+                }
+                return values;
+            };
+
+            source.ToVConsole(headers, selector);
+        }
+
+
+        public static void ToVConsole<T>(this IEnumerable<T> source, string[] headers, Func<T, object[]> selector)
+        {
+            int m = 1;
+            int n = headers.Length;
+
+            var D = new ConsoleTable(m + 1);
+
+            object[] L = new object[m + 1];
+            T[] src = source.ToArray();
+
+            for (int i = 0; i < n; i++)
+            {
+                int k = 0;
+                L[k++] = headers[i];
+                L[k++] = src[i];
+
+                D.MeasureWidth(L);
+            }
+
+            D.DisplayLine();
+
+            if (source.Count() == 0)
+                return;
+
+            for (int i = 0; i < n; i++)
+            {
+                int k = 0;
+                L[k++] = headers[i];
+                L[k++] = src[i];
+
+                D.DisplayLine(L);
+            }
+
+            D.DisplayLine();
+        }
+
 
         public static void ToVConsole(this DataTable table)
         {
