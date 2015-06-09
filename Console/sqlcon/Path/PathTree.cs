@@ -85,6 +85,8 @@ namespace sqlcon
             if (cmd.Segments.Length != 0)
             {
                 pt = Navigate(cmd.Segments);
+                if (pt == null)
+                    return;
             }
 
             if (pt.Nodes.Count == 0)

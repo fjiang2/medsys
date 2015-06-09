@@ -11,15 +11,16 @@ namespace sqlcon
         public string wildcard { get; private set; }
         public string[] Segments { get; private set; }
 
-        public bool HasHelp { get; private set; }
-
-        public bool IsStruct { get; private set; }
-        public bool IsVertical { get; private set; }
-
         public string Action { get; private set; }
-
         public string arg1 { get; private set; }
         public string arg2 { get; private set; }
+
+
+        public readonly bool HasHelp;
+        public readonly bool IsStruct;
+        public readonly bool IsVertical;
+
+        public readonly int top = 10;
 
         public Command(string line)
         {
@@ -44,7 +45,8 @@ namespace sqlcon
 
             for (int i = 1; i < L.Length; i++)
             {
-                switch (L[i])
+                string a = L[i];
+                switch (a)
                 {
                     case "/s":
                         IsStruct = true;
@@ -54,12 +56,24 @@ namespace sqlcon
                         IsVertical = true;
                         break;
 
+                    case "/all":
+                        top = 0;
+                        break;
+
                     case "/?":
                         HasHelp = true;
                         break;
 
                     default:
-                        this.Segments = parsePath(L[i]);
+                        if (a.StartsWith("/"))
+                        {
+                            if (a.StartsWith("/top"))
+                                int.TryParse(a.Substring(4), out top);
+                        }
+                        else
+                        {
+                            this.Segments = parsePath(a);
+                        }
                         break;
                 }
             }
