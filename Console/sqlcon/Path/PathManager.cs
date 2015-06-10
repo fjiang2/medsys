@@ -37,35 +37,6 @@ namespace sqlcon
 
         public bool Refreshing { get; set; }
 
-       
-        public void chdir(ServerName serverName, DatabaseName databaseName)
-        {
-            string[] segments = new string[] { "\\", serverName.Path, databaseName.Path };
-            var node = Navigate(segments);
-            if (node != null)
-            {
-                current = node;
-            }
-        }
-
-        public bool chdir(Command cmd)
-        {
-            if (cmd.wildcard != null)
-            {
-                stdio.ShowError("invalid path");
-                return false;
-            }
-
-            var node = Navigate(cmd.Segments);
-            if (node != null)
-            {
-                current = node;
-                return true;
-            }
-
-            return false;
-        }
-
         private static bool IsMatch(string wildcard, string text)
         {
             if (wildcard != null)
@@ -75,106 +46,8 @@ namespace sqlcon
             }
             return true;
         }
-
-        public void dir(Command cmd)
-        {
-            var pt = current;
-
-            
-            if (cmd.Segments.Length != 0)
-            {
-                pt = Navigate(cmd.Segments);
-                if (pt == null)
-                    return;
-            }
-
-            if (pt.Nodes.Count == 0)
-                Expand(pt, this.Refreshing);
-
-            Display(pt, cmd);
-
-        }
-
-        public void set(Command cmd)
-        {
-            if (cmd.arg1 == null)
-                return;
-
-            var pt = current;
-            if (!(pt.Item is Locator))
-                return;
-
-            Locator locator = (Locator)pt.Item;
-            TableName tname = (TableName)pt.Parent.Item;
-
-            try
-            {
-                int count = new SqlBuilder(tname.Provider).UPDATE(tname).SET(cmd.arg1).WHERE(locator).ExecuteNonQuery();
-                stdio.WriteLine("{0} of row(s) affected", count);
-            }
-            catch (Exception ex)
-            {
-                stdio.ShowError(ex.Message);
-            }
-        }
-
-
-        public void del(Command cmd)
-        {
-            var pt = current;
-            if (!(pt.Item is Locator))
-                return;
-
-            Locator locator = (Locator)pt.Item;
-            TableName tname = (TableName)pt.Parent.Item;
-            stdio.Write("are you sure to delete (y/n)?");
-            if (stdio.ReadKey() != ConsoleKey.Y)
-                return;
-            
-            stdio.WriteLine();
-            
-            try
-            {
-                int count = new SqlBuilder(tname.Provider).DELETE(tname).WHERE(locator).ExecuteNonQuery();
-                stdio.WriteLine("{0} of row(s) affected", count);
-            }
-            catch (Exception ex)
-            {
-                stdio.ShowError(ex.Message);
-            }
-        }
-
-
-        public void where(Command cmd)
-        {
-            TreeNode<IDataPath> pt = current;
-
-            if (!(pt.Item is TableName))
-            {
-                stdio.ShowError("cannot add where underneath non-Table");
-                return;
-            }
-
-            string _where = cmd.args;
-
-            if (string.IsNullOrEmpty(_where))
-            {
-                stdio.ShowError("argument cannot be empty");
-            }
-
-            TableName tname = (TableName)pt.Item;
-            var locator = new Locator(_where);
-            if (new SqlBuilder(tname.Provider).SELECT.TOP(1).COLUMNS().FROM(tname).WHERE(locator).Invalid())
-            {
-                stdio.ShowError("invalid expression");
-                return;
-            }
-
-            var lnode = new TreeNode<IDataPath>(locator);
-            pt.Nodes.Add(lnode);
-
-        }
-
+       
+     
         public override string ToString()
         {
             List<string> items = new List<string>();

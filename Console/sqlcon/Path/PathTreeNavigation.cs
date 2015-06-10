@@ -11,7 +11,7 @@ namespace sqlcon
 {
     partial class PathManager
     {
-        private TreeNode<IDataPath> current;
+        internal TreeNode<IDataPath> current;
 
         public IDataPath Current
         {
@@ -41,7 +41,7 @@ namespace sqlcon
         }
 
 
-        private TreeNode<IDataPath> Navigate(string[] segments)
+        public TreeNode<IDataPath> Navigate(string[] segments)
         {
             if (segments.Length == 0)
                 return current;

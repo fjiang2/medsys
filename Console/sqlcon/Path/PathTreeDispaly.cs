@@ -19,7 +19,7 @@ namespace sqlcon
     partial class PathManager 
     {
 
-        private void Display(TreeNode<IDataPath> pt, Command cmd)
+        public void Display(TreeNode<IDataPath> pt, Command cmd)
         {
             if (DisplayServerNodes(pt, cmd)) return;
             if (DisplayDatabaseNodes(pt, cmd)) return;

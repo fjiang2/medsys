@@ -19,13 +19,16 @@ namespace sqlcon
         private Side theSide;
         private CompareAdapter adapter;
         private Configuration cfg;
-        private PathManager commander;
+
+        private PathManager mgr;
+        private Commandee commandee;
 
         public SqlShell(Configuration cfg, CompareAdapter adapter)
         {
             this.cfg = cfg;
             this.adapter = adapter;
-            this.commander = new PathManager(cfg);
+            this.mgr = new PathManager(cfg);
+            this.commandee = new Commandee(mgr);
 
             ChangeSide(adapter.Side1);
         }
@@ -35,7 +38,7 @@ namespace sqlcon
             this.theSide = side;
             Context.DS.AddHostObject(Context.THESIDE, side);
 
-            commander.chdir(theSide.Provider.ServerName, theSide.DatabaseName); 
+            commandee.chdir(theSide.Provider.ServerName, theSide.DatabaseName); 
         }
 
         public void DoCommand()
@@ -46,7 +49,7 @@ namespace sqlcon
             while (true)
             {
             L1:
-                stdio.Write("{0}> ", commander);
+                stdio.Write("{0}> ", mgr);
             L2:
                 line = stdio.ReadLine();
 
@@ -115,7 +118,7 @@ namespace sqlcon
             switch (cmd.Action)
             {
                 case "dir":
-                    commander.dir(cmd);
+                    commandee.dir(cmd);
                     return true;
 
                 case "cd":
@@ -123,7 +126,7 @@ namespace sqlcon
                     if (cmd.arg1 != null)
                         chdir(cmd);
                     else
-                        stdio.WriteLine(commander.ToString());
+                        stdio.WriteLine(commandee.ToString());
                     return true;
 
 
@@ -137,11 +140,11 @@ namespace sqlcon
 
 
                 case "set":
-                    commander.set(cmd);
+                    commandee.set(cmd);
                     return true;
 
                 case "del":
-                    commander.del(cmd);
+                    commandee.del(cmd);
                     return true;
 
                 case "ren":
@@ -152,7 +155,7 @@ namespace sqlcon
                     return true;
 
                 case "where":
-                    commander.where(cmd);
+                    commandee.where(cmd);
                     return true;
 
                 case "show":
@@ -303,8 +306,8 @@ namespace sqlcon
                 case "export":
                     {
                         string fileName = cfg.OutputFile;
-                        TableName tname = commander.GetCurrent<TableName>();
-                        Locator where = commander.GetCurrent<Locator>();
+                        TableName tname = mgr.GetCurrent<TableName>();
+                        Locator where = mgr.GetCurrent<Locator>();
                         if (tname == null)
                         {
                             stdio.ShowError("warning: table is not available");
@@ -340,9 +343,9 @@ namespace sqlcon
 
         private void chdir(Command cmd)
         {
-            if (commander.chdir(cmd))
+            if (commandee.chdir(cmd))
             {
-                var dname = commander.GetCurrent<DatabaseName>();
+                var dname = mgr.GetCurrent<DatabaseName>();
                 if (dname != null)
                     theSide.UpdateDatabase(dname.Provider);
             }

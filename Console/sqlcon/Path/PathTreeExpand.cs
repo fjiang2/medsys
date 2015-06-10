@@ -10,7 +10,7 @@ namespace sqlcon
 {
     partial class PathManager
     {
-        private void Expand(TreeNode<IDataPath> pt, bool refresh)
+        public void Expand(TreeNode<IDataPath> pt, bool refresh)
         {
             if (pt == RootNode)
                 return;
