@@ -9,7 +9,7 @@ namespace sqlcon
     class Command
     {
         public string wildcard { get; private set; }
-        public string[] Segments { get; private set; }
+        public string[] Segments { get; set; }
 
         public string Action { get; private set; }
         public string arg1 { get; private set; }
@@ -21,30 +21,47 @@ namespace sqlcon
         public readonly bool IsVertical;
         public readonly bool HasWhere;
 
-        public readonly int top = 20;
+        public readonly int top;
 
-        public Command(string line)
+        public Command(string line, Configuration cfg)
         {
             this.wildcard = null;
             this.Segments = new string[0];
             this.IsStruct = false;
             this.IsVertical = false;
+            this.top = cfg.Limit_Top;
 
             if (string.IsNullOrEmpty(line))
                 return;
 
-            string[] L = line.Split(' ');
-            if (L.Length == 0)
-                return;
-            
-            this.Action = L[0].ToLower();
+            string[] L = new string[0];
+            if (line.StartsWith("cd.") || line.StartsWith("cd\\"))
+            {
+                this.Action = "cd";
+                L = line.Substring(2).Split(' ');
+            }
+            else
+            {
+                int index = line.IndexOf(' ');
+                if (index > 0)
+                {
+                    this.Action = line.Substring(0, index).ToLower();
+                    if (line.Length > index + 1)
+                        L = line.Substring(index + 1).Split(' ');
+                }
+                else
+                {
+                    this.Action = line;
+                }
+            }
+
+            if (L.Length > 0)
+                this.arg1 = L[0];
+
             if (L.Length > 1)
-                this.arg1 = L[1];
+                this.arg2 = L[1];
 
-            if (L.Length > 2)
-                this.arg2 = L[2];
-
-            for (int i = 1; i < L.Length; i++)
+            for (int i = 0; i < L.Length; i++)
             {
                 string a = L[i];
                 switch (a)

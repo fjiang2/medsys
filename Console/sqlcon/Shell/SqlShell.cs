@@ -110,7 +110,7 @@ namespace sqlcon
                 return false;
 
 
-            Command cmd = new Command(text);
+            Command cmd = new Command(text, cfg);
 
             switch (cmd.Action)
             {
@@ -119,23 +119,11 @@ namespace sqlcon
                     return true;
 
                 case "cd":
-                    if (cmd.arg1 != null)
-                        chdir(cmd.arg1);
-                    else
-                        stdio.WriteLine(pathTree.ToString());
-                    return true;
-
-                case "cd.":
-                    chdir(".");
-                    return true;
-
-                case "cd..":
-                    chdir("..");
-                    return true;
-
-                case "cd...":
-                    chdir("..\\..");
-                    return true;
+                if (cmd.arg1 != null)
+                    chdir(cmd);
+                else
+                    stdio.WriteLine(pathTree.ToString());
+                return true;
 
                 case "set":
                     pathTree.set(cmd);
@@ -328,11 +316,6 @@ namespace sqlcon
 
 
                 default:
-                    if (cmd.Action.StartsWith("cd\\"))
-                    {
-                        chdir(cmd.Action.Substring(2));
-                        return true;
-                    }
                     break;
             }
 
@@ -340,9 +323,9 @@ namespace sqlcon
         }
 
 
-        private void chdir(string path)
+        private void chdir(Command cmd)
         {
-            if (pathTree.chdir(path))
+            if (pathTree.chdir(cmd))
             {
                 var dname = pathTree.GetCurrent<DatabaseName>();
                 if (dname != null)

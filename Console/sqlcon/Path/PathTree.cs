@@ -40,7 +40,7 @@ namespace sqlcon
        
         public void chdir(ServerName serverName, DatabaseName databaseName)
         {
-            string[] segments = new string[] { serverName.Path, databaseName.Path };
+            string[] segments = new string[] { "\\", serverName.Path, databaseName.Path };
             var node = Navigate(segments);
             if (node != null)
             {
@@ -48,16 +48,15 @@ namespace sqlcon
             }
         }
 
-        public bool chdir(string path)
+        public bool chdir(Command cmd)
         {
-            string[] segments = path.Split('\\');
-            if (path.IndexOf('*') >= 0 || path.IndexOf('?') >= 0)
+            if (cmd.wildcard != null)
             {
                 stdio.ShowError("invalid path");
                 return false;
             }
 
-            var node = Navigate(segments);
+            var node = Navigate(cmd.Segments);
             if (node != null)
             {
                 current = node;

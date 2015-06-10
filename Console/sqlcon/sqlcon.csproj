@@ -73,6 +73,9 @@
   <ItemGroup>
     <Compile Include="Output\ConsoleGrid.cs" />
     <None Include="packages.config" />
+    <None Include="user.cfg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="sqlcon.cfg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
