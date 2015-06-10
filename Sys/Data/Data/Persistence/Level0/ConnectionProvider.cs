@@ -62,23 +62,28 @@ namespace Sys.Data
 
         public bool CheckConnection()
         {
+            return !InvalidSqlClause("SELECT COUNT(name) FROM sys.tables");
+        }
+
+        public bool InvalidSqlClause(string sql)
+        {
             SqlConnection conn = new SqlConnection(ConnectionString);
             try
             {
                 conn.Open();
-                SqlCommand cmd = new SqlCommand("SELECT COUNT(name) FROM sys.tables", conn);
+                SqlCommand cmd = new SqlCommand(sql, conn);
                 cmd.ExecuteScalar();
             }
             catch (Exception)
             {
-                return false;
+                return true;
             }
             finally
             {
                 conn.Close();
             }
 
-            return true;
+            return false;
         }
 
 
