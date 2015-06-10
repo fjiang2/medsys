@@ -119,11 +119,22 @@ namespace sqlcon
                     return true;
 
                 case "cd":
-                if (cmd.arg1 != null)
-                    chdir(cmd);
-                else
-                    stdio.WriteLine(pathTree.ToString());
-                return true;
+                case "chdir":
+                    if (cmd.arg1 != null)
+                        chdir(cmd);
+                    else
+                        stdio.WriteLine(pathTree.ToString());
+                    return true;
+
+
+                case "md":
+                case "mkdir":
+                    return true;
+
+                case "rd":
+                case "rmdir":
+                    return true;
+
 
                 case "set":
                     pathTree.set(cmd);
