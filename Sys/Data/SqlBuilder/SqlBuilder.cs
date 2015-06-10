@@ -600,6 +600,27 @@ namespace Sys.Data
             return script.ToString();
         }
 
+        public bool Invalid()
+        {
+            var old = MessageException.DefaultExceptionHandler;
+            bool result = false;
+            MessageException.DefaultExceptionHandler = delegate(string title, string message)
+            {
+                result = true;
+            };
+
+            try
+            {
+                ExecuteScalar();
+            }
+            finally
+            {
+                MessageException.DefaultExceptionHandler = old;
+            }
+            
+            return result;
+        }
+
         public DataSet ExecuteQuery()
         {
             SqlCmd cmd = new SqlCmd(this);

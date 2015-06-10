@@ -19,13 +19,13 @@ namespace sqlcon
         private Side theSide;
         private CompareAdapter adapter;
         private Configuration cfg;
-        private PathTree pathTree;
+        private PathTree commander;
 
         public SqlShell(Configuration cfg, CompareAdapter adapter)
         {
             this.cfg = cfg;
             this.adapter = adapter;
-            this.pathTree = new PathTree(cfg);
+            this.commander = new PathTree(cfg);
 
             ChangeSide(adapter.Side1);
         }
@@ -35,7 +35,7 @@ namespace sqlcon
             this.theSide = side;
             Context.DS.AddHostObject(Context.THESIDE, side);
 
-            pathTree.chdir(theSide.Provider.ServerName, theSide.DatabaseName); 
+            commander.chdir(theSide.Provider.ServerName, theSide.DatabaseName); 
         }
 
         public void DoCommand()
@@ -46,7 +46,7 @@ namespace sqlcon
             while (true)
             {
             L1:
-                stdio.Write("{0}> ", pathTree);
+                stdio.Write("{0}> ", commander);
             L2:
                 line = stdio.ReadLine();
 
@@ -115,7 +115,7 @@ namespace sqlcon
             switch (cmd.Action)
             {
                 case "dir":
-                    pathTree.dir(cmd);
+                    commander.dir(cmd);
                     return true;
 
                 case "cd":
@@ -123,7 +123,7 @@ namespace sqlcon
                     if (cmd.arg1 != null)
                         chdir(cmd);
                     else
-                        stdio.WriteLine(pathTree.ToString());
+                        stdio.WriteLine(commander.ToString());
                     return true;
 
 
@@ -137,11 +137,11 @@ namespace sqlcon
 
 
                 case "set":
-                    pathTree.set(cmd);
+                    commander.set(cmd);
                     return true;
 
                 case "del":
-                    pathTree.del(cmd);
+                    commander.del(cmd);
                     return true;
 
                 case "ren":
@@ -149,6 +149,10 @@ namespace sqlcon
 
                 case "rem":
                     stdio.WriteLine(text);
+                    return true;
+
+                case "where":
+                    commander.where(cmd);
                     return true;
 
                 case "show":
@@ -299,8 +303,8 @@ namespace sqlcon
                 case "export":
                     {
                         string fileName = cfg.OutputFile;
-                        TableName tname = pathTree.GetCurrent<TableName>();
-                        Locator where = pathTree.GetCurrent<Locator>();
+                        TableName tname = commander.GetCurrent<TableName>();
+                        Locator where = commander.GetCurrent<Locator>();
                         if (tname == null)
                         {
                             stdio.ShowError("warning: table is not available");
@@ -336,9 +340,9 @@ namespace sqlcon
 
         private void chdir(Command cmd)
         {
-            if (pathTree.chdir(cmd))
+            if (commander.chdir(cmd))
             {
-                var dname = pathTree.GetCurrent<DatabaseName>();
+                var dname = commander.GetCurrent<DatabaseName>();
                 if (dname != null)
                     theSide.UpdateDatabase(dname.Provider);
             }

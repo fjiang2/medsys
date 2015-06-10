@@ -49,7 +49,7 @@ namespace sqlcon
                         ExpandServerName(node, Refreshing);
                     }
 
-                    stdio.WriteLine("[{0,2}] {1,26} <SVR> {2,10} Databases", i, sname.Path, sname.Disconnected ? "?" : node.Nodes.Count.ToString());
+                    stdio.WriteLine("{0,4} {1,26} <SVR> {2,10} Databases", sub(i), sname.Path, sname.Disconnected ? "?" : node.Nodes.Count.ToString());
                 }
             }
 
@@ -83,7 +83,7 @@ namespace sqlcon
                         if (node.Nodes.Count == 0)
                             ExpandDatabaseName(node, true);
 
-                        stdio.WriteLine("[{0,2}] {1,26} <DB> {2,10} Tables/Views", i, dname.Name, node.Nodes.Count);
+                        stdio.WriteLine("{0,4} {1,26} <DB> {2,10} Tables/Views", sub(i), dname.Name, node.Nodes.Count);
                     }
                 }
 
@@ -111,7 +111,7 @@ namespace sqlcon
                     if (!tname.IsViewName) count[0]++;
                     if (tname.IsViewName) count[1]++;
 
-                    stdio.WriteLine("[{0,3}] {1,15}.{2,-37} <{3}>", i, tname.SchemaName, tname.Name, tname.IsViewName ? "VIEW" : "TABLE");
+                    stdio.WriteLine("{0,5} {1,15}.{2,-37} <{3}>", sub(i), tname.SchemaName, tname.Name, tname.IsViewName ? "VIEW" : "TABLE");
                 }
             }
 
@@ -175,8 +175,8 @@ namespace sqlcon
                     if ((column as ColumnSchema).FkContraintName != null) L.Add("fk");
                     string keys = string.Join(",", L);
 
-                    stdio.WriteLine("({0:000}) {1,26} {2,-16} {3,10} {4,10}",
-                       ++i,
+                    stdio.WriteLine("{0,5} {1,26} {2,-16} {3,10} {4,10}",
+                       sub(++i),
                        string.Format("[{0}]", column.ColumnName),
                        ColumnSchema.GetSQLType(column),
                        keys,
@@ -198,7 +198,7 @@ namespace sqlcon
                 if (IsMatch(cmd.wildcard, locator.Path))
                 {
                     count++;
-                    stdio.WriteLine("[{0,3}] {1} <WHERE>", i, locator);
+                    stdio.WriteLine("{0,5} {1} <WHERE>", sub(i), locator);
                 }
             }
 
@@ -265,5 +265,9 @@ namespace sqlcon
             }
         }
     
+        private static string sub(int i)
+        {
+            return string.Format("[{0}]", i);
+        }
     }
 }

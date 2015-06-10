@@ -12,6 +12,7 @@ namespace sqlcon
         public string[] Segments { get; set; }
 
         public string Action { get; private set; }
+        public string args { get; private set; }
         public string arg1 { get; private set; }
         public string arg2 { get; private set; }
 
@@ -38,7 +39,8 @@ namespace sqlcon
             if (line.StartsWith("cd.") || line.StartsWith("cd\\"))
             {
                 this.Action = "cd";
-                L = line.Substring(2).Split(' ');
+                this.args = line.Substring(2);
+                L = args.Split(' ');
             }
             else
             {
@@ -47,7 +49,10 @@ namespace sqlcon
                 {
                     this.Action = line.Substring(0, index).ToLower();
                     if (line.Length > index + 1)
-                        L = line.Substring(index + 1).Split(' ');
+                    {
+                        this.args = line.Substring(index + 1);
+                        L = args.Split(' ');
+                    }
                 }
                 else
                 {

@@ -89,8 +89,6 @@ namespace Sys.Data
                 MessageException.DefaultExceptionHandler("SQL Error", message);
             else
                 throw new Exception(message);
-
-            //System.Windows.Forms.MessageBox.Show(message, "SQL Exception", System.Windows.Forms.MessageBoxButtons.OK);
         }
 
 

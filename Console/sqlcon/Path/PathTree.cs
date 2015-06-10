@@ -146,6 +146,37 @@ namespace sqlcon
             }
         }
 
+
+        public void where(Command cmd)
+        {
+            TreeNode<IDataPath> pt = current;
+
+            if (!(pt.Item is TableName))
+            {
+                stdio.ShowError("cannot add where underneath non-Table");
+                return;
+            }
+
+            string _where = cmd.args;
+
+            if (string.IsNullOrEmpty(_where))
+            {
+                stdio.ShowError("argument cannot be empty");
+            }
+
+            TableName tname = (TableName)pt.Item;
+            var locator = new Locator(_where);
+            if (new SqlBuilder(tname.Provider).SELECT.TOP(1).COLUMNS().FROM(tname).WHERE(locator).Invalid())
+            {
+                stdio.ShowError("invalid expression");
+                return;
+            }
+
+            var lnode = new TreeNode<IDataPath>(locator);
+            pt.Nodes.Add(lnode);
+
+        }
+
         public override string ToString()
         {
             List<string> items = new List<string>();
