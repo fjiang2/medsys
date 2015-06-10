@@ -43,9 +43,10 @@ namespace sqlcon
 
         public void DoCommand()
         {
-        
             StringBuilder builder = new StringBuilder();
             string line = null;
+            bool multipleLineMode = false;
+
             while (true)
             {
             L1:
@@ -53,28 +54,32 @@ namespace sqlcon
             L2:
                 line = stdio.ReadLine();
 
-                if (line == "exit")
-                    break;
-
-                switch (line)
+                if (!multipleLineMode)
                 {
-                    case "help":
-                    case "?":
-                        Help();
-                        builder.Clear();
-                        goto L1;
 
-                    case "cls":
-                        Console.Clear();
-                        goto L1;
-
-                    default:
-                        if (DoSingleLineCommand(line))
-                        {
-                            stdio.WriteLine();
-                            goto L1;
-                        }
+                    if (line == "exit")
                         break;
+
+                    switch (line)
+                    {
+                        case "help":
+                        case "?":
+                            Help();
+                            builder.Clear();
+                            goto L1;
+
+                        case "cls":
+                            Console.Clear();
+                            goto L1;
+
+                        default:
+                            if (DoSingleLineCommand(line))
+                            {
+                                stdio.WriteLine();
+                                goto L1;
+                            }
+                            break;
+                    }
                 }
 
                 if (line != "" && line != ";")
@@ -91,15 +96,17 @@ namespace sqlcon
                     try
                     {
                         DoMultipleLineCommand(text);
+                        multipleLineMode = false;
                         stdio.WriteLine();
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         stdio.WriteLine(ex.Message);
                     }
                 }
                 else if (builder.ToString() != "")
                 {
+                    multipleLineMode = true;
                     stdio.Write("...");
                     goto L2;
                 }
@@ -126,7 +133,7 @@ namespace sqlcon
                     if (cmd.arg1 != null)
                         chdir(cmd);
                     else
-                        stdio.WriteLine(commandee.ToString());
+                        stdio.WriteLine(mgr.ToString());
                     return true;
 
 
@@ -588,7 +595,7 @@ namespace sqlcon
             stdio.WriteLine("<help>                  : this help");
             stdio.WriteLine("<?>                     : this help");
             stdio.WriteLine("cd [path]               : change current directory");
-            stdio.WriteLine("dir [path]              : list data structure directory");
+            stdio.WriteLine("dir [path] [/top |/all] : list data structure directory");
             stdio.WriteLine();
             stdio.WriteLine("<Commands>");
             stdio.WriteLine("<compare schema> tables : compare schema of tables");

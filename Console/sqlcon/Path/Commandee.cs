@@ -34,6 +34,16 @@ namespace sqlcon
 
         public bool chdir(Command cmd)
         {
+            if (cmd.arg1 == "/?")
+            {
+                stdio.WriteLine("cd [path]              : change directory");
+                stdio.WriteLine("cd \\                   : change to root directory");
+                stdio.WriteLine("cd ..                  : change to the parent directory");
+                stdio.WriteLine("cd ...                 : change to the grand parent directory");
+                return true;
+            }
+
+
             if (cmd.wildcard != null)
             {
                 stdio.ShowError("invalid path");
@@ -54,8 +64,18 @@ namespace sqlcon
 
         public void dir(Command cmd)
         {
-            var pt = mgr.current;
+            if (cmd.arg1 == "/?")
+            {
+                stdio.WriteLine("dir [path]             : display current directory");
+                stdio.WriteLine("options:   /topnnn     : display top nnn records");
+                stdio.WriteLine("           /all        : display all records");
+                stdio.WriteLine("           /s          : display table structure");
+                stdio.WriteLine("           /w          : display where filters");
+                stdio.WriteLine("           /t          : display table in vertical grid");
+                return;
+            }
 
+            var pt = mgr.current;
 
             if (cmd.Segments.Length != 0)
             {
