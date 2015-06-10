@@ -31,7 +31,7 @@ namespace sqlcon
         {
             if (!tname.Exists())
             {
-                stdio.WriteLine("table not exists : {0}", tname);
+                stdio.WriteLine("table not found : {0}", tname);
                 return false;
             }
 
@@ -42,7 +42,7 @@ namespace sqlcon
         {
             if (!dname.Exists())
             {
-                stdio.WriteLine("table not exists : {0}", dname);
+                stdio.WriteLine("table not found : {0}", dname);
                 return false;
             }
 

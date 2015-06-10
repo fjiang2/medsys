@@ -14,19 +14,22 @@ namespace sqlcon
 {
     class Configuration
     {
+        
         public const string _COMPARISON = "comparison";
         public const string _SERVER1 = "server1";
         public const string _SERVER2 = "server2";
         
         const string _FUNC_CONFIG = "config";
         const string _SERVERS = "servers";
-        
+
+        const string _FILE_SYSTEM_CONFIG = "sqlcon.cfg"; 
         const string _FILE_INPUT = "input";
         const string _FILE_OUTPUT = "output";
         const string _FILE_SCHEMA = "schema";
         const string _FILE_LOG = "log";
         const string _FILE_EDITOR = "editor";
 
+        const string _LIMIT = "limit";
         const string _ACTION_TYPE = "actiontype";
         const string _EXCLUDED_TABLES = "excludedtables";
 
@@ -43,6 +46,8 @@ namespace sqlcon
         public string SchemaFile { get; set; }
 
         public string[] excludedtables = new string[] { };
+        public int Limit_Top = 20;
+
         public readonly Dictionary<string, string[]> PK = new Dictionary<string, string[]>();
 
         public Configuration()
@@ -70,7 +75,7 @@ namespace sqlcon
         {
             if (!File.Exists(cfgFile))
             {
-                Console.WriteLine("configuration file {0} not exists", cfgFile);
+                Console.WriteLine("configuration file {0} not found", cfgFile);
                 return false;
             }
 
@@ -191,8 +196,17 @@ namespace sqlcon
 
         public bool Initialize(string cfgFile)
         {
-            if (!TryReadCfg(cfgFile))
+
+            string theDirectory = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+
+            if (!TryReadCfg(Path.Combine(theDirectory, _FILE_SYSTEM_CONFIG)))
                 return false;
+
+            if (!string.IsNullOrEmpty(cfgFile))
+            {
+                if (!TryReadCfg(cfgFile))
+                    return false;
+            }
 
             this.excludedtables = Cfg.GetValue<string[]>(_EXCLUDED_TABLES, new string[] { });
             this.Action = Cfg.GetValue<ActionType>(_ACTION_TYPE, ActionType.CompareSchema);
@@ -200,7 +214,10 @@ namespace sqlcon
             this.InputFile = Cfg.GetValue<string>(_FILE_INPUT, "script.sql");
             this.OutputFile = Cfg.GetValue<string>(_FILE_OUTPUT, "script.sql");
             this.SchemaFile = Cfg.GetValue<string>(_FILE_SCHEMA, "schema.xml");
-
+            
+            var limit = Cfg[_LIMIT];
+            if (limit["top"].Defined)
+                this.Limit_Top = (int)limit["top"];
 
             var log = Cfg[_FILE_LOG];
             if (log.Defined) Context.DS.Add(_FILE_LOG, log);
@@ -271,7 +288,7 @@ namespace sqlcon
         {
             if (!File.Exists(xmlFile))
             {
-                Console.WriteLine("warning: not exists {0}", xmlFile);
+                Console.WriteLine("warning: not found {0}", xmlFile);
                 return null;
             }
 
