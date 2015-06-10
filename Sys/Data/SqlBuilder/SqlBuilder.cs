@@ -347,6 +347,11 @@ namespace Sys.Data
             return this.CRLF;
         }
 
+        public SqlBuilder WHERE(string exp)
+        {
+            script.Append(" WHERE ").Append(exp);
+            return this.CRLF;
+        }
 
         #endregion
 
