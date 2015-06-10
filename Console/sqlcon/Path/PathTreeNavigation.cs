@@ -9,7 +9,7 @@ using Sys.Data;
 
 namespace sqlcon
 {
-    partial class PathTree
+    partial class PathManager
     {
         private TreeNode<IDataPath> current;
 

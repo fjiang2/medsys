@@ -57,7 +57,7 @@
     <Compile Include="Path\PathLevel.cs" />
     <Compile Include="Path\PathNode.cs" />
     <Compile Include="Path\PathTreeDispaly.cs" />
-    <Compile Include="Path\PathTree.cs" />
+    <Compile Include="Path\PathManager.cs" />
     <Compile Include="DataSource\DbSchema.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="DataSource\MatchedDatabase.cs" />

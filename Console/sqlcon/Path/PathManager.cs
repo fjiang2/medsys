@@ -14,13 +14,13 @@ using Sys.Data;
 namespace sqlcon
 {
 
-    partial class PathTree 
+    partial class PathManager 
     {
         private Configuration cfg;
         private Tree<IDataPath> tree;
 
 
-        public PathTree(Configuration cfg)
+        public PathManager(Configuration cfg)
         {
             tree = new Tree<IDataPath>();
             current = RootNode;
@@ -109,8 +109,7 @@ namespace sqlcon
 
             try
             {
-                SqlBuilder builder = new SqlBuilder(tname.Provider).UPDATE(tname).SET(cmd.arg1).WHERE(locator);
-                int count = new SqlCmd(builder).ExecuteNonQuery();
+                int count = new SqlBuilder(tname.Provider).UPDATE(tname).SET(cmd.arg1).WHERE(locator).ExecuteNonQuery();
                 stdio.WriteLine("{0} of row(s) affected", count);
             }
             catch (Exception ex)
@@ -136,8 +135,7 @@ namespace sqlcon
             
             try
             {
-                SqlBuilder builder = new SqlBuilder(tname.Provider).DELETE(tname).WHERE(locator);
-                int count = new SqlCmd(builder).ExecuteNonQuery();
+                int count = new SqlBuilder(tname.Provider).DELETE(tname).WHERE(locator).ExecuteNonQuery();
                 stdio.WriteLine("{0} of row(s) affected", count);
             }
             catch (Exception ex)

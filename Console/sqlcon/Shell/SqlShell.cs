@@ -19,13 +19,13 @@ namespace sqlcon
         private Side theSide;
         private CompareAdapter adapter;
         private Configuration cfg;
-        private PathTree commander;
+        private PathManager commander;
 
         public SqlShell(Configuration cfg, CompareAdapter adapter)
         {
             this.cfg = cfg;
             this.adapter = adapter;
-            this.commander = new PathTree(cfg);
+            this.commander = new PathManager(cfg);
 
             ChangeSide(adapter.Side1);
         }

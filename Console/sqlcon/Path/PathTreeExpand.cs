@@ -8,7 +8,7 @@ using Sys.Data;
 
 namespace sqlcon
 {
-    partial class PathTree
+    partial class PathManager
     {
         private void Expand(TreeNode<IDataPath> pt, bool refresh)
         {

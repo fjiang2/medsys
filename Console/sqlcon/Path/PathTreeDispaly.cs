@@ -16,7 +16,7 @@ namespace sqlcon
 
     
 
-    partial class PathTree 
+    partial class PathManager 
     {
 
         private void Display(TreeNode<IDataPath> pt, Command cmd)
@@ -143,11 +143,7 @@ namespace sqlcon
             }
             else
             {
-                SqlBuilder builder;
-                builder = new SqlBuilder(tname.Provider).SELECT.TOP(cmd.top).COLUMNS().FROM(tname);
-
-                DataTable table = new SqlCmd(builder)
-                    .FillDataTable();
+                DataTable table = new SqlBuilder(tname.Provider).SELECT.TOP(cmd.top).COLUMNS().FROM(tname).FillDataTable();
                 if (cmd.IsVertical)
                     table.ToVConsole();
                 else
@@ -248,10 +244,7 @@ namespace sqlcon
 
             try
             {
-                builder = new SqlBuilder(tname.Provider).SELECT.TOP(cmd.top).COLUMNS().FROM(tname).WHERE(locator);
-
-                DataTable table = new SqlCmd(builder)
-                    .FillDataTable();
+                DataTable table = new SqlBuilder(tname.Provider).SELECT.TOP(cmd.top).COLUMNS().FROM(tname).WHERE(locator).FillDataTable();
                 if (cmd.IsVertical)
                     table.ToVConsole();
                 else
