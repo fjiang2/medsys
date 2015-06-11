@@ -114,18 +114,9 @@ namespace sqlcon
         public static DataTable ViewSchema(this TableName tableName)
         {
             string SQL = @"
-             SELECT 
-	            VCU.TABLE_NAME AS ViewName, 
-	            COL.COLUMN_NAME AS ColumnName,
-	            COL.DATA_TYPE,
-	            COL.IS_NULLABLE
-            FROM INFORMATION_SCHEMA.VIEW_COLUMN_USAGE AS VCU
-	            JOIN INFORMATION_SCHEMA.COLUMNS AS COL
-	            ON  COL.TABLE_SCHEMA  = VCU.TABLE_SCHEMA
-	            AND COL.TABLE_CATALOG = VCU.TABLE_CATALOG
-	            AND COL.TABLE_NAME    = VCU.TABLE_NAME
-	            AND COL.COLUMN_NAME   = VCU.COLUMN_NAME
-            WHERE VCU.VIEW_NAME = '{0}'
+                SELECT TABLE_SCHEMA, COLUMN_NAME, DATA_TYPE, IS_NULLABLE
+                FROM INFORMATION_SCHEMA.COLUMNS
+                WHERE TABLE_NAME='{0}'
             ";
             return Use(tableName, SQL);
 

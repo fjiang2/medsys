@@ -240,20 +240,22 @@ namespace sqlcon
             int i = 0;
             int count = 0;
             int h = 0;
-            foreach (DataRow column in schema.Rows)
+            foreach (DataRow row in schema.Rows)
             {
-                //if (IsMatch(wildcard, column.ColumnName))
-                //{
-                //    count++;
+                string columnName = string.Format("{0}", row["COLUMN_NAME"]);
+                if (IsMatch(cmd.wildcard, columnName))
+                {
+                    count++;
 
-                //    stdio.WriteLine("({0:000}) {1,26} {2,-16} {3,10} {4,10}",
-                //        ++i,
-                //        string.Format("[{0}]", column.ColumnName),
-                //        ColumnSchema.GetSQLType(column),
-                //        column.Nullable ? "null" : "not null");
-                //}
+                    stdio.WriteLine("{0,5} {1,26} {2,-16} {3,10}",
+                        sub(++i),
+                        string.Format("{0}", columnName),
+                        row["DATA_TYPE"],
+                        (string)row["IS_NULLABLE"] =="YES" ? "null" : "not null");
 
-                h = PagePause(cmd, ++h);
+                    h = PagePause(cmd, ++h);
+                }
+
             }
             stdio.WriteLine("\t{0} Column(s)", count);
 
