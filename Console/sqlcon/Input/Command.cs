@@ -21,6 +21,7 @@ namespace sqlcon
         public readonly bool IsStruct;
         public readonly bool IsVertical;
         public readonly bool HasWhere;
+        public readonly bool HasPage;
 
         public readonly int top;
 
@@ -50,12 +51,13 @@ namespace sqlcon
                 k++;
             }
 
-            this.Action = new string(buf, 0, k);
+            this.Action = new string(buf, 0, k).ToLower();
             if (k<line.Length && line[k] == ' ')
                 k++;
 
             this.args = line.Substring(k);
-            L = args.Split(' ');
+            if(this.args.Length != 0)
+                L = args.Split(' ');
 
             if (L.Length > 0)
                 this.arg1 = L[0];
@@ -78,6 +80,10 @@ namespace sqlcon
 
                     case "/w":
                         HasWhere = true;
+                        break;
+
+                    case "/p":
+                        HasPage = true;
                         break;
 
                     case "/all":

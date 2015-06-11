@@ -36,6 +36,7 @@ namespace sqlcon
 
             int i = 0;
             int count = 0;
+            int h = 0;
             foreach (var node in pt.Nodes)
             {
                 ServerName sname = (ServerName)node.Item;
@@ -50,6 +51,7 @@ namespace sqlcon
                     }
 
                     stdio.WriteLine("{0,4} {1,26} <SVR> {2,10} Databases", sub(i), sname.Path, sname.Disconnected ? "?" : node.Nodes.Count.ToString());
+                    h = PagePause(cmd, ++h);
                 }
             }
 
@@ -72,6 +74,7 @@ namespace sqlcon
             {
                 int i = 0;
                 int count = 0;
+                int h = 0;
                 foreach (var node in pt.Nodes)
                 {
                     DatabaseName dname = (DatabaseName)node.Item;
@@ -84,6 +87,7 @@ namespace sqlcon
                             ExpandDatabaseName(node, true);
 
                         stdio.WriteLine("{0,4} {1,26} <DB> {2,10} Tables/Views", sub(i), dname.Name, node.Nodes.Count);
+                        h = PagePause(cmd, ++h);
                     }
                 }
 
@@ -101,6 +105,7 @@ namespace sqlcon
 
             int i = 0;
             int[] count = new int[] { 0, 0 };
+            int h = 0;
             foreach (var node in pt.Nodes)
             {
                 TableName tname = (TableName)node.Item;
@@ -112,13 +117,28 @@ namespace sqlcon
                     if (tname.IsViewName) count[1]++;
 
                     stdio.WriteLine("{0,5} {1,15}.{2,-37} <{3}>", sub(i), tname.SchemaName, tname.Name, tname.IsViewName ? "VIEW" : "TABLE");
+
+                    h = PagePause(cmd, ++h);
                 }
             }
 
+            
             stdio.WriteLine("\t{0} Table(s)", count[0]);
             stdio.WriteLine("\t{0} View(s)", count[1]);
 
             return true;
+        }
+
+        private static int PagePause(Command cmd, int h)
+        {
+            if (cmd.HasPage && h >= Console.WindowHeight - 1)
+            {
+                h = 0;
+                stdio.Write("press any key to continue...");
+                stdio.ReadKey();
+                stdio.WriteLine();
+            }
+            return h;
         }
 
 
@@ -159,6 +179,7 @@ namespace sqlcon
 
             int i = 0;
             int count = 0;
+            int h = 0;
             foreach (IColumn column in schema.Columns)
             {
                 if (IsMatch(cmd.wildcard, column.ColumnName))
@@ -177,8 +198,11 @@ namespace sqlcon
                        ColumnSchema.GetSQLType(column),
                        keys,
                        column.Nullable ? "null" : "not null");
+
+                    h = PagePause(cmd, ++h);
                 }
             }
+
             stdio.WriteLine("\t{0} Column(s)", count);
         }
 
@@ -215,6 +239,7 @@ namespace sqlcon
 
             int i = 0;
             int count = 0;
+            int h = 0;
             foreach (DataRow column in schema.Rows)
             {
                 //if (IsMatch(wildcard, column.ColumnName))
@@ -227,6 +252,8 @@ namespace sqlcon
                 //        ColumnSchema.GetSQLType(column),
                 //        column.Nullable ? "null" : "not null");
                 //}
+
+                h = PagePause(cmd, ++h);
             }
             stdio.WriteLine("\t{0} Column(s)", count);
 

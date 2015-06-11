@@ -76,7 +76,7 @@ namespace sqlcon
             }
             catch (Exception ex)
             {
-                stdio.WriteLine(ex.Message);
+                stdio.ShowError(ex.Message);
             }
             finally
             {

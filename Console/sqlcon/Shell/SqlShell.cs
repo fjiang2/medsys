@@ -53,6 +53,11 @@ namespace sqlcon
                 stdio.Write("{0}> ", mgr);
             L2:
                 line = stdio.ReadLine();
+            
+                //ctrl-c captured
+                if (line == null)
+                    return;
+
 
                 if (!multipleLineMode)
                 {

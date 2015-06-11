@@ -15,6 +15,15 @@ namespace sqlcon
         {
             string fileName = Context.GetValue<string>("log", "sqlcon.log");
             writer = fileName.NewStreamWriter();
+
+            Console.CancelKeyPress += Console_CancelKeyPress;
+        }
+
+        static void Console_CancelKeyPress(object sender, ConsoleCancelEventArgs e)
+        {
+            e.Cancel = true;
+            Console.WriteLine();
+            Console.WriteLine("exit application...");
         }
 
         public static void Close()
