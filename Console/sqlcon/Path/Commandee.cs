@@ -145,6 +145,11 @@ namespace sqlcon
         {
             TreeNode<IDataPath> pt = mgr.current;
 
+            //search TableName node
+            var x = mgr.GetCurrentNode<TableName>();
+            if (x != null)
+                pt = x;
+
             if (!(pt.Item is TableName))
             {
                 stdio.ShowError("cannot add where underneath non-Table");
@@ -166,9 +171,11 @@ namespace sqlcon
                 return;
             }
 
-            var lnode = new TreeNode<IDataPath>(locator);
-            pt.Nodes.Add(lnode);
+            var xnode = new TreeNode<IDataPath>(locator);
+            pt.Nodes.Add(xnode);
 
+            //jump to the node just created
+            mgr.current = xnode;
         }
 
     }

@@ -23,7 +23,7 @@ namespace sqlcon
             get { return tree.RootNode; }
         }
  
-        public T GetCurrent<T>() where T : IDataPath
+        public T GetCurrentPath<T>() where T : IDataPath
         {
             if (current == RootNode)
                 return default(T);
@@ -40,6 +40,25 @@ namespace sqlcon
             return (T)pt.Item;
         }
 
+
+        public TreeNode<IDataPath> GetCurrentNode<T>() where T : IDataPath
+        {
+            if (current == RootNode)
+                return null;
+
+            var pt = current;
+            while (!(pt.Item is T))
+            {
+                pt = pt.Parent;
+
+                if (pt == null)
+                    return null;
+            }
+
+            return pt;
+        }
+
+  
 
         public TreeNode<IDataPath> Navigate(string[] segments)
         {

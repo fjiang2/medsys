@@ -318,8 +318,8 @@ namespace sqlcon
                 case "export":
                     {
                         string fileName = cfg.OutputFile;
-                        TableName tname = mgr.GetCurrent<TableName>();
-                        Locator where = mgr.GetCurrent<Locator>();
+                        TableName tname = mgr.GetCurrentPath<TableName>();
+                        Locator where = mgr.GetCurrentPath<Locator>();
                         if (tname == null)
                         {
                             stdio.ShowError("warning: table is not available");
@@ -357,7 +357,7 @@ namespace sqlcon
         {
             if (commandee.chdir(cmd))
             {
-                var dname = mgr.GetCurrent<DatabaseName>();
+                var dname = mgr.GetCurrentPath<DatabaseName>();
                 if (dname != null)
                     theSide.UpdateDatabase(dname.Provider);
             }
