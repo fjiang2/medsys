@@ -616,7 +616,7 @@ namespace Sys.Data
 
             try
             {
-                ExecuteScalar();
+                SqlCmd.ExecuteScalar();
             }
             finally
             {
@@ -626,24 +626,14 @@ namespace Sys.Data
             return result;
         }
 
-        public DataSet ExecuteQuery()
+        public SqlCmd SqlCmd
         {
-            SqlCmd cmd = new SqlCmd(this);
-            return cmd.FillDataSet();
+            get
+            {
+                SqlCmd cmd = new SqlCmd(this);
+                return cmd;
+            }
         }
-        
-        public int ExecuteNonQuery()
-        {
-            SqlCmd cmd = new SqlCmd(this);
-            return cmd.ExecuteNonQuery();
-        }
-
-        public object ExecuteScalar()
-        {
-            SqlCmd cmd = new SqlCmd(this);
-            return cmd.ExecuteScalar();
-        }
-
     }
 
 

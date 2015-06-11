@@ -56,7 +56,7 @@ namespace Sys.Data.Persistence.Level4
                     );
 
 
-            this.dataset = (relationships + many).FillDataSet();
+            this.dataset = (relationships + many).SqlCmd.FillDataSet();
             
         }
 

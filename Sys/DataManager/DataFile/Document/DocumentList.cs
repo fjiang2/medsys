@@ -98,7 +98,7 @@ namespace Sys.DataManager
                 .AND(Doc01Dpo._Row_Id.ColumnName() == -1)
                 .AND(Doc01Dpo._Owner.ColumnName() == Sys.Security.Account.CurrentUser.User_ID)
                 )
-             .ExecuteNonQuery();
+             .SqlCmd.ExecuteNonQuery();
         }
 
         public static void DeleteTempDocuments(DPObject rowObject)

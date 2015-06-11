@@ -105,7 +105,7 @@ namespace sqlcon
 
             try
             {
-                int count = new SqlBuilder(tname.Provider).UPDATE(tname).SET(cmd.arg1).WHERE(locator).ExecuteNonQuery();
+                int count = new SqlBuilder(tname.Provider).UPDATE(tname).SET(cmd.arg1).WHERE(locator).SqlCmd.ExecuteNonQuery();
                 stdio.WriteLine("{0} of row(s) affected", count);
             }
             catch (Exception ex)
@@ -131,7 +131,7 @@ namespace sqlcon
 
             try
             {
-                int count = new SqlBuilder(tname.Provider).DELETE(tname).WHERE(locator).ExecuteNonQuery();
+                int count = new SqlBuilder(tname.Provider).DELETE(tname).WHERE(locator).SqlCmd.ExecuteNonQuery();
                 stdio.WriteLine("{0} of row(s) affected", count);
             }
             catch (Exception ex)

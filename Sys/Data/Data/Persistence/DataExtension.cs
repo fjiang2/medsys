@@ -26,23 +26,6 @@ namespace Sys.Data
 {
     public static class DataExtension
     {
-        #region SqlCmd
-
-        public static DataSet FillDataSet(this ISqlBuilder sql)
-        {
-            SqlCmd cmd = new SqlCmd(sql.Clause);
-            return cmd.FillDataSet();
-        }
-
-        public static DataTable FillDataTable(this ISqlBuilder sql)
-        {
-            SqlCmd cmd = new SqlCmd(sql.Clause);
-            return cmd.FillDataTable();
-        }
-
-
-
-        #endregion
 
 
         #region IsNull

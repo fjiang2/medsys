@@ -151,6 +151,7 @@ namespace Sys.DataManager
                     .AND(PictureDpo._Row_Id.ColumnName() == -1)
                     .AND(PictureDpo._Owner.ColumnName() == Sys.Security.Account.CurrentUser.User_ID)
                 )
+               .SqlCmd
                .ExecuteNonQuery();
         }
 
