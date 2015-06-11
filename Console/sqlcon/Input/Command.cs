@@ -36,29 +36,26 @@ namespace sqlcon
                 return;
 
             string[] L = new string[0];
-            if (line.StartsWith("cd.") || line.StartsWith("cd\\"))
+            
+            int k = 0;
+            char[] buf= new char[200];
+            while (k < line.Length)
             {
-                this.Action = "cd";
-                this.args = line.Substring(2);
-                L = args.Split(' ');
-            }
-            else
-            {
-                int index = line.IndexOf(' ');
-                if (index > 0)
+                if (line[k] == ' ' || line[k] == '.' || line[k] == '\\')
                 {
-                    this.Action = line.Substring(0, index).ToLower();
-                    if (line.Length > index + 1)
-                    {
-                        this.args = line.Substring(index + 1);
-                        L = args.Split(' ');
-                    }
+                    break;
                 }
-                else
-                {
-                    this.Action = line;
-                }
+                    
+                buf[k] = line[k];
+                k++;
             }
+
+            this.Action = new string(buf, 0, k);
+            if (k<line.Length && line[k] == ' ')
+                k++;
+
+            this.args = line.Substring(k);
+            L = args.Split(' ');
 
             if (L.Length > 0)
                 this.arg1 = L[0];
