@@ -40,18 +40,11 @@ namespace Sys.Data
             this.provider = privider;
         }
 
-        //public static implicit operator SqlClause(string sql)
-        //{
-        //    return new SqlClause(sql);
-        //}
-
         public static explicit operator string(SqlBuilder sql)
         {
             return sql.Clause;
         }
 
-
-        
         public ConnectionProvider Provider
         {
             get
@@ -118,7 +111,7 @@ namespace Sys.Data
         {
             get
             {
-                script.Append("SELECT");
+                script.Append("SELECT ");
                 return this;
             }
         }
@@ -127,7 +120,7 @@ namespace Sys.Data
         {
             get
             {
-                script.Append(" DISTINCT ");
+                script.Append("DISTINCT ");
                 return this;
             }
         }
@@ -136,7 +129,7 @@ namespace Sys.Data
         {
             get
             {
-                script.Append(" ALL ");
+                script.Append("ALL ");
                 return this;
             }
         }
@@ -145,28 +138,24 @@ namespace Sys.Data
         public SqlBuilder TOP(int n)
         {
             if (n > 0)
-                script.Append(" TOP ").Append(n);
+                script.Append("TOP ").Append(n);
          
             return this;
         }
 
 
-        //public SqlClause COLUMNS(params string[] columns)
-        //{
-        //    if (columns.Length == 0)
-        //        script.Append(" * ");
-        //    else
-        //        script.Append(" ").Append(ConcatColumns(columns));
-
-        //    return this;
-        //}
+        public SqlBuilder COLUMNS(string columns)
+        {
+            script.Append(columns).Append(" ");
+            return this;
+        }
 
         public SqlBuilder COLUMNS(params SqlExpr[] columns)
         {
             if (columns.Length == 0)
-                script.Append(" * ");
+                script.Append("* ");
             else
-                script.Append(" ").Append(string.Join(",", columns.Select(column=>column.ToString())));
+                script.Append(string.Join(",", columns.Select(column => column.ToString()))).Append(" ");
 
             return this;
         }
@@ -175,7 +164,7 @@ namespace Sys.Data
         public SqlBuilder INTO(string tableName)
         {
             script
-                .Append(" INTO ")
+                .Append("INTO ")
                 .Append(tableName);
 
             return this;
@@ -184,7 +173,7 @@ namespace Sys.Data
         public SqlBuilder INTO(TableName tableName)
         {
             script
-                .Append(" INTO ")
+                .Append("INTO ")
                 .Append(tableName.FullName);
 
             return this;
@@ -220,9 +209,9 @@ namespace Sys.Data
 
         private SqlBuilder FROM(string from, string alias)
         {
-            script.Append(" FROM ").Append(from);
+            script.Append("FROM ").Append(from).Append(" ");
             if (alias != null)
-                script.Append(" ").Append(alias);
+                script.Append(alias).Append(" ");
 
             return this;
         }
@@ -255,9 +244,9 @@ namespace Sys.Data
 
         private SqlBuilder UPDATE(string tableName, string alias)
         {
-           script.Append("UPDATE ").Append(tableName);
+            script.Append("UPDATE ").Append(tableName).Append(" ");
             if(alias != null)
-                script.Append(" ").Append(alias);
+                script.Append(alias).Append(" ");
            
             return this;
         }
@@ -265,7 +254,7 @@ namespace Sys.Data
 
         public SqlBuilder SET(params string[] assignments)
         {
-            script.Append("SET ").Append(string.Join(",",assignments));
+            script.Append("SET ").Append(string.Join(", ",assignments));
 
             return this.CRLF;
         }
@@ -274,7 +263,7 @@ namespace Sys.Data
 
         public SqlBuilder SET(params SqlExpr[] assignments)
         {
-            script.Append(" SET ");
+            script.Append("SET ");
             string s = string.Join<SqlExpr>(", ", assignments);
             script.Append(s);
 
@@ -284,8 +273,9 @@ namespace Sys.Data
 
         public SqlBuilder SET(string assignments)
         {
-            script.Append(" SET ");
-            script.Append(assignments);
+            script.Append("SET ")
+               .Append(assignments)
+               .Append(" ");
 
             return this.CRLF;
         }
@@ -299,11 +289,12 @@ namespace Sys.Data
         {
             this.provider = tableName.Provider;
             script
-                .Append("INSERT INTO")
+                .Append("INSERT INTO ")
                 .Append(tableName);
             
             if(columns.Length >0)
-                script.Append("(").Append(ConcatColumns(columns)).Append(")");
+                script.Append("(").Append(ConcatColumns(columns)).Append(") ");
+
 
             return this;
         }
@@ -313,7 +304,7 @@ namespace Sys.Data
         {
             script
                 .Append("VALUES ")
-                .Append("(").Append(ConcatValues(values)).Append(")");
+                .Append("(").Append(ConcatValues(values)).Append(") ");
 
             return this.CRLF;
         }
@@ -322,7 +313,7 @@ namespace Sys.Data
         {
             this.provider = tableName.Provider;
 
-            script.Append("DELETE FROM ").Append(tableName);
+            script.Append("DELETE FROM ").Append(tableName).Append(" ");
 
             return this;
         }
@@ -336,20 +327,20 @@ namespace Sys.Data
 
         public SqlBuilder WHERE(SqlExpr exp)
         {
-            script.Append(" WHERE ").Append(exp);
+            script.Append("WHERE ").Append(exp).Append(" ");
             this.Merge(exp);
             return this.CRLF;
         }
 
         public SqlBuilder WHERE(Locator locator)
         {
-            script.Append(" WHERE ").Append(locator);
+            script.Append("WHERE ").Append(locator).Append(" ");
             return this.CRLF;
         }
 
         public SqlBuilder WHERE(string exp)
         {
-            script.Append(" WHERE ").Append(exp);
+            script.Append("WHERE ").Append(exp).Append(" ");
             return this.CRLF;
         }
 
@@ -362,7 +353,7 @@ namespace Sys.Data
         {
             get
             {
-                script.Append(" LEFT");
+                script.Append("LEFT ");
                 return this;
             }
         }
@@ -371,7 +362,7 @@ namespace Sys.Data
         {
             get
             {
-                script.Append(" RIGHT");
+                script.Append("RIGHT ");
                 return this;
             }
         }
@@ -380,7 +371,7 @@ namespace Sys.Data
         {
             get
             {
-                script.Append(" INNER");
+                script.Append("INNER ");
                 return this;
             }
         }
@@ -389,7 +380,7 @@ namespace Sys.Data
         {
             get
             {
-                script.Append(" OUTTER");
+                script.Append("OUTTER ");
                 return this;
             }
         }
@@ -420,18 +411,23 @@ namespace Sys.Data
         private SqlBuilder JOIN(string tableName, string alias)
         {
             script
-                .Append(" JOIN ")
-                .Append(tableName);
+                .Append("JOIN ")
+                .Append(tableName)
+                .Append(" ");
 
             if (alias != null)
-                script.Append(" ").Append(alias);
+                script.Append(alias).Append(" ");
                 
             return this;
         }
 
         public SqlBuilder ON(SqlExpr exp)
         {
-            script.Append(" ON ").Append(exp);
+            script
+                .Append("ON ")
+                .Append(exp)
+                .Append(" ");
+
             this.Merge(exp);
             return this;
         }
@@ -443,13 +439,13 @@ namespace Sys.Data
         #region GROUP BY / HAVING clause
         public SqlBuilder GROUP_BY(params string[] columns)
         {
-            script.Append(" GROUP BY ").Append(ConcatColumns(columns));
+            script.Append("GROUP BY ").Append(ConcatColumns(columns)).Append(" ");
             return this;
         }
 
         public SqlBuilder HAVING(params string[] columns)
         {
-            script.Append(" HAVING ").Append(ConcatColumns(columns));
+            script.Append("HAVING ").Append(ConcatColumns(columns)).Append(" ");
             return this;
         }
         
@@ -462,7 +458,7 @@ namespace Sys.Data
             if (columns == null)
                 return this;
 
-            script.Append(" ORDER BY ").Append(ConcatColumns(columns));
+            script.Append("ORDER BY ").Append(ConcatColumns(columns)).Append(" ");
             return this;
         }
 
@@ -471,7 +467,7 @@ namespace Sys.Data
         {
             get
             {
-                script.Append(" UNION ");
+                script.Append("UNION ");
                 return this;
             }
         }
@@ -481,7 +477,7 @@ namespace Sys.Data
         {
             get
             {
-                script.Append(" DESC");
+                script.Append("DESC ");
                 return this;
             }
         }
@@ -515,6 +511,14 @@ namespace Sys.Data
             return this;
         }
 
+        private SqlBuilder SPACE
+        {
+            get
+            {
+                script.Append(" ");
+                return this;
+            }
+        }
    
 
         #region Concatenate

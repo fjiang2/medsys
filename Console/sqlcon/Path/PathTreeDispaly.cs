@@ -163,7 +163,7 @@ namespace sqlcon
             }
             else
             {
-                DataTable table = new SqlBuilder(tname.Provider).SELECT.TOP(cmd.top).COLUMNS().FROM(tname).SqlCmd.FillDataTable();
+                DataTable table = new SqlBuilder().SELECT.TOP(cmd.top).COLUMNS().FROM(tname).SqlCmd.FillDataTable();
                 if (cmd.IsVertical)
                     table.ToVConsole();
                 else
@@ -272,7 +272,7 @@ namespace sqlcon
 
             try
             {
-                DataTable table = new SqlBuilder(tname.Provider).SELECT.TOP(cmd.top).COLUMNS().FROM(tname).WHERE(locator).SqlCmd.FillDataTable();
+                DataTable table = new SqlBuilder().SELECT.TOP(cmd.top).COLUMNS().FROM(tname).WHERE(locator).SqlCmd.FillDataTable();
                 if (cmd.IsVertical)
                     table.ToVConsole();
                 else

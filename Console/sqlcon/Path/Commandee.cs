@@ -105,7 +105,7 @@ namespace sqlcon
 
             try
             {
-                int count = new SqlBuilder(tname.Provider).UPDATE(tname).SET(cmd.arg1).WHERE(locator).SqlCmd.ExecuteNonQuery();
+                int count = new SqlBuilder().UPDATE(tname).SET(cmd.arg1).WHERE(locator).SqlCmd.ExecuteNonQuery();
                 stdio.WriteLine("{0} of row(s) affected", count);
             }
             catch (Exception ex)
@@ -131,7 +131,7 @@ namespace sqlcon
 
             try
             {
-                int count = new SqlBuilder(tname.Provider).DELETE(tname).WHERE(locator).SqlCmd.ExecuteNonQuery();
+                int count = new SqlBuilder().DELETE(tname).WHERE(locator).SqlCmd.ExecuteNonQuery();
                 stdio.WriteLine("{0} of row(s) affected", count);
             }
             catch (Exception ex)
@@ -165,7 +165,7 @@ namespace sqlcon
 
             TableName tname = (TableName)pt.Item;
             var locator = new Locator(_where);
-            if (new SqlBuilder(tname.Provider).SELECT.TOP(1).COLUMNS().FROM(tname).WHERE(locator).Invalid())
+            if (new SqlBuilder().SELECT.TOP(1).COLUMNS().FROM(tname).WHERE(locator).Invalid())
             {
                 stdio.ShowError("invalid expression");
                 return;
