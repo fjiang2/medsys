@@ -118,9 +118,18 @@ namespace sqlcon
                         return node.Nodes[result];
                 }
 
-                xnode = TryAddWhere(node, segment);
-                if (xnode != node)
-                    return xnode;
+                if (node.Item is TableName)
+                {
+                    xnode = TryAddWhere(node, segment);
+                    if (xnode != node)
+                        return xnode;
+                }
+                else if (node.Item is Locator)
+                {
+                    xnode = TryAddColumn(node, segment);
+                    if (xnode != node)
+                        return xnode;
+                }
 
                 stdio.ShowError("invalid path", segment);
                 return null;
@@ -132,7 +141,6 @@ namespace sqlcon
         {
             if (!(pt.Item is TableName))
             {
-                stdio.ShowError("cannot add where underneath non-Table");
                 return pt;
             }
 
@@ -150,6 +158,34 @@ namespace sqlcon
             }
 
             var xnode = new TreeNode<IDataPath>(locator);
+            pt.Nodes.Add(xnode);
+
+            return xnode;
+
+        }
+
+        public TreeNode<IDataPath> TryAddColumn(TreeNode<IDataPath> pt, string columns)
+        {
+            if (!(pt.Item is Locator))
+            {
+                return pt;
+            }
+
+            if (string.IsNullOrEmpty(columns))
+            {
+                stdio.ShowError("argument cannot be empty");
+            }
+            
+            Locator locator = (Locator)pt.Item;
+            TableName tname = (TableName)pt.Parent.Item;
+            
+            if (new SqlBuilder().SELECT.TOP(1).COLUMNS(columns).FROM(tname).WHERE(locator).Invalid())
+            {
+                stdio.ShowError("invalid column names");
+                return pt;
+            }
+
+            var xnode = new TreeNode<IDataPath>(new ColumnPath(columns));
             pt.Nodes.Add(xnode);
 
             return xnode;

@@ -37,28 +37,11 @@ namespace sqlcon
             if (string.IsNullOrEmpty(line))
                 return;
 
-            
-            int k = 0;
-            char[] buf= new char[200];
-            while (k < line.Length)
-            {
-                if (line[k] == ' ' || line[k] == '.' || line[k] == '\\' || line[k] == '"')
-                {
-                    break;
-                }
-                    
-                buf[k] = line[k];
-                k++;
-            }
 
-            this.Action = new string(buf, 0, k).ToLower();
-            while (k < line.Length && line[k] == ' ')
-                k++;
-
+            int k = parseAction(line);
             this.args = line.Substring(k);
 
             string[] L;
-
             this.badcommand = !parseArgument(this.args, out L);
 
             if (L.Length > 0)
@@ -104,11 +87,37 @@ namespace sqlcon
                         }
                         else
                         {
-                            this.Segments = parsePath(a);
+                            if (this.Segments.Length == 0)
+                                this.Segments = parsePath(a);
+                            else
+                            {
+                                this.badcommand = true;
+                            }
                         }
                         break;
                 }
             }
+        }
+
+        private int parseAction(string line)
+        {
+            int k = 0;
+            char[] buf = new char[200];
+            while (k < line.Length)
+            {
+                if (line[k] == ' ' || line[k] == '.' || line[k] == '\\' || line[k] == '"')
+                {
+                    break;
+                }
+
+                buf[k] = line[k];
+                k++;
+            }
+
+            this.Action = new string(buf, 0, k).ToLower();
+            while (k < line.Length && line[k] == ' ')
+                k++;
+            return k;
         }
 
 
@@ -147,7 +156,7 @@ namespace sqlcon
 
                     if (k == args.Length)
                     {
-                        stdio.ShowError("\" is missing");
+                        stdio.ShowError("Unclosed quotation mark after the character string \"");
                         result = new string[] { };
                         return false;
                     }

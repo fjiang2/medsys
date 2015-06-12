@@ -126,6 +126,17 @@ namespace sqlcon
 
 
             Command cmd = new Command(text, cfg);
+            switch (cmd.Action)
+            {
+                case "set":
+                    commandee.set(cmd);
+                    return true;
+
+                case "where":
+                    commandee.where(cmd);
+                    return true;
+            }
+
             if (cmd.badcommand)
                 return true;
 
@@ -143,18 +154,12 @@ namespace sqlcon
                         stdio.WriteLine(mgr.ToString());
                     return true;
 
-
                 case "md":
                 case "mkdir":
                     return true;
 
                 case "rd":
                 case "rmdir":
-                    return true;
-
-
-                case "set":
-                    commandee.set(cmd);
                     return true;
 
                 case "del":
@@ -166,10 +171,6 @@ namespace sqlcon
 
                 case "rem":
                     stdio.WriteLine(text);
-                    return true;
-
-                case "where":
-                    commandee.where(cmd);
                     return true;
 
                 case "show":

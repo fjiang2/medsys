@@ -27,6 +27,7 @@ namespace sqlcon
             if (DisplayTableSubNodes(pt, cmd)) return;
             if (DisplayViewNodes(pt, cmd)) return;
             if (DisplayLocatorData(pt, cmd)) return;
+            if (DisplayLocatorColumnData(pt, cmd)) return;
         }
 
         private bool DisplayServerNodes(TreeNode<IDataPath> pt, Command cmd)
@@ -285,7 +286,43 @@ namespace sqlcon
                 return false;
             }
         }
-    
+
+        private static bool DisplayLocatorColumnData(TreeNode<IDataPath> pt, Command cmd)
+        {
+            if (!(pt.Item is ColumnPath))
+                return false;
+
+            ColumnPath column = (ColumnPath)pt.Item;
+            Locator locator = (Locator)pt.Parent.Item;
+            TableName tname = (TableName)pt.Parent.Parent.Item;
+
+            try
+            {
+                DataTable table;
+                if (cmd.wildcard == null)
+                {
+                    table = new SqlBuilder().SELECT.TOP(cmd.top).COLUMNS(column.Columns).FROM(tname).WHERE(locator).SqlCmd.FillDataTable();
+                }
+                else
+                {
+                    string wildcard = cmd.wildcard.Replace("*", "%").Replace("?", "_");
+                    string where = string.Format("({0}) AND ({1} like '{2}')", locator.Path, column.FirstColumn, wildcard);
+                    table = new SqlBuilder().SELECT.TOP(cmd.top).COLUMNS(column.Columns).FROM(tname).WHERE(where).SqlCmd.FillDataTable();
+                }
+                if (cmd.IsVertical)
+                    table.ToVConsole();
+                else
+                    table.ToConsole();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                stdio.ShowError(ex.Message);
+                return false;
+            }
+        }
+
         private static string sub(int i)
         {
             return string.Format("[{0}]", i);

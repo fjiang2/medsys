@@ -93,7 +93,7 @@ namespace sqlcon
 
         public void set(Command cmd)
         {
-            if (cmd.arg1 == null)
+            if (cmd.args == null)
                 return;
 
             var pt = mgr.current;
@@ -105,7 +105,7 @@ namespace sqlcon
 
             try
             {
-                int count = new SqlBuilder().UPDATE(tname).SET(cmd.arg1).WHERE(locator).SqlCmd.ExecuteNonQuery();
+                int count = new SqlBuilder().UPDATE(tname).SET(cmd.args).WHERE(locator).SqlCmd.ExecuteNonQuery();
                 stdio.WriteLine("{0} of row(s) affected", count);
             }
             catch (Exception ex)
@@ -149,6 +149,12 @@ namespace sqlcon
             var x = mgr.GetCurrentNode<TableName>();
             if (x != null)
                 pt = x;
+
+            if (!(pt.Item is TableName))
+            {
+                stdio.ShowError("cannot add where underneath non-Table");
+                return;
+            }
 
             var xnode = mgr.TryAddWhere(pt, cmd.args);
             if (xnode != pt)
