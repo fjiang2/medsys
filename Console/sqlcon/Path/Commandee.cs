@@ -150,35 +150,15 @@ namespace sqlcon
             if (x != null)
                 pt = x;
 
-            if (!(pt.Item is TableName))
+            var xnode = mgr.TryAddWhere(pt, cmd.args);
+            if (xnode != pt)
             {
-                stdio.ShowError("cannot add where underneath non-Table");
-                return;
+                //jump to the node just created
+                mgr.current = xnode;
+                mgr.Display(xnode, cmd);
             }
-
-            string _where = cmd.args;
-
-            if (string.IsNullOrEmpty(_where))
-            {
-                stdio.ShowError("argument cannot be empty");
-            }
-
-            TableName tname = (TableName)pt.Item;
-            var locator = new Locator(_where);
-            if (new SqlBuilder().SELECT.TOP(1).COLUMNS().FROM(tname).WHERE(locator).Invalid())
-            {
-                stdio.ShowError("invalid expression");
-                return;
-            }
-
-            var xnode = new TreeNode<IDataPath>(locator);
-            pt.Nodes.Add(xnode);
-
-            //jump to the node just created
-            mgr.current = xnode;
-
-            mgr.Display(xnode, cmd);
         }
+
 
     }
 }

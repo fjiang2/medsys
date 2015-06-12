@@ -118,11 +118,42 @@ namespace sqlcon
                         return node.Nodes[result];
                 }
 
-             
+                xnode = TryAddWhere(node, segment);
+                if (xnode != node)
+                    return xnode;
+
                 stdio.ShowError("invalid path", segment);
                 return null;
             }
         }
 
+
+        public TreeNode<IDataPath> TryAddWhere(TreeNode<IDataPath> pt, string where)
+        {
+            if (!(pt.Item is TableName))
+            {
+                stdio.ShowError("cannot add where underneath non-Table");
+                return pt;
+            }
+
+            if (string.IsNullOrEmpty(where))
+            {
+                stdio.ShowError("argument cannot be empty");
+            }
+
+            TableName tname = (TableName)pt.Item;
+            var locator = new Locator(where);
+            if (new SqlBuilder().SELECT.TOP(1).COLUMNS().FROM(tname).WHERE(locator).Invalid())
+            {
+                stdio.ShowError("invalid expression");
+                return pt;
+            }
+
+            var xnode = new TreeNode<IDataPath>(locator);
+            pt.Nodes.Add(xnode);
+
+            return xnode;
+
+        }
     }
 }
