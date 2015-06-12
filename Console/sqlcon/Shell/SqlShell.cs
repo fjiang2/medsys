@@ -126,6 +126,8 @@ namespace sqlcon
 
 
             Command cmd = new Command(text, cfg);
+            if (cmd.badcommand)
+                return true;
 
             switch (cmd.Action)
             {

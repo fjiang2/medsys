@@ -176,6 +176,8 @@ namespace sqlcon
 
             //jump to the node just created
             mgr.current = xnode;
+
+            mgr.Display(xnode, cmd);
         }
 
     }

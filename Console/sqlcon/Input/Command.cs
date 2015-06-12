@@ -8,6 +8,7 @@ namespace sqlcon
 {
     class Command
     {
+        public readonly bool badcommand = false;
         public string wildcard { get; private set; }
         public string[] Segments { get; set; }
 
@@ -36,13 +37,12 @@ namespace sqlcon
             if (string.IsNullOrEmpty(line))
                 return;
 
-            string[] L = new string[0];
             
             int k = 0;
             char[] buf= new char[200];
             while (k < line.Length)
             {
-                if (line[k] == ' ' || line[k] == '.' || line[k] == '\\')
+                if (line[k] == ' ' || line[k] == '.' || line[k] == '\\' || line[k] == '"')
                 {
                     break;
                 }
@@ -52,12 +52,14 @@ namespace sqlcon
             }
 
             this.Action = new string(buf, 0, k).ToLower();
-            if (k<line.Length && line[k] == ' ')
+            while (k < line.Length && line[k] == ' ')
                 k++;
 
             this.args = line.Substring(k);
-            if(this.args.Length != 0)
-                L = args.Split(' ');
+
+            string[] L;
+
+            this.badcommand = !parseArgument(this.args, out L);
 
             if (L.Length > 0)
                 this.arg1 = L[0];
@@ -107,6 +109,63 @@ namespace sqlcon
                         break;
                 }
             }
+        }
+
+
+        private bool parseArgument(string args, out string[] result)
+        {
+            if (args.Length == 0)
+            {
+                result = new string[] { };
+                return true;
+            }
+
+            List<string> L = new List<string>();
+
+            char[] buf = new char[5000];
+            int k = 0;
+            int i = 0;
+
+            while (k < args.Length)
+            {
+                if (args[k] == ' ')
+                {
+                    if (i > 0)
+                    {
+                        L.Add(new string(buf, 0, i));
+                        i = 0;
+                    }
+                }
+                else if (args[k] == '"')
+                {
+                    k++;
+                    while (k < args.Length && args[k] != '"')
+                    {
+                        buf[i++] = args[k];
+                        k++;
+                    }
+
+                    if (k == args.Length)
+                    {
+                        stdio.ShowError("\" is missing");
+                        result = new string[] { };
+                        return false;
+                    }
+
+                    L.Add(new string(buf, 0, i));
+                    i = 0;
+                }
+                else
+                    buf[i++] = args[k];
+
+                k++;
+            }
+
+            if (i > 0)
+                L.Add(new string(buf, 0, i));
+
+            result = L.ToArray();
+            return true;
         }
 
         private string[] parsePath(string path)

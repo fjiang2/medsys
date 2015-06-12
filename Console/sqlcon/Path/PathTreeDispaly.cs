@@ -218,7 +218,7 @@ namespace sqlcon
                 if (IsMatch(cmd.wildcard, locator.Path))
                 {
                     count++;
-                    stdio.WriteLine("{0,5} {1} <WHERE>", sub(i), locator);
+                    stdio.WriteLine("{0,5} {1,40} <WHERE>", sub(i), locator);
                 }
             }
 
