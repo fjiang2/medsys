@@ -16,9 +16,13 @@ namespace sqlcon
             this.Columns = columns;
         }
 
-        public string FirstColumn
+        public string GetColumn(int i)
         {
-            get { return Columns.Split(',')[0]; }
+            string[] C = Columns.Split(',');
+            if (i >= 0 && i < C.Length)
+                return C[i];
+
+            return null;
         }
 
         public string Path

@@ -603,7 +603,7 @@ namespace sqlcon
             stdio.WriteLine("<help>                  : this help");
             stdio.WriteLine("<?>                     : this help");
             stdio.WriteLine("cd [path]               : change current directory");
-            stdio.WriteLine("dir [path] [/top |/all] : list data structure directory");
+            stdio.WriteLine("dir[path] [/top:n|/all] : list data structure directory");
             stdio.WriteLine();
             stdio.WriteLine("<Commands>");
             stdio.WriteLine("<compare schema> tables : compare schema of tables");

@@ -23,8 +23,10 @@ namespace sqlcon
         public readonly bool IsVertical;
         public readonly bool HasWhere;
         public readonly bool HasPage;
+        public readonly bool HasSearch;
 
         public readonly int top;
+        public readonly string column;
 
         public Command(string line, Configuration cfg)
         {
@@ -55,8 +57,12 @@ namespace sqlcon
                 string a = L[i];
                 switch (a)
                 {
-                    case "/s":
+                    case "/def":
                         IsStruct = true;
+                        break;
+
+                    case "/s":
+                        HasSearch = true;
                         break;
 
                     case "/t":
@@ -82,8 +88,11 @@ namespace sqlcon
                     default:
                         if (a.StartsWith("/"))
                         {
-                            if (a.StartsWith("/top"))
-                                int.TryParse(a.Substring(4), out top);
+                            if (a.StartsWith("/top:"))
+                                int.TryParse(a.Substring(5), out top);
+
+                            if (a.StartsWith("/col:"))
+                                column= a.Substring(5);
                         }
                         else
                         {

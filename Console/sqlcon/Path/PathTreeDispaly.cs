@@ -162,9 +162,37 @@ namespace sqlcon
             {
                 _DisplayLocatorNodes(pt, cmd);
             }
+            else if (cmd.wildcard != null)
+            {
+                string wildcard = cmd.wildcard.Replace("*", "%").Replace("?", "_");
+                if (cmd.column == null)
+                {
+                    stdio.ShowError("column not found");
+                    return false;
+                }
+
+                string where = string.Format("{0} LIKE '{1}'", cmd.column, wildcard);
+
+                var builder = new SqlBuilder().SELECT.COLUMNS().FROM(tname).WHERE(where);
+
+                try
+                {
+                    DataTable table = builder.SqlCmd.FillDataTable();
+                    if (cmd.IsVertical)
+                        table.ToVConsole();
+                    else
+                        table.ToConsole();
+                }
+                catch (Exception ex)
+                {
+                    stdio.ShowError(ex.Message);
+                    return false;
+                }
+            }
             else
             {
-                DataTable table = new SqlBuilder().SELECT.TOP(cmd.top).COLUMNS().FROM(tname).SqlCmd.FillDataTable();
+                var builder = new SqlBuilder().SELECT.TOP(cmd.top).COLUMNS().FROM(tname);
+                DataTable table = builder.SqlCmd.FillDataTable();
                 if (cmd.IsVertical)
                     table.ToVConsole();
                 else
@@ -314,7 +342,7 @@ namespace sqlcon
 
             try
             {
-              
+
                 SqlBuilder builder;
                 if (cmd.wildcard == null)
                 {
@@ -324,17 +352,23 @@ namespace sqlcon
                 }
                 else
                 {
+                    string columnName = cmd.column;
                     string wildcard = cmd.wildcard.Replace("*", "%").Replace("?", "_");
-                    string where;
+                    if(columnName == null)
+                    {
+                        stdio.ShowError("column not found");
+                        return false;
+                    }
+
+                    string where = string.Format("{0} LIKE '{1}'", columnName, wildcard);
                     if (locator != null)
-                        where = string.Format("({0}) AND ({1} like '{2}')", locator.Path, column.FirstColumn, wildcard);
-                    else
-                        where = string.Format("{0} LIKE '{1}'", column.FirstColumn, wildcard);
+                        where = string.Format("({0}) AND ({1})", locator.Path, where);
+                    
 
                     builder = new SqlBuilder().SELECT.TOP(cmd.top).COLUMNS(column.Columns).FROM(tname).WHERE(where);
                 }
-                  
-                DataTable table = builder. SqlCmd.FillDataTable();
+
+                DataTable table = builder.SqlCmd.FillDataTable();
                 if (cmd.IsVertical)
                     table.ToVConsole();
                 else
