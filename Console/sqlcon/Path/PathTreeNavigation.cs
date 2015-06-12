@@ -118,15 +118,9 @@ namespace sqlcon
                         return node.Nodes[result];
                 }
 
-                if (node.Item is TableName)
+                if (node.Item is TableName || node.Item is Locator)
                 {
-                    xnode = TryAddWhere(node, segment);
-                    if (xnode != node)
-                        return xnode;
-                }
-                else if (node.Item is Locator)
-                {
-                    xnode = TryAddColumn(node, segment);
+                    xnode = TryAddWhereOrColumns(node, segment);
                     if (xnode != node)
                         return xnode;
                 }
@@ -137,59 +131,67 @@ namespace sqlcon
         }
 
 
-        public TreeNode<IDataPath> TryAddWhere(TreeNode<IDataPath> pt, string where)
+        public TreeNode<IDataPath> TryAddWhereOrColumns(TreeNode<IDataPath> pt, string segment)
         {
-            if (!(pt.Item is TableName))
+            if (!(pt.Item is Locator) && !(pt.Item is TableName))
             {
                 return pt;
             }
 
-            if (string.IsNullOrEmpty(where))
+            if (string.IsNullOrEmpty(segment))
             {
                 stdio.ShowError("argument cannot be empty");
             }
 
-            TableName tname = (TableName)pt.Item;
-            var locator = new Locator(where);
-            if (new SqlBuilder().SELECT.TOP(1).COLUMNS().FROM(tname).WHERE(locator).Invalid())
+            Locator locator = null;
+            TableName tname = null;
+
+            if (pt.Item is Locator)
             {
-                stdio.ShowError("invalid expression");
+                locator = (Locator)pt.Item;
+                tname = (TableName)pt.Parent.Item;
+            }
+            else
+                tname = (TableName)pt.Item;
+
+            TreeNode<IDataPath> xnode;
+
+            if (locator == null)
+            {
+                xnode = AddLocatorNode(pt, tname, segment);
+                if (xnode != pt)
+                    return xnode;
+            }
+
+            SqlBuilder builder = new SqlBuilder().SELECT.TOP(1).COLUMNS(segment).FROM(tname);
+            if (builder.Invalid())
+            {
+                xnode = AddLocatorNode(pt, tname, segment);
+                if (xnode != pt)
+                    return xnode;
+            }
+
+            xnode = new TreeNode<IDataPath>(new ColumnPath(segment));
+            pt.Nodes.Add(xnode);
+
+            return xnode;
+        }
+
+        private static TreeNode<IDataPath> AddLocatorNode(TreeNode<IDataPath> pt,  TableName tname, string segment)
+        {
+            var locator = new Locator(segment);
+            var builder = new SqlBuilder().SELECT.TOP(1).COLUMNS().FROM(tname).WHERE(locator);
+            if (builder.Invalid())
+            {
                 return pt;
             }
 
             var xnode = new TreeNode<IDataPath>(locator);
             pt.Nodes.Add(xnode);
-
             return xnode;
-
         }
 
-        public TreeNode<IDataPath> TryAddColumn(TreeNode<IDataPath> pt, string columns)
-        {
-            if (!(pt.Item is Locator))
-            {
-                return pt;
-            }
+        
 
-            if (string.IsNullOrEmpty(columns))
-            {
-                stdio.ShowError("argument cannot be empty");
-            }
-            
-            Locator locator = (Locator)pt.Item;
-            TableName tname = (TableName)pt.Parent.Item;
-            
-            if (new SqlBuilder().SELECT.TOP(1).COLUMNS(columns).FROM(tname).WHERE(locator).Invalid())
-            {
-                stdio.ShowError("invalid column names");
-                return pt;
-            }
-
-            var xnode = new TreeNode<IDataPath>(new ColumnPath(columns));
-            pt.Nodes.Add(xnode);
-
-            return xnode;
-
-        }
     }
 }

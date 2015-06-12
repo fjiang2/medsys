@@ -156,7 +156,7 @@ namespace sqlcon
                 return;
             }
 
-            var xnode = mgr.TryAddWhere(pt, cmd.args);
+            var xnode = mgr.TryAddWhereOrColumns(pt, cmd.args);
             if (xnode != pt)
             {
                 //jump to the node just created

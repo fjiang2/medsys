@@ -213,17 +213,17 @@ namespace sqlcon
             int count = 0;
             foreach (var node in pt.Nodes)
             {
-                Locator locator = (Locator)node.Item;
+                IDataPath item = node.Item;
                 ++i;
 
-                if (IsMatch(cmd.wildcard, locator.Path))
+                if (IsMatch(cmd.wildcard, item.Path))
                 {
                     count++;
-                    stdio.WriteLine("{0,5} {1,-40} <WHERE>", sub(i), locator);
+                    stdio.WriteLine("{0,5} {1}", sub(i), item);
                 }
             }
 
-            stdio.WriteLine("\t{0} Where(s)", count);
+            stdio.WriteLine("\t{0} Item(s)", count);
         }
 
         private static bool DisplayViewNodes(TreeNode<IDataPath> pt, Command cmd)
@@ -271,19 +271,27 @@ namespace sqlcon
             TableName tname = (TableName)pt.Parent.Item;
             Locator locator = (Locator)pt.Item;
 
-            try
+            if (cmd.HasWhere)
             {
-                DataTable table = new SqlBuilder().SELECT.TOP(cmd.top).COLUMNS().FROM(tname).WHERE(locator).SqlCmd.FillDataTable();
-                if (cmd.IsVertical)
-                    table.ToVConsole();
-                else
-                    table.ToConsole();
+                _DisplayLocatorNodes(pt, cmd);
                 return true;
             }
-            catch (Exception ex)
+            else
             {
-                stdio.ShowError(ex.Message);
-                return false;
+                try
+                {
+                    DataTable table = new SqlBuilder().SELECT.TOP(cmd.top).COLUMNS().FROM(tname).WHERE(locator).SqlCmd.FillDataTable();
+                    if (cmd.IsVertical)
+                        table.ToVConsole();
+                    else
+                        table.ToConsole();
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    stdio.ShowError(ex.Message);
+                    return false;
+                }
             }
         }
 
@@ -293,22 +301,40 @@ namespace sqlcon
                 return false;
 
             ColumnPath column = (ColumnPath)pt.Item;
-            Locator locator = (Locator)pt.Parent.Item;
-            TableName tname = (TableName)pt.Parent.Parent.Item;
+            Locator locator = null;
+            TableName tname = null;
+            
+            if (pt.Parent.Item is Locator)
+            {
+                locator = (Locator)pt.Parent.Item;
+                tname = (TableName)pt.Parent.Parent.Item;
+            }
+            else
+                tname = (TableName)pt.Parent.Item;
 
             try
             {
-                DataTable table;
+              
+                SqlBuilder builder;
                 if (cmd.wildcard == null)
                 {
-                    table = new SqlBuilder().SELECT.TOP(cmd.top).COLUMNS(column.Columns).FROM(tname).WHERE(locator).SqlCmd.FillDataTable();
+                    builder = new SqlBuilder().SELECT.TOP(cmd.top).COLUMNS(column.Columns).FROM(tname);
+                    if (locator != null)
+                        builder.WHERE(locator);
                 }
                 else
                 {
                     string wildcard = cmd.wildcard.Replace("*", "%").Replace("?", "_");
-                    string where = string.Format("({0}) AND ({1} like '{2}')", locator.Path, column.FirstColumn, wildcard);
-                    table = new SqlBuilder().SELECT.TOP(cmd.top).COLUMNS(column.Columns).FROM(tname).WHERE(where).SqlCmd.FillDataTable();
+                    string where;
+                    if (locator != null)
+                        where = string.Format("({0}) AND ({1} like '{2}')", locator.Path, column.FirstColumn, wildcard);
+                    else
+                        where = string.Format("{0} LIKE '{1}'", column.FirstColumn, wildcard);
+
+                    builder = new SqlBuilder().SELECT.TOP(cmd.top).COLUMNS(column.Columns).FROM(tname).WHERE(where);
                 }
+                  
+                DataTable table = builder. SqlCmd.FillDataTable();
                 if (cmd.IsVertical)
                     table.ToVConsole();
                 else
