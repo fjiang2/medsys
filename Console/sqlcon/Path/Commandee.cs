@@ -50,7 +50,7 @@ namespace sqlcon
                 return false;
             }
 
-            var node = mgr.Navigate(cmd.Segments);
+            var node = mgr.Navigate(cmd.Path1);
             if (node != null)
             {
                 mgr.current = node;
@@ -77,9 +77,9 @@ namespace sqlcon
 
             var pt = mgr.current;
 
-            if (cmd.Segments.Length != 0)
+            if (cmd.Path1.Length != 0)
             {
-                pt = mgr.Navigate(cmd.Segments);
+                pt = mgr.Navigate(cmd.Path1);
                 if (pt == null)
                     return;
             }
@@ -141,7 +141,7 @@ namespace sqlcon
         }
 
 
-        public void where(Command cmd)
+        public void mkdir(Command cmd)
         {
             TreeNode<IDataPath> pt = mgr.current;
 
@@ -152,19 +152,97 @@ namespace sqlcon
 
             if (!(pt.Item is TableName))
             {
-                stdio.ShowError("cannot add where underneath non-Table");
+                stdio.ShowError("cannot add filter underneath non-Table");
                 return;
             }
 
             var xnode = mgr.TryAddWhereOrColumns(pt, cmd.args);
-            if (xnode != pt)
+            //if (xnode != pt)
+            //{
+            //    //jump to the node just created
+            //    mgr.current = xnode;
+            //    mgr.Display(xnode, cmd);
+            //}
+        }
+
+        public void rmdir(Command cmd)
+        {
+            TreeNode<IDataPath> pt = mgr.current;
+
+            if (cmd.Path1.Length != 0)
             {
-                //jump to the node just created
-                mgr.current = xnode;
-                mgr.Display(xnode, cmd);
+                pt = mgr.Navigate(cmd.Path1);
+                if (pt == null)
+                {
+                    stdio.ShowError("invalid path");
+                    return;
+                }
+
+            }
+
+            pt = pt.Parent;
+
+            if (!(pt.Item is TableName))
+            {
+                stdio.ShowError("cannot remove filter underneath non-Table");
+                return;
+            }
+
+
+            var nodes = pt.Nodes.Where(node => node.Item is Locator && (node.Item as Locator).Path == cmd.args);
+            if (nodes.Count() > 0)
+            {
+                stdio.Write("are you sure to delete (y/n)?");
+                if (stdio.ReadKey() != ConsoleKey.Y)
+                    return;
+
+                foreach (var node in nodes)
+                {
+                    pt.Nodes.Remove(node);
+                }
+
+            }
+            else
+            {
+                int result;
+                if (int.TryParse("segment", out result))
+                {
+                    result--;
+
+                    if (result >= 0 && result < pt.Nodes.Count)
+                    {
+                        stdio.Write("are you sure to delete (y/n)?");
+                        if (stdio.ReadKey() != ConsoleKey.Y)
+                            return;
+
+                        var node = pt.Nodes[result];
+                        pt.Nodes.Remove(node);
+                    }
+                }
             }
         }
 
+        public void type(Command cmd)
+        {
+            if (cmd.arg1 == "/?")
+            {
+                stdio.WriteLine("type [path]            : display current data");
+                return;
+            }
 
+            var pt = mgr.current;
+
+            if (cmd.Path1.Length != 0)
+            {
+                pt = mgr.Navigate(cmd.Path1);
+                if (pt == null)
+                {
+                    stdio.ShowError("invalid path");
+                    return;
+                }
+            }
+
+            mgr.TypeFile(pt, cmd);
+        }
     }
 }

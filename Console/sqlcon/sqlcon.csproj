@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="Path\ColumnName.cs" />
     <Compile Include="Path\Commandee.cs" />
+    <Compile Include="Path\PathTreeTypeFileData.cs" />
     <Compile Include="Shell\CompareAdapter.cs" />
     <Compile Include="Shell\ActionType.cs" />
     <Compile Include="CompareConsole.cs" />

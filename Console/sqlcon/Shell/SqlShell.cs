@@ -132,8 +132,14 @@ namespace sqlcon
                     commandee.set(cmd);
                     return true;
 
-                case "where":
-                    commandee.where(cmd);
+                case "md":
+                case "mkdir":
+                    commandee.mkdir(cmd);
+                    return true;
+
+                case "rd":
+                case "rmdir":
+                    commandee.rmdir(cmd);
                     return true;
             }
 
@@ -154,12 +160,8 @@ namespace sqlcon
                         stdio.WriteLine(mgr.ToString());
                     return true;
 
-                case "md":
-                case "mkdir":
-                    return true;
-
-                case "rd":
-                case "rmdir":
+                case "type":
+                    commandee.type(cmd);
                     return true;
 
                 case "del":

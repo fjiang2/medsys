@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace sqlcon
 {
     class Command
     {
         public readonly bool badcommand = false;
-        public string wildcard { get; private set; }
-        public string[] Segments { get; set; }
+        public string wildcard;
+        private List<string> paths = new List<string>();
 
-        public string Action { get; private set; }
+        public string Action;
         public string args { get; private set; }
         public string arg1 { get; private set; }
         public string arg2 { get; private set; }
@@ -31,7 +32,6 @@ namespace sqlcon
         public Command(string line, Configuration cfg)
         {
             this.wildcard = null;
-            this.Segments = new string[0];
             this.IsStruct = false;
             this.IsVertical = false;
             this.top = cfg.Limit_Top;
@@ -40,7 +40,7 @@ namespace sqlcon
                 return;
 
 
-            int k = parseAction(line);
+            int k = parseAction(line, out Action);
             this.args = line.Substring(k);
 
             string[] L;
@@ -55,60 +55,78 @@ namespace sqlcon
             for (int i = 0; i < L.Length; i++)
             {
                 string a = L[i];
-                switch (a)
+                if (a.StartsWith("/"))
                 {
-                    case "/def":
-                        IsStruct = true;
-                        break;
+                    switch (a)
+                    {
+                        case "/def":
+                            IsStruct = true;
+                            break;
 
-                    case "/s":
-                        HasSearch = true;
-                        break;
+                        case "/s":
+                            HasSearch = true;
+                            break;
 
-                    case "/t":
-                        IsVertical = true;
-                        break;
+                        case "/t":
+                            IsVertical = true;
+                            break;
 
-                    case "/w":
-                        HasWhere = true;
-                        break;
+                        case "/w":
+                            HasWhere = true;
+                            break;
 
-                    case "/p":
-                        HasPage = true;
-                        break;
+                        case "/p":
+                            HasPage = true;
+                            break;
 
-                    case "/all":
-                        top = 0;
-                        break;
+                        case "/all":
+                            top = 0;
+                            break;
 
-                    case "/?":
-                        HasHelp = true;
-                        break;
+                        case "/?":
+                            HasHelp = true;
+                            break;
 
-                    default:
-                        if (a.StartsWith("/"))
-                        {
+                        default:
                             if (a.StartsWith("/top:"))
                                 int.TryParse(a.Substring(5), out top);
 
                             if (a.StartsWith("/col:"))
-                                column= a.Substring(5);
-                        }
-                        else
-                        {
-                            if (this.Segments.Length == 0)
-                                this.Segments = parsePath(a);
-                            else
-                            {
-                                this.badcommand = true;
-                            }
-                        }
-                        break;
+                                column = a.Substring(5);
+                            break;
+                    }
+                }
+                else
+                {
+                    paths.Add(a);
                 }
             }
         }
 
-        private int parseAction(string line)
+
+        public string[] Path1
+        {
+            get
+            {
+                if (this.paths.Count > 0)
+                    return parsePath(paths[0], out this.wildcard);
+                else
+                    return new string[0];
+            }
+        }
+
+        public string[] Path2
+        {
+            get
+            {
+                if (this.paths.Count > 1)
+                    return parsePath(paths[1], out this.wildcard);
+                else
+                    return new string[0];
+            }
+        }
+
+        private static int parseAction(string line, out string action)
         {
             int k = 0;
             char[] buf = new char[200];
@@ -123,14 +141,13 @@ namespace sqlcon
                 k++;
             }
 
-            this.Action = new string(buf, 0, k).ToLower();
+            action = new string(buf, 0, k).ToLower();
             while (k < line.Length && line[k] == ' ')
                 k++;
             return k;
         }
 
-
-        private bool parseArgument(string args, out string[] result)
+        private static bool parseArgument(string args, out string[] result)
         {
             if (args.Length == 0)
             {
@@ -186,9 +203,9 @@ namespace sqlcon
             return true;
         }
 
-        private string[] parsePath(string path)
+        private static string[] parsePath(string path, out string wildcard)
         {
-            this.wildcard = null;
+            wildcard = null;
 
             if (string.IsNullOrEmpty(path))
                 return new string[0];
