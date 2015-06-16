@@ -23,6 +23,8 @@ namespace sqlcon
         private PathManager mgr;
         private Commandee commandee;
 
+        private Side Side0;
+
         public SqlShell(Configuration cfg, CompareAdapter adapter)
         {
             this.cfg = cfg;
@@ -30,7 +32,21 @@ namespace sqlcon
             this.mgr = new PathManager(cfg);
             this.commandee = new Commandee(mgr);
 
-            ChangeSide(adapter.Side1);
+            string server = cfg.GetValue<string>(Configuration._SERVER0);
+            var pvd = cfg.GetProvider(server);
+            if (pvd != null)
+            {
+                Side0 = new Side(pvd);
+                ChangeSide(Side0);
+            }
+            else if (cfg.Providers.Count() > 0)
+            {
+                Side0 = new Side(cfg.Providers.First());
+            }
+            else
+            {
+                throw new Exception("SQL Server not defined");
+            }
         }
 
         private void ChangeSide(Side side)
@@ -189,6 +205,11 @@ namespace sqlcon
                         stdio.ShowError("find object undefined");
                     return true;
 
+                case "0":
+                    ChangeSide(Side0);
+                    stdio.WriteLine("working server selected({0})", showConnection(Side0.Provider));
+                    return true;
+
                 case "1":
                     if (cmd.arg1 != null)
                     {
@@ -201,7 +222,7 @@ namespace sqlcon
                     }
 
                     ChangeSide(adapter.Side1);
-                    stdio.WriteLine("server 1 selected({0})", showConnection(theSide.Provider));
+                    stdio.WriteLine("comparison server 1 selected({0})", showConnection(theSide.Provider));
                     return true;
 
                 case "2":
@@ -215,7 +236,7 @@ namespace sqlcon
                         }
                     }
                     ChangeSide(adapter.Side2);
-                    stdio.WriteLine("server 2 selected({0})", showConnection(theSide.Provider));
+                    stdio.WriteLine("comparison server 2 selected({0})", showConnection(theSide.Provider));
                     return true;
 
 
@@ -604,8 +625,11 @@ namespace sqlcon
             stdio.WriteLine("<exit>                  : quit application");
             stdio.WriteLine("<help>                  : this help");
             stdio.WriteLine("<?>                     : this help");
-            stdio.WriteLine("cd [path]               : change current directory");
-            stdio.WriteLine("dir[path] [/top:n|/all] : list data structure directory");
+            stdio.WriteLine("dir /?                  : see more info");
+            stdio.WriteLine("cd /?                   : see more info");
+            stdio.WriteLine("md /?                   : see more info");
+            stdio.WriteLine("rd /?                   : see more info");
+            stdio.WriteLine("type /?                 : see more info");
             stdio.WriteLine();
             stdio.WriteLine("<Commands>");
             stdio.WriteLine("<compare schema> tables : compare schema of tables");
@@ -625,8 +649,9 @@ namespace sqlcon
             stdio.WriteLine("<show current>          : show current active connection-string");
             stdio.WriteLine("<show var>              : show variable list");
             stdio.WriteLine("<run> query(..)         : run predefined query. e.g. run query(var1=val1,...);");
-            stdio.WriteLine("<1> [path]              : switch to source server 1 (default)");
-            stdio.WriteLine("<2> [path]              : switch to sink server 2");
+            stdio.WriteLine("<0>                     : switch to default server");
+            stdio.WriteLine("<1> [path]              : switch to comparison source server 1");
+            stdio.WriteLine("<2> [path]              : switch to comparison sink server 2");
             stdio.WriteLine("<goto> path             : switch to database server");
             stdio.WriteLine("<copy output>           : copy sql script ouput to clipboard");
             stdio.WriteLine("<open log>              : open log file");
@@ -644,10 +669,6 @@ namespace sqlcon
             stdio.WriteLine("alter ...");
             stdio.WriteLine("exec ...");
             stdio.WriteLine("export                  : export export INSERT script");
-            stdio.WriteLine("<Functions>");
-            stdio.WriteLine("  export(tablename, where)");
-            stdio.WriteLine("                        : export INSERT script, SELECT * FROM table WHERE ...");
-            stdio.WriteLine("  export(tablename)     : export INSERT script, SELECT * FROM table");
             stdio.WriteLine("<Variables>");
             stdio.WriteLine("  maxrows               : max number of row shown on select query");
             stdio.WriteLine("  DataReader            : true: use SqlDataReader; false: use Fill DataSet");

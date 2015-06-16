@@ -16,6 +16,7 @@ namespace sqlcon
     {
         
         public const string _COMPARISON = "comparison";
+        public const string _SERVER0 = "server";
         public const string _SERVER1 = "server1";
         public const string _SERVER2 = "server2";
         
@@ -99,6 +100,11 @@ namespace sqlcon
         public VAL GetValue(VAR variable)
         {
             return Cfg[variable];
+        }
+
+        public T GetValue<T>(string variable, T defaultValue = default(T))
+        {
+            return Cfg.GetValue<T>(variable, defaultValue);
         }
 
         private static string PeelOleDb(string connectionString)
