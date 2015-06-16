@@ -43,6 +43,11 @@ namespace Sys.Data
         {
         }
 
+        public Locator(Locator locator)
+        {
+            this.where = locator.where;
+        }
+
         public Locator(string any)
         {
             this.where = any;
@@ -56,6 +61,16 @@ namespace Sys.Data
         public Locator(SqlExpr expression)
         {
             this.where = expression.ToString();
+        }
+
+        public void And(Locator locator)
+        {
+            this.where = string.Format("({0}) AND ({1})", this.where, locator.where);
+        }
+
+        public void Or(Locator locator)
+        {
+            this.where = string.Format("({0}) OR ({1})", this.where, locator.where);
         }
 
         /// <summary>

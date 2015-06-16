@@ -25,6 +25,7 @@ namespace sqlcon
             if (DisplayDatabaseNodes(pt, cmd)) return;
             if (DisplayTableNodes(pt, cmd)) return;
             if (DisplayTableSubNodes(pt, cmd)) return;
+            if (_DisplayLocatorNodes(pt, cmd)) return;
             if (DisplayViewNodes(pt, cmd)) return;
         }
 
@@ -197,7 +198,7 @@ namespace sqlcon
             stdio.WriteLine("\t{0} Column(s)", count);
         }
 
-        private static void _DisplayLocatorNodes(TreeNode<IDataPath> pt, Command cmd)
+        private static bool _DisplayLocatorNodes(TreeNode<IDataPath> pt, Command cmd)
         {
             int i = 0;
             int count = 0;
@@ -214,6 +215,7 @@ namespace sqlcon
             }
 
             stdio.WriteLine("\t{0} Item(s)", count);
+            return true;
         }
 
         private static bool DisplayViewNodes(TreeNode<IDataPath> pt, Command cmd)

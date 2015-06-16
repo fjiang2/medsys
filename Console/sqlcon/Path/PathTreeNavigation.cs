@@ -137,51 +137,19 @@ namespace sqlcon
                 stdio.ShowError("argument cannot be empty");
             }
 
-            Locator locator = null;
-            TableName tname = null;
+            TableName tname = GetCurrentPath<TableName>();
 
-            if (pt.Item is Locator)
-            {
-                locator = (Locator)pt.Item;
-                tname = (TableName)pt.Parent.Item;
-            }
-            else
-                tname = (TableName)pt.Item;
-
-            TreeNode<IDataPath> xnode;
-
-            if (locator == null)
-            {
-                xnode = AddLocatorNode(pt, tname, segment);
-                if (xnode != pt)
-                    return xnode;
-            }
-
-            SqlBuilder builder = new SqlBuilder().SELECT.TOP(1).COLUMNS(segment).FROM(tname);
-            if (builder.Invalid())
-            {
-                xnode = AddLocatorNode(pt, tname, segment);
-                if (xnode != pt)
-                    return xnode;
-            }
-
-            xnode = new TreeNode<IDataPath>(new ColumnPath(segment));
-            pt.Nodes.Add(xnode);
-
-            return xnode;
-        }
-
-        private static TreeNode<IDataPath> AddLocatorNode(TreeNode<IDataPath> pt,  TableName tname, string segment)
-        {
             var locator = new Locator(segment);
             var builder = new SqlBuilder().SELECT.TOP(1).COLUMNS().FROM(tname).WHERE(locator);
             if (builder.Invalid())
             {
+                stdio.ShowError("invalid path");
                 return pt;
             }
 
             var xnode = new TreeNode<IDataPath>(locator);
             pt.Nodes.Add(xnode);
+
             return xnode;
         }
 

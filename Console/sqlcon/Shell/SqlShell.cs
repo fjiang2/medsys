@@ -658,6 +658,7 @@ namespace sqlcon
             stdio.WriteLine("<open input>            : open input file");
             stdio.WriteLine("<open output>           : open output file");
             stdio.WriteLine("<open schema>           : open schema file");
+            stdio.WriteLine("export                  : export export INSERT script");
             stdio.WriteLine();
             stdio.WriteLine("type [;] to execute following SQL script or functions");
             stdio.WriteLine("<SQL>");
@@ -668,7 +669,6 @@ namespace sqlcon
             stdio.WriteLine("drop table ...");
             stdio.WriteLine("alter ...");
             stdio.WriteLine("exec ...");
-            stdio.WriteLine("export                  : export export INSERT script");
             stdio.WriteLine("<Variables>");
             stdio.WriteLine("  maxrows               : max number of row shown on select query");
             stdio.WriteLine("  DataReader            : true: use SqlDataReader; false: use Fill DataSet");

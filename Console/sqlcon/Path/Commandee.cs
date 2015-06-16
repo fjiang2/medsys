@@ -156,14 +156,9 @@ namespace sqlcon
         {
             TreeNode<IDataPath> pt = mgr.current;
 
-            //search TableName node
-            var x = mgr.GetCurrentNode<TableName>();
-            if (x != null)
-                pt = x;
-
-            if (!(pt.Item is TableName))
+            if (!(pt.Item is TableName) && !(pt.Item is Locator))
             {
-                stdio.ShowError("cannot add filter underneath non-Table");
+                stdio.ShowError("must add filter underneath table or locator");
                 return;
             }
 

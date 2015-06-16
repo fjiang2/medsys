@@ -84,36 +84,36 @@ namespace sqlcon
         }
 
 
-        private static bool TypeLocatorData(TreeNode<IDataPath> pt, Command cmd)
+        private bool TypeLocatorData(TreeNode<IDataPath> pt, Command cmd)
         {
             if (!(pt.Item is Locator))
                 return false;
 
-            TableName tname = (TableName)pt.Parent.Item;
-            Locator locator = (Locator)pt.Item;
+            TableName tname = this.GetCurrentPath<TableName>();
+            Locator locator = new Locator((Locator)pt.Item);
 
-            if (cmd.HasWhere)
+            var xnode = pt;
+            while (xnode.Parent.Item is Locator)
             {
-                _DisplayLocatorNodes(pt, cmd);
+                xnode = xnode.Parent;
+                locator.And((Locator)xnode.Item);
+            }
+
+            try
+            {
+                DataTable table = new SqlBuilder().SELECT.TOP(cmd.top).COLUMNS().FROM(tname).WHERE(locator).SqlCmd.FillDataTable();
+                if (cmd.IsVertical)
+                    table.ToVConsole();
+                else
+                    table.ToConsole();
                 return true;
             }
-            else
+            catch (Exception ex)
             {
-                try
-                {
-                    DataTable table = new SqlBuilder().SELECT.TOP(cmd.top).COLUMNS().FROM(tname).WHERE(locator).SqlCmd.FillDataTable();
-                    if (cmd.IsVertical)
-                        table.ToVConsole();
-                    else
-                        table.ToConsole();
-                    return true;
-                }
-                catch (Exception ex)
-                {
-                    stdio.ShowError(ex.Message);
-                    return false;
-                }
+                stdio.ShowError(ex.Message);
+                return false;
             }
+
         }
 
         private static bool TypeLocatorColumnData(TreeNode<IDataPath> pt, Command cmd)
