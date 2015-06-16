@@ -24,8 +24,8 @@ namespace sqlcon
 
         public void chdir(ServerName serverName, DatabaseName databaseName)
         {
-            string[] segments = new string[] { "\\", serverName.Path, databaseName.Path };
-            var node = mgr.Navigate(segments);
+            PathName pathName = new PathName(string.Format("\\{0}\\{1}\\", serverName.Path, databaseName.Path ));
+            var node = mgr.Navigate(pathName);
             if (node != null)
             {
                 mgr.current = node;
@@ -50,17 +50,20 @@ namespace sqlcon
                 return false;
             }
 
-            var node = mgr.Navigate(cmd.Path1);
-            if (node != null)
+            if (cmd.Path1 != null)
             {
-                mgr.current = node;
-                return true;
+                var node = mgr.Navigate(cmd.Path1);
+                if (node != null)
+                {
+                    mgr.current = node;
+                    return true;
+                }
             }
 
             return false;
         }
 
- 
+
 
         public void dir(Command cmd)
         {
@@ -77,7 +80,7 @@ namespace sqlcon
 
             var pt = mgr.current;
 
-            if (cmd.Path1.Length != 0)
+            if (cmd.Path1 != null)
             {
                 pt = mgr.Navigate(cmd.Path1);
                 if (pt == null)
@@ -169,7 +172,7 @@ namespace sqlcon
         {
             TreeNode<IDataPath> pt = mgr.current;
 
-            if (cmd.Path1.Length != 0)
+            if (cmd.Path1 != null)
             {
                 pt = mgr.Navigate(cmd.Path1);
                 if (pt == null)
@@ -177,8 +180,8 @@ namespace sqlcon
                     stdio.ShowError("invalid path");
                     return;
                 }
-
             }
+
 
             pt = pt.Parent;
 
@@ -205,7 +208,7 @@ namespace sqlcon
             else
             {
                 int result;
-                if (int.TryParse("segment", out result))
+                if (int.TryParse(cmd.Path1.name, out result))
                 {
                     result--;
 
@@ -232,7 +235,7 @@ namespace sqlcon
 
             var pt = mgr.current;
 
-            if (cmd.Path1.Length != 0)
+            if (cmd.Path1 != null)
             {
                 pt = mgr.Navigate(cmd.Path1);
                 if (pt == null)

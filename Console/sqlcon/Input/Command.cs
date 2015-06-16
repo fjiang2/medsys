@@ -104,25 +104,25 @@ namespace sqlcon
         }
 
 
-        public string[] Path1
+        public PathName Path1
         {
             get
             {
                 if (this.paths.Count > 0)
-                    return parsePath(paths[0], out this.wildcard);
+                    return new PathName(paths[0]);
                 else
-                    return new string[0];
+                    return null;
             }
         }
 
-        public string[] Path2
+        public PathName Path2
         {
             get
             {
                 if (this.paths.Count > 1)
-                    return parsePath(paths[1], out this.wildcard);
+                    return new PathName(paths[1]);
                 else
-                    return new string[0];
+                    return null;
             }
         }
 
@@ -203,30 +203,6 @@ namespace sqlcon
             return true;
         }
 
-        private static string[] parsePath(string path, out string wildcard)
-        {
-            wildcard = null;
-
-            if (string.IsNullOrEmpty(path))
-                return new string[0];
-
-            string[] segments = path.Split('\\');
-            int n1 = 0;
-            int n2 = segments.Length - 1;
-
-            if (string.IsNullOrEmpty(segments[n1]))
-                segments[n1] = "\\";
-
-            if (segments[n2] == "")
-                return segments.Take(n2).ToArray();
-
-            if (segments[n2].IndexOf('*') >= 0 || segments[n2].IndexOf('?') >= 0)
-            {
-                wildcard = segments[n2];
-                return segments.Take(n2).ToArray();
-            }
-
-            return segments;
-        }
+     
     }
 }

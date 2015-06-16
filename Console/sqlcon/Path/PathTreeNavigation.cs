@@ -60,8 +60,10 @@ namespace sqlcon
 
   
 
-        public TreeNode<IDataPath> Navigate(string[] segments)
+        public TreeNode<IDataPath> Navigate(PathName pathName)
         {
+            string[] segments = pathName.FullSegments;
+      
             if (segments.Length == 0)
                 return current;
 
