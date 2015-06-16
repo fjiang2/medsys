@@ -120,14 +120,6 @@ namespace sqlcon
                         return node.Nodes[result];
                 }
 
-                //if (node.Item is TableName || node.Item is Locator)
-                //{
-                //    xnode = TryAddWhereOrColumns(node, segment);
-                //    if (xnode != node)
-                //        return xnode;
-                //}
-
-                stdio.ShowError("invalid path", segment);
                 return null;
             }
         }

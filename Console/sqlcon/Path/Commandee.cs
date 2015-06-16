@@ -17,19 +17,41 @@ namespace sqlcon
     class Commandee
     {
         private PathManager mgr;
+        private TreeNode<IDataPath> pt;
+
         public Commandee(PathManager mgr)
         {
             this.mgr = mgr;
         }
 
+        private bool Navigate(Command cmd)
+        {
+            this.pt = mgr.current;
+
+            if (cmd.Path1 != null)
+            {
+                pt = mgr.Navigate(cmd.Path1);
+                if (pt == null)
+                {
+                    stdio.ShowError("invalid path");
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
         public void chdir(ServerName serverName, DatabaseName databaseName)
         {
-            PathName pathName = new PathName(string.Format("\\{0}\\{1}\\", serverName.Path, databaseName.Path ));
+            string path = string.Format("\\{0}\\{1}\\", serverName.Path, databaseName.Path);
+            PathName pathName = new PathName(path);
             var node = mgr.Navigate(pathName);
             if (node != null)
             {
                 mgr.current = node;
             }
+            else
+                stdio.ShowError("invalid path:" + path);
         }
 
         public bool chdir(Command cmd)
@@ -50,17 +72,13 @@ namespace sqlcon
                 return false;
             }
 
-            if (cmd.Path1 != null)
+            if (!Navigate(cmd))
+                return false;
+            else
             {
-                var node = mgr.Navigate(cmd.Path1);
-                if (node != null)
-                {
-                    mgr.current = node;
-                    return true;
-                }
+                mgr.current = pt;
+                return true;
             }
-
-            return false;
         }
 
 
@@ -70,22 +88,12 @@ namespace sqlcon
             if (cmd.arg1 == "/?")
             {
                 stdio.WriteLine("dir [path]             : display current directory");
-                stdio.WriteLine("options:   /topnnn     : display top nnn records");
-                stdio.WriteLine("           /all        : display all records");
-                stdio.WriteLine("           /s          : display table structure");
-                stdio.WriteLine("           /w          : display where filters");
-                stdio.WriteLine("           /t          : display table in vertical grid");
+                stdio.WriteLine("options:   /def        : display table structure");
                 return;
             }
 
-            var pt = mgr.current;
-
-            if (cmd.Path1 != null)
-            {
-                pt = mgr.Navigate(cmd.Path1);
-                if (pt == null)
-                    return;
-            }
+            if (!Navigate(cmd))
+                return;
 
             if (pt.Nodes.Count == 0)
                 mgr.Expand(pt, true);
@@ -170,18 +178,8 @@ namespace sqlcon
 
         public void rmdir(Command cmd)
         {
-            TreeNode<IDataPath> pt = mgr.current;
-
-            if (cmd.Path1 != null)
-            {
-                pt = mgr.Navigate(cmd.Path1);
-                if (pt == null)
-                {
-                    stdio.ShowError("invalid path");
-                    return;
-                }
-            }
-
+            if (!Navigate(cmd))
+                return;
 
             pt = pt.Parent;
 
@@ -192,7 +190,7 @@ namespace sqlcon
             }
 
 
-            var nodes = pt.Nodes.Where(node => node.Item is Locator && (node.Item as Locator).Path == cmd.args);
+            var nodes = pt.Nodes.Where(node => node.Item is Locator && (node.Item as Locator).Path == cmd.Path1.name);
             if (nodes.Count() > 0)
             {
                 stdio.Write("are you sure to delete (y/n)?");
@@ -230,20 +228,18 @@ namespace sqlcon
             if (cmd.arg1 == "/?")
             {
                 stdio.WriteLine("type [path]            : display current data");
+                stdio.WriteLine("options:   /top:n      : display top n records");
+                stdio.WriteLine("           /all        : display all records");
+                stdio.WriteLine("           /t          : display table in vertical grid");
+                stdio.WriteLine("example:");
+                stdio.WriteLine("type match*s /col:name : display rows matched on column:name");
                 return;
             }
 
-            var pt = mgr.current;
+            this.pt = mgr.current;
 
-            if (cmd.Path1 != null)
-            {
-                pt = mgr.Navigate(cmd.Path1);
-                if (pt == null)
-                {
-                    stdio.ShowError("invalid path");
-                    return;
-                }
-            }
+            if (!Navigate(cmd))
+                return;
 
             mgr.TypeFile(pt, cmd);
         }

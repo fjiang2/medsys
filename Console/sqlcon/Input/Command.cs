@@ -10,14 +10,12 @@ namespace sqlcon
     class Command
     {
         public readonly bool badcommand = false;
-        public string wildcard;
         private List<string> paths = new List<string>();
 
         public string Action;
         public string args { get; private set; }
         public string arg1 { get; private set; }
         public string arg2 { get; private set; }
-
 
         public readonly bool HasHelp;
         public readonly bool IsStruct;
@@ -31,7 +29,6 @@ namespace sqlcon
 
         public Command(string line, Configuration cfg)
         {
-            this.wildcard = null;
             this.IsStruct = false;
             this.IsVertical = false;
             this.top = cfg.Limit_Top;
@@ -98,6 +95,9 @@ namespace sqlcon
                 }
                 else
                 {
+                    if (paths.Count > 1)
+                        this.badcommand = true;
+
                     paths.Add(a);
                 }
             }
@@ -123,6 +123,18 @@ namespace sqlcon
                     return new PathName(paths[1]);
                 else
                     return null;
+            }
+        }
+
+        public string wildcard
+        {
+            get
+            {
+                if (Path1 == null)
+                    return null;
+                else
+                    return Path1.wildcard;
+
             }
         }
 
