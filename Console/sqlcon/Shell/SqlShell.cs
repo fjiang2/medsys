@@ -345,7 +345,7 @@ namespace sqlcon
                     {
                         string fileName = cfg.OutputFile;
                         TableName tname = mgr.GetCurrentPath<TableName>();
-                        Locator where = mgr.GetCurrentPath<Locator>();
+                        var node = mgr.GetCurrentNode<Locator>();
                         if (tname == null)
                         {
                             stdio.ShowError("warning: table is not available");
@@ -356,10 +356,11 @@ namespace sqlcon
 
                         using (var writer = fileName.NewStreamWriter())
                         {
-                            if (where != null)
+                            if (node != null)
                             {
-                                count = theSide.GenerateRows(writer, tname, where);
-                                stdio.WriteLine("insert clauses (SELECT * FROM {0} WHERE {1}) generated to {2}", tname, where, fileName);
+                                Locator locator = mgr.GetCombinedLocator(node);
+                                count = theSide.GenerateRows(writer, tname, locator);
+                                stdio.WriteLine("insert clauses (SELECT * FROM {0} WHERE {1}) generated to {2}", tname, locator, fileName);
                             }
                             else
                             {

@@ -90,7 +90,7 @@ namespace sqlcon
                 return false;
 
             TableName tname = this.GetCurrentPath<TableName>();
-            Locator locator = new Locator((Locator)pt.Item);
+            Locator locator = GetCombinedLocator(pt);
 
             var xnode = pt;
             while (xnode.Parent.Item is Locator)

@@ -58,7 +58,23 @@ namespace sqlcon
             return pt;
         }
 
-  
+        public Locator GetCombinedLocator(TreeNode<IDataPath> pt1)
+        {
+            if (pt1.Item is Locator)
+            {
+                Locator locator = new Locator((Locator)pt1.Item);
+                var pt2 = pt1;
+                while (pt2.Parent.Item is Locator)
+                {
+                    pt2 = pt2.Parent;
+                    locator.And((Locator)pt2.Item);
+                }
+
+                return locator;
+            }
+            else
+                return null;
+        }
 
         public TreeNode<IDataPath> Navigate(PathName pathName)
         {
