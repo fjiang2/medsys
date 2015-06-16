@@ -138,6 +138,18 @@ namespace sqlcon
             }
         }
 
+        public string where
+        {
+            get
+            {
+                if (Path1 == null)
+                    return null;
+                else
+                    return Path1.where;
+
+            }
+        }
+
         private static int parseAction(string line, out string action)
         {
             int k = 0;

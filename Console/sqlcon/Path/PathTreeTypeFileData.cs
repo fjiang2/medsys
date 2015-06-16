@@ -53,6 +53,24 @@ namespace sqlcon
                     return false;
                 }
             }
+            else if (cmd.where != null)
+            {
+                try
+                {
+                    var locator = new Locator(cmd.where);
+                    DataTable table = new SqlBuilder().SELECT.TOP(cmd.top).COLUMNS().FROM(tname).WHERE(locator).SqlCmd.FillDataTable();
+                    if (cmd.IsVertical)
+                        table.ToVConsole();
+                    else
+                        table.ToConsole();
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    stdio.ShowError(ex.Message);
+                    return false;
+                }
+            }
             else
             {
                 var builder = new SqlBuilder().SELECT.TOP(cmd.top).COLUMNS().FROM(tname);
