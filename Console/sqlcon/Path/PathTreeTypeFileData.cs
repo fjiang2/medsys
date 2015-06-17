@@ -19,6 +19,18 @@ namespace sqlcon
             if (TypeLocatorColumnData(pt, cmd)) return;
         }
 
+        private static void _DisplayTable(Command cmd, DataTable table)
+        {
+            if (table == null)
+                return;
+
+            if (cmd.IsVertical)
+                table.ToVConsole();
+            else
+                table.ToConsole();
+        }
+
+
         public static bool TypeFileData(TreeNode<IDataPath> pt, Command cmd)
         {
             if (!(pt.Item is TableName))
@@ -29,7 +41,7 @@ namespace sqlcon
             if (cmd.wildcard != null)
             {
                 string wildcard = cmd.wildcard.Replace("*", "%").Replace("?", "_");
-                if (cmd.column == null)
+                if (string.IsNullOrEmpty(cmd.column))
                 {
                     stdio.ShowError("column not found");
                     return false;
@@ -42,10 +54,7 @@ namespace sqlcon
                 try
                 {
                     DataTable table = builder.SqlCmd.FillDataTable();
-                    if (cmd.IsVertical)
-                        table.ToVConsole();
-                    else
-                        table.ToConsole();
+                    _DisplayTable(cmd, table);
                 }
                 catch (Exception ex)
                 {
@@ -59,10 +68,7 @@ namespace sqlcon
                 {
                     var locator = new Locator(cmd.where);
                     DataTable table = new SqlBuilder().SELECT.TOP(cmd.top).COLUMNS().FROM(tname).WHERE(locator).SqlCmd.FillDataTable();
-                    if (cmd.IsVertical)
-                        table.ToVConsole();
-                    else
-                        table.ToConsole();
+                    _DisplayTable(cmd, table);
                     return true;
                 }
                 catch (Exception ex)
@@ -75,13 +81,12 @@ namespace sqlcon
             {
                 var builder = new SqlBuilder().SELECT.TOP(cmd.top).COLUMNS().FROM(tname);
                 DataTable table = builder.SqlCmd.FillDataTable();
-                if (cmd.IsVertical)
-                    table.ToVConsole();
-                else
-                    table.ToConsole();
+                _DisplayTable(cmd, table);
             }
             return true;
         }
+
+      
 
 
         private bool TypeLocatorData(TreeNode<IDataPath> pt, Command cmd)
@@ -102,10 +107,7 @@ namespace sqlcon
             try
             {
                 DataTable table = new SqlBuilder().SELECT.TOP(cmd.top).COLUMNS().FROM(tname).WHERE(locator).SqlCmd.FillDataTable();
-                if (cmd.IsVertical)
-                    table.ToVConsole();
-                else
-                    table.ToConsole();
+                _DisplayTable(cmd, table);
                 return true;
             }
             catch (Exception ex)
@@ -147,7 +149,7 @@ namespace sqlcon
                 {
                     string columnName = cmd.column;
                     string wildcard = cmd.wildcard.Replace("*", "%").Replace("?", "_");
-                    if (columnName == null)
+                    if (string.IsNullOrEmpty(columnName))
                     {
                         stdio.ShowError("column not found");
                         return false;
@@ -162,10 +164,7 @@ namespace sqlcon
                 }
 
                 DataTable table = builder.SqlCmd.FillDataTable();
-                if (cmd.IsVertical)
-                    table.ToVConsole();
-                else
-                    table.ToConsole();
+                _DisplayTable(cmd, table);
 
                 return true;
             }

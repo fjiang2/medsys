@@ -159,9 +159,7 @@ namespace sqlcon
                     return true;
             }
 
-            if (cmd.badcommand)
-                return true;
-
+         
             switch (cmd.Action)
             {
                 case "dir":

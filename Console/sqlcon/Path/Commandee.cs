@@ -105,18 +105,28 @@ namespace sqlcon
         public void set(Command cmd)
         {
             if (cmd.args == null)
+            {
+                stdio.ShowError("argument cannot be empty");
                 return;
+            }
 
             var pt = mgr.current;
-            if (!(pt.Item is Locator))
+            if (!(pt.Item is Locator) && !(pt.Item is TableName))
+            {
+                stdio.ShowError("table is not selected");
                 return;
+            }
 
-            Locator locator = (Locator)pt.Item;
-            TableName tname = (TableName)pt.Parent.Item;
+            Locator locator = mgr.GetCombinedLocator(pt);
+            TableName tname = mgr.GetCurrentPath<TableName>();
+
+            SqlBuilder builder = new SqlBuilder().UPDATE(tname).SET(cmd.args);
+            if (locator != null)
+                builder.WHERE(locator);
 
             try
             {
-                int count = new SqlBuilder().UPDATE(tname).SET(cmd.args).WHERE(locator).SqlCmd.ExecuteNonQuery();
+                int count = builder.SqlCmd.ExecuteNonQuery();
                 stdio.WriteLine("{0} of row(s) affected", count);
             }
             catch (Exception ex)
