@@ -339,6 +339,36 @@ namespace sqlcon
                         stdio.ShowError("command argument missing");
                     return true;
 
+                //example: run func(id=20)
+                case "run":
+                    {
+                        VAL result = Context.Evaluate(cmd.args);
+                        if (result.IsNull)
+                            stdio.ShowError("undefined query function");
+                        else if (result.IsInt)
+                        {
+                            //show error code
+                        }
+                        else
+                        {
+                            if (!result.IsList && result.Size != 2)
+                            {
+                                stdio.ShowError("invalid format, run query like >run query(id=1)");
+                                return true;
+                            }
+
+                            DataSet ds = new SqlCmd(theSide.Provider, (string)result[0], result[1]).FillDataSet();
+                            if (ds != null)
+                            {
+                                foreach (DataTable dt in ds.Tables)
+                                    dt.ToConsole();
+                            }
+                            else
+                                stdio.ShowError("cannot retrieve data from server");
+                        }
+                    }
+                    return true;
+
                 case "export":
                     {
                         string fileName = cfg.OutputFile;
@@ -418,28 +448,6 @@ namespace sqlcon
              switch (cmd)
             {
            
-                case "run":
-                    {
-                        VAL result = Context.Evaluate(arg1);
-                        if(result.IsNull)
-                            stdio.ShowError("undefined query function");
-                        else if (result.IsInt)
-                        {
-                            //show error code
-                        }
-                        else
-                        {
-                            DataSet ds = new SqlCmd(theSide.Provider, (string)result[0], result[1]).FillDataSet();
-                            if (ds != null)
-                            {
-                                foreach (DataTable dt in ds.Tables)
-                                    dt.ToConsole();
-                            }
-                            else
-                                stdio.ShowError("cannot retrieve data from server");
-                        }
-                    }
-                    break;
 
                 case "use":
                 case "select":
