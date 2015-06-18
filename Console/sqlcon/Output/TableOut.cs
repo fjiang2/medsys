@@ -1,0 +1,126 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Data;
+using Sys;
+using Sys.Data;
+
+namespace sqlcon
+{
+    class TableOut
+    {
+        private TableName tname;
+
+        public TableOut(TableName tableName)
+        {
+            this.tname = tableName;
+        }
+
+        private string LikeExpr(string wildcard, string[] columns)
+        {
+            wildcard = wildcard.Replace("*", "%").Replace("?", "_");
+
+            if (columns.Length == 0)
+            {
+                var schema = new TableSchema(tname);
+                List<string> L = new List<string>();
+                foreach (var c in schema.Columns)
+                {
+                    if (c.CType == CType.NVarChar || c.CType == CType.NChar || c.CType == CType.NText)
+                        L.Add(c.ColumnName);
+                }
+                columns = L.ToArray();
+            }
+
+            string where = "";
+            foreach (string column in columns)
+            {
+                if (where != "")
+                    where += " OR ";
+                where += string.Format("[{0}] LIKE '{1}'", column, wildcard);
+            }
+
+            return where;
+        }
+
+        private DataTable GetTable(string wildcard, string[] columns)
+        {
+            string where = LikeExpr(wildcard, columns);
+            var builder = new SqlBuilder().SELECT.COLUMNS().FROM(tname).WHERE(where);
+
+            DataTable table = builder.SqlCmd.FillDataTable();
+            return table;
+        }
+
+        private static void _DisplayTable(DataTable table, bool vert)
+        {
+            if (table == null)
+                return;
+
+            if (vert)
+                table.ToVConsole();
+            else
+                table.ToConsole();
+        }
+
+        private static bool Display(Command cmd, SqlBuilder builder)
+        {
+            try
+            {
+                DataTable table = builder.SqlCmd.FillDataTable();
+                _DisplayTable(table, cmd.IsVertical);
+            }
+            catch (Exception ex)
+            {
+                stdio.ShowError(ex.Message);
+                return false;
+            }
+
+            return true;
+        }
+
+
+        public bool Display(Command cmd)
+        {
+            SqlBuilder builder;
+            if (cmd.wildcard != null)
+            {
+                string where = LikeExpr(cmd.wildcard, cmd.Columns);
+                builder = new SqlBuilder().SELECT.COLUMNS().FROM(tname).WHERE(where);
+            }
+            else if (cmd.where != null)
+            {
+                var locator = new Locator(cmd.where);
+                builder = new SqlBuilder().SELECT.TOP(cmd.top).COLUMNS().FROM(tname).WHERE(locator);
+            }
+            else
+                builder = new SqlBuilder().SELECT.TOP(cmd.top).COLUMNS().FROM(tname);
+
+            return Display(cmd, builder);
+        }
+
+      
+        public bool Display(Command cmd, string columns, Locator locator)
+        {
+            SqlBuilder builder;
+            if (cmd.wildcard == null)
+            {
+                builder = new SqlBuilder().SELECT.TOP(cmd.top).COLUMNS(columns).FROM(tname);
+                if (locator != null)
+                    builder.WHERE(locator);
+            }
+            else
+            {
+                string where = LikeExpr(cmd.wildcard, cmd.Columns);
+                if (locator != null)
+                    where = string.Format("({0}) AND ({1})", locator.Path, where);
+
+                builder = new SqlBuilder().SELECT.TOP(cmd.top).COLUMNS(columns).FROM(tname).WHERE(where);
+            }
+
+            return Display(cmd, builder);
+        }
+    }
+}

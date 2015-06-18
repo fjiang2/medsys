@@ -25,7 +25,7 @@ namespace sqlcon
         public readonly bool HasSearch;
 
         public readonly int top;
-        public readonly string column;
+        private readonly string columns;
 
         public Command(string line, Configuration cfg)
         {
@@ -89,7 +89,7 @@ namespace sqlcon
                                 int.TryParse(a.Substring(5), out top);
 
                             if (a.StartsWith("/col:"))
-                                column = a.Substring(5);
+                                columns = a.Substring(5);
                             break;
                     }
                 }
@@ -147,6 +147,17 @@ namespace sqlcon
                 else
                     return Path1.where;
 
+            }
+        }
+
+        public string[] Columns
+        {
+            get
+            {
+                if (this.columns == null)
+                    return new string[] { };
+                else
+                    return this.columns.Split(',');
             }
         }
 

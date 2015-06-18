@@ -19,18 +19,7 @@ namespace sqlcon
             if (TypeLocatorColumnData(pt, cmd)) return;
         }
 
-        private static void _DisplayTable(Command cmd, DataTable table)
-        {
-            if (table == null)
-                return;
-
-            if (cmd.IsVertical)
-                table.ToVConsole();
-            else
-                table.ToConsole();
-        }
-
-
+     
         public static bool TypeFileData(TreeNode<IDataPath> pt, Command cmd)
         {
             if (!(pt.Item is TableName))
@@ -38,57 +27,10 @@ namespace sqlcon
 
             TableName tname = (TableName)pt.Item;
 
-            if (cmd.wildcard != null)
-            {
-                string wildcard = cmd.wildcard.Replace("*", "%").Replace("?", "_");
-                if (string.IsNullOrEmpty(cmd.column))
-                {
-                    stdio.ShowError("column not found");
-                    return false;
-                }
-
-                string where = string.Format("{0} LIKE '{1}'", cmd.column, wildcard);
-
-                var builder = new SqlBuilder().SELECT.COLUMNS().FROM(tname).WHERE(where);
-
-                try
-                {
-                    DataTable table = builder.SqlCmd.FillDataTable();
-                    _DisplayTable(cmd, table);
-                }
-                catch (Exception ex)
-                {
-                    stdio.ShowError(ex.Message);
-                    return false;
-                }
-            }
-            else if (cmd.where != null)
-            {
-                try
-                {
-                    var locator = new Locator(cmd.where);
-                    DataTable table = new SqlBuilder().SELECT.TOP(cmd.top).COLUMNS().FROM(tname).WHERE(locator).SqlCmd.FillDataTable();
-                    _DisplayTable(cmd, table);
-                    return true;
-                }
-                catch (Exception ex)
-                {
-                    stdio.ShowError(ex.Message);
-                    return false;
-                }
-            }
-            else
-            {
-                var builder = new SqlBuilder().SELECT.TOP(cmd.top).COLUMNS().FROM(tname);
-                DataTable table = builder.SqlCmd.FillDataTable();
-                _DisplayTable(cmd, table);
-            }
-            return true;
+            return new TableOut(tname).Display(cmd);
         }
 
       
-
-
         private bool TypeLocatorData(TreeNode<IDataPath> pt, Command cmd)
         {
             if (!(pt.Item is Locator))
@@ -104,17 +46,7 @@ namespace sqlcon
                 locator.And((Locator)xnode.Item);
             }
 
-            try
-            {
-                DataTable table = new SqlBuilder().SELECT.TOP(cmd.top).COLUMNS().FROM(tname).WHERE(locator).SqlCmd.FillDataTable();
-                _DisplayTable(cmd, table);
-                return true;
-            }
-            catch (Exception ex)
-            {
-                stdio.ShowError(ex.Message);
-                return false;
-            }
+            return new TableOut(tname).Display(cmd, "*", locator);
 
         }
 
@@ -135,44 +67,7 @@ namespace sqlcon
             else
                 tname = (TableName)pt.Parent.Item;
 
-            try
-            {
-
-                SqlBuilder builder;
-                if (cmd.wildcard == null)
-                {
-                    builder = new SqlBuilder().SELECT.TOP(cmd.top).COLUMNS(column.Columns).FROM(tname);
-                    if (locator != null)
-                        builder.WHERE(locator);
-                }
-                else
-                {
-                    string columnName = cmd.column;
-                    string wildcard = cmd.wildcard.Replace("*", "%").Replace("?", "_");
-                    if (string.IsNullOrEmpty(columnName))
-                    {
-                        stdio.ShowError("column not found");
-                        return false;
-                    }
-
-                    string where = string.Format("{0} LIKE '{1}'", columnName, wildcard);
-                    if (locator != null)
-                        where = string.Format("({0}) AND ({1})", locator.Path, where);
-
-
-                    builder = new SqlBuilder().SELECT.TOP(cmd.top).COLUMNS(column.Columns).FROM(tname).WHERE(where);
-                }
-
-                DataTable table = builder.SqlCmd.FillDataTable();
-                _DisplayTable(cmd, table);
-
-                return true;
-            }
-            catch (Exception ex)
-            {
-                stdio.ShowError(ex.Message);
-                return false;
-            }
+            return new TableOut(tname).Display(cmd, column.Columns, locator);
         }
 
     }

@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Input\PathName.cs" />
+    <Compile Include="Output\TableOut.cs" />
     <Compile Include="Path\ColumnName.cs" />
     <Compile Include="Path\Commandee.cs" />
     <Compile Include="Path\PathTreeTypeFileData.cs" />
