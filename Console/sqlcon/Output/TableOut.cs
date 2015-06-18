@@ -125,5 +125,25 @@ namespace sqlcon
 
             return Display(cmd, builder);
         }
+
+
+        public static List<byte[]> RowIdTable(DataTable table)
+        {
+            DataColumn C1 = table.Columns[0];
+            C1.DataType = typeof(int);
+            table.Columns[0].ColumnName = "RowId";
+
+            List<byte[]> L = new List<byte[]>();
+            int i = 1;
+            foreach (DataRow row in table.Rows)
+            {
+                L.Add((byte[])row[0]);
+                row[0] = i++;
+            }
+
+            table.AcceptChanges();
+
+            return L;
+        }
     }
 }

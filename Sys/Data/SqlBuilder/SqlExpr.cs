@@ -322,7 +322,15 @@ namespace Sys.Data
             return this;
         }
 
+        public SqlExpr ROWID
+        {
+            get
+            {
+                this.Next("%%physloc%%");
+                return this;
+            }
 
+        }
 
         public SqlExpr BETWEEN(SqlExpr exp1, SqlExpr exp2)
         {
