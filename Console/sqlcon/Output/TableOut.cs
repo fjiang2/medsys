@@ -85,6 +85,9 @@ namespace sqlcon
         public bool Display(Command cmd)
         {
             SqlBuilder builder;
+            int top = cmd.top;
+            string[] columns = cmd.Columns;
+
             if (cmd.wildcard != null)
             {
                 string where = LikeExpr(cmd.wildcard, cmd.Columns);
@@ -93,10 +96,10 @@ namespace sqlcon
             else if (cmd.where != null)
             {
                 var locator = new Locator(cmd.where);
-                builder = new SqlBuilder().SELECT.TOP(cmd.top).COLUMNS().FROM(tname).WHERE(locator);
+                builder = new SqlBuilder().SELECT.TOP(top).COLUMNS(columns).FROM(tname).WHERE(locator);
             }
             else
-                builder = new SqlBuilder().SELECT.TOP(cmd.top).COLUMNS().FROM(tname);
+                builder = new SqlBuilder().SELECT.TOP(top).COLUMNS(columns).FROM(tname);
 
             return Display(cmd, builder);
         }
@@ -117,7 +120,7 @@ namespace sqlcon
                 if (locator != null)
                     where = string.Format("({0}) AND ({1})", locator.Path, where);
 
-                builder = new SqlBuilder().SELECT.TOP(cmd.top).COLUMNS(columns).FROM(tname).WHERE(where);
+                builder = new SqlBuilder().SELECT.COLUMNS(columns).FROM(tname).WHERE(where);
             }
 
             return Display(cmd, builder);

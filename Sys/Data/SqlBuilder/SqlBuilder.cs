@@ -150,6 +150,21 @@ namespace Sys.Data
             return this;
         }
 
+        public SqlBuilder COLUMNS(string[] columns)
+        {
+            if (columns.Length == 0)
+                script.Append("* ");
+            else
+            {
+                var L = columns.Select(column => column.ColumnName());
+
+                script.Append(string.Join(",", L)).Append(" ");
+            }
+
+            return this;
+        }
+
+
         public SqlBuilder COLUMNS(params SqlExpr[] columns)
         {
             if (columns.Length == 0)

@@ -232,12 +232,14 @@ namespace sqlcon
         {
             if (cmd.arg1 == "/?")
             {
-                stdio.WriteLine("type [path]            : display current data");
-                stdio.WriteLine("options:   /top:n      : display top n records");
-                stdio.WriteLine("           /all        : display all records");
-                stdio.WriteLine("           /t          : display table in vertical grid");
+                stdio.WriteLine("type [path]|[pattern]  : display current data, or search pattern");
+                stdio.WriteLine("options:");
+                stdio.WriteLine("   /top:n              : display top n records");
+                stdio.WriteLine("   /all                : display all records");
+                stdio.WriteLine("   /t                  : display table in vertical grid");
+                stdio.WriteLine("   /col:c1,c2,..       : display columns, or search on columns");
                 stdio.WriteLine("example:");
-                stdio.WriteLine("type match*s /col:name : display rows matched on column:name");
+                stdio.WriteLine("type match*s /col:c1,c2 : display rows matched on columns:c1 or c2");
                 return;
             }
 
