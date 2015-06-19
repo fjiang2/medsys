@@ -23,6 +23,7 @@ namespace sqlcon
         public readonly bool HasWhere;
         public readonly bool HasPage;
         public readonly bool HasSearch;
+        public readonly bool HasRowId;
 
         public readonly int top;
         private readonly string columns;
@@ -78,6 +79,10 @@ namespace sqlcon
 
                         case "/all":
                             top = 0;
+                            break;
+
+                        case "/r":
+                            HasRowId = true;
                             break;
 
                         case "/?":

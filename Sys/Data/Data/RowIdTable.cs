@@ -14,39 +14,50 @@ namespace Sys.Data
         private List<byte[]> LOC = new List<byte[]>();
         private bool hasPhysloc = false;
 
+        private DataColumn colLoc = null;
+        private DataColumn colRowID = null;
+
         public RowIdTable(TableName tname, DataTable table)
         {
             this.TableName = tname;
             this.table = table;
 
             int i = 0;
-            int index = -1;
+            int I1 = -1;
+            int I2 = -1;
 
-            DataColumn col = null;
             foreach (DataColumn column in table.Columns)
             {
                 if (column.ColumnName == SqlExpr.PHYSLOC)
                 {
                     this.hasPhysloc = true;
-                    col = column;
-                    index = i;
-                    break;
+                    colLoc = column;
+                    I1 = i;
+                }
+
+                if (column.ColumnName == SqlExpr.ROWID)
+                {
+                    this.hasPhysloc = true;
+                    colRowID = column;
+                    I2 = i;
                 }
 
                 i++;
             }
 
-            if (col == null)
+            if (!hasPhysloc)
                 return;
 
             i = 0;
             foreach (DataRow row in table.Rows)
             {
-                LOC.Add((byte[])row[index]);
-                row[index + 1] = i++;
+                LOC.Add((byte[])row[I1]);
+                row[I2] = i++;
             }
 
-            table.Columns.Remove(col);
+            colRowID.ColumnName = "RowId";
+
+            table.Columns.Remove(colLoc);
             table.AcceptChanges();
         }
 
@@ -94,8 +105,8 @@ namespace Sys.Data
                 List<Column> L = new List<Column>();
                 foreach (DataColumn column in table.Columns)
                 {
-                    if(column.ColumnName != SqlExpr.ROWID)
-                        L.Add(new Column(this, column));
+                    if(column != colRowID)
+                        L.Add(new Column(this.table, column));
                 }
 
                 return L.ToArray();
@@ -106,9 +117,9 @@ namespace Sys.Data
     public class Column
     {
         private DataColumn column;
-        private RowIdTable table;
+        private DataTable table;
 
-        internal Column(RowIdTable table, DataColumn name)
+        internal Column(DataTable table, DataColumn name)
         {
             this.table = table;
             this.column = name;
@@ -118,17 +129,17 @@ namespace Sys.Data
         {
             get 
             {
-                return table.Table.Rows[rowId][column];
+                return table.Rows[rowId][column];
             }
             set
             {
-                table.Table.Rows[rowId][column] = value;
+                table.Rows[rowId][column] = value;
             }
         }
 
         public override string ToString()
         {
-            return column.ColumnName;
+            return string.Format("Table Column Array: {0} size={1}", column.ColumnName, table.Rows.Count);
         }
     }
 }

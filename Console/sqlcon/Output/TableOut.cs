@@ -108,15 +108,15 @@ namespace sqlcon
             if (cmd.wildcard != null)
             {
                 string where = LikeExpr(cmd.wildcard, cmd.Columns);
-                builder = new SqlBuilder().SELECT.ROWID.COLUMNS().FROM(tname).WHERE(where);
+                builder = new SqlBuilder().SELECT.ROWID(cmd.HasRowId).COLUMNS().FROM(tname).WHERE(where);
             }
             else if (cmd.where != null)
             {
                 var locator = new Locator(cmd.where);
-                builder = new SqlBuilder().SELECT.TOP(top).ROWID.COLUMNS(columns).FROM(tname).WHERE(locator);
+                builder = new SqlBuilder().SELECT.TOP(top).ROWID(cmd.HasRowId).COLUMNS(columns).FROM(tname).WHERE(locator);
             }
             else
-                builder = new SqlBuilder().SELECT.TOP(top).ROWID.COLUMNS(columns).FROM(tname);
+                builder = new SqlBuilder().SELECT.TOP(top).ROWID(cmd.HasRowId).COLUMNS(columns).FROM(tname);
 
             return Display(cmd, builder);
         }

@@ -143,16 +143,14 @@ namespace Sys.Data
             return this;
         }
 
-        public SqlBuilder ROWID
+        public SqlBuilder ROWID(bool has)
         {
-            get
-            {
+            if (has)
                 script
                     .Append(string.Format("{0} AS [{0}],", SqlExpr.PHYSLOC))
                     .Append(string.Format("0 AS [{0}],", SqlExpr.ROWID));
-                
-                return this;
-            }
+
+            return this;
         }
 
 
