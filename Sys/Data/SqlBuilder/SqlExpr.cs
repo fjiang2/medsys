@@ -25,6 +25,7 @@ namespace Sys.Data
     public sealed class SqlExpr : SqlBuilderInfo
     {
         internal const string PHYSLOC = "%%physloc%%";
+        internal const string ROWID = "RowId";
 
         private StringBuilder script = new StringBuilder();
 
@@ -329,16 +330,7 @@ namespace Sys.Data
             return this;
         }
 
-        public SqlExpr ROWID
-        {
-            get
-            {
-                this.Next(PHYSLOC);
-                return this;
-            }
-
-        }
-
+      
         public SqlExpr BETWEEN(SqlExpr exp1, SqlExpr exp2)
         {
             this.Next(" BETWEEN ")

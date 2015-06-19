@@ -42,14 +42,6 @@ namespace sqlcon
         }
 
 
-        public byte[] PhysLoc(int rowId)
-        {
-            if (this.rTable == null)
-                return null;
-
-            return rTable.PhysLoc(rowId);
-        }
-
         private string LikeExpr(string wildcard, string[] columns)
         {
             wildcard = wildcard.Replace("*", "%").Replace("?", "_");
@@ -93,7 +85,8 @@ namespace sqlcon
         {
             try
             {
-                rTable = builder.FillRowIdTable();
+                DataTable table = builder.SqlCmd.FillDataTable();
+                rTable = new RowIdTable(tname, table);
                 _DisplayTable(rTable.Table, cmd.IsVertical);
             }
             catch (Exception ex)

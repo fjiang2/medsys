@@ -147,8 +147,10 @@ namespace Sys.Data
         {
             get
             {
-                script.Append(string.Format("{0} AS [{0}],", SqlExpr.PHYSLOC))
-                    .Append("0 AS RowId,");
+                script
+                    .Append(string.Format("{0} AS [{0}],", SqlExpr.PHYSLOC))
+                    .Append(string.Format("0 AS [{0}],", SqlExpr.ROWID));
+                
                 return this;
             }
         }
@@ -670,11 +672,6 @@ namespace Sys.Data
             }
         }
 
-        public RowIdTable FillRowIdTable()
-        {
-            DataTable table = SqlCmd.FillDataTable();
-            return new RowIdTable(table);
-        }
     }
   
 }

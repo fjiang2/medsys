@@ -637,6 +637,7 @@ namespace sqlcon
             stdio.WriteLine("md /?                   : see more info");
             stdio.WriteLine("rd /?                   : see more info");
             stdio.WriteLine("type /?                 : see more info");
+            stdio.WriteLine("set /?                  : see more info");
             stdio.WriteLine();
             stdio.WriteLine("<Commands>");
             stdio.WriteLine("<compare schema> tables : compare schema of tables");

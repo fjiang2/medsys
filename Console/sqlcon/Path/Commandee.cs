@@ -104,6 +104,14 @@ namespace sqlcon
 
         public void set(Command cmd)
         {
+            if (cmd.arg1 == "/?")
+            {
+                stdio.WriteLine("set assignment                      : update value by current table or locator");
+                stdio.WriteLine("set col1=val1, col2= val2           : update column by current table or locator");
+                stdio.WriteLine("set col[n1]=val1, col[n2]=val2      : update by row-id, n1,n2 is row-id");
+                return;
+            }
+
             if (cmd.args == null)
             {
                 stdio.ShowError("argument cannot be empty");
@@ -129,13 +137,18 @@ namespace sqlcon
             {
                 try
                 {
-                    var x = ParsePhysLocStatement(tname, mgr.Tout.Table, cmd.args);
+                    var x = ParsePhysLocStatement(mgr.Tout.Table, cmd.args);
                     if (x != null)
                         builder = x;
                 }
-                catch (Exception ex)
+                catch (TieException)
                 {
-                    stdio.ShowError(ex.Message);
+                    stdio.ShowError("invalid set assigment");
+                    return;
+                }
+                catch (Exception ex2)
+                {
+                    stdio.ShowError(ex2.Message);
                     return;
                 }
             }
@@ -151,13 +164,14 @@ namespace sqlcon
             }
         }
 
-        private SqlBuilder ParsePhysLocStatement(TableName tname, RowIdTable table, string text)
+        private SqlBuilder ParsePhysLocStatement(RowIdTable table, string text)
         {
             if (string.IsNullOrEmpty(text))
                 return null;
 
-            Memory ds = new Memory();
             text = text.Trim();
+
+            Memory ds = new Memory();
 
             Script.Evaluate(text, ds);
             if (ds.Names.Count() == 0)
@@ -168,20 +182,18 @@ namespace sqlcon
             foreach (VAR name in ds.Names)
             {
                 string column = (string)name;
-                VAL x = ds[name];
+                VAL val = ds[name];
 
-                if (!x.IsList)
+                if (!val.IsList)
                     continue;
 
-                for (int i = 0; i < x.Size; i++)
+                for (int i = 0; i < val.Size; i++)
                 {
-                    VAL s = x[i];
+                    VAL s = val[i];
                     if (s.IsNull)
                         continue;
 
-                    var builder = new SqlBuilder().UPDATE(tname)
-                               .SET(column.Assign(s.HostValue))
-                               .WHERE(table.PhysLoc(i));
+                    SqlBuilder builder = table.WriteValue(column, i, s.HostValue);
 
                     if (sum == null)
                         sum = builder;
