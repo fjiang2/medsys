@@ -102,13 +102,16 @@ namespace sqlcon
 
             else if (cell == DBNull.Value)
                 return "NULL";
-
+            else if (cell is byte[])
+            {
+                return "0x" + BitConverter.ToString((byte[])cell).Replace("-","");
+            }
             else
             {
                 string result = cell.ToString().Trim();
-                
+
                 //when cell includes a big string with letter [\n]
-                if(result.Length > 200)
+                if (result.Length > 200)
                     result = result.Replace("\n", "");
 
                 return result;

@@ -143,6 +143,16 @@ namespace Sys.Data
             return this;
         }
 
+        public SqlBuilder ROWID
+        {
+            get
+            {
+                script.Append(string.Format("{0} AS [{0}],", SqlExpr.PHYSLOC))
+                    .Append("0 AS RowId,");
+                return this;
+            }
+        }
+
 
         public SqlBuilder COLUMNS(string columns)
         {

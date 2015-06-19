@@ -45,15 +45,6 @@ namespace sqlcon
             return where;
         }
 
-        private DataTable GetTable(string wildcard, string[] columns)
-        {
-            string where = LikeExpr(wildcard, columns);
-            var builder = new SqlBuilder().SELECT.COLUMNS().FROM(tname).WHERE(where);
-
-            DataTable table = builder.SqlCmd.FillDataTable();
-            return table;
-        }
-
         private static void _DisplayTable(DataTable table, bool vert)
         {
             if (table == null)
@@ -70,6 +61,7 @@ namespace sqlcon
             try
             {
                 DataTable table = builder.SqlCmd.FillDataTable();
+                List<byte[]> L = PhyslocTable(table);
                 _DisplayTable(table, cmd.IsVertical);
             }
             catch (Exception ex)
@@ -91,15 +83,15 @@ namespace sqlcon
             if (cmd.wildcard != null)
             {
                 string where = LikeExpr(cmd.wildcard, cmd.Columns);
-                builder = new SqlBuilder().SELECT.COLUMNS().FROM(tname).WHERE(where);
+                builder = new SqlBuilder().SELECT.ROWID.COLUMNS().FROM(tname).WHERE(where);
             }
             else if (cmd.where != null)
             {
                 var locator = new Locator(cmd.where);
-                builder = new SqlBuilder().SELECT.TOP(top).COLUMNS(columns).FROM(tname).WHERE(locator);
+                builder = new SqlBuilder().SELECT.TOP(top).ROWID.COLUMNS(columns).FROM(tname).WHERE(locator);
             }
             else
-                builder = new SqlBuilder().SELECT.TOP(top).COLUMNS(columns).FROM(tname);
+                builder = new SqlBuilder().SELECT.TOP(top).ROWID.COLUMNS(columns).FROM(tname);
 
             return Display(cmd, builder);
         }
@@ -127,21 +119,37 @@ namespace sqlcon
         }
 
 
-        public static List<byte[]> RowIdTable(DataTable table)
+        public static List<byte[]> PhyslocTable(DataTable table)
         {
-            DataColumn C1 = table.Columns[0];
-            C1.DataType = typeof(int);
-            table.Columns[0].ColumnName = "RowId";
 
-            List<byte[]> L = new List<byte[]>();
-            int i = 1;
-            foreach (DataRow row in table.Rows)
+            int i = 0;
+            int index = -1;
+            DataColumn C1 = null;
+            foreach (DataColumn column in table.Columns)
             {
-                L.Add((byte[])row[0]);
-                row[0] = i++;
+                if (column.ColumnName == SqlExpr.PHYSLOC)
+                {
+                    C1 = column;
+                    index = i;
+                    break;
+                }
+
+                i++;
             }
 
-            table.AcceptChanges();
+            if (C1 == null)
+                return null;
+
+
+            List<byte[]> L = new List<byte[]>();
+            i = 1;
+            foreach (DataRow row in table.Rows)
+            {
+                L.Add((byte[])row[index]);
+                row[index + 1] = i++;
+            }
+
+            table.Columns.Remove(C1);
 
             return L;
         }

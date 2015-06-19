@@ -24,6 +24,8 @@ namespace Sys.Data
 {
     public sealed class SqlExpr : SqlBuilderInfo
     {
+        public const string PHYSLOC = "%%physloc%%";
+
         private StringBuilder script = new StringBuilder();
 
         private SqlExpr()
@@ -326,7 +328,7 @@ namespace Sys.Data
         {
             get
             {
-                this.Next("%%physloc%%");
+                this.Next(PHYSLOC);
                 return this;
             }
 
