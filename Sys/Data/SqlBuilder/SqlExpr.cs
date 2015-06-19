@@ -46,6 +46,11 @@ namespace Sys.Data
             return this;
         }
 
+        internal static SqlExpr Assign(string name, object value)
+        {
+            return ColumnName(name, null).Next(" = ").NextValue(value);
+        }
+
         internal static SqlExpr ColumnName(string name, string alias)
         {
             SqlExpr exp = new SqlExpr();

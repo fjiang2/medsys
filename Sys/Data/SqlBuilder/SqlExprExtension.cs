@@ -27,6 +27,11 @@ namespace Sys.Data
         #region SqlExpr/SqlClause: ColumName/ParameterName/AddParameter
 
     
+        public static SqlExpr Assign(this string name, object value)
+        {
+          return SqlExpr.Assign(name, value);
+        }
+
         /// <summary>
         /// "name" -> "[name]"
         /// </summary>

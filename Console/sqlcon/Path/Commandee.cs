@@ -10,7 +10,7 @@ using System.Data;
 using System.Text.RegularExpressions;
 using Sys;
 using Sys.Data;
-
+using Tie;
 
 namespace sqlcon
 {
@@ -129,8 +129,9 @@ namespace sqlcon
             {
                 try
                 {
-                    int rowId = 12;
-                    builder.WHERE(mgr.Tout.PhysLoc(rowId));
+                    var x = ParsePhysLocStatement(tname, mgr.Tout.Table, cmd.args);
+                    if (x != null)
+                        builder = x;
                 }
                 catch (Exception ex)
                 {
@@ -148,6 +149,48 @@ namespace sqlcon
             {
                 stdio.ShowError(ex.Message);
             }
+        }
+
+        private SqlBuilder ParsePhysLocStatement(TableName tname, RowIdTable table, string text)
+        {
+            if (string.IsNullOrEmpty(text))
+                return null;
+
+            Memory ds = new Memory();
+            text = text.Trim();
+
+            Script.Evaluate(text, ds);
+            if (ds.Names.Count() == 0)
+                return null;
+
+            SqlBuilder sum = null;
+
+            foreach (VAR name in ds.Names)
+            {
+                string column = (string)name;
+                VAL x = ds[name];
+
+                if (!x.IsList)
+                    continue;
+
+                for (int i = 0; i < x.Size; i++)
+                {
+                    VAL s = x[i];
+                    if (s.IsNull)
+                        continue;
+
+                    var builder = new SqlBuilder().UPDATE(tname)
+                               .SET(column.Assign(s.HostValue))
+                               .WHERE(table.PhysLoc(i));
+
+                    if (sum == null)
+                        sum = builder;
+                    else
+                        sum += builder;
+                }
+            }
+
+            return sum;
         }
 
 
