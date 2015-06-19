@@ -21,26 +21,12 @@ namespace sqlcon
             if (TypeLocatorColumnData(pt, cmd)) return;
         }
 
-        public bool HasRowId
+        public TableOut Tout
         {
-            get
-            {
-                if (tout == null || tout.Table == null)
-                    return false;
-
-                return tout.Table.HasPhysloc;
-            }
+            get { return this.tout; }
         }
 
-
-        public byte[] PhysLoc(int rowId)
-        {
-            if (tout == null || tout.Table == null)
-                return null;
-
-            return tout.Table.PhysLoc(rowId);
-        }
-
+     
         private bool TypeFileData(TreeNode<IDataPath> pt, Command cmd)
         {
             if (!(pt.Item is TableName))

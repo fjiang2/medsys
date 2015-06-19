@@ -37,7 +37,7 @@ namespace Sys.Data
             if (C1 == null)
                 return;
 
-            i = 1;
+            i = 0;
             foreach (DataRow row in table.Rows)
             {
                 R.Add((byte[])row[index]);
@@ -57,8 +57,6 @@ namespace Sys.Data
 
         public byte[] PhysLoc(int rowId)
         {
-            rowId--;
-
             if (rowId < 0 || rowId > R.Count - 1)
                 throw new IndexOutOfRangeException("RowId is out of range");
 
@@ -67,16 +65,6 @@ namespace Sys.Data
             return B;
         }
 
-
-        public void Where(SqlBuilder builder, int rowId)
-        { 
-            if(!hasPhysloc)
-                return;
-
-            byte[] B = PhysLoc(rowId);
-
-            builder.WHERE(B);
-        }
 
      
     }

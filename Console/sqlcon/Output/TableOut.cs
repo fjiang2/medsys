@@ -29,6 +29,27 @@ namespace sqlcon
             get { return this.rTable; }
         }
 
+
+        public bool HasPhysloc
+        {
+            get
+            {
+                if (this.rTable == null)
+                    return false;
+
+                return rTable.HasPhysloc;
+            }
+        }
+
+
+        public byte[] PhysLoc(int rowId)
+        {
+            if (this.rTable == null)
+                return null;
+
+            return rTable.PhysLoc(rowId);
+        }
+
         private string LikeExpr(string wildcard, string[] columns)
         {
             wildcard = wildcard.Replace("*", "%").Replace("?", "_");

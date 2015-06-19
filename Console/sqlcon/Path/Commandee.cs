@@ -125,10 +125,18 @@ namespace sqlcon
             {
                 builder.WHERE(locator);
             }
-            else if (mgr.HasRowId)
+            else if (mgr.Tout != null && mgr.Tout.TableName == tname && mgr.Tout.HasPhysloc)
             {
-             //   int rowId = 12;
-              //  builder.WHERE(mgr.PhysLoc(rowId));
+                try
+                {
+                    int rowId = 12;
+                    builder.WHERE(mgr.Tout.PhysLoc(rowId));
+                }
+                catch (Exception ex)
+                {
+                    stdio.ShowError(ex.Message);
+                    return;
+                }
             }
 
             try
