@@ -63,7 +63,7 @@ namespace Sys.Data
             script.Append(tableName);
             if (alias != null)
                 script.Append(" ").Append(alias);
-            
+
             return this;
         }
 
@@ -72,7 +72,7 @@ namespace Sys.Data
             return TABLE_NAME(tableName.FullName, alias);
         }
 
-     
+
         public SqlBuilder TABLE_NAME(DPObject dpo, string alias = null)
         {
             return TABLE_NAME(dpo.TableName, alias);
@@ -89,7 +89,7 @@ namespace Sys.Data
         }
 
 
-        
+
         #endregion
 
         public SqlBuilder USE(string database)
@@ -139,7 +139,7 @@ namespace Sys.Data
         {
             if (n > 0)
                 script.Append("TOP ").Append(n).Append(" ");
-         
+
             return this;
         }
 
@@ -270,21 +270,21 @@ namespace Sys.Data
         private SqlBuilder UPDATE(string tableName, string alias)
         {
             script.Append("UPDATE ").Append(tableName).Append(" ");
-            if(alias != null)
+            if (alias != null)
                 script.Append(alias).Append(" ");
-           
+
             return this;
         }
 
 
         public SqlBuilder SET(params string[] assignments)
         {
-            script.Append("SET ").Append(string.Join(", ",assignments));
+            script.Append("SET ").Append(string.Join(", ", assignments));
 
             return this.CRLF;
         }
 
-    
+
 
         public SqlBuilder SET(params SqlExpr[] assignments)
         {
@@ -316,8 +316,8 @@ namespace Sys.Data
             script
                 .Append("INSERT INTO ")
                 .Append(tableName);
-            
-            if(columns.Length >0)
+
+            if (columns.Length > 0)
                 script.Append("(").Append(ConcatColumns(columns)).Append(") ");
 
 
@@ -410,7 +410,7 @@ namespace Sys.Data
             }
         }
 
-     
+
 
 
         public SqlBuilder JOIN(DPObject dpo, string alias = null)
@@ -442,7 +442,7 @@ namespace Sys.Data
 
             if (alias != null)
                 script.Append(alias).Append(" ");
-                
+
             return this;
         }
 
@@ -473,7 +473,7 @@ namespace Sys.Data
             script.Append("HAVING ").Append(ConcatColumns(columns)).Append(" ");
             return this;
         }
-        
+
         #endregion
 
 
@@ -544,7 +544,7 @@ namespace Sys.Data
                 return this;
             }
         }
-   
+
 
         #region Concatenate
 
@@ -564,7 +564,7 @@ namespace Sys.Data
             return sb.ToString();
         }
 
-      
+
         private static string ConcatValues(object[] S)
         {
             StringBuilder sb = new StringBuilder();
@@ -580,9 +580,9 @@ namespace Sys.Data
             return sb.ToString();
         }
 
-   
 
-     
+
+
         #endregion
 
         /// <summary>
@@ -594,7 +594,7 @@ namespace Sys.Data
         public static SqlBuilder operator +(SqlBuilder clause1, SqlBuilder clause2)
         {
             var clause = new SqlBuilder();
-                
+
             clause.script
                 .Append(clause1)
                 .AppendLine()
@@ -619,15 +619,15 @@ namespace Sys.Data
             return clause;
         }
 
-        
+
         public string Clause
         {
-            get 
-            { 
-                return script.ToString(); 
+            get
+            {
+                return script.ToString();
             }
         }
-   
+
 
         public override string ToString()
         {
@@ -651,7 +651,7 @@ namespace Sys.Data
             {
                 MessageException.DefaultExceptionHandler = old;
             }
-            
+
             return result;
         }
 
@@ -663,8 +663,12 @@ namespace Sys.Data
                 return cmd;
             }
         }
+
+        public RowIdTable FillRowIdTable()
+        {
+            DataTable table = SqlCmd.FillDataTable();
+            return new RowIdTable(table);
+        }
     }
-
-
   
 }

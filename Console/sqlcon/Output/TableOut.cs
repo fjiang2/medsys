@@ -60,9 +60,8 @@ namespace sqlcon
         {
             try
             {
-                DataTable table = builder.SqlCmd.FillDataTable();
-                List<byte[]> L = PhyslocTable(table);
-                _DisplayTable(table, cmd.IsVertical);
+                var T = builder.FillRowIdTable();
+                _DisplayTable(T.Table, cmd.IsVertical);
             }
             catch (Exception ex)
             {
@@ -119,39 +118,5 @@ namespace sqlcon
         }
 
 
-        public static List<byte[]> PhyslocTable(DataTable table)
-        {
-
-            int i = 0;
-            int index = -1;
-            DataColumn C1 = null;
-            foreach (DataColumn column in table.Columns)
-            {
-                if (column.ColumnName == SqlExpr.PHYSLOC)
-                {
-                    C1 = column;
-                    index = i;
-                    break;
-                }
-
-                i++;
-            }
-
-            if (C1 == null)
-                return null;
-
-
-            List<byte[]> L = new List<byte[]>();
-            i = 1;
-            foreach (DataRow row in table.Rows)
-            {
-                L.Add((byte[])row[index]);
-                row[index + 1] = i++;
-            }
-
-            table.Columns.Remove(C1);
-
-            return L;
-        }
     }
 }
