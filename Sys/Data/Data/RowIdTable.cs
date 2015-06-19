@@ -11,6 +11,7 @@ namespace Sys.Data
     {
         private DataTable table;
         private List<byte[]> R = new List<byte[]>();
+        private bool hasPhysloc = false;
 
         public RowIdTable(DataTable table)
         {
@@ -24,6 +25,7 @@ namespace Sys.Data
             {
                 if (column.ColumnName == SqlExpr.PHYSLOC)
                 {
+                    this.hasPhysloc = true;
                     C1 = column;
                     index = i;
                     break;
@@ -46,14 +48,36 @@ namespace Sys.Data
             table.AcceptChanges();
         }
 
+        public bool HasPhysloc
+        {
+            get { return hasPhysloc; }
+        }
 
         public DataTable Table { get { return this.table; } }
-        public List<byte[]> RL { get { return this.R; } }
 
+        public byte[] PhysLoc(int rowId)
+        {
+            rowId--;
 
-        public void Update(SqlBuilder builder)
-        { 
+            if (rowId < 0 || rowId > R.Count - 1)
+                throw new IndexOutOfRangeException("RowId is out of range");
+
+            byte[] B = R[rowId];
             
+            return B;
         }
+
+
+        public void Where(SqlBuilder builder, int rowId)
+        { 
+            if(!hasPhysloc)
+                return;
+
+            byte[] B = PhysLoc(rowId);
+
+            builder.WHERE(B);
+        }
+
+     
     }
 }

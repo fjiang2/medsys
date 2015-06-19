@@ -12,10 +12,21 @@ namespace sqlcon
     class TableOut
     {
         private TableName tname;
+        private RowIdTable rTable = null;
 
         public TableOut(TableName tableName)
         {
             this.tname = tableName;
+        }
+
+        public TableName TableName
+        {
+            get { return this.tname; }
+        }
+
+        public RowIdTable Table
+        {
+            get { return this.rTable; }
         }
 
         private string LikeExpr(string wildcard, string[] columns)
@@ -56,12 +67,13 @@ namespace sqlcon
                 table.ToConsole();
         }
 
-        private static bool Display(Command cmd, SqlBuilder builder)
+
+        private bool Display(Command cmd, SqlBuilder builder)
         {
             try
             {
-                var T = builder.FillRowIdTable();
-                _DisplayTable(T.Table, cmd.IsVertical);
+                rTable = builder.FillRowIdTable();
+                _DisplayTable(rTable.Table, cmd.IsVertical);
             }
             catch (Exception ex)
             {

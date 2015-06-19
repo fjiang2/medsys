@@ -62,7 +62,7 @@ namespace Sys.Data
                     if (gb2312text(value as string))
                         sb.Append("N");
 
-                    sb.Append("'") 
+                    sb.Append("'")
                       .Append((value as string).Replace("'", "''"))
                       .Append("'");
                 }
@@ -73,6 +73,10 @@ namespace Sys.Data
                 else if (value is DateTime || value is DateTime? || value is char)
                 {
                     sb.Append("'").Append(value).Append("'");
+                }
+                else if (value is byte[])
+                {
+                    sb.Append("0x" + BitConverter.ToString((byte[])value).Replace("-", ""));
                 }
                 else
                 {

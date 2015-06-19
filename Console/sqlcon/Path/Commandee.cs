@@ -119,10 +119,17 @@ namespace sqlcon
 
             Locator locator = mgr.GetCombinedLocator(pt);
             TableName tname = mgr.GetCurrentPath<TableName>();
-
+            
             SqlBuilder builder = new SqlBuilder().UPDATE(tname).SET(cmd.args);
             if (locator != null)
+            {
                 builder.WHERE(locator);
+            }
+            else if (mgr.HasRowId)
+            {
+             //   int rowId = 12;
+              //  builder.WHERE(mgr.PhysLoc(rowId));
+            }
 
             try
             {

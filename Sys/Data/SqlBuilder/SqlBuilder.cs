@@ -369,6 +369,12 @@ namespace Sys.Data
             return this.CRLF;
         }
 
+        public SqlBuilder WHERE(byte[] loc)
+        {
+            script.Append("WHERE ").Append(SqlExpr.PHYSLOC).Append(" = ").Append(new SqlValue(loc).Text);
+            return this.CRLF;
+        }
+
         #endregion
 
 

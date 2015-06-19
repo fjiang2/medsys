@@ -12,6 +12,8 @@ namespace sqlcon
 {
     partial class PathManager
     {
+        private TableOut tout = null;
+
         public void TypeFile(TreeNode<IDataPath> pt, Command cmd)
         {
             if (TypeFileData(pt, cmd)) return;
@@ -19,15 +21,35 @@ namespace sqlcon
             if (TypeLocatorColumnData(pt, cmd)) return;
         }
 
-     
-        public static bool TypeFileData(TreeNode<IDataPath> pt, Command cmd)
+        public bool HasRowId
+        {
+            get
+            {
+                if (tout == null || tout.Table == null)
+                    return false;
+
+                return tout.Table.HasPhysloc;
+            }
+        }
+
+
+        public byte[] PhysLoc(int rowId)
+        {
+            if (tout == null || tout.Table == null)
+                return null;
+
+            return tout.Table.PhysLoc(rowId);
+        }
+
+        private bool TypeFileData(TreeNode<IDataPath> pt, Command cmd)
         {
             if (!(pt.Item is TableName))
                 return false;
 
             TableName tname = (TableName)pt.Item;
 
-            return new TableOut(tname).Display(cmd);
+            tout = new TableOut(tname);
+            return tout.Display(cmd);
         }
 
       
@@ -46,11 +68,12 @@ namespace sqlcon
                 locator.And((Locator)xnode.Item);
             }
 
-            return new TableOut(tname).Display(cmd, "*", locator);
+            tout = new TableOut(tname);
+            return tout.Display(cmd, "*", locator);
 
         }
 
-        private static bool TypeLocatorColumnData(TreeNode<IDataPath> pt, Command cmd)
+        private bool TypeLocatorColumnData(TreeNode<IDataPath> pt, Command cmd)
         {
             if (!(pt.Item is ColumnPath))
                 return false;
@@ -67,7 +90,8 @@ namespace sqlcon
             else
                 tname = (TableName)pt.Parent.Item;
 
-            return new TableOut(tname).Display(cmd, column.Columns, locator);
+            tout = new TableOut(tname);
+            return tout.Display(cmd, column.Columns, locator);
         }
 
     }
