@@ -7,7 +7,7 @@ using System.Data;
 
 namespace Sys.Data
 {
-    public class RowIdTable
+    public class UniqueTable
     {
         public readonly TableName TableName;
         private DataTable table;
@@ -17,7 +17,7 @@ namespace Sys.Data
         private DataColumn colLoc = null;
         private DataColumn colRowID = null;
 
-        public RowIdTable(TableName tname, DataTable table)
+        public UniqueTable(TableName tname, DataTable table)
         {
             this.TableName = tname;
             this.table = table;
@@ -96,20 +96,50 @@ namespace Sys.Data
             table.Rows[rowId][column] = value;
             return new SqlBuilder().UPDATE(TableName).SET(column.Assign(value)).WHERE(PhysLoc(rowId));
         }
-     
 
-        public Column[] Columns
+
+        private DataColumnCollection columns = null;
+        public DataColumnCollection Columns
         {
             get
             {
-                List<Column> L = new List<Column>();
-                foreach (DataColumn column in table.Columns)
-                {
-                    if(column != colRowID)
-                        L.Add(new Column(this.table, column));
-                }
+                if (columns == null)
+                    columns = new DataColumnCollection(this.table);
 
-                return L.ToArray();
+                return columns;
+            }
+        }
+    }
+
+    public class DataColumnCollection
+    {
+        private DataTable table;
+        private List<Column> columns = new List<Column>();
+
+        internal DataColumnCollection(DataTable table)
+        {
+            this.table = table;
+
+            foreach (DataColumn column in table.Columns)
+            {
+                columns.Add(new Column(this.table, column));
+            }
+        }
+
+        public Column this[DataColumn column]
+        {
+            get
+            {
+                return columns.Find(c => c.DataColumn == column);
+            }
+        }
+
+
+        public Column this[string column]
+        {
+            get
+            {
+                return columns.Find(c => c.DataColumn.ColumnName == column);
             }
         }
     }
@@ -125,6 +155,11 @@ namespace Sys.Data
             this.column = name;
         }
 
+        public DataColumn DataColumn
+        {
+            get { return this.column; }
+        }
+
         public object this[int rowId]
         {
             get 
@@ -134,6 +169,24 @@ namespace Sys.Data
             set
             {
                 table.Rows[rowId][column] = value;
+            }
+        }
+
+        public object[] ItemArray 
+        {
+            get
+            {
+                object[] objs = new object[table.Rows.Count];
+                for (int i = 0; i < objs.Length; i++)
+                    objs[i] = table.Rows[i][column];
+             
+                return objs;
+            }
+            set
+            {
+                object[] objs = value;
+                for (int i = 0; i < objs.Length; i++)
+                    table.Rows[i][column] = objs[i];
             }
         }
 

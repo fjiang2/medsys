@@ -164,7 +164,7 @@ namespace sqlcon
             }
         }
 
-        private SqlBuilder ParsePhysLocStatement(RowIdTable table, string text)
+        private SqlBuilder ParsePhysLocStatement(UniqueTable table, string text)
         {
             if (string.IsNullOrEmpty(text))
                 return null;

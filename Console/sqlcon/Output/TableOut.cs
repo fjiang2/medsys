@@ -12,7 +12,7 @@ namespace sqlcon
     class TableOut
     {
         private TableName tname;
-        private RowIdTable rTable = null;
+        private UniqueTable rTable = null;
 
         public TableOut(TableName tableName)
         {
@@ -24,7 +24,7 @@ namespace sqlcon
             get { return this.tname; }
         }
 
-        public RowIdTable Table
+        public UniqueTable Table
         {
             get { return this.rTable; }
         }
@@ -86,7 +86,7 @@ namespace sqlcon
             try
             {
                 DataTable table = builder.SqlCmd.FillDataTable();
-                rTable = new RowIdTable(tname, table);
+                rTable = new UniqueTable(tname, table);
                 _DisplayTable(rTable.Table, cmd.IsVertical);
             }
             catch (Exception ex)
