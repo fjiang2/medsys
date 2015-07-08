@@ -30,12 +30,12 @@ namespace Sys.Data.Comparison
             foreach (var column in table.NonPkColumns)
             {
                 if (!row1[column].Equals(row2[column]))
-                    L2.Add(new ColumnPair { ColumnName = column, Value = row1[column] });
+                    L2.Add(new ColumnPair(column, row1[column]));
             }
 
             foreach (var column in table.PkColumns.Keys)
             {
-                L1.Add(new ColumnPair { ColumnName = column, Value = row1[column] });
+                L1.Add(new ColumnPair(column, row1[column]));
             }
         }
 
@@ -86,7 +86,7 @@ namespace Sys.Data.Comparison
             foreach (DataColumn column in row.Table.Columns)
             {
                 if(row[column] != DBNull.Value)
-                    list.Add(new ColumnPair { ColumnName = column.ColumnName, Value = row[column] });
+                    list.Add(new ColumnPair( column.ColumnName,  row[column] ));
             }
 
             return list;
@@ -99,7 +99,7 @@ namespace Sys.Data.Comparison
             for (int i = 0; i < columnName.Length; i++)
             {
                 if (values[i] != DBNull.Value)
-                    list.Add(new ColumnPair { ColumnName = columnName[i], Value = values[i] });
+                    list.Add(new ColumnPair( columnName[i],  values[i] ));
             }
 
             return list;

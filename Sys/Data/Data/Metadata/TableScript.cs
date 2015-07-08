@@ -40,7 +40,7 @@ namespace Sys.Data
         public string INSERT(IEnumerable<IColumn> columns)
         {
             var x1 = columns.Select(column => "[" + column.ColumnName + "]");
-            var x2 = columns.Select(column => ColumnPair.ToScript(column));
+            var x2 = columns.Select(column => ColumnValue.ToScript(column));
 
             return string.Format(insertCommandTemplate,
              string.Join(",", x1),
@@ -53,7 +53,7 @@ namespace Sys.Data
         public string INSERT(IEnumerable<ColumnPair> pairs)
         {
             var x1 = pairs.Select(p => "[" + p.ColumnName + "]");
-            var x2 = pairs.Select(p => p.ToScript());
+            var x2 = pairs.Select(p => p.Value.ToScript());
 
             return string.Format(insertCommandTemplate,
                 string.Join(",", x1),
@@ -71,7 +71,7 @@ namespace Sys.Data
             var L1 = new List<ColumnPair>();
             foreach (var column in primaryKey.Keys)
             {
-                L1.Add(new ColumnPair { ColumnName = column, Value = row[column] });
+                L1.Add(new ColumnPair( column,  row[column] ));
             }
 
             return string.Format(deleteCommandTemplate, string.Join<ColumnPair>(" AND ", L1));
