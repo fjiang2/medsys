@@ -159,7 +159,7 @@ namespace sqlcon
                     return true;
             }
 
-         
+
             switch (cmd.Action)
             {
                 case "dir":
@@ -255,17 +255,22 @@ namespace sqlcon
                     return true;
 
                 case "template":
-                    if (cmd.arg1 != null)
                     {
-                        string sql = theSide.GenerateRowTemplate(new TableName(theSide.DatabaseName, "dbo", cmd.arg1));
-                        stdio.WriteLine(sql);
-                        using (var writer = cfg.OutputFile.NewStreamWriter())
+                        TableName tname = mgr.GetCurrentPath<TableName>();
+                        if (tname == null)
                         {
-                            writer.WriteLine(sql);
+                            stdio.ShowError("warning: table is not available");
+                        }
+                        else
+                        {
+                            string sql = theSide.GenerateRowTemplate(tname);
+                            stdio.WriteLine(sql);
+                            using (var writer = cfg.OutputFile.NewStreamWriter())
+                            {
+                                writer.WriteLine(sql);
+                            }
                         }
                     }
-                    else
-                        stdio.ShowError("command argument missing");
                     return true;
 
                 case "copy":
@@ -377,7 +382,7 @@ namespace sqlcon
                         if (tname == null)
                         {
                             stdio.ShowError("warning: table is not available");
-                            break;
+                            return true;
                         }
 
                         int count;
@@ -399,6 +404,23 @@ namespace sqlcon
                     }
                     return true;
 
+                case "schema":
+                    DatabaseName dname = mgr.GetCurrentPath<DatabaseName>();
+                    if (dname != null)
+                    {
+                        stdio.WriteLine("start to generate database schema to file: {0}", cfg.SchemaFile);
+                        using (var writer = cfg.SchemaFile.NewStreamWriter())
+                        {
+                            DataSet ds = dname.DatabaseSchema();
+                            ds.WriteXml(writer, XmlWriteMode.WriteSchema);
+                        }
+                        stdio.WriteLine("completed");
+                    }
+                    else
+                    {
+                        stdio.ShowError("warning: database is not available");
+                    }
+                    return true; ;
 
                 default:
                     break;
@@ -662,6 +684,7 @@ namespace sqlcon
             stdio.WriteLine("<2> [path]              : switch to comparison sink server 2");
             stdio.WriteLine("<goto> path             : switch to database server");
             stdio.WriteLine("<copy output>           : copy sql script ouput to clipboard");
+            stdio.WriteLine("<schema>                : generate current database schema");
             stdio.WriteLine("<open log>              : open log file");
             stdio.WriteLine("<open input>            : open input file");
             stdio.WriteLine("<open output>           : open output file");

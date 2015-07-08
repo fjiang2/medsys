@@ -12,8 +12,7 @@ namespace Sys.Data
 
         private static string SQL_SCHEMA = @"
 SELECT 
-	--SCHEMA_NAME(t.schema_id) AS SchemaName,
-	--t.name AS TableName,
+	{0} 
     c.name AS ColumnName,
     ty.name AS DataType,
     c.max_length AS Length,
@@ -56,14 +55,14 @@ SELECT
 										 WHERE  i1.CONSTRAINT_TYPE = 'PRIMARY KEY'
 									   ) PT ON PT.TABLE_NAME = PK.TABLE_NAME
 				   ) f ON f.FK_Table = t.name AND f.FK_Column = c.name
-{0}
+{1}
 ORDER BY t.name, c.column_id
 ";
 
         public static DataTable TableSchema(this TableName tableName)
         {
             DataTable dt1;
-            string SQL = string.Format(SQL_SCHEMA, "WHERE t.name='{0}'");
+            string SQL = string.Format(SQL_SCHEMA, "", "WHERE t.name='{0}'");
             dt1 = Use(tableName, SQL);
 
             return dt1;
@@ -91,9 +90,9 @@ ORDER BY t.name, c.column_id
         public static DataSet DatabaseSchema(this DatabaseName dname)
         {
             StringBuilder builder = new StringBuilder();
-
+            string s = @"SCHEMA_NAME(t.schema_id) AS SchemaName,t.name AS TableName,";
             builder.AppendFormat("USE [{0}] ", dname.Name).AppendLine();
-            builder.AppendLine(string.Format(SQL_SCHEMA, ""));
+            builder.AppendLine(string.Format(SQL_SCHEMA, s, ""));
 
             DataSet ds = new SqlCmd(dname.Provider, builder.ToString()).FillDataSet();
             ds.DataSetName = dname.Name;

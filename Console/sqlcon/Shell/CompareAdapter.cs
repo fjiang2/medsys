@@ -24,7 +24,7 @@ namespace sqlcon
         {
             this.Side1 = side1;
             this.Side2 = side2;
-            this.compare = new Compare(this.Side1.Provider, this.Side2.Provider);
+            this.compare = new Compare();
         }
      
         private static bool Exists(TableName tname)

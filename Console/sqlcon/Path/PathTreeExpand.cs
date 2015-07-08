@@ -56,6 +56,9 @@ namespace sqlcon
                     pt.Nodes.Clear();
 
                 TableName[] tnames = dname.GetTableNames();
+                if (tnames == null)
+                    return false;
+
                 foreach (var tname in tnames)
                     pt.Nodes.Add(new TreeNode<IDataPath>(tname));
 

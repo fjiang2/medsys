@@ -9,13 +9,8 @@ namespace Sys.Data.Comparison
 {
     public class Compare
     {
-        ConnectionProvider pvd1;
-        ConnectionProvider pvd2;
-
-        public Compare(ConnectionProvider pvd1, ConnectionProvider pvd2)
+        public Compare()
         {
-            this.pvd1 = pvd1;
-            this.pvd2 = pvd2;
         }
 
         #region compare database schema/data
