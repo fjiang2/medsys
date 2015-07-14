@@ -18,7 +18,7 @@ namespace sqlcon
         [STAThread]
         static void Main(string[] args)
         {
-            Console.WriteLine("SQL Server Command Console [Version 1.0.0.0]");
+            Console.WriteLine("SQL Server Command Console [Version {0}]", System.Reflection.Assembly.GetEntryAssembly().GetName().Version);
             Console.WriteLine("Copyright (c) 2014-2015 Datconn. All rights reserved.");
             Console.WriteLine();
 

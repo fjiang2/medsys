@@ -58,8 +58,9 @@ namespace sqlcon
         {
             if (cmd.arg1 == "/?")
             {
+                stdio.WriteLine("command cd or chdir");
                 stdio.WriteLine("cd [path]              : change directory");
-                stdio.WriteLine("cd \\                   : change to root directory");
+                stdio.WriteLine("cd \\                  : change to root directory");
                 stdio.WriteLine("cd ..                  : change to the parent directory");
                 stdio.WriteLine("cd ...                 : change to the grand parent directory");
                 return true;
@@ -87,6 +88,7 @@ namespace sqlcon
         {
             if (cmd.arg1 == "/?")
             {
+                stdio.WriteLine("command dir or ls");
                 stdio.WriteLine("dir [path]             : display current directory");
                 stdio.WriteLine("options:   /def        : display table structure");
                 return;
@@ -210,6 +212,7 @@ namespace sqlcon
         {
             if (cmd.arg1 == "/?")
             {
+                stdio.WriteLine("command del or erase:  delete data rows");
                 stdio.WriteLine("del [sql where clause]  : delete current table filtered rows");
                 stdio.WriteLine("example:");
                 stdio.WriteLine("del : delete all rows");
@@ -273,6 +276,7 @@ namespace sqlcon
         {
             if (cmd.arg1 == "/?")
             {
+                stdio.WriteLine("command md or mkdir");
                 stdio.WriteLine("md [sql where clause]  : filter current table rows");
                 stdio.WriteLine("example:");
                 stdio.WriteLine("md col1=1 and col2='match' : filter rows matched on columns:c1 or c2");
@@ -301,6 +305,14 @@ namespace sqlcon
 
         public void rmdir(Command cmd)
         {
+            if (cmd.arg1 == "/?")
+            {
+                stdio.WriteLine("command rd or rmdir");
+                stdio.WriteLine("rm [sql where clause] : remove locators");
+                stdio.WriteLine("rm #1 : remove the locator node");
+                return;
+            }
+
             if (!Navigate(cmd))
                 return;
 
