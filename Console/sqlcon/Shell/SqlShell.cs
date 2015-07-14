@@ -162,6 +162,7 @@ namespace sqlcon
 
             switch (cmd.Action)
             {
+                case "ls":
                 case "dir":
                     commandee.dir(cmd);
                     return true;
@@ -444,7 +445,7 @@ namespace sqlcon
         {
             return string.Format("S={0} db={1} U={2} P={3}", cs.DataSource, cs.InitialCatalog, cs.UserId, cs.Password);
         }
-      
+
         private void DoMultipleLineCommand(string text)
         {
             text = text.Trim();
@@ -467,10 +468,8 @@ namespace sqlcon
             if (n > 2)
                 arg2 = A[2].Trim();
 
-             switch (cmd)
+            switch (cmd)
             {
-           
-
                 case "use":
                 case "select":
                     if (!Context.GetValue<bool>(Context.DATAREADER))
@@ -651,15 +650,17 @@ namespace sqlcon
         private static void Help()
         {
             stdio.WriteLine("Notes: table names support wildcard matching, e.g. Prod*,Pro?ucts");
-            stdio.WriteLine("<exit>                  : quit application");
-            stdio.WriteLine("<help>                  : this help");
-            stdio.WriteLine("<?>                     : this help");
-            stdio.WriteLine("dir /?                  : see more info");
-            stdio.WriteLine("cd /?                   : see more info");
-            stdio.WriteLine("md /?                   : see more info");
-            stdio.WriteLine("rd /?                   : see more info");
+            stdio.WriteLine("exit                    : quit application");
+            stdio.WriteLine("help                    : this help");
+            stdio.WriteLine("?                       : this help");
+            stdio.WriteLine("dir,ls /?               : see more info");
+            stdio.WriteLine("cd,chdir /?             : see more info");
+            stdio.WriteLine("md,mkdir /?             : see more info");
+            stdio.WriteLine("rd,rmdir /?             : see more info");
             stdio.WriteLine("type /?                 : see more info");
             stdio.WriteLine("set /?                  : see more info");
+            stdio.WriteLine("del /?                  : see more info");
+            stdio.WriteLine("ren /?                  : see more info");
             stdio.WriteLine();
             stdio.WriteLine("<Commands>");
             stdio.WriteLine("<compare schema> tables : compare schema of tables");

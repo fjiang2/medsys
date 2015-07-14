@@ -14,8 +14,11 @@ namespace sqlcon
         private string[] fullSegments = new string[0];
         public readonly string[] segments = new string[0];
 
+
+        private string fullName;
         public PathName(string fullName)
         {
+            this.fullName = fullName;
 
             if (string.IsNullOrEmpty(fullName))
                 fullSegments = new string[0];
@@ -54,6 +57,8 @@ namespace sqlcon
             }
         }
 
+
+
         private static bool IsWhere(string text)
         {
             string[] keys = new string[] { "(", ")", "=", ">", "<", " and ", " or ", " between ", " not ", " is " };
@@ -74,6 +79,11 @@ namespace sqlcon
             {
                 return this.fullSegments;
             }
+        }
+
+        public override string ToString()
+        {
+            return this.fullName;
         }
     }
 }

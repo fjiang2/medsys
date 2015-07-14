@@ -112,7 +112,7 @@ namespace sqlcon
                 return;
             }
 
-            if (cmd.args == null)
+            if (string.IsNullOrEmpty(cmd.args))
             {
                 stdio.ShowError("argument cannot be empty");
                 return;
@@ -208,13 +208,45 @@ namespace sqlcon
 
         public void del(Command cmd)
         {
-            var pt = mgr.current;
-            if (!(pt.Item is Locator))
+            if (cmd.arg1 == "/?")
+            {
+                stdio.WriteLine("del [sql where clause]  : delete current table filtered rows");
+                stdio.WriteLine("example:");
+                stdio.WriteLine("del : delete all rows");
+                stdio.WriteLine("del col1=1 and col2='match' : del rows matched on columns:c1 or c2");
                 return;
+            }
 
-            Locator locator = (Locator)pt.Item;
-            TableName tname = (TableName)pt.Parent.Item;
-            stdio.Write("are you sure to delete (y/n)?");
+            var pt = mgr.current;
+            if (!(pt.Item is Locator) && !(pt.Item is TableName))
+            {
+                stdio.ShowError("table is not selected");
+                return;
+            }
+
+
+            TableName tname = null;
+            Locator locator = null;
+            if (pt.Item is Locator)
+            {
+                locator = mgr.GetCombinedLocator(pt);
+                tname = mgr.GetCurrentPath<TableName>();
+                if (!string.IsNullOrEmpty(cmd.args))
+                    locator.And(new Locator(cmd.args));
+            }
+
+            if (pt.Item is TableName)
+            {
+                tname = (TableName)pt.Item;
+                if(!string.IsNullOrEmpty(cmd.args))
+                    locator = new Locator(cmd.args);
+            }
+
+            if (locator == null)
+                stdio.Write("are you sure to delete all rows (y/n)?");
+            else
+                stdio.Write("are you sure to delete (y/n)?");
+
             if (stdio.ReadKey() != ConsoleKey.Y)
                 return;
 
@@ -222,7 +254,12 @@ namespace sqlcon
 
             try
             {
-                int count = new SqlBuilder().DELETE(tname).WHERE(locator).SqlCmd.ExecuteNonQuery();
+                int count;
+                if (locator == null)
+                    count = new SqlBuilder().DELETE(tname).SqlCmd.ExecuteNonQuery();
+                else
+                    count = new SqlBuilder().DELETE(tname).WHERE(locator).SqlCmd.ExecuteNonQuery();
+                
                 stdio.WriteLine("{0} of row(s) affected", count);
             }
             catch (Exception ex)
@@ -234,6 +271,14 @@ namespace sqlcon
 
         public void mkdir(Command cmd)
         {
+            if (cmd.arg1 == "/?")
+            {
+                stdio.WriteLine("md [sql where clause]  : filter current table rows");
+                stdio.WriteLine("example:");
+                stdio.WriteLine("md col1=1 and col2='match' : filter rows matched on columns:c1 or c2");
+                return;
+            }
+
             TreeNode<IDataPath> pt = mgr.current;
 
             if (!(pt.Item is TableName) && !(pt.Item is Locator))
@@ -241,6 +286,9 @@ namespace sqlcon
                 stdio.ShowError("must add filter underneath table or locator");
                 return;
             }
+
+            if (string.IsNullOrEmpty(cmd.args))
+                return;
 
             var xnode = mgr.TryAddWhereOrColumns(pt, cmd.args);
             //if (xnode != pt)
@@ -318,7 +366,8 @@ namespace sqlcon
             if (!Navigate(cmd))
                 return;
 
-            mgr.TypeFile(pt, cmd);
+            if (!mgr.TypeFile(pt, cmd))
+                stdio.ShowError("invalid arguments");
         }
     }
 }

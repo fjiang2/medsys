@@ -14,11 +14,13 @@ namespace sqlcon
     {
         private TableOut tout = null;
 
-        public void TypeFile(TreeNode<IDataPath> pt, Command cmd)
+        public bool TypeFile(TreeNode<IDataPath> pt, Command cmd)
         {
-            if (TypeFileData(pt, cmd)) return;
-            if (TypeLocatorData(pt, cmd)) return;
-            if (TypeLocatorColumnData(pt, cmd)) return;
+            if (TypeFileData(pt, cmd)) return true;
+            if (TypeLocatorData(pt, cmd)) return true;
+            if (TypeLocatorColumnData(pt, cmd)) return true;
+
+            return false;
         }
 
         public TableOut Tout
