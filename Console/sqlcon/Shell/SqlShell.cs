@@ -180,14 +180,23 @@ namespace sqlcon
                     return true;
 
                 case "del":
+                case "erase":
                     commandee.del(cmd);
                     return true;
 
                 case "ren":
+                case "rename":
+                    return true;
+
+                case "echo":
+                    stdio.WriteLine(text);
                     return true;
 
                 case "rem":
-                    stdio.WriteLine(text);
+                    return true;
+
+                case "ver":
+                    stdio.WriteLine("sqlcon [Version {0}]", System.Reflection.Assembly.GetEntryAssembly().GetName().Version);
                     return true;
 
                 case "show":
@@ -653,14 +662,18 @@ namespace sqlcon
             stdio.WriteLine("exit                    : quit application");
             stdio.WriteLine("help                    : this help");
             stdio.WriteLine("?                       : this help");
+            stdio.WriteLine("cls                     : clears the screen");
             stdio.WriteLine("dir,ls /?               : see more info");
             stdio.WriteLine("cd,chdir /?             : see more info");
             stdio.WriteLine("md,mkdir /?             : see more info");
             stdio.WriteLine("rd,rmdir /?             : see more info");
             stdio.WriteLine("type /?                 : see more info");
             stdio.WriteLine("set /?                  : see more info");
-            stdio.WriteLine("del /?                  : see more info");
-            stdio.WriteLine("ren /?                  : see more info");
+            stdio.WriteLine("del,erase /?            : see more info");
+            stdio.WriteLine("ren,rename /?           : see more info");
+            stdio.WriteLine("echo                    : display message");
+            stdio.WriteLine("rem                     : records comments/remarks");
+            stdio.WriteLine("ver                     : display version");
             stdio.WriteLine();
             stdio.WriteLine("<Commands>");
             stdio.WriteLine("<compare schema> tables : compare schema of tables");
