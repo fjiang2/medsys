@@ -43,10 +43,7 @@ namespace sqlcon
 
         public string GenerateScript()
         {
-            StringBuilder builder = new StringBuilder();
-            builder.Append(DatabaseName.GenerateDropTableScript());
-            builder.Append(DatabaseName.GenerateScript());
-            return builder.ToString();
+            return DatabaseName.GenerateScript();
         }
 
         public void ExecuteScript(string scriptFile)

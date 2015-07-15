@@ -158,6 +158,13 @@ namespace Sys.Data
                     .ToArray();
         }
 
+        public static string GenerateScript(this DatabaseName databaseName)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.Append(databaseName.GenerateDropTableScript());
+            builder.Append(databaseName.GenerateScript_());
+            return builder.ToString();
+        }
 
         public static string GenerateScript(this TableName tableName)
         {
@@ -184,7 +191,7 @@ namespace Sys.Data
             return sql;
         }
 
-        public static string GenerateScript(this DatabaseName databaseName)
+        private static string GenerateScript_(this DatabaseName databaseName)
         {
             StringBuilder builder = new StringBuilder();
             TableName[] history = GetDependencyTableNames(databaseName);
