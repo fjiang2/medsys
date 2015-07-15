@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Data;
 
 namespace Sys.Data.Comparison
 {
@@ -16,10 +17,10 @@ namespace Sys.Data.Comparison
             tableName2 = name2;
         }
 
-        public string Compare()
+        public string Compare(DataTable dbSchema1, DataTable dbSchema2)
         {
-            TableSchema schema1 = new TableSchema(tableName1);
-            TableSchema schema2 = new TableSchema(tableName2);
+            TableSchema schema1 = new TableSchema(tableName1, dbSchema1);
+            TableSchema schema2 = new TableSchema(tableName2, dbSchema2);
 
             StringBuilder builder = new StringBuilder();
             TableScript script = new TableScript(schema1);

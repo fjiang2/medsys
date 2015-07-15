@@ -31,10 +31,17 @@ namespace Sys.Data
     public class TableSchema : ITable
     {
         protected TableName tableName;
-        
+        private DataTable dbSchema = null;
+
         public TableSchema(TableName tname)
         {
             this.tableName = tname;
+        }
+
+        public TableSchema(TableName tname, DataTable dbSchema)
+        {
+            this.tableName = tname;
+            this.dbSchema = dbSchema;
         }
 
         public override string ToString()
@@ -44,7 +51,11 @@ namespace Sys.Data
 
         protected virtual void LoadSchema()
         {
-            DataTable schema = InformationSchema.TableSchema(tableName);
+            DataTable schema;
+            if (dbSchema == null)
+                schema = InformationSchema.TableSchema(tableName);
+            else
+                schema = InformationSchema.TableSchema(tableName, dbSchema);
 
             this._columns = new ColumnCollection(this);
 
@@ -52,7 +63,6 @@ namespace Sys.Data
             {
                 this._columns.Add(new ColumnSchema(row));
             }
-
 
         }
         

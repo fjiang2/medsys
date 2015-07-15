@@ -7,14 +7,12 @@ using System.IO;
 
 namespace Sys.Data.Comparison
 {
-    public class Compare
+    public static class Compare
     {
-        public Compare()
-        {
-        }
+       
 
         #region compare database schema/data
-        public string DatabaseSchemaDifference(DatabaseName dname1, DatabaseName dname2)
+        public static string DatabaseSchemaDifference(DatabaseName dname1, DatabaseName dname2)
         {
             TableName[] names = dname1.GetDependencyTableNames();
 
@@ -42,7 +40,70 @@ namespace Sys.Data.Comparison
             return builder.ToString();
         }
 
-        public string DatabaseDifference(DatabaseName dname1, DatabaseName dname2, string[] excludedTables)
+
+        public static string DatabaseSchemaDifference(string xmlSchema1, string xmlSchema2)
+        {
+            ConnectionProvider pvd = ConnectionProviderManager.DefaultProvider;
+            DataTable dbSchema1;
+            DataTable dbSchema2; 
+            DataSet ds2 = new DataSet();
+            using (var reader = new System.IO.StreamReader(xmlSchema1))
+            {
+                DataSet ds = new DataSet();
+                ds.ReadXml(reader);
+                dbSchema1 = ds.Tables[0];
+            }
+
+            using (var reader = new System.IO.StreamReader(xmlSchema2))
+            {
+                DataSet ds = new DataSet();
+                ds.ReadXml(reader);
+                dbSchema2 = ds.Tables[0];
+            }
+
+         
+            DatabaseName dname1 = new DatabaseName(pvd, "left");
+            DatabaseName dname2 = new DatabaseName(pvd, "right");
+
+            TableName[] tnames1 = InformationSchema.TableNameRange(dname1, dbSchema1);
+            TableName[] tnames2 = InformationSchema.TableNameRange(dname2, dbSchema2);
+
+            StringBuilder builder = new StringBuilder();
+            foreach (TableName tname1 in tnames1)
+            {
+#if DEBUG
+                Console.WriteLine(tname1.ShortName);
+#endif
+                try
+                {
+                    string sql = string.Empty;
+                    TableName tname2 = tnames2.FirstOrDefault(row => row.SchemaName == tname1.SchemaName && row.Name == tname1.Name);
+                    if (tname2!=null)
+                    {
+                        TableSchemaCompare compare = new TableSchemaCompare(tname1, tname2);
+                        sql = compare.Compare(dbSchema1, dbSchema2);
+                    }
+                    else
+                    {
+                      //  sql = tname1.GenerateScript();
+                    }
+
+                    builder.Append(sql);
+#if DEBUG
+                    if (sql != string.Empty)
+                        Console.WriteLine(sql);
+#endif
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("error:" + ex.Message);
+                }
+            }
+
+            return builder.ToString();
+        }
+
+        public static string DatabaseDifference(DatabaseName dname1, DatabaseName dname2, string[] excludedTables)
         {
             TableName[] names = dname1.GetDependencyTableNames();
             excludedTables = excludedTables.Select(row => row.ToUpper()).ToArray();
@@ -90,7 +151,7 @@ namespace Sys.Data.Comparison
 
         #region compare table schema/data
 
-        public string TableSchemaDifference(TableName tableName1, TableName tableName2)
+        public static string TableSchemaDifference(TableName tableName1, TableName tableName2)
         {
 
             string sql;
@@ -98,7 +159,7 @@ namespace Sys.Data.Comparison
             if (DatabaseSchema.Exists(tableName2))
             {
                 TableSchemaCompare compare = new TableSchemaCompare(tableName1, tableName2);
-                sql = compare.Compare();
+                sql = compare.Compare(null, null);
             }
             else
             {
@@ -108,9 +169,7 @@ namespace Sys.Data.Comparison
             return sql;
         }
 
-
-
-        public string TableDifference(TableSchema schema1, TableSchema schema2, string[] primaryKeys)
+        public static string TableDifference(TableSchema schema1, TableSchema schema2, string[] primaryKeys)
         {
             TableCompare compare = new TableCompare(schema1, schema2);
             IPrimaryKeys keys = new PrimaryKeys(primaryKeys);

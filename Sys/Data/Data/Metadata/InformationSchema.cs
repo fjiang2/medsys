@@ -99,5 +99,48 @@ ORDER BY t.name, c.column_id
             ds.Tables[0].TableName = "COLUMN";
             return ds;
         }
+
+        public static DataTable TableSchema(this TableName tableName, DataTable schema)
+        {
+            DataTable dt = new DataTable();
+            foreach (DataColumn column in schema.Columns)
+            {
+                if (column.ColumnName != "SchemaName" && column.ColumnName != "TableName")
+                    dt.Columns.Add(new DataColumn(column.ColumnName, column.DataType));
+            }
+
+            var rows = schema.AsEnumerable().Where(row => row.Field<string>("SchemaName") == tableName.SchemaName && row.Field<string>("TableName") == tableName.Name);
+            foreach (var row in rows)
+            {
+                DataRow newRow = dt.NewRow();
+                foreach (DataColumn column in dt.Columns)
+                {
+                    newRow[column] = row[column.ColumnName];
+                }
+
+                dt.Rows.Add(newRow);
+            }
+
+            dt.AcceptChanges();
+            return dt;
+        }
+
+
+        public static TableName[] TableNameRange(this DatabaseName databaseName, DataTable schema)
+        {
+            var rows = schema.AsEnumerable()
+                .Select(row=> new { schema =  row.Field<string>("SchemaName"), name = row.Field<string>("TableName")})
+                .Distinct();
+
+            List<TableName> tnames = new List<TableName>();
+            foreach (var row in rows)
+            {
+                TableName tname = new TableName(databaseName, row.schema, row.name);
+                tnames.Add(tname);
+            }
+
+            return tnames.ToArray();
+        }
+
     }
 }
