@@ -15,7 +15,6 @@ namespace sqlcon
 
     class CompareAdapter  
     {
-        private Compare compare;
 
         public Side Side1 {get; private set;}
         public Side Side2 {get; private set;}
@@ -24,7 +23,6 @@ namespace sqlcon
         {
             this.Side1 = side1;
             this.Side2 = side2;
-            this.compare = new Compare();
         }
      
         private static bool Exists(TableName tname)
@@ -117,7 +115,7 @@ namespace sqlcon
         private string CompareDatabaseSchema(DatabaseName db1, DatabaseName db2)
         {
             stdio.WriteLine("compare database schema {0} => {1}", db1.Name, db2.Name);
-            return compare.DatabaseSchemaDifference(db1, db2);
+            return Compare.DatabaseSchemaDifference(db1, db2);
         }
 
         private string CompareDatabaseData(DatabaseName db1, DatabaseName db2, string[] excludedtables)
@@ -125,7 +123,7 @@ namespace sqlcon
             stdio.WriteLine("compare database data {0} => {1}", db1.Name, db2.Name);
             if (excludedtables != null && excludedtables.Length > 0)
                 stdio.WriteLine("ignore tables: {0}", string.Join(",", excludedtables));
-            return compare.DatabaseDifference(db1, db2, excludedtables);
+            return Compare.DatabaseDifference(db1, db2, excludedtables);
         }
 
         private string CompareTable(TableName tname1, TableName tname2, Dictionary<string, string[]> pk)
@@ -137,13 +135,13 @@ namespace sqlcon
                 return string.Empty;
 
             stdio.WriteLine("compare table schema {0} => {1}", tname1.ShortName, tname2.ShortName);
-            string sql = compare.TableSchemaDifference(tname1, tname2);
+            string sql = Compare.TableSchemaDifference(tname1, tname2);
 
             if (sql == string.Empty)
             {
                 stdio.WriteLine("compare table data {0} => {1}", tname1.ShortName, tname2.ShortName);
                 bool hasPk = schema1.PrimaryKeys.Length > 0;
-                sql = compare.TableDifference(schema1, schema2, schema1.PrimaryKeys.Keys);
+                sql = Compare.TableDifference(schema1, schema2, schema1.PrimaryKeys.Keys);
 
                 if (!hasPk)
                 {
@@ -153,7 +151,7 @@ namespace sqlcon
                     if (pk.ContainsKey(key))
                     {
                         stdio.WriteLine("use predefine keys defined in ini file: {0}", tname1);
-                        sql = compare.TableDifference(schema1, schema2, pk[key]);
+                        sql = Compare.TableDifference(schema1, schema2, pk[key]);
                     }
                 }
 
