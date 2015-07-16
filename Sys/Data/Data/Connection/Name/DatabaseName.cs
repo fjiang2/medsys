@@ -78,7 +78,7 @@ namespace Sys.Data
         public override bool Equals(object obj)
         {
             DatabaseName dname = (DatabaseName)obj;
-            return this.name.Equals(dname.name) && this.ServerName.Equals(dname.ServerName);
+            return this.name.ToLower().Equals(dname.name.ToLower()) && this.ServerName.Equals(dname.ServerName);
         }
 
 

@@ -81,7 +81,7 @@ namespace Sys.Data
         public override bool Equals(object obj)
         {
             TableName name = (TableName)obj;
-            return FullName.Equals(name.FullName) && this.baseName.Equals(name.baseName);
+            return FullName.ToLower().Equals(name.FullName.ToLower()) && this.baseName.Equals(name.baseName);
         }
 
         public override int GetHashCode()

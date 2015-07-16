@@ -50,7 +50,6 @@
     <Compile Include="Compare\ColumnValue.cs" />
     <Compile Include="Compare\ColumnPair.cs" />
     <Compile Include="Compare\Compare.cs" />
-    <Compile Include="Compare\DatabaseSchemaCompare.cs" />
     <Compile Include="Compare\RowCompare.cs" />
     <Compile Include="Compare\TableCompare.cs" />
     <Compile Include="Compare\TableSchemaCompare.cs" />
