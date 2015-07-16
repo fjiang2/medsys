@@ -85,7 +85,7 @@ namespace Sys.Data.Comparison
                     }
                     else
                     {
-                      //  sql = tname1.GenerateScript();
+                        sql = tname1.GenerateScript(dbSchema1);
                     }
 
                     builder.Append(sql);

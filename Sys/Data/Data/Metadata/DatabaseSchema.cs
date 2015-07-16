@@ -166,9 +166,9 @@ namespace Sys.Data
             return builder.ToString();
         }
 
-        public static string GenerateScript(this TableName tableName)
+        public static string GenerateScript(this TableName tableName, DataTable dbSchema = null)
         {
-            TableSchema schema1 = new TableSchema(tableName);
+            TableSchema schema1 = new TableSchema(tableName, dbSchema);
 
             string sql;
             var script = new TableScript(schema1);
