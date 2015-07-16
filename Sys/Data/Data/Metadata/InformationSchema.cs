@@ -94,7 +94,7 @@ ORDER BY t.name, c.column_id
 
             DataSet ds = new SqlCmd(dname.Provider, builder.ToString()).FillDataSet();
             ds.DataSetName = dname.Name;
-            ds.Tables[0].TableName = "COLUMN";
+            ds.Tables[0].TableName = dname.Name;
             return ds;
         }
 

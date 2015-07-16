@@ -113,13 +113,25 @@ namespace Sys.Data
 
         public string UserId
         {
-            get { return (string)ConnectionBuilder["User Id"]; }
+            get 
+            {
+                if (ConnectionBuilder.ContainsKey("User Id"))
+                    return (string)ConnectionBuilder["User Id"];
+                else
+                    return null;
+            }
             set { ConnectionBuilder["User Id"] = value; }
         }
       
         public string Password
         {
-            get { return (string)ConnectionBuilder["Password"]; }
+            get 
+            {
+                if (ConnectionBuilder.ContainsKey("Password"))
+                    return (string)ConnectionBuilder["Password"];
+                else
+                    return null;
+            }
             set { ConnectionBuilder["Password"] = value; }
         }
 

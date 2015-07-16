@@ -211,7 +211,7 @@ namespace Sys.Data
         public static ConnectionProvider CloneConnectionProvider(ConnectionProvider provider, string serverName, string databaseName)
         {
             provider.InitialCatalog = databaseName;
-            var pvd = ConnectionProviderManager.Register(serverName, new SqlConnectionStringBuilder(provider.ConnectionString));
+            var pvd = ConnectionProviderManager.Register(serverName, provider.Type, provider.ConnectionString);
             return pvd;
         }
     }

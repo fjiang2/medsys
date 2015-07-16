@@ -18,7 +18,7 @@ namespace Sys.Data
 
         public virtual bool Exists(DatabaseName dname)
         {
-            return GetDatabaseNames().FirstOrDefault(row => row == dname) != null;
+            return GetDatabaseNames().FirstOrDefault(row => row.Equals(dname)) != null;
         }
 
         public virtual bool Exists(TableName tname)
@@ -27,7 +27,7 @@ namespace Sys.Data
             if (!Exists(dname))
                 return false;
 
-            return GetTableNames(dname).FirstOrDefault(row => row == tname) != null;
+            return GetTableNames(dname).FirstOrDefault(row => row.Equals(tname)) != null;
         }
 
 

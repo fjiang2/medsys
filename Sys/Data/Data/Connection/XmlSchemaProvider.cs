@@ -11,16 +11,16 @@ namespace Sys.Data
     {
         DataSet dbSchema;
 
-        public XmlSchemaProvider(ConnectionProvider connectionProvider)
-            : base(connectionProvider)
+        public XmlSchemaProvider(ConnectionProvider provider)
+            : base(provider)
         {
             dbSchema = new DataSet();
-            using (var reader = new System.IO.StreamReader(connectionProvider.DataSource))
+            using (var reader = new System.IO.StreamReader(provider.DataSource))
             {
                 dbSchema = new DataSet();
                 dbSchema.ReadXml(reader);
                 if (dbSchema.Tables.Count == 0)
-                    throw new Exception(string.Format("error in xml schema file: {0}", connectionProvider));
+                    throw new Exception(string.Format("error in xml schema file: {0}", provider));
             }
 
         }
@@ -28,12 +28,19 @@ namespace Sys.Data
       
         public override DatabaseName[] GetDatabaseNames()
         {
-            return new DatabaseName[] { provider.DefaultDatabaseName };
+            List<DatabaseName> dnames = new List<DatabaseName>();
+            foreach(DataTable table in dbSchema.Tables)
+            {
+                DatabaseName dname = new DatabaseName(provider, table.TableName);
+                dnames.Add(dname);
+            }
+
+            return dnames.ToArray();
         }
 
-        public override TableName[] GetTableNames(DatabaseName databaseName)
+        public override TableName[] GetTableNames(DatabaseName dname)
         {
-            return InformationSchema.XmlTableNames(databaseName, dbSchema.Tables[0]);
+            return InformationSchema.XmlTableNames(dname, dbSchema.Tables[dname.Name]);
         }
 
         public override TableName[] GetViewNames(DatabaseName dname)
@@ -41,9 +48,9 @@ namespace Sys.Data
             return new TableName[] { };
         }
 
-        public override DataTable GetTableSchema(TableName tableName)
+        public override DataTable GetTableSchema(TableName tname)
         {
-            return InformationSchema.XmlTableSchema(tableName, dbSchema.Tables[0]);
+            return InformationSchema.XmlTableSchema(tname, dbSchema.Tables[tname.DatabaseName.Name]);
         }
 
         public override DataSet GetDatabaseSchema(DatabaseName dname)
