@@ -111,8 +111,9 @@ namespace Sys.Data
 
         public override DataTable GetDatabaseSchema(DatabaseName dname)
         {
-            DataTable dt = GetServerSchema(dname.ServerName).Tables[dname.Name];
-            return dt;
+            //return GetServerSchema(dname.ServerName).Tables[dname.Name];
+
+            return InformationSchema.SqlServerSchema(dname.ServerName, new DatabaseName[] { dname }).Tables[dname.Name];
         }
 
         public override DataSet GetServerSchema(ServerName sname)

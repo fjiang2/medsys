@@ -479,7 +479,7 @@ namespace sqlcon
                         ServerName sname = mgr.GetCurrentPath<ServerName>();
                         if (sname != null)
                         {
-                            stdio.WriteLine("start to generate database {0} schema to file: {1}", dname, cfg.SchemaFile);
+                            stdio.WriteLine("start to generate server {0} schema to file: {1}", sname, cfg.SchemaFile);
                             using (var writer = cfg.SchemaFile.NewStreamWriter())
                             {
                                 DataSet ds = sname.ServerSchema();
@@ -488,7 +488,7 @@ namespace sqlcon
                             stdio.WriteLine("completed");
                         }
                         else
-                            stdio.ShowError("warning: database is not available");
+                            stdio.ShowError("warning: server or database is not selected");
                     }
 
                     return true;

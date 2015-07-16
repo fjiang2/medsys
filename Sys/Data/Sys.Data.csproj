@@ -73,6 +73,7 @@
     <Compile Include="Data\Attribute\RevisionAttribute.cs" />
     <Compile Include="Data\Attribute\TableAttribute.cs" />
     <Compile Include="Data\Connection\Name\ServerName.cs" />
+    <Compile Include="Data\Persistence\Level0\Provider\XmlProvider.cs" />
     <Compile Include="Data\UniqueTable.cs" />
     <Compile Include="SqlBuilder\SqlBuilder.cs" />
     <Compile Include="SqlBuilder\SqlBuilderInfo.cs" />

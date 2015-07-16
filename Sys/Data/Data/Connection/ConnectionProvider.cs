@@ -231,6 +231,9 @@ namespace Sys.Data
                     case DbProviderType.OleDb:
                         return new OleDbConnection(ConnectionString);
 
+                    case DbProviderType.DataSet:
+                        return null;
+
                 }
 
                 throw new NotImplementedException();
