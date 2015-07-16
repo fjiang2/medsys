@@ -53,7 +53,12 @@ namespace Sys.Data
             return InformationSchema.XmlTableSchema(tname, dbSchema.Tables[tname.DatabaseName.Name]);
         }
 
-        public override DataSet GetDatabaseSchema(DatabaseName dname)
+        public override DataTable GetDatabaseSchema(DatabaseName dname)
+        {
+            return dbSchema.Tables[dname.Name];
+        }
+
+        public override DataSet GetServerSchema(ServerName sname)
         {
             return dbSchema;
         }

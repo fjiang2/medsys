@@ -85,16 +85,32 @@ ORDER BY t.name, c.column_id
         }
 
 
-        public static DataSet SqlDatabaseSchema(this DatabaseName dname)
+        private static string SqlDatabaseSchema(DatabaseName dname)
         {
             StringBuilder builder = new StringBuilder();
             string s = @"SCHEMA_NAME(t.schema_id) AS SchemaName,t.name AS TableName,";
             builder.AppendFormat("USE [{0}] ", dname.Name).AppendLine();
             builder.AppendLine(string.Format(SQL_SCHEMA, s, ""));
 
-            DataSet ds = new SqlCmd(dname.Provider, builder.ToString()).FillDataSet();
-            ds.DataSetName = dname.Name;
-            ds.Tables[0].TableName = dname.Name;
+            return builder.ToString();
+        }
+
+        public static DataSet SqlServerSchema(ServerName sname, IEnumerable<DatabaseName> dnames)
+        {
+            StringBuilder builder = new StringBuilder();
+            foreach (DatabaseName dname in dnames)
+            {
+                builder.AppendLine(SqlDatabaseSchema(dname));
+            }
+
+            DataSet ds = new SqlCmd(sname.Provider, builder.ToString()).FillDataSet();
+            ds.DataSetName = sname.Path;
+            int i = 0;
+            foreach (DatabaseName dname in dnames)
+            {
+                ds.Tables[i++].TableName = dname.Name;
+            }
+
             return ds;
         }
 

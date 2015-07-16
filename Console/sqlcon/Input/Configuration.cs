@@ -153,16 +153,8 @@ namespace sqlcon
 
                 string serverName = pair[0].Str;
                 string connectionString = PeelOleDb(pair[1].Str);
-                if (connectionString.ToLower().IndexOf("provider=xmlfile") >= 0)
-                {
-                    ConnectionProvider provider = ConnectionProviderManager.Register(serverName, ConnectionProviderType.XmlFile, connectionString);
-                    pvds.Add(provider);
-                }
-                else
-                {
-                    ConnectionProvider provider = ConnectionProviderManager.Register(serverName, new SqlConnectionStringBuilder(connectionString));
-                    pvds.Add(provider);
-                }
+                ConnectionProvider provider = ConnectionProviderManager.Register(serverName, connectionString);
+                pvds.Add(provider);
             }
              
             return pvds;

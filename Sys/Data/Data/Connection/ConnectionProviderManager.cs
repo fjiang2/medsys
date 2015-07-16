@@ -207,6 +207,17 @@ namespace Sys.Data
             return Register(name, ConnectionProviderType.OleDbServer, builder.ConnectionString);
         }
 
+        public static ConnectionProvider Register(string serverName, string connectionString)
+        {
+            if (connectionString.ToLower().IndexOf("provider=xmlfile") >= 0)
+            {
+                return ConnectionProviderManager.Register(serverName, ConnectionProviderType.XmlFile, connectionString);
+            }
+            else
+            {
+                return ConnectionProviderManager.Register(serverName, new SqlConnectionStringBuilder(connectionString));
+            }
+        }
 
         public static ConnectionProvider CloneConnectionProvider(ConnectionProvider provider, string serverName, string databaseName)
         {

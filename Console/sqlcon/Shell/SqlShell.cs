@@ -387,24 +387,6 @@ namespace sqlcon
                 case "export":
                     return ExportSqlScript(cmd);
 
-                case "schema":
-                    DatabaseName dname = mgr.GetCurrentPath<DatabaseName>();
-                    if (dname != null)
-                    {
-                        stdio.WriteLine("start to generate database {0} schema to file: {1}", dname, cfg.SchemaFile);
-                        using (var writer = cfg.SchemaFile.NewStreamWriter())
-                        {
-                            DataSet ds = dname.DatabaseSchema();
-                            ds.WriteXml(writer, XmlWriteMode.WriteSchema);
-                        }
-                        stdio.WriteLine("completed");
-                    }
-                    else
-                    {
-                        stdio.ShowError("warning: database is not available");
-                    }
-                    return true; ;
-
                 default:
                     break;
             }
@@ -419,69 +401,103 @@ namespace sqlcon
             DatabaseName dname = mgr.GetCurrentPath<DatabaseName>();
 
 
-            if (cmd.arg1 == "insert")
+            switch (cmd.arg1)
             {
-                var node = mgr.GetCurrentNode<Locator>();
-                if (tname == null)
-                {
-                    stdio.ShowError("warning: table is not available");
-                    return true;
-                }
-
-                int count;
-
-                using (var writer = fileName.NewStreamWriter())
-                {
-                    if (node != null)
+                case "insert":
+                    var node = mgr.GetCurrentNode<Locator>();
+                    if (tname == null)
                     {
-                        stdio.WriteLine("start to generate {0} INSERT script to file: {1}", tname, fileName);
-                        Locator locator = mgr.GetCombinedLocator(node);
-                        count = theSide.GenerateRows(writer, tname, locator);
-                        stdio.WriteLine("insert clauses (SELECT * FROM {0} WHERE {1}) generated to {2}", tname, locator, fileName);
+                        stdio.ShowError("warning: table is not available");
+                        return true;
+                    }
+
+                    int count;
+
+                    using (var writer = fileName.NewStreamWriter())
+                    {
+                        if (node != null)
+                        {
+                            stdio.WriteLine("start to generate {0} INSERT script to file: {1}", tname, fileName);
+                            Locator locator = mgr.GetCombinedLocator(node);
+                            count = theSide.GenerateRows(writer, tname, locator);
+                            stdio.WriteLine("insert clauses (SELECT * FROM {0} WHERE {1}) generated to {2}", tname, locator, fileName);
+                        }
+                        else
+                        {
+                            count = theSide.GenerateRows(writer, tname, null);
+                            stdio.WriteLine("insert clauses (SELECT * FROM {0}) generated to {1}", tname, fileName);
+                        }
+                    }
+
+                    return true;
+
+                case "create":
+                    if (tname != null)
+                    {
+                        stdio.WriteLine("start to generate {0} CREATE TABLE script to file: {1}", tname, fileName);
+                        using (var writer = fileName.NewStreamWriter())
+                        {
+                            writer.WriteLine(tname.GenerateScript());
+                        }
+                        stdio.WriteLine("completed");
                     }
                     else
                     {
-                        count = theSide.GenerateRows(writer, tname, null);
-                        stdio.WriteLine("insert clauses (SELECT * FROM {0}) generated to {1}", tname, fileName);
+                        stdio.ShowError("warning: select table first");
                     }
-                }
-            }
-            else if (cmd.arg1 == "create")
-            {
-                if (tname != null)
-                {
-                    stdio.WriteLine("start to generate {0} CREATE TABLE script to file: {1}", tname, fileName);
-                    using (var writer = fileName.NewStreamWriter())
+                    return true;
+
+                case "database":
+                    if (dname != null)
                     {
-                        writer.WriteLine(tname.GenerateScript());
+                        stdio.WriteLine("start to generate {0} script to file: {1}", dname, fileName);
+                        using (var writer = fileName.NewStreamWriter())
+                        {
+                            writer.WriteLine(dname.GenerateScript());
+                        }
+                        stdio.WriteLine("completed");
                     }
-                    stdio.WriteLine("completed");
-                }
-                else
-                {
-                    stdio.ShowError("warning: select table first");
-                }
-            }
-            else if (cmd.arg1 == "database")
-            {
-                if (dname != null)
-                {
-                    stdio.WriteLine("start to generate {0} script to file: {1}", dname, fileName);
-                    using (var writer = fileName.NewStreamWriter())
+                    else
                     {
-                        writer.WriteLine(dname.GenerateScript());
+                        stdio.ShowError("warning: select table first");
                     }
-                    stdio.WriteLine("completed");
-                }
-                else
-                {
-                    stdio.ShowError("warning: select table first");
-                }
+                    return true;
+
+                case "schema":
+                    if (dname != null)
+                    {
+                        stdio.WriteLine("start to generate database {0} schema to file: {1}", dname, cfg.SchemaFile);
+                        using (var writer = cfg.SchemaFile.NewStreamWriter())
+                        {
+                            DataTable dt = dname.DatabaseSchema();
+                            dt.WriteXml(writer, XmlWriteMode.WriteSchema);
+                        }
+                        stdio.WriteLine("completed");
+                    }
+                    else
+                    {
+                        ServerName sname = mgr.GetCurrentPath<ServerName>();
+                        if (sname != null)
+                        {
+                            stdio.WriteLine("start to generate database {0} schema to file: {1}", dname, cfg.SchemaFile);
+                            using (var writer = cfg.SchemaFile.NewStreamWriter())
+                            {
+                                DataSet ds = sname.ServerSchema();
+                                ds.WriteXml(writer, XmlWriteMode.WriteSchema);
+                            }
+                            stdio.WriteLine("completed");
+                        }
+                        else
+                            stdio.ShowError("warning: database is not available");
+                    }
+
+                    return true;
+
+                default:
+                    stdio.ShowError("warning: correct format: export [insert|create|database|schema]");
+                    break;
             }
-            else
-            {
-                stdio.ShowError("warning: correct format: export [insert|create|database]");
-            }
+
             return true;
         }
 
@@ -752,6 +768,7 @@ namespace sqlcon
             stdio.WriteLine("export insert           : export INSERT INTO script");
             stdio.WriteLine("export create           : export CREATE TABLE script");
             stdio.WriteLine("export database         : export CREATE TABLE script for all tables");
+            stdio.WriteLine("export schema           : export database schema xml file");
             stdio.WriteLine();
             stdio.WriteLine("type [;] to execute following SQL script or functions");
             stdio.WriteLine("<SQL>");

@@ -46,9 +46,14 @@ namespace Sys.Data
             return tableName.Provider.Schema.GetTableSchema(tableName);
         }
 
-        public static DataSet DatabaseSchema(this DatabaseName databaseName)
+        public static DataTable DatabaseSchema(this DatabaseName databaseName)
         {
             return databaseName.Provider.Schema.GetDatabaseSchema(databaseName);
+        }
+
+        public static DataSet ServerSchema(this ServerName serverName)
+        {
+            return serverName.Provider.Schema.GetServerSchema(serverName);
         }
 
         public static string CurrentDatabaseName(this ConnectionProvider provider)

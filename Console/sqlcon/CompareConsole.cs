@@ -322,8 +322,8 @@ namespace sqlcon
                     stdio.WriteLine("start to generate database schema to file: {0}", cfg.SchemaFile);
                     using (var writer = cfg.SchemaFile.NewStreamWriter())
                     {
-                        DataSet ds = adapter.Side1.DatabaseName.DatabaseSchema();
-                        ds.WriteXml(writer, XmlWriteMode.WriteSchema);
+                        DataTable dt = adapter.Side1.DatabaseName.DatabaseSchema();
+                        dt.WriteXml(writer, XmlWriteMode.WriteSchema);
                     }
                     stdio.WriteLine("completed");
                     break;
