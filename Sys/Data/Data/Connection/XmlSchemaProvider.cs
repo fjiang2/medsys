@@ -65,7 +65,14 @@ namespace Sys.Data
 
         public override DataTable GetDependencySchema(DatabaseName dname)
         {
-            throw new NotImplementedException();
+            DataTable dt = new DataTable();
+            dt.Columns.Add(new DataColumn("FK_SCHEMA", typeof(string)));
+            dt.Columns.Add(new DataColumn("FK_Table", typeof(string)));
+            dt.Columns.Add(new DataColumn("PK_SCHEMA", typeof(string)));
+            dt.Columns.Add(new DataColumn("PK_Table", typeof(string)));
+
+            dt.AcceptChanges();
+            return dt;
         }
     }
 }

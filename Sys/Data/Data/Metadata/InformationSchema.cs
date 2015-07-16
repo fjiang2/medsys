@@ -123,7 +123,7 @@ ORDER BY t.name, c.column_id
                     dt.Columns.Add(new DataColumn(column.ColumnName, column.DataType));
             }
 
-            var rows = schema.AsEnumerable().Where(row => row.Field<string>("SchemaName") == tableName.SchemaName && row.Field<string>("TableName") == tableName.Name);
+            var rows = schema.AsEnumerable().Where(row => row.Field<string>("SchemaName") == tableName.SchemaName && row.Field<string>("TableName").ToLower() == tableName.Name.ToLower());
             foreach (var row in rows)
             {
                 DataRow newRow = dt.NewRow();

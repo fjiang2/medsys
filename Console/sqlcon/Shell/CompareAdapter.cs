@@ -137,28 +137,28 @@ namespace sqlcon
             stdio.WriteLine("compare table schema {0} => {1}", tname1.ShortName, tname2.ShortName);
             string sql = Compare.TableSchemaDifference(tname1, tname2);
 
-            if (sql == string.Empty)
-            {
-                stdio.WriteLine("compare table data {0} => {1}", tname1.ShortName, tname2.ShortName);
-                bool hasPk = schema1.PrimaryKeys.Length > 0;
-                sql = Compare.TableDifference(schema1, schema2, schema1.PrimaryKeys.Keys);
+            //if (sql == string.Empty)
+            //{
+            //    stdio.WriteLine("compare table data {0} => {1}", tname1.ShortName, tname2.ShortName);
+            //    bool hasPk = schema1.PrimaryKeys.Length > 0;
+            //    sql = Compare.TableDifference(schema1, schema2, schema1.PrimaryKeys.Keys);
 
-                if (!hasPk)
-                {
-                    stdio.WriteLine("warning: no primary key found : {0}", tname1);
+            //    if (!hasPk)
+            //    {
+            //        stdio.WriteLine("warning: no primary key found : {0}", tname1);
 
-                    string key = tname1.Name.ToUpper();
-                    if (pk.ContainsKey(key))
-                    {
-                        stdio.WriteLine("use predefine keys defined in ini file: {0}", tname1);
-                        sql = Compare.TableDifference(schema1, schema2, pk[key]);
-                    }
-                }
+            //        string key = tname1.Name.ToUpper();
+            //        if (pk.ContainsKey(key))
+            //        {
+            //            stdio.WriteLine("use predefine keys defined in ini file: {0}", tname1);
+            //            sql = Compare.TableDifference(schema1, schema2, pk[key]);
+            //        }
+            //    }
 
-                if (sql != string.Empty)
-                    stdio.WriteLine(sql);
-            }
-            else
+            //    if (sql != string.Empty)
+            //        stdio.WriteLine(sql);
+            //}
+            //else
                 stdio.WriteLine(sql);
 
             return sql;
