@@ -809,7 +809,7 @@ namespace Sys.Data
         /// <returns></returns>
         public bool CreateTable()
         {
-            if (DatabaseSchema.Exists(this.TableName))
+            if (this.TableName.Exists())
                 return false;
 
             string SQL = string.Format("USE [{0}];", TableName.DatabaseName.Name) + string.Format(this.CreateTableString, TableName.FormalName);

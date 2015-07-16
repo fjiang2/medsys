@@ -41,68 +41,7 @@ namespace Sys.Data.Comparison
         }
 
 
-        public static string DatabaseSchemaDifference(string xmlSchema1, string xmlSchema2)
-        {
-            ConnectionProvider pvd = ConnectionProviderManager.DefaultProvider;
-            DataTable dbSchema1;
-            DataTable dbSchema2; 
-            DataSet ds2 = new DataSet();
-            using (var reader = new System.IO.StreamReader(xmlSchema1))
-            {
-                DataSet ds = new DataSet();
-                ds.ReadXml(reader);
-                dbSchema1 = ds.Tables[0];
-            }
-
-            using (var reader = new System.IO.StreamReader(xmlSchema2))
-            {
-                DataSet ds = new DataSet();
-                ds.ReadXml(reader);
-                dbSchema2 = ds.Tables[0];
-            }
-
-         
-            DatabaseName dname1 = new DatabaseName(pvd, "left");
-            DatabaseName dname2 = new DatabaseName(pvd, "right");
-
-            TableName[] tnames1 = InformationSchema.TableNameRange(dname1, dbSchema1);
-            TableName[] tnames2 = InformationSchema.TableNameRange(dname2, dbSchema2);
-
-            StringBuilder builder = new StringBuilder();
-            foreach (TableName tname1 in tnames1)
-            {
-#if DEBUG
-                Console.WriteLine(tname1.ShortName);
-#endif
-                try
-                {
-                    string sql = string.Empty;
-                    TableName tname2 = tnames2.FirstOrDefault(row => row.SchemaName == tname1.SchemaName && row.Name == tname1.Name);
-                    if (tname2!=null)
-                    {
-                        TableSchemaCompare compare = new TableSchemaCompare(tname1, tname2);
-                        sql = compare.Compare(dbSchema1, dbSchema2);
-                    }
-                    else
-                    {
-                        sql = tname1.GenerateScript(dbSchema1);
-                    }
-
-                    builder.Append(sql);
-#if DEBUG
-                    if (sql != string.Empty)
-                        Console.WriteLine(sql);
-#endif
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("error:" + ex.Message);
-                }
-            }
-
-            return builder.ToString();
-        }
-
+       
         public static string DatabaseDifference(DatabaseName dname1, DatabaseName dname2, string[] excludedTables)
         {
             TableName[] names = dname1.GetDependencyTableNames();
@@ -131,7 +70,7 @@ namespace Sys.Data.Comparison
                     continue;
                 }
 
-                if (DatabaseSchema.Exists(tname2))
+                if (tname2.Exists())
                 {
                     builder.Append(TableDifference(schema1, schema2, schema1.PrimaryKeys.Keys));
                 }
@@ -156,10 +95,10 @@ namespace Sys.Data.Comparison
 
             string sql;
 
-            if (DatabaseSchema.Exists(tableName2))
+            if (tableName2.Exists())
             {
                 TableSchemaCompare compare = new TableSchemaCompare(tableName1, tableName2);
-                sql = compare.Compare(null, null);
+                sql = compare.Compare();
             }
             else
             {

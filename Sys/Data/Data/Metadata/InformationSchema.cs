@@ -7,7 +7,7 @@ using System.Data;
 
 namespace Sys.Data
 {
-    public static class InformationSchema
+    static class InformationSchema
     {
 
         private static string SQL_SCHEMA = @"
@@ -59,7 +59,7 @@ SELECT
 ORDER BY t.name, c.column_id
 ";
 
-        public static DataTable TableSchema(this TableName tableName)
+        public static DataTable SqlTableSchema(TableName tableName)
         {
             DataTable dt1;
             string SQL = string.Format(SQL_SCHEMA, "", "WHERE t.name='{0}'");
@@ -69,8 +69,6 @@ ORDER BY t.name, c.column_id
         }
 
       
-
-
         private static DataTable Use(this TableName tableName, string script)
         {
             StringBuilder builder = new StringBuilder();
@@ -87,7 +85,7 @@ ORDER BY t.name, c.column_id
         }
 
 
-        public static DataSet DatabaseSchema(this DatabaseName dname)
+        public static DataSet SqlDatabaseSchema(this DatabaseName dname)
         {
             StringBuilder builder = new StringBuilder();
             string s = @"SCHEMA_NAME(t.schema_id) AS SchemaName,t.name AS TableName,";
@@ -100,7 +98,7 @@ ORDER BY t.name, c.column_id
             return ds;
         }
 
-        public static DataTable TableSchema(this TableName tableName, DataTable schema)
+        public static DataTable XmlTableSchema(TableName tableName, DataTable schema)
         {
             DataTable dt = new DataTable();
             foreach (DataColumn column in schema.Columns)
@@ -126,7 +124,7 @@ ORDER BY t.name, c.column_id
         }
 
 
-        public static TableName[] TableNameRange(this DatabaseName databaseName, DataTable schema)
+        public static TableName[] XmlTableNames(this DatabaseName databaseName, DataTable schema)
         {
             var rows = schema.AsEnumerable()
                 .Select(row=> new { schema =  row.Field<string>("SchemaName"), name = row.Field<string>("TableName")})

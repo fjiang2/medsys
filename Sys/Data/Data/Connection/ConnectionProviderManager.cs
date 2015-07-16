@@ -207,6 +207,7 @@ namespace Sys.Data
             return Register(name, ConnectionProviderType.OleDbServer, builder.ConnectionString);
         }
 
+
         public static ConnectionProvider CloneConnectionProvider(ConnectionProvider provider, string serverName, string databaseName)
         {
             provider.InitialCatalog = databaseName;

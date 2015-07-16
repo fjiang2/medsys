@@ -29,6 +29,9 @@ namespace Sys.Data
     {
         internal const int DEFAULT_HANDLE = 0;
         internal const int USER_HANDLE_BASE = DEFAULT_HANDLE + 1000;
+        
+        private DbConnectionStringBuilder ConnectionBuilder;
+
 
         internal ConnectionProvider(int handle, string name, ConnectionProviderType type, string connectionString)
         {
@@ -44,28 +47,35 @@ namespace Sys.Data
 
         internal int Handle { get; private set;}
         internal ConnectionProviderType Type { get; private set; }
-        
-        internal string ConnectionString 
-        { 
+
+        internal string ConnectionString
+        {
             get { return this.ConnectionBuilder.ConnectionString; }
         }
 
-        internal DbConnectionStringBuilder ConnectionBuilder { get; private set; }
 
         private void SetDbConnectionString(string connectionString)
         {
             if (Type == ConnectionProviderType.SqlServer)
                 this.ConnectionBuilder = new SqlConnectionStringBuilder(connectionString);
-            else
+            else if (Type == ConnectionProviderType.OleDbServer)
                 this.ConnectionBuilder = new OleDbConnectionStringBuilder(connectionString);
+            else
+            {
+                this.ConnectionBuilder = new DbConnectionStringBuilder();
+                this.ConnectionBuilder.ConnectionString = connectionString;
+            }
         }
 
         public bool CheckConnection()
         {
-            return !InvalidSqlClause("SELECT COUNT(name) FROM sys.tables");
+            if (Type != ConnectionProviderType.XmlFile)
+                return !InvalidSqlClause("SELECT COUNT(name) FROM sys.tables");
+            else
+                return System.IO.File.Exists(DataSource);
         }
 
-        public bool InvalidSqlClause(string sql)
+        private bool InvalidSqlClause(string sql)
         {
             SqlConnection conn = new SqlConnection(ConnectionString);
             try
@@ -188,6 +198,9 @@ namespace Sys.Data
                     case ConnectionProviderType.SqlServerCe:
                         return DbProviderType.SqlCe;
 
+                    case ConnectionProviderType.XmlFile:
+                        return DbProviderType.DataSet;
+
                     default:
                         return DbProviderType.OleDb;
                 }
@@ -243,6 +256,28 @@ namespace Sys.Data
             }
         }
 
-    
+
+        private SchemaProvider schema = null;
+        public SchemaProvider Schema
+        {
+            get
+            {
+                if (schema == null)
+                {
+                    switch (Type)
+                    {
+                        case ConnectionProviderType.SqlServer:
+                            schema = new SqlSchemaProvider(this);
+                            break;
+
+                        case ConnectionProviderType.XmlFile:
+                            schema = new XmlSchemaProvider(this);
+                            break;
+                    }
+                }
+
+                return schema;
+            }
+        }
     }
 }

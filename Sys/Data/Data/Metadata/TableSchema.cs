@@ -31,17 +31,10 @@ namespace Sys.Data
     public class TableSchema : ITable
     {
         protected TableName tableName;
-        private DataTable dbSchema = null;
-
+        
         public TableSchema(TableName tname)
         {
             this.tableName = tname;
-        }
-
-        public TableSchema(TableName tname, DataTable dbSchema)
-        {
-            this.tableName = tname;
-            this.dbSchema = dbSchema;
         }
 
         public override string ToString()
@@ -52,10 +45,7 @@ namespace Sys.Data
         protected virtual void LoadSchema()
         {
             DataTable schema;
-            if (dbSchema == null)
-                schema = InformationSchema.TableSchema(tableName);
-            else
-                schema = InformationSchema.TableSchema(tableName, dbSchema);
+            schema = tableName.TableSchema();
 
             this._columns = new ColumnCollection(this);
 
@@ -150,7 +140,7 @@ namespace Sys.Data
         {
             get
             {
-                return DatabaseSchema.Exists(tableName);
+                return tableName.Exists();
             }
         }
 
@@ -177,10 +167,10 @@ namespace Sys.Data
 
     
 
-        internal static string GenerateCREATE_TABLE(ITable metaTable)
+        internal static string GenerateCREATE_TABLE(ITable table)
         {
-            string fields = string.Join(",\r\n", metaTable.Columns.Select(column => "\t" + Sys.Data.ColumnSchema.GetSQLField(column)));
-            return CREATE_TABLE(fields, metaTable.PrimaryKeys);
+            string fields = string.Join(",\r\n", table.Columns.Select(column => "\t" + Sys.Data.ColumnSchema.GetSQLField(column)));
+            return CREATE_TABLE(fields, table.PrimaryKeys);
 
         }
 

@@ -405,10 +405,6 @@ namespace sqlcon
                     }
                     return true; ;
 
-                case "cmp":
-                    Compare.DatabaseSchemaDifference("atms\\atms107.xml", "atms\\atms128.xml");
-                    return true;
-
                 default:
                     break;
             }

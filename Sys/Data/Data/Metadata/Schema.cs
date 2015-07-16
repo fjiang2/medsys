@@ -23,25 +23,12 @@ using Sys.Data.Comparison;
 
 namespace Sys.Data
 {
-    public static class DatabaseSchema
+    public static class Schema
     {
 
         public static bool Exists(this DatabaseName databaseName)
         {
-            try
-            {
-                switch (databaseName.Provider.DpType)
-                {
-                    case DbProviderType.SqlDb:
-                        return SqlCmd.FillDataRow(databaseName.Provider, "SELECT * FROM sys.databases WHERE name = '{0}'", databaseName.Name) != null;
-                    case DbProviderType.SqlCe:
-                        return true;
-                }
-            }
-            catch (Exception)
-            {
-            }
-            return false;
+            return databaseName.Provider.Schema.Exists(databaseName);
         }
 
         public static void CreateDatabase(this DatabaseName databaseName)
@@ -51,27 +38,18 @@ namespace Sys.Data
 
         public static bool Exists(this TableName tname)
         {
-            try
-            {
-                if (!Exists(tname.DatabaseName))
-                    return false;
-
-                switch (tname.Provider.DpType)
-                {
-                    case DbProviderType.SqlDb:
-                        return SqlCmd.FillDataRow(tname.Provider, "USE [{0}] ; SELECT * FROM sys.Tables WHERE Name='{1}'", tname.DatabaseName.Name, tname.Name) != null;
-
-                    case DbProviderType.SqlCe:
-                        return SqlCmd.FillDataRow(tname.Provider, "SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE='TABLE' AND TABLE_NAME='{0}'", tname.Name) != null;
-                }
-            }
-            catch (Exception)
-            {
-            }
-
-            return false;
+            return tname.Provider.Schema.Exists(tname);
         }
 
+        public static DataTable TableSchema(this TableName tableName)
+        {
+            return tableName.Provider.Schema.GetTableSchema(tableName);
+        }
+
+        public static DataSet DatabaseSchema(this DatabaseName databaseName)
+        {
+            return databaseName.Provider.Schema.GetDatabaseSchema(databaseName);
+        }
 
         public static string CurrentDatabaseName(this ConnectionProvider provider)
         {
@@ -93,69 +71,19 @@ namespace Sys.Data
         }
 
 
-        private static string[] __sys_tables = { "master", "model", "msdb", "tempdb" };
         public static DatabaseName[] GetDatabaseNames(this ServerName serverName)
         {
-            string[] dnames;
-            switch (serverName.Provider.DpType)
-            {
-                case DbProviderType.SqlDb:
-                    dnames = SqlCmd.FillDataTable(serverName.Provider, "SELECT Name FROM sys.databases ORDER BY Name").ToArray<string>("name");
-                    List<string> L = new List<string>();
-                    foreach (var dname in dnames)
-                    {
-                        if (!__sys_tables.Contains(dname))
-                            L.Add(dname);
-                    }
-
-                    dnames = L.ToArray();
-                    break;
-
-                case DbProviderType.SqlCe:
-                    dnames = new string[] { "Database" };
-                    break;
-
-                default:
-                    throw new NotSupportedException();
-            }
-
-            return dnames.Select(dname => new DatabaseName(serverName.Provider, dname)).ToArray();
+            return serverName.Provider.Schema.GetDatabaseNames();
         }
 
         public static TableName[] GetTableNames(this DatabaseName databaseName)
         {
-            switch (databaseName.Provider.DpType)
-            {
-                case DbProviderType.OleDb:
-                case DbProviderType.SqlDb:
-                    var table = SqlCmd.FillDataTable(databaseName.Provider,
-                        "USE [{0}] ; SELECT SCHEMA_NAME(schema_id) AS SchemaName, name as TableName FROM sys.Tables ORDER BY SchemaName,Name",
-                            databaseName.Name);
-                    if (table != null)
-                    {
-                        return table
-                            .AsEnumerable()
-                            .Select(row => new TableName(databaseName, row.Field<string>("SchemaName"), row.Field<string>("TableName")))
-                            .ToArray();
-                    }
-                    else
-                        return null;
-
-                default:
-                    return new TableName[0];
-            }
-
+            return databaseName.Provider.Schema.GetTableNames(databaseName);
         }
 
         public static TableName[] GetViewNames(this DatabaseName databaseName)
         {
-            return SqlCmd
-                .FillDataTable(databaseName.Provider,
-                    "USE [{0}] ; SELECT  SCHEMA_NAME(schema_id) SchemaName, name FROM sys.views ORDER BY name",
-                    databaseName.Name)
-                    .AsEnumerable()
-                    .Select(row => new TableName(databaseName, row.Field<string>(0), row.Field<string>(1)) { IsViewName = true })
-                    .ToArray();
+            return databaseName.Provider.Schema.GetViewNames(databaseName);
         }
 
         public static string GenerateScript(this DatabaseName databaseName)
@@ -166,9 +94,9 @@ namespace Sys.Data
             return builder.ToString();
         }
 
-        public static string GenerateScript(this TableName tableName, DataTable dbSchema = null)
+        public static string GenerateScript(this TableName tableName)
         {
-            TableSchema schema1 = new TableSchema(tableName, dbSchema);
+            TableSchema schema1 = new TableSchema(tableName);
 
             string sql;
             var script = new TableScript(schema1);
@@ -231,27 +159,8 @@ IF OBJECT_ID('{0}') IS NOT NULL
 
         public static TableName[] GetDependencyTableNames(this DatabaseName databaseName)
         {
-            string sql = @"
-SELECT  
-		FK.TABLE_SCHEMA AS FK_SCHEMA,
-		FK.TABLE_NAME AS FK_Table,
-		PK.TABLE_SCHEMA AS FK_SCHEMA,
-        PK.TABLE_NAME AS PK_Table
-  FROM  INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS C
-        INNER JOIN INFORMATION_SCHEMA.TABLE_CONSTRAINTS FK ON C.CONSTRAINT_NAME = FK.CONSTRAINT_NAME
-        INNER JOIN INFORMATION_SCHEMA.TABLE_CONSTRAINTS PK ON C.UNIQUE_CONSTRAINT_NAME = PK.CONSTRAINT_NAME
-        INNER JOIN INFORMATION_SCHEMA.KEY_COLUMN_USAGE CU ON C.CONSTRAINT_NAME = CU.CONSTRAINT_NAME
-        INNER JOIN ( SELECT i1.TABLE_NAME ,
-                            i2.COLUMN_NAME
-                     FROM   INFORMATION_SCHEMA.TABLE_CONSTRAINTS i1
-                            INNER JOIN INFORMATION_SCHEMA.KEY_COLUMN_USAGE i2 ON i1.CONSTRAINT_NAME = i2.CONSTRAINT_NAME
-                     WHERE  i1.CONSTRAINT_TYPE = 'PRIMARY KEY'
-                   ) PT ON PT.TABLE_NAME = PK.TABLE_NAME
- WHERE FK.TABLE_NAME <> PK.TABLE_NAME
-";
-
-            var dt = new SqlCmd(databaseName.Provider, sql)
-                .FillDataTable()
+            var dt = databaseName.Provider
+                .Schema.GetDependencySchema(databaseName)                
                 .AsEnumerable();
 
             var dict = dt.GroupBy(

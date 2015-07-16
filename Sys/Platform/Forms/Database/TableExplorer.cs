@@ -161,7 +161,7 @@ namespace Sys.Platform.Forms
                 {
                     TableNode tableNode = (TableNode)node;
                     TableName tname = tableNode.TableName;
-                    DataTable table = InformationSchema.TableSchema(tname);
+                    DataTable table = tname.TableSchema();
                     AddTabPage(tname, table, true);
                     return;
                 }

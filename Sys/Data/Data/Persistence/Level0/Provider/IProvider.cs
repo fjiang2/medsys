@@ -28,7 +28,8 @@ namespace Sys.Data
     {
         OleDb,
         SqlDb,
-        SqlCe
+        SqlCe,
+        DataSet
     }
 
 

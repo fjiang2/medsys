@@ -21,17 +21,70 @@ using System.Text;
 
 namespace Sys.Data
 {
-    public enum ConnectionProviderType
+    public class DatabaseName : IComparable<DatabaseName>, IComparable, IDataPath
     {
-        SqlServer = 1,
-        OleDbServer = 2,
-        SqlServerCe = 3,
-        MySQL = 4,
-        Oracle = 5,
-        Access = 6,
-        Excel = 7,
-        Excel2007 = 8,
-        Excel2010 = 9
-    }
+        private ConnectionProvider provider;
+        private string name;
 
+        public DatabaseName(ConnectionProvider provider, string databaseName)
+        {
+            this.provider = provider;
+            this.name = databaseName;
+        }
+
+        public string Name
+        {
+            get { return this.name; }
+        }
+
+        public string Path
+        {
+            get { return this.name; }
+        }
+        
+        public ServerName ServerName
+        {
+            get { return Provider.ServerName; }
+        }
+
+        public ConnectionProvider Provider
+        {
+            get
+            {
+                this.provider.InitialCatalog = name;
+                return this.provider; 
+            }
+        }
+
+        public int CompareTo(object obj)
+        {
+            return CompareTo((DatabaseName)obj);
+        }
+
+        public int CompareTo(DatabaseName n)
+        {
+            if (this.ServerName.CompareTo(n.ServerName) == 0)
+               return this.name.CompareTo(n.name);
+
+            return this.ServerName.CompareTo(n.ServerName);
+        }
+
+
+        public override int GetHashCode()
+        {
+            return name.GetHashCode() + this.ServerName.GetHashCode() * 324819;
+        }
+
+        public override bool Equals(object obj)
+        {
+            DatabaseName dname = (DatabaseName)obj;
+            return this.name.Equals(dname.name) && this.ServerName.Equals(dname.ServerName);
+        }
+
+
+        public override string ToString()
+        {
+            return string.Format("{0}\\{1}", this.ServerName, this.name);
+        }
+    }
 }

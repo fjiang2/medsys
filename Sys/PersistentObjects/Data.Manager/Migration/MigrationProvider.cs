@@ -32,7 +32,7 @@ namespace Sys.Data.Manager
         
         public bool TableExists(TableName table)
         {
-            return DatabaseSchema.Exists(table);
+            return table.Exists();
         }
 
         public void AddPrimaryKey(string name, TableName table, params string[] columns)

@@ -17,10 +17,10 @@ namespace Sys.Data.Comparison
             tableName2 = name2;
         }
 
-        public string Compare(DataTable dbSchema1, DataTable dbSchema2)
+        public string Compare()
         {
-            TableSchema schema1 = new TableSchema(tableName1, dbSchema1);
-            TableSchema schema2 = new TableSchema(tableName2, dbSchema2);
+            TableSchema schema1 = new TableSchema(tableName1);
+            TableSchema schema2 = new TableSchema(tableName2);
 
             StringBuilder builder = new StringBuilder();
             TableScript script = new TableScript(schema1);
