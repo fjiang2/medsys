@@ -86,7 +86,7 @@ namespace sqlcon
                         stdio.WriteLine("skip to compare data on table {0}", N2[i]);
                     }
 
-                    builder.Append(CompareTable(N1[i], N2[i], pk));
+                    builder.Append(CompareTable(CompareType, N1[i], N2[i], pk));
                 }
             }
             else if (CompareType == ActionType.CompareSchema)
@@ -126,7 +126,7 @@ namespace sqlcon
             return Compare.DatabaseDifference(db1, db2, excludedtables);
         }
 
-        private string CompareTable(TableName tname1, TableName tname2, Dictionary<string, string[]> pk)
+        private string CompareTable(ActionType type, TableName tname1, TableName tname2, Dictionary<string, string[]> pk)
         {
             TableSchema schema1 = new TableSchema(tname1);
             TableSchema schema2 = new TableSchema(tname2);
@@ -134,31 +134,37 @@ namespace sqlcon
             if (!Exists(tname1) || !Exists(tname2))
                 return string.Empty;
 
-            stdio.WriteLine("compare table schema {0} => {1}", tname1.ShortName, tname2.ShortName);
-            string sql = Compare.TableSchemaDifference(tname1, tname2);
+            string sql = string.Empty;
 
-            //if (sql == string.Empty)
-            //{
-            //    stdio.WriteLine("compare table data {0} => {1}", tname1.ShortName, tname2.ShortName);
-            //    bool hasPk = schema1.PrimaryKeys.Length > 0;
-            //    sql = Compare.TableDifference(schema1, schema2, schema1.PrimaryKeys.Keys);
+            if (type == ActionType.CompareSchema)
+            {
+                stdio.WriteLine("compare table schema {0} => {1}", tname1.ShortName, tname2.ShortName);
+                sql = Compare.TableSchemaDifference(tname1, tname2);
+            }
 
-            //    if (!hasPk)
-            //    {
-            //        stdio.WriteLine("warning: no primary key found : {0}", tname1);
+            if (type == ActionType.CompareData)
+            {
+                stdio.WriteLine("compare table data {0} => {1}", tname1.ShortName, tname2.ShortName);
+                bool hasPk = schema1.PrimaryKeys.Length > 0;
+                sql = Compare.TableDifference(schema1, schema2, schema1.PrimaryKeys.Keys);
 
-            //        string key = tname1.Name.ToUpper();
-            //        if (pk.ContainsKey(key))
-            //        {
-            //            stdio.WriteLine("use predefine keys defined in ini file: {0}", tname1);
-            //            sql = Compare.TableDifference(schema1, schema2, pk[key]);
-            //        }
-            //    }
+                if (!hasPk)
+                {
+                    stdio.WriteLine("warning: no primary key found : {0}", tname1);
 
-            //    if (sql != string.Empty)
-            //        stdio.WriteLine(sql);
-            //}
-            //else
+                    string key = tname1.Name.ToUpper();
+                    if (pk.ContainsKey(key))
+                    {
+                        stdio.WriteLine("use predefine keys defined in ini file: {0}", tname1);
+                        sql = Compare.TableDifference(schema1, schema2, pk[key]);
+                    }
+                }
+
+                if (sql != string.Empty)
+                    stdio.WriteLine(sql);
+            }
+
+            if (sql != string.Empty)
                 stdio.WriteLine(sql);
 
             return sql;
