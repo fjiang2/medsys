@@ -70,24 +70,33 @@ namespace sqlcon
 
             if (N1 != null && N2 != null)
             {
-                if (N1.Length != N2.Length)
+                if (N1.Length == N2.Length)
+                {
+                    for (int i = 0; i < N1.Length; i++)
+                    {
+                        if (m1.Includes(N1[i]))
+                        {
+                            stdio.WriteLine("skip to compare data on table {0}", N1[i]);
+                        }
+                        else if (m2.Includes(N2[i]))
+                        {
+                            stdio.WriteLine("skip to compare data on table {0}", N2[i]);
+                        }
+
+                        builder.Append(CompareTable(CompareType, N1[i], N2[i], pk));
+                    }
+                }
+                else if (N1.Length > 0 && N2.Length == 0)
+                {
+                    foreach (var tname1 in N1)
+                         builder.Append(tname1.GenerateScript());
+                }
+                else
                 {
                     stdio.WriteLine("number of comparing table are different: {0}!={1}", N1.Length, N2.Length);
                     return string.Empty;
                 }
-                for(int i=0; i<N1.Length; i++)
-                {
-                    if (m1.Includes(N1[i]))
-                    {
-                        stdio.WriteLine("skip to compare data on table {0}", N1[i]);
-                    }
-                    else if (m2.Includes(N2[i]))
-                    {
-                        stdio.WriteLine("skip to compare data on table {0}", N2[i]);
-                    }
 
-                    builder.Append(CompareTable(CompareType, N1[i], N2[i], pk));
-                }
             }
             else if (CompareType == ActionType.CompareSchema)
             {
