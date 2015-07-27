@@ -27,7 +27,7 @@ namespace sqlcon
                 stdio.ShowError(message);
             };
 
-            string cfgFile = null;
+            string cfgFile = "user.cfg";
 
             int i = 0;
             while (i < args.Length)
