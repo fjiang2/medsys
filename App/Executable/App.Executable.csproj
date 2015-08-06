@@ -65,7 +65,7 @@
     <ApplicationIcon>Resources\kiwi.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>DE321A3EE1CCFF664B273E93AB44ED5231098C7C</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>B29228E3FA4D18DC744F27E050AA343982987C16</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestKeyFile>App.Executable_TemporaryKey.pfx</ManifestKeyFile>

@@ -69,25 +69,25 @@ namespace sqlcon
             return where;
         }
 
-        private static void _DisplayTable(DataTable table, bool vert)
+        private static void _DisplayTable(DataTable table, bool vert, bool more)
         {
             if (table == null)
                 return;
 
             if (vert)
-                table.ToVConsole();
+                table.ToVConsole(more);
             else
-                table.ToConsole();
+                table.ToConsole(more);
         }
 
 
-        private bool Display(Command cmd, SqlBuilder builder)
+        private bool Display(Command cmd, SqlBuilder builder, int top)
         {
             try
             {
                 DataTable table = builder.SqlCmd.FillDataTable();
                 rTable = new UniqueTable(tname, table);
-                _DisplayTable(rTable.Table, cmd.IsVertical);
+                _DisplayTable(rTable.Table, cmd.IsVertical, top>0 && table.Rows.Count == top);
             }
             catch (Exception ex)
             {
@@ -118,7 +118,7 @@ namespace sqlcon
             else
                 builder = new SqlBuilder().SELECT.TOP(top).ROWID(cmd.HasRowId).COLUMNS(columns).FROM(tname);
 
-            return Display(cmd, builder);
+            return Display(cmd, builder, top);
         }
 
       
@@ -140,7 +140,7 @@ namespace sqlcon
                 builder = new SqlBuilder().SELECT.COLUMNS(columns).FROM(tname).WHERE(where);
             }
 
-            return Display(cmd, builder);
+            return Display(cmd, builder, cmd.top);
         }
 
 

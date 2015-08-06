@@ -117,9 +117,8 @@ namespace sqlcon
         }
 
 
-        public static void ToConsole(this DataTable table)
+        public static void ToConsole(this DataTable table, bool more = false)
         {
-
             List<string> list = new List<string>();
             foreach (DataColumn column in table.Columns)
                 list.Add(column.ColumnName);
@@ -147,7 +146,8 @@ namespace sqlcon
             }
 
             D.DisplayLine();
-            stdio.WriteLine("<{0} row{1}>", table.Rows.Count, table.Rows.Count > 1 ? "s" : "");
+
+            stdio.WriteLine("<{0}{1} row{2}>", more ? "top " : "", table.Rows.Count,  table.Rows.Count > 1 ? "s" : "");
         }
 
 
@@ -209,7 +209,7 @@ namespace sqlcon
         }
 
 
-        public static void ToVConsole(this DataTable table)
+        public static void ToVConsole(this DataTable table, bool more = false)
         {
 
             List<string> list = new List<string>();
@@ -248,7 +248,7 @@ namespace sqlcon
             }
 
             D.DisplayLine();
-            stdio.WriteLine("<{0} row{1}>", table.Rows.Count, table.Rows.Count > 1 ? "s" : "");
+            stdio.WriteLine("<{0}{1} row{2}>", more ? "top " : "", table.Rows.Count, table.Rows.Count > 1 ? "s" : "");
         }
 
     }
