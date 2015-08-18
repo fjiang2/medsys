@@ -167,6 +167,13 @@ namespace sqlcon
                         stdio.WriteLine("use predefine keys defined in ini file: {0}", tname1);
                         sql = Compare.TableDifference(schema1, schema2, pk[key]);
                     }
+                    else
+                    {
+                        stdio.WriteLine("use entire row as primary keys:{0}", tname1);
+                        var keys = schema1.Columns.Select(row => row.ColumnName).ToArray();
+                        sql = Compare.TableDifference(schema1, schema2, keys);
+                    }
+
                 }
 
                 if (sql != string.Empty)

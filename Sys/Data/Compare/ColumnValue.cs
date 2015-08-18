@@ -23,7 +23,7 @@ namespace Sys.Data.Comparison
                 return "NULL";
             else if (Value is DateTime)
             {
-                var d = DELIMETER + ((DateTime)Value).ToShortDateString() + DELIMETER;
+                var d = DELIMETER + ((DateTime)Value).ToString("MM/dd/yyyy HH:mm:ss.fff") + DELIMETER;
                 return d;
                 //return string.Format("CAST(N'2012-01-01 00:00:00.000' AS DateTime)", d);
             }
