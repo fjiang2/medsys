@@ -54,7 +54,9 @@ namespace Sys.Data
                     if (upperLine.StartsWith("INSERT")
                         || upperLine.StartsWith("UPDATE")
                         || upperLine.StartsWith("DELETE")
-                        || upperLine.StartsWith("SELECT")
+                        || upperLine.StartsWith("CREATE")
+                        || upperLine.StartsWith("DROP")
+                        || upperLine.StartsWith("ALTER")
                         || upperLine.StartsWith("GO")
                         )
                     {
