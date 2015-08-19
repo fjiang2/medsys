@@ -91,11 +91,15 @@ namespace sqlcon
                 stdio.WriteLine("command dir or ls");
                 stdio.WriteLine("dir [path]             : display current directory");
                 stdio.WriteLine("options:   /def        : display table structure");
+                stdio.WriteLine("options:   /refresh    : refresh table structure");
                 return;
             }
 
             if (!Navigate(cmd))
                 return;
+
+            if (cmd.Refresh)
+                pt.Nodes.Clear();
 
             if (pt.Nodes.Count == 0)
                 mgr.Expand(pt, true);

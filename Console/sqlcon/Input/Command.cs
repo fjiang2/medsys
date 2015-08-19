@@ -24,6 +24,7 @@ namespace sqlcon
         public readonly bool HasPage;
         public readonly bool HasSearch;
         public readonly bool HasRowId;
+        public readonly bool Refresh;
 
         public readonly int top;
         private readonly string columns;
@@ -83,6 +84,10 @@ namespace sqlcon
 
                         case "/r":
                             HasRowId = true;
+                            break;
+
+                        case "/refresh":
+                            Refresh = true;
                             break;
 
                         case "/?":

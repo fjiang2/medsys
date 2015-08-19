@@ -54,23 +54,7 @@ namespace sqlcon
                 return;
             }
 
-            StringBuilder builder = new StringBuilder();
-            using (var reader = new StreamReader(scriptFile))
-            {
-                while (!reader.EndOfStream)
-                {
-                    string line = reader.ReadLine();
-
-                    if (line == "GO" || line=="go")
-                    {
-                        string sql = builder.ToString();
-                        new SqlCmd(this.Provider, sql).ExecuteNonQuery();
-                        builder.Clear();
-                    }
-                    else if (line != string.Empty)
-                        builder.AppendLine(line);
-                }
-            }
+            new SqlScript(this.Provider, scriptFile).Execute();
         }
 
         public void GenerateRowScript(StreamWriter writer, string tableNamePattern, string[] excludedtables)

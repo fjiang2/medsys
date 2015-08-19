@@ -84,7 +84,7 @@ namespace sqlcon
                     {
                         count++;
                         if (node.Nodes.Count == 0)
-                            ExpandDatabaseName(node, true);
+                            ExpandDatabaseName(node, cmd.Refresh);
 
                         stdio.WriteLine("{0,4} {1,26} <DB> {2,10} Tables/Views", sub(i), dname.Name, node.Nodes.Count);
                         h = PagePause(cmd, ++h);

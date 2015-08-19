@@ -94,13 +94,17 @@ namespace Sys.Data
 
         public override TableName[] GetViewNames(DatabaseName dname)
         {
-            return SqlCmd
+            var table = SqlCmd
                 .FillDataTable(dname.Provider,
                     "USE [{0}] ; SELECT  SCHEMA_NAME(schema_id) SchemaName, name FROM sys.views ORDER BY name",
-                    dname.Name)
-                    .AsEnumerable()
-                    .Select(row => new TableName(dname, row.Field<string>(0), row.Field<string>(1)) { IsViewName = true })
-                    .ToArray();
+                    dname.Name);
+
+            if (table != null)
+                return table.AsEnumerable()
+                .Select(row => new TableName(dname, row.Field<string>(0), row.Field<string>(1)) { IsViewName = true })
+                .ToArray();
+            else
+                return new TableName[] { };
         }
 
 

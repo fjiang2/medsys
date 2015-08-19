@@ -300,6 +300,29 @@ namespace sqlcon
                     }
                     return true;
 
+                case "execute":
+                    {
+                        string inputfile = cfg.InputFile;
+                        if (cmd.arg1 != null)
+                            inputfile = cmd.arg1;
+                        if (!File.Exists(inputfile))
+                        {
+                            stdio.ShowError("no input file found : {0}", inputfile);
+                            break;
+                        }
+
+                        var script = new SqlScript(theSide.Provider, inputfile);
+                        script.Reported += (sender, e) =>
+                        {
+                            stdio.WriteLine("processed: {0}>{1}", e.Value1, e.Value2);
+                        };
+
+                        script.Execute();
+                        stdio.WriteLine("completed");
+                    }
+
+                    return true;
+
                 case "open":
                     switch (cmd.arg1)
                     {
@@ -765,10 +788,11 @@ namespace sqlcon
             stdio.WriteLine("<open input>            : open input file");
             stdio.WriteLine("<open output>           : open output file");
             stdio.WriteLine("<open schema>           : open schema file");
-            stdio.WriteLine("export insert           : export INSERT INTO script");
-            stdio.WriteLine("export create           : export CREATE TABLE script");
-            stdio.WriteLine("export database         : export CREATE TABLE script for all tables");
-            stdio.WriteLine("export schema           : export database schema xml file");
+            stdio.WriteLine("<export insert>         : export INSERT INTO script");
+            stdio.WriteLine("<export create>         : export CREATE TABLE script");
+            stdio.WriteLine("<export database>       : export CREATE TABLE script for all tables");
+            stdio.WriteLine("<export schema>         : export database schema xml file");
+            stdio.WriteLine("<execute inputfile>     : execute sql script file");
             stdio.WriteLine();
             stdio.WriteLine("type [;] to execute following SQL script or functions");
             stdio.WriteLine("<SQL>");
