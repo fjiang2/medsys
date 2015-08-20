@@ -115,6 +115,7 @@ namespace sqlcon
                 stdio.WriteLine("set assignment                      : update value by current table or locator");
                 stdio.WriteLine("set col1=val1, col2= val2           : update column by current table or locator");
                 stdio.WriteLine("set col[n1]=val1, col[n2]=val2      : update by row-id, n1,n2 is row-id");
+                stdio.WriteLine("    --use command type /r to display row-id");
                 return;
             }
 
@@ -371,6 +372,7 @@ namespace sqlcon
                 stdio.WriteLine("   /top:n              : display top n records");
                 stdio.WriteLine("   /all                : display all records");
                 stdio.WriteLine("   /t                  : display table in vertical grid");
+                stdio.WriteLine("   /r                  : display row-id");
                 stdio.WriteLine("   /col:c1,c2,..       : display columns, or search on columns");
                 stdio.WriteLine("example:");
                 stdio.WriteLine("type match*s /col:c1,c2 : display rows matched on columns:c1 or c2");
