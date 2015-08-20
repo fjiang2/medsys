@@ -316,15 +316,12 @@ namespace sqlcon
                         {
                             stdio.WriteLine("processed: {0}>{1}", e.Value1, e.Value2);
                         };
+                        script.Error += (sender, e) =>
+                        {
+                            stdio.ShowError("line:{0}, {1}, SQL:{2}", e.Line, e.Exception.Message, e.Command);
+                        };
 
-                        try
-                        {
-                            script.Execute();
-                        }
-                        catch (Exception ex)
-                        {
-                            stdio.ShowError(ex.Message);
-                        }
+                        script.Execute();
                         stdio.WriteLine("completed");
                     }
 

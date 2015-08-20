@@ -11,11 +11,18 @@ namespace Sys.Data
     public class SqlExceptionEventArgs
     {
         public readonly Exception Exception;
-        public readonly DbCommand Command;
+        public readonly string Command;
+        public int Line { get; set; }
 
         public SqlExceptionEventArgs(DbCommand cmd, Exception ex)
         {
-            this.Command = cmd;
+            this.Command = cmd.CommandText;
+            this.Exception = ex;
+        }
+
+        public SqlExceptionEventArgs(string command, Exception ex)
+        {
+            this.Command = command;
             this.Exception = ex;
         }
     }

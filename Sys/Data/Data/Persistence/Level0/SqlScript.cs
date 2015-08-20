@@ -15,7 +15,7 @@ namespace Sys.Data
 
         public event EventHandler<EventArgs<int, string>> Reported;
         public event EventHandler<EventArgs> Completed;
-        public event EventHandler<EventArgs<string>> Err;
+        public event EventHandler<SqlExceptionEventArgs> Error;
 
         public SqlScript(ConnectionProvider provider, string scriptFile)
         {
@@ -38,14 +38,16 @@ namespace Sys.Data
                 Completed(this, e);
         }
 
-        protected void OnError(EventArgs<string> e)
+        protected void OnError(SqlExceptionEventArgs e)
         {
-            if (Err != null)
-                Err(this, e);
+            if (Error != null)
+                Error(this, e);
+            else
+                throw e.Exception;
         }
 
 
-       
+
 
         public void Execute()
         {
@@ -70,12 +72,8 @@ namespace Sys.Data
                         || upperLine.StartsWith("GO")
                         )
                     {
-                        string sql = builder.ToString();
-                        if (!string.IsNullOrEmpty(sql))
-                        {
-                            new SqlCmd(provider, sql).ExecuteNonQuery();
-                            OnReported(new EventArgs<int, string>(i, sql));
-                        }
+                        if (!ExecuteSql(i - 1, builder))
+                            return;
 
                         builder.Clear();
                         if (!upperLine.StartsWith("GO"))
@@ -88,14 +86,33 @@ namespace Sys.Data
                 }
             }
 
-            if (builder.Length != 0)
-            {
-                string sql = builder.ToString();
-                new SqlCmd(provider, sql).ExecuteNonQuery();
-                OnReported(new EventArgs<int, string>(i, sql));
-            }
+            if (!ExecuteSql(i - 1, builder))
+                return;
 
             OnCompleted(new EventArgs());
+        }
+
+        private bool ExecuteSql(int i, StringBuilder builder)
+        {
+            string sql = builder.ToString();
+
+            if (string.IsNullOrEmpty(sql))
+                return true;
+
+            try
+            {
+                var cmd =new SqlCmd(provider, sql);
+                //cmd.Error += (sender, e) => { OnError(e); };
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                OnError(new SqlExceptionEventArgs(sql, ex){ Line = i});
+                return false;
+            }
+
+            OnReported(new EventArgs<int, string>(i, sql));
+            return true;
         }
 
 
@@ -131,7 +148,7 @@ namespace Sys.Data
                 catch (Exception ex)
                 {
                     // Handle the exception if the transaction fails to commit.
-                    OnError(new EventArgs<string>(ex.Message));
+                    OnError(new SqlExceptionEventArgs(command, ex));
 
                     try
                     {
@@ -143,7 +160,7 @@ namespace Sys.Data
                         // Throws an InvalidOperationException if the connection 
                         // is closed or the transaction has already been rolled 
                         // back on the server.
-                        OnError(new EventArgs<string>(exRollback.Message));
+                        OnError(new SqlExceptionEventArgs(command, exRollback));
                     }
                 }
             }
