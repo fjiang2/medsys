@@ -63,10 +63,12 @@
     <Compile Include="DataStructure\Tree\Tree.cs" />
     <Compile Include="DataStructure\Tree\TreeNode.cs" />
     <Compile Include="DataStructure\Tree\TreeNodeCollection.cs" />
-    <Compile Include="EventArgs`1.cs" />
-    <Compile Include="EventArgs`2.cs" />
+    <Compile Include="EventArgs\EventArgs`1.cs" />
+    <Compile Include="EventArgs\EventArgs`2.cs" />
     <Compile Include="Extension\DateTimeExtension.cs" />
     <Compile Include="Extension\EnumExtension.cs" />
+    <Compile Include="EventArgs\MessageExceptionEventArgs.cs" />
+    <Compile Include="EventArgs\MessageEventArgs.cs" />
     <Compile Include="Message\MessageException.cs" />
     <Compile Include="Message\Message.cs" />
     <Compile Include="Message\MessageBuilder.cs" />
