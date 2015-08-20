@@ -317,7 +317,14 @@ namespace sqlcon
                             stdio.WriteLine("processed: {0}>{1}", e.Value1, e.Value2);
                         };
 
-                        script.Execute();
+                        try
+                        {
+                            script.Execute();
+                        }
+                        catch (Exception ex)
+                        {
+                            stdio.ShowError(ex.Message);
+                        }
                         stdio.WriteLine("completed");
                     }
 
@@ -586,7 +593,14 @@ namespace sqlcon
                 case "create":
                 case "alter":
                 case "drop":
-                    stdio.WriteLine("{0} of row(s) affected", new SqlCmd(theSide.Provider, text).ExecuteNonQuery());
+                    try
+                    {
+                        stdio.WriteLine("{0} of row(s) affected", new SqlCmd(theSide.Provider, text).ExecuteNonQuery());
+                    }
+                    catch (Exception ex)
+                    {
+                        stdio.ShowError(ex.Message);
+                    }
                     break;
 
                 default:

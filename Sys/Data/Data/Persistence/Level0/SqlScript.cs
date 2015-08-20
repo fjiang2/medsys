@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Threading.Tasks;
+using System.Data.SqlClient;
 
 namespace Sys.Data
 {
@@ -14,6 +15,7 @@ namespace Sys.Data
 
         public event EventHandler<EventArgs<int, string>> Reported;
         public event EventHandler<EventArgs> Completed;
+        public event EventHandler<EventArgs<string>> Err;
 
         public SqlScript(ConnectionProvider provider, string scriptFile)
         {
@@ -36,6 +38,14 @@ namespace Sys.Data
                 Completed(this, e);
         }
 
+        protected void OnError(EventArgs<string> e)
+        {
+            if (Err != null)
+                Err(this, e);
+        }
+
+
+       
 
         public void Execute()
         {
@@ -87,6 +97,59 @@ namespace Sys.Data
 
             OnCompleted(new EventArgs());
         }
+
+
+
+
+        public void ExecuteTransaction(string[] clauses)
+        {
+            using (SqlConnection connection = (SqlConnection)provider.NewDbConnection)
+            {
+                connection.Open();
+
+                // Start a local transaction.
+                SqlTransaction sqlTran = connection.BeginTransaction();
+
+                // Enlist a command in the current transaction.
+                SqlCommand command = connection.CreateCommand();
+                command.Transaction = sqlTran;
+
+                try
+                {
+                    // Execute two separate commands.
+                    foreach (string clause in clauses)
+                    {
+                        command.CommandText = clause;
+                        command.ExecuteNonQuery();
+                    }
+
+                    // Commit the transaction.
+                    sqlTran.Commit();
+
+                    OnCompleted(new EventArgs());
+                }
+                catch (Exception ex)
+                {
+                    // Handle the exception if the transaction fails to commit.
+                    OnError(new EventArgs<string>(ex.Message));
+
+                    try
+                    {
+                        // Attempt to roll back the transaction.
+                        sqlTran.Rollback();
+                    }
+                    catch (Exception exRollback)
+                    {
+                        // Throws an InvalidOperationException if the connection 
+                        // is closed or the transaction has already been rolled 
+                        // back on the server.
+                        OnError(new EventArgs<string>(exRollback.Message));
+                    }
+                }
+            }
+
+        }
+
     }
 
 

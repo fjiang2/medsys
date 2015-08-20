@@ -22,11 +22,6 @@ namespace sqlcon
             Console.WriteLine("Copyright (c) 2014-2015 Datconn. All rights reserved.");
             Console.WriteLine();
 
-            MessageException.DefaultExceptionHandler = delegate(string title, string message)
-            {
-                stdio.ShowError(message);
-            };
-
             string cfgFile = "user.cfg";
 
             int i = 0;

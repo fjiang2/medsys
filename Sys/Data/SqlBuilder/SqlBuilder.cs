@@ -642,21 +642,14 @@ namespace Sys.Data
 
         public bool Invalid()
         {
-            var old = MessageException.DefaultExceptionHandler;
             bool result = false;
-            MessageException.DefaultExceptionHandler = delegate(string title, string message)
+
+            SqlCmd.Error += (sender, e) =>
             {
                 result = true;
             };
 
-            try
-            {
-                SqlCmd.ExecuteScalar();
-            }
-            finally
-            {
-                MessageException.DefaultExceptionHandler = old;
-            }
+            SqlCmd.ExecuteScalar();
 
             return result;
         }

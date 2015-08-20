@@ -83,14 +83,15 @@ namespace Sys.Data
         }
 
 
-        protected virtual void ExceptionHandler(string message)
-        {
-            if (MessageException.DefaultExceptionHandler != null)
-                MessageException.DefaultExceptionHandler("SQL Error", message);
-            else
-                throw new Exception(message);
-        }
+        public event EventHandler<SqlExceptionEventArgs> Error;
 
+        public void OnError(SqlExceptionEventArgs e)
+        {
+            if (Error != null)
+                Error(this, e);
+            else
+                throw e.Exception;
+        }
 
        
         public object ExecuteScalar()
@@ -103,7 +104,7 @@ namespace Sys.Data
             }
             catch (Exception ex)
             {
-                ExceptionHandler(ex.Message);
+                OnError(new SqlExceptionEventArgs(command, ex));
             }
             finally
             {
@@ -129,7 +130,7 @@ namespace Sys.Data
             }
             catch (Exception ex)
             {
-                ExceptionHandler(ex.Message);
+                OnError(new SqlExceptionEventArgs(command, ex));
             }
             finally
             {
@@ -309,11 +310,7 @@ namespace Sys.Data
             }
             catch (Exception ex)
             {
-#if DEBUG
-                ExceptionHandler(ex.Message + " :: " + command.CommandText);
-#else
-                ExceptionHandler(ex.Message);
-#endif
+                OnError(new SqlExceptionEventArgs(command, ex));
             }
             finally
             {

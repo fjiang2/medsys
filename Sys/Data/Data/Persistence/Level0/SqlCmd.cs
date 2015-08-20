@@ -117,11 +117,7 @@ namespace Sys.Data
             }
             catch (Exception ex)
             {
-#if DEBUG
-                ExceptionHandler(ex.Message + " :: " + command.CommandText);
-#else
-                ExceptionHandler(ex.Message);
-#endif
+                OnError(new SqlExceptionEventArgs(command, ex));
             }
             finally
             {
@@ -141,7 +137,7 @@ namespace Sys.Data
             }
             catch (Exception ex)
             {
-                ExceptionHandler(ex.Message);
+                OnError(new SqlExceptionEventArgs(command, ex));
             }
             finally
             {
@@ -163,7 +159,7 @@ namespace Sys.Data
             }
             catch (Exception ex)
             {
-                ExceptionHandler(ex.Message);
+                OnError(new SqlExceptionEventArgs(command, ex));
             }
             finally
             {

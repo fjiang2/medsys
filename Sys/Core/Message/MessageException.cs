@@ -26,16 +26,6 @@ namespace Sys
     /// </summary>
     public class MessageException : Exception
     {
-        /// <summary>
-        /// define default exception handler
-        /// </summary>
-        public static Action<string, string> DefaultExceptionHandler =
-            delegate(string title, string message)
-            {
-                Console.WriteLine(title);
-                Console.WriteLine(message);
-            };
-
         
         private Message msg;
 

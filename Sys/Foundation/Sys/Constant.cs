@@ -22,8 +22,12 @@ namespace Sys
 
         public static bool SINGLE_USER_SYSTEM = false;
 
+        public static EventHandler<SqlExceptionEventArgs> DefaultExceptionHandler= (sender, e) =>
+        {
+                System.Windows.Forms.MessageBox.Show(e.Exception.Message, "SQL Error", System.Windows.Forms.MessageBoxButtons.OK);
+        };
 
-        private static FieldInfo[] GetFields()
+    private static FieldInfo[] GetFields()
         {
             return 
                        typeof(Constant).BaseType.GetFields()
@@ -84,12 +88,6 @@ namespace Sys
 
             Const.DB_REVISION = Configuration.Instance.GetValue<int>("Revision");
             
-            MessageException.DefaultExceptionHandler = delegate(string title, string message)
-            {
-                System.Windows.Forms.MessageBox.Show(message, title, System.Windows.Forms.MessageBoxButtons.OK);
-            };
-
-
             return SqlServer.IsGoodConnectionString();
         }
 

@@ -74,6 +74,7 @@
     <Compile Include="Data\Attribute\TableAttribute.cs" />
     <Compile Include="Data\Connection\Name\ServerName.cs" />
     <Compile Include="Data\Persistence\Level0\Provider\XmlProvider.cs" />
+    <Compile Include="Data\Persistence\Level0\SqlExceptionEventArgs.cs" />
     <Compile Include="Data\Persistence\Level0\SqlScript.cs" />
     <Compile Include="Data\UniqueTable.cs" />
     <Compile Include="SqlBuilder\SqlBuilder.cs" />
