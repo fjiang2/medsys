@@ -209,7 +209,7 @@ namespace sqlcon
         }
 
 
-        public static void ToVConsole(this DataTable table, bool more = false)
+        public static void ToVConsole(this DataTable table, bool more)
         {
 
             List<string> list = new List<string>();
