@@ -213,40 +213,50 @@ namespace sqlcon
                         stdio.ShowError("find object undefined");
                     return true;
 
-                case "0":
-                    ChangeSide(Side0);
-                    stdio.WriteLine("working server selected({0})", showConnection(Side0.Provider));
-                    return true;
-
-                case "1":
-                    if (cmd.arg1 != null)
+                case "side":
+                    switch (cmd.arg1)
                     {
-                        var pvd = cfg.GetProvider(cmd.arg1);
-                        if (pvd != null)
-                        {
-                            Side side = new Side(pvd);
-                            adapter = new CompareAdapter(side, adapter.Side2);
-                        }
+                        case "1":
+                        case "source":
+                            if (cmd.arg2 != null)
+                            {
+                                var pvd = cfg.GetProvider(cmd.arg2);
+                                if (pvd != null)
+                                {
+                                    Side side = new Side(pvd);
+                                    adapter = new CompareAdapter(side, adapter.Side2);
+                                }
+                            }
+
+                            ChangeSide(adapter.Side1);
+                            stdio.WriteLine("comparison server 1 selected({0})", showConnection(theSide.Provider));
+                            return true;
+
+                        case "2":
+                        case "sink":
+                            if (cmd.arg2 != null)
+                            {
+                                var pvd = cfg.GetProvider(cmd.arg2);
+                                if (pvd != null)
+                                {
+                                    Side side = new Side(pvd);
+                                    adapter = new CompareAdapter(adapter.Side1, side);
+                                }
+                            }
+                            ChangeSide(adapter.Side2);
+                            stdio.WriteLine("comparison server 2 selected({0})", showConnection(theSide.Provider));
+                            return true;
+
+                        case "swap":
+                            adapter = new CompareAdapter(adapter.Side2, adapter.Side1);
+                            stdio.WriteLine("comparison servers has been swapped, source:{0}, sink:{1}", adapter.Side1, adapter.Side2);
+                            return true;
+
+                        default:
+                            ChangeSide(Side0);
+                            stdio.WriteLine("working server selected({0})", showConnection(Side0.Provider));
+                            return true;
                     }
-
-                    ChangeSide(adapter.Side1);
-                    stdio.WriteLine("comparison server 1 selected({0})", showConnection(theSide.Provider));
-                    return true;
-
-                case "2":
-                    if (cmd.arg1 != null)
-                    {
-                        var pvd = cfg.GetProvider(cmd.arg1);
-                        if (pvd != null)
-                        {
-                            Side side = new Side(pvd);
-                            adapter = new CompareAdapter(adapter.Side1, side);
-                        }
-                    }
-                    ChangeSide(adapter.Side2);
-                    stdio.WriteLine("comparison server 2 selected({0})", showConnection(theSide.Provider));
-                    return true;
-
 
                 case "goto":
                     if (cmd.arg1 != null)
@@ -349,6 +359,7 @@ namespace sqlcon
 
                     return true;
 
+                case "comp":
                 case "compare":
                     if (cmd.arg1 != null)
                     {
@@ -789,9 +800,10 @@ namespace sqlcon
             stdio.WriteLine("<show current>          : show current active connection-string");
             stdio.WriteLine("<show var>              : show variable list");
             stdio.WriteLine("<run> query(..)         : run predefined query. e.g. run query(var1=val1,...);");
-            stdio.WriteLine("<0>                     : switch to default server");
-            stdio.WriteLine("<1> [path]              : switch to comparison source server 1");
-            stdio.WriteLine("<2> [path]              : switch to comparison sink server 2");
+            stdio.WriteLine("<side>                  : switch to default server");
+            stdio.WriteLine("<side 1> [path]         : switch to comparison source server 1");
+            stdio.WriteLine("<side 2> [path]         : switch to comparison sink server 2");
+            stdio.WriteLine("<side swap>             : swap source server and sink server");
             stdio.WriteLine("<goto> path             : switch to database server");
             stdio.WriteLine("<copy output>           : copy sql script ouput to clipboard");
             stdio.WriteLine("<schema>                : generate current database schema");

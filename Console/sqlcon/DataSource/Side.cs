@@ -100,7 +100,7 @@ namespace sqlcon
         
         public override string ToString()
         {
-            return string.Format("Side: Server= {0} Db={1}",Provider.DataSource, this.DatabaseName.Name);
+            return string.Format("Server={0}, Db={1}",Provider.DataSource, this.DatabaseName.Name);
         }
 
     }
