@@ -397,22 +397,21 @@ namespace sqlcon
             {
                 if (sideType == SideType.copy)
                 {
-                    stdio.WriteLine("command copy");
-                    stdio.WriteLine("copy [table1] [table2]     : copy table1' records to table2");
-                    stdio.WriteLine("copy [table1]              : copy table1' records to current table");
+                    stdio.WriteLine("copy schema or records from table1 to table2");
+                    stdio.WriteLine("copy [table1] [table2] [/s]");
+                    stdio.WriteLine("[/s]                        : copy table schema, default copy table records");
                 }
                 else if (sideType == SideType.sync)
                 {
-                    stdio.WriteLine("command sync");
-                    stdio.WriteLine("sync [table1] [table2]     : sync table1' records to table2");
-                    stdio.WriteLine("sync [table1]              : sync table1' records to current table");
+                    stdio.WriteLine("synchronize schema or records from table1 to table2");
+                    stdio.WriteLine("sync [table1] [table2] [/s] : sync table1' records to table2");
                 }
                 else if (sideType == SideType.compare)
                 {
-                    stdio.WriteLine("command comp");
-                    stdio.WriteLine("comp [table1] [table2]     : sync table1' records to table2");
-                    stdio.WriteLine("comp [table1]              : sync table1' records to current table");
+                    stdio.WriteLine("compare schema or records from table1 to table2");
+                    stdio.WriteLine("comp [table1] [table2] [/s] : sync table1' records to table2");
                 }
+                    stdio.WriteLine("[/s]                        : table schema, default table records");
                 return;
             }
 
@@ -482,10 +481,16 @@ namespace sqlcon
             //------------------------------------------------------------------------------
 
             var adapter = new CompareAdapter(side1, side2);
-            var sql = adapter.CompareTable(ActionType.CompareData, sideType, tname1, tname2,  mgr.Configuration.PK);
+            var sql = adapter.CompareTable(cmd.IsSchema ? ActionType.CompareSchema : ActionType.CompareData, sideType, tname1, tname2, mgr.Configuration.PK);
 
             if (sideType == SideType.compare)
+            {
+                if (sql == string.Empty)
+                {
+                    stdio.WriteLine("source and destination are identical", tname2);
+                }
                 return;
+            }
 
             if (sql == string.Empty)
             {

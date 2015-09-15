@@ -12,7 +12,7 @@ namespace Sys.Data.Comparison
        
 
         #region compare database schema/data
-        public static string DatabaseSchemaDifference(DatabaseName dname1, DatabaseName dname2)
+        public static string DatabaseSchemaDifference(SideType sideType, DatabaseName dname1, DatabaseName dname2)
         {
             TableName[] names = dname1.GetDependencyTableNames();
 
@@ -24,7 +24,7 @@ namespace Sys.Data.Comparison
 #endif
                 try
                 {
-                    string sql = TableSchemaDifference(tableName, new TableName(dname2, tableName.SchemaName, tableName.Name));
+                    string sql = TableSchemaDifference(sideType, tableName, new TableName(dname2, tableName.SchemaName, tableName.Name));
                     builder.Append(sql);
 #if DEBUG
                     if (sql != string.Empty)
@@ -90,7 +90,7 @@ namespace Sys.Data.Comparison
 
         #region compare table schema/data
 
-        public static string TableSchemaDifference(TableName tableName1, TableName tableName2)
+        public static string TableSchemaDifference(SideType sideType, TableName tableName1, TableName tableName2)
         {
 
             string sql;
@@ -98,7 +98,7 @@ namespace Sys.Data.Comparison
             if (tableName2.Exists())
             {
                 TableSchemaCompare compare = new TableSchemaCompare(tableName1, tableName2);
-                sql = compare.Compare();
+                sql = compare.Compare(sideType);
             }
             else
             {

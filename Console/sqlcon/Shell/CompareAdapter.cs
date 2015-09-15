@@ -91,7 +91,7 @@ namespace sqlcon
             }
             else if (CompareType == ActionType.CompareSchema)
             {
-                sql = CompareDatabaseSchema(db1, db2);
+                sql = CompareDatabaseSchema(SideType.compare, db1, db2);
 
                 if (sql != string.Empty)
                     builder.Append(sql);
@@ -112,10 +112,10 @@ namespace sqlcon
             return builder.ToString();
         }
 
-        private string CompareDatabaseSchema(DatabaseName db1, DatabaseName db2)
+        private string CompareDatabaseSchema(SideType sideType, DatabaseName db1, DatabaseName db2)
         {
-            stdio.WriteLine("compare database schema {0} => {1}", db1.Name, db2.Name);
-            return Compare.DatabaseSchemaDifference(db1, db2);
+            stdio.WriteLine("{0} database schema {1} => {2}", sideType, db1.Name, db2.Name);
+            return Compare.DatabaseSchemaDifference(sideType, db1, db2);
         }
 
         private string CompareDatabaseData(DatabaseName db1, DatabaseName db2, string[] excludedtables)
@@ -140,11 +140,11 @@ namespace sqlcon
             if (actiontype == ActionType.CompareSchema)
             {
                 stdio.WriteLine("{0} table schema {1} => {2}", sidetype, tname1, tname2);
-                sql = Compare.TableSchemaDifference(tname1, tname2);
+                sql = Compare.TableSchemaDifference(sidetype, tname1, tname2);
             }
             else if (actiontype == ActionType.CompareData)
             {
-                if (Compare.TableSchemaDifference(tname1, tname2) != string.Empty)
+                if (Compare.TableSchemaDifference(sidetype, tname1, tname2) != string.Empty)
                 {
                     stdio.WriteLine("failed to {0} becuase of different table schemas", sidetype);
                     return string.Empty;

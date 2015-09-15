@@ -22,7 +22,7 @@ namespace sqlcon
         public readonly bool IsVertical;
         public readonly bool HasWhere;
         public readonly bool HasPage;
-        public readonly bool HasSearch;
+        public readonly bool IsSchema;
         public readonly bool HasRowId;
         public readonly bool Refresh;
 
@@ -63,7 +63,7 @@ namespace sqlcon
                             break;
 
                         case "/s":
-                            HasSearch = true;
+                            IsSchema = true;
                             break;
 
                         case "/t":

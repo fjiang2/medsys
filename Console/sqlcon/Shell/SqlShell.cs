@@ -788,8 +788,8 @@ namespace sqlcon
             stdio.WriteLine("echo                    : display message");
             stdio.WriteLine("rem                     : records comments/remarks");
             stdio.WriteLine("ver                     : display version");
-            stdio.WriteLine("copy src [dst]          : copy source table records to destination's");
-            stdio.WriteLine("comp src [dst]          : compare source table records to destination's");
+            stdio.WriteLine("copy src [dst] [/s]     : copy source table records to destination's");
+            stdio.WriteLine("comp src [dst] [/s]     : compare source table records to destination's");
             stdio.WriteLine();
             stdio.WriteLine("<Commands>");
             stdio.WriteLine("<compare schema> tables : compare schema of tables");

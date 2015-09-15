@@ -17,7 +17,7 @@ namespace Sys.Data.Comparison
             tableName2 = name2;
         }
 
-        public string Compare()
+        public string Compare(SideType sideType)
         {
             TableSchema schema1 = new TableSchema(tableName1);
             TableSchema schema2 = new TableSchema(tableName2);
