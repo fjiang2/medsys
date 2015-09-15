@@ -25,6 +25,16 @@ namespace sqlcon
  
         public T GetCurrentPath<T>() where T : IDataPath
         {
+            return GetPathFrom<T>(this.current);
+        }
+
+        public TreeNode<IDataPath> GetCurrentNode<T>() where T : IDataPath
+        {
+            return GetNodeFrom<T>(this.current);
+        }
+
+        public T GetPathFrom<T>(TreeNode<IDataPath> current) where T : IDataPath
+        {
             if (current == RootNode)
                 return default(T);
 
@@ -41,7 +51,7 @@ namespace sqlcon
         }
 
 
-        public TreeNode<IDataPath> GetCurrentNode<T>() where T : IDataPath
+        public TreeNode<IDataPath> GetNodeFrom<T>(TreeNode<IDataPath> current) where T : IDataPath
         {
             if (current == RootNode)
                 return null;

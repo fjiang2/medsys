@@ -387,5 +387,89 @@ namespace sqlcon
             if (!mgr.TypeFile(pt, cmd))
                 stdio.ShowError("invalid arguments");
         }
+
+
+
+        public void xcopy(Command cmd)
+        {
+            if (cmd.arg1 == null)
+            {
+                stdio.ShowError("invalid argument");
+                return;
+            }
+
+            var path1 = new PathName(cmd.arg1);
+            TreeNode<IDataPath> node1 = mgr.Navigate(path1);
+            if (node1 == null)
+            {
+                stdio.ShowError("invalid path:" + path1);
+                return;
+            }
+
+            TableName tname1 = mgr.GetPathFrom<TableName>(node1);
+            if (tname1 == null)
+            {
+                stdio.ShowError("warning: source table is not available");
+                return;
+            }
+
+            var server1 = mgr.GetPathFrom<ServerName>(node1);
+            if (server1 == null)
+            {
+                stdio.ShowError("warning: source server is not available");
+                return;
+            }
+
+            var pvd1 = server1.Provider;
+            Side side1 = new Side(pvd1);
+            //------------------------------------------------------------------------------
+
+            TreeNode<IDataPath> node2 = mgr.Navigate(path1);
+            if (cmd.arg2 != null)
+            {
+                var path2 = new PathName(cmd.arg2);
+                node2 = mgr.Navigate(path2);
+                if (node2 == null)
+                {
+                    stdio.ShowError("invalid path:" + path2);
+                    return;
+                }
+            }
+            else
+                node2 = this.mgr.current;
+
+            TableName tname2 = mgr.GetPathFrom<TableName>(node2);
+            if (tname2 == null)
+            {
+                stdio.ShowError("warning: destination table is not available");
+                return;
+            }
+
+            var server2 = mgr.GetPathFrom<ServerName>(node2);
+            if (server2 == null)
+            {
+                stdio.ShowError("warning: destination server is not available");
+                return;
+            }
+
+            var pvd2 = server2.Provider;
+            Side side2 = new Side(pvd2);
+
+            //------------------------------------------------------------------------------
+
+            var adapter = new CompareAdapter(side1, side2);
+            var sql = adapter.CopyTable(ActionType.CompareData, tname1, tname2,  mgr.Configuration.PK);
+
+            if (sql == string.Empty)
+            {
+                stdio.WriteLine("nothing changed on destination {0}", tname2);
+            }
+            else
+            {
+                int count = new SqlCmd(pvd2, sql).ExecuteNonQuery();
+                stdio.WriteLine("{0} row(s) changed at destination {1}", count, tname2);
+            }
+        }
+
     }
 }

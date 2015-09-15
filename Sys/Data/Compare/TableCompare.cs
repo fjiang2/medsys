@@ -8,6 +8,14 @@ using Sys.Data;
 
 namespace Sys.Data.Comparison
 {
+
+    public enum SideType
+    {
+        Compare,
+        Copy,
+        Sync
+    }
+
     class TableCompare
     {
         #region Implemetation
@@ -25,15 +33,15 @@ namespace Sys.Data.Comparison
         }
 
 
-        public string Compare(IPrimaryKeys pk)
+        public string Compare(SideType type, IPrimaryKeys pk)
         {
             var dt1 = new TableReader(schema1.TableName).Table;
             var dt2 = new TableReader(schema2.TableName).Table;
 
-            return Compare(pk, dt1, dt2);
+            return Compare(type, pk, dt1, dt2);
         }
 
-        private string Compare(IPrimaryKeys pk, DataTable table1, DataTable table2)
+        private string Compare(SideType type, IPrimaryKeys pk, DataTable table1, DataTable table2)
         {
             this.PkColumns = pk;
             this.NonPkColumns = table1.Columns.OfType<DataColumn>().Select(row => row.ColumnName).Except(PkColumns.Keys).ToArray();
@@ -63,16 +71,18 @@ namespace Sys.Data.Comparison
                 }
             }
 
-
-            foreach (DataRow row2 in table2.Rows)
+            if (type == SideType.Compare)
             {
-                if (R2.IndexOf(row2) < 0)
+                foreach (DataRow row2 in table2.Rows)
                 {
-                    builder.AppendLine(script.DELETE(row2, pk));
+                    if (R2.IndexOf(row2) < 0)
+                    {
+                        builder.AppendLine(script.DELETE(row2, pk));
+                    }
                 }
             }
 
-            if (builder.ToString() != string.Empty)
+            if (builder.ToString() != string.Empty && type == SideType.Compare)
                 builder.AppendLine(TableScript.GO);
 
             return builder.ToString();

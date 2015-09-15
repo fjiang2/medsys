@@ -267,28 +267,13 @@ namespace sqlcon
                             return true;
                     }
 
-                case "goto":
-                    if (cmd.arg1 != null)
-                    {
-                        var sname = cfg.GetProvider(cmd.arg1);
-                        if (sname != null)
-                        {
-                            Side side = new Side(sname);
-                            ChangeSide(side);
-                        }
-                        else
-                            stdio.ShowError("undefined database server name : {0}", cmd.arg1);
-                    }
-                    else
-                        stdio.ShowError("command argument missing");
-                    return true;
-
                 case "template":
                     {
                         TableName tname = mgr.GetCurrentPath<TableName>();
                         if (tname == null)
                         {
                             stdio.ShowError("warning: table is not available");
+                            return true;
                         }
                         else
                         {
@@ -399,6 +384,11 @@ namespace sqlcon
                     }
                     else
                         stdio.ShowError("command argument missing");
+                    return true;
+
+
+                case "xcopy":
+                    commandee.xcopy(cmd);
                     return true;
 
                 //example: run func(id=20)
@@ -641,7 +631,7 @@ namespace sqlcon
             }
         }
 
-
+     
         private void Show(string arg1, string arg2)
         {
             TableName[] tnames;
@@ -790,10 +780,11 @@ namespace sqlcon
             stdio.WriteLine("echo                    : display message");
             stdio.WriteLine("rem                     : records comments/remarks");
             stdio.WriteLine("ver                     : display version");
+            stdio.WriteLine("xcopy src [dst]         : copy source table records to destination's");
             stdio.WriteLine();
             stdio.WriteLine("<Commands>");
             stdio.WriteLine("<compare schema> tables : compare schema of tables");
-            stdio.WriteLine("<compare data> tables   : compare data of tables");
+            stdio.WriteLine("<compare data> tables   : compare data of tables, compare different tables using <compare data table1:table2>");
             stdio.WriteLine("<find> pattern          : find table name or column name");
             stdio.WriteLine("<show db>               : show all database names");
             stdio.WriteLine("<show table>            : show all table names");
@@ -813,7 +804,6 @@ namespace sqlcon
             stdio.WriteLine("<side 1> [path]|current : switch to comparison source server 1");
             stdio.WriteLine("<side 2> [path]|current : switch to comparison sink server 2");
             stdio.WriteLine("<side swap>             : swap source server and sink server");
-            stdio.WriteLine("<goto> path             : switch to database server");
             stdio.WriteLine("<copy output>           : copy sql script ouput to clipboard");
             stdio.WriteLine("<schema>                : generate current database schema");
             stdio.WriteLine("<open log>              : open log file");

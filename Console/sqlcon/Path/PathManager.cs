@@ -35,6 +35,11 @@ namespace sqlcon
             }
         }
 
+        public Configuration Configuration
+        {
+            get { return this.cfg; }
+        }
+
         public bool Refreshing { get; set; }
 
         private static bool IsMatch(string wildcard, string text)

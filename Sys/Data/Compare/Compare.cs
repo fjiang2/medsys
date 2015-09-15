@@ -72,7 +72,7 @@ namespace Sys.Data.Comparison
 
                 if (tname2.Exists())
                 {
-                    builder.Append(TableDifference(schema1, schema2, schema1.PrimaryKeys.Keys));
+                    builder.Append(TableDifference(SideType.Compare, schema1, schema2, schema1.PrimaryKeys.Keys));
                 }
                 else
                 {
@@ -108,11 +108,11 @@ namespace Sys.Data.Comparison
             return sql;
         }
 
-        public static string TableDifference(TableSchema schema1, TableSchema schema2, string[] primaryKeys)
+        public static string TableDifference(SideType type, TableSchema schema1, TableSchema schema2, string[] primaryKeys)
         {
             TableCompare compare = new TableCompare(schema1, schema2);
             IPrimaryKeys keys = new PrimaryKeys(primaryKeys);
-            return compare.Compare(keys);
+            return compare.Compare(type, keys);
         }
 
         #endregion

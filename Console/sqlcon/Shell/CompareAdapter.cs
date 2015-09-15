@@ -135,7 +135,7 @@ namespace sqlcon
             return Compare.DatabaseDifference(db1, db2, excludedtables);
         }
 
-        private string CompareTable(ActionType type, TableName tname1, TableName tname2, Dictionary<string, string[]> pk)
+        public string CompareTable(ActionType type, TableName tname1, TableName tname2, Dictionary<string, string[]> pk)
         {
             TableSchema schema1 = new TableSchema(tname1);
             TableSchema schema2 = new TableSchema(tname2);
@@ -155,7 +155,7 @@ namespace sqlcon
             {
                 stdio.WriteLine("compare table data {0} => {1}", tname1.ShortName, tname2.ShortName);
                 bool hasPk = schema1.PrimaryKeys.Length > 0;
-                sql = Compare.TableDifference(schema1, schema2, schema1.PrimaryKeys.Keys);
+                sql = Compare.TableDifference(SideType.Compare, schema1, schema2, schema1.PrimaryKeys.Keys);
 
                 if (!hasPk)
                 {
@@ -165,13 +165,13 @@ namespace sqlcon
                     if (pk.ContainsKey(key))
                     {
                         stdio.WriteLine("use predefine keys defined in ini file: {0}", tname1);
-                        sql = Compare.TableDifference(schema1, schema2, pk[key]);
+                        sql = Compare.TableDifference(SideType.Compare, schema1, schema2, pk[key]);
                     }
                     else
                     {
                         stdio.WriteLine("use entire row as primary keys:{0}", tname1);
                         var keys = schema1.Columns.Select(row => row.ColumnName).ToArray();
-                        sql = Compare.TableDifference(schema1, schema2, keys);
+                        sql = Compare.TableDifference(SideType.Compare, schema1, schema2, keys);
                     }
 
                 }
@@ -186,7 +186,50 @@ namespace sqlcon
             return sql;
         }
 
-    
+
+        public string CopyTable(ActionType type, TableName tname1, TableName tname2, Dictionary<string, string[]> pk)
+        {
+            TableSchema schema1 = new TableSchema(tname1);
+            TableSchema schema2 = new TableSchema(tname2);
+
+            if (!Exists(tname1) || !Exists(tname2))
+                return string.Empty;
+
+            string sql = string.Empty;
+
+            if (type == ActionType.CompareSchema)
+            {
+                stdio.WriteLine("copy table schema {0} => {1}", tname1, tname2);
+                sql = Compare.TableSchemaDifference(tname1, tname2);
+            }
+
+            if (type == ActionType.CompareData)
+            {
+                stdio.WriteLine("copy table data {0} => {1}", tname1, tname2);
+                bool hasPk = schema1.PrimaryKeys.Length > 0;
+                sql = Compare.TableDifference(SideType.Copy, schema1, schema2, schema1.PrimaryKeys.Keys);
+
+                if (!hasPk)
+                {
+                    stdio.WriteLine("warning: no primary key found : {0}", tname1);
+
+                    string key = tname1.Name.ToUpper();
+                    if (pk.ContainsKey(key))
+                    {
+                        stdio.WriteLine("use predefine keys defined in ini file: {0}", tname1);
+                        sql = Compare.TableDifference(SideType.Copy, schema1, schema2, pk[key]);
+                    }
+                    else
+                    {
+                        stdio.WriteLine("use entire row as primary keys:{0}", tname1);
+                        var keys = schema1.Columns.Select(row => row.ColumnName).ToArray();
+                        sql = Compare.TableDifference(SideType.Copy, schema1, schema2, keys);
+                    }
+                }
+            }
+
+            return sql;
+        }
 
     }
 }
