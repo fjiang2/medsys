@@ -10,6 +10,7 @@ using System.Data;
 using System.Text.RegularExpressions;
 using Sys;
 using Sys.Data;
+using Sys.Data.Comparison;
 using Tie;
 
 namespace sqlcon
@@ -390,8 +391,25 @@ namespace sqlcon
 
 
 
-        public void xcopy(Command cmd)
+        public void xcopy(Command cmd, SideType sideType)
         {
+            if (cmd.arg1 == "/?")
+            {
+                if (sideType == SideType.copy)
+                {
+                    stdio.WriteLine("command xcopy");
+                    stdio.WriteLine("xcopy [table1] [table2]     : copy table1' records to table2");
+                    stdio.WriteLine("xcopy [table1]              : copy table1' records to current table");
+                }
+                else if (sideType == SideType.sync)
+                {
+                    stdio.WriteLine("command xcopy");
+                    stdio.WriteLine("sync [table1] [table2]     : sync table1' records to table2");
+                    stdio.WriteLine("sync [table1]              : sync table1' records to current table");
+                }
+                return;
+            }
+
             if (cmd.arg1 == null)
             {
                 stdio.ShowError("invalid argument");
@@ -458,7 +476,7 @@ namespace sqlcon
             //------------------------------------------------------------------------------
 
             var adapter = new CompareAdapter(side1, side2);
-            var sql = adapter.CopyTable(ActionType.CompareData, tname1, tname2,  mgr.Configuration.PK);
+            var sql = adapter.CompareTable(ActionType.CompareData, sideType, tname1, tname2,  mgr.Configuration.PK);
 
             if (sql == string.Empty)
             {

@@ -11,9 +11,9 @@ namespace Sys.Data.Comparison
 
     public enum SideType
     {
-        Compare,
-        Copy,
-        Sync
+        compare,
+        copy,
+        sync
     }
 
     class TableCompare
@@ -71,7 +71,7 @@ namespace Sys.Data.Comparison
                 }
             }
 
-            if (type == SideType.Compare)
+            if (type != SideType.copy)
             {
                 foreach (DataRow row2 in table2.Rows)
                 {
@@ -82,7 +82,7 @@ namespace Sys.Data.Comparison
                 }
             }
 
-            if (builder.ToString() != string.Empty && type == SideType.Compare)
+            if (builder.ToString() != string.Empty && type == SideType.compare)
                 builder.AppendLine(TableScript.GO);
 
             return builder.ToString();

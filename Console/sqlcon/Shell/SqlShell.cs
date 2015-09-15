@@ -388,7 +388,11 @@ namespace sqlcon
 
 
                 case "xcopy":
-                    commandee.xcopy(cmd);
+                    commandee.xcopy(cmd, SideType.copy);
+                    return true;
+
+                case "sync":
+                    commandee.xcopy(cmd, SideType.sync);
                     return true;
 
                 //example: run func(id=20)
@@ -804,6 +808,7 @@ namespace sqlcon
             stdio.WriteLine("<side 1> [path]|current : switch to comparison source server 1");
             stdio.WriteLine("<side 2> [path]|current : switch to comparison sink server 2");
             stdio.WriteLine("<side swap>             : swap source server and sink server");
+            stdio.WriteLine("<sync table1 table2>    : synchronize, make table2 is the same as table1");
             stdio.WriteLine("<copy output>           : copy sql script ouput to clipboard");
             stdio.WriteLine("<schema>                : generate current database schema");
             stdio.WriteLine("<open log>              : open log file");

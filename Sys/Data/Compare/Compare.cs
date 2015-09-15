@@ -72,7 +72,7 @@ namespace Sys.Data.Comparison
 
                 if (tname2.Exists())
                 {
-                    builder.Append(TableDifference(SideType.Compare, schema1, schema2, schema1.PrimaryKeys.Keys));
+                    builder.Append(TableDifference(SideType.compare, schema1, schema2, schema1.PrimaryKeys.Keys));
                 }
                 else
                 {
