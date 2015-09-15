@@ -287,7 +287,7 @@ namespace sqlcon
                     }
                     return true;
 
-                case "copy":
+                case "xcopy":
                     if (cmd.arg1 == "output")
                     {
                         if (!File.Exists(this.cfg.OutputFile))
@@ -353,7 +353,7 @@ namespace sqlcon
 
                     return true;
 
-                case "comp":
+     
                 case "compare":
                     if (cmd.arg1 != null)
                     {
@@ -387,7 +387,7 @@ namespace sqlcon
                     return true;
 
 
-                case "xcopy":
+                case "copy":
                     commandee.xcopy(cmd, SideType.copy);
                     return true;
 
@@ -395,7 +395,11 @@ namespace sqlcon
                     commandee.xcopy(cmd, SideType.sync);
                     return true;
 
-                //example: run func(id=20)
+                case "comp":
+                    commandee.xcopy(cmd, SideType.compare);
+                    return true;
+
+                  //example: run func(id=20)
                 case "run":
                     {
                         VAL result = Context.Evaluate(cmd.args);
@@ -784,7 +788,8 @@ namespace sqlcon
             stdio.WriteLine("echo                    : display message");
             stdio.WriteLine("rem                     : records comments/remarks");
             stdio.WriteLine("ver                     : display version");
-            stdio.WriteLine("xcopy src [dst]         : copy source table records to destination's");
+            stdio.WriteLine("copy src [dst]          : copy source table records to destination's");
+            stdio.WriteLine("comp src [dst]          : compare source table records to destination's");
             stdio.WriteLine();
             stdio.WriteLine("<Commands>");
             stdio.WriteLine("<compare schema> tables : compare schema of tables");
@@ -809,7 +814,7 @@ namespace sqlcon
             stdio.WriteLine("<side 2> [path]|current : switch to comparison sink server 2");
             stdio.WriteLine("<side swap>             : swap source server and sink server");
             stdio.WriteLine("<sync table1 table2>    : synchronize, make table2 is the same as table1");
-            stdio.WriteLine("<copy output>           : copy sql script ouput to clipboard");
+            stdio.WriteLine("<xcopy output>          : copy sql script ouput to clipboard");
             stdio.WriteLine("<schema>                : generate current database schema");
             stdio.WriteLine("<open log>              : open log file");
             stdio.WriteLine("<open input>            : open input file");

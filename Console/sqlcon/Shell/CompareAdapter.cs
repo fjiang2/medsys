@@ -144,6 +144,12 @@ namespace sqlcon
             }
             else if (actiontype == ActionType.CompareData)
             {
+                if (Compare.TableSchemaDifference(tname1, tname2) != string.Empty)
+                {
+                    stdio.WriteLine("failed to {0} becuase of different table schemas", sidetype);
+                    return string.Empty;
+                }
+
                 stdio.WriteLine("{0} table data {1} => {2}", sidetype, tname1, tname2);
                 bool hasPk = schema1.PrimaryKeys.Length > 0;
                 sql = Compare.TableDifference(sidetype, schema1, schema2, schema1.PrimaryKeys.Keys);

@@ -397,15 +397,21 @@ namespace sqlcon
             {
                 if (sideType == SideType.copy)
                 {
-                    stdio.WriteLine("command xcopy");
-                    stdio.WriteLine("xcopy [table1] [table2]     : copy table1' records to table2");
-                    stdio.WriteLine("xcopy [table1]              : copy table1' records to current table");
+                    stdio.WriteLine("command copy");
+                    stdio.WriteLine("copy [table1] [table2]     : copy table1' records to table2");
+                    stdio.WriteLine("copy [table1]              : copy table1' records to current table");
                 }
                 else if (sideType == SideType.sync)
                 {
-                    stdio.WriteLine("command xcopy");
+                    stdio.WriteLine("command sync");
                     stdio.WriteLine("sync [table1] [table2]     : sync table1' records to table2");
                     stdio.WriteLine("sync [table1]              : sync table1' records to current table");
+                }
+                else if (sideType == SideType.compare)
+                {
+                    stdio.WriteLine("command comp");
+                    stdio.WriteLine("comp [table1] [table2]     : sync table1' records to table2");
+                    stdio.WriteLine("comp [table1]              : sync table1' records to current table");
                 }
                 return;
             }
@@ -478,9 +484,12 @@ namespace sqlcon
             var adapter = new CompareAdapter(side1, side2);
             var sql = adapter.CompareTable(ActionType.CompareData, sideType, tname1, tname2,  mgr.Configuration.PK);
 
+            if (sideType == SideType.compare)
+                return;
+
             if (sql == string.Empty)
             {
-                stdio.WriteLine("nothing changed on destination {0}", tname2);
+                stdio.WriteLine("nothing changes made on destination {0}", tname2);
             }
             else
             {
