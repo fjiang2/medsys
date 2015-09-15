@@ -127,9 +127,7 @@
     <Compile Include="pubsub\PubsubLeafNode.cs" />
     <Compile Include="roster\IRosterControl.cs" />
     <Compile Include="roster\PresenceData.cs" />
-    <Compile Include="roster\RosterControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="roster\RosterControl.cs" />
     <Compile Include="roster\RosterControl.Designer.cs">
       <DependentUpon>RosterControl.cs</DependentUpon>
     </Compile>

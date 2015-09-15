@@ -289,9 +289,7 @@
       <DependentUpon>TieEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="Xmpp\XmppClient.cs" />
-    <Compile Include="Forms\Controls\JGanttChart.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="Forms\Controls\JGanttChart.cs" />
     <Compile Include="Forms\Controls\JGanttChart.Designer.cs">
       <DependentUpon>JGanttChart.cs</DependentUpon>
     </Compile>

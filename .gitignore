@@ -44,3 +44,7 @@
 /Console/sqlcon/obj/Debug
 /Console/sqlcon/bin/Debug/atms
 /Console/sqlcon/bin/Debug
+*.dll
+*.pdb
+*.suo
+*.user

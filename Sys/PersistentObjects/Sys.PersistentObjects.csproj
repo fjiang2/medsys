@@ -97,9 +97,7 @@
     <Compile Include="MgCode\DpoClass\RecordLockDpo.cs" />
     <Compile Include="MgCode\DpoClass\dictEnumTypeDpo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Sys\JBackgroundWorker.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="Sys\JBackgroundWorker.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\Sys.Core.csproj">

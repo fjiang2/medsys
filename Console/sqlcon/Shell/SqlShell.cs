@@ -23,8 +23,6 @@ namespace sqlcon
         private PathManager mgr;
         private Commandee commandee;
 
-        private Side Side0;
-
         public SqlShell(Configuration cfg, CompareAdapter adapter)
         {
             this.cfg = cfg;
@@ -36,12 +34,13 @@ namespace sqlcon
             var pvd = cfg.GetProvider(server);
             if (pvd != null)
             {
-                Side0 = new Side(pvd);
-                ChangeSide(Side0);
+                theSide = new Side(pvd);
+                ChangeSide(theSide);
             }
             else if (cfg.Providers.Count() > 0)
             {
-                Side0 = new Side(cfg.Providers.First());
+                theSide = new Side(cfg.Providers.First());
+                ChangeSide(theSide);
             }
             else
             {
@@ -220,7 +219,12 @@ namespace sqlcon
                         case "source":
                             if (cmd.arg2 != null)
                             {
-                                var pvd = cfg.GetProvider(cmd.arg2);
+                                ConnectionProvider pvd;
+                                if (cmd.arg2 == "current")
+                                    pvd = theSide.Provider;
+                                else
+                                    pvd = cfg.GetProvider(cmd.arg2);
+
                                 if (pvd != null)
                                 {
                                     Side side = new Side(pvd);
@@ -236,7 +240,12 @@ namespace sqlcon
                         case "sink":
                             if (cmd.arg2 != null)
                             {
-                                var pvd = cfg.GetProvider(cmd.arg2);
+                                ConnectionProvider pvd;
+                                if (cmd.arg2 == "current")
+                                    pvd = theSide.Provider;
+                                else
+                                    pvd = cfg.GetProvider(cmd.arg2);
+
                                 if (pvd != null)
                                 {
                                     Side side = new Side(pvd);
@@ -253,8 +262,8 @@ namespace sqlcon
                             return true;
 
                         default:
-                            ChangeSide(Side0);
-                            stdio.WriteLine("working server selected({0})", showConnection(Side0.Provider));
+                            ChangeSide(theSide);
+                            stdio.WriteLine("working server selected({0})", showConnection(theSide.Provider));
                             return true;
                     }
 
@@ -318,7 +327,7 @@ namespace sqlcon
                         if (!File.Exists(inputfile))
                         {
                             stdio.ShowError("no input file found : {0}", inputfile);
-                            break;
+                            return true;
                         }
 
                         var script = new SqlScript(theSide.Provider, inputfile);
@@ -801,8 +810,8 @@ namespace sqlcon
             stdio.WriteLine("<show var>              : show variable list");
             stdio.WriteLine("<run> query(..)         : run predefined query. e.g. run query(var1=val1,...);");
             stdio.WriteLine("<side>                  : switch to default server");
-            stdio.WriteLine("<side 1> [path]         : switch to comparison source server 1");
-            stdio.WriteLine("<side 2> [path]         : switch to comparison sink server 2");
+            stdio.WriteLine("<side 1> [path]|current : switch to comparison source server 1");
+            stdio.WriteLine("<side 2> [path]|current : switch to comparison sink server 2");
             stdio.WriteLine("<side swap>             : swap source server and sink server");
             stdio.WriteLine("<goto> path             : switch to database server");
             stdio.WriteLine("<copy output>           : copy sql script ouput to clipboard");
