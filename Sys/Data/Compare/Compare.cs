@@ -60,7 +60,7 @@ namespace Sys.Data.Comparison
 
                 if (excludedTables.Contains(tableName.ShortName.ToUpper()))
                 {
-                    Console.WriteLine("skip to compare data on table {0}", tableName.ShortName);
+                    Console.WriteLine("skip to compare data on excluded table {0}", tableName.ShortName);
                     continue;
                 }
 

@@ -74,15 +74,6 @@ namespace sqlcon
                 {
                     for (int i = 0; i < N1.Length; i++)
                     {
-                        if (m1.Includes(N1[i]))
-                        {
-                            stdio.WriteLine("skip to compare data on table {0}", N1[i]);
-                        }
-                        else if (m2.Includes(N2[i]))
-                        {
-                            stdio.WriteLine("skip to compare data on table {0}", N2[i]);
-                        }
-
                         builder.Append(CompareTable(CompareType, SideType.compare, N1[i], N2[i], pk));
                     }
                 }
