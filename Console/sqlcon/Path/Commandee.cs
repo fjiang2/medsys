@@ -218,18 +218,52 @@ namespace sqlcon
         {
             if (cmd.HasHelp)
             {
-                stdio.WriteLine("command del or erase:  delete data rows");
-                stdio.WriteLine("del [sql where clause]  : delete current table filtered rows");
+                stdio.WriteLine("command del or erase: drop tables or  delete data rows");
+                stdio.WriteLine("del tablename               : drop table");
+                stdio.WriteLine("del [sql where clause]      : delete current table filtered rows");
                 stdio.WriteLine("example:");
-                stdio.WriteLine("del : delete all rows");
-                stdio.WriteLine("del col1=1 and col2='match' : del rows matched on columns:c1 or c2");
+                stdio.WriteLine(@"local> del Northwind\Products       : drop table Products");
+                stdio.WriteLine(@"local\Northwind\Products> del       : delete all rows of table Products");
+                stdio.WriteLine(@"local\Northwind\Products> del col1=1 and col2='match' : del rows matched on columns:c1 or c2");
                 return;
             }
 
             var pt = mgr.current;
             if (!(pt.Item is Locator) && !(pt.Item is TableName))
             {
-                stdio.ShowError("table is not selected");
+                TableName[] T = null;
+                if (cmd.arg1 != null)
+                {
+                    PathName path = new PathName(cmd.arg1);
+                    var node = mgr.Navigate(path);
+                    if (node != null)
+                    {
+                        var dname = mgr.GetPathFrom<DatabaseName>(node);
+                        if (dname != null)
+                        {
+                            if (cmd.wildcard != null)
+                            {
+                                var m = new MatchedDatabase(dname, cmd.wildcard, new string[] { });
+                                T = m.MatchedTableNames;
+                            }
+                            else
+                            {
+                                var _tname = mgr.GetPathFrom<TableName>(node);
+                                if (_tname != null)
+                                    T = new TableName[] { _tname };
+                            }
+                        }
+                    }
+                }
+                if (T != null && T.Length>0)
+                { 
+                    var sqlcmd = new SqlCmd(T[0].Provider, string.Empty);
+                    sqlcmd.ExecuteNonQueryTransaction(T.Select(row => string.Format("DROP TABLE {0}", row)));
+                    stdio.ShowError("completed to drop table(s):\n{0}", string.Join<TableName>("\n", T));
+                }
+                else
+                    stdio.ShowError("table is not selected");
+
                 return;
             }
 
@@ -496,7 +530,7 @@ namespace sqlcon
                 }
 
                 var adapter = new CompareAdapter(side1, side2);
-                stdio.WriteLine("start to {0} from {1} to {2}", sideType, tname1, tname2);
+                //stdio.WriteLine("start to {0} from {1} to {2}", sideType, tname1, tname2);
                 var sql = adapter.CompareTable(cmd.IsSchema ? ActionType.CompareSchema : ActionType.CompareData, sideType, tname1, tname2, mgr.Configuration.PK);
 
                 if (sideType == CompareSideType.compare)
