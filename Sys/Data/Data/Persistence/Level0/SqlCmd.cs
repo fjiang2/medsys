@@ -223,6 +223,50 @@ namespace Sys.Data
                     tableName.FullName,
                     where);
         }
+
+        public int ExecuteNonQueryTransaction()
+        {
+            return ExecuteNonQueryTransaction(new string[] { base.script });
+        }
+
+        public int ExecuteNonQueryTransaction(IEnumerable<string> clauses)
+        {
+            int count = -1;
+            using (SqlConnection connection = (SqlConnection)provider.NewDbConnection)
+            {
+                connection.Open();
+                SqlTransaction transaction = connection.BeginTransaction();
+
+                SqlCommand command = connection.CreateCommand();
+                command.Transaction = transaction;
+
+                try
+                {
+                    foreach (string clause in clauses)
+                    {
+                        command.CommandText = clause;
+                        count = command.ExecuteNonQuery();
+                    }
+
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    OnError(new SqlExceptionEventArgs(command, ex));
+                    try
+                    {
+                        transaction.Rollback();
+                    }
+                    catch (Exception exRollback)
+                    {
+                        OnError(new SqlExceptionEventArgs(command, exRollback));
+                    }
+                }
+            }
+
+            return count;
+        }
+
     }
 }
 

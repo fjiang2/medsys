@@ -507,7 +507,8 @@ namespace sqlcon
                 bool exists = tname2.Exists();
                 try
                 {
-                    int count = new SqlCmd(pvd2, sql).ExecuteNonQuery();
+                    var sqlcmd = new SqlCmd(pvd2, sql);
+                    int count = sqlcmd.ExecuteNonQueryTransaction();
                     if (exists)
                         stdio.WriteLine("{0} row(s) changed at destination {1}", count, tname2);
                     else
