@@ -140,8 +140,8 @@ namespace sqlcon
 
             if (actiontype == ActionType.CompareSchema)
             {
-                stdio.WriteLine("{0} table schema {1} => {2}", sidetype, tname1, tname2);
                 sql = Compare.TableSchemaDifference(sidetype, tname1, tname2);
+                stdio.WriteLine("completed to {0} table schema {1} => {2}", sidetype, tname1, tname2);
             }
             else if (actiontype == ActionType.CompareData)
             {
@@ -156,7 +156,6 @@ namespace sqlcon
                     return string.Empty;
                 }
 
-                stdio.WriteLine("{0} table data {1} => {2}", sidetype, tname1, tname2);
                 bool hasPk = schema1.PrimaryKeys.Length > 0;
                 sql = Compare.TableDifference(sidetype, schema1, schema2, schema1.PrimaryKeys.Keys);
 
@@ -177,6 +176,8 @@ namespace sqlcon
                         sql = Compare.TableDifference(sidetype, schema1, schema2, keys);
                     }
                 }
+
+                stdio.WriteLine("completed to {0} table data {1} => {2}", sidetype, tname1, tname2);
             }
 
             if (sql != string.Empty && sidetype == CompareSideType.compare)

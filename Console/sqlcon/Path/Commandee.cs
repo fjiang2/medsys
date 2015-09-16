@@ -397,20 +397,21 @@ namespace sqlcon
             {
                 if (sideType == CompareSideType.copy)
                 {
-                    stdio.WriteLine("copy schema or records from table1 to table2");
-                    stdio.WriteLine("copy [table1] [table2]|[path] [/s]");
+                    stdio.WriteLine("copy schema or records from table1 to table2, support table name wildcards");
+                    stdio.WriteLine("copy table1 [table2] [/s]");
                 }
                 else if (sideType == CompareSideType.sync)
                 {
                     stdio.WriteLine("synchronize schema or records from table1 to table2");
-                    stdio.WriteLine("sync [table1] [table2] |[path] [/s] : sync table1' records to table2");
+                    stdio.WriteLine("sync table1 [table2] [/s] : sync table1' records to table2");
                 }
                 else if (sideType == CompareSideType.compare)
                 {
                     stdio.WriteLine("compare schema or records from table1 to table2");
-                    stdio.WriteLine("comp [table1] [table2]|[path] [/s] : sync table1' records to table2");
+                    stdio.WriteLine("comp table1 [table2] [/s] : sync table1' records to table2");
                 }
-                    stdio.WriteLine("[/s]                               : table schema, default table records");
+                stdio.WriteLine("support table name wildcards");
+                stdio.WriteLine("[/s]                       : table schema, default table records");
                 return;
             }
 
@@ -421,31 +422,47 @@ namespace sqlcon
             }
 
             var path1 = new PathName(cmd.arg1);
-            TreeNode<IDataPath> node1 = mgr.Navigate(path1);
-            if (node1 == null)
+            TableName[] T1;
+            Side side1;
+
+            if (path1.wildcard != null)
             {
-                stdio.ShowError("invalid path:" + path1);
-                return;
+                TreeNode<IDataPath> node1 = mgr.Navigate(path1);
+                DatabaseName dname1 = mgr.GetPathFrom<DatabaseName>(node1);
+                if (dname1 == null)
+                {
+                    stdio.ShowError("warning: source database is unavailable");
+                    return;
+                }
+
+                var m1 = new MatchedDatabase(dname1, path1.wildcard, mgr.Configuration.excludedtables);
+                T1 = m1.MatchedTableNames;
+                var server1 = mgr.GetPathFrom<ServerName>(node1);
+                side1 = new Side(server1.Provider);
+            }
+            else
+            {
+                TreeNode<IDataPath> node1 = mgr.Navigate(path1);
+                if (node1 == null)
+                {
+                    stdio.ShowError("invalid path:" + path1);
+                    return;
+                }
+
+                TableName tname1 = mgr.GetPathFrom<TableName>(node1);
+                if (tname1 == null)
+                {
+                    stdio.ShowError("warning: source table is not available");
+                    return;
+                }
+
+                T1 = new TableName[] { tname1 };
+
+                var server1 = mgr.GetPathFrom<ServerName>(node1);
+                side1 = new Side(server1.Provider);
             }
 
-            var server1 = mgr.GetPathFrom<ServerName>(node1);
-            if (server1 == null)
-            {
-                stdio.ShowError("warning: source server is not available");
-                return;
-            }
-
-            var pvd1 = server1.Provider;
-            Side side1 = new Side(pvd1);
-
-            TableName tname1 = mgr.GetPathFrom<TableName>(node1);
-            if (tname1 == null)
-            {
-                stdio.ShowError("warning: source table is not available");
-                return;
-            }
             //------------------------------------------------------------------------------
-
             TreeNode<IDataPath> node2;
             if (cmd.arg2 != null)
             {
@@ -460,66 +477,60 @@ namespace sqlcon
             else
                 node2 = this.mgr.current;
 
-            var server2 = mgr.GetPathFrom<ServerName>(node2);
-            if (server2 == null)
+            var dname2 = mgr.GetPathFrom<DatabaseName>(node2);
+            if (dname2 == null)
             {
-                stdio.ShowError("warning: destination server is not available");
+                stdio.ShowError("warning: destination database is unavailable");
                 return;
             }
 
-            var pvd2 = server2.Provider;
-            Side side2 = new Side(pvd2);
+            var server2 = mgr.GetPathFrom<ServerName>(node2);
+            Side side2 = new Side(server2.Provider);
 
-            TableName tname2 = mgr.GetPathFrom<TableName>(node2);
-            if (tname2 == null)
+            foreach (var tname1 in T1)
             {
-                var dname2 = mgr.GetPathFrom<DatabaseName>(node2);
-                if (dname2 != null)
+                TableName tname2 = mgr.GetPathFrom<TableName>(node2);
+                if (tname2 == null || path1.wildcard != null)
                 {
                     tname2 = new TableName(dname2, tname1.SchemaName, tname1.ShortName);
                 }
-                else
+
+                var adapter = new CompareAdapter(side1, side2);
+                stdio.WriteLine("start to {0} from {1} to {2}", sideType, tname1, tname2);
+                var sql = adapter.CompareTable(cmd.IsSchema ? ActionType.CompareSchema : ActionType.CompareData, sideType, tname1, tname2, mgr.Configuration.PK);
+
+                if (sideType == CompareSideType.compare)
                 {
-                    stdio.ShowError("warning: destination table is not available");
+                    if (sql == string.Empty)
+                    {
+                        stdio.WriteLine("source {0} and destination {1} are identical", tname1, tname2);
+                    }
                     return;
                 }
-            }
-            //------------------------------------------------------------------------------
 
-            var adapter = new CompareAdapter(side1, side2);
-            var sql = adapter.CompareTable(cmd.IsSchema ? ActionType.CompareSchema : ActionType.CompareData, sideType, tname1, tname2, mgr.Configuration.PK);
-
-            if (sideType == CompareSideType.compare)
-            {
                 if (sql == string.Empty)
                 {
-                    stdio.WriteLine("source and destination are identical", tname2);
+                    stdio.WriteLine("nothing changes made on destination {0}", tname2);
                 }
-                return;
-            }
-
-            if (sql == string.Empty)
-            {
-                stdio.WriteLine("nothing changes made on destination {0}", tname2);
-            }
-            else
-            {
-                bool exists = tname2.Exists();
-                try
+                else
                 {
-                    var sqlcmd = new SqlCmd(pvd2, sql);
-                    int count = sqlcmd.ExecuteNonQueryTransaction();
-                    if (exists)
-                        stdio.WriteLine("{0} row(s) changed at destination {1}", count, tname2);
-                    else
-                        stdio.WriteLine("table {0} created at destination", tname2);
+                    bool exists = tname2.Exists();
+                    try
+                    {
+                        var sqlcmd = new SqlCmd(side2.Provider, sql);
+                        int count = sqlcmd.ExecuteNonQueryTransaction();
+                        if (exists)
+                            stdio.WriteLine("{0} row(s) changed at destination {1}", count, tname2);
+                        else
+                            stdio.WriteLine("table {0} created at destination", tname2);
+                    }
+                    catch (Exception ex)
+                    {
+                        stdio.ShowError(ex.Message);
+                        return;
+                    }
                 }
-                catch (Exception ex)
-                {
-                    stdio.ShowError(ex.Message);
-                    return;
-                }
-            }
+            } // loop for
         }
 
     }
