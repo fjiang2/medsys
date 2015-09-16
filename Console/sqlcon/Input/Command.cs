@@ -45,10 +45,10 @@ namespace sqlcon
             string[] L;
             this.badcommand = !parseArgument(this.args, out L);
 
-            if (L.Length > 0)
+            if (L.Length > 0 && !L[0].StartsWith("/"))
                 this.arg1 = L[0];
 
-            if (L.Length > 1)
+            if (L.Length > 1 && !L[1].StartsWith("/"))
                 this.arg2 = L[1];
 
             for (int i = 0; i < L.Length; i++)

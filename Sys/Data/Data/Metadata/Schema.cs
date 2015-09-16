@@ -108,14 +108,15 @@ namespace Sys.Data
             sql = script.CREATE_TABLE();
 
             StringBuilder builder = new StringBuilder(sql);
-            builder.AppendLine(TableScript.GO);
+            //builder.AppendLine(TableScript.GO);
 
             var fk1 = schema1.ForeignKeys;
             if (fk1.Keys.Length > 0)
             {
                 foreach (var fk in fk1.Keys)
                 {
-                    builder.AppendLine(script.ADD_FOREIGN_KEY(fk)).AppendLine(TableScript.GO);
+                    builder.AppendLine(script.ADD_FOREIGN_KEY(fk));
+                    //builder.AppendLine(TableScript.GO);
                 }
 
             }

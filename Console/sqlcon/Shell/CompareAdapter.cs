@@ -80,7 +80,7 @@ namespace sqlcon
                 else if (N1.Length > 0 && N2.Length == 0)
                 {
                     foreach (var tname1 in N1)
-                         builder.Append(tname1.GenerateScript());
+                        builder.Append(tname1.GenerateScript());
                 }
                 else
                 {
@@ -132,8 +132,9 @@ namespace sqlcon
             TableSchema schema1 = new TableSchema(tname1);
             TableSchema schema2 = new TableSchema(tname2);
 
-            if (!Exists(tname1) || !Exists(tname2))
+            if (!Exists(tname1))
                 return string.Empty;
+
 
             string sql = string.Empty;
 
@@ -144,6 +145,11 @@ namespace sqlcon
             }
             else if (actiontype == ActionType.CompareData)
             {
+                if (!Exists(tname2))
+                {
+                    return string.Empty;
+                }
+
                 if (Compare.TableSchemaDifference(sidetype, tname1, tname2) != string.Empty)
                 {
                     stdio.WriteLine("failed to {0} becuase of different table schemas", sidetype);

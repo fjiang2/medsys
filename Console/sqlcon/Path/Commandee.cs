@@ -57,7 +57,7 @@ namespace sqlcon
 
         public bool chdir(Command cmd)
         {
-            if (cmd.arg1 == "/?")
+            if (cmd.HasHelp)
             {
                 stdio.WriteLine("command cd or chdir");
                 stdio.WriteLine("cd [path]              : change directory");
@@ -87,7 +87,7 @@ namespace sqlcon
 
         public void dir(Command cmd)
         {
-            if (cmd.arg1 == "/?")
+            if (cmd.HasHelp)
             {
                 stdio.WriteLine("command dir or ls");
                 stdio.WriteLine("dir [path]             : display current directory");
@@ -111,7 +111,7 @@ namespace sqlcon
 
         public void set(Command cmd)
         {
-            if (cmd.arg1 == "/?")
+            if (cmd.HasHelp)
             {
                 stdio.WriteLine("set assignment                      : update value by current table or locator");
                 stdio.WriteLine("set col1=val1, col2= val2           : update column by current table or locator");
@@ -216,7 +216,7 @@ namespace sqlcon
 
         public void del(Command cmd)
         {
-            if (cmd.arg1 == "/?")
+            if (cmd.HasHelp)
             {
                 stdio.WriteLine("command del or erase:  delete data rows");
                 stdio.WriteLine("del [sql where clause]  : delete current table filtered rows");
@@ -280,7 +280,7 @@ namespace sqlcon
 
         public void mkdir(Command cmd)
         {
-            if (cmd.arg1 == "/?")
+            if (cmd.HasHelp)
             {
                 stdio.WriteLine("command md or mkdir");
                 stdio.WriteLine("md [sql where clause]  : filter current table rows");
@@ -311,7 +311,7 @@ namespace sqlcon
 
         public void rmdir(Command cmd)
         {
-            if (cmd.arg1 == "/?")
+            if (cmd.HasHelp)
             {
                 stdio.WriteLine("command rd or rmdir");
                 stdio.WriteLine("rm [sql where clause] : remove locators");
@@ -366,7 +366,7 @@ namespace sqlcon
 
         public void type(Command cmd)
         {
-            if (cmd.arg1 == "/?")
+            if (cmd.HasHelp)
             {
                 stdio.WriteLine("type [path]|[pattern]  : display current data, or search pattern");
                 stdio.WriteLine("options:");
@@ -393,7 +393,7 @@ namespace sqlcon
 
         public void xcopy(Command cmd, CompareSideType sideType)
         {
-            if (cmd.arg1 == "/?")
+            if (cmd.HasHelp)
             {
                 if (sideType == CompareSideType.copy)
                 {
@@ -446,7 +446,7 @@ namespace sqlcon
             }
             //------------------------------------------------------------------------------
 
-            TreeNode<IDataPath> node2 = mgr.Navigate(path1);
+            TreeNode<IDataPath> node2;
             if (cmd.arg2 != null)
             {
                 var path2 = new PathName(cmd.arg2);
@@ -504,8 +504,20 @@ namespace sqlcon
             }
             else
             {
-                int count = new SqlCmd(pvd2, sql).ExecuteNonQuery();
-                stdio.WriteLine("{0} row(s) changed at destination {1}", count, tname2);
+                bool exists = tname2.Exists();
+                try
+                {
+                    int count = new SqlCmd(pvd2, sql).ExecuteNonQuery();
+                    if (exists)
+                        stdio.WriteLine("{0} row(s) changed at destination {1}", count, tname2);
+                    else
+                        stdio.WriteLine("table {0} created at destination", tname2);
+                }
+                catch (Exception ex)
+                {
+                    stdio.ShowError(ex.Message);
+                    return;
+                }
             }
         }
 
