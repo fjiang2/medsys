@@ -13,11 +13,14 @@ namespace Sys.Data.Comparison
 
         public TableSchemaCompare(TableName name1, TableName name2)
         {
+            SideType = CompareSideType.compare;
             tableName1 = name1;
             tableName2 = name2;
         }
 
-        public string Compare(SideType sideType)
+        public CompareSideType SideType { get; set; }
+
+        public string Compare()
         {
             TableSchema schema1 = new TableSchema(tableName1);
             TableSchema schema2 = new TableSchema(tableName2);

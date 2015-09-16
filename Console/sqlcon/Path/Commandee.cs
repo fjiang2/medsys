@@ -391,27 +391,26 @@ namespace sqlcon
 
 
 
-        public void xcopy(Command cmd, SideType sideType)
+        public void xcopy(Command cmd, CompareSideType sideType)
         {
             if (cmd.arg1 == "/?")
             {
-                if (sideType == SideType.copy)
+                if (sideType == CompareSideType.copy)
                 {
                     stdio.WriteLine("copy schema or records from table1 to table2");
-                    stdio.WriteLine("copy [table1] [table2] [/s]");
-                    stdio.WriteLine("[/s]                        : copy table schema, default copy table records");
+                    stdio.WriteLine("copy [table1] [table2]|[path] [/s]");
                 }
-                else if (sideType == SideType.sync)
+                else if (sideType == CompareSideType.sync)
                 {
                     stdio.WriteLine("synchronize schema or records from table1 to table2");
-                    stdio.WriteLine("sync [table1] [table2] [/s] : sync table1' records to table2");
+                    stdio.WriteLine("sync [table1] [table2] |[path] [/s] : sync table1' records to table2");
                 }
-                else if (sideType == SideType.compare)
+                else if (sideType == CompareSideType.compare)
                 {
                     stdio.WriteLine("compare schema or records from table1 to table2");
-                    stdio.WriteLine("comp [table1] [table2] [/s] : sync table1' records to table2");
+                    stdio.WriteLine("comp [table1] [table2]|[path] [/s] : sync table1' records to table2");
                 }
-                    stdio.WriteLine("[/s]                        : table schema, default table records");
+                    stdio.WriteLine("[/s]                               : table schema, default table records");
                 return;
             }
 
@@ -429,13 +428,6 @@ namespace sqlcon
                 return;
             }
 
-            TableName tname1 = mgr.GetPathFrom<TableName>(node1);
-            if (tname1 == null)
-            {
-                stdio.ShowError("warning: source table is not available");
-                return;
-            }
-
             var server1 = mgr.GetPathFrom<ServerName>(node1);
             if (server1 == null)
             {
@@ -445,6 +437,13 @@ namespace sqlcon
 
             var pvd1 = server1.Provider;
             Side side1 = new Side(pvd1);
+
+            TableName tname1 = mgr.GetPathFrom<TableName>(node1);
+            if (tname1 == null)
+            {
+                stdio.ShowError("warning: source table is not available");
+                return;
+            }
             //------------------------------------------------------------------------------
 
             TreeNode<IDataPath> node2 = mgr.Navigate(path1);
@@ -461,13 +460,6 @@ namespace sqlcon
             else
                 node2 = this.mgr.current;
 
-            TableName tname2 = mgr.GetPathFrom<TableName>(node2);
-            if (tname2 == null)
-            {
-                stdio.ShowError("warning: destination table is not available");
-                return;
-            }
-
             var server2 = mgr.GetPathFrom<ServerName>(node2);
             if (server2 == null)
             {
@@ -478,12 +470,26 @@ namespace sqlcon
             var pvd2 = server2.Provider;
             Side side2 = new Side(pvd2);
 
+            TableName tname2 = mgr.GetPathFrom<TableName>(node2);
+            if (tname2 == null)
+            {
+                var dname2 = mgr.GetPathFrom<DatabaseName>(node2);
+                if (dname2 != null)
+                {
+                    tname2 = new TableName(dname2, tname1.SchemaName, tname1.ShortName);
+                }
+                else
+                {
+                    stdio.ShowError("warning: destination table is not available");
+                    return;
+                }
+            }
             //------------------------------------------------------------------------------
 
             var adapter = new CompareAdapter(side1, side2);
             var sql = adapter.CompareTable(cmd.IsSchema ? ActionType.CompareSchema : ActionType.CompareData, sideType, tname1, tname2, mgr.Configuration.PK);
 
-            if (sideType == SideType.compare)
+            if (sideType == CompareSideType.compare)
             {
                 if (sql == string.Empty)
                 {

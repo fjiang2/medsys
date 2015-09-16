@@ -12,7 +12,7 @@ namespace Sys.Data.Comparison
        
 
         #region compare database schema/data
-        public static string DatabaseSchemaDifference(SideType sideType, DatabaseName dname1, DatabaseName dname2)
+        public static string DatabaseSchemaDifference(CompareSideType sideType, DatabaseName dname1, DatabaseName dname2)
         {
             TableName[] names = dname1.GetDependencyTableNames();
 
@@ -42,7 +42,7 @@ namespace Sys.Data.Comparison
 
 
        
-        public static string DatabaseDifference(DatabaseName dname1, DatabaseName dname2, string[] excludedTables)
+        public static string DatabaseDifference(CompareSideType sideType, DatabaseName dname1, DatabaseName dname2, string[] excludedTables)
         {
             TableName[] names = dname1.GetDependencyTableNames();
             excludedTables = excludedTables.Select(row => row.ToUpper()).ToArray();
@@ -72,7 +72,7 @@ namespace Sys.Data.Comparison
 
                 if (tname2.Exists())
                 {
-                    builder.Append(TableDifference(SideType.compare, schema1, schema2, schema1.PrimaryKeys.Keys));
+                    builder.Append(TableDifference(sideType, schema1, schema2, schema1.PrimaryKeys.Keys));
                 }
                 else
                 {
@@ -90,15 +90,15 @@ namespace Sys.Data.Comparison
 
         #region compare table schema/data
 
-        public static string TableSchemaDifference(SideType sideType, TableName tableName1, TableName tableName2)
+        public static string TableSchemaDifference(CompareSideType sideType, TableName tableName1, TableName tableName2)
         {
 
             string sql;
 
             if (tableName2.Exists())
             {
-                TableSchemaCompare compare = new TableSchemaCompare(tableName1, tableName2);
-                sql = compare.Compare(sideType);
+                TableSchemaCompare compare = new TableSchemaCompare(tableName1, tableName2) { SideType = sideType };
+                sql = compare.Compare();
             }
             else
             {
@@ -108,11 +108,11 @@ namespace Sys.Data.Comparison
             return sql;
         }
 
-        public static string TableDifference(SideType type, TableSchema schema1, TableSchema schema2, string[] primaryKeys)
+        public static string TableDifference(CompareSideType sideType, TableSchema schema1, TableSchema schema2, string[] primaryKeys)
         {
-            TableCompare compare = new TableCompare(schema1, schema2);
+            TableCompare compare = new TableCompare(schema1, schema2) { SideType = sideType };
             IPrimaryKeys keys = new PrimaryKeys(primaryKeys);
-            return compare.Compare(type, keys);
+            return compare.Compare(keys);
         }
 
         #endregion

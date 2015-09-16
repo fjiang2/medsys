@@ -9,12 +9,7 @@ using Sys.Data;
 namespace Sys.Data.Comparison
 {
 
-    public enum SideType
-    {
-        compare,
-        copy,
-        sync
-    }
+  
 
     class TableCompare
     {
@@ -28,20 +23,22 @@ namespace Sys.Data.Comparison
 
         public TableCompare(TableSchema schema1, TableSchema schema2)
         {
+            SideType = CompareSideType.compare;
             this.schema1 = schema1;
             this.schema2 = schema2;
         }
 
+        public CompareSideType SideType { get; set; }
 
-        public string Compare(SideType type, IPrimaryKeys pk)
+        public string Compare(IPrimaryKeys pk)
         {
             var dt1 = new TableReader(schema1.TableName).Table;
             var dt2 = new TableReader(schema2.TableName).Table;
 
-            return Compare(type, pk, dt1, dt2);
+            return Compare(pk, dt1, dt2);
         }
 
-        private string Compare(SideType type, IPrimaryKeys pk, DataTable table1, DataTable table2)
+        private string Compare(IPrimaryKeys pk, DataTable table1, DataTable table2)
         {
             this.PkColumns = pk;
             this.NonPkColumns = table1.Columns.OfType<DataColumn>().Select(row => row.ColumnName).Except(PkColumns.Keys).ToArray();
@@ -71,7 +68,7 @@ namespace Sys.Data.Comparison
                 }
             }
 
-            if (type != SideType.copy)
+            if (SideType != CompareSideType.copy)
             {
                 foreach (DataRow row2 in table2.Rows)
                 {
@@ -82,7 +79,7 @@ namespace Sys.Data.Comparison
                 }
             }
 
-            if (builder.ToString() != string.Empty && type == SideType.compare)
+            if (builder.ToString() != string.Empty && SideType == CompareSideType.compare)
                 builder.AppendLine(TableScript.GO);
 
             return builder.ToString();

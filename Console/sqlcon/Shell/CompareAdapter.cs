@@ -74,7 +74,7 @@ namespace sqlcon
                 {
                     for (int i = 0; i < N1.Length; i++)
                     {
-                        builder.Append(CompareTable(CompareType, SideType.compare, N1[i], N2[i], pk));
+                        builder.Append(CompareTable(CompareType, CompareSideType.compare, N1[i], N2[i], pk));
                     }
                 }
                 else if (N1.Length > 0 && N2.Length == 0)
@@ -91,7 +91,7 @@ namespace sqlcon
             }
             else if (CompareType == ActionType.CompareSchema)
             {
-                sql = CompareDatabaseSchema(SideType.compare, db1, db2);
+                sql = CompareDatabaseSchema(CompareSideType.compare, db1, db2);
 
                 if (sql != string.Empty)
                     builder.Append(sql);
@@ -103,7 +103,7 @@ namespace sqlcon
                 //if (sql != string.Empty)
                 //    builder.Append(sql);
 
-                sql = CompareDatabaseData(db1, db2, m1.Excludedtables);
+                sql = CompareDatabaseData(CompareSideType.compare, db1, db2, m1.Excludedtables);
                 if (sql != string.Empty)
                     builder.Append(sql);
 
@@ -112,22 +112,22 @@ namespace sqlcon
             return builder.ToString();
         }
 
-        private string CompareDatabaseSchema(SideType sideType, DatabaseName db1, DatabaseName db2)
+        private string CompareDatabaseSchema(CompareSideType sideType, DatabaseName db1, DatabaseName db2)
         {
             stdio.WriteLine("{0} database schema {1} => {2}", sideType, db1.Name, db2.Name);
             return Compare.DatabaseSchemaDifference(sideType, db1, db2);
         }
 
-        private string CompareDatabaseData(DatabaseName db1, DatabaseName db2, string[] excludedtables)
+        private string CompareDatabaseData(CompareSideType sideType, DatabaseName db1, DatabaseName db2, string[] excludedtables)
         {
             stdio.WriteLine("compare database data {0} => {1}", db1.Name, db2.Name);
             if (excludedtables != null && excludedtables.Length > 0)
                 stdio.WriteLine("ignore tables: {0}", string.Join(",", excludedtables));
-            return Compare.DatabaseDifference(db1, db2, excludedtables);
+            return Compare.DatabaseDifference(sideType, db1, db2, excludedtables);
         }
 
   
-        public string CompareTable(ActionType actiontype, SideType sidetype, TableName tname1, TableName tname2, Dictionary<string, string[]> pk)
+        public string CompareTable(ActionType actiontype, CompareSideType sidetype, TableName tname1, TableName tname2, Dictionary<string, string[]> pk)
         {
             TableSchema schema1 = new TableSchema(tname1);
             TableSchema schema2 = new TableSchema(tname2);
@@ -173,7 +173,7 @@ namespace sqlcon
                 }
             }
 
-            if (sql != string.Empty && sidetype == SideType.compare)
+            if (sql != string.Empty && sidetype == CompareSideType.compare)
                 stdio.WriteLine(sql);
 
             return sql;
