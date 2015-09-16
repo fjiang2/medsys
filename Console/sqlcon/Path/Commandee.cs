@@ -218,7 +218,7 @@ namespace sqlcon
         {
             if (cmd.HasHelp)
             {
-                stdio.WriteLine("command del or erase: drop tables or  delete data rows");
+                stdio.WriteLine("command del or erase: drop tables or delete data rows");
                 stdio.WriteLine("del tablename               : drop table");
                 stdio.WriteLine("del [sql where clause]      : delete current table filtered rows");
                 stdio.WriteLine("example:");
@@ -251,15 +251,42 @@ namespace sqlcon
                                 var _tname = mgr.GetPathFrom<TableName>(node);
                                 if (_tname != null)
                                     T = new TableName[] { _tname };
+                                else
+                                {
+                                    stdio.ShowError("invalid path");
+                                    return;
+                                }
                             }
                         }
+                        else
+                        {
+                            stdio.ShowError("database is unavailable");
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        stdio.ShowError("invalid path");
+                        return;
                     }
                 }
-                if (T != null && T.Length>0)
-                { 
-                    var sqlcmd = new SqlCmd(T[0].Provider, string.Empty);
-                    sqlcmd.ExecuteNonQueryTransaction(T.Select(row => string.Format("DROP TABLE {0}", row)));
-                    stdio.ShowError("completed to drop table(s):\n{0}", string.Join<TableName>("\n", T));
+
+                if (T != null && T.Length > 0)
+                {
+                    stdio.Write("are you sure to drop {0} tables (y/n)?", T.Length);
+                    if (stdio.ReadKey() != ConsoleKey.Y)
+                        return;
+
+                    try
+                    {
+                        var sqlcmd = new SqlCmd(T[0].Provider, string.Empty);
+                        sqlcmd.ExecuteNonQueryTransaction(T.Select(row => string.Format("DROP TABLE {0}", row)));
+                        stdio.ShowError("completed to drop table(s):\n{0}", string.Join<TableName>("\n", T));
+                    }
+                    catch (Exception ex)
+                    {
+                        stdio.ShowError(ex.Message);
+                    }
                 }
                 else
                     stdio.ShowError("table is not selected");
