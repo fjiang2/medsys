@@ -226,6 +226,8 @@ namespace Sys.Data
 
         public int ExecuteNonQueryTransaction()
         {
+            string splitter = TableScript.GO + "\r\n";
+            string[] clauses = base.script.Split(new string[] { splitter }, StringSplitOptions.RemoveEmptyEntries);
             return ExecuteNonQueryTransaction(new string[] { base.script });
         }
 

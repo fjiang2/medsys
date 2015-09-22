@@ -135,7 +135,7 @@ namespace sqlcon
 
             Locator locator = mgr.GetCombinedLocator(pt);
             TableName tname = mgr.GetCurrentPath<TableName>();
-            
+
             SqlBuilder builder = new SqlBuilder().UPDATE(tname).SET(cmd.args);
             if (locator != null)
             {
@@ -308,7 +308,7 @@ namespace sqlcon
             if (pt.Item is TableName)
             {
                 tname = (TableName)pt.Item;
-                if(!string.IsNullOrEmpty(cmd.args))
+                if (!string.IsNullOrEmpty(cmd.args))
                     locator = new Locator(cmd.args);
             }
 
@@ -329,7 +329,7 @@ namespace sqlcon
                     count = new SqlBuilder().DELETE(tname).SqlCmd.ExecuteNonQuery();
                 else
                     count = new SqlBuilder().DELETE(tname).WHERE(locator).SqlCmd.ExecuteNonQuery();
-                
+
                 stdio.WriteLine("{0} of row(s) affected", count);
             }
             catch (Exception ex)
@@ -594,5 +594,20 @@ namespace sqlcon
             } // loop for
         }
 
+        public void rename(Command cmd)
+        {
+            if (cmd.HasHelp)
+            {
+                stdio.WriteLine("rename column name, table name and database name");
+                stdio.WriteLine("ren table1 table2");
+                return;
+            }
+
+            if (cmd.arg1 == null)
+            {
+                stdio.ShowError("invalid argument");
+                return;
+            }
+        }
     }
 }

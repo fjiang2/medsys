@@ -14,7 +14,7 @@ using Tie;
 
 namespace sqlcon
 {
-    class SqlShell  
+    class SqlShell
     {
         private Side theSide;
         private CompareAdapter adapter;
@@ -53,7 +53,7 @@ namespace sqlcon
             this.theSide = side;
             Context.DS.AddHostObject(Context.THESIDE, side);
 
-            commandee.chdir(theSide.Provider.ServerName, theSide.DatabaseName); 
+            commandee.chdir(theSide.Provider.ServerName, theSide.DatabaseName);
         }
 
         public void DoCommand()
@@ -64,11 +64,11 @@ namespace sqlcon
 
             while (true)
             {
-            L1:
+                L1:
                 stdio.Write("{0}> ", mgr);
-            L2:
+                L2:
                 line = stdio.ReadLine();
-            
+
                 //ctrl-c captured
                 if (line == null)
                     return;
@@ -185,6 +185,7 @@ namespace sqlcon
 
                 case "ren":
                 case "rename":
+                    commandee.rename(cmd);
                     return true;
 
                 case "echo":
@@ -353,29 +354,24 @@ namespace sqlcon
 
                     return true;
 
-     
+
                 case "compare":
                     if (cmd.arg1 != null)
                     {
                         string t1 = null;
                         string t2 = null;
-                        if (cmd.arg2 != null)
-                            cmd.arg2.parse(out t1, out t2);
+                        if (cmd.arg1 != null)
+                            cmd.arg1.parse(out t1, out t2);
 
                         MatchedDatabase m1 = new MatchedDatabase(adapter.Side1.DatabaseName, t1, cfg.excludedtables);
                         MatchedDatabase m2 = new MatchedDatabase(adapter.Side2.DatabaseName, t2, cfg.excludedtables);
                         using (var writer = cfg.OutputFile.NewStreamWriter())
                         {
-                            var type = ActionType.CompareSchema;
-                            if (cmd.arg1 == "data")
-                                type = ActionType.CompareData;
-                            else if (cmd.arg1 == "schema")
+                            ActionType type;
+                            if (cmd.IsSchema)
                                 type = ActionType.CompareSchema;
-                            else
-                            {
-                                stdio.ShowError("invalid command argument");
-                                break;
-                            }
+                            else 
+                                type = ActionType.CompareData;
 
                             var sql = adapter.Run(type, m1, m2, cfg.PK);
                             writer.Write(sql);
@@ -399,7 +395,7 @@ namespace sqlcon
                     commandee.xcopy(cmd, CompareSideType.compare);
                     return true;
 
-                  //example: run func(id=20)
+                //example: run func(id=20)
                 case "run":
                     {
                         VAL result = Context.Evaluate(cmd.args);
@@ -610,7 +606,11 @@ namespace sqlcon
                 case "drop":
                     try
                     {
-                        stdio.WriteLine("{0} of row(s) affected", new SqlCmd(theSide.Provider, text).ExecuteNonQuery());
+                        int count = new SqlCmd(theSide.Provider, text).ExecuteNonQuery();
+                        if (count != -1)
+                            stdio.WriteLine("{0} of row(s) affected", count);
+                        else
+                            stdio.WriteLine("nothing affected");
                     }
                     catch (Exception ex)
                     {
@@ -639,7 +639,7 @@ namespace sqlcon
             }
         }
 
-     
+
         private void Show(string arg1, string arg2)
         {
             TableName[] tnames;
@@ -729,7 +729,7 @@ namespace sqlcon
                     tnames.Select(tname => new { Schema = tname.SchemaName, Table = tname.Name })
                         .ToConsole();
                     break;
-                
+
                 case "view":
                     vnames.Select(tname => new { Schema = tname.SchemaName, View = tname.Name })
                         .ToConsole();
@@ -738,11 +738,11 @@ namespace sqlcon
                 case "proc":
                     theSide.DatabaseName.AllProc().ToConsole();
                     break;
-                
+
                 case "index":
                     theSide.DatabaseName.AllIndices().ToConsole();
-                    break; 
-                
+                    break;
+
                 case "connection":
                     {
                         var list = cfg.GetValue("servers");
@@ -792,8 +792,8 @@ namespace sqlcon
             stdio.WriteLine("ver                     : display version");
             stdio.WriteLine();
             stdio.WriteLine("<Commands>");
-            stdio.WriteLine("<compare schema> tables : compare schema of tables");
-            stdio.WriteLine("<compare data> tables   : compare data of tables, compare different tables using <compare data table1:table2>");
+            stdio.WriteLine("<compare> tables /s     : compare schema of tables");
+            stdio.WriteLine("<compare> tables        : compare data of tables, compare different tables using <compare data table1:table2>");
             stdio.WriteLine("<find> pattern          : find table name or column name");
             stdio.WriteLine("<show db>               : show all database names");
             stdio.WriteLine("<show table>            : show all table names");
