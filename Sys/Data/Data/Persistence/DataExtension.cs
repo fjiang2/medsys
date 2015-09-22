@@ -336,7 +336,7 @@ namespace Sys.Data
         public static void SqlDelete(this TableName tableName, string where, params object[] args)
         {
             string sql = string.Format("DELETE FROM {0} WHERE {1}", tableName, string.Format(where, args));
-            SqlCmd.ExecuteNonQuery(tableName.Provider, sql);
+            DataExtension.ExecuteNonQuery(tableName.Provider, sql);
         }
 
         internal static object Convert(object obj, Type type)
@@ -483,6 +483,58 @@ namespace Sys.Data
                     row[columnName] = value;
             }
         }
+
+        /// <summary>
+        /// Delete records
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="where"></param>
+        public static void Delete<T>(this SqlExpr where) where T : class, IDPObject, new()
+        {
+            TableName tableName = typeof(T).TableName();
+            DataExtension.ExecuteScalar(tableName.Provider,
+                    "DELETE FROM {0} WHERE {1}",
+                    tableName.FullName,
+                    where);
+        }
+
+
+        //--------------------------------------------------------------------------------------
+        public static object ExecuteScalar(this ConnectionProvider provider, string script, params object[] args)
+        {
+            SqlCmd cmd = new SqlCmd(provider, string.Format(script, args));
+            return cmd.ExecuteScalar();
+        }
+
+        public static int ExecuteNonQuery(this ConnectionProvider provider, string script, params object[] args)
+        {
+            SqlCmd cmd = new SqlCmd(provider, string.Format(script, args));
+            return cmd.ExecuteNonQuery();
+        }
+
+        public static DataTable FillDataTable(this string script, params object[] args)
+        {
+            return FillDataTable(ConnectionProviderManager.DefaultProvider, script, args);
+        }
+
+        public static DataTable FillDataTable<T>(this string script, params object[] args) where T : class, IDPObject, new()
+        {
+            TableName tableName = typeof(T).TableName();
+            return FillDataTable(tableName.Provider, script, args);
+        }
+
+        public static DataTable FillDataTable(this ConnectionProvider provider, string script, params object[] args)
+        {
+            SqlCmd cmd = new SqlCmd(provider, string.Format(script, args));
+            return cmd.FillDataTable();
+        }
+
+        public static DataRow FillDataRow(this ConnectionProvider provider, string script, params object[] args)
+        {
+            SqlCmd cmd = new SqlCmd(provider, string.Format(script, args));
+            return cmd.FillDataRow();
+        }
+
 
     }
 }

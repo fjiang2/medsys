@@ -88,7 +88,7 @@ namespace Sys.Workflow.Collaborative
                     WHERE WorkflowInstance_ID = {1}
                 ";
 
-            DataTable dt = SqlCmd.FillDataTable<wfTaskDpo>(SQL, wfTaskDpo.TABLE_NAME, this.ID);
+            DataTable dt = DataExtension.FillDataTable<wfTaskDpo>(SQL, wfTaskDpo.TABLE_NAME, this.ID);
             
             StringBuilder script = new StringBuilder();
             foreach (DataRow dataRow in dt.Rows)

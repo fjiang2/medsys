@@ -122,7 +122,7 @@ namespace Sys.ViewManager.Modules
                 .Replace("@Assemblies", AssemblyDpo.TABLE_NAME);
 
             ConnectionProvider provider = typeof(Sys.ViewManager.DpoClass.ItemPermissionDpo).TableName().Provider;
-            SqlCmd.ExecuteNonQuery(provider, SQL, assemblyName, L);
+            DataExtension.ExecuteNonQuery(provider, SQL, assemblyName, L);
             return true;
         }
 

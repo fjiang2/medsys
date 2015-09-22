@@ -79,7 +79,7 @@ namespace Sys.DataManager
                 man.Delete();
             }
 
-            SqlCmd.ExecuteScalar(
+            DataExtension.ExecuteScalar(
                 tableName.Provider,
                 "DELETE FROM {0} WHERE Doc_Id={1}", tableName, this.ID);
 

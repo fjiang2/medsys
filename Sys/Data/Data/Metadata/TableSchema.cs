@@ -128,7 +128,7 @@ namespace Sys.Data
             {
                 if (_thisDataTable == null)
                 {
-                    _thisDataTable = SqlCmd.FillDataTable(tableName.Provider, "SELECT TOP 1 * FROM {0}", tableName);
+                    _thisDataTable = DataExtension.FillDataTable(tableName.Provider, "SELECT TOP 1 * FROM {0}", tableName);
                     _thisDataTable.Rows.Clear();
                 }
 

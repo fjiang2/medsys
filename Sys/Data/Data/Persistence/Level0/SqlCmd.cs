@@ -170,60 +170,7 @@ namespace Sys.Data
         }
 
 
-        //--------------------------------------------------------------------------------------
-        public static object ExecuteScalar(ConnectionProvider provider, string script, params object[] args)
-        {
-            SqlCmd cmd = new SqlCmd(provider, string.Format(script, args));
-            return cmd.ExecuteScalar();
-        }
-
-        public static int ExecuteNonQuery(ConnectionProvider provider, string script, params object[] args)
-        {
-            SqlCmd cmd = new SqlCmd(provider, string.Format(script, args));
-            return cmd.ExecuteNonQuery();
-        }
-
-        public static DataTable FillDataTable(string script, params object[] args)
-        {
-            return FillDataTable(ConnectionProviderManager.DefaultProvider, script, args);
-        }
-
-        public static DataTable FillDataTable<T>(string script, params object[] args) where T : class,  IDPObject, new()
-        {
-            TableName tableName = typeof(T).TableName();
-            return FillDataTable(tableName.Provider, script, args);
-        }
-
-        public static DataTable FillDataTable(ConnectionProvider provider, string script, params object[] args)
-        {
-            SqlCmd cmd = new SqlCmd(provider, string.Format(script, args));
-            return cmd.FillDataTable();
-        }
-
-        public static DataRow FillDataRow(ConnectionProvider provider, string script, params object[] args)
-        {
-            SqlCmd cmd = new SqlCmd(provider, string.Format(script, args));
-            return cmd.FillDataRow();
-        }
-
-
       
-
-
-        /// <summary>
-        /// Delete records
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="where"></param>
-        public static void Delete<T>(SqlExpr where) where T : class,  IDPObject, new()
-        {
-            TableName tableName = typeof(T).TableName();
-            SqlCmd.ExecuteScalar(tableName.Provider,
-                    "DELETE FROM {0} WHERE {1}",
-                    tableName.FullName,
-                    where);
-        }
-
         public int ExecuteNonQueryTransaction()
         {
             string splitter = TableScript.GO + "\r\n";

@@ -41,7 +41,7 @@ namespace Sys.Platform.DataImporter
 
             LookUp lookUp = new LookUp(
                 "Select import template",
-                SqlCmd.FillDataTable(
+                DataExtension.FillDataTable(
                     tableName.Provider,
                     "SELECT ID, Label, Description FROM @DataImports"
                     .Replace("@DataImports", tableName.FullName)
@@ -235,7 +235,7 @@ namespace Sys.Platform.DataImporter
         private void btnRetrieveDataSource_Click(object sender, EventArgs e)
         {
             if (this.tbDataSource.Text != "")
-                gridControl1.DataSource = SqlCmd.FillDataTable<DataImportDpo>(this.tbDataSource.Text);
+                gridControl1.DataSource = DataExtension.FillDataTable<DataImportDpo>(this.tbDataSource.Text);
         }
 
         private void tbClassName_Validating(object sender, CancelEventArgs e)

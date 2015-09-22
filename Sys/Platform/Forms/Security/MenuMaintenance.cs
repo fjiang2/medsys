@@ -252,7 +252,7 @@ namespace Sys.Platform.Forms
             string SQL = "SELECT ID, Label, Command FROM @UserMenus"
                 .Replace("@UserMenus", Sys.ViewManager.DpoClass.UserMenuDpo.TABLE_NAME);
 
-            LookUp lookup = new LookUp("Select Menu Item", SqlCmd.FillDataTable<Sys.ViewManager.DpoClass.UserMenuDpo>(SQL));
+            LookUp lookup = new LookUp("Select Menu Item", DataExtension.FillDataTable<Sys.ViewManager.DpoClass.UserMenuDpo>(SQL));
             DataRow dataRow = lookup.PopUp(this);
             if (dataRow == null)
                 return;

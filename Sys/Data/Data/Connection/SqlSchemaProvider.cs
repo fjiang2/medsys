@@ -20,7 +20,7 @@ namespace Sys.Data
         {
             try
             {
-                return SqlCmd.FillDataRow(dname.Provider, "SELECT * FROM sys.databases WHERE name = '{0}'", dname.Name) != null;
+                return DataExtension.FillDataRow(dname.Provider, "SELECT * FROM sys.databases WHERE name = '{0}'", dname.Name) != null;
             }
             catch (Exception)
             {
@@ -36,7 +36,7 @@ namespace Sys.Data
                 if (!Exists(tname.DatabaseName))
                     return false;
 
-                return SqlCmd.FillDataRow(provider, "USE [{0}] ; SELECT * FROM sys.Tables WHERE Name='{1}'", tname.DatabaseName.Name, tname.Name) != null;
+                return DataExtension.FillDataRow(provider, "USE [{0}] ; SELECT * FROM sys.Tables WHERE Name='{1}'", tname.DatabaseName.Name, tname.Name) != null;
 
                 //case DbProviderType.SqlCe:
                 //  return SqlCmd.FillDataRow(tname.Provider, "SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE='TABLE' AND TABLE_NAME='{0}'", tname.Name) != null;
@@ -54,7 +54,7 @@ namespace Sys.Data
             switch (provider.DpType)
             {
                 case DbProviderType.SqlDb:
-                    dnames = SqlCmd.FillDataTable(provider, "SELECT Name FROM sys.databases ORDER BY Name").ToArray<string>("name");
+                    dnames = DataExtension.FillDataTable(provider, "SELECT Name FROM sys.databases ORDER BY Name").ToArray<string>("name");
                     List<string> L = new List<string>();
                     foreach (var dname in dnames)
                     {
@@ -78,7 +78,7 @@ namespace Sys.Data
 
         public override TableName[] GetTableNames(DatabaseName dname)
         {
-            var table = SqlCmd.FillDataTable(dname.Provider,
+            var table = DataExtension.FillDataTable(dname.Provider,
                      "USE [{0}] ; SELECT SCHEMA_NAME(schema_id) AS SchemaName, name as TableName FROM sys.Tables ORDER BY SchemaName,Name",
                          dname.Name);
             if (table != null)
@@ -94,7 +94,7 @@ namespace Sys.Data
 
         public override TableName[] GetViewNames(DatabaseName dname)
         {
-            var table = SqlCmd
+            var table = DataExtension
                 .FillDataTable(dname.Provider,
                     "USE [{0}] ; SELECT  SCHEMA_NAME(schema_id) SchemaName, name FROM sys.views ORDER BY name",
                     dname.Name);

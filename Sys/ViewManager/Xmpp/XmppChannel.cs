@@ -53,7 +53,7 @@ namespace Sys.Xmpp
                 WHERE Ty={3} AND ID= {4}
             ";
 
-            DataTable dataTable = SqlCmd.FillDataTable<Sys.ViewManager.DpoClass.ItemPermissionDpo>(SQL,
+            DataTable dataTable = DataExtension.FillDataTable<Sys.ViewManager.DpoClass.ItemPermissionDpo>(SQL,
                 Sys.ViewManager.DpoClass.ItemPermissionDpo.TABLE_NAME, UserRoleDpo.TABLE_NAME, UserDpo.TABLE_NAME,
                 (int)SecurityType.Workflow, channelID);
             subscribers = new UserCollectionProtocol(dataTable);
@@ -75,7 +75,7 @@ namespace Sys.Xmpp
                 WHERE U.User_ID IN ({1})
             ";
 
-            DataTable dataTable = SqlCmd.FillDataTable<UserDpo>(SQL,
+            DataTable dataTable = DataExtension.FillDataTable<UserDpo>(SQL,
                 UserDpo.TABLE_NAME,
                 userIDList.ToString().Replace("{","").Replace("}","")
                 );

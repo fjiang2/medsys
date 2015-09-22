@@ -80,7 +80,7 @@ namespace Sys.Security
                 WHERE User_Name = '{3}' 
             ";
 
-            return SqlCmd.FillDataTable(
+            return DataExtension.FillDataTable(
                 tableName.Provider,
                 SQL,
                 UserDpo.TABLE_NAME,

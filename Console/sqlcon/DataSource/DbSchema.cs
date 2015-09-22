@@ -19,7 +19,7 @@ namespace sqlcon
 
             builder.AppendFormat(script, tableName.Name);
 
-            return SqlCmd.FillDataTable(tableName.Provider, builder.ToString());
+            return DataExtension.FillDataTable(tableName.Provider, builder.ToString());
 
         }
 
@@ -31,7 +31,7 @@ namespace sqlcon
 
             builder.Append(script);
 
-            return SqlCmd.FillDataTable(databaseName.Provider, builder.ToString());
+            return DataExtension.FillDataTable(databaseName.Provider, builder.ToString());
 
         }
 

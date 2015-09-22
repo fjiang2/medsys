@@ -49,7 +49,7 @@ namespace Sys.BusinessRules
                 ";
 
             TableName tableName = typeof(RuleDpo).TableName();
-            DataTable dt = SqlCmd.FillDataTable(tableName.Provider, SQL, tableName.FullName, workflowName, andStateName, andException);
+            DataTable dt = DataExtension.FillDataTable(tableName.Provider, SQL, tableName.FullName, workflowName, andStateName, andException);
 
 
             foreach (DataRow row in dt.Rows)

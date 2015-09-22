@@ -37,7 +37,7 @@ namespace Sys.ViewManager.DpoClass
         {
             this.dpo = dpo;
 
-            history = SqlCmd.FillDataTable<logDataTableDpo>(@"
+            history = DataExtension.FillDataTable<logDataTableDpo>(@"
                 SELECT  {0}
                         u.User_name, 
                         u.First_Name, 

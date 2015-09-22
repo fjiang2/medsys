@@ -80,7 +80,7 @@ ORDER BY t.name, c.column_id
 
             builder.AppendFormat(script, tableName.Name);
 
-            return SqlCmd.FillDataTable(tableName.Provider, builder.ToString());
+            return DataExtension.FillDataTable(tableName.Provider, builder.ToString());
 
         }
 

@@ -49,7 +49,7 @@ namespace Sys.Platform.Forms
 
             currentRoleID = roleID;
             TableName tableName = typeof(RoleDpo).TableName();
-            this.lblCurrentRole.Text = (string)SqlCmd.ExecuteScalar(
+            this.lblCurrentRole.Text = (string)DataExtension.ExecuteScalar(
                 tableName.Provider,
                 "SELECT Role_Name FROM {0} WHERE Role_ID={1}", tableName.FullName, roleID); 
         }
@@ -65,12 +65,12 @@ namespace Sys.Platform.Forms
             
             
             string SQL = @"SELECT ID, ParentID, Label FROM {0} WHERE Ty=0 AND Controlled=1 ORDER BY orderBy";
-            DataTable definition = SqlCmd.FillDataTable<Sys.ViewManager.DpoClass.UserMenuDpo>(SQL, Sys.ViewManager.DpoClass.UserMenuDpo.TABLE_NAME);
+            DataTable definition = DataExtension.FillDataTable<Sys.ViewManager.DpoClass.UserMenuDpo>(SQL, Sys.ViewManager.DpoClass.UserMenuDpo.TABLE_NAME);
             HookTree hook = new HookTree(treeView1, "MENU", definition, SecurityType.MenuItem);
             hooks.Add(hook);
 
             SQL = @"SELECT ID, ParentID, Label FROM {0} WHERE ParentID IS NOT NULL AND Access_Level <> {1}";
-            definition = SqlCmd.FillDataTable<Sys.SmartList.DpoClass.CommandDpo>(SQL, Sys.SmartList.DpoClass.CommandDpo.TABLE_NAME, (int)SecurityLevel.PrivateAccess);
+            definition = DataExtension.FillDataTable<Sys.SmartList.DpoClass.CommandDpo>(SQL, Sys.SmartList.DpoClass.CommandDpo.TABLE_NAME, (int)SecurityLevel.PrivateAccess);
             hook = new HookTree(treeView1, "SMART LIST", definition, SecurityType.SmartList);
             hooks.Add(hook);
 
@@ -85,7 +85,7 @@ namespace Sys.Platform.Forms
                 INNER JOIN {0} W ON W.Name = S.Workflow_Name AND W.Released = 1
                 ORDER BY ParentID, ID
             ";
-            definition = SqlCmd.FillDataTable<Sys.Workflow.DpoClass.wfWorkflowDpo>(SQL,
+            definition = DataExtension.FillDataTable<Sys.Workflow.DpoClass.wfWorkflowDpo>(SQL,
                 Sys.Workflow.DpoClass.wfWorkflowDpo.TABLE_NAME,
                 Sys.Workflow.DpoClass.wfStateDpo.TABLE_NAME
                 );
@@ -403,7 +403,7 @@ namespace Sys.Platform.Forms
             TableName t1 = typeof(Sys.ViewManager.DpoClass.FormPermissionDpo).TableName();
             TableName t2 = typeof(RoleDpo).TableName();
 
-            SqlCmd.ExecuteScalar(t1.Provider, "DELETE FROM {0} WHERE Role_ID NOT IN (SELECT Role_ID FROM {1})", t1.FullName, t2.FullName);
+            DataExtension.ExecuteScalar(t1.Provider, "DELETE FROM {0} WHERE Role_ID NOT IN (SELECT Role_ID FROM {1})", t1.FullName, t2.FullName);
             this.InformationMessage ="Role definition is cleaned.";
         }
 

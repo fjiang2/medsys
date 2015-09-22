@@ -94,7 +94,7 @@ namespace Sys.ViewManager.Security
                     .Replace("@ItemPermissions", DpoClass.ItemPermissionDpo.TABLE_NAME)
                     .Replace("@UserRoles", UserRoleDpo.TABLE_NAME);
 
-                dataTable = SqlCmd.FillDataTable<DpoClass.UserMenuDpo>(SQL,
+                dataTable = DataExtension.FillDataTable<DpoClass.UserMenuDpo>(SQL,
                     (int)SecurityType.MenuItem,
                     collector.UserID);
 

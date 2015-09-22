@@ -103,8 +103,8 @@ namespace Sys.Data.Manager
         {
             if (Locked)
                 return;
-            
-            SqlCmd.ExecuteScalar(
+
+            DataExtension.ExecuteScalar(
                 TableName.Provider,
                 "UPDATE {0} SET {1} = getdate() WHERE {2} = {3}", TableName, _Last_Access_Time,  _ID, this.ID);
         }

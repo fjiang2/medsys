@@ -62,7 +62,7 @@ namespace Sys.Data
             {
                 case DbProviderType.SqlDb:
                     {
-                        return (string)SqlCmd.ExecuteScalar(provider, "SELECT DB_NAME()");
+                        return (string)DataExtension.ExecuteScalar(provider, "SELECT DB_NAME()");
                         //var connection = new SqlCmd(provider, string.Empty).DbProvider.DbConnection;
                         //return connection.Database.ToString();
                     }

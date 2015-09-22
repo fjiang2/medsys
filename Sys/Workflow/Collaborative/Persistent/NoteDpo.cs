@@ -62,7 +62,7 @@ namespace Sys.Workflow.Collaborative
                 ORDER BY Date_Created
             ";
 
-            DataTable dataTable = SqlCmd.FillDataTable<UserDpo>(SQL, this.TableName, UserDpo.TABLE_NAME, activity.WorkflowInstance.Data.PIN, activity.State.StateName);
+            DataTable dataTable = DataExtension.FillDataTable<UserDpo>(SQL, this.TableName, UserDpo.TABLE_NAME, activity.WorkflowInstance.Data.PIN, activity.State.StateName);
 
             NoteHistory history = new NoteHistory(rtf, activity.State.StateName);
             foreach (DataRow dataRow in dataTable.Rows)

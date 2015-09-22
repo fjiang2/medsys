@@ -210,7 +210,7 @@ namespace Sys.SmartList.Forms
 
             treeView1.ImageList = CommandTree.ImageList;
 
-            this.dtSmartList = SqlCmd.FillDataTable<CommandDpo>(selectCommand, (int)SecurityType.SmartList, collector.UserID);
+            this.dtSmartList = DataExtension.FillDataTable<CommandDpo>(selectCommand, (int)SecurityType.SmartList, collector.UserID);
             treeView1.Nodes.Clear();
             treeView1.DataSource = new DPList<CommandNodeDpo>(dtSmartList);
             treeView1.BuildTreeView();

@@ -124,11 +124,9 @@ namespace Sys.DataManager
             //    rowObject.TableId, 
             //    Sys.Security.Account.CurrentUser.User_ID);
 
-            SqlCmd.Delete<Doc01Dpo>(
                 (Doc01Dpo._Table_Id.ColumnName() == rowObject.TableId)
                 .AND(Doc01Dpo._Row_Id.ColumnName() == -1)
-                .AND(Doc01Dpo._Owner.ColumnName() == Sys.Security.Account.CurrentUser.User_ID)
-                );
+                .AND(Doc01Dpo._Owner.ColumnName() == Sys.Security.Account.CurrentUser.User_ID).Delete<Doc01Dpo>();
         }
     }
 }

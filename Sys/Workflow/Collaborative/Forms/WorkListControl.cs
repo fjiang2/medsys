@@ -38,9 +38,9 @@ namespace Sys.Workflow.Collaborative.Forms
         {
           
             if(Sys.Security.Account.CurrentUser.IsDeveloper)
-                this.dataTable = SqlCmd.FillDataTable<wfWorkflowDpo>(selectComamndDeveloper, wfWorkflowDpo.TABLE_NAME);
+                this.dataTable = DataExtension.FillDataTable<wfWorkflowDpo>(selectComamndDeveloper, wfWorkflowDpo.TABLE_NAME);
             else
-                this.dataTable = SqlCmd.FillDataTable<wfWorkflowDpo>(selectCommand, wfWorkflowDpo.TABLE_NAME);
+                this.dataTable = DataExtension.FillDataTable<wfWorkflowDpo>(selectCommand, wfWorkflowDpo.TABLE_NAME);
 
             treeView = new TreeRowView(treeView1, dataTable);
             treeView.ImageField = "Workflow";
@@ -194,7 +194,7 @@ namespace Sys.Workflow.Collaborative.Forms
                             .Replace("@IPermissions", Sys.ViewManager.DpoClass.ItemPermissionDpo.TABLE_NAME)
                             .Replace("@UserRoles", UserRoleDpo.TABLE_NAME);
 
-                        DataTable stateTable = SqlCmd.FillDataTable<DpoClass.wfStateDpo>(SQL,
+                        DataTable stateTable = DataExtension.FillDataTable<DpoClass.wfStateDpo>(SQL,
                             WorkflowName, 
                             (int)StateNodeType.Initial,
                             (int)StateNodeType.Logical,

@@ -153,8 +153,8 @@ namespace Sys.ViewManager.Forms
             {
                 string SQL = string.Format("UPDATE @TableName SET {0} = {1} WHERE {2} = {3}", OrderByField, row[OrderByField], IdField, row[IdField])
                     .Replace("@TableName", tableName.FullName);
-                
-                SqlCmd.ExecuteNonQuery(tableName.Provider, SQL);
+
+                DataExtension.ExecuteNonQuery(tableName.Provider, SQL);
                 
             }
         }

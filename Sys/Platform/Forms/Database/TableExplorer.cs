@@ -216,7 +216,7 @@ namespace Sys.Platform.Forms
 
         private void AddTabPage(TableName tname)
         {
-            DataTable table = SqlCmd.FillDataTable(tname.Provider, string.Format("SELECT * FROM {0}", tname));
+            DataTable table = DataExtension.FillDataTable(tname.Provider, string.Format("SELECT * FROM {0}", tname));
             AddTabPage(tname, table, false);
         }
 

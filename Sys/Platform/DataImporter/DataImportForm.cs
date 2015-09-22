@@ -46,8 +46,8 @@ namespace Sys.Platform.DataImporter
         {
             TableName tableName = typeof(DataImportDpo).TableName();
 
-            LookUp lookUp = new LookUp("Select template", 
-                SqlCmd.FillDataTable(tableName.Provider, "SELECT ID, Label, Description FROM {0}", tableName.FullName));
+            LookUp lookUp = new LookUp("Select template",
+                DataExtension.FillDataTable(tableName.Provider, "SELECT ID, Label, Description FROM {0}", tableName.FullName));
             DataRow dataRow = lookUp.PopUp(this);
             if (dataRow == null)
                 return;

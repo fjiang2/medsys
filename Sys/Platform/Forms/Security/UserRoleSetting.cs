@@ -63,7 +63,7 @@ namespace Sys.Platform.Forms
             lvUsers.Columns.Add("Last Name", 80, HorizontalAlignment.Left);
             lvUsers.Columns.Add("Class", 80, HorizontalAlignment.Left);
 
-            DataTable dt = SqlCmd.FillDataTable<UserDpo>(
+            DataTable dt = DataExtension.FillDataTable<UserDpo>(
                 "SELECT User_Name, First_Name, Last_Name, Group_Name FROM {0} WHERE Inactive = 0 AND User_ID <> {1}",
                 UserDpo.TABLE_NAME,
                 (int)PredefinedRole.devel);
@@ -176,7 +176,7 @@ namespace Sys.Platform.Forms
         private void btnSave_Click(object sender, EventArgs e)
         {
             TableName tableName = typeof(UserDpo).TableName();
-            int userID = (int)SqlCmd.ExecuteScalar(
+            int userID = (int)DataExtension.ExecuteScalar(
                 tableName.Provider,
                 "SELECT User_ID FROM {0} WHERE User_Name='{1}'", tableName.FullName, currentUserName);
 
@@ -208,7 +208,7 @@ namespace Sys.Platform.Forms
             if (x != "")
             {
                 TableName tableName2 = typeof(UserRoleDpo).TableName();
-                SqlCmd.ExecuteScalar(tableName.Provider,
+                DataExtension.ExecuteScalar(tableName.Provider,
                     "DELETE FROM {0} WHERE User_ID={1} AND Role_ID IN ({2})", tableName2.FullName, userID, x);
             }
 

@@ -51,7 +51,7 @@ namespace Sys.Data
             DataTable dataTable;
             if (TableName.Exists())
             {
-                dataTable = SqlCmd.FillDataTable(TableName.Provider, "SELECT TOP 1 * FROM {0}", TableName);
+                dataTable = DataExtension.FillDataTable("SELECT TOP 1 * FROM {0}", TableName);
                 dataTable.TableName = TableName.Name;
                 dataTable.Clear();
             }

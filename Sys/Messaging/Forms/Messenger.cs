@@ -1682,7 +1682,7 @@ namespace Sys.Messaging.Forms
 
             xmppAccount = new XmppAccount(XmppCon, account);
 
-            if (null == SqlCmd.FillDataRow(
+            if (null == DataExtension.FillDataRow(
                 ConnectionProviderManager.Instance.GetProvider(Constant.XMPP_DATA_PROVIDER),
                 "SELECT * FROM {0}..ofUser WHERE username='{1}'", 
                 Sys.Constant.XMPP_DATABASE_NAME, 

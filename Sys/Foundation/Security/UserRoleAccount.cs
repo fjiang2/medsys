@@ -121,7 +121,7 @@ namespace Sys.Security
         {
             TableName tableName = typeof(UserRole).TableName();
 
-            DataTable dt = SqlCmd.FillDataTable(
+            DataTable dt = DataExtension.FillDataTable(
                 tableName.Provider,
                 string.Format("SELECT Role_ID FROM {0} WHERE User_ID={1}", tableName.FullName, this.User_ID));
 

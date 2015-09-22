@@ -127,7 +127,7 @@ namespace Sys.SmartList.Forms
   
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            int count = (int)SqlCmd.ExecuteScalar(par.TableName.Provider, "SELECT COUNT(*) FROM {0} WHERE ParentID={1}", par.TableName, par.ID);
+            int count = (int)DataExtension.ExecuteScalar(par.TableName.Provider, "SELECT COUNT(*) FROM {0} WHERE ParentID={1}", par.TableName, par.ID);
             
             if (count > 0)
             {

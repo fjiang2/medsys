@@ -177,10 +177,9 @@ namespace Sys.DataManager
             //    rowObject.TableId, 
             //    Sys.Security.Account.CurrentUser.User_ID);
 
-            SqlCmd.Delete<PictureDpo>(
-                (PictureDpo._Table_Id.ColumnName() == rowObject.TableId)
+            (PictureDpo._Table_Id.ColumnName() == rowObject.TableId)
                 .AND(PictureDpo._Row_Id.ColumnName() == -1)
-                .AND(PictureDpo._Owner.ColumnName() == Sys.Security.Account.CurrentUser.User_ID));
+                .AND(PictureDpo._Owner.ColumnName() == Sys.Security.Account.CurrentUser.User_ID).Delete<PictureDpo>();
         }
     }
 }
