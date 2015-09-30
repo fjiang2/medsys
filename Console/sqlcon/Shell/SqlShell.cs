@@ -607,10 +607,12 @@ namespace sqlcon
                     try
                     {
                         int count = new SqlCmd(theSide.Provider, text).ExecuteNonQuery();
-                        if (count != -1)
+                        if (count >0)
                             stdio.WriteLine("{0} of row(s) affected", count);
-                        else
+                        else if(count == 0)
                             stdio.WriteLine("nothing affected");
+                        else
+                            stdio.WriteLine("command(s) completed successfully");
                     }
                     catch (Exception ex)
                     {

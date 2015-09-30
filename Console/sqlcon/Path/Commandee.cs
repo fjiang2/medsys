@@ -581,7 +581,12 @@ namespace sqlcon
                         var sqlcmd = new SqlCmd(side2.Provider, sql);
                         int count = sqlcmd.ExecuteNonQueryTransaction();
                         if (exists)
-                            stdio.WriteLine("{0} row(s) changed at destination {1}", count, tname2);
+                        {
+                            if (count >= 0)
+                                stdio.WriteLine("{0} row(s) changed at destination {1}", count, tname2);
+                            else
+                                stdio.WriteLine("command(s) completed successfully at destination {1}", count, tname2);
+                        }
                         else
                             stdio.WriteLine("table {0} created at destination", tname2);
                     }
