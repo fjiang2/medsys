@@ -84,7 +84,21 @@ namespace sqlcon
                 }
                 else
                 {
+                    var common = N1.Join(N2, t1 => t1.ShortName.ToUpper(), t2 => t2.ShortName.ToUpper(), (t1, t2) => new { T1 = t1, T2 = t2 }).ToArray();
+                    var diff1 = N1.Except(common.Select(t=>t.T1)).ToArray();
+                    var diff2 = N2.Except(common.Select(t=>t.T2)).ToArray();
+
                     stdio.WriteLine("number of comparing table are different: {0}!={1}", N1.Length, N2.Length);
+                    foreach (var tname in diff1)
+                    {
+                        stdio.WriteLine(tname.ToString());
+                    }
+
+                    foreach (var tname in diff2)
+                    {
+                        stdio.WriteLine(tname.ToString());
+                    }
+
                     return string.Empty;
                 }
 

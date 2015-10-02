@@ -356,30 +356,25 @@ namespace sqlcon
 
 
                 case "compare":
+                    string t1 = null;
+                    string t2 = null;
                     if (cmd.arg1 != null)
+                        cmd.arg1.parse(out t1, out t2);
+
+                    MatchedDatabase m1 = new MatchedDatabase(adapter.Side1.DatabaseName, t1, cfg.excludedtables);
+                    MatchedDatabase m2 = new MatchedDatabase(adapter.Side2.DatabaseName, t2, cfg.excludedtables);
+                    using (var writer = cfg.OutputFile.NewStreamWriter())
                     {
-                        string t1 = null;
-                        string t2 = null;
-                        if (cmd.arg1 != null)
-                            cmd.arg1.parse(out t1, out t2);
+                        ActionType type;
+                        if (cmd.IsSchema)
+                            type = ActionType.CompareSchema;
+                        else 
+                            type = ActionType.CompareData;
 
-                        MatchedDatabase m1 = new MatchedDatabase(adapter.Side1.DatabaseName, t1, cfg.excludedtables);
-                        MatchedDatabase m2 = new MatchedDatabase(adapter.Side2.DatabaseName, t2, cfg.excludedtables);
-                        using (var writer = cfg.OutputFile.NewStreamWriter())
-                        {
-                            ActionType type;
-                            if (cmd.IsSchema)
-                                type = ActionType.CompareSchema;
-                            else 
-                                type = ActionType.CompareData;
-
-                            var sql = adapter.Run(type, m1, m2, cfg.PK);
-                            writer.Write(sql);
-                        }
-                        stdio.WriteLine("completed");
+                        var sql = adapter.Run(type, m1, m2, cfg.PK);
+                        writer.Write(sql);
                     }
-                    else
-                        stdio.ShowError("command argument missing");
+                    stdio.WriteLine("completed");
                     return true;
 
 
