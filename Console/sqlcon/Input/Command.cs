@@ -33,6 +33,7 @@ namespace sqlcon
         public readonly bool HasIdentityKey;
         public readonly bool HasDependency;
         public readonly bool HasIndex;
+        public readonly bool HasStorage;
 
         public readonly int top;
         private readonly string columns;
@@ -120,6 +121,10 @@ namespace sqlcon
 
                         case "/ind":
                             HasIndex = true;
+                            break;
+
+                        case "/sto":
+                            HasStorage = true;
                             break;
 
                         default:

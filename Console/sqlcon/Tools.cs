@@ -28,15 +28,17 @@ namespace sqlcon
 
             sql = @"
  SELECT 
+	s.name as SchemaName,
 	t.name as TableName,
     c.name AS ColumnName,
     ty.name AS DataType,
     c.max_length AS Length,
     CASE c.is_nullable WHEN 0 THEN 'NOT NULL' WHEN 1 THEN 'NULL' END AS Nullable
 FROM sys.tables t 
-        INNER JOIN sys.columns c ON t.object_id = c.object_id 
-        INNER JOIN sys.types ty ON ty.system_type_id =c.system_type_id AND ty.name<>'sysname'
-        LEFT JOIN sys.Computed_columns d ON t.object_id = d.object_id AND c.name = d.name
+     INNER JOIN sys.columns c ON t.object_id = c.object_id 
+     INNER JOIN sys.types ty ON ty.system_type_id =c.system_type_id AND ty.name<>'sysname'
+     LEFT JOIN sys.Computed_columns d ON t.object_id = d.object_id AND c.name = d.name
+	 INNER JOIN sys.schemas s ON s.schema_id=t.schema_id
 ORDER BY c.name, c.column_id
 ";
             dt = new SqlCmd(side.Provider, sql).FillDataTable();

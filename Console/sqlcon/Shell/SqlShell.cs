@@ -658,54 +658,6 @@ namespace sqlcon
 
             switch (arg1)
             {
-                case "dt":
-                case "pk":
-                case "fk":
-                case "ik":
-                    {
-                        List<string> list = new List<string>();
-                        foreach (var tname in tnames)
-                        {
-                            DataTable dt = null;
-                            switch (arg1)
-                            {
-                                case "dt":
-                                    dt = tname.TableSchema();
-                                    break;
-
-                                case "pk":
-                                    dt = tname.PrimaryKeySchema();
-                                    break;
-
-                                case "fk":
-                                    dt = tname.ForeignKeySchema();
-                                    break;
-
-                                case "ik":
-                                    dt = tname.IdentityKeySchema();
-                                    break;
-                            }
-
-                            if (dt.Rows.Count > 0)
-                            {
-                                stdio.WriteLine("<{0}>", tname.ShortName);
-                                dt.ToConsole();
-                            }
-                            else
-                            {
-                                list.Add(tname.ShortName);
-                                stdio.WriteLine("not found at " + tname.ShortName);
-                            }
-                        }
-
-                        if (list.Count > 0)
-                        {
-                            stdio.WriteLine("not found on tables below");
-                            list.Select(row => new { TableName = row }).ToConsole();
-                        }
-                    }
-                    break;
-
                 case "vw":
                     foreach (var vname in vnames)
                     {
@@ -719,17 +671,6 @@ namespace sqlcon
                         else
                             stdio.WriteLine("not found at <{0}>", vname.ShortName);
                     }
-                    break;
-
-                case "db":
-                    new SqlCmd(theSide.Provider, "SELECT name FROM sys.databases ORDER BY name")
-                        .FillDataTable()
-                        .ToConsole();
-                    break;
-
-                case "table":
-                    tnames.Select(tname => new { Schema = tname.SchemaName, Table = tname.Name })
-                        .ToConsole();
                     break;
 
                 case "view":
@@ -797,15 +738,9 @@ namespace sqlcon
             stdio.WriteLine("<compare> tables /s     : compare schema of tables");
             stdio.WriteLine("<compare> tables        : compare data of tables, compare different tables using <compare data table1:table2>");
             stdio.WriteLine("<find> pattern          : find table name or column name");
-            stdio.WriteLine("<show db>               : show all database names");
-            stdio.WriteLine("<show table>            : show all table names");
             stdio.WriteLine("<show view>             : show all views");
             stdio.WriteLine("<show proc>             : show all stored proc and func");
             stdio.WriteLine("<show index>            : show all indices");
-            stdio.WriteLine("<show dt> tablename     : show table structure");
-            stdio.WriteLine("<show pk> tablename     : show table primary keys");
-            stdio.WriteLine("<show fk> tablename     : show table foreign keys");
-            stdio.WriteLine("<show ik> tablename     : show table identity keys");
             stdio.WriteLine("<show vw> viewnames     : show view structure");
             stdio.WriteLine("<show connection>       : show connection-string list");
             stdio.WriteLine("<show current>          : show current active connection-string");

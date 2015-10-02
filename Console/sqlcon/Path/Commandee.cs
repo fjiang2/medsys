@@ -97,6 +97,7 @@ namespace sqlcon
                 stdio.WriteLine("options:   /ik         : display table identity keys");
                 stdio.WriteLine("options:   /dep        : display table dependencies");
                 stdio.WriteLine("options:   /ind        : display table index/indices");
+                stdio.WriteLine("options:   /sto        : display table storage");
                 stdio.WriteLine("options:   /refresh    : refresh table structure");
                 return;
             }

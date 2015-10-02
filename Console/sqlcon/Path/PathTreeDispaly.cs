@@ -194,6 +194,14 @@ namespace sqlcon
                 flag = true;
             }
 
+
+            if (cmd.HasStorage)
+            {
+                displayTable(tname.StorageSchema(), "Storage");
+                flag = true;
+            }
+
+
             if (flag)
                 return true;
 
