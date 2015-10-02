@@ -92,6 +92,11 @@ namespace sqlcon
                 stdio.WriteLine("command dir or ls");
                 stdio.WriteLine("dir [path]             : display current directory");
                 stdio.WriteLine("options:   /def        : display table structure");
+                stdio.WriteLine("options:   /pk         : display table primary keys");
+                stdio.WriteLine("options:   /fk         : display table foreign keys");
+                stdio.WriteLine("options:   /ik         : display table identity keys");
+                stdio.WriteLine("options:   /dep        : display table dependencies");
+                stdio.WriteLine("options:   /ind        : display table index/indices");
                 stdio.WriteLine("options:   /refresh    : refresh table structure");
                 return;
             }

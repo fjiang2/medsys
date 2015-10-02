@@ -150,19 +150,70 @@ namespace sqlcon
 
             TableName tname = (TableName)pt.Item;
 
-            if (cmd.IsStruct)
+            bool flag = false;
+
+            if (cmd.HasDefinition)
             {
                 if (tname.IsViewName)
+                {
+                    stdio.WriteLine("cannot display view structure");
                     return false;
+                }
 
                 _DisplayColumnNodes(cmd, tname);
-                return true;
+                flag = true;
             }
 
+            if (cmd.HasPrimaryKey)
+            {
+                displayTable(tname.PrimaryKeySchema(), "Primary Key(s)");
+                flag = true;
+            }
+
+            if (cmd.HasForeignKey)
+            {
+                displayTable(tname.ForeignKeySchema(), "Foreign Key(s)");
+                flag = true;
+            }
+
+            if (cmd.HasDependency)
+            {
+                displayTable(tname.DependenySchema(), "Dependencies");
+                flag = true;
+            }
+
+            if (cmd.HasIdentityKey)
+            {
+                displayTable(tname.IdentityKeySchema(), "Identity Key(s)");
+                flag = true;
+            }
+
+            if (cmd.HasIndex)
+            {
+                displayTable(tname.IndexSchema(), "Indices");
+                flag = true;
+            }
+
+            if (flag)
+                return true;
 
             _DisplayLocatorNodes(pt, cmd);
             return true;
         }
+
+        private static void displayTable(DataTable dt, string title)
+        {
+            if (dt.Rows.Count > 0)
+            {
+                stdio.WriteLine("<{0}>", title);
+                dt.ToConsole();
+            }
+            else
+            {
+                stdio.WriteLine(title+ " not found");
+            }
+        }
+
 
         private static void _DisplayColumnNodes(Command cmd, TableName tname)
         {

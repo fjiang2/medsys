@@ -17,21 +17,29 @@ namespace sqlcon
         public string arg1 { get; private set; }
         public string arg2 { get; private set; }
 
-        public readonly bool HasHelp;
-        public readonly bool IsStruct;
+        public readonly bool Refresh;
+
         public readonly bool IsVertical;
+        public readonly bool IsSchema;
+
+        public readonly bool HasHelp;
         public readonly bool HasWhere;
         public readonly bool HasPage;
-        public readonly bool IsSchema;
         public readonly bool HasRowId;
-        public readonly bool Refresh;
+
+        public readonly bool HasDefinition;
+        public readonly bool HasPrimaryKey;
+        public readonly bool HasForeignKey;
+        public readonly bool HasIdentityKey;
+        public readonly bool HasDependency;
+        public readonly bool HasIndex;
 
         public readonly int top;
         private readonly string columns;
 
         public Command(string line, Configuration cfg)
         {
-            this.IsStruct = false;
+            this.HasDefinition = false;
             this.IsVertical = false;
             this.top = cfg.Limit_Top;
 
@@ -59,7 +67,7 @@ namespace sqlcon
                     switch (a)
                     {
                         case "/def":
-                            IsStruct = true;
+                            HasDefinition = true;
                             break;
 
                         case "/s":
@@ -92,6 +100,26 @@ namespace sqlcon
 
                         case "/?":
                             HasHelp = true;
+                            break;
+
+                        case "/pk":
+                             HasPrimaryKey = true;
+                            break;
+
+                        case "/fk":
+                            HasForeignKey = true;
+                            break;
+
+                        case "/ik":
+                            HasIdentityKey = true;
+                            break;
+
+                        case "/dep":
+                            HasDependency = true;
+                            break;
+
+                        case "/ind":
+                            HasIndex = true;
                             break;
 
                         default:
