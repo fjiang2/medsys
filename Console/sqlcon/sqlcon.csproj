@@ -65,6 +65,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Input\KeyValueTable.cs" />
     <Compile Include="Input\PathName.cs" />
     <Compile Include="Output\TableOut.cs" />
     <Compile Include="Path\ColumnName.cs" />

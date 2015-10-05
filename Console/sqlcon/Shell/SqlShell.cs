@@ -147,6 +147,10 @@ namespace sqlcon
                     commandee.set(cmd);
                     return true;
 
+                case "let":
+                    commandee.let(cmd);
+                    return true;
+
                 case "md":
                 case "mkdir":
                     commandee.mkdir(cmd);

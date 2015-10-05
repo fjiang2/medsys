@@ -620,5 +620,95 @@ namespace sqlcon
                 return;
             }
         }
+
+        public void let(Command cmd)
+        {
+            if (cmd.HasHelp)
+            {
+                stdio.WriteLine("let assignment              : update key-value table row, key-value table must be defined on the sqlcon.cfg or user.cfg");
+                stdio.WriteLine("let key=value               : update column by current table or locator");
+                stdio.WriteLine("example:");
+                stdio.WriteLine("let Smtp.Host=\"127.0.0.1\" : update key-value row, it's equivalent to UPDATE table SET [Value]='\"127.0.0.1\"' WHERE [Key]='Smtp.Host'");
+                return;
+            }
+
+            if (string.IsNullOrEmpty(cmd.args))
+            {
+                stdio.ShowError("argument cannot be empty");
+                return;
+            }
+
+            var pt = mgr.current;
+            if (!(pt.Item is Locator) && !(pt.Item is TableName))
+            {
+                stdio.ShowError("table is not selected");
+                return;
+            }
+
+            if (this.mgr.Configuration.dictionarytables.Count == 0)
+            {
+                stdio.ShowError("key-value tables is undefined");
+                return;
+            }
+
+            TableName tname = mgr.GetCurrentPath<TableName>();
+            var setting = this.mgr.Configuration.dictionarytables.FirstOrDefault(row => row.TableName.ToUpper() == tname.Name.ToUpper());
+            if (setting == null)
+            {
+                stdio.ShowError("current table is not key-value tables");
+                return;
+            }
+
+            string[] kvp = cmd.args.Split('=');
+
+            string key = null;
+            string value = null;
+
+            if (kvp.Length == 1)
+            {
+                key = kvp[0].Trim();
+            }
+            else if (kvp.Length == 2)
+            {
+                key = kvp[0].Trim();
+                value = kvp[1].Trim();
+            }
+
+            if (string.IsNullOrEmpty(key))
+            {
+                stdio.ShowError("invalid assignment");
+                return;
+            }
+
+            Locator locator = new Locator(setting.KeyName.ColumnName() == key);
+            SqlBuilder builder = new SqlBuilder().SELECT.COLUMNS(setting.ValueName.ColumnName()).FROM(tname).WHERE(locator);
+            var L = new SqlCmd(builder).FillDataColumn<string>(0);
+            if (L.Count() == 0)
+            {
+                stdio.ShowError("undefined key: {0}", key);
+                return;
+            }
+
+            if (kvp.Length == 1)
+            {
+                stdio.ShowError("{0} = {1}", key, L.First());
+                return;
+            }
+
+            builder = new SqlBuilder()
+                .UPDATE(tname)
+                .SET(setting.ValueName.ColumnName() == value)
+                .WHERE(locator);
+
+            try
+            {
+                int count = builder.SqlCmd.ExecuteNonQuery();
+                stdio.WriteLine("{0} of row(s) affected", count);
+            }
+            catch (Exception ex)
+            {
+                stdio.ShowError(ex.Message);
+            }
+        }
     }
 }

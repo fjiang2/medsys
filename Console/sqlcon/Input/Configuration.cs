@@ -33,6 +33,7 @@ namespace sqlcon
         const string _LIMIT = "limit";
         const string _ACTION_TYPE = "actiontype";
         const string _EXCLUDED_TABLES = "excludedtables";
+        const string _DICTIONARY_TABLES = "dictionarytables";
 
         const string _QUEREY = "query";
         const string _PRIMARY_KEY = "primary_key";
@@ -47,6 +48,7 @@ namespace sqlcon
         public string SchemaFile { get; set; }
 
         public string[] excludedtables = new string[] { };
+        public List<KeyValueTable> dictionarytables = new List<KeyValueTable>();
         public int Limit_Top = 20;
 
         public readonly Dictionary<string, string[]> PK = new Dictionary<string, string[]>();
@@ -215,6 +217,15 @@ namespace sqlcon
             }
 
             this.excludedtables = Cfg.GetValue<string[]>(_EXCLUDED_TABLES, new string[] { });
+            if (Cfg.GetValue(_DICTIONARY_TABLES).Defined)
+            {
+                var d = Cfg.GetValue(_DICTIONARY_TABLES);
+                foreach (var t in d)
+                {
+                    dictionarytables.Add(new KeyValueTable { TableName = (string)t["table"], KeyName = (string)t["key"], ValueName = (string)t["value"] });
+                }
+            }
+
             this.Action = Cfg.GetValue<ActionType>(_ACTION_TYPE, ActionType.CompareSchema);
 
             this.InputFile = Cfg.GetValue<string>(_FILE_INPUT, "script.sql");
