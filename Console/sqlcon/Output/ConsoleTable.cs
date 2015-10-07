@@ -104,7 +104,7 @@ namespace sqlcon
                 return "NULL";
             else if (cell is byte[])
             {
-                return "0x" + BitConverter.ToString((byte[])cell).Replace("-","");
+                return "0x" + BitConverter.ToString((byte[])cell).Replace("-", "");
             }
             else
             {
@@ -112,7 +112,10 @@ namespace sqlcon
 
                 //when cell includes a big string with letter [\n]
                 if (result.Length > 200)
-                    result = result.Replace("\n", "");
+                    result = result
+                        .Replace("\r\n", " ")
+                        .Replace("\n", " ")
+                        .Replace("\t", " ");
 
                 return result;
             }

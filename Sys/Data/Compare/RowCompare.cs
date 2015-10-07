@@ -29,8 +29,17 @@ namespace Sys.Data.Comparison
 
             foreach (var column in table.NonPkColumns)
             {
-                if (!row1[column].Equals(row2[column]))
-                    L2.Add(new ColumnPair(column, row1[column]));
+                var r1 = row1[column];
+                var r2 = row2[column];
+
+                if (r1 is string)   //compare string with postfix ' ' character
+                    r1 = (r1 as string).Trim();
+
+                if (r2 is string)
+                    r2 = (r2 as string).Trim();
+
+                if (!r1.Equals(r2))
+                    L2.Add(new ColumnPair(column, r1));
             }
 
             foreach (var column in table.PkColumns.Keys)
