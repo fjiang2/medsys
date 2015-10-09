@@ -85,33 +85,64 @@ namespace Sys.Data
 
         public override TableName[] GetTableNames(DatabaseName dname)
         {
-            var table = DataExtension.FillDataTable(dname.Provider,
-                     "USE [{0}] ; SELECT SCHEMA_NAME(schema_id) AS SchemaName, name as TableName FROM sys.Tables ORDER BY SchemaName,Name",
-                         dname.Name);
-            if (table != null)
+            if (dname.Provider.Version >= 2005)
             {
-                return table
-                    .AsEnumerable()
-                    .Select(row => new TableName(dname, row.Field<string>("SchemaName"), row.Field<string>("TableName")))
-                    .ToArray();
+                var table = DataExtension.FillDataTable(dname.Provider,
+                         "USE [{0}] ; SELECT SCHEMA_NAME(schema_id) AS SchemaName, name as TableName FROM sys.Tables ORDER BY SchemaName,Name",
+                             dname.Name);
+                if (table != null)
+                {
+                    return table
+                        .AsEnumerable()
+                        .Select(row => new TableName(dname, row.Field<string>("SchemaName"), row.Field<string>("TableName")))
+                        .ToArray();
+                }
             }
             else
-                return new TableName[] { };
+            {
+
+                var table = DataExtension.FillDataTable(dname.Provider, "USE [{0}] ; EXEC sp_tables", dname.Name);
+                if (table != null)
+                {
+                    return table
+                        .AsEnumerable()
+                        .Where(row => row.Field<string>("TABLE_TYPE") == "TABLE")
+                        .Select(row => new TableName(dname, row.Field<string>("TABLE_OWNER"), row.Field<string>("TABLE_NAME")))
+                        .ToArray();
+                }
+            }
+
+            return new TableName[] { };
         }
 
         public override TableName[] GetViewNames(DatabaseName dname)
         {
-            var table = DataExtension
+            if (dname.Provider.Version >= 2005)
+            {
+                var table = DataExtension
                 .FillDataTable(dname.Provider,
                     "USE [{0}] ; SELECT  SCHEMA_NAME(schema_id) SchemaName, name FROM sys.views ORDER BY name",
                     dname.Name);
 
-            if (table != null)
-                return table.AsEnumerable()
-                .Select(row => new TableName(dname, row.Field<string>(0), row.Field<string>(1)) { IsViewName = true })
-                .ToArray();
+                if (table != null)
+                    return table.AsEnumerable()
+                    .Select(row => new TableName(dname, row.Field<string>(0), row.Field<string>(1)) { IsViewName = true })
+                    .ToArray();
+            }
             else
-                return new TableName[] { };
+            {
+                var table = DataExtension.FillDataTable(dname.Provider, "USE [{0}] ; EXEC sp_tables", dname.Name);
+                if (table != null)
+                {
+                    return table
+                        .AsEnumerable()
+                        .Where(row => row.Field<string>("TABLE_TYPE") == "VIEW")
+                        .Select(row => new TableName(dname, row.Field<string>("TABLE_OWNER"), row.Field<string>("TABLE_NAME")) { IsViewName = true })
+                        .ToArray();
+                }
+            }
+
+            return new TableName[] { };
         }
 
 

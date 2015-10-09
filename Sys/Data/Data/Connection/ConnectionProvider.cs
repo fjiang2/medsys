@@ -96,6 +96,36 @@ namespace Sys.Data
             return false;
         }
 
+        private int version = -1;
+        public int Version
+        {
+            get
+            {
+                if (version != -1)
+                    return version;
+
+                SqlConnection conn = new SqlConnection(ConnectionString);
+                try
+                {
+                    conn.Open();
+                    SqlCommand cmd = new SqlCommand("SELECT @@version", conn);
+                    string text = (string)cmd.ExecuteScalar();
+                    string[] items = text.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                    version = int.Parse(items[3]);
+                }
+                catch (Exception)
+                {
+                    version = 0;
+                }
+                finally
+                {
+                    conn.Close();
+                }
+
+                return version;
+            }
+        }
+
 
         public string InitialCatalog
         {
