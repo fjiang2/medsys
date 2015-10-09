@@ -549,6 +549,12 @@ namespace sqlcon
                 var dname = mgr.GetCurrentPath<DatabaseName>();
                 if (dname != null)
                     theSide.UpdateDatabase(dname.Provider);
+                else
+                {
+                    var sname = mgr.GetCurrentPath<ServerName>();
+                    if (sname != null)
+                        theSide.UpdateDatabase(sname.Provider);
+                }
             }
         }
 
@@ -643,21 +649,12 @@ namespace sqlcon
 
         private void Show(string arg1, string arg2)
         {
-            TableName[] tnames;
             TableName[] vnames;
-
-            vnames = new MatchedDatabase(theSide.DatabaseName, arg2, null).DefaultViewNames;
-            tnames = new MatchedDatabase(theSide.DatabaseName, arg2, null).DefaultTableNames;
-
-            if (tnames.Length == 0 && vnames.Length == 0)
-            {
-                stdio.ShowError("cannot find any table/view name like \"{0}\"", arg2);
-                return;
-            }
 
             switch (arg1)
             {
                 case "vw":
+                    vnames = new MatchedDatabase(theSide.DatabaseName, arg2, null).DefaultViewNames;
                     foreach (var vname in vnames)
                     {
                         DataTable dt = null;
@@ -673,6 +670,7 @@ namespace sqlcon
                     break;
 
                 case "view":
+                    vnames = new MatchedDatabase(theSide.DatabaseName, arg2, null).DefaultViewNames;
                     vnames.Select(tname => new { Schema = tname.SchemaName, View = tname.Name })
                         .ToConsole();
                     break;

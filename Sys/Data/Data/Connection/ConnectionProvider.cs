@@ -70,7 +70,7 @@ namespace Sys.Data
         public bool CheckConnection()
         {
             if (Type != ConnectionProviderType.XmlFile)
-                return !InvalidSqlClause("SELECT COUNT(name) FROM sys.tables");
+                return !InvalidSqlClause("EXEC sp_databases");
             else
                 return System.IO.File.Exists(DataSource);
         }
