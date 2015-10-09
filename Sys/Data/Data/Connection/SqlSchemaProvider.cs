@@ -41,10 +41,9 @@ namespace Sys.Data
                 if (!Exists(tname.DatabaseName))
                     return false;
 
-                return DataExtension.FillDataRow(provider, "USE [{0}] ; SELECT * FROM sys.Tables WHERE Name='{1}'", tname.DatabaseName.Name, tname.Name) != null;
+                var tnames = GetTableNames(tname.DatabaseName);
+                return tnames.FirstOrDefault(row => row.Name == tname.Name && row.SchemaName == tname.SchemaName) != null;
 
-                //case DbProviderType.SqlCe:
-                //  return SqlCmd.FillDataRow(tname.Provider, "SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE='TABLE' AND TABLE_NAME='{0}'", tname.Name) != null;
             }
             catch (Exception)
             {

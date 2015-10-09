@@ -149,7 +149,7 @@ namespace Sys.Data
             try
             {
                 conn.Open();
-                SqlCommand cmd = new SqlCommand("SELECT COUNT(name) FROM sys.tables", conn);
+                SqlCommand cmd = new SqlCommand("EXEC sp_databases", conn);
                 cmd.ExecuteScalar();
             }
             catch (Exception)
