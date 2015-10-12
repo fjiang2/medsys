@@ -93,7 +93,7 @@ namespace sqlcon
                             goto L1;
 
                         default:
-                            if (DoSingleLineCommand(line))
+                            if (TrySingleLineCommand(line))
                             {
                                 stdio.WriteLine();
                                 goto L1;
@@ -133,6 +133,23 @@ namespace sqlcon
             }
         }
 
+        private bool TrySingleLineCommand(string text)
+        {
+            try
+            {
+                return DoSingleLineCommand(text);
+            }
+            catch (SqlException ex1)
+            {
+                stdio.ShowError("{0}:{1}", "SQL", ex1.Message);
+            }
+            catch (Exception ex2)
+            {
+                stdio.ShowError(ex2.Message);
+            }
+
+            return true;
+        }
         private bool DoSingleLineCommand(string text)
         {
             text = text.Trim();

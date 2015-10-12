@@ -42,7 +42,7 @@ namespace Sys.Data
                     return false;
 
                 var tnames = GetTableNames(tname.DatabaseName);
-                return tnames.FirstOrDefault(row => row.Name == tname.Name && row.SchemaName == tname.SchemaName) != null;
+                return tnames.FirstOrDefault(row => row.Name.ToUpper() == tname.Name.ToUpper() && row.SchemaName.ToUpper() == tname.SchemaName.ToUpper()) != null;
 
             }
             catch (Exception)
