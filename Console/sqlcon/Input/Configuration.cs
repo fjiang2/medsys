@@ -32,7 +32,8 @@ namespace sqlcon
 
         const string _LIMIT = "limit";
         const string _ACTION_TYPE = "actiontype";
-        const string _EXCLUDED_TABLES = "excludedtables";
+        const string _COMPARE_EXCLUDED_TABLES = "compare_excluded_tables";
+        const string _EXPORT_EXCLUDED_TABLES = "export_excluded_tables";
         const string _DICTIONARY_TABLES = "dictionarytables";
 
         const string _QUEREY = "query";
@@ -47,7 +48,8 @@ namespace sqlcon
         public string OutputFile { get; set; }
         public string SchemaFile { get; set; }
 
-        public string[] excludedtables = new string[] { };
+        public string[] compareExcludedTables = new string[] { };
+        public string[] exportExcludedTables = new string[] { };
         public List<KeyValueTable> dictionarytables = new List<KeyValueTable>();
         public int Limit_Top = 20;
 
@@ -216,7 +218,8 @@ namespace sqlcon
                     return false;
             }
 
-            this.excludedtables = Cfg.GetValue<string[]>(_EXCLUDED_TABLES, new string[] { });
+            this.compareExcludedTables = Cfg.GetValue<string[]>(_COMPARE_EXCLUDED_TABLES, new string[] { });
+            this.exportExcludedTables = Cfg.GetValue<string[]>(_EXPORT_EXCLUDED_TABLES, new string[] { });
             if (Cfg.GetValue(_DICTIONARY_TABLES).Defined)
             {
                 var d = Cfg.GetValue(_DICTIONARY_TABLES);

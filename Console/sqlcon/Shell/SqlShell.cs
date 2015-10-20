@@ -382,8 +382,8 @@ namespace sqlcon
                     if (cmd.arg1 != null)
                         cmd.arg1.parse(out t1, out t2);
 
-                    MatchedDatabase m1 = new MatchedDatabase(adapter.Side1.DatabaseName, t1, cfg.excludedtables);
-                    MatchedDatabase m2 = new MatchedDatabase(adapter.Side2.DatabaseName, t2, cfg.excludedtables);
+                    MatchedDatabase m1 = new MatchedDatabase(adapter.Side1.DatabaseName, t1, cfg.compareExcludedTables);
+                    MatchedDatabase m2 = new MatchedDatabase(adapter.Side2.DatabaseName, t2, cfg.compareExcludedTables);
                     using (var writer = cfg.OutputFile.NewStreamWriter())
                     {
                         ActionType type;
@@ -461,30 +461,44 @@ namespace sqlcon
             switch (cmd.arg1)
             {
                 case "insert":
-                    var node = mgr.GetCurrentNode<Locator>();
-                    if (tname == null)
+                    if (tname != null)
                     {
-                        stdio.ShowError("warning: table is not available");
-                        return true;
-                    }
+                        var node = mgr.GetCurrentNode<Locator>();
+                        int count;
 
-                    int count;
-
-                    using (var writer = fileName.NewStreamWriter())
-                    {
-                        if (node != null)
+                        using (var writer = fileName.NewStreamWriter())
                         {
-                            stdio.WriteLine("start to generate {0} INSERT script to file: {1}", tname, fileName);
-                            Locator locator = mgr.GetCombinedLocator(node);
-                            count = theSide.GenerateRows(writer, tname, locator);
-                            stdio.WriteLine("insert clauses (SELECT * FROM {0} WHERE {1}) generated to {2}", tname, locator, fileName);
-                        }
-                        else
-                        {
-                            count = theSide.GenerateRows(writer, tname, null);
-                            stdio.WriteLine("insert clauses (SELECT * FROM {0}) generated to {1}", tname, fileName);
+                            if (node != null)
+                            {
+                                stdio.WriteLine("start to generate {0} INSERT script to file: {1}", tname, fileName);
+                                Locator locator = mgr.GetCombinedLocator(node);
+                                count = theSide.GenerateRows(writer, tname, locator);
+                                stdio.WriteLine("insert clauses (SELECT * FROM {0} WHERE {1}) generated to {2}", tname, locator, fileName);
+                            }
+                            else
+                            {
+                                count = theSide.GenerateRows(writer, tname, null);
+                                stdio.WriteLine("insert clauses (SELECT * FROM {0}) generated to {1}", tname, fileName);
+                            }
                         }
                     }
+                    else if (dname != null)
+                    {
+                        using (var writer = fileName.NewStreamWriter())
+                        {
+                            foreach(var tname1 in dname.GetTableNames())
+                            {
+                                if (!cfg.exportExcludedTables.Select(row=>row.ToUpper()).Contains(tname1.ShortName.ToUpper()))
+                                {
+                                    int count = theSide.GenerateRows(writer, tname1, null);
+                                    stdio.WriteLine("insert clauses from {0} generated", tname1);
+                                }
+                            }
+                            stdio.WriteLine("insert clauses saved to {0}", fileName);
+                        }
+                    }
+                    else
+                        stdio.ShowError("warning: table or database is not available");
 
                     return true;
 

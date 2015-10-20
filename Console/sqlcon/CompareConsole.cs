@@ -228,7 +228,7 @@ namespace sqlcon
                     case "/e":
                         if (i < args.Length && !args[i].StartsWith("/"))
                         {
-                            cfg.excludedtables = args[i++].Split(',');
+                            cfg.compareExcludedTables = args[i++].Split(',');
                             break;
                         }
                         else
@@ -298,8 +298,8 @@ namespace sqlcon
             Side side2 = new Side(pvd2);
 
             CompareAdapter adapter = new CompareAdapter(side1, side2);
-            MatchedDatabase m1 = new MatchedDatabase(adapter.Side1.DatabaseName, tableNamePattern1, cfg.excludedtables);
-            MatchedDatabase m2 = new MatchedDatabase(adapter.Side2.DatabaseName, tableNamePattern2, cfg.excludedtables);
+            MatchedDatabase m1 = new MatchedDatabase(adapter.Side1.DatabaseName, tableNamePattern1, cfg.compareExcludedTables);
+            MatchedDatabase m2 = new MatchedDatabase(adapter.Side2.DatabaseName, tableNamePattern2, cfg.compareExcludedTables);
 
             switch (action)
             {
@@ -311,7 +311,7 @@ namespace sqlcon
                 case ActionType.GenerateTableRows:
                     using (var writer = cfg.OutputFile.NewStreamWriter())
                     {
-                        adapter.Side1.GenerateRowScript(writer, tableNamePattern1, cfg.excludedtables);
+                        adapter.Side1.GenerateRowScript(writer, tableNamePattern1, cfg.compareExcludedTables);
                     }
                     break;
                 case ActionType.GenerateScript:

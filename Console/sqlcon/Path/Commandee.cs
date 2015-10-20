@@ -502,7 +502,7 @@ namespace sqlcon
                     return;
                 }
 
-                var m1 = new MatchedDatabase(dname1, path1.wildcard, mgr.Configuration.excludedtables);
+                var m1 = new MatchedDatabase(dname1, path1.wildcard, mgr.Configuration.compareExcludedTables);
                 T1 = m1.MatchedTableNames;
                 var server1 = mgr.GetPathFrom<ServerName>(node1);
                 side1 = new Side(server1.Provider);
