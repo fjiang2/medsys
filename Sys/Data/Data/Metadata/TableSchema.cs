@@ -84,7 +84,13 @@ namespace Sys.Data
 
         public IIdentityKeys Identity
         {
-            get { return new IdentityKeys(this.Columns); }
+            get
+            {
+                if (tableName.Provider.Version >= 2005)
+                    return new IdentityKeys(this.Columns);
+                else
+                    return new IdentityKeys();
+            }
         }
 
 
