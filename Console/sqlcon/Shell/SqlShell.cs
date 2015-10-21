@@ -484,6 +484,7 @@ namespace sqlcon
                     }
                     else if (dname != null)
                     {
+                        stdio.WriteLine("start to generate {0} script to file: {1}", dname, fileName);
                         using (var writer = fileName.NewStreamWriter())
                         {
                             foreach(var tname1 in dname.GetTableNames())
@@ -493,8 +494,10 @@ namespace sqlcon
                                     int count = theSide.GenerateRows(writer, tname1, null);
                                     stdio.WriteLine("insert clauses from {0} generated", tname1);
                                 }
+                                else
+                                    stdio.WriteLine("insert clauses from {0} skipped", tname1);
                             }
-                            stdio.WriteLine("insert clauses saved to {0}", fileName);
+                            stdio.WriteLine("completed");
                         }
                     }
                     else
@@ -512,14 +515,7 @@ namespace sqlcon
                         }
                         stdio.WriteLine("completed");
                     }
-                    else
-                    {
-                        stdio.ShowError("warning: select table first");
-                    }
-                    return true;
-
-                case "database":
-                    if (dname != null)
+                    else if (dname != null)
                     {
                         stdio.WriteLine("start to generate {0} script to file: {1}", dname, fileName);
                         using (var writer = fileName.NewStreamWriter())
@@ -530,7 +526,7 @@ namespace sqlcon
                     }
                     else
                     {
-                        stdio.ShowError("warning: select table first");
+                        stdio.ShowError("warning: select table or database is not available");
                     }
                     return true;
 
@@ -565,7 +561,7 @@ namespace sqlcon
                     return true;
 
                 default:
-                    stdio.ShowError("warning: correct format: export [insert|create|database|schema]");
+                    stdio.ShowError("warning: correct format is export [insert|create|schema]");
                     break;
             }
 
@@ -785,9 +781,8 @@ namespace sqlcon
             stdio.WriteLine("<open input>            : open input file");
             stdio.WriteLine("<open output>           : open output file");
             stdio.WriteLine("<open schema>           : open schema file");
-            stdio.WriteLine("<export insert>         : export INSERT INTO script");
-            stdio.WriteLine("<export create>         : export CREATE TABLE script");
-            stdio.WriteLine("<export database>       : export CREATE TABLE script for all tables");
+            stdio.WriteLine("<export insert>         : export INSERT INTO script on current table/database");
+            stdio.WriteLine("<export create>         : export CREATE TABLE script on current table/database");
             stdio.WriteLine("<export schema>         : export database schema xml file");
             stdio.WriteLine("<execute inputfile>     : execute sql script file");
             stdio.WriteLine();

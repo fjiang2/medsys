@@ -96,7 +96,7 @@ namespace sqlcon
             stdio.WriteLine("     [/f sql script file(.sql)]");
             stdio.WriteLine();
             stdio.WriteLine("/h,/?      : this help");
-            stdio.WriteLine("/cfg       : congfiguration file default file:sqlcon.cfg]");
+            stdio.WriteLine("/cfg       : congfiguration file default file:user.cfg]");
             stdio.WriteLine("/s         : server name defined on ini file]");
             stdio.WriteLine("/c schema  : compare schmea (default)");
             stdio.WriteLine("/c data    : compare data");
@@ -104,7 +104,7 @@ namespace sqlcon
             stdio.WriteLine("/c row     : generate rows from table on server1");
             stdio.WriteLine("/c struct  : generate datbase schema structure in *.xml file on server1");
             stdio.WriteLine("/c exec    : run sql script on server 2, let server2 += diff");
-            stdio.WriteLine("/c shell     : enter command window");
+            stdio.WriteLine("/c shell   : enter command window");
             stdio.WriteLine("/db        : database name");
             stdio.WriteLine("/dt        : table name (wildcard*,?)");
             stdio.WriteLine("/e         : excluded table list during 2 databases data comparing");

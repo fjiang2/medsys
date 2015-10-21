@@ -78,11 +78,6 @@ namespace sqlcon
 
         private bool TryReadCfg(string cfgFile)
         {
-            if (!File.Exists(cfgFile))
-            {
-                Console.WriteLine("configuration file {0} not found", cfgFile);
-                return false;
-            }
 
             using (var reader = new StreamReader(cfgFile))
             {
@@ -208,14 +203,21 @@ namespace sqlcon
         {
 
             string theDirectory = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            string sysCfgFile = Path.Combine(theDirectory, _FILE_SYSTEM_CONFIG);
 
-            if (!TryReadCfg(Path.Combine(theDirectory, _FILE_SYSTEM_CONFIG)))
+            if (!File.Exists(sysCfgFile))
+            {
+                Console.WriteLine("configuration file {0} not found", sysCfgFile);
+                return false;
+            }
+                
+            if (!TryReadCfg(sysCfgFile))
                 return false;
 
-            if (!string.IsNullOrEmpty(cfgFile))
+            //user.cfg is optional
+            if (!string.IsNullOrEmpty(cfgFile) && File.Exists(cfgFile))
             {
-                if (!TryReadCfg(cfgFile))
-                    return false;
+                TryReadCfg(cfgFile);
             }
 
             this.compareExcludedTables = Cfg.GetValue<string[]>(_COMPARE_EXCLUDED_TABLES, new string[] { });
@@ -234,7 +236,7 @@ namespace sqlcon
             this.InputFile = Cfg.GetValue<string>(_FILE_INPUT, "script.sql");
             this.OutputFile = Cfg.GetValue<string>(_FILE_OUTPUT, "script.sql");
             this.SchemaFile = Cfg.GetValue<string>(_FILE_SCHEMA, "schema.xml");
-            
+
             var limit = Cfg[_LIMIT];
             if (limit["top"].Defined)
                 this.Limit_Top = (int)limit["top"];
