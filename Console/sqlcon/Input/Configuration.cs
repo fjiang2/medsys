@@ -110,7 +110,10 @@ namespace sqlcon
         {
             get
             {
-                return GetValue<string>(Configuration._SERVER0);
+                string path = GetValue<string>(Configuration._SERVER0);
+                var provider = GetProvider(path);
+                path = string.Format("{0}\\{1}", provider.ServerName, provider.DefaultDatabaseName.Name);
+                return path;
             }
         }
 
@@ -198,6 +201,9 @@ namespace sqlcon
             var provider = Providers.Find(x => x.Name == serverName);
             if (provider != null)
             {
+                if (databaseName == "~")
+                    databaseName = provider.DefaultDatabaseName.Name;
+
                 return ConnectionProviderManager.CloneConnectionProvider(provider, serverName, databaseName);
             }
             else
