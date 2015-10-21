@@ -125,6 +125,19 @@ namespace sqlcon
             {
                 return Navigate(Navigate(node, ".."), "..");
             }
+            else if (segment == "~")
+            {
+                if (node == RootNode)
+                {
+                    return Navigate(new PathName(cfg.DefaultServerPath));
+                }
+                else if (node.Item is ServerName)
+                {
+                    var sname = node.Item as ServerName;
+                    if (sname != null)
+                        segment = sname.Provider.DefaultDatabaseName.Name;
+                }
+            }
 
             Expand(node, this.Refreshing);
 

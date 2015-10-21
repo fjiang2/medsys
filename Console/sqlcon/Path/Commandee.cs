@@ -64,6 +64,7 @@ namespace sqlcon
                 stdio.WriteLine("cd \\                  : change to root directory");
                 stdio.WriteLine("cd ..                  : change to the parent directory");
                 stdio.WriteLine("cd ...                 : change to the grand parent directory");
+                stdio.WriteLine("cd ~                   : change to default database defined on the connection string, or change to default server");
                 return true;
             }
 

@@ -106,6 +106,14 @@ namespace sqlcon
             return Cfg.GetValue<T>(variable, defaultValue);
         }
 
+        public string DefaultServerPath
+        {
+            get
+            {
+                return GetValue<string>(Configuration._SERVER0);
+            }
+        }
+
         private static string PeelOleDb(string connectionString)
         {
             if (connectionString.ToLower().IndexOf("sqloledb") >= 0)
@@ -327,6 +335,16 @@ namespace sqlcon
                 .Where(x => x.Attribute(pair[0]).Value == pair[1])
                 .Select(x => x.Attribute("value").Value)
                 .FirstOrDefault();
+
+            string[] L = connectionString.Split(';');
+            for (int i = 0; i < L.Length; i++)
+            {
+                if (L[i].ToUpper() == "Provider=sqloledb".ToUpper())
+                {
+                    connectionString = connectionString.Replace(L[i] + ";", "");
+                    break;
+                }
+            }
 
             return connectionString;
         }

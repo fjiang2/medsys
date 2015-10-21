@@ -189,7 +189,7 @@ namespace sqlcon
 
                 case "cd":
                 case "chdir":
-                    if (cmd.arg1 != null)
+                    if (cmd.arg1 != null || cmd.HasHelp)
                         chdir(cmd);
                     else
                         stdio.WriteLine(mgr.ToString());
