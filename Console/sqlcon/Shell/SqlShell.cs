@@ -492,10 +492,10 @@ namespace sqlcon
                                 if (!cfg.exportExcludedTables.Select(row=>row.ToUpper()).Contains(tname1.ShortName.ToUpper()))
                                 {
                                     int count = theSide.GenerateRows(writer, tname1, null);
-                                    stdio.WriteLine("insert clauses from {0} generated", tname1);
+                                    stdio.WriteLine("{0,10} row(s) generated on {1}", count, tname1.ShortName);
                                 }
                                 else
-                                    stdio.WriteLine("insert clauses from {0} skipped", tname1);
+                                    stdio.WriteLine("{0,10} skipped", tname1.ShortName);
                             }
                             stdio.WriteLine("completed");
                         }

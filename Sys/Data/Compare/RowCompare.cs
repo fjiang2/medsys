@@ -69,11 +69,11 @@ namespace Sys.Data.Comparison
         { 
             foreach(var column in columns)
             {
-                if (row1[column] is byte[] && row1[column] is byte[])
-                { 
-                    var B1 = (byte[]) row1[column];
-                    var B2 = (byte[]) row2[column];
-                    if(B1.Length != B2.Length)
+                if (row1[column] is byte[] && row2[column] is byte[])
+                {
+                    var B1 = (byte[])row1[column];
+                    var B2 = (byte[])row2[column];
+                    if (B1.Length != B2.Length)
                         return false;
 
                     for (int i = 0; i < B1.Length; i++)
@@ -82,7 +82,21 @@ namespace Sys.Data.Comparison
                             return false;
                     }
                 }
-                else if(!row1[column].Equals(row2[column]))
+                else if (row1[column] is string && row2[column] is string)
+                {
+                    var r1 = row1[column];
+                    var r2 = row2[column];
+
+                    if (r1 is string)   //compare string with postfix ' ' character
+                        r1 = (r1 as string).Trim();
+
+                    if (r2 is string)
+                        r2 = (r2 as string).Trim();
+
+                    if (!r1.Equals(r2))
+                        return false ;
+                }
+                else if (!row1[column].Equals(row2[column]))
                     return false;
             }
 
