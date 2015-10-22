@@ -16,7 +16,7 @@ namespace sqlcon
     {
         
         public const string _COMPARISON = "comparison";
-        public const string _SERVER0 = "server";
+        public const string _SERVER0 = "home";
         public const string _SERVER1 = "server1";
         public const string _SERVER2 = "server2";
         
@@ -52,6 +52,7 @@ namespace sqlcon
         public string[] exportExcludedTables = new string[] { };
         public List<KeyValueTable> dictionarytables = new List<KeyValueTable>();
         public int Limit_Top = 20;
+        public int Export_Max_Count = 2000;
 
         public readonly Dictionary<string, string[]> PK = new Dictionary<string, string[]>();
 
@@ -254,6 +255,10 @@ namespace sqlcon
             var limit = Cfg[_LIMIT];
             if (limit["top"].Defined)
                 this.Limit_Top = (int)limit["top"];
+
+            if (limit["export_max_count"].Defined)
+                this.Export_Max_Count = (int)limit["export_max_count"];
+
 
             var log = Cfg[_FILE_LOG];
             if (log.Defined) Context.DS.Add(_FILE_LOG, log);

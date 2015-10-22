@@ -99,7 +99,7 @@ namespace Sys.Data
             var L = new List<string>();
             foreach (var c in C)
             {
-                L.Add(string.Format("[{0}]=@{0}", c));
+                L.Add(string.Format("[{0}]={1}", c, c.SqlParameterName()));
             }
 
             return string.Format(updateCommandTemplate, string.Join(",", L), primaryWhere(columns));
@@ -117,7 +117,7 @@ namespace Sys.Data
             var L = new List<string>();
             foreach (var key in primaryKeys)
             {
-                L.Add(string.Format("[{0}]=@{0}", key));
+                L.Add(string.Format("[{0}]={1}", key, key.SqlParameterName()));
             }
             return string.Join(" AND ", L);
         }

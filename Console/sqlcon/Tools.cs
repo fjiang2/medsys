@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Sys;
 using Sys.Data;
 using System.Text.RegularExpressions;
 using System.Data;
@@ -91,7 +92,7 @@ ORDER BY c.name, c.column_id
 
         public static DataTable Search(string pattern, DataTable table, string columnName)
         {
-            Regex regex = WildcardRegex(pattern);
+            Regex regex = pattern.WildcardRegex();
             foreach (DataRow row in table.Rows)
             {
                 if(!regex.IsMatch(row[columnName].ToString()))
@@ -103,16 +104,6 @@ ORDER BY c.name, c.column_id
         }
 
 
-        public static Regex WildcardRegex(this string pattern)
-        {
-            string x = "^" + Regex.Escape(pattern)
-                                  .Replace(@"\*", ".*")
-                                  .Replace(@"\?", ".")
-                           + "$";
-
-            Regex regex = new Regex(x, RegexOptions.IgnoreCase);
-            return regex;
-        }
     }
 
 

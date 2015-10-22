@@ -482,9 +482,21 @@ namespace sqlcon
                         {
                             foreach(var tname1 in dname.GetTableNames())
                             {
-                                if (!cfg.exportExcludedTables.Select(row=>row.ToUpper()).Contains(tname1.ShortName.ToUpper()))
+                                if (!cfg.exportExcludedTables.IsMatch(tname1.ShortName))
                                 {
-                                    int count = theSide.GenerateRows(writer, tname1, null);
+                                    int count = new SqlCmd(tname1.Provider, string.Format("SELECT COUNT(*) FROM {0}", tname1)).FillObject<int>();
+                                    if (count > cfg.Export_Max_Count)
+                                    {
+                                        stdio.Write("are you sure to export {0} rows on {1} (y/n)?", count, tname1.ShortName);
+                                        if (stdio.ReadKey() != ConsoleKey.Y)
+                                        {
+                                            stdio.WriteLine("\n{0,10} skipped", tname1.ShortName);
+                                            continue;
+                                        }
+                                        stdio.WriteLine();
+                                    }
+
+                                    count = theSide.GenerateRows(writer, tname1, null);
                                     stdio.WriteLine("{0,10} row(s) generated on {1}", count, tname1.ShortName);
                                 }
                                 else
