@@ -78,6 +78,7 @@
     <Compile Include="Data\Persistence\Level0\Provider\XmlProvider.cs" />
     <Compile Include="Data\Persistence\Level0\SqlExceptionEventArgs.cs" />
     <Compile Include="Data\Persistence\Level0\SqlScript.cs" />
+    <Compile Include="Data\Persistence\Level0\SqlScriptReader.cs" />
     <Compile Include="Data\UniqueTable.cs" />
     <Compile Include="SqlBuilder\SqlBuilder.cs" />
     <Compile Include="SqlBuilder\SqlBuilderInfo.cs" />

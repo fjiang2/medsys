@@ -52,67 +52,59 @@ namespace Sys.Data
         public void Execute()
         {
             StringBuilder builder = new StringBuilder();
-            int i = 0;
+            var reader = new SqlScriptReader(scriptFile);
 
-            using (var reader = new StreamReader(scriptFile))
+            while (reader.NextLine())
             {
-                while (!reader.EndOfStream)
+                string line = reader.Line;
+
+                string formatedLine = line.Trim();
+                string upperLine = formatedLine.ToUpper();
+                if (upperLine.StartsWith("INSERT")
+                    || upperLine.StartsWith("UPDATE")
+                    || upperLine.StartsWith("DELETE")
+                    || upperLine.StartsWith("CREATE")
+                    || upperLine.StartsWith("DROP")
+                    || upperLine.StartsWith("ALTER")
+                    || upperLine.StartsWith("GO")
+                    )
                 {
-                    string line = reader.ReadLine();
-                    i++;
+                    if (!ExecuteSql(reader.LineNumber, builder))
+                        ;//return;
 
-                    string formatedLine = line.Trim();
-                    if (formatedLine == string.Empty)
-                        continue;
-
-                    string upperLine = formatedLine.ToUpper();
-                    if (upperLine.StartsWith("INSERT")
-                        || upperLine.StartsWith("UPDATE")
-                        || upperLine.StartsWith("DELETE")
-                        || upperLine.StartsWith("CREATE")
-                        || upperLine.StartsWith("DROP")
-                        || upperLine.StartsWith("ALTER")
-                        || upperLine.StartsWith("GO")
-                        )
+                    builder.Clear();
+                    if (!upperLine.StartsWith("GO"))
+                        builder.AppendLine(line);
+                }
+                else
+                {
+                    builder.AppendLine(line);
+                    while (reader.NextLine())
                     {
-                        if (!ExecuteSql(i - 1, builder))
-                            ;//return;
+                        line = reader.Line;
 
-                        builder.Clear();
+                        formatedLine = line.Trim();
+
+                        upperLine = formatedLine.ToUpper();
+
                         if (!upperLine.StartsWith("GO"))
                             builder.AppendLine(line);
-                    }
-                    else
-                    {
-                        builder.AppendLine(line);
-                        while (!reader.EndOfStream)
+                        else
                         {
-                            line = reader.ReadLine();
-                            i++;
+                            if (!ExecuteSql(reader.LineNumber, builder))
+                                ; //return;
 
-                            formatedLine = line.Trim();
-                            if (formatedLine == string.Empty)
-                                continue;
-
-                            upperLine = formatedLine.ToUpper();
-
-                            if (!upperLine.StartsWith("GO"))
-                                builder.AppendLine(line);
-                            else
-                            {
-                                if (!ExecuteSql(i - 1, builder))
-                                    ; //return;
-
-                                builder.Clear();
-                                break;
-                            }
+                            builder.Clear();
+                            break;
                         }
                     }
-
                 }
+
             }
 
-            if (!ExecuteSql(i - 1, builder))
+            reader.Close();
+
+            if (!ExecuteSql(reader.LineNumber, builder))
                 return;
 
             OnCompleted(new EventArgs());
