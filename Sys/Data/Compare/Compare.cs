@@ -179,11 +179,26 @@ namespace Sys.Data.Comparison
             return count;
         }
 
-        public static string GenerateRowTemplate(TableSchema schema)
+        public static string GenerateTemplate(TableSchema schema, SqlScriptType type)
         {
             TableName tableName = schema.TableName;
             TableScript script = new TableScript(schema);
-            return script.INSERT( schema.Columns);
+            switch (type)
+            {
+                case SqlScriptType.INSERT:
+                    return script.INSERT(schema.Columns);
+
+                case SqlScriptType.SELECT:
+                    return script.SELECT(schema.Columns);
+
+                case SqlScriptType.UPDATE:
+                    return script.UPDATE(schema.Columns);
+
+                case SqlScriptType.DELETE:
+                    return script.DELETE(schema.Columns);
+            }
+
+            return null;
         }
 
         #endregion

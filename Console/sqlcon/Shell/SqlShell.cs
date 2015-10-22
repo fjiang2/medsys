@@ -289,25 +289,6 @@ namespace sqlcon
                             return true;
                     }
 
-                case "template":
-                    {
-                        TableName tname = mgr.GetCurrentPath<TableName>();
-                        if (tname == null)
-                        {
-                            stdio.ShowError("warning: table is not available");
-                            return true;
-                        }
-                        else
-                        {
-                            string sql = theSide.GenerateRowTemplate(tname);
-                            stdio.WriteLine(sql);
-                            using (var writer = cfg.OutputFile.NewStreamWriter())
-                            {
-                                writer.WriteLine(sql);
-                            }
-                        }
-                    }
-                    return true;
 
                 case "xcopy":
                     if (cmd.arg1 == "output")
@@ -463,22 +444,34 @@ namespace sqlcon
                 case "insert":
                     if (tname != null)
                     {
-                        var node = mgr.GetCurrentNode<Locator>();
-                        int count;
-
-                        using (var writer = fileName.NewStreamWriter())
+                        if (cmd.IsSchema)
                         {
-                            if (node != null)
+                            using (var writer = fileName.NewStreamWriter())
                             {
-                                stdio.WriteLine("start to generate {0} INSERT script to file: {1}", tname, fileName);
-                                Locator locator = mgr.GetCombinedLocator(node);
-                                count = theSide.GenerateRows(writer, tname, locator);
-                                stdio.WriteLine("insert clauses (SELECT * FROM {0} WHERE {1}) generated to {2}", tname, locator, fileName);
+                                string sql = theSide.GenerateTemplate(tname, SqlScriptType.INSERT);
+                                stdio.WriteLine(sql);
+                                writer.WriteLine(sql);
                             }
-                            else
+                        }
+                        else
+                        {
+                            var node = mgr.GetCurrentNode<Locator>();
+                            int count;
+
+                            using (var writer = fileName.NewStreamWriter())
                             {
-                                count = theSide.GenerateRows(writer, tname, null);
-                                stdio.WriteLine("insert clauses (SELECT * FROM {0}) generated to {1}", tname, fileName);
+                                if (node != null)
+                                {
+                                    stdio.WriteLine("start to generate {0} INSERT script to file: {1}", tname, fileName);
+                                    Locator locator = mgr.GetCombinedLocator(node);
+                                    count = theSide.GenerateRows(writer, tname, locator);
+                                    stdio.WriteLine("insert clauses (SELECT * FROM {0} WHERE {1}) generated to {2}", tname, locator, fileName);
+                                }
+                                else
+                                {
+                                    count = theSide.GenerateRows(writer, tname, null);
+                                    stdio.WriteLine("insert clauses (SELECT * FROM {0}) generated to {1}", tname, fileName);
+                                }
                             }
                         }
                     }
@@ -501,7 +494,7 @@ namespace sqlcon
                         }
                     }
                     else
-                        stdio.ShowError("warning: table or database is not available");
+                        stdio.ShowError("warning: table or database is not selected");
 
                     return true;
 
@@ -526,7 +519,31 @@ namespace sqlcon
                     }
                     else
                     {
-                        stdio.ShowError("warning: select table or database is not available");
+                        stdio.ShowError("warning: table or database is not seleted");
+                    }
+                    return true;
+
+                case "select":
+                case "delete":
+                case "update":
+                    if (tname != null)
+                    {
+                        SqlScriptType type = SqlScriptType.SELECT;
+                        if (cmd.arg1 == "delete")
+                            type = SqlScriptType.DELETE;
+                        if (cmd.arg1 == "update")
+                            type = SqlScriptType.UPDATE;
+
+                        using (var writer = fileName.NewStreamWriter())
+                        {
+                            string sql = theSide.GenerateTemplate(tname, type);
+                            stdio.WriteLine(sql);
+                            writer.WriteLine(sql);
+                        }
+                    }
+                    else
+                    {
+                        stdio.ShowError("warning: table is not selected");
                     }
                     return true;
 
@@ -561,7 +578,7 @@ namespace sqlcon
                     return true;
 
                 default:
-                    stdio.ShowError("warning: correct format is export [insert|create|schema]");
+                    stdio.ShowError("warning: correct format is export [insert|create|select|update|delete|schema]");
                     break;
             }
 

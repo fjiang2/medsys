@@ -52,6 +52,7 @@
     <Compile Include="Compare\Compare.cs" />
     <Compile Include="Compare\CompareSideType.cs" />
     <Compile Include="Compare\RowCompare.cs" />
+    <Compile Include="Compare\SqlScriptType.cs" />
     <Compile Include="Compare\TableCompare.cs" />
     <Compile Include="Compare\TableSchemaCompare.cs" />
     <Compile Include="Data\Connection\SqlSchemaProvider.cs" />

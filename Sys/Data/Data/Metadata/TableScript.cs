@@ -21,9 +21,11 @@ namespace Sys.Data
             this.tableName = schema.TableName;
         }
 
-     
 
-        #region INSERT/UPDATE/DELETE
+
+        #region SELECT/INSERT/UPDATE/DELETE
+
+      
 
         public string INSERT(DataRow row)
         {
@@ -36,19 +38,7 @@ namespace Sys.Data
             var direct = RowCompare.Direct(columnName, values).Where(column => !schema.Identity.ColumnNames.Contains(column.ColumnName));
             return INSERT(direct);
         }
-
-        public string INSERT(IEnumerable<IColumn> columns)
-        {
-            var x1 = columns.Select(column => "[" + column.ColumnName + "]");
-            var x2 = columns.Select(column => ColumnValue.ToScript(column));
-
-            return string.Format(insertCommandTemplate,
-             string.Join(",", x1),
-             string.Join(",", x2)
-             );
-        }
-
-       
+        
 
         public string INSERT(IEnumerable<ColumnPair> pairs)
         {
@@ -66,6 +56,8 @@ namespace Sys.Data
             return string.Format(updateCommandTemplate, compare.Set, compare.Where);
         }
 
+     
+
         public string DELETE(DataRow row, IPrimaryKeys primaryKey)
         {
             var L1 = new List<ColumnPair>();
@@ -76,7 +68,60 @@ namespace Sys.Data
 
             return string.Format(deleteCommandTemplate, string.Join<ColumnPair>(" AND ", L1));
         }
-        
+        #endregion
+
+
+        #region SELECT/UPDATE/DELETE/INSERT template
+
+        public string SELECT(IEnumerable<IColumn> columns)
+        {
+            var L = columns.Select(column => "[" + column.ColumnName + "]");
+            return string.Format(selectCommandTemplate, string.Join(",", L), primaryWhere(columns));
+        }
+
+        public string INSERT(IEnumerable<IColumn> columns)
+        {
+            var x1 = columns.Select(column => "[" + column.ColumnName + "]");
+            var x2 = columns.Select(column => ColumnValue.ToScript(column));
+
+            return string.Format(insertCommandTemplate,
+             string.Join(",", x1),
+             string.Join(",", x2)
+             );
+        }
+
+
+        public string UPDATE(IEnumerable<IColumn> columns)
+        {
+
+            string[] C = columns.Where(c => !c.IsPrimary && !c.IsIdentity).Select(c => c.ColumnName).ToArray();
+
+            var L = new List<string>();
+            foreach (var c in C)
+            {
+                L.Add(string.Format("[{0}]=@{0}", c));
+            }
+
+            return string.Format(updateCommandTemplate, string.Join(",", L), primaryWhere(columns));
+        }
+
+
+        public string DELETE(IEnumerable<IColumn> columns)
+        {
+            return string.Format(deleteCommandTemplate, primaryWhere(columns));
+        }
+
+        private string primaryWhere(IEnumerable<IColumn> columns)
+        {
+            string[] primaryKeys = columns.Where(c => c.IsPrimary).Select(c => c.ColumnName).ToArray();
+            var L = new List<string>();
+            foreach (var key in primaryKeys)
+            {
+                L.Add(string.Format("[{0}]=@{0}", key));
+            }
+            return string.Join(" AND ", L);
+        }
+
         #endregion
 
         #region CREATE/DROP Table
@@ -158,6 +203,10 @@ namespace Sys.Data
 
         #region Insert/Update/Delete template
         
+        private string selectCommandTemplate
+        {
+            get { return string.Format("SELECT {0} FROM {1} WHERE {2}", "{0}", tableName.FormalName, "{1}"); }
+        }
         private string updateCommandTemplate
         {
             get { return string.Format("UPDATE {0} SET {1} WHERE {2}", tableName.FormalName, "{0}", "{1}"); }

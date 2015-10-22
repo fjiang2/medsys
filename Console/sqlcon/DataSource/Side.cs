@@ -93,9 +93,9 @@ namespace sqlcon
         }
 
 
-        public string GenerateRowTemplate(TableName tableName)
+        public string GenerateTemplate(TableName tableName, SqlScriptType type)
         {
-            return Compare.GenerateRowTemplate(new TableSchema(tableName));
+            return Compare.GenerateTemplate(new TableSchema(tableName), type);
         }
         
         public override string ToString()

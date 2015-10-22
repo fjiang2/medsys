@@ -63,6 +63,12 @@ namespace Sys.Data
             this.where = expression.ToString();
         }
 
+
+        /// <summary>
+        /// name of locator
+        /// </summary>
+        public string Name { get; set; }
+
         public void And(Locator locator)
         {
             this.where = string.Format("({0}) AND ({1})", this.where, locator.where);

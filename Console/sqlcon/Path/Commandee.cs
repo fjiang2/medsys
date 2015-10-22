@@ -436,7 +436,8 @@ namespace sqlcon
         {
             if (cmd.HasHelp)
             {
-                stdio.WriteLine("type [path]|[pattern]  : display current data, or search pattern");
+                stdio.WriteLine("display current data, or search pattern");
+                stdio.WriteLine("type [path]|[pattern]|[where]  : display current data, or search pattern");
                 stdio.WriteLine("options:");
                 stdio.WriteLine("   /top:n              : display top n records");
                 stdio.WriteLine("   /all                : display all records");
@@ -445,6 +446,7 @@ namespace sqlcon
                 stdio.WriteLine("   /col:c1,c2,..       : display columns, or search on columns");
                 stdio.WriteLine("example:");
                 stdio.WriteLine("type match*s /col:c1,c2 : display rows matched on columns:c1 or c2");
+                stdio.WriteLine("type id=20             : display rows where id=20");
                 return;
             }
 
