@@ -62,6 +62,9 @@ namespace Sys.Data
                     i++;
 
                     string formatedLine = line.Trim();
+                    if (formatedLine == string.Empty)
+                        continue;
+
                     string upperLine = formatedLine.ToUpper();
                     if (upperLine.StartsWith("INSERT")
                         || upperLine.StartsWith("UPDATE")
@@ -73,16 +76,39 @@ namespace Sys.Data
                         )
                     {
                         if (!ExecuteSql(i - 1, builder))
-                            return;
+                            ;//return;
 
                         builder.Clear();
                         if (!upperLine.StartsWith("GO"))
                             builder.AppendLine(line);
                     }
-                    else if (formatedLine != string.Empty)
+                    else
                     {
                         builder.AppendLine(line);
+                        while (!reader.EndOfStream)
+                        {
+                            line = reader.ReadLine();
+                            i++;
+
+                            formatedLine = line.Trim();
+                            if (formatedLine == string.Empty)
+                                continue;
+
+                            upperLine = formatedLine.ToUpper();
+
+                            if (!upperLine.StartsWith("GO"))
+                                builder.AppendLine(line);
+                            else
+                            {
+                                if (!ExecuteSql(i - 1, builder))
+                                    ; //return;
+
+                                builder.Clear();
+                                break;
+                            }
+                        }
                     }
+
                 }
             }
 
@@ -101,13 +127,13 @@ namespace Sys.Data
 
             try
             {
-                var cmd =new SqlCmd(provider, sql);
+                var cmd = new SqlCmd(provider, sql);
                 //cmd.Error += (sender, e) => { OnError(e); };
                 cmd.ExecuteNonQuery();
             }
             catch (Exception ex)
             {
-                OnError(new SqlExceptionEventArgs(sql, ex){ Line = i});
+                OnError(new SqlExceptionEventArgs(sql, ex) { Line = i });
                 return false;
             }
 

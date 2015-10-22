@@ -22,6 +22,7 @@ namespace sqlcon
             Console.WriteLine("Copyright (c) 2014-2015 Datconn. All rights reserved.");
             Console.WriteLine();
 
+            Tie.Constant.MAX_CPU_REG_NUM = 600;
             string cfgFile = "user.cfg";
 
             int i = 0;

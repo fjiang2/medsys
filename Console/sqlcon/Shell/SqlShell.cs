@@ -312,24 +312,27 @@ namespace sqlcon
                         string inputfile = cfg.InputFile;
                         if (cmd.arg1 != null)
                             inputfile = cmd.arg1;
-                        if (!File.Exists(inputfile))
+                        if (inputfile.StartsWith("$"))
                         {
-                            stdio.ShowError("no input file found : {0}", inputfile);
-                            return true;
+                            string tag = inputfile.Substring(1, inputfile.Length - 1);
+                            string[] files = cfg.GetValue<string[]>(tag);
+                            if (files == null)
+                            {
+                                stdio.ShowError("no varible string[] {0} found on config file: {0}", tag);
+                                return true;
+                            }
+
+                            foreach (var file in files)
+                            {
+                                if (!ExecuteSqlScript(file))
+                                {
+                                    stdio.ShowError("interupted on {0}", file);
+                                    return true;
+                                }
+                            }
                         }
-
-                        var script = new SqlScript(theSide.Provider, inputfile);
-                        script.Reported += (sender, e) =>
-                        {
-                            stdio.WriteLine("processed: {0}>{1}", e.Value1, e.Value2);
-                        };
-                        script.Error += (sender, e) =>
-                        {
-                            stdio.ShowError("line:{0}, {1}, SQL:{2}", e.Line, e.Exception.Message, e.Command);
-                        };
-
-                        script.Execute();
-                        stdio.WriteLine("completed");
+                        else
+                            ExecuteSqlScript(inputfile);
                     }
 
                     return true;
@@ -598,6 +601,35 @@ namespace sqlcon
         }
 
 
+        private bool ExecuteSqlScript(string inputfile)
+        {
+            if (!File.Exists(inputfile))
+            {
+                stdio.ShowError("no input file found : {0}", inputfile);
+                return false;
+            }
+
+            stdio.WriteLine("Execute {0}", inputfile);
+            var script = new SqlScript(theSide.Provider, inputfile);
+            script.Reported += (sender, e) =>
+            {
+               // stdio.WriteLine("processed: {0}>{1}", e.Value1, e.Value2);
+            };
+
+            bool hasError = false;
+            script.Error += (sender, e) =>
+            {
+                hasError = true;
+                stdio.ShowError("line:{0}, {1}, SQL:{2}", e.Line, e.Exception.Message, e.Command);
+            };
+
+            script.Execute();
+            stdio.WriteLine("completed");
+
+            return !hasError;
+        }
+
+
         private void chdir(Command cmd)
         {
             if (commandee.chdir(cmd))
@@ -814,6 +846,7 @@ namespace sqlcon
             stdio.WriteLine("<export create>         : export CREATE TABLE script on current table/database");
             stdio.WriteLine("<export schema>         : export database schema xml file");
             stdio.WriteLine("<execute inputfile>     : execute sql script file");
+            stdio.WriteLine("<execute $variable>    : execute script file list defined on the configuration file");
             stdio.WriteLine();
             stdio.WriteLine("type [;] to execute following SQL script or functions");
             stdio.WriteLine("<SQL>");
