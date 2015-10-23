@@ -49,7 +49,7 @@ namespace Sys.Data
 
 
 
-        public void Execute(bool stopOnError)
+        public void Execute(Func<bool> stopOnError)
         {
             StringBuilder builder = new StringBuilder();
             var reader = new SqlScriptReader(scriptFile);
@@ -69,8 +69,11 @@ namespace Sys.Data
                     || upperLine.StartsWith("GO")
                     )
                 {
-                    if (!ExecuteSql(reader.LineNumber, builder) && stopOnError)
-                        return;
+                    if (!ExecuteSql(reader.LineNumber, builder))
+                    {
+                        if(stopOnError != null && stopOnError())
+                            return;
+                    }
 
                     builder.Clear();
                     if (!upperLine.StartsWith("GO"))
@@ -91,8 +94,11 @@ namespace Sys.Data
                             builder.AppendLine(line);
                         else
                         {
-                            if (!ExecuteSql(reader.LineNumber, builder) && stopOnError)
-                                return;
+                            if (!ExecuteSql(reader.LineNumber, builder))
+                            {
+                                if (stopOnError != null && stopOnError())
+                                    return;
+                            }
 
                             builder.Clear();
                             break;

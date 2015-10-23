@@ -304,7 +304,7 @@ namespace sqlcon
             switch (action)
             {
                 case ActionType.Execute:
-                    adapter.Side2.ExecuteScript(cfg.InputFile, true);
+                    adapter.Side2.ExecuteScript(cfg.InputFile);
 
                     break;
 

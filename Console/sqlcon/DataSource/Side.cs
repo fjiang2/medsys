@@ -9,6 +9,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.IO;
 using System.Text.RegularExpressions;
+using Sys;
 
 namespace sqlcon
 {
@@ -46,16 +47,55 @@ namespace sqlcon
             return DatabaseName.GenerateScript();
         }
 
-        public void ExecuteScript(string scriptFile, bool stopOnError)
+        public bool ExecuteScript(string scriptFile)
+        {
+            return ExecuteSqlScript(this.Provider, scriptFile);
+        }
+
+        private static bool ExecuteSqlScript(ConnectionProvider provider, string scriptFile)
         {
             if (!File.Exists(scriptFile))
             {
-                stdio.WriteLine("input file not found: {0}", scriptFile);
-                return;
+                stdio.ShowError("no input file found : {0}", scriptFile);
+                return false;
             }
 
-            new SqlScript(this.Provider, scriptFile).Execute(stopOnError);
+            stdio.WriteLine("Execute {0}", scriptFile);
+            var script = new SqlScript(provider, scriptFile);
+            script.Reported += (sender, e) =>
+            {
+                // stdio.WriteLine("processed: {0}>{1}", e.Value1, e.Value2);
+            };
+
+            bool hasError = false;
+            script.Error += (sender, e) =>
+            {
+                hasError = true;
+                stdio.ShowError("line:{0}, {1}, SQL:{2}", e.Line, e.Exception.Message, e.Command);
+            };
+
+            Func<bool> stopOnError = () =>
+            {
+                return !stdio.YesOrNo("are you sure to contune (yes/no)?:");
+            };
+
+            script.Execute(stopOnError);
+            stdio.WriteLine("completed");
+
+            return !hasError;
         }
+
+
+
+
+
+
+
+
+
+
+
+
 
         public void GenerateRowScript(StreamWriter writer, string tableNamePattern, string[] excludedtables)
         {
@@ -68,7 +108,7 @@ namespace sqlcon
             {
                 if (m.DefaultTableNames.Contains(name))
                 {
-                    if (!excludedtables.Contains(name.ShortName.ToUpper()))
+                    if (!excludedtables.IsMatch(name.ShortName))
                         list.Add(name);
                 }
             }

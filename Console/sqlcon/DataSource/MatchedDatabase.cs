@@ -22,7 +22,7 @@ namespace sqlcon
             this.DatabaseName = databaseName;
             
             if(excludedtables != null)
-                this.Excludedtables = excludedtables.Select(row => row.ToUpper()).ToArray(); ;
+                this.Excludedtables = excludedtables;
         }
 
 
@@ -75,7 +75,7 @@ namespace sqlcon
             if (Excludedtables == null)
                 return true;
 
-              return !Excludedtables.Contains(tableName.ShortName.ToUpper());
+            return !Excludedtables.IsMatch(tableName.ShortName);
         }
 
         public static TableName[] Search(string pattern, TableName[] tableNames)

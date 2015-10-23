@@ -324,7 +324,7 @@ namespace sqlcon
 
                             foreach (var file in files)
                             {
-                                if (!ExecuteSqlScript(file))
+                                if (!theSide.ExecuteScript(file))
                                 {
                                     if (!stdio.YesOrNo("are you sure to continue(y/n)?"))
                                     {
@@ -335,7 +335,7 @@ namespace sqlcon
                             }
                         }
                         else
-                            ExecuteSqlScript(inputfile);
+                            theSide.ExecuteScript(inputfile);
                     }
 
                     return true;
@@ -486,25 +486,26 @@ namespace sqlcon
                         stdio.WriteLine("start to generate {0} script to file: {1}", dname, fileName);
                         using (var writer = fileName.NewStreamWriter())
                         {
-                            foreach(var tname1 in dname.GetTableNames())
+                            TableName[] tnames = dname.GetDependencyTableNames();
+                            foreach (var tn in tnames)
                             {
-                                if (!cfg.exportExcludedTables.IsMatch(tname1.ShortName))
+                                if (!cfg.exportExcludedTables.IsMatch(tn.ShortName))
                                 {
-                                    int count = new SqlCmd(tname1.Provider, string.Format("SELECT COUNT(*) FROM {0}", tname1)).FillObject<int>();
+                                    int count = new SqlCmd(tn.Provider, string.Format("SELECT COUNT(*) FROM {0}", tn)).FillObject<int>();
                                     if (count > cfg.Export_Max_Count)
                                     {
-                                        if(!stdio.YesOrNo("are you sure to export {0} rows on {1} (y/n)?", count, tname1.ShortName))
+                                        if(!stdio.YesOrNo("are you sure to export {0} rows on {1} (y/n)?", count, tn.ShortName))
                                         {
-                                            stdio.WriteLine("\n{0,10} skipped", tname1.ShortName);
+                                            stdio.WriteLine("\n{0,10} skipped", tn.ShortName);
                                             continue;
                                         }
                                     }
 
-                                    count = theSide.GenerateRows(writer, tname1, null);
-                                    stdio.WriteLine("{0,10} row(s) generated on {1}", count, tname1.ShortName);
+                                    count = theSide.GenerateRows(writer, tn, null);
+                                    stdio.WriteLine("{0,10} row(s) generated on {1}", count, tn.ShortName);
                                 }
                                 else
-                                    stdio.WriteLine("{0,10} skipped", tname1.ShortName);
+                                    stdio.WriteLine("{0,10} skipped", tn.ShortName);
                             }
                             stdio.WriteLine("completed");
                         }
@@ -602,35 +603,7 @@ namespace sqlcon
         }
 
 
-        private bool ExecuteSqlScript(string inputfile)
-        {
-            if (!File.Exists(inputfile))
-            {
-                stdio.ShowError("no input file found : {0}", inputfile);
-                return false;
-            }
-
-            stdio.WriteLine("Execute {0}", inputfile);
-            var script = new SqlScript(theSide.Provider, inputfile);
-            script.Reported += (sender, e) =>
-            {
-               // stdio.WriteLine("processed: {0}>{1}", e.Value1, e.Value2);
-            };
-
-            bool hasError = false;
-            script.Error += (sender, e) =>
-            {
-                hasError = true;
-                stdio.ShowError("line:{0}, {1}, SQL:{2}", e.Line, e.Exception.Message, e.Command);
-            };
-
-            script.Execute(true);
-            stdio.WriteLine("completed");
-
-            return !hasError;
-        }
-
-
+    
         private void chdir(Command cmd)
         {
             if (commandee.chdir(cmd))
