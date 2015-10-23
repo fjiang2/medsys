@@ -522,6 +522,8 @@ namespace sqlcon
                         stdio.WriteLine("start to generate {0} CREATE TABLE script to file: {1}", tname, fileName);
                         using (var writer = fileName.NewStreamWriter())
                         {
+                            writer.WriteLine(tname.IF_EXISTS_DROP_TABLE());
+                            writer.WriteLine("GO");
                             writer.WriteLine(tname.GenerateScript());
                         }
                         stdio.WriteLine("completed");

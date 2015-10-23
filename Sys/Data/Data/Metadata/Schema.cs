@@ -99,6 +99,18 @@ namespace Sys.Data
             return builder.ToString();
         }
 
+
+        public static string IF_EXISTS_DROP_TABLE(this TableName tableName)
+        {
+            string drop =
+@"IF OBJECT_ID('{0}') IS NOT NULL
+  DROP TABLE {1}
+";
+            StringBuilder builder = new StringBuilder();
+            builder.AppendFormat(drop, tableName.Name, tableName.FormalName);
+            return builder.ToString();
+        }
+
         public static string GenerateScript(this TableName tableName)
         {
             TableSchema schema1 = new TableSchema(tableName);
@@ -148,15 +160,11 @@ namespace Sys.Data
 
         public static string GenerateDropTableScript(this DatabaseName databaseName)
         {
-            string drop = @"
-IF OBJECT_ID('{0}') IS NOT NULL
-  DROP TABLE {1}
-";
             TableName[] history = GetDependencyTableNames(databaseName);
             StringBuilder builder = new StringBuilder();
             foreach (var tableName in history.Reverse())
             {
-                builder.AppendFormat(drop, tableName.Name, tableName.FormalName)
+                builder.AppendLine(tableName.IF_EXISTS_DROP_TABLE())
                     .AppendLine(TableScript.GO);
             }
 

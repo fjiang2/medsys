@@ -156,14 +156,8 @@ namespace Sys.Data
             get { return this.tableName; } 
         }
 
-
-
-
-
-
+        
         //------------------------------------------------------------------------------------
-
-      
         public Locator DefaultLocator()
         {
             return new Locator(this.PrimaryKeys);
