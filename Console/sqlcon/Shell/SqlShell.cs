@@ -312,9 +312,10 @@ namespace sqlcon
                         string inputfile = cfg.InputFile;
                         if (cmd.arg1 != null)
                             inputfile = cmd.arg1;
-                        if (inputfile.StartsWith("$"))
+
+                        if (cmd.IsSchema)
                         {
-                            string tag = inputfile.Substring(1, inputfile.Length - 1);
+                            string tag = inputfile;
                             string[] files = cfg.GetValue<string[]>(tag);
                             if (files == null)
                             {
@@ -820,7 +821,7 @@ namespace sqlcon
             stdio.WriteLine("<export create>         : export CREATE TABLE script on current table/database");
             stdio.WriteLine("<export schema>         : export database schema xml file");
             stdio.WriteLine("<execute inputfile>     : execute sql script file");
-            stdio.WriteLine("<execute $variable>    : execute script file list defined on the configuration file");
+            stdio.WriteLine("<execute variable /s>   : execute script file list defined on the configuration file");
             stdio.WriteLine();
             stdio.WriteLine("type [;] to execute following SQL script or functions");
             stdio.WriteLine("<SQL>");
