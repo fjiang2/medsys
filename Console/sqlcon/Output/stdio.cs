@@ -153,5 +153,22 @@ namespace sqlcon
             
             return line;
         }
+
+        /// <summary>
+        /// return true if answer is YES
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        public static bool YesOrNo(string format, params object[] args)
+        {
+            stdio.Write(format, args);
+            if (stdio.ReadKey() != ConsoleKey.Y)
+            {
+                return false;
+            }
+
+            stdio.WriteLine();
+            return true;
+        }
     }
 }

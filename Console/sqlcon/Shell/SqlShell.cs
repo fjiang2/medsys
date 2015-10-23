@@ -326,8 +326,11 @@ namespace sqlcon
                             {
                                 if (!ExecuteSqlScript(file))
                                 {
-                                    stdio.ShowError("interupted on {0}", file);
-                                    return true;
+                                    if (!stdio.YesOrNo("are you sure to continue(y/n)?"))
+                                    {
+                                        stdio.ShowError("interupted on {0}", file);
+                                        return true;
+                                    }
                                 }
                             }
                         }
@@ -490,13 +493,11 @@ namespace sqlcon
                                     int count = new SqlCmd(tname1.Provider, string.Format("SELECT COUNT(*) FROM {0}", tname1)).FillObject<int>();
                                     if (count > cfg.Export_Max_Count)
                                     {
-                                        stdio.Write("are you sure to export {0} rows on {1} (y/n)?", count, tname1.ShortName);
-                                        if (stdio.ReadKey() != ConsoleKey.Y)
+                                        if(!stdio.YesOrNo("are you sure to export {0} rows on {1} (y/n)?", count, tname1.ShortName))
                                         {
                                             stdio.WriteLine("\n{0,10} skipped", tname1.ShortName);
                                             continue;
                                         }
-                                        stdio.WriteLine();
                                     }
 
                                     count = theSide.GenerateRows(writer, tname1, null);
@@ -623,7 +624,7 @@ namespace sqlcon
                 stdio.ShowError("line:{0}, {1}, SQL:{2}", e.Line, e.Exception.Message, e.Command);
             };
 
-            script.Execute();
+            script.Execute(true);
             stdio.WriteLine("completed");
 
             return !hasError;

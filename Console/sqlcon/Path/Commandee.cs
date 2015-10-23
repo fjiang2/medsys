@@ -280,8 +280,7 @@ namespace sqlcon
 
                 if (T != null && T.Length > 0)
                 {
-                    stdio.Write("are you sure to drop {0} tables (y/n)?", T.Length);
-                    if (stdio.ReadKey() != ConsoleKey.Y)
+                    if(!stdio.YesOrNo("are you sure to drop {0} tables (y/n)?", T.Length))
                         return;
 
                     try
@@ -402,8 +401,7 @@ namespace sqlcon
             var nodes = pt.Nodes.Where(node => node.Item is Locator && (node.Item as Locator).Path == cmd.Path1.name);
             if (nodes.Count() > 0)
             {
-                stdio.Write("are you sure to delete (y/n)?");
-                if (stdio.ReadKey() != ConsoleKey.Y)
+                if(!stdio.YesOrNo("are you sure to delete (y/n)?"))
                     return;
 
                 foreach (var node in nodes)
@@ -421,8 +419,7 @@ namespace sqlcon
 
                     if (result >= 0 && result < pt.Nodes.Count)
                     {
-                        stdio.Write("are you sure to delete (y/n)?");
-                        if (stdio.ReadKey() != ConsoleKey.Y)
+                        if(!stdio.YesOrNo("are you sure to delete (y/n)?"))
                             return;
 
                         var node = pt.Nodes[result];

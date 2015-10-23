@@ -46,7 +46,7 @@ namespace sqlcon
             return DatabaseName.GenerateScript();
         }
 
-        public void ExecuteScript(string scriptFile)
+        public void ExecuteScript(string scriptFile, bool stopOnError)
         {
             if (!File.Exists(scriptFile))
             {
@@ -54,7 +54,7 @@ namespace sqlcon
                 return;
             }
 
-            new SqlScript(this.Provider, scriptFile).Execute();
+            new SqlScript(this.Provider, scriptFile).Execute(stopOnError);
         }
 
         public void GenerateRowScript(StreamWriter writer, string tableNamePattern, string[] excludedtables)
