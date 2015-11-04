@@ -100,10 +100,17 @@ namespace sqlcon
             return Use(tableName, SQL);
 
         }
+
         public static DataTable StorageSchema(this TableName tableName)
         {
             string SQL = string.Format("Exec sp_spaceused N'{0}'", tableName.ShortName);
             return Use(tableName, SQL);
+        }
+
+        public static DataTable StorageSchema(this DatabaseName dname)
+        {
+            string SQL = "Exec sp_spaceused";
+            return Use(dname, SQL);
         }
 
         public static DataTable AllView(this DatabaseName databaseName)

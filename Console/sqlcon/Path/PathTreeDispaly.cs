@@ -103,6 +103,13 @@ namespace sqlcon
             if (!(pt.Item is DatabaseName))
                 return false;
 
+            DatabaseName dname = (DatabaseName)pt.Item;
+            if (cmd.HasStorage)
+            {
+                displayTable(dname.StorageSchema(), "Storage");
+                return true;
+            }
+
             int i = 0;
             int[] count = new int[] { 0, 0 };
             int h = 0;
