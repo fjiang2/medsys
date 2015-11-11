@@ -27,7 +27,7 @@ namespace Sys.Data.Comparison
             L1 = new List<ColumnPair>();
             L2 = new List<ColumnPair>();
 
-            foreach (var column in table.NonPkColumns)
+            foreach (var column in table.CompareColumns)
             {
                 var r1 = row1[column];
                 var r2 = row2[column];

@@ -564,7 +564,8 @@ namespace sqlcon
 
                 var adapter = new CompareAdapter(side1, side2);
                 //stdio.WriteLine("start to {0} from {1} to {2}", sideType, tname1, tname2);
-                var sql = adapter.CompareTable(cmd.IsSchema ? ActionType.CompareSchema : ActionType.CompareData, sideType, tname1, tname2, mgr.Configuration.PK);
+                var sql = adapter.CompareTable(cmd.IsSchema ? ActionType.CompareSchema : ActionType.CompareData, 
+                    sideType, tname1, tname2, mgr.Configuration.PK, new string[] { });
 
                 if (sideType == CompareSideType.compare)
                 {

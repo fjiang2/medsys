@@ -48,7 +48,7 @@ namespace sqlcon
         }
 
 
-        public string Run(ActionType CompareType, MatchedDatabase m1, MatchedDatabase m2, Dictionary<string, string[]> pk)
+        public string Run(ActionType CompareType, MatchedDatabase m1, MatchedDatabase m2, Dictionary<string, string[]> pk, string[] exceptColumns)
         {
             DatabaseName db1 = Side1.DatabaseName;
             DatabaseName db2 = Side2.DatabaseName;
@@ -74,7 +74,7 @@ namespace sqlcon
                 {
                     for (int i = 0; i < N1.Length; i++)
                     {
-                        builder.Append(CompareTable(CompareType, CompareSideType.compare, N1[i], N2[i], pk));
+                        builder.Append(CompareTable(CompareType, CompareSideType.compare, N1[i], N2[i], pk, exceptColumns));
                     }
                 }
                 else if (N1.Length > 0 && N2.Length == 0)
@@ -141,7 +141,7 @@ namespace sqlcon
         }
 
   
-        public string CompareTable(ActionType actiontype, CompareSideType sidetype, TableName tname1, TableName tname2, Dictionary<string, string[]> pk)
+        public string CompareTable(ActionType actiontype, CompareSideType sidetype, TableName tname1, TableName tname2, Dictionary<string, string[]> pk, string[] exceptColumns)
         {
             TableSchema schema1 = new TableSchema(tname1);
             TableSchema schema2 = new TableSchema(tname2);
@@ -171,7 +171,7 @@ namespace sqlcon
                 }
 
                 bool hasPk = schema1.PrimaryKeys.Length > 0;
-                sql = Compare.TableDifference(sidetype, schema1, schema2, schema1.PrimaryKeys.Keys);
+                sql = Compare.TableDifference(sidetype, schema1, schema2, schema1.PrimaryKeys.Keys, exceptColumns);
 
                 if (!hasPk)
                 {
@@ -181,13 +181,13 @@ namespace sqlcon
                     if (pk.ContainsKey(key))
                     {
                         stdio.WriteLine("use predefine keys defined in ini file: {0}", tname1);
-                        sql = Compare.TableDifference(sidetype, schema1, schema2, pk[key]);
+                        sql = Compare.TableDifference(sidetype, schema1, schema2, pk[key], exceptColumns);
                     }
                     else
                     {
                         stdio.WriteLine("use entire row as primary keys:{0}", tname1);
                         var keys = schema1.Columns.Select(row => row.ColumnName).ToArray();
-                        sql = Compare.TableDifference(sidetype, schema1, schema2, keys);
+                        sql = Compare.TableDifference(sidetype, schema1, schema2, keys, exceptColumns);
                     }
                 }
 

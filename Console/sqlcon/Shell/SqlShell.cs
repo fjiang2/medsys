@@ -380,7 +380,7 @@ namespace sqlcon
                         else 
                             type = ActionType.CompareData;
 
-                        var sql = adapter.Run(type, m1, m2, cfg.PK);
+                        var sql = adapter.Run(type, m1, m2, cfg.PK, cmd.Columns);
                         writer.Write(sql);
                     }
                     stdio.WriteLine("completed");
@@ -798,7 +798,9 @@ namespace sqlcon
             stdio.WriteLine();
             stdio.WriteLine("<Commands>");
             stdio.WriteLine("<compare> tables /s     : compare schema of tables");
-            stdio.WriteLine("<compare> tables        : compare data of tables, compare different tables using <compare data table1:table2>");
+            stdio.WriteLine("<compare> tables        : compare data of tables, compare different tables");
+            stdio.WriteLine("                          using <compare data table1:table2>");
+            stdio.WriteLine("          /col:c1,c2    : skip columns defined during comparing");
             stdio.WriteLine("<find> pattern          : find table name or column name");
             stdio.WriteLine("<show view>             : show all views");
             stdio.WriteLine("<show proc>             : show all stored proc and func");

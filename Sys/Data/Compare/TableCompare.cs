@@ -16,16 +16,20 @@ namespace Sys.Data.Comparison
         #region Implemetation
 
         internal IPrimaryKeys PkColumns;
-        internal string[] NonPkColumns;
+        private string[] compareColumns;
+        public string[] ExceptColumns { get; set; }//don't compare these columns
 
         private TableSchema schema1;
         private TableSchema schema2;
 
         public TableCompare(TableSchema schema1, TableSchema schema2)
         {
-            SideType = CompareSideType.compare;
+            this.SideType = CompareSideType.compare;
+            this.ExceptColumns = new string[] { };
+
             this.schema1 = schema1;
             this.schema2 = schema2;
+
         }
 
         public CompareSideType SideType { get; set; }
@@ -38,10 +42,24 @@ namespace Sys.Data.Comparison
             return Compare(pk, dt1, dt2);
         }
 
+
+        public string[] CompareColumns
+        {
+            get
+            {
+                return this.compareColumns;
+            }
+        }
+
         private string Compare(IPrimaryKeys pk, DataTable table1, DataTable table2)
         {
             this.PkColumns = pk;
-            this.NonPkColumns = table1.Columns.OfType<DataColumn>().Select(row => row.ColumnName).Except(PkColumns.Keys).ToArray();
+            this.compareColumns = table1.Columns
+                .OfType<DataColumn>()
+                .Select(row => row.ColumnName)
+                .Except(PkColumns.Keys)
+                .Except(ExceptColumns)
+                .ToArray();
 
             StringBuilder builder = new StringBuilder();
             TableScript script = new TableScript(schema1);
@@ -53,7 +71,7 @@ namespace Sys.Data.Comparison
 
                 if (row2 != null)
                 {
-                    if (!RowCompare.Compare(NonPkColumns, row1, row2))
+                    if (!RowCompare.Compare(compareColumns, row1, row2))
                     {
                         var compare = new RowCompare(this, row1, row2);
 

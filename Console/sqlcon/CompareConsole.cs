@@ -330,7 +330,7 @@ namespace sqlcon
 
                 case ActionType.CompareData:
                 case ActionType.CompareSchema:
-                    WriteFile(adapter.Run(action, m1, m2, cfg.PK));
+                    WriteFile(adapter.Run(action, m1, m2, cfg.PK, new string[] { }));
                     break;
 
                 case ActionType.Shell:
