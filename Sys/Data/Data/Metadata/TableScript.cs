@@ -25,11 +25,27 @@ namespace Sys.Data
 
         #region SELECT/INSERT/UPDATE/DELETE
 
-      
+
+        public string IF_NOT_EXISTS_INSERT(string[] columns, object[] values)
+        {
+            string[] keys = schema.PrimaryKeys.Keys;
+            var L1 = new List<ColumnPair>();
+            foreach (var key in keys)
+            {
+                for (int i = 0; i < columns.Length; i++)
+                    if (key == columns[i])
+                    {
+                        L1.Add(new ColumnPair(key, values[i]));
+                    }
+            }
+
+            string where = string.Join<ColumnPair>(" AND ", L1);
+            return string.Format(ifNotExistsInsertTemplate, where, INSERT(columns, values));
+        }
 
         public string INSERT(DataRow row)
         {
-            var direct = RowCompare.Direct(row).Where(column=> !schema.Identity.ColumnNames.Contains(column.ColumnName));
+            var direct = RowCompare.Direct(row).Where(column => !schema.Identity.ColumnNames.Contains(column.ColumnName));
             return INSERT(direct);
         }
 
@@ -38,7 +54,7 @@ namespace Sys.Data
             var direct = RowCompare.Direct(columnName, values).Where(column => !schema.Identity.ColumnNames.Contains(column.ColumnName));
             return INSERT(direct);
         }
-        
+
 
         public string INSERT(IEnumerable<ColumnPair> pairs)
         {
@@ -56,14 +72,14 @@ namespace Sys.Data
             return string.Format(updateCommandTemplate, compare.Set, compare.Where);
         }
 
-     
+
 
         public string DELETE(DataRow row, IPrimaryKeys primaryKey)
         {
             var L1 = new List<ColumnPair>();
             foreach (var column in primaryKey.Keys)
             {
-                L1.Add(new ColumnPair( column,  row[column] ));
+                L1.Add(new ColumnPair(column, row[column]));
             }
 
             return string.Format(deleteCommandTemplate, string.Join<ColumnPair>(" AND ", L1));
@@ -138,7 +154,7 @@ namespace Sys.Data
             string script = string.Format("DROP TABLE {0}", tableName.FormalName);
             return script;
         }
-        
+
         #endregion
 
 
@@ -185,7 +201,7 @@ namespace Sys.Data
         public string ADD_FOREIGN_KEY(IForeignKey foreignKey)
         {
             string reference;
-            if(foreignKey.PK_Schema != TableName.dbo)
+            if (foreignKey.PK_Schema != TableName.dbo)
                 reference = string.Format(" [{0}].[{1}]([{2}])", foreignKey.PK_Schema, foreignKey.PK_Table, foreignKey.PK_Column);
             else
                 reference = string.Format(" [{0}]([{1}])", foreignKey.PK_Table, foreignKey.PK_Column);
@@ -201,7 +217,21 @@ namespace Sys.Data
         #endregion
 
         #region Insert/Update/Delete template
-        
+
+        private string ifNotExistsInsertTemplate
+        {
+            get
+            {
+                string ifExists = @"
+IF NOT EXISTS(SELECT * FROM @@0 WHERE @@1)
+   @@2";
+                return ifExists
+                    .Replace("@@0", tableName.FormalName)
+                    .Replace("@@1", "{0}")
+                    .Replace("@@2", "{1}");
+            }
+        }
+
         private string selectCommandTemplate
         {
             get { return string.Format("SELECT {0} FROM {1} WHERE {2}", "{0}", tableName.FormalName, "{1}"); }

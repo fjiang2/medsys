@@ -138,7 +138,7 @@ namespace Sys.Data.Comparison
             return builder.ToString();
         }
 
-        public static int GenerateRows(StreamWriter writer, TableSchema schema, Locator where)
+        public static int GenerateRows(StreamWriter writer, TableSchema schema, Locator where, bool hasIfExists)
         {
             TableName tableName = schema.TableName;
             string sql = string.Format("SELECT * FROM {0}", tableName);
@@ -162,7 +162,10 @@ namespace Sys.Data.Comparison
                         while (reader.Read())
                         {
                             reader.GetValues(values);
-                            writer.WriteLine(script.INSERT(columns, values));
+                            if(hasIfExists)
+                                writer.WriteLine(script.IF_NOT_EXISTS_INSERT(columns, values));
+                            else
+                                writer.WriteLine(script.INSERT(columns, values));
 
                             count++;
                             if (count % 5000 == 0)

@@ -23,7 +23,7 @@ namespace sqlcon
         public readonly bool IsSchema;
 
         public readonly bool HasHelp;
-        public readonly bool HasWhere;
+        public readonly bool HasIfExists;
         public readonly bool HasPage;
         public readonly bool HasRowId;
 
@@ -79,8 +79,8 @@ namespace sqlcon
                             IsVertical = true;
                             break;
 
-                        case "/w":
-                            HasWhere = true;
+                        case "/if":
+                            HasIfExists = true;
                             break;
 
                         case "/p":

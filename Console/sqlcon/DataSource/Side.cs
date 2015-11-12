@@ -123,13 +123,13 @@ namespace sqlcon
             foreach (var tableName in tableNames)
             {
                 stdio.WriteLine("generate insert clauses on table : {0}", tableName);
-                Compare.GenerateRows(writer, new TableSchema(tableName), null);
+                Compare.GenerateRows(writer, new TableSchema(tableName), null, false);
             }
         }
 
-        public int GenerateRows(StreamWriter writer, TableName tableName, Locator where)
+        public int GenerateRows(StreamWriter writer, TableName tableName, Locator where, bool hasIfExists)
         {
-            return Compare.GenerateRows(writer, new TableSchema(tableName), where);
+            return Compare.GenerateRows(writer, new TableSchema(tableName), where, hasIfExists);
         }
 
 

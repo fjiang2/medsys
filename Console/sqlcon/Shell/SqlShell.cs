@@ -471,12 +471,12 @@ namespace sqlcon
                                 {
                                     stdio.WriteLine("start to generate {0} INSERT script to file: {1}", tname, fileName);
                                     Locator locator = mgr.GetCombinedLocator(node);
-                                    count = theSide.GenerateRows(writer, tname, locator);
+                                    count = theSide.GenerateRows(writer, tname, locator, cmd.HasIfExists);
                                     stdio.WriteLine("insert clauses (SELECT * FROM {0} WHERE {1}) generated to {2}", tname, locator, fileName);
                                 }
                                 else
                                 {
-                                    count = theSide.GenerateRows(writer, tname, null);
+                                    count = theSide.GenerateRows(writer, tname, null, cmd.HasIfExists);
                                     stdio.WriteLine("insert clauses (SELECT * FROM {0}) generated to {1}", tname, fileName);
                                 }
                             }
@@ -502,7 +502,7 @@ namespace sqlcon
                                         }
                                     }
 
-                                    count = theSide.GenerateRows(writer, tn, null);
+                                    count = theSide.GenerateRows(writer, tn, null, cmd.HasIfExists);
                                     stdio.WriteLine("{0,10} row(s) generated on {1}", count, tn.ShortName);
                                 }
                                 else
@@ -598,7 +598,7 @@ namespace sqlcon
                     return true;
 
                 default:
-                    stdio.ShowError("warning: correct format is export [insert|create|select|update|delete|schema]");
+                    stdio.ShowError("warning: correct format is export insert [/if]|create|select|update|delete|schema");
                     break;
             }
 

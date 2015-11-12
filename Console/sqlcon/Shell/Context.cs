@@ -107,12 +107,12 @@ namespace sqlcon
                             {
                                 if (where != null)
                                 {
-                                    count = theSide.GenerateRows(writer, tname, new Locator(where));
+                                    count = theSide.GenerateRows(writer, tname, new Locator(where), false);
                                     stdio.WriteLine("insert clauses (SELECT * FROM {0} WHERE {1}) generated to {2}", tname, where, fileName);
                                 }
                                 else
                                 {
-                                    count = theSide.GenerateRows(writer, tname, null);
+                                    count = theSide.GenerateRows(writer, tname, null, false);
                                     stdio.WriteLine("insert clauses (SELECT * FROM {0}) generated to {1}", tname, fileName);
                                 }
                             }
