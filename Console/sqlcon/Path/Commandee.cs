@@ -15,7 +15,12 @@ using Tie;
 
 namespace sqlcon
 {
-    class Commandee
+    interface ITabCompletion
+    {
+        string[] TabCandidates(string argument);
+    }
+
+    class Commandee : ITabCompletion
     {
         private PathManager mgr;
         private TreeNode<IDataPath> pt;
@@ -23,6 +28,15 @@ namespace sqlcon
         public Commandee(PathManager mgr)
         {
             this.mgr = mgr;
+        }
+
+        public string[] TabCandidates(string argument)
+        {
+            var pt = mgr.current;
+            var paths = pt.Nodes
+                .Where(row => row.Item.Path.ToLower().StartsWith(argument.ToLower()))
+                .Select(row => row.Item.Path).ToArray();
+            return paths;
         }
 
         private bool Navigate(Command cmd)

@@ -141,16 +141,69 @@ namespace sqlcon
             return keyInfo.Key;
         }
 
+        public static string ReadTabLine(ITabCompletion completion)
+        {
+
+            ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+            StringBuilder builder = new StringBuilder();
+
+            while (keyInfo.Key != ConsoleKey.Enter)
+            {
+                char ch = keyInfo.KeyChar;
+
+                switch (keyInfo.Key)
+                {
+                    case ConsoleKey.Spacebar:
+                        break;
+
+                    case ConsoleKey.Tab:
+                        completion.TabCandidates(builder.ToString());
+                        break;
+
+
+                    case ConsoleKey.LeftArrow:
+                    case ConsoleKey.RightArrow:
+                        break;
+
+                    case ConsoleKey.Insert:
+                        break;
+
+                    case ConsoleKey.Backspace:
+                    case ConsoleKey.Delete:
+                        break;
+                }
+
+                    
+                builder.Append(ch);
+                if (writer != null)
+                {
+                    writer.Write(ch);
+                    writer.Flush();
+                }
+
+                keyInfo = Console.ReadKey();
+            } ;
+
+            if (writer != null)
+            {
+                writer.WriteLine();
+                writer.Flush();
+            }
+
+            return builder.ToString();
+        }
+
+
         public static string ReadLine()
         {
             string line = Console.ReadLine();
-            
+
             if (writer != null)
             {
                 writer.WriteLine(line);
                 writer.Flush();
             }
-            
+
             return line;
         }
 
