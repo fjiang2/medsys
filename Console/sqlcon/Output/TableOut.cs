@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Data;
 using Sys;
 using Sys.Data;
+using Tie;
 
 namespace sqlcon
 {
@@ -69,15 +70,46 @@ namespace sqlcon
             return where;
         }
 
-        private static void _DisplayTable(DataTable table, bool vert, bool more)
+        private static void _DisplayTable(DataTable table, bool vert, bool more, bool json)
         {
             if (table == null)
                 return;
+
+            if (json)
+            {
+                stdio.WriteLine(ToJson(table));
+                return;
+            }
 
             if (vert)
                 table.ToVConsole(more);
             else
                 table.ToConsole(more);
+        }
+
+
+        private static string ToJson(DataTable dt)
+        {
+            //array
+            if (dt.Columns.Count == 1)
+            {
+                return VAL.Boxing(dt.ToArray(row=>row[0])).ToJson();
+            }
+
+            string[] columns = dt.Columns.Cast<DataColumn>().Select(col => col.ColumnName).ToArray();
+            VAL L = new VAL();
+            foreach (DataRow row in dt.Rows)
+            {
+                VAL V = new VAL();
+                for (int i = 0; i < columns.Length; i++)
+                {
+                    V.AddMember(columns[i], row[i]);
+                }
+                L.Add(V);
+            }
+
+            return L.ToJson();
+
         }
 
 
@@ -87,7 +119,7 @@ namespace sqlcon
             {
                 DataTable table = builder.SqlCmd.FillDataTable();
                 rTable = new UniqueTable(tname, table);
-                _DisplayTable(rTable.Table, cmd.IsVertical, top>0 && table.Rows.Count == top);
+                _DisplayTable(rTable.Table, cmd.IsVertical, top>0 && table.Rows.Count == top, cmd.ToJson);
             }
             catch (Exception ex)
             {

@@ -34,6 +34,7 @@ namespace sqlcon
         public readonly bool HasDependency;
         public readonly bool HasIndex;
         public readonly bool HasStorage;
+        public readonly bool ToJson;
 
         public readonly int top;
         private readonly string columns;
@@ -125,6 +126,10 @@ namespace sqlcon
 
                         case "/sto":
                             HasStorage = true;
+                            break;
+
+                        case "/json":
+                            ToJson = true;
                             break;
 
                         default:
