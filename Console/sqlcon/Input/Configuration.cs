@@ -292,24 +292,25 @@ namespace sqlcon
 
         private static string SearchConnectionString(VAL val)
         {
-            if(val.Count != 2)
+            if(val.Count != 3)
             {
-                Console.WriteLine("required 2 parameters on function config(file,path), 1: app.config/web.config name; 2: path to reach connection string");
+                Console.WriteLine("required 2 parameters on function config(file,path,value), 1: app.config/web.config name; 2: path to reach connection string; 3:connection string attribute");
                 return null;
             }
 
-            if (val[0].VALTYPE != VALTYPE.stringcon || val[1].VALTYPE != VALTYPE.stringcon)
+            if (val[0].VALTYPE != VALTYPE.stringcon || val[1].VALTYPE != VALTYPE.stringcon || val[2].VALTYPE != VALTYPE.stringcon)
             {
-                Console.WriteLine("error on function config(file,path) argument type, 1: string, 2: string");
+                Console.WriteLine("error on function config(file,path,value) argument type, 1: string, 2: string, 3:string");
                 return null;
             }
 
             string xmlFile = (string)val[0];
             string path = (string)val[1];
+            string value = (string)val[2];
 
             try
             {
-                return SearchConnectionString(xmlFile, path);
+                return SearchConnectionString(xmlFile, path, value);
             }
             catch (Exception ex)
             {
@@ -325,7 +326,7 @@ namespace sqlcon
         /// <param name="xmlFile"></param>
         /// <param name="path"></param>
         /// <returns></returns>
-        private static string SearchConnectionString(string xmlFile, string path)
+        private static string SearchConnectionString(string xmlFile, string path, string valueAttr)
         {
             if (!File.Exists(xmlFile))
             {
@@ -344,7 +345,7 @@ namespace sqlcon
             string[] pair = attr.Split('=');
             var connectionString = X.Elements()
                 .Where(x => x.Attribute(pair[0]).Value == pair[1])
-                .Select(x => x.Attribute("value").Value)
+                .Select(x => x.Attribute(valueAttr).Value)
                 .FirstOrDefault();
 
             string[] L = connectionString.Split(';');
