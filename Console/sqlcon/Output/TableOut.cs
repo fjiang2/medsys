@@ -70,18 +70,24 @@ namespace sqlcon
             return where;
         }
 
-        private static void _DisplayTable(DataTable table, bool vert, bool more, bool json)
+        private static void _DisplayTable(DataTable table, bool more, Command cmd)
         {
             if (table == null)
                 return;
 
-            if (json)
+            if (cmd.ToJson)
             {
                 stdio.WriteLine(ToJson(table));
                 return;
             }
 
-            if (vert)
+            if (cmd.ToCSharp)
+            {
+                stdio.WriteLine(ToCSharp(table));
+                return;
+            }
+
+            if (cmd.IsVertical)
                 table.ToVConsole(more);
             else
                 table.ToConsole(more);
@@ -93,7 +99,10 @@ namespace sqlcon
             //array
             if (dt.Columns.Count == 1)
             {
-                return VAL.Boxing(dt.ToArray(row=>row[0])).ToJson();
+                //string name = dt.Columns[0].ColumnName;
+                string json = VAL.Boxing(dt.ToArray(row => row[0])).ToJson();
+                //string.Format("{0}={1}", name, json);
+                return json;
             }
 
             string[] columns = dt.Columns.Cast<DataColumn>().Select(col => col.ColumnName).ToArray();
@@ -109,9 +118,32 @@ namespace sqlcon
             }
 
             return L.ToJson();
-
         }
 
+        private static string ToCSharp(DataTable dt)
+        {
+            //array
+            if (dt.Columns.Count == 1)
+            {
+                var L1 = dt.ToArray(row => VAL.Boxing(row[0]).ToString());
+                return "{" + string.Join(",", L1) + "}";
+            }
+
+            string[] columns = dt.Columns.Cast<DataColumn>().Select(col => col.ColumnName).ToArray();
+            List<string> L = new List<string>();
+            foreach (DataRow row in dt.Rows)
+            {
+                List<string> V = new List<string>();
+                for (int i = 0; i < columns.Length; i++)
+                {
+                    V.Add(string.Format("{0}={1}", columns[i], VAL.Boxing(row[i]).ToString()));
+                }
+
+                L.Add("new {" + string.Join(", ", V) + "}");
+            }
+
+            return "new[] {\n" + string.Join(",\n", L) + "\n}";
+        }
 
         private bool Display(Command cmd, SqlBuilder builder, int top)
         {
@@ -119,7 +151,7 @@ namespace sqlcon
             {
                 DataTable table = builder.SqlCmd.FillDataTable();
                 rTable = new UniqueTable(tname, table);
-                _DisplayTable(rTable.Table, cmd.IsVertical, top>0 && table.Rows.Count == top, cmd.ToJson);
+                _DisplayTable(rTable.Table, top>0 && table.Rows.Count == top, cmd);
             }
             catch (Exception ex)
             {

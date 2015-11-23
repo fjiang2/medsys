@@ -35,6 +35,7 @@ namespace sqlcon
         public readonly bool HasIndex;
         public readonly bool HasStorage;
         public readonly bool ToJson;
+        public readonly bool ToCSharp;
 
         public readonly int top;
         private readonly string columns;
@@ -130,6 +131,10 @@ namespace sqlcon
 
                         case "/json":
                             ToJson = true;
+                            break;
+
+                        case "/c#":
+                            ToCSharp = true;
                             break;
 
                         default:

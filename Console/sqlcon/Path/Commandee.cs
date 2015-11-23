@@ -455,6 +455,7 @@ namespace sqlcon
                 stdio.WriteLine("   /t                  : display table in vertical grid");
                 stdio.WriteLine("   /r                  : display row-id");
                 stdio.WriteLine("   /json               : generate json data");
+                stdio.WriteLine("   /c#                 : generate C# data");
                 stdio.WriteLine("   /col:c1,c2,..       : display columns, or search on columns");
                 stdio.WriteLine("example:");
                 stdio.WriteLine("type match*s /col:c1,c2 : display rows matched on columns:c1 or c2");
