@@ -19,8 +19,9 @@ namespace sqlcon
         public const string _SERVER0 = "home";
         public const string _SERVER1 = "server1";
         public const string _SERVER2 = "server2";
-        
+
         const string _FUNC_CONFIG = "config";
+        const string _FUNC_CFG = "cfg";
         const string _SERVERS = "servers";
 
         const string _FILE_SYSTEM_CONFIG = "sqlcon.cfg"; 
@@ -64,10 +65,18 @@ namespace sqlcon
 
         private static VAL functions(string func, VAL parameters, Memory DS)
         {
+            string conn;
             switch (func)
             {
                 case _FUNC_CONFIG:
-                    var conn = SearchConnectionString(parameters);
+                    conn = SearchXmlConnectionString(parameters);
+                    if (conn != null)
+                        return new VAL(conn);
+                    else
+                        return new VAL();
+
+                case _FUNC_CFG:
+                    conn = SearchTieConnectionString(parameters);
                     if (conn != null)
                         return new VAL(conn);
                     else
@@ -290,7 +299,7 @@ namespace sqlcon
 
         }
 
-        private static string SearchConnectionString(VAL val)
+        private static string SearchXmlConnectionString(VAL val)
         {
             if(val.Count != 3)
             {
@@ -312,9 +321,9 @@ namespace sqlcon
             {
                 return SearchConnectionString(xmlFile, path, value);
             }
-            catch (Exception ex)
+            catch (Exception) 
             {
-                Console.WriteLine("cannot find connection string on file {0}, {1}", xmlFile, ex.Message);
+                Console.WriteLine("cannot find connection string on {0}, path={1}", xmlFile, path);
                 return null;
             }
         }
@@ -348,6 +357,11 @@ namespace sqlcon
                 .Select(x => x.Attribute(valueAttr).Value)
                 .FirstOrDefault();
 
+            return cleanConnectionString(connectionString);
+        }
+
+        private static string cleanConnectionString(string connectionString)
+        {
             string[] L = connectionString.Split(';');
             for (int i = 0; i < L.Length; i++)
             {
@@ -361,5 +375,66 @@ namespace sqlcon
             return connectionString;
         }
 
+
+        private static string SearchTieConnectionString(VAL val)
+        {
+            if (val.Count != 2)
+            {
+                Console.WriteLine("required 2 parameters on function config(file,variable), 1: app.config/web.config name; 2: variable to reach connection string");
+                return null;
+            }
+
+            if (val[0].VALTYPE != VALTYPE.stringcon || val[1].VALTYPE != VALTYPE.stringcon)
+            {
+                Console.WriteLine("error on function config(file,variable) argument type, 1: string, 2: string");
+                return null;
+            }
+
+            string cfgFile = (string)val[0];
+            string variable = (string)val[1];
+
+            try
+            {
+                Memory DS = new Memory();
+                if (File.Exists(cfgFile))
+                {
+                    using (var reader = new StreamReader(cfgFile))
+                    {
+                        string code = reader.ReadToEnd();
+                        try
+                        {
+                            Script.Execute(code, DS);
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine("configuration file format error in {0}, {1}", cfgFile, ex.Message);
+                        }
+                    }
+                }
+                else
+                    Console.WriteLine("cannot find configuration file: {0}", cfgFile);
+
+                VAL value = DS.GetValue(variable);
+                if (value.Undefined)
+                {
+                    Console.WriteLine("undefined variable {0}", variable);
+                    return null;
+                }
+                else if (!(value.Value is string))
+                {
+                    Console.WriteLine("connection string must be string, {0}={1}", variable, value.ToString());
+                    return null;
+                }
+                else
+                    return cleanConnectionString((string)value);
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("cannot find connection string on {0}, variable={1}", cfgFile, variable);
+                return null;
+            }
+        }
+
     }
 }
+
