@@ -70,10 +70,6 @@
       <Project>{58332852-369d-4045-93c2-5cfe9cfb2313}</Project>
       <Name>Sys.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Data\Sys.Data.csproj">
-      <Project>{91f93c1b-f6b4-4ef6-8149-a6b2a9e47137}</Project>
-      <Name>Sys.Data</Name>
-    </ProjectReference>
     <ProjectReference Include="..\PersistentObjects\Sys.PersistentObjects.csproj">
       <Project>{FE52736A-BA94-41FC-9FD3-A481A790FC9C}</Project>
       <Name>Sys.PersistentObjects</Name>

@@ -87,10 +87,6 @@
       <Project>{e5ec721b-1f83-41d2-adfd-2e8e0b1e516d}</Project>
       <Name>Sys.DataManager</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Sys\Data\Sys.Data.csproj">
-      <Project>{91f93c1b-f6b4-4ef6-8149-a6b2a9e47137}</Project>
-      <Name>Sys.Data</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Sys\Network\Sys.Network.csproj">
       <Project>{fc5c22c3-7df3-4e3f-9c61-dda511174ff5}</Project>
       <Name>Sys.Network</Name>
