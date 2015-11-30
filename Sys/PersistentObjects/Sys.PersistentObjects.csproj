@@ -75,9 +75,6 @@
     <Compile Include="Data.Manager\Log\DefaultLogee.cs" />
     <Compile Include="Data.Manager\Manager.cs" />
     <Compile Include="Data.Manager\ManagerExtension.cs" />
-    <Compile Include="Data.Manager\Migration\Migration.cs" />
-    <Compile Include="Data.Manager\Migration\MigrationAttribute.cs" />
-    <Compile Include="Data.Manager\Migration\MigrationProvider.cs" />
     <Compile Include="Data.Manager\Package\BasePackage.cs" />
     <Compile Include="Data.Manager\Package\IPacking.cs" />
     <Compile Include="Data.Manager\Package\Packing.cs" />
@@ -93,7 +90,6 @@
     <Compile Include="MgCode\DpoClass\logDataColumnDpo.cs" />
     <Compile Include="MgCode\DpoClass\logDataSetDpo.cs" />
     <Compile Include="MgCode\DpoClass\logDataTableDpo.cs" />
-    <Compile Include="MgCode\DpoClass\MigrationVersionDpo.cs" />
     <Compile Include="MgCode\DpoClass\RecordLockDpo.cs" />
     <Compile Include="MgCode\DpoClass\dictEnumTypeDpo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
