@@ -18,7 +18,7 @@ namespace X12.File
         {
         }
 
-        public void Parse(JBackgroundWorker worker)
+        public void Parse(BackgroundTask worker)
         {
             this.parser = new Parser(lines, worker);
             parser.Parse();

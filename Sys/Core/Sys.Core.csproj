@@ -68,6 +68,23 @@
     <Compile Include="Compare\TableCompare.cs" />
     <Compile Include="Compare\TableSchemaCompare.cs" />
     <Compile Include="Const.cs" />
+    <Compile Include="Data.Manager\DpoGenerate\ClassName.cs" />
+    <Compile Include="Data.Manager\DpoGenerate\ClassTableName.cs" />
+    <Compile Include="Data.Manager\DpoGenerate\DataTableDpoClass.cs" />
+    <Compile Include="Data.Manager\DpoGenerate\DpoClass.cs" />
+    <Compile Include="Data.Manager\DpoGenerate\DpoField.cs" />
+    <Compile Include="Data.Manager\DpoGenerate\DpoGenerator.cs" />
+    <Compile Include="Data.Manager\DpoGenerate\PropertyDefinition.cs" />
+    <Compile Include="Data.Manager\Extension.cs" />
+    <Compile Include="Data.Manager\Package\BasePackage.cs" />
+    <Compile Include="Data.Manager\Package\IPacking.cs" />
+    <Compile Include="Data.Manager\Package\Packing.cs" />
+    <Compile Include="Data.Manager\Package\Unpacking.cs" />
+    <Compile Include="Data.Manager\Setting.cs" />
+    <Compile Include="Data.Manager\SpGenerate\SpDatabase.cs" />
+    <Compile Include="Data.Manager\SpGenerate\SpParam.cs" />
+    <Compile Include="Data.Manager\SpGenerate\SpParamDpo.cs" />
+    <Compile Include="Data.Manager\SpGenerate\SpProc.cs" />
     <Compile Include="DataStructure\Range.cs" />
     <Compile Include="DataStructure\RangeSet.cs" />
     <Compile Include="DataStructure\SequentialList.cs" />
@@ -196,6 +213,7 @@
     <Compile Include="SqlBuilder\SqlExpr.cs" />
     <Compile Include="SqlBuilder\SqlExprExtension.cs" />
     <Compile Include="SqlBuilder\SqlValue.cs" />
+    <Compile Include="Sys\BackgroundTask.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

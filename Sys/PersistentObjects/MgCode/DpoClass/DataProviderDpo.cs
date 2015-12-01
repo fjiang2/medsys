@@ -43,24 +43,24 @@ namespace Sys.PersistentObjects.DpoClass
 
         public override void Collect(DataRow row)
         {
-            row[_handle] = handle;
-            row[_name] = name;
-            row[_type] = type;
-            row[_connection] = connection;
-            row[_user_id] = user_id;
-            row[_password] = password;
-            row[_inactive] = inactive;
+            SetValue(row, _handle, handle);
+            SetValue(row, _name, name);
+            SetValue(row, _type, type);
+            SetValue(row, _connection, connection);
+            SetValue(row, _user_id, user_id);
+            SetValue(row, _password, password);
+            SetValue(row, _inactive, inactive);
         }
 
         public override void Fill(DataRow row)
         {
-            handle = (int)row[_handle];
-            name = (string)row[_name];
-            type = (int)row[_type];
-            connection = (string)row[_connection];
-            user_id = (string)row[_user_id];
-            password = (string)row[_password];
-            inactive = (bool)row[_inactive];
+            handle = GetValue<int>(row, _handle);
+            name = GetValue<string>(row, _name);
+            type = GetValue<int>(row, _type);
+            connection = GetValue<string>(row, _connection);
+            user_id = GetValue<string>(row, _user_id);
+            password = GetValue<string>(row, _password);
+            inactive = GetValue<bool>(row, _inactive);
         }
 
         public DataProviderDpo(int handle)

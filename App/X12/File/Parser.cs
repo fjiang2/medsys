@@ -16,10 +16,10 @@ namespace X12.File
         private NTree<LoopTemplateDpo> director;
         
         private Memory DS = new Memory();
-        private JBackgroundWorker worker;
+        private BackgroundTask worker;
         public readonly MessageBuilder Messages = new MessageBuilder();
 
-        public Parser(List<SegmentLine> segmentLines, JBackgroundWorker worker)
+        public Parser(List<SegmentLine> segmentLines, BackgroundTask worker)
             :base(segmentLines)
         {
             this.worker = worker;

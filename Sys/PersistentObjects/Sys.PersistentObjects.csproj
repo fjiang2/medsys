@@ -53,8 +53,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data.Manager\DpoGenerate\DataTableDpoClass.cs" />
-    <Compile Include="Data.Manager\DpoGenerate\PropertyDefinition.cs" />
     <Compile Include="Data.Manager\LogDpoClass.cs" />
     <Compile Include="Extension.cs" />
     <Compile Include="MgCode\DpoClass\DataProviderDpo.cs" />
@@ -62,11 +60,6 @@
     <Compile Include="Data.Manager\Dictionary\DictColumn.cs" />
     <Compile Include="Data.Manager\Dictionary\DictDatabase.cs" />
     <Compile Include="Data.Manager\Dictionary\DictTable.cs" />
-    <Compile Include="Data.Manager\DpoGenerate\ClassName.cs" />
-    <Compile Include="Data.Manager\DpoGenerate\ClassTableName.cs" />
-    <Compile Include="Data.Manager\DpoGenerate\DpoClass.cs" />
-    <Compile Include="Data.Manager\DpoGenerate\DpoField.cs" />
-    <Compile Include="Data.Manager\DpoGenerate\DpoGenerator.cs" />
     <Compile Include="Data.Manager\EnumGenerate\EnumField.cs" />
     <Compile Include="Data.Manager\EnumGenerate\EnumType.cs" />
     <Compile Include="Data.Manager\EnumGenerate\EnumTypeManager.cs" />
@@ -75,15 +68,6 @@
     <Compile Include="Data.Manager\Log\DefaultLogee.cs" />
     <Compile Include="Data.Manager\Manager.cs" />
     <Compile Include="Data.Manager\ManagerExtension.cs" />
-    <Compile Include="Data.Manager\Package\BasePackage.cs" />
-    <Compile Include="Data.Manager\Package\IPacking.cs" />
-    <Compile Include="Data.Manager\Package\Packing.cs" />
-    <Compile Include="Data.Manager\Package\Unpacking.cs" />
-    <Compile Include="Data.Manager\Setting.cs" />
-    <Compile Include="Data.Manager\SpGenerate\SpDatabase.cs" />
-    <Compile Include="Data.Manager\SpGenerate\SpParam.cs" />
-    <Compile Include="Data.Manager\SpGenerate\SpParamDpo.cs" />
-    <Compile Include="Data.Manager\SpGenerate\SpProc.cs" />
     <Compile Include="MgCode\DpoClass\dictDatabaseDpo.cs" />
     <Compile Include="MgCode\DpoClass\dictDataColumnDpo.cs" />
     <Compile Include="MgCode\DpoClass\dictDataTableDpo.cs" />
@@ -93,7 +77,6 @@
     <Compile Include="MgCode\DpoClass\RecordLockDpo.cs" />
     <Compile Include="MgCode\DpoClass\dictEnumTypeDpo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Sys\JBackgroundWorker.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\Sys.Core.csproj">
@@ -104,6 +87,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
