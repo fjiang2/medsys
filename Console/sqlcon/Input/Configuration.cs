@@ -301,7 +301,7 @@ namespace sqlcon
 
         private static string SearchXmlConnectionString(VAL val)
         {
-            if(val.Count != 3)
+            if(val.Size != 3)
             {
                 Console.WriteLine("required 2 parameters on function config(file,path,value), 1: app.config/web.config name; 2: path to reach connection string; 3:connection string attribute");
                 return null;
@@ -378,7 +378,7 @@ namespace sqlcon
 
         private static string SearchTieConnectionString(VAL val)
         {
-            if (val.Count != 2)
+            if (val.Size != 2)
             {
                 Console.WriteLine("required 2 parameters on function config(file,variable), 1: app.config/web.config name; 2: variable to reach connection string");
                 return null;

@@ -100,6 +100,13 @@
             <param name="userFunc"></param>
             <returns></returns>
         </member>
+        <member name="M:Tie.Script.Tokenize(System.String)">
+            <summary>
+            Tokenizers are used to break a string down into a stream of terms or tokens. 
+            </summary>
+            <param name="text"></param>
+            <returns></returns>
+        </member>
         <member name="M:Tie.Script.#ctor">
             <summary>
             Initializes a new instance of the Tie.Script class, using dynamically created GUID as module name.
@@ -159,6 +166,46 @@
         <member name="M:Tie.Script.Close">
             <summary>
             explicit dispose instance
+            </summary>
+        </member>
+        <member name="P:Tie.Script.ModuleName">
+            <summary>
+            Get module name
+            </summary>
+        </member>
+        <member name="P:Tie.Script.DS">
+            <summary>
+            Get data segment of this instance
+            </summary>
+        </member>
+        <member name="P:Tie.Script.Scope">
+            <summary>
+            Set/Get scope of script.
+            code piece may be a part of class code.
+            e.g.
+                code piece: 
+                    this.x = 20;
+                the value of (this)above is defined by property (Scope)
+            </summary>
+        </member>
+        <member name="P:Tie.Script.UserFunction">
+            <summary>
+            Tie script functions extension. Tie will call functions defined in the (UserFunction)
+            </summary>
+        </member>
+        <member name="P:Tie.Script.SystemMemory">
+            <summary>
+            System level memory (Data Segment), this is restricted to use 
+            </summary>
+        </member>
+        <member name="P:Tie.Script.CommonMemory">
+            <summary>
+            Shared memory (Data Segment) used by all scripts
+            </summary>
+        </member>
+        <member name="P:Tie.Script.FunctionChain">
+            <summary>
+            Fuction chain used to implement tie script functions by .NET code
             </summary>
         </member>
         <member name="M:Tie.Script.CreateInstance(System.String,System.Object[])">
@@ -343,6 +390,11 @@
             Clear event handlers
             </summary>
         </member>
+        <member name="P:Tie.Script.RemoveEventHandlerSupported">
+            <summary>
+             Remove event handler is supported or not. System default is not supported.
+            </summary>
+        </member>
         <member name="F:Tie.Script.cpu">
             用例: 每一行都停顿
             
@@ -351,6 +403,15 @@
                  while(script.DebugContinue(line++, handler));
             
             
+        </member>
+        <member name="T:Tie.Script.DebugHandler">
+            <summary>
+            Debug handler, when breakpoint is reached, debug handler is invoked
+            </summary>
+            <param name="breakpoint">Address of break point</param>
+            <param name="cursor"></param>
+            <param name="info">CPU registers/stacks infomation is passed in</param>
+            <param name="DS2">Shared data segment</param>
         </member>
         <member name="M:Tie.Script.DebugStart(System.String)">
             <summary>
@@ -366,60 +427,6 @@
             <param name="breakpoint">address of break point</param>
             <param name="debugHandler">debug handler</param>
             <returns></returns>
-        </member>
-        <member name="P:Tie.Script.ModuleName">
-            <summary>
-            Get module name
-            </summary>
-        </member>
-        <member name="P:Tie.Script.DS">
-            <summary>
-            Get data segment of this instance
-            </summary>
-        </member>
-        <member name="P:Tie.Script.Scope">
-            <summary>
-            Set/Get scope of script.
-            code piece may be a part of class code.
-            e.g.
-                code piece: 
-                    this.x = 20;
-                the value of (this)above is defined by property (Scope)
-            </summary>
-        </member>
-        <member name="P:Tie.Script.UserFunction">
-            <summary>
-            Tie script functions extension. Tie will call functions defined in the (UserFunction)
-            </summary>
-        </member>
-        <member name="P:Tie.Script.SystemMemory">
-            <summary>
-            System level memory (Data Segment), this is restricted to use 
-            </summary>
-        </member>
-        <member name="P:Tie.Script.CommonMemory">
-            <summary>
-            Shared memory (Data Segment) used by all scripts
-            </summary>
-        </member>
-        <member name="P:Tie.Script.FunctionChain">
-            <summary>
-            Fuction chain used to implement tie script functions by .NET code
-            </summary>
-        </member>
-        <member name="P:Tie.Script.RemoveEventHandlerSupported">
-            <summary>
-             Remove event handler is supported or not. System default is not supported.
-            </summary>
-        </member>
-        <member name="T:Tie.Script.DebugHandler">
-            <summary>
-            Debug handler, when breakpoint is reached, debug handler is invoked
-            </summary>
-            <param name="breakpoint">Address of break point</param>
-            <param name="cursor"></param>
-            <param name="info">CPU registers/stacks infomation is passed in</param>
-            <param name="DS2">Shared data segment</param>
         </member>
         <member name="T:Tie.Valizer`1">
             <summary>
@@ -553,6 +560,15 @@
             <param name="val"></param>
             <returns></returns>
         </member>
+        <member name="M:Tie.Valizer.Devalize``1(Tie.VAL,``0)">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="val"></param>
+            <param name="anonymous"></param>
+            <returns></returns>
+        </member>
         <member name="M:Tie.Valizer.Devalize(Tie.VAL,System.Type)">
             <summary>
             
@@ -630,6 +646,17 @@
             
             
         </member>
+        <member name="M:Tie.Expression.s_decl_instance">
+            返回false: 
+             格式为 new Circle(...) 
+             或者 new new System.Windows.Forms.Label()
+             
+            返回true:
+              格式为 new int[]
+              或者 其他的情况 new T
+            
+            
+        </member>
         <member name="M:Tie.Library.CompileModule(System.String@,System.Int32,System.String,System.String,Tie.CodeType,Tie.CodeMode)">
             <summary>
             Compile module
@@ -672,6 +699,12 @@
             System log class
             </summary>
         </member>
+        <member name="T:Tie.Logger.WriteLineHandler">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+        </member>
         <member name="M:Tie.Logger.Open(Tie.LOGTARGET)">
             <summary>
             Open log device
@@ -684,21 +717,15 @@
             </summary>
             <param name="logFileName"></param>
         </member>
-        <member name="M:Tie.Logger.Close">
-            <summary>
-            Close log device
-            </summary>
-        </member>
         <member name="P:Tie.Logger.Buffer">
             <summary>
             log string
             </summary>
         </member>
-        <member name="T:Tie.Logger.WriteLineHandler">
+        <member name="M:Tie.Logger.Close">
             <summary>
-            
+            Close log device
             </summary>
-            <param name="message"></param>
         </member>
         <member name="T:Tie.Numeric">
             <summary>
@@ -736,6 +763,57 @@
             <summary>
             current cursor in source code
             </summary>
+        </member>
+        <member name="T:Tie.tokty">
+            <summary>
+            Token Type used on Tokenizer
+            </summary>
+        </member>
+        <member name="F:Tie.tokty.number">
+            <summary>
+            number is int, double, float,...
+            </summary>
+        </member>
+        <member name="F:Tie.tokty.identsy">
+            <summary>
+            like variable name
+            </summary>
+        </member>
+        <member name="F:Tie.tokty.stringcon">
+            <summary>
+            string constant
+            </summary>
+        </member>
+        <member name="F:Tie.tokty.symbol">
+            <summary>
+            symbol like: +,-,++,>=
+            </summary>
+        </member>
+        <member name="F:Tie.tokty.keyword">
+            <summary>
+            reserved keywords in c/c++
+            </summary>
+        </member>
+        <member name="T:Tie.token">
+            <summary>
+            define a token 
+            </summary>
+        </member>
+        <member name="F:Tie.token.ty">
+            <summary>
+            token type
+            </summary>
+        </member>
+        <member name="F:Tie.token.tok">
+            <summary>
+            token itself
+            </summary>
+        </member>
+        <member name="M:Tie.token.ToString">
+            <summary>
+            
+            </summary>
+            <returns></returns>
         </member>
         <member name="M:Tie.DynamicDelegate.InstanceDelegate(System.Type,System.Object,System.Reflection.FieldInfo,System.Reflection.MethodInfo)">
             把函数public static object xxxx(object target, object[] arguments);
@@ -897,6 +975,16 @@
             
             </summary>
         </member>
+        <member name="P:Tie.Member.Name">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Tie.Member.Value">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="M:Tie.Member.#ctor(System.String,Tie.VAL)">
             <summary>
             
@@ -909,16 +997,6 @@
             
             </summary>
             <returns></returns>
-        </member>
-        <member name="P:Tie.Member.Name">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:Tie.Member.Value">
-            <summary>
-            
-            </summary>
         </member>
         <member name="T:Tie.IValizable">
             <summary>
@@ -1265,6 +1343,18 @@
             <param name="val"></param>
             <returns></returns>
         </member>
+        <member name="P:Tie.Memory.DS">
+            <summary>
+            Dictionary of varible
+            </summary>
+        </member>
+        <member name="P:Tie.Memory.Item(Tie.VAR)">
+            <summary>
+            Get value by variable name
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
         <member name="M:Tie.Memory.GetValue(System.String)">
             <summary>
             return value from memory.
@@ -1291,6 +1381,11 @@
             </summary>
             <param name="variable"></param>
         </member>
+        <member name="P:Tie.Memory.Names">
+            <summary>
+            all variables name in memory
+            </summary>
+        </member>
         <member name="M:Tie.Memory.RemoveAll">
             <summary>
             Clear varible dictionary
@@ -1315,25 +1410,37 @@
             </summary>
             <returns> A string whose value is the same as this instance.</returns>
         </member>
+        <member name="M:Tie.Memory.ToScript">
+            <summary>
+            Generate assignment statemnts for all variables
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Tie.Memory.ToScript(System.Collections.Generic.IEnumerable{Tie.VAR})">
+            <summary>
+            Generate assignment statemnts for selected variables
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Tie.Memory.CopyBlock(System.Collections.Generic.IEnumerable{Tie.VAR})">
             <summary>
             Copy some varibles into new varible dictionary
             </summary>
-            <param name="compactedKeyNames"></param>
+            <param name="names"></param>
             <returns></returns>
         </member>
-        <member name="M:Tie.Memory.RemoveValueUnchangedBlock(Tie.Memory)">
+        <member name="M:Tie.Memory.RemoveUnchangedBlock(Tie.Memory)">
             <summary>
             Remove unchanged varibles
             </summary>
             <param name="referenceMemory">reference varibles</param>
         </member>
-        <member name="M:Tie.Memory.GetValue``1(Tie.VAR,``0)">
+        <member name="M:Tie.Memory.GetValue``1(System.String,``0)">
             <summary>
             return default value when property is undefined, otherwise return this value
             </summary>
             <typeparam name="T"></typeparam>
-            <param name="name"></param>
+            <param name="variable"></param>
             <param name="defaultValue"></param>
             <returns></returns>
         </member>
@@ -1343,23 +1450,6 @@
             </summary>
             <param name="memory"></param>
             <returns></returns>
-        </member>
-        <member name="P:Tie.Memory.DS">
-            <summary>
-            Dictionary of varible
-            </summary>
-        </member>
-        <member name="P:Tie.Memory.Item(Tie.VAR)">
-            <summary>
-            Get value by variable name
-            </summary>
-            <param name="name"></param>
-            <returns></returns>
-        </member>
-        <member name="P:Tie.Memory.Names">
-            <summary>
-            all variables name in memory
-            </summary>
         </member>
         <member name="T:Tie.RuntimeException">
             <summary>
@@ -1618,12 +1708,22 @@
             constant VOID
             </summary>
         </member>
+        <member name="P:Tie.VAL.VALTYPE">
+            <summary>
+            get this value's type
+            </summary>
+        </member>
         <member name="M:Tie.VAL.UpdateObject(Tie.VALTYPE,System.Object)">
             <summary>
             update this object
             </summary>
             <param name="ty"></param>
             <param name="value"></param>
+        </member>
+        <member name="P:Tie.VAL.Value">
+            <summary>
+            internal value of VAL
+            </summary>
         </member>
         <member name="M:Tie.VAL.Boxing(System.Object)">
             <summary>
@@ -1818,6 +1918,122 @@
             <param name="v2"></param>
             <returns></returns>
         </member>
+        <member name="P:Tie.VAL.Item(System.Int32)">
+            <summary>
+            returns i-th element of list
+            </summary>
+            <param name="pos"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Tie.VAL.Item(System.String)">
+            <summary>
+            returns value by key in associative array
+            </summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Tie.VAL.Item(Tie.VAL)">
+            <summary>
+            returns offset of value, either property or array of host object
+            </summary>
+            <param name="arr"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Tie.VAL.Str">
+            <summary>
+            returns string value
+            </summary>
+        </member>
+        <member name="P:Tie.VAL.Intcon">
+            <summary>
+            returns integet value
+            </summary>
+        </member>
+        <member name="P:Tie.VAL.Doublecon">
+            <summary>
+            returns double value
+            </summary>
+        </member>
+        <member name="P:Tie.VAL.Decimalcon">
+            <summary>
+            returns decimal value
+            </summary>
+        </member>
+        <member name="P:Tie.VAL.Boolcon">
+            <summary>
+            returns boolean value
+            </summary>
+        </member>
+        <member name="P:Tie.VAL.Size">
+            <summary>
+            returns number of elements of list, if not list, returns -1
+            </summary>
+        </member>
+        <member name="P:Tie.VAL.Defined">
+            <summary>
+            value is defined
+            </summary>
+        </member>
+        <member name="P:Tie.VAL.Undefined">
+            <summary>
+            value is not defined
+            </summary>
+        </member>
+        <member name="P:Tie.VAL.IsNull">
+            <summary>
+            is null?
+            </summary>
+        </member>
+        <member name="P:Tie.VAL.IsBool">
+            <summary>
+            is boolean?
+            </summary>
+        </member>
+        <member name="P:Tie.VAL.IsHostType">
+            <summary>
+            is host type object?
+            </summary>
+        </member>
+        <member name="P:Tie.VAL.IsInt">
+            <summary>
+            is integer?
+            </summary>
+        </member>
+        <member name="P:Tie.VAL.IsList">
+            <summary>
+            is list value?
+            </summary>
+        </member>
+        <member name="P:Tie.VAL.IsDouble">
+            <summary>
+            is double?
+            </summary>
+        </member>
+        <member name="P:Tie.VAL.IsDecimal">
+            <summary>
+            is decimal?
+            </summary>
+        </member>
+        <member name="P:Tie.VAL.IsFunction">
+            <summary>
+            is user defined function?
+            </summary>
+        </member>
+        <member name="P:Tie.VAL.IsClass">
+            <summary>
+            is user defined class?
+            </summary>
+        </member>
+        <member name="P:Tie.VAL.IsTrue">
+            <summary>
+            is boolean and true?
+            </summary>
+        </member>
+        <member name="P:Tie.VAL.IsFalse">
+            <summary>
+            is boolean and false?
+            </summary>
+        </member>
         <member name="M:Tie.VAL.Array(System.Int32[])">
             <summary>
             Make multiple dimension array
@@ -1858,6 +2074,11 @@
             </summary>
             <param name="name"></param>
         </member>
+        <member name="P:Tie.VAL.Members">
+            <summary>
+            return associative array
+            </summary>
+        </member>
         <member name="M:Tie.VAL.GetMemeber``1(System.String,``0)">
             <summary>
             return default value when property is undefined, otherwise return this value
@@ -1870,6 +2091,11 @@
         <member name="M:Tie.VAL.ClearNullorVoid">
             <summary>
             Remove null/void key-value-pair in associative array
+            </summary>
+        </member>
+        <member name="P:Tie.VAL.ObjectArray">
+            <summary>
+            returns object array
             </summary>
         </member>
         <member name="M:Tie.VAL.ToString">
@@ -1885,6 +2111,12 @@
             Print no null, no quotation mark, no typeof
             </summary>
             <returns></returns>
+        </member>
+        <member name="P:Tie.VAL.Valor">
+            <summary>
+            returns instance string used for persistence purpose
+            Print null, quotation mark, typeof and valized value
+            </summary>
         </member>
         <member name="M:Tie.VAL.ToString(System.String)">
             <summary>
@@ -1932,32 +2164,10 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Tie.VAL.CopyTo(Tie.VAL[],System.Int32)">
+        <member name="P:Tie.VAL.HostValue">
             <summary>
-            Copies the entire list to a compatible one-dimensional
-            array, starting at the specified index of the target array.
+            returns Host value
             </summary>
-            <param name="array"></param>
-            <param name="arrayIndex"></param>
-        </member>
-        <member name="M:Tie.VAL.Clear">
-            <summary>
-            clear list
-            </summary>
-        </member>
-        <member name="M:Tie.VAL.Contains(Tie.VAL)">
-            <summary>
-            list contains item?
-            </summary>
-            <param name="item"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Tie.VAL.Remove(Tie.VAL)">
-            <summary>
-            removes item from list
-            </summary>
-            <param name="item"></param>
-            <returns></returns>
         </member>
         <member name="M:Tie.VAL.op_Explicit(Tie.VAL)~System.Boolean">
             <summary>
@@ -2098,163 +2308,6 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="P:Tie.VAL.VALTYPE">
-            <summary>
-            get this value's type
-            </summary>
-        </member>
-        <member name="P:Tie.VAL.Value">
-            <summary>
-            internal value of VAL
-            </summary>
-        </member>
-        <member name="P:Tie.VAL.Item(System.Int32)">
-            <summary>
-            returns i-th element of list
-            </summary>
-            <param name="pos"></param>
-            <returns></returns>
-        </member>
-        <member name="P:Tie.VAL.Item(System.String)">
-            <summary>
-            returns value by key in associative array
-            </summary>
-            <param name="key"></param>
-            <returns></returns>
-        </member>
-        <member name="P:Tie.VAL.Item(Tie.VAL)">
-            <summary>
-            returns offset of value, either property or array of host object
-            </summary>
-            <param name="arr"></param>
-            <returns></returns>
-        </member>
-        <member name="P:Tie.VAL.Str">
-            <summary>
-            returns string value
-            </summary>
-        </member>
-        <member name="P:Tie.VAL.Intcon">
-            <summary>
-            returns integet value
-            </summary>
-        </member>
-        <member name="P:Tie.VAL.Doublecon">
-            <summary>
-            returns double value
-            </summary>
-        </member>
-        <member name="P:Tie.VAL.Decimalcon">
-            <summary>
-            returns decimal value
-            </summary>
-        </member>
-        <member name="P:Tie.VAL.Boolcon">
-            <summary>
-            returns boolean value
-            </summary>
-        </member>
-        <member name="P:Tie.VAL.Size">
-            <summary>
-            returns number of elements of list, if not list, returns -1
-            </summary>
-        </member>
-        <member name="P:Tie.VAL.Defined">
-            <summary>
-            value is defined
-            </summary>
-        </member>
-        <member name="P:Tie.VAL.Undefined">
-            <summary>
-            value is not defined
-            </summary>
-        </member>
-        <member name="P:Tie.VAL.IsNull">
-            <summary>
-            is null?
-            </summary>
-        </member>
-        <member name="P:Tie.VAL.IsBool">
-            <summary>
-            is boolean?
-            </summary>
-        </member>
-        <member name="P:Tie.VAL.IsHostType">
-            <summary>
-            is host type object?
-            </summary>
-        </member>
-        <member name="P:Tie.VAL.IsInt">
-            <summary>
-            is integer?
-            </summary>
-        </member>
-        <member name="P:Tie.VAL.IsList">
-            <summary>
-            is list value?
-            </summary>
-        </member>
-        <member name="P:Tie.VAL.IsDouble">
-            <summary>
-            is double?
-            </summary>
-        </member>
-        <member name="P:Tie.VAL.IsDecimal">
-            <summary>
-            is decimal?
-            </summary>
-        </member>
-        <member name="P:Tie.VAL.IsFunction">
-            <summary>
-            is user defined function?
-            </summary>
-        </member>
-        <member name="P:Tie.VAL.IsClass">
-            <summary>
-            is user defined class?
-            </summary>
-        </member>
-        <member name="P:Tie.VAL.IsTrue">
-            <summary>
-            is boolean and true?
-            </summary>
-        </member>
-        <member name="P:Tie.VAL.IsFalse">
-            <summary>
-            is boolean and false?
-            </summary>
-        </member>
-        <member name="P:Tie.VAL.Members">
-            <summary>
-            return associative array
-            </summary>
-        </member>
-        <member name="P:Tie.VAL.ObjectArray">
-            <summary>
-            returns object array
-            </summary>
-        </member>
-        <member name="P:Tie.VAL.Valor">
-            <summary>
-            returns instance string used for persistence purpose
-            Print null, quotation mark, typeof and valized value
-            </summary>
-        </member>
-        <member name="P:Tie.VAL.Count">
-            <summary>
-            returns count of list
-            </summary>
-        </member>
-        <member name="P:Tie.VAL.IsReadOnly">
-            <summary>
-            always returns true
-            </summary>
-        </member>
-        <member name="P:Tie.VAL.HostValue">
-            <summary>
-            returns Host value
-            </summary>
-        </member>
         <member name="T:Tie.VAR">
             <summary>
             
@@ -2274,7 +2327,7 @@
         </member>
         <member name="M:Tie.VAR.Equals(System.Object)">
             <summary>
-            
+            obj is VAR type
             </summary>
             <param name="obj"></param>
             <returns></returns>
@@ -2318,7 +2371,7 @@
         </member>
         <member name="M:Tie.VAR.CompareTo(System.Object)">
             <summary>
-            
+            obj is VAR type
             </summary>
             <param name="obj"></param>
             <returns></returns>
