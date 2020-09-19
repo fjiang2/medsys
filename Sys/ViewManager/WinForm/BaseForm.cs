@@ -267,7 +267,9 @@ namespace Sys.ViewManager.Forms
             }
             else
             {
-              
+
+                if (val.Undefined)
+                    return;
 
                 System.Drawing.Rectangle box = SystemInformation.VirtualScreen;
 

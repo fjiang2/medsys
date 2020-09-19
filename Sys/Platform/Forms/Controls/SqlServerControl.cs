@@ -24,7 +24,7 @@ namespace Sys.Platform.Forms
 
         public string DatabaseName
         {
-            get {  return comboBoxDatabase.Text; }
+            get { return comboBoxDatabase.Text; }
         }
 
 
@@ -70,7 +70,8 @@ namespace Sys.Platform.Forms
 
                 if (comboBoxServer.Items.Count == 0)
                 {
-                    string[] servers = SqlServer.GetAvailableServers();
+                    //string[] servers = SqlServer.GetAvailableServers();
+                    string[] servers = new string[] { @"localhost\SQLEXPRESS", @"(localdb)\MSSQLLocalDB" };
 
                     if (servers != null && servers.Length != 0)
                     {
@@ -133,7 +134,7 @@ namespace Sys.Platform.Forms
         {
             RefreshComboBoxDatabase();
             this.comboBoxDatabase.SelectedItem = databaseName;
-            
+
             if (DatabaseSelected != null)
                 DatabaseSelected(this, new EventArgs());
         }
@@ -176,7 +177,7 @@ namespace Sys.Platform.Forms
                 Cursor.Current = Cursors.Default;
             }
         }
-      
+
 
         public bool Connect()
         {
@@ -193,18 +194,18 @@ namespace Sys.Platform.Forms
             string connectionString = GetConnectionString();
             ConnectionProviderManager.RegisterDefaultProvider(connectionString);
 
-          
+
             Sys.Constant.DB_SYSTEM = databaseName;
             Sys.Constant.DB_APPLICATION = databaseName;
-            
+
             return true;
         }
 
-     
+
     }
 
     public class ConnectionEventArgs : EventArgs
-    { 
+    {
         public readonly bool Connected;
 
         public ConnectionEventArgs(bool connected)

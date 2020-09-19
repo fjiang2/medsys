@@ -15,7 +15,7 @@ namespace Sys.ViewManager.Manager
 {
     public partial class ShortcutControl : NavBarControl
     {
-        
+
         private NavBarGroup favorites = new DevExpress.XtraNavBar.NavBarGroup();
         private NavBarGroup recentlyused = new DevExpress.XtraNavBar.NavBarGroup();
         private NavBarGroup apps = new DevExpress.XtraNavBar.NavBarGroup();
@@ -23,8 +23,8 @@ namespace Sys.ViewManager.Manager
 
         private Dictionary<NavBarItemLink, TaskData> navBarLinks = new Dictionary<NavBarItemLink, TaskData>();
 
-  
-        
+
+
         public ShortcutControl(ContainerControl owner)
         {
             InitializeComponent();
@@ -41,7 +41,7 @@ namespace Sys.ViewManager.Manager
             this.ActiveGroup = this.favorites;
             this.ContentButtonHint = null;
             this.Groups.AddRange(
-                    new DevExpress.XtraNavBar.NavBarGroup[] 
+                    new DevExpress.XtraNavBar.NavBarGroup[]
                     {
                         this.favorites,
                         this.recentlyused,
@@ -70,7 +70,7 @@ namespace Sys.ViewManager.Manager
                 Image map;
                 if (dpo.IconImage != null)
                     map = dpo.IconImage;
-                else if(dpo.Command.StartsWith("http://"))
+                else if (dpo.Command.StartsWith("http://"))
                     map = global::Sys.ViewManager.Properties.Resources.Web;
                 else
                     map = global::Sys.ViewManager.Properties.Resources.application;
@@ -107,7 +107,7 @@ namespace Sys.ViewManager.Manager
             TaskData task = new TaskData(key, false, caption, hostType, func, args);
             TaskItem item = new TaskItem(task);
 
-            item.LinkClicked += delegate(object sender, NavBarLinkEventArgs e)
+            item.LinkClicked += delegate (object sender, NavBarLinkEventArgs e)
             {
                 Cursor = Cursors.WaitCursor;
                 object result = task.Evaluate();
@@ -130,7 +130,7 @@ namespace Sys.ViewManager.Manager
             //item.LargeImage = image;
             item.SmallImage = image;
 
-            item.LinkClicked += delegate(object sender, NavBarLinkEventArgs e)
+            item.LinkClicked += delegate (object sender, NavBarLinkEventArgs e)
             {
                 Cursor = Cursors.WaitCursor;
                 System.Diagnostics.Process.Start(app);
@@ -152,20 +152,20 @@ namespace Sys.ViewManager.Manager
                 Profile.Instance.Memory[key] = shortCuts;
             else
                 shortCuts = Profile.Instance.Memory[key];
-    
+
             return shortCuts;
         }
 
         public void Load()
         {
             VAL shortCuts = Persistent("ShortCuts");
-            for(int i= 0; i<shortCuts.Size; i++)
+            for (int i = 0; i < shortCuts.Size; i++)
             {
                 VAL val = shortCuts[i];
-                
-                if (!val.IsList)        
+
+                if (!val.IsList)
                     continue;
-                
+
                 TaskData task = new TaskData(val);
                 AddItem(task);
             }
@@ -176,7 +176,9 @@ namespace Sys.ViewManager.Manager
             VAL shortCuts = VAL.Array();
             foreach (TaskData task in navBarLinks.Values)
             {
-                shortCuts.Add(task.GetVAL());
+                VAL val = task.GetVAL();
+                if (val.Defined)
+                    shortCuts.Add(val);
             }
 
             Profile.Instance.Memory["ShortCuts"] = shortCuts;
@@ -195,7 +197,7 @@ namespace Sys.ViewManager.Manager
 
         public bool Add(bool pinned, string key, string caption, Type formClassType, object[] args)
         {
-            key = formClassType.FullName + "#" + key.ToIdent(); 
+            key = formClassType.FullName + "#" + key.ToIdent();
             TaskData task = new TaskData(key, pinned, caption, formClassType, args);
 
             return AddItem(task);
@@ -211,7 +213,7 @@ namespace Sys.ViewManager.Manager
         public bool Add(bool pinned, UserMenuItem menuItem, Type hostType, string func, object[] args)
         {
             System.Guid key;
-            if(!Guid.TryParse(menuItem.Key_Name, out key))
+            if (!Guid.TryParse(menuItem.Key_Name, out key))
             {
                 key = System.Guid.NewGuid();
                 menuItem.Key_Name = key.ToString();
@@ -285,7 +287,7 @@ namespace Sys.ViewManager.Manager
 
             if (group == recentlyused)
             {
-                while(recentlyused.ItemLinks.Count >= 10)   //keep last 10 tasks
+                while (recentlyused.ItemLinks.Count >= 10)   //keep last 10 tasks
                     RemoveOldestUnpinnedTask();
             }
 
@@ -298,7 +300,7 @@ namespace Sys.ViewManager.Manager
             {
                 TaskItem item = new TaskItem(task);
 
-                item.LinkClicked += delegate(object sender, NavBarLinkEventArgs e)
+                item.LinkClicked += delegate (object sender, NavBarLinkEventArgs e)
                 {
                     Cursor = Cursors.WaitCursor;
                     object result = task.Evaluate();
@@ -359,7 +361,7 @@ namespace Sys.ViewManager.Manager
             this.navBarLinks.Remove(link);
             return true;
 
-        
+
         }
 
         private bool RemoveNavBarItem(NavBarItemLink link)
@@ -389,16 +391,16 @@ namespace Sys.ViewManager.Manager
             ToolStripMenuItem menuMove = new ToolStripMenuItem("Move to Favorite", global::Sys.ViewManager.Properties.Resources.star);
 
             TaskData task = navBarLinks[link];
-            menuMove.Enabled = !task.pinned; 
+            menuMove.Enabled = !task.pinned;
 
-            menuDelete.Click += delegate(object sender, EventArgs e)
+            menuDelete.Click += delegate (object sender, EventArgs e)
             {
                 if (RemoveNavBarItem(link))
                     Save();
             };
 
 
-            menuMove.Click += delegate(object sender, EventArgs e)
+            menuMove.Click += delegate (object sender, EventArgs e)
             {
                 task.pinned = true;
                 recentlyused.ItemLinks.Remove(link);
@@ -425,7 +427,7 @@ namespace Sys.ViewManager.Manager
             if (navBarHitInfo.Link != null)
             {
                 ContextMenuStrip contextMenuStrip = BuildContextMenu(navBarHitInfo.Link);
-                if(contextMenuStrip != null)
+                if (contextMenuStrip != null)
                     contextMenuStrip.Show((Control)sender, point.X, point.Y);
             }
 

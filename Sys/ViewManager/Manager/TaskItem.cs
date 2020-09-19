@@ -9,17 +9,20 @@ using Sys.ViewManager.Security;
 
 namespace Sys.ViewManager.Manager
 {
-    class TaskItem : NavBarItem, IComparer<TaskItem>, IComparer  
+    class TaskItem : NavBarItem, IComparer<TaskItem>, IComparer
     {
         TaskData task;
 
         public TaskItem(TaskData task)
         {
             this.task = task;
-            
-            switch(task.ty)
+
+            switch (task.ty)
             {
                 case TaskDataType.NewBaseForm:
+                    if (task.HostType == null)
+                        return;
+
                     FormClass dpo = new FormClass(task.HostType.FullName);
                     if (!dpo.Exists)
                     {
@@ -34,13 +37,13 @@ namespace Sys.ViewManager.Manager
                         dpo.Save();
 
                     }
-                    
+
                     this.Caption = task.caption == null ? dpo.Label : task.caption;
                     this.SmallImage = dpo.IconImage;
                     this.LargeImage = dpo.IconImage;
 
                     break;
-            
+
                 case TaskDataType.StaticMethod:
                     /*
                     UserShortcut shortcut = new UserShortcut(task.Key);

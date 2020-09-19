@@ -100,6 +100,9 @@ namespace Sys.ViewManager.Manager
       
         public VAL GetVAL()
         {
+            if (hostType == null)
+                return VAL.VOID;
+
             VAL val = new VAL();
             val["Key"] = VAL.Boxing(key);
             val["Caption"] = VAL.Boxing(caption);
