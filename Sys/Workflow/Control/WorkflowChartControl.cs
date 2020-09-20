@@ -90,8 +90,8 @@ namespace Sys.Workflow
             Diagram.AxisY.Range.Auto = false;
             Diagram.AxisY.Range.MinValueInternal = 0.0;
             Diagram.AxisY.Range.MaxValueInternal = 20.0;
-            Diagram.AxisY.DateTimeGridAlignment = DevExpress.XtraCharts.DateTimeMeasurementUnit.Hour;
-            Diagram.AxisY.DateTimeMeasureUnit = DevExpress.XtraCharts.DateTimeMeasurementUnit.Hour;
+            Diagram.AxisY.DateTimeScaleOptions.MeasureUnit = DevExpress.XtraCharts.DateTimeMeasureUnit.Hour;
+            Diagram.AxisY.DateTimeScaleOptions.MeasureUnit = DevExpress.XtraCharts.DateTimeMeasureUnit.Hour;
             Diagram.AxisY.Label.Staggered = true;
             Diagram.AxisY.Range.ScrollingRange.SideMarginsEnabled = true;
             Diagram.AxisY.Range.SideMarginsEnabled = true;

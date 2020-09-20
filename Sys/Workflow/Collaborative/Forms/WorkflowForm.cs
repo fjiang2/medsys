@@ -274,8 +274,8 @@ namespace Sys.Workflow.Collaborative.Forms
            RangeBarPointOptions pointOptions = (RangeBarPointOptions)series0.Label.PointOptions;
            pointOptions.PointView = PointView.ArgumentAndValues;
 
-           form.WorkflowChartControl.Diagram.AxisY.DateTimeMeasureUnit = DateTimeMeasurementUnit.Hour;
-           form.WorkflowChartControl.ChartControl.Legend.Visible = true;
+           form.WorkflowChartControl.Diagram.AxisY.DateTimeScaleOptions.MeasureUnit = DateTimeMeasureUnit.Hour;
+           form.WorkflowChartControl.ChartControl.Legend.Visibility = DevExpress.Utils.DefaultBoolean.True;
            ((SeriesViewColorEachSupportBase)series0.View).ColorEach = true;
 
            form.PopUp(this, FormPlace.Floating);

@@ -119,7 +119,7 @@ namespace Sys.ViewManager.Forms
             ganttDiagram1.AxisX.VisibleInPanesSerializable = "-1";
 
             ganttDiagram1.AxisY.Label.Angle = -33;
-            ganttDiagram1.AxisY.Label.Antialiasing = true;
+            ganttDiagram1.AxisY.Label.EnableAntialiasing = DefaultBoolean.True;
             ganttDiagram1.AxisY.Range.ScrollingRange.SideMarginsEnabled = true;
             ganttDiagram1.AxisY.Range.SideMarginsEnabled = true;
             ganttDiagram1.AxisY.VisibleInPanesSerializable = "-1";
@@ -211,12 +211,12 @@ namespace Sys.ViewManager.Forms
 
         public void AddAxis(string axisXTitle)
         {
-            this.Diagram.AxisX.Title.Visible = true;
+            this.Diagram.AxisX.Title.Visibility = DefaultBoolean.True;
             this.Diagram.AxisX.Title.Text = axisXTitle;
             this.Diagram.AxisY.Interlaced = true;
             this.Diagram.AxisY.GridSpacing = 10.0;
             this.Diagram.AxisY.Label.Angle = -30;
-            this.Diagram.AxisY.Label.Antialiasing = true;
+            this.Diagram.AxisY.Label.EnableAntialiasing = DefaultBoolean.True;
             this.Diagram.AxisY.DateTimeOptions.Format = DevExpress.XtraCharts.DateTimeFormat.MonthAndDay;
 
             this.chartControl1.Legend.AlignmentHorizontal = DevExpress.XtraCharts.LegendAlignmentHorizontal.Right;
