@@ -192,8 +192,8 @@ namespace Sys.SmartList
             this.chartControl1.Name = "chartControl1";
             this.chartControl1.RuntimeHitTesting = false;
             this.chartControl1.SeriesSerializable = new DevExpress.XtraCharts.Series[0];
-            pointSeriesLabel3.LineVisible = true;
-            pointSeriesLabel3.Visible = false;
+            pointSeriesLabel3.LineVisibility = DevExpress.Utils.DefaultBoolean.True;
+            pointSeriesLabel3.LineVisibility = DevExpress.Utils.DefaultBoolean.False;
             this.chartControl1.SeriesTemplate.Label = pointSeriesLabel3;
             this.chartControl1.SeriesTemplate.View = lineSeriesView3;
             this.chartControl1.Size = new System.Drawing.Size(690, 176);

@@ -13,6 +13,6 @@
   <PropertyGroup>
   </PropertyGroup>
   <PropertyGroup>
-    <ReferencePath>C:\devel\medsys\Lib\DevExpress\</ReferencePath>
+    <ReferencePath>D:\devel\GitHub\medsys\Lib\DevExpress\</ReferencePath>
   </PropertyGroup>
 </Project>

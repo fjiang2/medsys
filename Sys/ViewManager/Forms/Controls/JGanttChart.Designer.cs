@@ -58,7 +58,7 @@
             ganttDiagram1.AxisX.Range.ScrollingRange.SideMarginsEnabled = true;
             ganttDiagram1.AxisX.Range.SideMarginsEnabled = true;
             ganttDiagram1.AxisX.VisibleInPanesSerializable = "-1";
-            ganttDiagram1.AxisY.Label.Antialiasing = true;
+            ganttDiagram1.AxisY.Label.EnableAntialiasing = DevExpress.Utils.DefaultBoolean.True;
             ganttDiagram1.AxisY.Range.ScrollingRange.SideMarginsEnabled = true;
             ganttDiagram1.AxisY.Range.SideMarginsEnabled = true;
             ganttDiagram1.AxisY.VisibleInPanesSerializable = "-1";

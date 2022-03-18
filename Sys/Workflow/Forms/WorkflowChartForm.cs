@@ -40,9 +40,9 @@ namespace Sys.Workflow.Forms
             this.workflowChartControl1.ActivityPointType = pointType;
 
 
-            foreach (DateTimeMeasurementUnit ty in Enum.GetValues(typeof(DateTimeMeasurementUnit)))
+            foreach (DateTimeMeasureUnit ty in Enum.GetValues(typeof(DateTimeMeasureUnit)))
             {
-                if(ty!= DateTimeMeasurementUnit.Millisecond && ty!= DateTimeMeasurementUnit.Second) 
+                if(ty!= DateTimeMeasureUnit.Millisecond && ty!= DateTimeMeasureUnit.Second) 
                     this.dupMeasureUnit.Items.Add(ty.ToString());
             }
 
@@ -57,10 +57,10 @@ namespace Sys.Workflow.Forms
             RangeBarPointOptions pointOptions = (RangeBarPointOptions)series0.Label.PointOptions;
             this.chkShowArgument.Checked = pointOptions.PointView == PointView.ArgumentAndValues || pointOptions.PointView == PointView.Argument;
             this.chkShowValues.Checked = pointOptions.PointView == PointView.ArgumentAndValues || pointOptions.PointView == PointView.Values;
-            this.chkShowLegend.Checked = workflowChartControl1.ChartControl.Legend.Visible;
+            this.chkShowLegend.Checked = workflowChartControl1.ChartControl.Legend.Visibility == DevExpress.Utils.DefaultBoolean.True;
 
-            this.chkShowLegend.Checked = workflowChartControl1.ChartControl.Legend.Visible;
-            this.dupMeasureUnit.SelectedItem = workflowChartControl1.Diagram.AxisY.DateTimeMeasureUnit.ToString();
+            this.chkShowLegend.Checked = workflowChartControl1.ChartControl.Legend.Visibility == DevExpress.Utils.DefaultBoolean.True;
+            this.dupMeasureUnit.SelectedItem = workflowChartControl1.Diagram.AxisY.DateTimeScaleOptions.MeasureUnit.ToString();
 
             this.chkColorEach.Checked = ((OverlappedGanttSeriesView)workflowChartControl1.Series0.View).ColorEach;
         }
@@ -76,7 +76,7 @@ namespace Sys.Workflow.Forms
 
             ((System.ComponentModel.ISupportInitialize)(workflowChartControl1.ChartControl)).BeginInit();
             
-            seriesLabel.Visible = true;
+            seriesLabel.LineVisibility = DevExpress.Utils.DefaultBoolean.True;
             
             if (chkShowArgument.Checked && chkShowValues.Checked)
                 pointOptions.PointView = DevExpress.XtraCharts.PointView.ArgumentAndValues;
@@ -85,14 +85,14 @@ namespace Sys.Workflow.Forms
             else if (!chkShowArgument.Checked && chkShowValues.Checked)
                 pointOptions.PointView = DevExpress.XtraCharts.PointView.Values;
             else
-                seriesLabel.Visible = false;
+                seriesLabel.LineVisibility = DevExpress.Utils.DefaultBoolean.False;
 
             ((System.ComponentModel.ISupportInitialize)(workflowChartControl1.ChartControl)).EndInit();
         }
 
         private void chkShowLegend_CheckedChanged(object sender, EventArgs e)
         {
-            workflowChartControl1.ChartControl.Legend.Visible = chkShowLegend.Checked;
+            workflowChartControl1.ChartControl.Legend.Visibility = chkShowLegend.Checked? DevExpress.Utils.DefaultBoolean.True: DevExpress.Utils.DefaultBoolean.False;
         }
 
         private void dupMeasureUnit_SelectedItemChanged(object sender, EventArgs e)
@@ -101,8 +101,8 @@ namespace Sys.Workflow.Forms
 
             if (name != null)
             {
-                workflowChartControl1.Diagram.AxisY.DateTimeMeasureUnit =
-                   (DateTimeMeasurementUnit)Enum.Parse(typeof(DateTimeMeasurementUnit), name);
+                workflowChartControl1.Diagram.AxisY.DateTimeScaleOptions.MeasureUnit =
+                   (DateTimeMeasureUnit)Enum.Parse(typeof(DateTimeMeasureUnit), name);
             }
         }
 
